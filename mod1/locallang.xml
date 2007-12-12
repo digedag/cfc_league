@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+	<meta type="array">
+		<type>module</type>
+		<description>Language labels for module &quot;web_txcfcleagueM1&quot;</description>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array">
+			<label index="message">Message</label>
+			<label index="error">Error</label>
+			<label index="title">League Management</label>
+			<label index="title_recent_tickers">Recent ticker messages</label>
+			<label index="create_games">Create matches</label>
+			<label index="edit_games">Edit matches</label>
+			<label index="create_players">Create players</label>
+			<label index="search_profiles">Search profiles</label>
+			<label index="match_ticker">Match ticker/Statistics</label>
+			<label index="no_league_in_page">No Leagues found in current page.</label>
+			<label index="no_round_in_league">This Competition containes no matches.</label>
+			<label index="btn_update_msgEditGames">Save changes?</label>
+			<label index="btn_update">Update</label>
+			<label index="msg_no_league_generation">Cannot create match table. Please ensure there that league has no games, more than on team assigned and a generation string.</label>
+			<label index="btn_create">Create</label>
+			<label index="btn_edit">Edit</label>
+			<label index="btn_save">Save</label>
+			<label index="btn_search">Search</label>
+			<label index="msg_CreateGameTable">Create all matches for this league?</label>
+			<label index="msg_CreateProfiles">Create all profiles in current page?</label>
+			<label index="msg_NoCompetitonsFound">No competitions found!</label>
+			<label index="msg_NoSaisonFound">No saison found!</label>
+			<label index="msg_data_saved">Submitted data has been saved!</label>
+			<label index="msg_matches_created">All matches were successfully created!</label>
+			<label index="msg_checkPage">Profiles will be created on page: </label>
+			<label index="msg_maxPlayers">Team contains maximum number of players!</label>
+			<label index="msg_pageNotAllowed">Page is not allowed for profiles. Select another page!</label>
+			<label index="msg_data_saved">Data saved!</label>
+			<label index="msg_free_of_play">Free of play</label>
+
+			<label index="msg_no_team_found">No team found!</label>
+			<label index="msg_no_person_found">No person found!</label>
+			<label index="msg_found_person">Found person</label>
+			<label index="msg_search_person">Search for person in database</label>
+			<label index="msg_edit_person">Edit person</label>
+			<label index="msg_person_saved">Person updated</label>
+			<label index="msg_date_saved">Date has been updated</label>
+			<label index="msg_profiles_created">Profiles were created!</label>
+			<label index="msg_profiles_warnings">Could not create the following profiles:</label>
+
+			<label index="msg_number_of_players">Number of players to create:</label>
+			<label index="msg_number_of_coaches">Number of coaches to create:</label>
+			<label index="msg_number_of_supporters">Number of supporters to create:</label>
+
+			<label index="createGameTable_round">. Round</label>
+			<label index="label_firstname">Firstname</label>
+			<label index="label_lastname">Lastname</label>
+			<label index="label_birthday">Birthday</label>
+			<label index="label_current_standings">Current standings</label>
+			<label index="label_matchpart_1">Halftime</label>
+			<label index="label_information">Information</label>
+
+			<label index="label_profile_coach">Coach</label>
+			<label index="label_profile_player">Player</label>
+			<label index="label_profile_supporter">Supporter</label>
+
+		</languageKey>
+		<languageKey index="de" type="array">
+			<label index="message">Hinweis</label>
+			<label index="error">Fehler</label>
+			<label index="title">Ligaverwaltung</label>
+			<label index="title_recent_tickers">Letzte Tickermeldungen</label>
+			<label index="create_games">Spielplan erstellen</label>
+			<label index="edit_games">Spiele bearbeiten</label>
+			<label index="create_players">Spieler anlegen</label>
+			<label index="search_profiles">Personen suchen</label>
+			<label index="match_ticker">Spielticker/Statistik</label>
+			<label index="no_league_in_page">Die aktuelle Seite enth&amp;auml;lt keine Ligen.</label>
+			<label index="no_round_in_league">Dieser Wettbewerb enth&amp;auml;lt keine Spiele.</label>
+			<label index="btn_update_msgEditGames">Sollen die Ergebnisse gespeichert werden?</label>
+			<label index="btn_update">Aktualisieren</label>
+			<label index="msg_no_league_generation">F&amp;uuml;r diese Liga kann kein Spielplan erstellt werden. Stellen Sie sicher, da&amp;szlig; die Liga noch keine Spiele enth&amp;auml;lt, da&amp;szlig; Teams zugeordnet wurden und da&amp;szlig; ein Erstellungsstring zugeordnet ist.</label>
+			<label index="btn_create">Erstellen</label>
+			<label index="btn_edit">Ändern</label>
+			<label index="btn_save">Speichern</label>
+			<label index="btn_search">Suchen</label>
+			<label index="msg_CreateGameTable">Sollen alle Spiele für diese Liga erstellt werden?</label>
+			<label index="msg_CreateProfiles">Sollen alle Profile in der aktuellen Seite erstellt werden?</label>
+			<label index="msg_NoCompetitonsFound">Es wurden keine Wettbewerbe gefunden!</label>
+			<label index="msg_NoSaisonFound">Bitte legen Sie zuerst eine Saison an und ordnen dieser Wettbewerbe mit Mannschaften zu.</label>
+			<label index="msg_data_saved">Die Daten wurden gespeichert!</label>
+			<label index="msg_matches_created">Die Spiele wurden erstellt!</label>
+			<label index="msg_checkPage">Alle Spieler werden auf folgender Seite angelegt: </label>
+			<label index="msg_maxPlayers">Es können keine Profile mehr angelegt werden, da die maximale Anzahl erreicht ist!</label>
+			<label index="msg_pageNotAllowed">Auf der aktuellen Seite können keine Spieler angelegt werden!</label>
+			<label index="msg_data_saved">Die Daten wurden gespeichert!</label>
+			<label index="msg_free_of_play">Spielfrei</label>
+
+			<label index="msg_no_team_found">Keine Personen gefunden!</label>
+			<label index="msg_no_person_found">Keine Personen gefunden!</label>
+			<label index="msg_found_person">Gefundene Personen</label>
+			<label index="msg_search_person">Suche nach Personen in der Datenbank</label>
+			<label index="msg_edit_person">Person bearbeiten</label>
+			<label index="msg_person_saved">Person aktualisiert</label>
+			<label index="msg_date_saved">Das Datum wurde aktualisiert</label>
+			<label index="msg_profiles_created">Die Profile wurden erstellt!</label>
+			<label index="msg_profiles_warnings">Die folgenden Profile konnten nicht angelegt werden:</label>
+			<label index="msg_number_of_players">Anzahl Spieler, die angelegt werden k&amp;ouml;nnen:</label>
+			<label index="msg_number_of_coaches">Anzahl Trainer, die angelegt werden k&amp;ouml;nnen:</label>
+			<label index="msg_number_of_supporters">Anzahl Betreuer, die angelegt werden k&amp;ouml;nnen:</label>
+
+			<label index="createGameTable_round">. Spieltag</label>
+			<label index="label_firstname">Vorname</label>
+			<label index="label_lastname">Nachname</label>
+			<label index="label_birthday">Geburtstag</label>
+			<label index="label_current_standings">Aktueller Spielstand</label>
+			<label index="label_matchpart_1">Halbzeit</label>
+			<label index="label_information">Informationen</label>
+
+			<label index="label_profile_coach">Trainer</label>
+			<label index="label_profile_player">Spieler</label>
+			<label index="label_profile_supporter">Betreuer</label>
+		</languageKey>
+	</data>
+</T3locallang>

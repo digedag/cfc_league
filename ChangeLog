@@ -1,0 +1,53 @@
+
+Änderungen
+----------
+v0.2.5 (31.10.2007)
+- Die Anzahl der Eingabefelder im Tickermodul kann per TS im PageSetup festgelegt werden:
+tx_cfcleague.matchTickerCfg.numberOfInputFields = 4
+
+
+v0.2.4 (30.10.2007)
+- Bei Wettbewerbsstrafe kann in allen Werten jetzt auch eine negative Zahl angegeben werden
+
+v0.2.3 (20.10.2007)
+- Funktion "Spieler anlegen" ist jetzt voll TCA-kompatibel
+- In Funktion "Spieler anlegen" können jetzt auch Betreuer angelegt werden
+- Experimentell: bis zu 4 Spielabschnitte werden unterstützt (Eishockey, Basketball...)
+
+v0.2.2 (09.10.2007)
+- CSH für Wettbewerb erstellt.
+- Bugfix: Geburtstag kann jetzt wieder über Personensuche geändert werden
+
+v0.2.1 (29.09.2007)
+- Zuschauerzahl jetzt maximal 6-stellig
+
+v0.2.0 (27.09.2007)
+- Wettbewerbsstrafe zeigt nur noch Wettbewerbe der aktuellen Seite
+- Wettbewerbsstrafe wurde um zusätzliche Optionen erweitert
+- Zusätzliche Übersetzungen in der Personensuche
+- "Ligaerstellung" und "Spiele bearbeiten" berücksichtigen jetzt das Team "Spielfrei"
+- Dokumentation aktualisiert
+
+v0.1.5 (17.09.2007)
+- Layoutänderung im Ticker/Statistik-Modul. Die Bemerkungsbox steht jetzt unter den Auswahlboxen der Spieler
+- im Ticker/Statistik-Modul kann jetzt auch direkt das Ergebnis des Spiel geändert werden. Dies ist vor allem
+  bei Betrieb eines Liveticker von Vorteil, da für die Ergebnisänderung der View nicht mehr gewechselt werden muss.
+- die Integration der Modulfunktionen wurde intern auf den TYPO3-Standard umgestellt. Dadurch können jetzt
+  auch Module von anderen Extensions integriert werden.
+- In der Funktion "Spiele bearbeiten" wurde der Update der Ergebnisse intern auf den TYPO3-Standard umgestellt. 
+- Es wurden einige neue Datenbankfelder integriert. Diese werden aber noch nicht genutzt!
+
+
+v0.1.4 (28.08.2007)
+Der Teamdatensatz hat ein neues Feld zur Verlinkung auf die Teamseite. Dieses wird im FE verwendet, um
+direkte Links auf die Teamseiten aus Spielplan und Ligatabelle zu ermöglichen oder zu verhindern.
+
+v0.1.3 (23.08.2007)
+Im Spielticker können jetzt Nachspielzeiten gesondert eingegeben werden. Fällt zum Beispiel ein 
+Tor in der 47. Minute der ersten Halbzeit, dann sollte man 45+2 im Ticker eingeben. Dadurch kann 
+im Frontend die Tickermeldung korrekt ausgegeben werden. Der Anstoss zur zweiten Halbzeit in der 
+46. Minute steht dann nach der Tormeldung.
+
+
+v0.1.2 (16.08.2007)
+- Bugfix: Team-Logo hatte fehlerhaften TCA Eintrag. Dadurch wurde das Team-Foto angezeigt.
