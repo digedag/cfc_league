@@ -174,12 +174,9 @@ class tx_cfcleague_profile_search extends t3lib_extobjbase {
       $where .= 'tx_cfcleague_profiles.uid = ' . intval($uid) . ' ';
     }
     else {
-      if(strlen($data['last_name'])) {
-        $where .= "last_name like '%" . $data['last_name'] . "%' ";
-      }
-      if(strlen($data['first_name'])) {
-       if(strlen($where) > 0) $where .= 'AND ';
-       $where .= "first_name like '%" . $data['first_name'] . "%' ";
+      if(strlen($data['searchterm'])) {
+        $where .= "last_name like '%" . $data['searchterm'] . "%' ";
+        $where .= "OR first_name like '%" . $data['searchterm'] . "%' ";
       }
     }
     $orderBy = 'last_name, first_name, tx_cfcleague_profiles.uid';
@@ -265,10 +262,8 @@ class tx_cfcleague_profile_search extends t3lib_extobjbase {
   function createSearchForm(&$data) {
     global $LANG;
     $out = '';
-    $out .= 'Name: ';
-    $out .= $this->formTool->createTxtInput('data[last_name]', $data['last_name'], 20);
-    $out .= ' Vorname: ';
-    $out .= $this->formTool->createTxtInput('data[first_name]', $data['first_name'], 20);
+    $out .= $LANG->getLL('label_searchterm').': ';
+    $out .= $this->formTool->createTxtInput('data[searchterm]', $data['searchterm'], 20);
     // Den Update-Button einfügen
     $out .= '<input type="submit" name="search" value="'.$LANG->getLL('btn_search').'"';
     // Jetzt noch zusätzlichen JavaScriptcode für Buttons auf der Seite

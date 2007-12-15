@@ -57,6 +57,7 @@
 			<label index="label_current_standings">Current standings</label>
 			<label index="label_matchpart_1">Halftime</label>
 			<label index="label_information">Information</label>
+			<label index="label_searchterm">Search for</label>
 
 			<label index="label_profile_coach">Coach</label>
 			<label index="label_profile_player">Player</label>
@@ -114,6 +115,7 @@
 			<label index="label_current_standings">Aktueller Spielstand</label>
 			<label index="label_matchpart_1">Halbzeit</label>
 			<label index="label_information">Informationen</label>
+			<label index="label_searchterm">Suchbegriff</label>
 
 			<label index="label_profile_coach">Trainer</label>
 			<label index="label_profile_player">Spieler</label>

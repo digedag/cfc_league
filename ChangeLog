@@ -1,6 +1,9 @@
 
 Änderungen
 ----------
+v0.2.6 (??.12.2007)
+- In Personensuche gibt es nur noch ein Suchfeld. Es wird automatisch in Vor- und Nachname gesucht.
+
 v0.2.5 (31.10.2007)
 - Die Anzahl der Eingabefelder im Tickermodul kann per TS im PageSetup festgelegt werden:
 tx_cfcleague.matchTickerCfg.numberOfInputFields = 4
