@@ -95,13 +95,25 @@ class tx_cfcleague_form_tool {
     return '<input type="hidden" name="'. $name.'" value="' . $value . '" />';
   }
 
+  function createRadio($name, $value, $checked = false){
+    return '<input type="radio" name="'. $name.'" value="' . $value . ($checked ? 'checked="checked"' : '') . '" />';
+  }
+
+  function createSubmit($name, $value, $confirmMsg = ''){
+    $btn = '<input type="submit" name="'. $name.'" value="' . $value . ($checked ? 'checked="checked"' : '') . '" ';
+    if(strlen($confirmMsg)) 
+    	$btn .= 'onclick="return confirm('.$GLOBALS['LANG']->JScharCode($confirmMsg).')"';
+    $btn .= '/>';
+    return $btn;
+  }
+  
   /**
    * Erstellt ein Textarea
    */
-  function createTextArea($name, $value){
+  function createTextArea($name, $value, $cols='30', $rows='5'){
     return '
       <textarea name="' . $name . '" style="width:288px;" class="formField1"'.
-      ' cols="30" rows="5" wrap="virtual">' . $value . '</textarea>';
+      ' cols="'.$cols.'" rows="'.$rows.'" wrap="virtual">' . $value . '</textarea>';
   }
 
   /**
