@@ -158,6 +158,21 @@ class tx_cfcleague_team{
 
     return $ret;
   }
+
+  /**
+   * Returns all Teams where given profile is joined
+   *
+   * @param int $profileUID
+   */
+  function getTeams4Profile($profileUID) {
+  	$where = 'FIND_IN_SET(' . $profileUID . ', players) ';
+  	$where .= ' OR FIND_IN_SET(' . $profileUID . ', coaches) ';
+  	$where .= ' OR FIND_IN_SET(' . $profileUID . ', supporters) ';
+  	$rows = tx_cfcleague_db::queryDB('*', $where,
+              'tx_cfcleague_teams','','',0);
+  	return $rows;
+  }
+
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/class.tx_cfcleague_team.php'])	{
