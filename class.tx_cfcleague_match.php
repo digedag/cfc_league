@@ -97,6 +97,37 @@ class tx_cfcleague_match{
 
   }
 
+  /**
+   * Returns all matches where given profile is joined
+   *
+   * @param int $profileUID
+   */
+  function getMatches4Profile($profileUID) {
+  	$where = 'FIND_IN_SET(' . $profileUID . ', referee) ';
+  	$where .= ' OR FIND_IN_SET(' . $profileUID . ', assists) ';
+  	$where .= ' OR FIND_IN_SET(' . $profileUID . ', coach_home) ';
+  	$where .= ' OR FIND_IN_SET(' . $profileUID . ', coach_guest) ';
+  	$where .= ' OR FIND_IN_SET(' . $profileUID . ', players_home) ';
+  	$where .= ' OR FIND_IN_SET(' . $profileUID . ', players_guest) ';
+  	$where .= ' OR FIND_IN_SET(' . $profileUID . ', substitutes_home) ';
+  	$where .= ' OR FIND_IN_SET(' . $profileUID . ', substitutes_guest) ';
+  	$rows = tx_cfcleague_db::queryDB('*', $where,
+              'tx_cfcleague_games','','',0);
+  	return $rows;
+  }
+  /**
+   * Returns all match notes where given profile is joined
+   *
+   * @param int $profileUID
+   */
+  function getMatchNotes4Profile($profileUID) {
+  	$where = 'FIND_IN_SET(' . $profileUID . ', player_home) ';
+  	$where .= ' OR FIND_IN_SET(' . $profileUID . ', player_guest) ';
+  	$rows = tx_cfcleague_db::queryDB('*', $where,
+              'tx_cfcleague_match_notes','','',0);
+  	return $rows;
+  }
+  
   // ab jetzt Private
 
   /**
@@ -107,6 +138,8 @@ class tx_cfcleague_match{
     $arr = array_merge($arr,t3lib_div::intExplode(',',$str2));
     return implode(',',$arr);
   }
+
+
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/class.tx_cfcleague_match.php'])	{
