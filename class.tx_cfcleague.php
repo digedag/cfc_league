@@ -222,23 +222,6 @@ class tx_cfcleague_handleDataInput{
 }
 
 
-/**
- * Datenhalter für ein Modulplugin. Damit können generisch zusätzliche Funktionen
- * in das Modul eingebunden werden, ohne die Modulklasse selbst anpassen zu müssen.
- */
-class tx_cfcleague_mod_def {
-  var $clazz_name, $label;
-  /**
-   * Konstruktor mit den notwendigen Parametern
-   * @param $clazz_name Name der Klasse des Moduls
-   * @param $label Anzeige Name der Funktion in der Selectbox
-   */
-  function tx_cfcleague_mod_def($clazz_name, $label) {
-    $this->clazz_name = $clazz_name;
-    $this->label = $label;
-  }
-}
-
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/class.tx_cfcleague.php'])	{
   include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/class.tx_cfcleague.php']);
 }
