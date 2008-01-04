@@ -78,6 +78,7 @@
 			<label index="tx_cfcleague_games.stadium">Stadium</label>
 			<label index="tx_cfcleague_games.status">State</label>
 			<label index="tx_cfcleague_games.status_scheduled">Scheduled</label>
+			<label index="tx_cfcleague_games.status_rescheduled">Re-Scheduled</label>
 			<label index="tx_cfcleague_games.status_running">Running</label>
 			<label index="tx_cfcleague_games.status_finished">Finished</label>
 			<label index="tx_cfcleague_games.status_invalid">Invalid</label>
@@ -230,6 +231,7 @@
 			<label index="tx_cfcleague_games.stadium">Stadion</label>
 			<label index="tx_cfcleague_games.status">Status</label>
 			<label index="tx_cfcleague_games.status_scheduled">Angesetzt</label>
+			<label index="tx_cfcleague_games.status_rescheduled">Verlegt</label>
 			<label index="tx_cfcleague_games.status_running">Läuft</label>
 			<label index="tx_cfcleague_games.status_finished">Beendet</label>
 			<label index="tx_cfcleague_games.status_invalid">Ungültig</label>
