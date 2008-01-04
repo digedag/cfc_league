@@ -6,12 +6,12 @@
 	</meta>
 	<data type="array">
 		<languageKey index="default" type="array">
-			<label index="mlang_tabs_tab">League Management</label>
+			<label index="mlang_tabs_tab">T3sports</label>
 			<label index="mlang_labels_tabdescr">Management of sport leagues</label>
 			<label index="mlang_labels_tablabel">League Management</label>
 		</languageKey>
 		<languageKey index="de" type="array">
-			<label index="mlang_tabs_tab">Ligaverwaltung</label>
+			<label index="mlang_tabs_tab">T3sports</label>
 			<label index="mlang_labels_tabdescr">Verwaltung von Sportligen</label>
 			<label index="mlang_labels_tablabel">Ligaverwaltung</label>
 		</languageKey>
