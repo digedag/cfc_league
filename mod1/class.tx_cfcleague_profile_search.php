@@ -22,6 +22,7 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
+require_once(t3lib_extMgm::extPath('div') . 'class.tx_div.php');
 require_once (PATH_t3lib.'class.t3lib_extobjbase.php');
 $BE_USER->modAccess($MCONF,1);
 
@@ -34,6 +35,8 @@ require_once('../class.tx_cfcleague_form_tool.php');
  */
 class tx_cfcleague_profile_search extends t3lib_extobjbase {
   var $doc, $MCONF;
+  /** Verstecken der Suchergebnisse */
+  var $hideResults = false; 
 
   /**
    * Initialization of the class
@@ -77,14 +80,85 @@ class tx_cfcleague_profile_search extends t3lib_extobjbase {
     if (is_array($data)) {
       // Soll ein Profil bearbeitet werden?
       $content .= $this->handleProfileUpdate($data);
-
+      $content .= $this->handleProfileMerge($data);
+      
       // Wir zeigen die Liste an
-      $profiles = $this->searchProfiles($data);
-      $content .= $this->doc->section($LANG->getLL('msg_found_person'),$this->buildProfileTable($profiles ), 0, 1);
+      if(!$this->hideResults) {
+	      $profiles = $this->searchProfiles($data);
+	      $content .= $this->doc->section($LANG->getLL('msg_found_person'),$this->buildProfileTable($profiles ), 0, 1);
+      }
     }
     return $content;
   }
+  /**
+   * Zusammenführung von zwei Profilen
+   *
+   * @param array $data
+   */
+  function handleProfileMerge(&$data) {
+    global $LANG;
+  	$profile1 = intval($data['merge1']);
+   	$profile2 = intval($data['merge2']);
+    if($data['merge_profiles']) { // Step 1
+    	if(!($profile1 && $profile2) || ($profile1 == $profile2)) {
+      	return $this->doc->icons(ICON_FATAL) . $LANG->getLL('msg_merge_selectprofiles');
+    	}
+    	$this->hideResults = true;
+    	// Beide Profile nochmal anzeigen
+    	// Das führende Profile muss ausgewählt werden
+      $out .= $this->doc->icons(ICON_INFO) . $LANG->getLL('msg_merge_selectprofile');
+    	
+      $out .= $this->createProfileMergeForm($profile1, $profile2);
+      
+    }
+    elseif ($data['merge_profiles_do']) { // Step 2
+//    	$this->hideResults = true;
+    	//Welches ist das führende Profil?
+  		$leading = intval($data['merge']);
+  		tx_div::load('tx_cfcleague_mod1_profileMerger');
+  		$errors = tx_cfcleague_mod1_profileMerger::merge($leading, $leading == $profile1 ? $profile2 : $profile1);
 
+      $out .= $this->doc->icons(ICON_OK) . $LANG->getLL('msg_merge_done');
+    }
+    if($out)
+			$out = $this->doc->section($LANG->getLL('label_mergehead'),$out, 0, 1);
+    return $out;
+  }
+
+  /**
+   * Erstellt das Form für den Abgleich zweier Personen. Der Nutzer muss das führende 
+   * Profil auswählen.
+   *
+   * @param int $uid1
+   * @param int $uid2
+   */
+  function createProfileMergeForm($uid1, $uid2) {
+    global $LANG;
+    tx_div::load('tx_cfcleague_showItem');
+    $info = t3lib_div::makeInstance('tx_cfcleague_showItem');
+
+    $out = '<table border="0" cellpadding="1" cellspacing="1">';
+    $out .= '<tr><td style="vertical-align:top;">';
+    $info->init('tx_cfcleague_profiles', $uid1);
+    $out .= $this->doc->section($LANG->getLL('label_profile1').':',$info->main());
+    $out .= '</td><td style="vertical-align:top;">';
+    $info->init('tx_cfcleague_profiles', $uid2);
+    $out .= $this->doc->section($LANG->getLL('label_profile2').':',$info->main());
+    $out .= '</td></tr>';
+    
+    $out .= '<tr><td class="bgColor5">' .
+            $this->formTool->createHidden('data[merge1]', $uid1) . 
+            $this->formTool->createRadio('data[merge]', $uid1, true);
+    $out .= '</td><td class="bgColor5">' .
+    				$this->formTool->createHidden('data[merge2]', $uid2) . 
+    				$this->formTool->createRadio('data[merge]', $uid2) . '</td></tr>';
+    $out .= '</table>';
+
+    $out .= $this->formTool->createSubmit('data[merge_profiles_do]', $LANG->getLL('label_merge'), $LANG->getLL('msg_merge_confirm'));
+    
+    return $out;
+  }
+  
   /**
    * Bearbeitet das interne Eingabeformular zu einer Person. Derzeit kann das Geburtsdatum
    * gesetzt werden.
@@ -94,7 +168,8 @@ class tx_cfcleague_profile_search extends t3lib_extobjbase {
     $out = '';
     // Soll das Edit-Formular gezeigt werden?
     if($data['edit_profile']) {
-      $uids = array_keys($data['edit_profile']);
+    	$this->hideResults = true;
+    	$uids = array_keys($data['edit_profile']);
 
       $profiles = $this->searchProfiles($data,$uids[0]);
         $out .= $this->doc->section($LANG->getLL('msg_edit_person'),$this->showProfileForm($profiles), 0, 1);
@@ -229,16 +304,17 @@ class tx_cfcleague_profile_search extends t3lib_extobjbase {
     }
     else {
 
-      $arr = Array(Array('UID',$LANG->getLL('label_lastname'),$LANG->getLL('label_firstname'),$LANG->getLL('label_birthday'),$LANG->getLL('information')));
+      $arr = Array(Array($LANG->getLL('label_merge'),'UID',$LANG->getLL('label_lastname'),$LANG->getLL('label_firstname'),$LANG->getLL('label_birthday'),$LANG->getLL('label_information')));
       foreach($profiles As $profile) {
         $row = array();
+        $row[] = $this->formTool->createRadio('data[merge1]', $profile['uid']) . $this->formTool->createRadio('data[merge2]', $profile['uid']);
         $row[] = $profile['uid'];
         $row[] = $profile['last_name'];
         $row[] = $profile['first_name'] ? $profile['first_name'] : '&nbsp;';
 
         $row[] = date('j.n.Y',$profile['birthday']) . ' <input type="submit" name="data[edit_profile][' . $profile['uid'] . ']" value="'.$LANG->getLL('btn_edit').'"';
         // Die Zusatzinfos zusammenstellen
-        $infos = 'Seite: ' . t3lib_BEfunc::getRecordPath($profile['pid'],'',0) . '<br />';
+        $infos = $LANG->getLL('label_page'). ': ' . t3lib_BEfunc::getRecordPath($profile['pid'],'',0) . '<br />';
         if(is_array($profile['teams']))
           foreach($profile['teams'] as $team) {
             $infos .= '&nbsp;Team: ' . $team['team_name'];
@@ -252,8 +328,12 @@ class tx_cfcleague_profile_search extends t3lib_extobjbase {
         $row[] = $this->formTool->createMoveLink('tx_cfcleague_profiles', $profile['uid'], $profile['pid']);
         $arr[] = $row;
       }
-      $out .= $this->doc->table($arr);
 
+      $out .= $this->doc->table($arr);
+      if(count($arr)) {
+      	// Button für Merge einbauen
+    		$out .= $this->formTool->createSubmit('data[merge_profiles]', $LANG->getLL('label_merge'));
+			}
 //      $out = count($profiles) . ' Personen gefunden!';
     }
     return $out;
