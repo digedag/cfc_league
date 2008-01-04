@@ -260,7 +260,11 @@ class tx_cfcleague_match_ticker extends t3lib_extobjbase {
 		$pageTSconfig = t3lib_BEfunc::getPagesTSconfig($this->id);
 		$inputFields = (is_array($pageTSconfig) && is_array($pageTSconfig['tx_cfcleague.']['matchTickerCfg.'])) ?
 		  intval($pageTSconfig['tx_cfcleague.']['matchTickerCfg.']['numberOfInputFields']) : 3;
-
+		$cols = (is_array($pageTSconfig) && is_array($pageTSconfig['tx_cfcleague.']['matchTickerCfg.'])) ?
+		  intval($pageTSconfig['tx_cfcleague.']['matchTickerCfg.']['commentFieldCols']) : 30;
+		$rows = (is_array($pageTSconfig) && is_array($pageTSconfig['tx_cfcleague.']['matchTickerCfg.'])) ?
+		  intval($pageTSconfig['tx_cfcleague.']['matchTickerCfg.']['commentFieldRows']) : 5;
+		  
 		// Wenn kein sinnvoller Wert vorhanden ist, bleibt der Standard bei 3
 		$inputFields = $inputFields ? $inputFields : 3;
     for($i=0; $i < $inputFields; $i++){
@@ -279,7 +283,7 @@ class tx_cfcleague_match_ticker extends t3lib_extobjbase {
 
       // Das Bemerkungsfeld kommt in die nächste Zeile
       $row = array();
-      $row[] = $this->formTool->createTextArea('data[tx_cfcleague_match_notes][NEW'.$i.'][comment]', '');
+      $row[] = $this->formTool->createTextArea('data[tx_cfcleague_match_notes][NEW'.$i.'][comment]', '', $cols, $rows);
       $arr[] = $row;
 
     }
