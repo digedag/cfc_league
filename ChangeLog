@@ -1,8 +1,13 @@
 
 Änderungen
 ----------
-v0.2.6 (??.12.2007)
+v0.2.6 (??.12.2008)
+- Vereinen kann Adresse zugeordnet werden (tt_address notwendig)
+- Neuer Spielstatus "verlegt"
 - In Personensuche gibt es nur noch ein Suchfeld. Es wird automatisch in Vor- und Nachname gesucht.
+- Profile können jetzt einfach zusammengeführt werden. Über die Personensuche können dazu zwei 
+  Spieler ausgewählt werden. Einer der beiden erhält dann alle Referenzen des anderen Spielers.
+  Letzteres kann anschließend gelöscht werden.
 
 v0.2.5 (31.10.2007)
 - Die Anzahl der Eingabefelder im Tickermodul kann per TS im PageSetup festgelegt werden:
