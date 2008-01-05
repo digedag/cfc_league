@@ -140,6 +140,7 @@ $TCA["tx_cfcleague_club"] = Array (
 		"fe_admin_fieldList" => "hidden, name, short_name, dam_logo",
 	)
 );
+t3lib_extMgm::addLLrefForTCAdescr('tx_cfcleague_club','EXT:cfc_league/locallang_csh_club.php');
 
 $TCA["tx_cfcleague_teams"] = Array (
 	"ctrl" => Array (

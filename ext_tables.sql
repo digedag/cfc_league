@@ -122,8 +122,9 @@ CREATE TABLE tx_cfcleague_club (
 
 	name varchar(150) DEFAULT '' NOT NULL,
 	short_name varchar(100) DEFAULT '' NOT NULL,
-        dam_logo int(11) DEFAULT '0' NOT NULL,
+	dam_logo int(11) DEFAULT '0' NOT NULL,
 	logo blob NOT NULL,
+	address int(11) DEFAULT '0' NOT NULL,
 
 	PRIMARY KEY (uid),
 	KEY parent (pid)

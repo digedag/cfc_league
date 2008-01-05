@@ -536,10 +536,22 @@ $TCA['tx_cfcleague_club'] = Array (
 				'eval' => 'required,trim',
 			)
 		),
-                'dam_logo' => txdam_getMediaTCA('image_field', 'dam_images'),
+    'dam_logo' => txdam_getMediaTCA('image_field', 'dam_images'),
+		'address' => Array (
+			'exclude' => 0,
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_club.address',
+			'config' => Array (
+				'type' => 'group',
+				'internal_type' => 'db',
+				'allowed' => 'tt_address',
+				'size' => 1,
+				'minitems' => 0,
+				'maxitems' => 1,
+			)
+		),
 	),
 	'types' => Array (
-		'0' => Array('showitem' => 'hidden;;1;;1-1-1, name, short_name, dam_logo')
+		'0' => Array('showitem' => 'hidden;;1;;1-1-1, name, short_name, dam_logo, address')
 	),
 	'palettes' => Array (
 		'1' => Array('showitem' => '')
