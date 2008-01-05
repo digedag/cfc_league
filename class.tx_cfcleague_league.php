@@ -72,13 +72,18 @@ class tx_cfcleague_league{
 
     if(!is_array($this->teamNames[$asArray])){
 // t3lib_div::debug('Erstelle neue Teams');
-      $rows = 
-         tx_cfcleague_db::queryDB('uid,name,short_name,dummy','uid IN (' . $this->record['teams'] . ')',
-              'tx_cfcleague_teams');
-      $this->teamNames[$asArray]= array();
-      foreach($rows As $row) {
-        $this->teamNames[$asArray][$row['uid']] = $asArray ? $row : $row['name'];
-      }
+			// Ohne zugeordnete Team, muss nicht gefragt werden
+			if($this->record['teams']) {
+	      $rows = 
+	         tx_cfcleague_db::queryDB('uid,name,short_name,dummy','uid IN (' . $this->record['teams'] . ')',
+	              'tx_cfcleague_teams');
+	      $this->teamNames[$asArray]= array();
+	      foreach($rows As $row) {
+	        $this->teamNames[$asArray][$row['uid']] = $asArray ? $row : $row['name'];
+	      }
+			}
+			else
+				$this->teamNames[$asArray] = array();
     }
     return $this->teamNames[$asArray];
   }
