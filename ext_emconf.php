@@ -12,7 +12,7 @@
 
 $EM_CONF[$_EXTKEY] = array(
 	'title' => 'T3sports',
-	'description' => 'Umfangreiche Extension zur Verwaltung von Sportvereinen und -wettbewerben. Funktioniert nur mit PHP5! Extensive extension to manage sports clubs and competitions. Requires PHP5!',
+	'description' => 'Umfangreiche Extension zur Verwaltung von Sportvereinen und -wettbewerben. Funktioniert nur mit PHP5! Extensive extension to manage sports clubs and competitions. Requires PHP5! http://cfcleague.sf.net/',
 	'category' => 'module',
 	'shy' => 0,
 	'version' => '0.2.5',
