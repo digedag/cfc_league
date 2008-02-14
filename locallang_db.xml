@@ -22,6 +22,7 @@
 			<label index="tx_cfcleague_competition.saison">Saison</label>
 			<label index="tx_cfcleague_competition.parent">Parent Competition</label>
 			<label index="tx_cfcleague_competition.type">Competition Type</label>
+			<label index="tx_cfcleague_competition.obligation">Obligation</label>
 			<label index="tx_cfcleague_competition.type_league">League</label>
 			<label index="tx_cfcleague_competition.type_ko">Cup</label>
 			<label index="tx_cfcleague_competition.type_other">Single Matches</label>
@@ -181,10 +182,11 @@
 			<label index="tx_cfcleague_competition.saison">Saison</label>
 			<label index="tx_cfcleague_competition.parent">Übergeordneter Wettbewerb</label>
 			<label index="tx_cfcleague_competition.teams">Mannschaften</label>
+			<label index="tx_cfcleague_competition.obligation">Pflichtwettbewerb</label>
 			<label index="tx_cfcleague_competition.type">Wettbewerbstyp</label>
 			<label index="tx_cfcleague_competition.type_league">Liga</label>
 			<label index="tx_cfcleague_competition.type_ko">Pokal</label>
-			<label index="tx_cfcleague_competition.type_other">Freundschaftsspiele</label>
+			<label index="tx_cfcleague_competition.type_other">Einzelspiele</label>
 			<label index="tx_cfcleague_competition.type_combined">Kombiniert</label>
 			<label index="tx_cfcleague_competition.match_parts">Spielabschnitte</label>
 			<label index="tx_cfcleague_competition.match_parts_0">Standard 2</label>

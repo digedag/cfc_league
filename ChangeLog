@@ -1,6 +1,9 @@
 
 Änderungen
 ----------
+v0.2.7 (??.0?.2008)
+* Neues Feld Obligation um Pflichtwettbewerbe zu markieren. Auswertung kann im Frontend interessant sein.
+
 v0.2.6 (29.01.2008)
 * Vereinen kann Adresse zugeordnet werden (tt_address notwendig)
 * Neuer Spielstatus "verlegt"
