@@ -89,6 +89,7 @@ class tx_cfcleague_league{
   }
   /**
    * Wenn vorhanden, wird die ID des Spielfrei-Teams geliefert.
+   * TODO: Mehrere spielfreie Teams pro Wettbewerb unterstützen
    * @return ID des Spielfrei-Teams oder 0
    */
   function hasDummyTeam() {
@@ -100,6 +101,7 @@ class tx_cfcleague_league{
   }
   /**
    * Liefert ein Array mit allen Spielrunden der Liga
+   * return array
    */
   function getRounds(){
     # build SQL for select
@@ -109,9 +111,25 @@ class tx_cfcleague_league{
     # Die UID der Liga setzen
     $where = 'competition="'.$this->uid.'"';
     $groupby = 'round,round_name';
-
+    $orderby = 'round asc';
+    
     return tx_cfcleague_db::queryDB($what,$where,
-              TABLE_GAMES, $groupby,'',0);
+              TABLE_GAMES, $groupby,$orderby,0);
+  }
+  /**
+   * Liefert die Anzahl der angesetzten Spielrunden
+   *
+   * @return int
+   */
+  function getNumberOfRounds() {
+  	return count($this->getRounds());
+  }
+  function getLastMatchNumber() {
+    $what = 'max(match_no) AS max_no';
+    $where = 'competition="'.$this->uid.'"';
+    $arr = tx_cfcleague_db::queryDB($what,$where,
+              TABLE_GAMES, '','',0);
+    return count($arr) ? $arr[0]['max_no'] : 0;
   }
 
   /**

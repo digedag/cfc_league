@@ -70,19 +70,25 @@ class tx_cfcleague_generator extends t3lib_extobjbase {
     if($current_league) {
 
       // Liga darf noch keine Spiele haben
-      if($this->checkLeagueGeneration($current_league)){
-        $content.=$this->doc->section($LANG->getLL('error').':',$LANG->getLL('msg_no_league_generation'),0,1,ICON_WARN);
-        return $content;
+      $matchCnt = count($current_league->getGames());
+    	
+      if($matchCnt > 0){
+        $content.=$this->doc->section($LANG->getLL('warning').':',$LANG->getLL('msg_league_generation_hasmatches'),0,1,ICON_WARN);
+        $content.='<br/><br/>';
       }
+      // TODO: Spieltag und Spielnummer dynamisch starten lassen, falls schon Spiel vorhanden sind!
 
       // Wir holen die Mannschaften und den GameString aus der Liga
       // Beides jagen wir durch den Generator
 
-      $option_halfseries = intval(t3lib_div::_GP('option_halfseries'));
-
+      $options['halfseries'] = intval(t3lib_div::_GP('option_halfseries'));
+      $options['nomatch'] = $current_league->hasDummyTeam();
+      $options['firstmatchday'] = $current_league->getNumberOfRounds();
+      $options['firstmatchnumber'] = $current_league->getLastMatchNumber();
+      
       // Zunächst mal Anzeige der Daten
       $gen = t3lib_div::makeInstance('tx_cfcleague_generator2');
-      $table = $gen->main($current_league->getTeamIds(),$current_league->getGenerationKey(), $option_halfseries, $current_league->hasDummyTeam());
+      $table = $gen->main($current_league->getTeamIds(),$current_league->getGenerationKey(), $options);
 
       $data = t3lib_div::_GP('data');
       // Haben wir Daten im Request?
@@ -96,7 +102,7 @@ class tx_cfcleague_generator extends t3lib_extobjbase {
       {
         if(strlen($table)) {
           // Wir zeigen alle Spieltage und fragen nach dem Termin
-          $content .= $this->prepareGameTable($table, $current_league,$option_halfseries);
+          $content .= $this->prepareGameTable($table, $current_league,$options['halfseries']);
 
           // Den Update-Button einfügen
           $content .= '<input type="submit" name="update" value="'.$LANG->getLL('btn_create').'" onclick="return confirm('.$GLOBALS['LANG']->JScharCode($GLOBALS['LANG']->getLL('msg_CreateGameTable')).')">';
@@ -122,7 +128,7 @@ class tx_cfcleague_generator extends t3lib_extobjbase {
   function createGames($rounds, $table, &$league) {
     global $LANG;
 
-    // Aus der Spielen der $table die TCA-Datensätze erzeugen
+    // Aus den Spielen der $table die TCA-Datensätze erzeugen
     $data['tx_cfcleague_games'] = array();
 
     // Wir erstellen die Spiel je Spieltag
@@ -238,16 +244,21 @@ class tx_cfcleague_generator2 {
   var $errorMsg;
 
   /**
-   * @param $teams sortiertes Array der Liga-Teams. Kann theoretisch von jedem Typ sein. Eine TeamID
+   * Optionen die per $options übergeben werden können:
+   * halfseries - wenn != 0 wird nur die erste Halbserie erzeugt
+   * nomatch - wenn ein Team als Spielfrei gewertet werden soll, dann muss es hier 
+   *          übergeben werden. Es muss auch im Array $teams enthalten sein!
+   * firstmatchday - Spieltag, mit dem die Zählung beginnen soll
+   * firstmatchnumber - Spielnummer mit der die Zählung beginnen soll
+   * 
+   * @param array $teams sortiertes Array der Liga-Teams. Kann theoretisch von jedem Typ sein. Eine TeamID
    *          wäre aber gut.
    * @param $table Spielplan-Tabelle
-   * @param $option_halfseries wenn != 0 wird nur die erste Halbserie erzeugt
-   * @param $option_nomatch Wenn ein Team als Spielfrei gewertet werden soll, dann muss es hier 
-   *          übergeben werden. Es muss auch im Array $teams enthalten sein!
+   * @param array $options
    * @return ein Array mit Key: Spieltag(int) und Value: Array der Spiele des Spieltags
    */
-  function main($teams, $table, $option_halfseries = 0, $option_nomatch = 0) {
-    // In Teams müssen eigentlich nur die UIDs der Teams stehen
+  function main($teams, $table, $options) {
+  	// In Teams müssen eigentlich nur die UIDs der Teams stehen
     $table = $this->splitTableString($table);
     // Prüfen, ob die Daten stimmen
     if($check = $this->checkParams($teams, $table)) {
@@ -255,21 +266,28 @@ class tx_cfcleague_generator2 {
       return;
     }
     // Jetzt kann man den Spielplan aufbauen
-    $ret = $this->createTable($teams, $table, $option_halfseries, $option_nomatch);
+    $ret = $this->createTable($teams, $table, $options);
 
     return $ret;
   }
 
   /**
    * Erstellt den eigentlichen Spielplan
+   * @param array $teams
+   * @param array $table
+   * @param array $options
    */
-  function createTable($teams, $table, $option_halfseries, $option_nomatch = 0) {
-    // Alle Elemente einen Indexplatz hochschieben, damit die Team-Nr stimmt.
+  function createTable($teams, $table, $options) {
+  	$option_halfseries = isset($options['halfseries']) ? intval($options['halfseries']) : 0;
+  	$option_nomatch = isset($options['nomatch']) ? intval($options['nomatch']) : 0;
+  	// Alle Elemente einen Indexplatz hochschieben, damit die Team-Nr stimmt.
     array_unshift($teams,0);
+    $matchCnt = 0; // ID des Spieldatensatzes. Wird für jedes angelegte Spiel gezählt
+    // Spielnummer. Spielfreie Spiele werden nicht gezählt
+    $matchCnt2 = isset($options['firstmatchnumber']) ? intval($options['firstmatchnumber']) : 0; 
+    // Zählung des Spieltags
+    $dayCnt = isset($options['firstmatchday']) ? intval($options['firstmatchday']) : 0;
 
-    $matchCnt = 0;
-    $matchCnt2 = 0;
-    $dayCnt = 0;
     $ret = array();
     foreach($table as $day => $matches) {
       $dayArr = array(); // Hier kommen die Spiele rein
@@ -346,8 +364,8 @@ class tx_cfcleague_generator2 {
 class Match {
   var $home, $guest, $nr, $nr2, $noMatch;
   function Match($n,$n2,$h,$g, $noMatch){
-    $this->nr = $n;
-    $this->nr2 = $n2;
+    $this->nr = $n; // ID
+    $this->nr2 = $n2; // Spielnummer
     $this->home = $h;
     $this->guest = $g;
     $this->noMatch = $noMatch;

@@ -7,6 +7,7 @@
 	<data type="array">
 		<languageKey index="default" type="array">
 			<label index="message">Message</label>
+			<label index="warning">Warning</label>
 			<label index="error">Error</label>
 			<label index="title">T3sports - League Management</label>
 			<label index="title_recent_tickers">Recent ticker messages</label>
@@ -19,7 +20,7 @@
 			<label index="no_round_in_league">This Competition containes no matches.</label>
 			<label index="btn_update_msgEditGames">Save changes?</label>
 			<label index="btn_update">Update</label>
-			<label index="msg_no_league_generation">Cannot create match table. Please ensure there that league has no games, more than on team assigned and a generation string.</label>
+			<label index="msg_league_generation_hasmatches">Current league has already matches. Please ensure that you really want to create additional matches!</label>
 			<label index="btn_create">Create</label>
 			<label index="btn_edit">Edit</label>
 			<label index="btn_save">Save</label>
@@ -76,6 +77,7 @@
 		</languageKey>
 		<languageKey index="de" type="array">
 			<label index="message">Hinweis</label>
+			<label index="warning">Warnung</label>
 			<label index="error">Fehler</label>
 			<label index="title">T3sports - Ligaverwaltung</label>
 			<label index="title_recent_tickers">Letzte Tickermeldungen</label>
@@ -88,7 +90,7 @@
 			<label index="no_round_in_league">Dieser Wettbewerb enth&amp;auml;lt keine Spiele.</label>
 			<label index="btn_update_msgEditGames">Sollen die Ergebnisse gespeichert werden?</label>
 			<label index="btn_update">Aktualisieren</label>
-			<label index="msg_no_league_generation">F&amp;uuml;r diese Liga kann kein Spielplan erstellt werden. Stellen Sie sicher, da&amp;szlig; die Liga noch keine Spiele enth&amp;auml;lt, da&amp;szlig; Teams zugeordnet wurden und da&amp;szlig; ein Erstellungsstring zugeordnet ist.</label>
+			<label index="msg_league_generation_hasmatches">Für diese Liga wurden bereits Spiele angelegt. Bitte prüfen Sie genau, daß Sie wirklich zusätzliche Paarungen anlegen möchten!</label>
 			<label index="btn_create">Erstellen</label>
 			<label index="btn_edit">Ändern</label>
 			<label index="btn_save">Speichern</label>
