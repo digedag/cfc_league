@@ -37,6 +37,13 @@
 			<label index="msg_data_saved">Data saved!</label>
 			<label index="msg_free_of_play">Free of play</label>
 
+			<label index="msg_no_matchkeys">For current competition is no match key set.</label>
+			<label index="msg_wrongmatchdays">Number of matchdays to be created is wrong. It should be %d but it is %d.</label>
+			<label index="msg_wrongmatches4matchday">Matchday %d: %d matches found. It should be %d.</label>
+			<label index="msg_wrongmatch_syntax">Matchday %d: Match is wrong. Check syntax: '%s'.</label>
+			<label index="msg_wrongmatch_homeidx">Matchday %d: Team index (home) out of range: '%d'.</label>
+			<label index="msg_wrongmatch_guestidx">Matchday %d: Team index (guest) out of range: '%d'.</label>
+
 			<label index="msg_no_team_found">No team found!</label>
 			<label index="msg_no_person_found">No person found!</label>
 			<label index="msg_found_person">Found person</label>
@@ -106,6 +113,13 @@
 			<label index="msg_pageNotAllowed">Auf der aktuellen Seite können keine Spieler angelegt werden!</label>
 			<label index="msg_data_saved">Die Daten wurden gespeichert!</label>
 			<label index="msg_free_of_play">Spielfrei</label>
+
+			<label index="msg_no_matchkeys">Für den aktuellen Wettbewerb ist kein Spielplanschlüssel gesetzt.</label>
+			<label index="msg_wrongmatchdays">Die Anzahl der Spieltage ist falsch. Es sollten %d sein, aber es sind %d.</label>
+			<label index="msg_wrongmatches4matchday">Spieltag %d: %d Spiele gefunden. Es sollten %d sein.</label>
+			<label index="msg_wrongmatch_syntax">Spieltag %d: Das Spiel wurde falsch eingetragen: '%s' Bitte Syntax prüfen!</label>
+			<label index="msg_wrongmatch_homeidx">Spieltag %d: Nummer des Heimteams ist außerhalb des gültigen Bereichs: '%d'.</label>
+			<label index="msg_wrongmatch_guestidx">Spieltag %d: Nummer des Gastteams ist außerhalb des gültigen Bereichs: '%d'.</label>
 
 			<label index="msg_no_team_found">Keine Personen gefunden!</label>
 			<label index="msg_no_person_found">Keine Personen gefunden!</label>

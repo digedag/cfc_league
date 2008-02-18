@@ -76,7 +76,6 @@ class tx_cfcleague_generator extends t3lib_extobjbase {
         $content.=$this->doc->section($LANG->getLL('warning').':',$LANG->getLL('msg_league_generation_hasmatches'),0,1,ICON_WARN);
         $content.='<br/><br/>';
       }
-      // TODO: Spieltag und Spielnummer dynamisch starten lassen, falls schon Spiel vorhanden sind!
 
       // Wir holen die Mannschaften und den GameString aus der Liga
       // Beides jagen wir durch den Generator
@@ -100,7 +99,16 @@ class tx_cfcleague_generator extends t3lib_extobjbase {
       }
       else
       {
-        if(strlen($table)) {
+//      	t3lib_div::debug(, 'tx_cfcleague_generator'); // TODO: Remove me!
+      	if(count($gen->errors)) {
+          // Da gibt es wohl ein Problem bei der Erzeugung der Spiele...
+          $content.=$this->doc->section($LANG->getLL('error').':','<ul><li>' . implode('<li>',$gen->errors) . '</ul>',0,1,ICON_FATAL);
+		    }
+      	if(count($gen->warnings)) {
+          // Da gibt es wohl ein Problem bei der Erzeugung der Spiele...
+          $content.=$this->doc->section($LANG->getLL('warning').':','<ul><li>' . implode('<li>',$gen->warnings) . '</ul>',0,1,ICON_WARN);
+		    }
+		    if(count($table)) {
           // Wir zeigen alle Spieltage und fragen nach dem Termin
           $content .= $this->prepareGameTable($table, $current_league,$options['halfseries']);
 
@@ -110,10 +118,7 @@ class tx_cfcleague_generator extends t3lib_extobjbase {
           // Den JS-Code für Validierung einbinden
           $content  .= $this->formTool->form->JSbottom('editform');
         }
-        else {
-          // Da gibt es wohl ein Problem bei der Erzeugung der Spiele...
-          $content.=$this->doc->section('Error:',$gen->errorMsg,0,1,ICON_FATAL);
-        }
+        
       }
     }
     else {
@@ -253,18 +258,21 @@ class tx_cfcleague_generator2 {
    * 
    * @param array $teams sortiertes Array der Liga-Teams. Kann theoretisch von jedem Typ sein. Eine TeamID
    *          wäre aber gut.
-   * @param $table Spielplan-Tabelle
+   * @param string $table Spielplan-Tabelle
    * @param array $options
    * @return ein Array mit Key: Spieltag(int) und Value: Array der Spiele des Spieltags
    */
   function main($teams, $table, $options) {
+  	global $LANG;
   	// In Teams müssen eigentlich nur die UIDs der Teams stehen
     $table = $this->splitTableString($table);
-    // Prüfen, ob die Daten stimmen
-    if($check = $this->checkParams($teams, $table)) {
-      $this->errorMsg = "Fehler: $check";
-      return;
+    if(!count($table)) {
+    	$this->errors[] = $LANG->getLL('msg_no_matchkeys');
+    	return array();
     }
+
+    // Prüfen, ob die Daten stimmen
+    $this->warnings = $this->checkParams($teams, $table);
     // Jetzt kann man den Spielplan aufbauen
     $ret = $this->createTable($teams, $table, $options);
 
@@ -316,31 +324,38 @@ class tx_cfcleague_generator2 {
   }
   /**
    * Prüft, ob die Spieltabelle zur Anzahl der Mannschaften passt
+   * Es wird ein Array mit gefundenen Warnungen geliefert
+   * @return array
    */
   function checkParams($teams, $table) {
+  	global $LANG;
+
+  	$warnings = array();
     $teamCnt = count($teams);
     // Anzahl Spieltage prüfen
     if($teamCnt-1 != count($table)) {
-      return 'Spieltage stimmen nicht überein! ('.($teamCnt-1) .'!=' . count($table) . ')';
+      $warnings[] = sprintf($LANG->getLL('msg_wrongmatchdays'), ($teamCnt-1), count($table));
     }
     // Anzahl Spiele pro Spieltag prüfen
     $matchCnt = intval($teamCnt / 2);
     foreach($table as $day => $matches) {
       if($matchCnt != count($matches)) {
-        return "Fehler bei Spieltag $day: " . $matchCnt .' != ' . count($matches) ;
+      	$warnings[] = sprintf($LANG->getLL('msg_wrongmatches4matchday'), $day, count($matches), $matchCnt);
       }
       // Stimmen die Indizes?
       foreach($matches as $k => $match) {
         $matchArr = explode('-',$match);
         if(count($matchArr) != 2)
-          return "Fehler bei Spieltag $day: Spiel falsch angelegt ".$match;
+      		$warnings[] = sprintf($LANG->getLL('msg_wrongmatch_syntax'), $day, $match);
         if(intval($matchArr[0]) < 1 || intval($matchArr[0]) > $teamCnt)
-          return "Fehler bei Spieltag $day: TeamIndex ist falsch ".$match;
+      		$warnings[] = sprintf($LANG->getLL('msg_wrongmatch_homeidx'), $day, $matchArr[0]);
+        //$warnings[] = "Fehler bei Spieltag $day: TeamIndex ist falsch ".$match;
         if(intval($matchArr[1]) < 1 || intval($matchArr[1]) > $teamCnt)
-          return "Fehler bei Spieltag $day: TeamIndex ist falsch ".$match;
+      		$warnings[] = sprintf($LANG->getLL('msg_wrongmatch_guestidx'), $day, $matchArr[1]);
+        //$warnings[] = "Fehler bei Spieltag $day: TeamIndex ist falsch ".$match;
       }
     }
-    return 0;
+    return $warnings;
   }
 
   /**
@@ -348,8 +363,9 @@ class tx_cfcleague_generator2 {
    * Ergebnis: (1 => ('1-4','3-2'), 2=>())
    */
   function splitTableString($table) {
-    $days = explode('|',$table);
-    $ret = array();    
+    $ret = array();
+    if(!strlen(trim($table))) return $ret; // Kein String gesetzt
+  	$days = explode('|',$table);
     foreach($days as $key => $matches) {
       $ret[$key+1] = explode(',',$matches);
     }
