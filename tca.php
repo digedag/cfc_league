@@ -2,7 +2,7 @@
 if (!defined ('TYPO3_MODE')) 	die ('Access denied.');
 
 // Zur Sicherheit einbinden, da die Funktion schon einmal nicht gefunden wurde...
-//require_once(t3lib_extMgm::extPath('dam').'tca_media_field.php');
+require_once(t3lib_extMgm::extPath('dam').'tca_media_field.php');
 
 
 $TCA['tx_cfcleague_group'] = Array (
