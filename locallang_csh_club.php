@@ -9,7 +9,7 @@ $LOCAL_LANG = Array(
 
   'de' => Array(
     '.description' => '
-      Ein Verein ist die Ã¼bergeordnete Organisation von Teams.',
+      Ein Verein ist die übergeordnete Organisation von Teams.',
     'address.description' => 'Adressdaten. Die Extension tt_address muss installiert sein.',
     'address.details' => '<p>Man kann einen Adressdatensatz der Extension tt_address zuweisen.</p>',
   ),
