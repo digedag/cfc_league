@@ -126,6 +126,7 @@
 			<label index="tx_cfcleague_profiles">Profile</label>
 			<label index="tx_cfcleague_profiles.first_name">First name</label>
 			<label index="tx_cfcleague_profiles.last_name">Last name</label>
+			<label index="tx_cfcleague_profiles.stage_name">Stage name</label>
 			<label index="tx_cfcleague_profiles.image">Images</label>
 			<label index="tx_cfcleague_profiles.native_town">Native town</label>
 			<label index="tx_cfcleague_profiles.home_town">Home town</label>
@@ -276,6 +277,7 @@
 			<label index="tx_cfcleague_games.goals_home_ap">Tore Heim n.E.</label>
 			<label index="tx_cfcleague_games.goals_guest_ap">Tore Gast n.E.</label>
 			<label index="tx_cfcleague_profiles">Person</label>
+			<label index="tx_cfcleague_profiles.stage_name">Künstlername</label>
 			<label index="tx_cfcleague_profiles.first_name">Vorname</label>
 			<label index="tx_cfcleague_profiles.last_name">Nachname</label>
 			<label index="tx_cfcleague_profiles.image">Bilder</label>

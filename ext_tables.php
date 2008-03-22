@@ -120,6 +120,7 @@ $TCA["tx_cfcleague_profiles"] = Array (
 		"fe_admin_fieldList" => "hidden, first_name, last_name, image, birthday, nationality, height, weight, position, duration_of_contract, start_of_contract, email, stations, nickname, family, hobbies, prosperities, summary, description",
 	)
 );
+t3lib_extMgm::addLLrefForTCAdescr('tx_cfcleague_profiles','EXT:cfc_league/locallang_csh_profiles.php');
 
 $TCA["tx_cfcleague_club"] = Array (
 	"ctrl" => Array (

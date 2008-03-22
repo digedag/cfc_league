@@ -1349,6 +1349,16 @@ $TCA['tx_cfcleague_profiles'] = Array (
 				'eval' => 'required,trim',
 			)
 		),
+		'stage_name' => Array (
+			'exclude' => 1,
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles.stage_name',
+			'config' => Array (
+				'type' => 'input',	
+				'size' => '30',	
+				'max' => '70',
+				'eval' => 'trim',
+			)
+		),
 		'link_report' => Array (
 			'exclude' => 1,
 			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles.link_report',
@@ -1519,7 +1529,7 @@ $TCA['tx_cfcleague_profiles'] = Array (
 		),
 	),
 	'types' => Array (
-		'0' => Array('showitem' => 'hidden;;1;;1-1-1, first_name, last_name, home_town, dam_images, birthday, native_town, nationality, height, weight, position, duration_of_contract, start_of_contract, email, nickname, link_report, summary;;;richtext[cut|copy|paste|formatblock|textcolor|bold|italic|underline|left|center|right|orderedlist|unorderedlist|outdent|indent|link|table|image|line|chMode]:rte_transform[mode=ts_css|imgpath=uploads/tx_cfcleague/rte/], description;;;richtext[cut|copy|paste|formatblock|textcolor|bold|italic|underline|left|center|right|orderedlist|unorderedlist|outdent|indent|link|table|image|line|chMode]:rte_transform[mode=ts_css|imgpath=uploads/tx_cfcleague/rte/]')
+		'0' => Array('showitem' => 'hidden;;1;;1-1-1, first_name, last_name, stage_name, home_town, dam_images, birthday, native_town, nationality, height, weight, position, duration_of_contract, start_of_contract, email, nickname, link_report, summary;;;richtext[cut|copy|paste|formatblock|textcolor|bold|italic|underline|left|center|right|orderedlist|unorderedlist|outdent|indent|link|table|image|line|chMode]:rte_transform[mode=ts_css|imgpath=uploads/tx_cfcleague/rte/], description;;;richtext[cut|copy|paste|formatblock|textcolor|bold|italic|underline|left|center|right|orderedlist|unorderedlist|outdent|indent|link|table|image|line|chMode]:rte_transform[mode=ts_css|imgpath=uploads/tx_cfcleague/rte/]')
 	),
 	'palettes' => Array (
 		'1' => Array('showitem' => '')
