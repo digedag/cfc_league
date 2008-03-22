@@ -558,9 +558,17 @@ $TCA['tx_cfcleague_club'] = Array (
 				'maxitems' => 1,
 			)
 		),
+		'favorite' => Array (
+			'exclude' => 1,
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_club.favorite',
+			'config' => Array (
+				'type' => 'check',
+				'default' => '0'
+			)
+		),
 	),
 	'types' => Array (
-		'0' => Array('showitem' => 'hidden;;1;;1-1-1, name, short_name, dam_logo, address')
+		'0' => Array('showitem' => 'hidden;;1;;1-1-1, name,short_name,dam_logo,address,favorite')
 	),
 	'palettes' => Array (
 		'1' => Array('showitem' => '')

@@ -55,6 +55,7 @@
 			<label index="tx_cfcleague_club.short_name">Shortname</label>
 			<label index="tx_cfcleague_club.logo">Logo</label>
 			<label index="tx_cfcleague_club.address">Address</label>
+			<label index="tx_cfcleague_club.favorite">Favorite</label>
 			<label index="tx_cfcleague_teams">Team</label>
 			<label index="tx_cfcleague_teams.club">Club</label>
 			<label index="tx_cfcleague_teams.name">Name</label>
@@ -210,6 +211,7 @@
 			<label index="tx_cfcleague_club.short_name">Kurzname</label>
 			<label index="tx_cfcleague_club.logo">Logo</label>
 			<label index="tx_cfcleague_club.address">Adresse</label>
+			<label index="tx_cfcleague_club.favorite">Lieblingsverein</label>
 			<label index="tx_cfcleague_teams">Mannschaft</label>
 			<label index="tx_cfcleague_teams.club">Verein</label>
 			<label index="tx_cfcleague_teams.name">Name</label>

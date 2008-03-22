@@ -126,6 +126,7 @@ CREATE TABLE tx_cfcleague_club (
 	dam_logo int(11) DEFAULT '0' NOT NULL,
 	logo blob NOT NULL,
 	address int(11) DEFAULT '0' NOT NULL,
+	favorite tinyint(4) DEFAULT '0' NOT NULL,
 
 	PRIMARY KEY (uid),
 	KEY parent (pid)
