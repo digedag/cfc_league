@@ -76,9 +76,9 @@ class tx_cfcleague_profile_create extends t3lib_extobjbase {
 
     // Wir benötigen die $TCA, um die maximalen Spieler pro Team prüfen zu können
     t3lib_div::loadTCA('tx_cfcleague_teams');
-    $maxCoaches = intval($TCA['tx_cfcleague_teams']['columns']['coaches']['config']['maxitems']);
-    $maxPlayers = intval($TCA['tx_cfcleague_teams']['columns']['players']['config']['maxitems']);
-    $maxSupporters = intval($TCA['tx_cfcleague_teams']['columns']['supporters']['config']['maxitems']);
+    $baseInfo['maxCoaches'] = intval($TCA['tx_cfcleague_teams']['columns']['coaches']['config']['maxitems']);
+    $baseInfo['maxPlayers'] = intval($TCA['tx_cfcleague_teams']['columns']['players']['config']['maxitems']);
+    $baseInfo['maxSupporters'] = intval($TCA['tx_cfcleague_teams']['columns']['supporters']['config']['maxitems']);
     
     $saison = $this->selector->showSaisonSelector($content,$this->id);
     if($saison && count($saison->getCompetitions())) {
@@ -94,23 +94,21 @@ class tx_cfcleague_profile_create extends t3lib_extobjbase {
       // Haben wir Daten im Request?
       else {
         if (is_array($data['tx_cfcleague_profiles'])) {
-          $content .= $this->createProfiles($data,$team, $maxCoaches, $maxPlayers);
+          $content .= $this->createProfiles($data,$team, $baseInfo);
           $team->refresh();
         }
 
-        $freePlayers = $maxPlayers - $team->getPlayerSize();
-        $freeCoaches = $maxCoaches - $team->getCoachSize();
-        $freeSupporters = $maxSupporters - $team->getSupporterSize();
-        if($freePlayers < 1 && $freeCoaches < 1) {
+        $baseInfo['freePlayers'] = $baseInfo['maxPlayers'] - $team->getPlayerSize();
+        $baseInfo['freeCoaches'] = $baseInfo['maxCoaches'] - $team->getCoachSize();
+        $baseInfo['freeSupporters'] = $baseInfo['maxSupporters'] - $team->getSupporterSize();
+        if($baseInfo['freePlayers'] < 1 && $baseInfo['freeCoaches'] < 1 && $baseInfo['freeSupporters'] < 1) {
           // Kann nix mehr angelegt werden
           $content .= $this->doc->section('Message:',$LANG->getLL('msg_maxPlayers'),0,1,ICON_WARN);
         }
         else {
           $content .= $this->doc->section('Info:',$LANG->getLL('msg_checkPage') . ': <b>' . t3lib_BEfunc::getRecordPath($this->id,'',0) . '</b>' ,0,1,ICON_WARN);
 
-          $content .= $this->doc->section('Message:',$LANG->getLL('msg_number_of_players').' ' . $freePlayers . 
-                                         '<br>'.$LANG->getLL('msg_number_of_coaches').' ' . $freeCoaches . 
-                                         '<br>'.$LANG->getLL('msg_number_of_supporters').' '.$freeSupporters,0,1, ICON_INFO);
+          $content .= $this->doc->section('Message:',$this->getInfoMessage($baseInfo),0,1, ICON_INFO);
           // Wir zeigen 15 Zeilen mit Eingabefeldern
           $content .= $this->prepareInputTable($team);
 
@@ -131,6 +129,33 @@ class tx_cfcleague_profile_create extends t3lib_extobjbase {
   }
 
   /**
+   * Liefert die Informationen, über den Zustand des Teams.
+   *
+   */
+  private function getInfoMessage($baseInfo) {
+    global $LANG;
+    $tableLayout = Array (
+      'table' => Array('<table class="typo3-dblist" cellspacing="0" cellpadding="0" border="0">', '</table><br/>'),
+    	'defRow' => Array ( // Formate für alle Zeilen
+        '0' => Array('<td valign="top" class="c-headLineTable" style="font-weight:bold;padding:0 5px;">','</td>'), // Format für 1. Spalte in jeder Zeile
+      	'defCol' => Array('<td valign="top" style="text-align:right;padding:0 5px;">','</td>') // Format für jede Spalte in jeder Zeile
+      ),
+      'defRowEven' => Array ( // Formate für alle Zeilen
+        '0' => Array('<td valign="top" class="c-headLineTable" style="font-weight:bold;padding:0 5px;">','</td>'), // Format für 1. Spalte in jeder Zeile
+      	'defCol' => Array('<td valign="top" class="db_list_alt" style="text-align:right;padding:0 5px;">','</td>') // Format für jede Spalte in jeder Zeile
+      )
+    );
+    $arr[] = array($LANG->getLL('msg_number_of_players'), $baseInfo['freePlayers']);
+    $arr[] = array($LANG->getLL('msg_number_of_coaches'), $baseInfo['freeCoaches']);
+    $arr[] = array($LANG->getLL('msg_number_of_supporters'), $baseInfo['freeSupporters']);
+    
+    return $this->doc->table($arr, $tableLayout);
+//    
+//    return $LANG->getLL('msg_number_of_players').' ' . $baseInfo['freePlayers'] . 
+//      '<br>'.$LANG->getLL('msg_number_of_coaches').' ' . $baseInfo['freeCoaches'] . 
+//      '<br>'.$LANG->getLL('msg_number_of_supporters').' '.$baseInfo['freeSupporters'];  	
+  }
+  /**
    * Erstellt eine Tabelle mit den schon vorhandenen Personen und den noch möglichen neuen
    * Personen.
    * Wenn keine Personen da sind, gibt es 15 Eingabefelder, sonst nur 5
@@ -139,52 +164,29 @@ class tx_cfcleague_profile_create extends t3lib_extobjbase {
   function prepareInputTable(&$team) {
     global $LANG;
 
-    $this->doc->tableLayout = Array (
+    $tableLayout = Array (
       '0' => Array( // Format für 1. Zeile
-         'defCol' => Array('<td valign="top" style="font-weight:bold;padding:2px 5px;">','</td>') // Format f�r jede Spalte in der 1. Zeile
+         'defCol' => Array('<td valign="top" class="c-headLineTable" style="font-weight:bold;padding:2px 5px;">','</td>') // Format f�r jede Spalte in der 1. Zeile
       ),
       'defRow' => Array ( // Formate für alle Zeilen
         'defCol' => Array('<td valign="top" style="padding:0 5px;">','</td>') // Format für jede Spalte in jeder Zeile
+      ),
+      'defRowEven' => Array ( // Formate für alle Zeilen
+          'defCol' => Array('<td valign="top" class="db_list_alt" style="padding:0 5px;">','</td>') // Format für jede Spalte in jeder Zeile
       )
     );
 
     // Es werden zwei Tabellen erstellt
-    $arr = Array(Array('',$LANG->getLL('label_firstname'),$LANG->getLL('label_lastname')));
+    $arr = Array(Array('&nbsp;',$LANG->getLL('label_firstname'),$LANG->getLL('label_lastname'),'&nbsp;'));
 
-    if($team->getCoachNames()) foreach($team->getCoachNames() As $uid => $prof) {
-      $row = array();
-      $row[] = '';
-      $row[] = $prof[first_name];
-      $row[] = $prof[last_name];
-      $row[] = $this->formTool->createEditLink('tx_cfcleague_profiles', $uid);
-      $arr[] = $row;
-    }
-    if($team->getCoachSize())
-      $arr[] = array('','-','-'); // Leere Zeile als Trenner
-    if($team->getPlayerNames()) foreach($team->getPlayerNames() As $uid => $prof) {
-      $row = array();
-      $row[] = '';
-      $row[] = $prof[first_name];
-      $row[] = $prof[last_name];
-      $row[] = $this->formTool->createEditLink('tx_cfcleague_profiles', $uid);
-      $arr[] = $row;
-    }
-    if($team->getPlayerSize())
-      $arr[] = array('','-','-'); // Leere Zeile als Trenner
-
-    if($team->getSupporterNames()) foreach($team->getSupporterNames() As $uid => $prof) {
-      $row = array();
-      $row[] = '';
-      $row[] = $prof[first_name];
-      $row[] = $prof[last_name];
-      $row[] = $this->formTool->createEditLink('tx_cfcleague_profiles', $uid);
-      $arr[] = $row;
-    }
-
-    $table1 = $this->doc->table($arr);
+    $this->addProfiles($arr, $team->getCoachNames(), $LANG->getLL('label_profile_coach'));
+    $this->addProfiles($arr, $team->getPlayerNames(), $LANG->getLL('label_profile_player'));
+    $this->addProfiles($arr, $team->getSupporterNames(), $LANG->getLL('label_profile_supporter'));
+    
+    $tableProfiles = count($arr) > 1 ? $this->doc->table($arr, $tableLayout) : '';
 
 
-    $arr = Array(Array('',$LANG->getLL('label_firstname'),$LANG->getLL('label_lastname')));
+    $arr = Array(Array('&nbsp;',$LANG->getLL('label_firstname'),$LANG->getLL('label_lastname'),'&nbsp;'));
     $maxFields = count($team->getPlayerNames()) > 5 ? 5 : 15;
     for($i=0; $i < $maxFields; $i++){
       $row = array();
@@ -196,9 +198,16 @@ class tx_cfcleague_profile_create extends t3lib_extobjbase {
                $this->formTool->createHidden('data[tx_cfcleague_profiles][NEW'.$i.'][pid]', $this->id);
       $arr[] = $row;
     }
-    $table2 = $this->doc->table($arr);
+    $tableForm = $this->doc->table($arr, $tableLayout);
 
-    $content .= $this->doc->table(Array(Array($table2,$table1)));
+    $tableLayout = Array (
+      'table' => Array('<table class="typo3-dblist" width="100%" cellspacing="0" cellpadding="0" border="0">', '</table><br/>'),
+      'defRow' => Array ( // Formate für alle Zeilen
+        'defCol' => Array('<td valign="top" style="padding:0 5px;">','</td>') // Format für jede Spalte in jeder Zeile
+      ),
+    );
+    
+    $content .= $this->doc->table(Array(Array($tableForm,$tableProfiles)), $tableLayout);
     return $content;
   }
 
@@ -212,13 +221,35 @@ class tx_cfcleague_profile_create extends t3lib_extobjbase {
   }
 
   /**
+   * Add profiles to profile list
+   *
+   * @param array $arr
+   * @param array $profiles
+   * @param string $label
+   */
+  function addProfiles (&$arr, &$profileNames, $label) {
+    $i = 1;
+    if($profileNames) foreach($profileNames As $uid => $prof) {
+    	if($i == 1)
+      	$arr[] = array('','&nbsp;',''); // Leere Zeile als Trenner;
+    	$row = array();
+      $row[] = $i++ == 1 ? $label : '';
+      $row[] = $prof[first_name];
+      $row[] = $prof[last_name];
+      $row[] = $this->formTool->createEditLink('tx_cfcleague_profiles', $uid);
+      $arr[] = $row;
+    }
+  }
+  /**
    * Erstellt die angeforderten Profile
    * @param $profiles Array mit den Daten aus dem Request
    * @param $team das aktuelle Team, dem die Personen zugeordnet werden
    */
-  function createProfiles(&$profiles, &$team, $maxCoaches, $maxPlayers) {
+  function createProfiles(&$profiles, &$team, $baseInfo) {
     global $BE_USER, $LANG;
 
+    $maxCoaches = $baseInfo['maxCoaches'];
+    $maxPlayers = $baseInfo['maxPlayers'];
     $profiles = $profiles['tx_cfcleague_profiles'];
     $content = '';
 

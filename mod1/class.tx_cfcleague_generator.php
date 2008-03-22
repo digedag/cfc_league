@@ -178,15 +178,23 @@ class tx_cfcleague_generator extends t3lib_extobjbase {
     $content .= '<br />';
 
 
-    $this->doc->tableLayout = Array (
-      '0' => Array( // Format für 1. Zeile
-         'defCol' => Array('<td valign="top" style="font-weight:bold;padding:2px 5px;">','</td>') // Format f�r jede Spalte in der 1. Zeile
+    $tableLayout = Array (
+      'table' => Array('<table class="typo3-dblist" style="margin:0;" width="100%" cellspacing="0" cellpadding="0" border="0">', '</table><br/>'),
+    	'0' => Array( // Format für 1. Zeile
+         'defCol' => Array('<td valign="top" class="c-headLineTable" style="font-weight:bold;padding:2px 5px;">','</td>') // Format f�r jede Spalte in der 1. Zeile
       ),
       'defRow' => Array ( // Formate für alle Zeilen
-        'defCol' => Array('<td valign="top" style="padding:0 5px;">','</td>') // Format für jede Spalte in jeder Zeile
-      )
+        'defCol' => Array('<td valign="top" style="padding:5px 5px 0 5px; border-bottom:solid 1px #A2AAB8;">','</td>') // Format für jede Spalte in jeder Zeile
+      ),
     );
-
+    $tableLayout2 = $tableLayout;
+    $tableLayout2['defRow'] = Array ( // Formate für alle Zeilen
+        'defCol' => Array('<td valign="top" style="padding:0 5px;">','</td>') // Format für jede Spalte in jeder Zeile
+      );
+    $tableLayout2['defRowEven'] = Array ( // Formate für alle Zeilen
+        'defCol' => Array('<td valign="top" class="db_list_alt" style="padding:0 5px;">','</td>') // Format für jede Spalte in jeder Zeile
+      );
+    
 
     $arr = Array(Array('Runde','Name','Termin','Ansetzungen'));
     foreach($table As $round => $matchArr) {
@@ -199,11 +207,11 @@ class tx_cfcleague_generator extends t3lib_extobjbase {
       $row[] = $this->formTool->createTxtInput('data[rounds][round_'.$round.'][round_name]',$round . $LANG->getLL('createGameTable_round'),10);
       $row[] = $this->formTool->createDateInput('data[rounds][round_'.$round.'][date]',time());
       // Anzeige der Paarungen
-      $row[] = $this->doc->table($this->createMatchTableArray($matchArr, $league));
+      $row[] = $this->doc->table($this->createMatchTableArray($matchArr, $league), $tableLayout2);
 
       $arr[] = $row;
     }
-    $content .= $this->doc->table($arr);
+    $content .= $this->doc->table($arr, $tableLayout);
     return $content;
 
   }

@@ -105,12 +105,16 @@ class tx_cfcleague_match_edit extends t3lib_extobjbase {
       $arr = $this->createTableArray($games, $current_league);
 
       $this->doc->tableLayout = Array (
+      	'table' => Array('<table class="typo3-dblist" width="100%" cellspacing="0" cellpadding="0" border="0">', '</table><br/>'),
         '0' => Array( // Format für 1. Zeile
-           'defCol' => Array('<td valign="top" style="font-weight:bold;padding:2px 5px;">','</td>') // Format f�r jede Spalte in der 1. Zeile
+           'defCol' => Array('<td valign="top" class="c-headLineTable" style="font-weight:bold;padding:2px 5px;">','</td>') // Format f�r jede Spalte in der 1. Zeile
         ),
         'defRow' => Array ( // Formate für alle Zeilen
 //          '0' => Array('<td valign="top">','</td>'), // Format für 1. Spalte in jeder Zeile
           'defCol' => Array('<td valign="top" style="padding:0 5px;">','</td>') // Format für jede Spalte in jeder Zeile
+        ),
+        'defRowEven' => Array ( // Formate für alle Zeilen
+          'defCol' => Array('<td valign="top" class="db_list_alt" style="padding:0 5px;">','</td>') // Format für jede Spalte in jeder Zeile
         )
       );
 

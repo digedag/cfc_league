@@ -137,11 +137,11 @@ class tx_cfcleague_profile_search extends t3lib_extobjbase {
     tx_div::load('tx_cfcleague_showItem');
     $info = t3lib_div::makeInstance('tx_cfcleague_showItem');
 
-    $out = '<table border="0" cellpadding="1" cellspacing="1">';
-    $out .= '<tr><td style="vertical-align:top;">';
+    $out = '<table class="typo3-dblist" width="100%" cellspacing="0" cellpadding="0" border="0">';
+    $out .= '<tr><td class="c-headLineTable" style="vertical-align:top;">';
     $info->init('tx_cfcleague_profiles', $uid1);
     $out .= $this->doc->section($LANG->getLL('label_profile1').':',$info->main());
-    $out .= '</td><td style="vertical-align:top;">';
+    $out .= '</td><td class="c-headLineTable" style="vertical-align:top;">';
     $info->init('tx_cfcleague_profiles', $uid2);
     $out .= $this->doc->section($LANG->getLL('label_profile2').':',$info->main());
     $out .= '</td></tr>';
@@ -288,12 +288,23 @@ class tx_cfcleague_profile_search extends t3lib_extobjbase {
    */
   function buildProfileTable(&$profiles) {
     global $LANG;
+ 
+//		  	<table class="typo3-dblist" width="100%" cellspacing="0" cellpadding="0" border="0">
+//		  	<tr>
+//		  		<td class="c-headLineTable">Name</td>
+//		  		<td class="c-headLineTable">Informationen</td>
+//		  		<td class="c-headLineTable">Aktion</td></tr>';
+    
     $this->doc->tableLayout = Array (
+      'table' => array('<table class="typo3-dblist" width="100%" cellspacing="0" cellpadding="0" border="0">', '</table>'),
       '0' => Array( // Format für 1. Zeile
-         'defCol' => Array('<td valign="top" style="font-weight:bold;padding:2px 5px;">','</td>') // Format für jede Spalte in der 1. Zeile
+         'defCol' => Array('<td valign="top" class="c-headLineTable" style="font-weight:bold;padding:2px 5px;">','</td>') // Format für jede Spalte in der 1. Zeile
       ),
-      'defRow' => Array ( // Formate für alle Zeilen
-        'defCol' => Array('<td valign="top" style="padding:0 5px;border-bottom:1px solid gray;">','</td>') // Format für jede Spalte in jeder Zeile
+      'defRowOdd' => Array ( // Formate für alle Zeilen
+        'defCol' => Array('<td class="db_list_alt" valign="top" style="padding:2px 5px;border-bottom:1px solid gray;">','</td>') // Format für jede Spalte in jeder Zeile
+      ),
+      'defRowEven' => Array ( // Formate für alle Zeilen
+        'defCol' => Array('<td valign="top" style="padding:2px 5px;border-bottom:1px solid gray;">','</td>') // Format für jede Spalte in jeder Zeile
       )
     );
 
@@ -304,7 +315,12 @@ class tx_cfcleague_profile_search extends t3lib_extobjbase {
     }
     else {
 
-      $arr = Array(Array($LANG->getLL('label_merge'),'UID',$LANG->getLL('label_lastname'),$LANG->getLL('label_firstname'),$LANG->getLL('label_birthday'),$LANG->getLL('label_information')));
+      $arr = Array(Array($LANG->getLL('label_merge'),'UID',
+      										$LANG->getLL('label_lastname'),
+      										$LANG->getLL('label_firstname'),
+      										$LANG->getLL('label_birthday'),
+      										$LANG->getLL('label_information'),
+      										'&nbsp;','&nbsp;','&nbsp;'));
       foreach($profiles As $profile) {
         $row = array();
         $row[] = $this->formTool->createRadio('data[merge1]', $profile['uid']) . $this->formTool->createRadio('data[merge2]', $profile['uid']);

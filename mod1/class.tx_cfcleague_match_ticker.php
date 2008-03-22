@@ -123,20 +123,11 @@ class tx_cfcleague_match_ticker extends t3lib_extobjbase {
       
       $arr = $this->createTickerArray($match, t3lib_div::_GP('showAll'));
       if($arr) {
-        $this->doc->tableLayout = Array (
-          '0' => Array( // Format für 1. Zeile
-            'defCol' => Array('<td valign="top" style="font-weight:bold;padding:2px 5px;">','</td>') // Format f�r jede Spalte in der 1. Zeile
-          ),
-          'defRow' => Array ( // Formate für alle Zeilen
-//           '0' => Array('<td valign="top">','</td>'), // Format für 1. Spalte in jeder Zeile
-            'defCol' => Array('<td valign="top" style="padding:0 5px;">','</td>') // Format für jede Spalte in jeder Zeile
-          )
-        );
         $tickerContent = $this->formTool->createLink('&showAll=1', $this->id, 'Alle Meldungen anzeigen');
-        $tickerContent .= $this->doc->table($arr);
+        $tickerContent .= $this->doc->table($arr, $this->_getTableLayoutTickerList());
       }
       else
-        $tickerContent .= 'Keine Tickermeldungen vorhanden';
+        $tickerContent .= $LANG->getLL('msg_NoTicker');
 
       $content.=$this->doc->section($LANG->getLL('title_recent_tickers'),$tickerContent);
 
@@ -186,19 +177,35 @@ class tx_cfcleague_match_ticker extends t3lib_extobjbase {
    */
   function _getTableLayoutForm() {
     $arr = Array (
-        '0' => Array( // Format für 1. Zeile
-           'defCol' => Array('<td valign="top" style="font-weight:bold;padding:2px 5px;">','</td>') // Format f�r jede Spalte in der 1. Zeile
+      'table' => Array('<table class="typo3-dblist" width="100%" cellspacing="0" cellpadding="0" border="0">', '</table><br/>'),
+      '0' => Array( // Format für 1. Zeile
+           'defCol' => Array('<td valign="top" class="c-headLineTable" style="font-weight:bold;padding:2px 5px;">','</td>') // Format f�r jede Spalte in der 1. Zeile
       ),
       'defRowOdd' => Array ( // Formate für alle geraden Zeilen
-          'defCol' => Array('<td valign="top" style="padding:0 5px;">','</td>') // Format für jede Spalte in jeder Zeile
+          'defCol' => Array('<td valign="top" style="padding:5px 5px;">','</td>') // Format für jede Spalte in jeder Zeile
       ),
       'defRowEven' => Array ( // Formate für alle ungeraden Zeilen (die Textbox)
-          'defCol' => Array('<td colspan="2"></td><td valign="top" align="right" colspan="2" style="padding:2px 5px;">','</td>') // Format für jede Spalte in jeder Zeile
+          'defCol' => Array('<td colspan="2" style="border-bottom:solid 1px #A2AAB8;">&nbsp;</td><td valign="top" align="left" colspan="2" style="padding:2px 5px;border-bottom:solid 1px #A2AAB8;">','</td>') // Format für jede Spalte in jeder Zeile
       )
     );
     return $arr;
   }
-
+  function _getTableLayoutTickerList() {
+    $arr = Array (
+      'table' => Array('<table class="typo3-dblist" width="100%" cellspacing="0" cellpadding="0" border="0">', '</table><br/>'),
+      '0' => Array( // Format für 1. Zeile
+           'defCol' => Array('<td valign="top" class="c-headLineTable" style="font-weight:bold;padding:2px 5px;">','</td>') // Format f�r jede Spalte in der 1. Zeile
+      ),
+        'defRow' => Array ( // Formate für alle Zeilen
+          'defCol' => Array('<td valign="top" style="padding:0 5px;">','</td>') // Format für jede Spalte in jeder Zeile
+        ),
+        'defRowEven' => Array ( // Formate für alle Zeilen
+          'defCol' => Array('<td valign="top" class="db_list_alt" style="padding:0 5px;">','</td>') // Format für jede Spalte in jeder Zeile
+        )
+    );
+    return $arr;
+  }
+  
   /**
    * Wir listen die Tickermeldungen des Spiels auf
    *
@@ -254,7 +261,7 @@ class tx_cfcleague_match_ticker extends t3lib_extobjbase {
       $LANG->getLL('tx_cfcleague_match_notes.player_home'),
       $LANG->getLL('tx_cfcleague_match_notes.player_guest'),
 //      $LANG->getLL('tx_cfcleague_match_notes.comment'),
-      ''));
+      ));
 
     // TS-Config der aktuellen Seite laden, um die Anzahl der Felder zu ermitteln
 		$pageTSconfig = t3lib_BEfunc::getPagesTSconfig($this->id);
