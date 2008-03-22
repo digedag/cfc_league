@@ -29,6 +29,7 @@
 			<label index="msg_CreateProfiles">Create all profiles in current page?</label>
 			<label index="msg_NoCompetitonsFound">No competitions found!</label>
 			<label index="msg_NoSaisonFound">No saison found!</label>
+			<label index="msg_NoTicker">No ticker messages found!</label>
 			<label index="msg_data_saved">Submitted data has been saved!</label>
 			<label index="msg_matches_created">All matches were successfully created!</label>
 			<label index="msg_checkPage">Profiles will be created on page: </label>
@@ -81,6 +82,7 @@
 			<label index="label_profile_player">Player</label>
 			<label index="label_profile_supporter">Supporter</label>
 
+
 		</languageKey>
 		<languageKey index="de" type="array">
 			<label index="message">Hinweis</label>
@@ -106,6 +108,7 @@
 			<label index="msg_CreateProfiles">Sollen alle Profile in der aktuellen Seite erstellt werden?</label>
 			<label index="msg_NoCompetitonsFound">Es wurden keine Wettbewerbe gefunden!</label>
 			<label index="msg_NoSaisonFound">Bitte legen Sie zuerst eine Saison an und ordnen dieser Wettbewerbe mit Mannschaften zu.</label>
+			<label index="msg_NoTicker">Keine Tickermeldungen vorhanden!</label>
 			<label index="msg_data_saved">Die Daten wurden gespeichert!</label>
 			<label index="msg_matches_created">Die Spiele wurden erstellt!</label>
 			<label index="msg_checkPage">Alle Spieler werden auf folgender Seite angelegt: </label>
