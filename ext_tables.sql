@@ -242,6 +242,7 @@ CREATE TABLE tx_cfcleague_profiles (
 	sorting int(10) DEFAULT '0' NOT NULL,
 	deleted tinyint(4) DEFAULT '0' NOT NULL,
 	hidden tinyint(4) DEFAULT '0' NOT NULL,
+	stage_name varchar(70) DEFAULT '' NOT NULL,
 	first_name varchar(50) DEFAULT '' NOT NULL,
 	last_name varchar(70) DEFAULT '' NOT NULL,
 	link_report tinyint(4) DEFAULT '0' NOT NULL,
