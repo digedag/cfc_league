@@ -1,6 +1,14 @@
 
 Änderungen
 ----------
+v0.2.8 (23.03.2008)
+* Possible to change match status im ticker form
+* New field stage_name for profiles
+* Online help for profiles
+* flag for favorite club added
+* Some optical improvements in backend forms
+* Include dam_media_field in tca.php
+
 v0.2.7 (18.02.2008)
 * Neues Feld Obligation um Pflichtwettbewerbe zu markieren. Auswertung kann im Frontend interessant sein.
 * Spielplanerstellung ist nicht mehr so restriktiv. Es können auch zu bestehenden Wettbewerben weitere Spiele hinzugefügt werden.
