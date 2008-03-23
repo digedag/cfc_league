@@ -165,6 +165,7 @@ class tx_cfcleague_match_ticker extends t3lib_extobjbase {
       $out .= ':';
       $out .= $this->formTool->createIntInput('data[tx_cfcleague_games]['.$match->uid.'][goals_guest_'.$i.']', $match->record['goals_guest_'.$i],2);
     }
+    $out .= $this->formTool->createSelectSingle('data[tx_cfcleague_games]['.$match->uid.'][status]', $match->record['status'], 'tx_cfcleague_games', 'status');
     
     $out .= '<br />';
 
