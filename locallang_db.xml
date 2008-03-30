@@ -50,6 +50,7 @@
 			<label index="tx_cfcleague_competition_penalty.points_pos">Penalty points</label>
 			<label index="tx_cfcleague_competition_penalty.points_neg">Penalty points negative</label>
 			<label index="tx_cfcleague_competition_penalty.static_position">Penalty static table position</label>
+			<label index="tx_cfcleague_competition_penalty.correction">Is correction</label>
 			<label index="tx_cfcleague_club">Club</label>
 			<label index="tx_cfcleague_club.name">Name</label>
 			<label index="tx_cfcleague_club.short_name">Shortname</label>
@@ -207,6 +208,7 @@
 			<label index="tx_cfcleague_competition_penalty.points_pos">Punktabzug</label>
 			<label index="tx_cfcleague_competition_penalty.points_neg">Punktabzug negativ</label>
 			<label index="tx_cfcleague_competition_penalty.static_position">Zwangsabstieg</label>
+			<label index="tx_cfcleague_competition_penalty.correction">Tabellenkorrektur, keine Strafe</label>
 			<label index="tx_cfcleague_club">Verein</label>
 			<label index="tx_cfcleague_club.name">Name</label>
 			<label index="tx_cfcleague_club.short_name">Kurzname</label>

@@ -500,9 +500,17 @@ $TCA['tx_cfcleague_competition_penalty'] = Array (
 */				'default' => 0
 			)
 		),
+		'correction' => Array (
+			'exclude' => 1,
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition_penalty.correction',
+			'config' => Array (
+				'type' => 'check',
+				'default' => '0'
+			)
+		),
 	),
 	'types' => Array (
-		'0' => Array('showitem' => 'hidden;;1;;1-1-1, competition, team, game, comment, points_pos, points_neg, goals_pos, goals_neg, matches, wins, draws, loses, static_position')
+		'0' => Array('showitem' => 'hidden;;1;;1-1-1, competition, team, game, comment, points_pos, points_neg, goals_pos, goals_neg, matches, wins, draws, loses, static_position, correction')
 	),
 	'palettes' => Array (
 		'1' => Array('showitem' => '')

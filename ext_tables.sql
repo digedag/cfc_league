@@ -102,6 +102,7 @@ CREATE TABLE tx_cfcleague_competition_penalty (
 	points_pos int(11) DEFAULT '0' NOT NULL,
 	points_neg int(11) DEFAULT '0' NOT NULL,
 	static_position int(11) DEFAULT '0' NOT NULL,
+	correction tinyint(4) DEFAULT '0' NOT NULL,
 
 	PRIMARY KEY (uid),
 	KEY parent (pid)
