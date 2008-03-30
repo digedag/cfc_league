@@ -1,8 +1,12 @@
 
 Änderungen
 ----------
+v0.2.9 (30.03.2008)
+* Profile search remembers last search string
+* New field correction in competition penalty
+
 v0.2.8 (23.03.2008)
-* Possible to change match status im ticker form
+* Possible to change match status in ticker form
 * New field stage_name for profiles
 * Online help for profiles
 * flag for favorite club added
