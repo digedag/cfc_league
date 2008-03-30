@@ -47,6 +47,7 @@
 
 			<label index="msg_no_team_found">No team found!</label>
 			<label index="msg_no_person_found">No person found!</label>
+			<label index="msg_string_too_short">Search string is too short. It should be at least 3 letters!</label>
 			<label index="msg_found_person">Found person</label>
 			<label index="msg_search_person">Search for person in database</label>
 			<label index="msg_edit_person">Edit person</label>
@@ -126,6 +127,7 @@
 
 			<label index="msg_no_team_found">Keine Personen gefunden!</label>
 			<label index="msg_no_person_found">Keine Personen gefunden!</label>
+			<label index="msg_string_too_short">Der Suchbegriff sollte mindestens drei Zeichen lang sein!</label>
 			<label index="msg_found_person">Gefundene Personen</label>
 			<label index="msg_search_person">Suche nach Personen in der Datenbank</label>
 			<label index="msg_edit_person">Person bearbeiten</label>

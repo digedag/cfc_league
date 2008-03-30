@@ -72,7 +72,8 @@ class tx_cfcleague_profile_search extends t3lib_extobjbase {
 
     $data = t3lib_div::_GP('data');
 //t3lib_div::debug($data, 'mod_prof_search');
-
+		$this->SEARCH_SETTINGS = t3lib_BEfunc::getModuleData(array ('searchterm' => ''),$data,$this->MCONF['name'] );
+    
     $content .= $this->doc->section($LANG->getLL('msg_search_person'),$this->createSearchForm($data), 0, 1);
     $content.=$this->doc->spacer(5);
 
@@ -81,12 +82,17 @@ class tx_cfcleague_profile_search extends t3lib_extobjbase {
       // Soll ein Profil bearbeitet werden?
       $content .= $this->handleProfileUpdate($data);
       $content .= $this->handleProfileMerge($data);
-      
-      // Wir zeigen die Liste an
-      if(!$this->hideResults) {
-	      $profiles = $this->searchProfiles($data);
-	      $content .= $this->doc->section($LANG->getLL('msg_found_person'),$this->buildProfileTable($profiles ), 0, 1);
-      }
+    }
+    // Wir zeigen die Liste an
+    if(!$this->hideResults) {
+	  	$searchterm = trim($this->SEARCH_SETTINGS['searchterm']);
+	  	
+	  	if(strlen($searchterm) && strlen($searchterm) < 3) 
+	  		$content .= $this->doc->section($LANG->getLL('message').':', $LANG->getLL('msg_string_too_short'), 0, 1,ICON_INFO);
+	  	elseif(strlen($searchterm) >= 3) {
+				$profiles = $this->searchProfiles($searchterm);
+				$content .= $this->doc->section($LANG->getLL('msg_found_person'),$this->buildProfileTable($profiles ), 0, 1);
+	  	}
     }
     return $content;
   }
@@ -235,8 +241,8 @@ class tx_cfcleague_profile_search extends t3lib_extobjbase {
    * Sucht die Profile mit den übergebenen Parametern. Entweder wird über 
    * Vor- und Zuname gesucht, oder man übergibt direkt eine UID.
    */
-  function searchProfiles(&$data, $uid = 0) {
-    $what = 'tx_cfcleague_profiles.uid,tx_cfcleague_profiles.pid,'.
+  function searchProfiles($searchterm, $uid = 0) {
+  	$what = 'tx_cfcleague_profiles.uid,tx_cfcleague_profiles.pid,'.
             'last_name, first_name,birthday, '.
             "t1.short_name as 'team_name', t1.uid as 'team_uid'";
 
@@ -249,9 +255,9 @@ class tx_cfcleague_profile_search extends t3lib_extobjbase {
       $where .= 'tx_cfcleague_profiles.uid = ' . intval($uid) . ' ';
     }
     else {
-      if(strlen($data['searchterm'])) {
-        $where .= "last_name like '%" . $data['searchterm'] . "%' ";
-        $where .= "OR first_name like '%" . $data['searchterm'] . "%' ";
+      if(strlen($searchterm)) {
+        $where .= "last_name like '%" . $searchterm . "%' ";
+        $where .= "OR first_name like '%" . $searchterm . "%' ";
       }
     }
     $orderBy = 'last_name, first_name, tx_cfcleague_profiles.uid';
@@ -359,7 +365,7 @@ class tx_cfcleague_profile_search extends t3lib_extobjbase {
     global $LANG;
     $out = '';
     $out .= $LANG->getLL('label_searchterm').': ';
-    $out .= $this->formTool->createTxtInput('data[searchterm]', $data['searchterm'], 20);
+    $out .= $this->formTool->createTxtInput('data[searchterm]', $this->SEARCH_SETTINGS['searchterm'], 20);
     // Den Update-Button einfügen
     $out .= '<input type="submit" name="search" value="'.$LANG->getLL('btn_search').'"';
     // Jetzt noch zusätzlichen JavaScriptcode für Buttons auf der Seite
