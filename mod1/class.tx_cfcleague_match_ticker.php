@@ -25,7 +25,8 @@
 require_once (PATH_t3lib.'class.t3lib_extobjbase.php');
 $BE_USER->modAccess($MCONF,1);
 
-require_once('../class.tx_cfcleague_form_tool.php');
+require_once(t3lib_extMgm::extPath('rn_base') . 'util/class.tx_rnbase_util_FormTool.php');
+
 require_once('../class.tx_cfcleague_db.php');
 
 /**
@@ -51,6 +52,18 @@ class tx_cfcleague_match_ticker extends t3lib_extobjbase {
 
   }
 
+	/**
+	 * Returns the formtool
+	 *
+	 * @return tx_rnbase_util_FormTool
+	 */
+	function getFormTool() {
+		if(!is_object($this->formTool)) {
+			$this->formTool = t3lib_div::makeInstance('tx_rnbase_util_FormTool');
+			$this->formTool->init($this->pObj->doc);
+		}
+  	return $this->formTool;
+	}
   /**
    * Bearbeitung von Spielen. Es werden die Paaren je Spieltag angezeigt
    */
@@ -58,9 +71,6 @@ class tx_cfcleague_match_ticker extends t3lib_extobjbase {
     global $LANG;
 
     $this->doc = $this->pObj->doc;
-
-    $this->formTool = t3lib_div::makeInstance('tx_cfcleague_form_tool');
-    $this->formTool->init($this->pObj->doc);
 
     // Selector-Instanz bereitstellen
     $this->selector = t3lib_div::makeInstance('tx_cfcleague_selector');
@@ -98,6 +108,7 @@ class tx_cfcleague_match_ticker extends t3lib_extobjbase {
       // Dann zeigen wir die FORM für die nächste Meldung
 //t3lib_div::debug($match);
 
+      $content .= $this->getFormTool()->createSubmit('update', $LANG->getLL('btn_save'));
       $arr = $this->createFormArray($match);
       $content .= $this->doc->table($arr, $this->_getTableLayoutForm());
 
@@ -110,10 +121,11 @@ class tx_cfcleague_match_ticker extends t3lib_extobjbase {
       $content .= '<br>';
 
       // Den Update-Button einfügen
-      $content .= '<input type="submit" name="update" value="'.$LANG->getLL('btn_save').'">';
+      $content .= $this->getFormTool()->createSubmit('update', $LANG->getLL('btn_save'));
+//      $content .= '<input type="submit" name="update" value="'.$LANG->getLL('btn_save').'">';
 
       // Den JS-Code für Validierung einbinden
-      $content  .= $this->formTool->form->JSbottom('editform');
+      $content  .= $this->getFormTool()->form->JSbottom('editform');
 
       // Jetzt listen wir noch die zum Spiel vorhandenen Tickermeldungen auf
       $content.=$this->doc->spacer(5);
@@ -123,7 +135,7 @@ class tx_cfcleague_match_ticker extends t3lib_extobjbase {
       
       $arr = $this->createTickerArray($match, t3lib_div::_GP('showAll'));
       if($arr) {
-        $tickerContent = $this->formTool->createLink('&showAll=1', $this->id, 'Alle Meldungen anzeigen');
+        $tickerContent = $this->getFormTool()->createLink('&showAll=1', $this->id, 'Alle Meldungen anzeigen');
         $tickerContent .= $this->doc->table($arr, $this->_getTableLayoutTickerList());
       }
       else
@@ -161,11 +173,13 @@ class tx_cfcleague_match_ticker extends t3lib_extobjbase {
       }
       $out .= $label ? $label : $i.'. part';
       $out .= ': ';
-      $out .= $this->formTool->createIntInput('data[tx_cfcleague_games]['.$match->uid.'][goals_home_'.$i.']', $match->record['goals_home_'.$i],2);
+      $out .= $this->getFormTool()->createIntInput('data[tx_cfcleague_games]['.$match->uid.'][goals_home_'.$i.']', $match->record['goals_home_'.$i],2);
       $out .= ':';
-      $out .= $this->formTool->createIntInput('data[tx_cfcleague_games]['.$match->uid.'][goals_guest_'.$i.']', $match->record['goals_guest_'.$i],2);
+      $out .= $this->getFormTool()->createIntInput('data[tx_cfcleague_games]['.$match->uid.'][goals_guest_'.$i.']', $match->record['goals_guest_'.$i],2);
     }
-    $out .= $this->formTool->createSelectSingle('data[tx_cfcleague_games]['.$match->uid.'][status]', $match->record['status'], 'tx_cfcleague_games', 'status');
+    $out .= $this->getFormTool()->createSelectSingle('data[tx_cfcleague_games]['.$match->uid.'][status]', $match->record['status'], 'tx_cfcleague_games', 'status');
+    $out .= $LANG->getLL('tx_cfcleague_games.visitors') .': ';
+    $out .= $this->getFormTool()->createIntInput('data[tx_cfcleague_games]['.$match->uid.'][visitors]', $match->record['visitors'],5);
     
     $out .= '<br />';
 
@@ -244,7 +258,7 @@ class tx_cfcleague_match_ticker extends t3lib_extobjbase {
 
 
       $row[] = $note['comment'];
-      $row[] = $this->formTool->createEditLink('tx_cfcleague_match_notes', $note['uid']);
+      $row[] = $this->getFormTool()->createEditLink('tx_cfcleague_match_notes', $note['uid']);
       $arr[] = $row;
     }
     return $arr;
@@ -278,26 +292,26 @@ class tx_cfcleague_match_ticker extends t3lib_extobjbase {
     for($i=0; $i < $inputFields; $i++){
       $row = array();
 
-      $row[] = $this->formTool->createIntInput('data[tx_cfcleague_match_notes][NEW'.$i.'][minute]', '',2,3) . '+' . 
-               $this->formTool->createIntInput('data[tx_cfcleague_match_notes][NEW'.$i.'][extra_time]', '',1,2) . 
-               $this->formTool->createHidden('data[tx_cfcleague_match_notes][NEW'.$i.'][game]', $match->uid);
-      $row[] = $this->formTool->createSelectSingle('data[tx_cfcleague_match_notes][NEW'.$i.'][type]', '0','tx_cfcleague_match_notes','type');
-      $row[] = $this->formTool->createSelectSingleByArray(
+      $row[] = $this->getFormTool()->createIntInput('data[tx_cfcleague_match_notes][NEW'.$i.'][minute]', '',2,3) . '+' . 
+               $this->getFormTool()->createIntInput('data[tx_cfcleague_match_notes][NEW'.$i.'][extra_time]', '',1,2) . 
+               $this->getFormTool()->createHidden('data[tx_cfcleague_match_notes][NEW'.$i.'][game]', $match->uid);
+      $row[] = $this->getFormTool()->createSelectSingle('data[tx_cfcleague_match_notes][NEW'.$i.'][type]', '0','tx_cfcleague_match_notes','type');
+      $row[] = $this->getFormTool()->createSelectSingleByArray(
                       'data[tx_cfcleague_match_notes][NEW'.$i.'][player_home]', '0', $match->getPlayerNamesHome(1,1));
-      $row[] = $this->formTool->createSelectSingleByArray(
+      $row[] = $this->getFormTool()->createSelectSingleByArray(
                       'data[tx_cfcleague_match_notes][NEW'.$i.'][player_guest]', '0', $match->getPlayerNamesGuest(1,1));
 
       $arr[] = $row;
 
       // Das Bemerkungsfeld kommt in die nächste Zeile
       $row = array();
-      $row[] = $this->formTool->createTextArea('data[tx_cfcleague_match_notes][NEW'.$i.'][comment]', '', $cols, $rows);
+      $row[] = $this->getFormTool()->createTextArea('data[tx_cfcleague_match_notes][NEW'.$i.'][comment]', '', $cols, $rows);
       $arr[] = $row;
 
     }
 
 //    $arr[] = Array();
-//    t3lib_div::debug($this->formTool->form->extJSCODE);
+//    t3lib_div::debug($this->getFormTool()->form->extJSCODE);
 
     return $arr;
   }
