@@ -494,10 +494,7 @@ $TCA['tx_cfcleague_competition_penalty'] = Array (
 			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition_penalty.static_position',
 			'config' => Array (
 				'type' => 'check',
-/*				'size' => '4',
-				'max' => '4',
-				'eval' => 'int',
-*/				'default' => 0
+				'default' => 0
 			)
 		),
 		'correction' => Array (
