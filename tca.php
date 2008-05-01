@@ -207,7 +207,7 @@ $TCA['tx_cfcleague_competition'] = Array (
 				'items' => Array(
 					Array('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition.type_league',1),
 					Array('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition.type_ko',2),
-					Array('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition.type_other',0)
+					Array('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition.type_other',3)
 //					, Array('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition.type_combined',100)
 				),
 				'default' => 1
