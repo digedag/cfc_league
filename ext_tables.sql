@@ -214,6 +214,7 @@ CREATE TABLE tx_cfcleague_games (
 	link_ticker tinyint(4) DEFAULT '0' NOT NULL,
 	game_report_author varchar(100) DEFAULT '' NOT NULL,
 	game_report text NOT NULL,
+	liveticker_author varchar(100) DEFAULT '' NOT NULL,
 	visitors int(11) DEFAULT '0' NOT NULL,
 
         dam_images int(11) DEFAULT '0' NOT NULL,

@@ -114,6 +114,7 @@
 			<label index="tx_cfcleague_games.date">Date</label>
 			<label index="tx_cfcleague_games.link_report">Link match report</label>
 			<label index="tx_cfcleague_games.link_report">Link Live-Ticker</label>
+			<label index="tx_cfcleague_games.liveticker_author">Liveticker author</label>
 			<label index="tx_cfcleague_games.game_report_author">Report author</label>
 			<label index="tx_cfcleague_games.game_report">Match report</label>
 			<label index="tx_cfcleague_games.visitors">Visitors</label>
@@ -268,7 +269,8 @@
 			<label index="tx_cfcleague_games.date">Datum</label>
 			<label index="tx_cfcleague_games.link_report">Spielbericht verlinken</label>
 			<label index="tx_cfcleague_games.link_ticker">Live-Ticker verlinken</label>
-			<label index="tx_cfcleague_games.game_report_author">Autor</label>
+			<label index="tx_cfcleague_games.liveticker_author">Autor des Livetickers</label>
+			<label index="tx_cfcleague_games.game_report_author">Autor des Spielberichts</label>
 			<label index="tx_cfcleague_games.game_report">Spielbericht</label>
 			<label index="tx_cfcleague_games.visitors">Zuschauer</label>
 			<label index="tx_cfcleague_games.pictures">Bilder</label>

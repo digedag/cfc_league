@@ -1185,6 +1185,16 @@ Beim Trainer funktioniert es allerdings.
 				'eval' => 'trim',
 			)
 		),
+		'liveticker_author' => Array (
+			'exclude' => 1,		
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.liveticker_author',
+			'config' => Array (
+				'type' => 'input',
+				'size' => '30',
+				'max' => '100',
+				'eval' => 'trim',
+			)
+		),
 		'game_report' => Array (
 			'exclude' => 1,		
 			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.game_report',
@@ -1309,13 +1319,14 @@ Beim Trainer funktioniert es allerdings.
 	),
 	'types' => Array (
 	// goals_home_1, goals_guest_1, goals_home_2, goals_guest_2, 
-		'0' => Array('showitem' => 'hidden;;1;;1-1-1, match_no, competition, home, guest, round, round_name, stadium, status, date, coach_home, players_home, substitutes_home, system_home, system_guest, coach_guest, players_guest, substitutes_guest, referee, assists, game_report_author, game_report;;4;richtext[paste|bold|italic|underline|formatblock|class|left|center|right|orderedlist|unorderedlist|outdent|indent|link|image]:rte_transform[mode=ts], visitors, dam_images, dam_media, is_extratime;;2, is_penalty;;3;;1-1-1')
+		'0' => Array('showitem' => 'hidden;;1;;1-1-1, match_no, competition, home, guest, round, round_name, stadium, status, date, coach_home, players_home, substitutes_home, system_home, system_guest, coach_guest, players_guest, substitutes_guest, referee, assists, game_report;;4;richtext[paste|bold|italic|underline|formatblock|class|left|center|right|orderedlist|unorderedlist|outdent|indent|link|image]:rte_transform[mode=ts], game_report_author;;5, visitors, dam_images, dam_media, is_extratime;;2, is_penalty;;3;;1-1-1')
 	),
 	'palettes' => Array (
 		'1' => Array('showitem' => ''),
 		'2' => Array('showitem' => 'goals_home_et, goals_guest_et'),
 		'3' => Array('showitem' => 'goals_home_ap, goals_guest_ap'),
-		'4' => Array('showitem' => 'link_report, link_ticker')
+		'4' => Array('showitem' => 'link_report, link_ticker'),
+		'5' => Array('showitem' => 'liveticker_author'),
 	)
 );
 
