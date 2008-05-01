@@ -95,12 +95,16 @@ class tx_cfcleague_form_tool {
     return '<input type="hidden" name="'. $name.'" value="' . $value . '" />';
   }
 
-  function createRadio($name, $value, $checked = false){
-    return '<input type="radio" name="'. $name.'" value="' . $value . ($checked ? 'checked="checked"' : '') . '" />';
-  }
+	function createRadio($name, $value, $checked = false, $onclick = ''){
+		return '<input type="radio" name="'. $name.'" value="' . $value . '" '. ($checked ? 'checked="checked"' : '') . (strlen($onclick) ? ' onclick="' . $onclick . '"' : '') . ' />';
+	}
 
+	function createCheckbox($name, $value, $checked = false, $onclick = ''){
+		return '<input type="checkbox" name="'. $name.'" value="' . $value . '" '. ($checked ? 'checked="checked"' : '') . (strlen($onclick) ? ' onclick="' . $onclick . '"' : '') .' />';
+	}
+  
   function createSubmit($name, $value, $confirmMsg = ''){
-    $btn = '<input type="submit" name="'. $name.'" value="' . $value . ($checked ? 'checked="checked"' : '') . '" ';
+    $btn = '<input type="submit" name="'. $name.'" value="' . $value . '" ';
     if(strlen($confirmMsg)) 
     	$btn .= 'onclick="return confirm('.$GLOBALS['LANG']->JScharCode($confirmMsg).')"';
     $btn .= '/>';
