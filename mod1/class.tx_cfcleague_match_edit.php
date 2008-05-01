@@ -25,7 +25,6 @@
 require_once (PATH_t3lib.'class.t3lib_extobjbase.php');
 $BE_USER->modAccess($MCONF,1);
 
-require_once(t3lib_extMgm::extPath('div') . 'class.tx_div.php');
 require_once('../class.tx_cfcleague_form_tool.php');
 
 /**
