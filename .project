@@ -3,6 +3,7 @@
 	<name>cfc_league</name>
 	<comment></comment>
 	<projects>
+		<project>rn_base</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
