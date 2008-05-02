@@ -1,9 +1,16 @@
 
 Änderungen
 ----------
+v0.3.0 (02.05.2008)
+* Mostly internal changes. This project depends now on rn_base. Make sure to load the latest version!
+* New field liveticker author
+* Value for competition type other changed from 0 to 3. You must resave these competitions.
+
 v0.2.9 (30.03.2008)
 * Profile search remembers last search string
 * New field correction in competition penalty
+* New field for liveticker author in match
+* Key value for competition type "single matches" changed from 0 to 3. You should resave that competitions.
 
 v0.2.8 (23.03.2008)
 * Possible to change match status in ticker form
