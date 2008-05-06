@@ -17,38 +17,38 @@ $TCA['tx_cfcleague_group'] = Array (
 		'tstamp' => 'tstamp',
 		'crdate' => 'crdate',
 		'cruser_id' => 'cruser_id',
-		"sortby" => "sorting",	
-		"delete" => "deleted",	
-		"enablecolumns" => Array (		
-			"disabled" => "hidden",	
-			"starttime" => "starttime",	
-			"fe_group" => "fe_group",
+		'sortby' => 'sorting',	
+		'delete' => 'deleted',	
+		'enablecolumns' => Array (		
+			'disabled' => 'hidden',	
+			'starttime' => 'starttime',	
+			'fe_group' => 'fe_group',
 		),
-		"dynamicConfigFile" => t3lib_extMgm::extPath($_EXTKEY)."tca.php",
-		"iconfile" => t3lib_extMgm::extRelPath($_EXTKEY)."icon_tx_cfcleague_group.gif",
+		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY).'tca.php',
+		'iconfile' => t3lib_extMgm::extRelPath($_EXTKEY).'icon_tx_cfcleague_group.gif',
 	),
-	"feInterface" => Array (
-		"fe_admin_fieldList" => "hidden, starttime, fe_group, name",
+	'feInterface' => Array (
+		'fe_admin_fieldList' => 'hidden, starttime, fe_group, name',
 	)
 );
 
-$TCA["tx_cfcleague_saison"] = Array (
-	"ctrl" => Array (
+$TCA['tx_cfcleague_saison'] = Array (
+	'ctrl' => Array (
 		'title' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_saison',		
 		'label' => 'name',	
 		'tstamp' => 'tstamp',
 		'crdate' => 'crdate',
 		'cruser_id' => 'cruser_id',
-		"sortby" => "sorting",	
-		"delete" => "deleted",	
-		"enablecolumns" => Array (		
-			"disabled" => "hidden",
+		'sortby' => 'sorting',	
+		'delete' => 'deleted',	
+		'enablecolumns' => Array (		
+			'disabled' => 'hidden',
 		),
-		"dynamicConfigFile" => t3lib_extMgm::extPath($_EXTKEY)."tca.php",
-		"iconfile" => t3lib_extMgm::extRelPath($_EXTKEY)."icon_tx_cfcleague_saison.gif",
+		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY).'tca.php',
+		'iconfile' => t3lib_extMgm::extRelPath($_EXTKEY).'icon_tx_cfcleague_saison.gif',
 	),
-	"feInterface" => Array (
-		"fe_admin_fieldList" => "hidden, name",
+	'feInterface' => Array (
+		'fe_admin_fieldList' => 'hidden, name',
 	)
 );
 
@@ -61,8 +61,8 @@ $TCA['tx_cfcleague_competition'] = Array (
 		'tstamp' => 'tstamp',
 		'crdate' => 'crdate',
 		'cruser_id' => 'cruser_id',
-		'sortby' => "sorting",	
-		'delete' => "deleted",	
+		'sortby' => 'sorting',	
+		'delete' => 'deleted',	
 		'enablecolumns' => Array (		
 			'disabled' => 'hidden',
 		),
@@ -76,8 +76,8 @@ $TCA['tx_cfcleague_competition'] = Array (
 
 t3lib_extMgm::addLLrefForTCAdescr('tx_cfcleague_competition','EXT:cfc_league/locallang_csh_competition.php');
 
-$TCA["tx_cfcleague_competition_penalty"] = Array (
-	"ctrl" => Array (
+$TCA['tx_cfcleague_competition_penalty'] = Array (
+	'ctrl' => Array (
 		'title' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition_penalty',		
 		'label' => 'comment',	
 		'label_alt' => 'team,competition',
@@ -86,21 +86,21 @@ $TCA["tx_cfcleague_competition_penalty"] = Array (
 		'tstamp' => 'tstamp',
 		'crdate' => 'crdate',
 		'cruser_id' => 'cruser_id',
-		"sortby" => "sorting",	
-		"delete" => "deleted",	
-		"enablecolumns" => Array (		
-			"disabled" => "hidden",
+		'sortby' => 'sorting',	
+		'delete' => 'deleted',	
+		'enablecolumns' => Array (		
+			'disabled' => 'hidden',
 		),
-		"dynamicConfigFile" => t3lib_extMgm::extPath($_EXTKEY)."tca.php",
-		"iconfile" => t3lib_extMgm::extRelPath($_EXTKEY)."icon_tx_cfcleague_competition.gif",
+		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY).'tca.php',
+		'iconfile' => t3lib_extMgm::extRelPath($_EXTKEY).'icon_tx_cfcleague_competition.gif',
 	),
-	"feInterface" => Array (
-		"fe_admin_fieldList" => "hidden, comment, team, game, points_pos, points_neg, goals_pos, goals_neg, static_position",
+	'feInterface' => Array (
+		'fe_admin_fieldList' => 'hidden, comment, team, game, points_pos, points_neg, goals_pos, goals_neg, static_position',
 	)
 );
 
-$TCA["tx_cfcleague_profiles"] = Array (
-	"ctrl" => Array (
+$TCA['tx_cfcleague_profiles'] = Array (
+	'ctrl' => Array (
 		'title' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles',		
 		'label' => 'last_name',	
 		'label_alt' => 'first_name',
@@ -108,63 +108,63 @@ $TCA["tx_cfcleague_profiles"] = Array (
 		'tstamp' => 'tstamp',
 		'crdate' => 'crdate',
 		'cruser_id' => 'cruser_id',
-		"sortby" => "sorting",	
-		"delete" => "deleted",	
-		"enablecolumns" => Array (		
-			"disabled" => "hidden",	
+		'sortby' => 'sorting',	
+		'delete' => 'deleted',	
+		'enablecolumns' => Array (		
+			'disabled' => 'hidden',	
 		),
-		"dynamicConfigFile" => t3lib_extMgm::extPath($_EXTKEY)."tca.php",
-		"iconfile" => t3lib_extMgm::extRelPath($_EXTKEY)."icon_tx_cfcleague_profiles.gif",
+		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY).'tca.php',
+		'iconfile' => t3lib_extMgm::extRelPath($_EXTKEY).'icon_tx_cfcleague_profiles.gif',
 	),
-	"feInterface" => Array (
-		"fe_admin_fieldList" => "hidden, first_name, last_name, image, birthday, nationality, height, weight, position, duration_of_contract, start_of_contract, email, stations, nickname, family, hobbies, prosperities, summary, description",
+	'feInterface' => Array (
+		'fe_admin_fieldList' => 'hidden, first_name, last_name, image, birthday, nationality, height, weight, position, duration_of_contract, start_of_contract, email, stations, nickname, family, hobbies, prosperities, summary, description',
 	)
 );
 t3lib_extMgm::addLLrefForTCAdescr('tx_cfcleague_profiles','EXT:cfc_league/locallang_csh_profiles.php');
 
-$TCA["tx_cfcleague_club"] = Array (
-	"ctrl" => Array (
+$TCA['tx_cfcleague_club'] = Array (
+	'ctrl' => Array (
 		'title' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_club',		
 		'label' => 'name',	
 		'tstamp' => 'tstamp',
 		'crdate' => 'crdate',
 		'cruser_id' => 'cruser_id',
-		"sortby" => "sorting",	
-		"delete" => "deleted",	
-		"enablecolumns" => Array (		
-			"disabled" => "hidden",
+		'sortby' => 'sorting',	
+		'delete' => 'deleted',	
+		'enablecolumns' => Array (		
+			'disabled' => 'hidden',
 		),
-		"dynamicConfigFile" => t3lib_extMgm::extPath($_EXTKEY)."tca.php",
-		"iconfile" => t3lib_extMgm::extRelPath($_EXTKEY)."icon_tx_cfcleague_clubs.gif",
+		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY).'tca.php',
+		'iconfile' => t3lib_extMgm::extRelPath($_EXTKEY).'icon_tx_cfcleague_clubs.gif',
 	),
-	"feInterface" => Array (
-		"fe_admin_fieldList" => "hidden, name, short_name, dam_logo",
+	'feInterface' => Array (
+		'fe_admin_fieldList' => 'hidden, name, short_name, dam_logo',
 	)
 );
 t3lib_extMgm::addLLrefForTCAdescr('tx_cfcleague_club','EXT:cfc_league/locallang_csh_club.php');
 
-$TCA["tx_cfcleague_teams"] = Array (
-	"ctrl" => Array (
+$TCA['tx_cfcleague_teams'] = Array (
+	'ctrl' => Array (
 		'title' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_teams',		
 		'label' => 'name',	
 		'tstamp' => 'tstamp',
 		'crdate' => 'crdate',
 		'cruser_id' => 'cruser_id',
-		"sortby" => "sorting",	
-		"delete" => "deleted",	
-		"enablecolumns" => Array (		
-			"disabled" => "hidden",
+		'sortby' => 'sorting',	
+		'delete' => 'deleted',	
+		'enablecolumns' => Array (		
+			'disabled' => 'hidden',
 		),
-		"dynamicConfigFile" => t3lib_extMgm::extPath($_EXTKEY)."tca.php",
-		"iconfile" => t3lib_extMgm::extRelPath($_EXTKEY)."icon_tx_cfcleague_teams.gif",
+		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY).'tca.php',
+		'iconfile' => t3lib_extMgm::extRelPath($_EXTKEY).'icon_tx_cfcleague_teams.gif',
 	),
-	"feInterface" => Array (
-		"fe_admin_fieldList" => "hidden, name, short_name",
+	'feInterface' => Array (
+		'fe_admin_fieldList' => 'hidden, name, short_name',
 	)
 );
 
-$TCA["tx_cfcleague_games"] = Array (
-	"ctrl" => Array (
+$TCA['tx_cfcleague_games'] = Array (
+	'ctrl' => Array (
 		'title' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games',		
 		'label' => 'round_name',
 		'label_alt' => 'competition,home,guest',
@@ -173,16 +173,16 @@ $TCA["tx_cfcleague_games"] = Array (
 		'tstamp' => 'tstamp',
 		'crdate' => 'crdate',
 		'cruser_id' => 'cruser_id',
-		"sortby" => "sorting",	
-		"delete" => "deleted",	
-		"enablecolumns" => Array (		
-			"disabled" => "hidden",
+		'sortby' => 'sorting',	
+		'delete' => 'deleted',	
+		'enablecolumns' => Array (		
+			'disabled' => 'hidden',
 		),
-		"dynamicConfigFile" => t3lib_extMgm::extPath($_EXTKEY)."tca.php",
-		"iconfile" => t3lib_extMgm::extRelPath($_EXTKEY)."icon_table.gif",
+		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY).'tca.php',
+		'iconfile' => t3lib_extMgm::extRelPath($_EXTKEY).'icon_table.gif',
 	),
-	"feInterface" => Array (
-		"fe_admin_fieldList" => "hidden, home, guest, competition, round, round_name, status, coach_home, coach_guest, players_home, players_guest, substitutes_home, substitutes_guest, goals_home_1, goals_guest_1, goals_home_2, goals_guest_2, goals_home_3, goals_guest_3, goals_home_4, goals_guest_4, date, link_report, link_ticker, game_report, visitors, goals_home_et, goals_guest_et, goals_home_ap, goals_guest_ap",
+	'feInterface' => Array (
+		'fe_admin_fieldList' => 'hidden, home, guest, competition, round, round_name, status, coach_home, coach_guest, players_home, players_guest, substitutes_home, substitutes_guest, goals_home_1, goals_guest_1, goals_home_2, goals_guest_2, goals_home_3, goals_guest_3, goals_home_4, goals_guest_4, date, link_report, link_ticker, game_report, visitors, goals_home_et, goals_guest_et, goals_home_ap, goals_guest_ap',
 	)
 );
 
@@ -209,8 +209,49 @@ $TCA['tx_cfcleague_match_notes'] = Array (
     )
 );
 
+$TCA['tx_cfcleague_team_notes'] = Array (
+	'ctrl' => Array (
+		'title' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_team_notes',
+		'label' => 'uid',
+		'label_alt' => 'team,comment',
+		'label_alt_force' => 1,
+		'requestUpdate' => 'team',
+		'tstamp' => 'tstamp',
+		'crdate' => 'crdate',
+		'cruser_id' => 'cruser_id',
+		'delete' => 'deleted',
+		'enablecolumns' => Array (
+			'disabled' => 'hidden',
+		),
+		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY).'tca.php',
+		'iconfile' => t3lib_extMgm::extRelPath($_EXTKEY).'icon_tx_cfcleague_teams.gif',
+	),
+	'feInterface' => Array (
+		'fe_admin_fieldList' => 'hidden, team, player, type, comment',
+	)
+);
 
-if (TYPO3_MODE=="BE")	{
+$TCA['tx_cfcleague_note_types'] = Array (
+	'ctrl' => Array (
+		'title' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_note_types',
+		'label' => 'label',
+		'label_alt' => 'marker',
+		'label_alt_force' => 1,
+		'tstamp' => 'tstamp',
+		'crdate' => 'crdate',
+		'cruser_id' => 'cruser_id',
+		'delete' => 'deleted',
+		'enablecolumns' => Array (
+		),
+		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY).'tca.php',
+		'iconfile' => t3lib_extMgm::extRelPath($_EXTKEY).'icon_table.gif',
+	),
+	'feInterface' => Array (
+		'fe_admin_fieldList' => 'label, marker, description',
+	)
+);
+
+if (TYPO3_MODE=='BE')	{
 		
   t3lib_extMgm::addModule('web','txcfcleagueM1','',t3lib_extMgm::extPath($_EXTKEY).'mod1/');
 

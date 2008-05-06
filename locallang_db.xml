@@ -166,6 +166,11 @@
 			<label index="tx_cfcleague_match_notes.player_home">Player Home</label>
 			<label index="tx_cfcleague_match_notes.player_guest">Player Guest</label>
 			<label index="tx_cfcleague_match_notes.comment">Comment</label>
+			<label index="tx_cfcleague_team_notes">Team note</label>
+			<label index="tx_cfcleague_note_types">Note type</label>
+			<label index="tx_cfcleague_note_types.label">Label</label>
+			<label index="tx_cfcleague_note_types.marker">HTML-Marker</label>
+			<label index="tx_cfcleague_note_types.description">Description</label>
 
 			<label index="tx_cfcleague.unknown">Unknown</label>
 		</languageKey>
@@ -322,6 +327,11 @@
 			<label index="tx_cfcleague_match_notes.player_guest">Spieler Gast</label>
 			<label index="tx_cfcleague_match_notes.comment">Bemerkung</label>
 			<label index="tx_cfcleague.unknown">Unbekannt</label>
+			<label index="tx_cfcleague_team_notes">Teamnotiz</label>
+			<label index="tx_cfcleague_note_types">Notiz-Typ</label>
+			<label index="tx_cfcleague_note_types.label">Name</label>
+			<label index="tx_cfcleague_note_types.marker">HTML-Marker</label>
+			<label index="tx_cfcleague_note_types.description">Beschreibung</label>
 		</languageKey>
 	</data>
 </T3locallang>

@@ -68,6 +68,36 @@ class tx_cfcleague_handleDataInput{
   }
 
   /**
+   * Find player of team
+   * Used: Edit mask for team notes
+   *
+   * @param array $PA
+   * @param t3lib_TCEforms $fobj
+   */
+	function getPlayers4Team(&$PA, &$fobj){
+		global $LANG;
+		$LANG->includeLLFile('EXT:cfc_league/locallang_db.xml');
+		$column = 'team';
+    if($PA['row'][$column])
+    {
+    	$tablename = 'tx_cfcleague_team_notes';
+    	$tcaFieldConf = $GLOBALS['TCA'][$tablename]['columns'][$column]['config'];
+    	$team = t3lib_div::trimExplode('|', $PA['row']['team']);
+    	$team = $team[0];
+			require_once (PATH_t3lib.'class.t3lib_loaddbgroup.php');
+    	$dbAnalysis = t3lib_div::makeInstance('t3lib_loadDBGroup');
+			$dbAnalysis->registerNonTableValues=0;
+			$dbAnalysis->start($team,$tcaFieldConf['allowed'], '', 0, $tablename, $tcaFieldConf);
+			$valueArray = $dbAnalysis->getValueArray(false);
+      // Abfrage aus Spieldatensatz
+      // Es werden alle Spieler des Teams benötigt
+      $players = $this->findPlayers($valueArray[0]);
+      $PA[items] = $players;
+    }
+    else
+      $PA[items] = array();
+	}
+  /**
    * Die Spieler des Heimteams ermitteln
    * Used: Edit-Maske eines Spiels für Teamaufstellung und Match-Note
    */

@@ -290,9 +290,44 @@ CREATE TABLE tx_cfcleague_match_notes (
 
 	
 	PRIMARY KEY (uid),
-	KEY parent (pid)
+	KEY parent (pid),
+	KEY idx_game (game)
 );
 
+CREATE TABLE tx_cfcleague_team_notes (
+	uid int(11) NOT NULL auto_increment,
+	pid int(11) DEFAULT '0' NOT NULL,
+	tstamp int(11) DEFAULT '0' NOT NULL,
+	crdate int(11) DEFAULT '0' NOT NULL,
+	cruser_id int(11) DEFAULT '0' NOT NULL,
+	sorting int(10) DEFAULT '0' NOT NULL,
+	deleted tinyint(4) DEFAULT '0' NOT NULL,
+	hidden tinyint(4) DEFAULT '0' NOT NULL,
 
+	team int(11) DEFAULT '0' NOT NULL,
+	type int(11) DEFAULT '0' NOT NULL,
+	player int(11) DEFAULT '0' NOT NULL,
+	comment text NOT NULL,
+	
+	PRIMARY KEY (uid),
+	KEY parent (pid),
+	KEY idx_team (team)
+);
 
+CREATE TABLE tx_cfcleague_note_types (
+	uid int(11) NOT NULL auto_increment,
+	pid int(11) DEFAULT '0' NOT NULL,
+	tstamp int(11) DEFAULT '0' NOT NULL,
+	crdate int(11) DEFAULT '0' NOT NULL,
+	cruser_id int(11) DEFAULT '0' NOT NULL,
+	sorting int(10) DEFAULT '0' NOT NULL,
+	deleted tinyint(4) DEFAULT '0' NOT NULL,
+
+	label varchar(50) DEFAULT '' NOT NULL,
+	marker varchar(20) DEFAULT '' NOT NULL,
+	description varchar(255) DEFAULT '' NOT NULL,
+
+	PRIMARY KEY (uid),
+	KEY parent (pid)
+);
 
