@@ -1,6 +1,9 @@
 
 Änderungen
 ----------
+v0.3.1 (??.05.2008)
+* New data types "Team note" and "Note type". With these types it is possible to add team relative data in a generic way. What does it mean? So you can add jersey number or position of a player in a specific team.
+
 v0.3.0 (02.05.2008)
 * Mostly internal changes. This project depends now on rn_base. Make sure to load the latest version!
 * New field liveticker author
