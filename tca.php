@@ -816,9 +816,9 @@ $TCA['tx_cfcleague_games'] = Array (
 				'maxitems' => 1,
 			)
 		),
-		'round' => Array (		
-			'exclude' => 1,		
-			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.round',		
+		'round' => Array (
+			'exclude' => 1,
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.round',
 			'config' => Array (
 				'type' => 'input',
 				'size' => '4',
@@ -833,12 +833,12 @@ $TCA['tx_cfcleague_games'] = Array (
 			)
 		),
 		'round_name' => Array (
-			'exclude' => 1,		
-			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.round_name',		
+			'exclude' => 1,
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.round_name',
 			'config' => Array (
-				'type' => 'input',	
-				'size' => '30',	
-				'max' => '100',	
+				'type' => 'input',
+				'size' => '30',
+				'max' => '100',
 				'eval' => 'required,trim',
 			)
 		),

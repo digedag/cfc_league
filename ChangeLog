@@ -1,15 +1,18 @@
 
 Änderungen
 ----------
-v0.3.1 (??.05.2008)
+v0.3.2 (17.05.2008) (not released)
+* Some minor changes
+
+v0.3.1 (07.05.2008) (not released)
 * New data types "Team note" and "Note type". With these types it is possible to add team relative data in a generic way. What does it mean? So you can add jersey number or position of a player in a specific team.
 
-v0.3.0 (02.05.2008)
+v0.3.0 (02.05.2008) (not released)
 * Mostly internal changes. This project depends now on rn_base. Make sure to load the latest version!
 * New field liveticker author
 * Value for competition type other changed from 0 to 3. You must resave these competitions.
 
-v0.2.9 (30.03.2008)
+v0.2.9 (30.03.2008) (not released)
 * Profile search remembers last search string
 * New field correction in competition penalty
 * New field for liveticker author in match
