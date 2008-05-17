@@ -66,9 +66,9 @@ class tx_cfcleague_match_edit extends t3lib_extobjbase {
     $this->formTool = t3lib_div::makeInstance('tx_cfcleague_form_tool');
     $this->formTool->init($this->pObj->doc);
 
-    // Selector-Instanz bereitstellen
-    $this->selector = t3lib_div::makeInstance('tx_cfcleague_selector');
-    $this->selector->init($this->pObj->doc, $this->MCONF);
+		// Selector-Instanz bereitstellen
+		$this->selector = t3lib_div::makeInstance('tx_cfcleague_selector');
+		$this->selector->init($this->pObj->doc, $this->MCONF);
 
 //t3lib_div::debug($this->pObj->doc, 'doc medit');
 

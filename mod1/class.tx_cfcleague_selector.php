@@ -52,8 +52,14 @@ class tx_cfcleague_selector{
     $this->LEAGUE_MENU = Array (
       'league' => array()
     );
-    foreach($leagues as $idx=>$league){
-      $this->LEAGUE_MENU['league'][$league['uid']] = $league['internal_name'] ? $league['internal_name'] : $league['name'];
+    $objLeagues = array();
+		foreach($leagues as $idx=>$league){
+			if(is_object($league)) {
+				$objLeagues[$league->uid] = $league; // Objekt merken
+				$this->LEAGUE_MENU['league'][$league->uid] = $league->record['internal_name'] ? $league->record['internal_name'] : $league->record['name'];
+			}
+			else
+				$this->LEAGUE_MENU['league'][$league['uid']] = $league['internal_name'] ? $league['internal_name'] : $league['name'];
     } 
     $this->LEAGUE_SETTINGS = t3lib_BEfunc::getModuleData(
       $this->LEAGUE_MENU,t3lib_div::_GP('SET'),$this->MCONF['name'] // Das ist der Name des Moduls
@@ -81,6 +87,8 @@ class tx_cfcleague_selector{
     }
 
     // Aktuellen Wert als Liga-Objekt zurückgeben
+    if(count($objLeagues))
+    	return $this->LEAGUE_SETTINGS['league'] ? $objLeagues[$this->LEAGUE_SETTINGS['league']] :0;
     return $this->LEAGUE_SETTINGS['league'] ? new tx_cfcleague_league($this->LEAGUE_SETTINGS['league']) :0;
   }
 
@@ -117,32 +125,38 @@ class tx_cfcleague_selector{
     return new tx_cfcleague_team($this->TEAM_SETTINGS['team']);
   }
 
-  /**
-   * Darstellung der Select-Box mit allen Spielrunden des übergebenen Wettbewerbs. Es wird auf die aktuelle Runde eingestellt.
-   */
-  function showRoundSelector(&$content,$pid,$league){
-    $this->ROUND_MENU = Array (
-      'round' => array()
-    );
+	/**
+	 * Darstellung der Select-Box mit allen Spielrunden des übergebenen Wettbewerbs. Es wird auf die aktuelle Runde eingestellt.
+	 */
+	function showRoundSelector(&$content,$pid,$league){
+		$this->ROUND_MENU = Array (
+			'round' => array()
+		);
 
-    foreach($league->getRounds() as $round){
-      $this->ROUND_MENU['round'][$round['round']] = $round['round_name'] . ( intval($round['max_status']) ? ' *' : '' );
-    }
+		$objRounds = array();
+		foreach($league->getRounds() as $round){
+			if(is_object($round)) {
+				$objRounds[$round->uid] = $round;
+				$this->ROUND_MENU['round'][$round->uid] = $round->record['name'] . ( intval($round->record['finished']) ? ' *' : '' );
+			}
+			else
+				$this->ROUND_MENU['round'][$round['round']] = $round['round_name'] . ( intval($round['max_status']) ? ' *' : '' );
+		}
 
-    $this->ROUND_SETTINGS = t3lib_BEfunc::getModuleData(
-      $this->ROUND_MENU,t3lib_div::_GP('SET'),$this->MCONF['name'] // Das ist der Name des Moduls
-    );
-    $menu = t3lib_BEfunc::getFuncMenu(
-      $pid,'SET[round]',$this->ROUND_SETTINGS['round'],$this->ROUND_MENU['round']
-    );
-    // In den Content einbauen
-    // Spielrunden sind keine Objekt, die bearbeitet werden können
-    if($menu)
-      $menu .= '</td><td style="width:90px; padding-left:10px;">';
-    $content.=$this->doc->section('',$this->doc->funcMenu($headerSection,$menu));
+		$this->ROUND_SETTINGS = t3lib_BEfunc::getModuleData(
+			$this->ROUND_MENU,t3lib_div::_GP('SET'),$this->MCONF['name'] // Das ist der Name des Moduls
+		);
+		$menu = t3lib_BEfunc::getFuncMenu(
+			$pid,'SET[round]',$this->ROUND_SETTINGS['round'],$this->ROUND_MENU['round']
+		);
+		// In den Content einbauen
+		// Spielrunden sind keine Objekt, die bearbeitet werden können
+		if($menu)
+			$menu .= '</td><td style="width:90px; padding-left:10px;">';
+		$content.=$this->doc->section('',$this->doc->funcMenu($headerSection,$menu));
 
-    return $this->ROUND_SETTINGS['round'];
-  }
+		return count($objRounds) ? $objRounds[$this->ROUND_SETTINGS['round']] : $this->ROUND_SETTINGS['round'];
+	}
 
   /**
    * Darstellung der Select-Box mit allen übergebenen Spielen. Es wird auf das aktuelle Spiel eingestellt.
