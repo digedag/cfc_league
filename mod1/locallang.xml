@@ -82,6 +82,7 @@
 			<label index="label_profile_coach">Coach</label>
 			<label index="label_profile_player">Player</label>
 			<label index="label_profile_supporter">Supporter</label>
+			<label index="label_action">Action</label>
 
 
 		</languageKey>
@@ -161,6 +162,7 @@
 			<label index="label_profile_coach">Trainer</label>
 			<label index="label_profile_player">Spieler</label>
 			<label index="label_profile_supporter">Betreuer</label>
+			<label index="label_action">Aktion</label>
 		</languageKey>
 	</data>
 </T3locallang>
