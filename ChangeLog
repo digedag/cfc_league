@@ -1,6 +1,10 @@
 
 Änderungen
 ----------
+v0.3.3 (21.05.2008) (not released)
+* Simple stop watch in liveticker view (BE)
+* Bugfix: Profile search found deleted profiles
+
 v0.3.2 (17.05.2008) (not released)
 * Some minor changes
 
