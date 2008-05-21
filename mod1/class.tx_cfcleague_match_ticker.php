@@ -92,9 +92,10 @@ class tx_cfcleague_match_ticker extends t3lib_extobjbase {
       $current_round = $this->selector->showRoundSelector($content,$this->id,$current_league);
       $content.=$this->doc->spacer(5);
       
+      $update = t3lib_div::_GP('update');
       $data = t3lib_div::_GP('data');
       // Haben wir Daten im Request?
-      if (is_array($data['tx_cfcleague_match_notes'])) {
+      if ($update && is_array($data['tx_cfcleague_match_notes'])) {
         $this->insertNotes($data);
         $content.= '<i>'.$LANG->getLL('msg_data_saved').'</i>';
       }
@@ -108,7 +109,7 @@ class tx_cfcleague_match_ticker extends t3lib_extobjbase {
       // Dann zeigen wir die FORM für die nächste Meldung
 //t3lib_div::debug($match);
 
-      $content .= $this->getFormTool()->createSubmit('update', $LANG->getLL('btn_save'));
+      $content .= $this->getFormHeadline();
       $arr = $this->createFormArray($match);
       $content .= $this->doc->table($arr, $this->_getTableLayoutForm());
 
@@ -152,6 +153,62 @@ class tx_cfcleague_match_ticker extends t3lib_extobjbase {
 
   }
 
+  function getFormHeadline() {
+    $stop = t3lib_div::_GP('btn_watch_stop');
+  	$start = t3lib_div::_GP('btn_watch_start');
+  		// Daten: Startuhrzeit auf dem Client und gewünschtes offset
+		$startTime = array('watch_starttime' => $stop ? 0 : t3lib_div::_GP('watch_localtime'));
+		$modValues = t3lib_BEfunc::getModuleData(array ('watch_starttime' => ''), $start || $stop ? $startTime : array(),$this->MCONF['name'] );
+		$startTime = isset($modValues['watch_starttime']) ? $modValues['watch_starttime'] : '0';
+		// Der übergebene Offset wird immer gespeichert
+		$offset = array('watch_offset' => intval(t3lib_div::_GP('watch_offset')));
+		$modValues = t3lib_BEfunc::getModuleData(array ('watch_offset' => ''), $offset,$this->MCONF['name'] );
+		$offset = isset($modValues['watch_offset']) ? $modValues['watch_offset'] : '0';
+
+
+  	$out = '<table width="100%"><tr><td style="text-align:left">';
+    $out .= $this->getFormTool()->createSubmit('update', $GLOBALS['LANG']->getLL('btn_save'));
+  	$out .= '</td><td style="text-align:right">';
+    
+    $out .= $GLOBALS['LANG']->getLL('label_tickeroffset') . ': ';
+    $out .= $this->getFormTool()->createTxtInput('watch_offset', $offset, '2') . ' ';
+    $out .= $GLOBALS['LANG']->getLL('label_tickerminute') . ': ';
+    $out .= $this->getFormTool()->createTxtInput('watch', 0, '5');
+    $out .= $this->getFormTool()->createHidden('watch_starttime', $startTime);
+    $out .= $this->getFormTool()->createHidden('watch_localtime', 0);
+    if($startTime > 0)
+	  	$out .= $this->getFormTool()->createSubmit('btn_watch_stop', $GLOBALS['LANG']->getLL('btn_watchstop'));
+    else
+	    $out .= $this->getFormTool()->createSubmit('btn_watch_start', $GLOBALS['LANG']->getLL('btn_watchstart'));
+	  $out .= '</td></tr></table>';
+    
+    $out .= '<script>
+	function ticker() {
+		form = document.forms[0];
+		now = (new Date()).getTime();
+		form.watch_localtime.value = now;
+
+		start = form.watch_starttime.value;
+		if(start > 0) {
+			offset = trim(form.watch_offset.value);
+			offset = parseInt(isNaN(offset) || offset == "" ? 0 : offset);
+			diff = new Date(now - start);
+			std = diff.getHours();
+			min = diff.getMinutes() + ((std - 1) * 60) + offset;
+			sec = diff.getSeconds();
+			form.watch.value = ((min>9) ? min : "0" + min) + ":" + ((sec>9) ? sec : "0" + sec);
+		}
+		setTimeout("ticker()", 1000);
+	}
+	function trim(str) {
+		return str ? str.replace(/\s+/,"") : "";
+	}
+ticker();
+</script>
+    ';
+    
+  	return $out;
+  }
   /**
    * Erstellt die Eingabemaske für den Spielstand
    * @param tx_cfcleague_match $match

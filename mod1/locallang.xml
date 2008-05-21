@@ -20,6 +20,11 @@
 			<label index="no_round_in_league">This Competition containes no matches.</label>
 			<label index="btn_update_msgEditGames">Save changes?</label>
 			<label index="btn_update">Update</label>
+			<label index="btn_watchstart">Start watch</label>
+			<label index="btn_watchstop">Stop watch</label>
+			<label index="label_tickerminute">Match minute</label>
+			<label index="label_tickeroffset">Offset</label>
+			
 			<label index="msg_league_generation_hasmatches">Current league has already matches. Please ensure that you really want to create additional matches!</label>
 			<label index="btn_create">Create</label>
 			<label index="btn_edit">Edit</label>
@@ -101,6 +106,10 @@
 			<label index="no_round_in_league">Dieser Wettbewerb enth&amp;auml;lt keine Spiele.</label>
 			<label index="btn_update_msgEditGames">Sollen die Ergebnisse gespeichert werden?</label>
 			<label index="btn_update">Aktualisieren</label>
+			<label index="btn_watchstart">Uhr starten</label>
+			<label index="btn_watchstop">Uhr stoppen</label>
+			<label index="label_tickerminute">Spielminute</label>
+			<label index="label_tickeroffset">Offset</label>
 			<label index="msg_league_generation_hasmatches">Für diese Liga wurden bereits Spiele angelegt. Bitte prüfen Sie genau, daß Sie wirklich zusätzliche Paarungen anlegen möchten!</label>
 			<label index="btn_create">Erstellen</label>
 			<label index="btn_edit">Ändern</label>
