@@ -256,8 +256,8 @@ class tx_cfcleague_profile_search extends t3lib_extobjbase {
     }
     else {
       if(strlen($searchterm)) {
-        $where .= "last_name like '%" . $searchterm . "%' ";
-        $where .= "OR first_name like '%" . $searchterm . "%' ";
+        $where .= "(last_name like '%" . $searchterm . "%' ";
+        $where .= "OR first_name like '%" . $searchterm . "%') ";
       }
     }
     $orderBy = 'last_name, first_name, tx_cfcleague_profiles.uid';
