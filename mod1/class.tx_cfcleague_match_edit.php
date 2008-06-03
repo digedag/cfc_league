@@ -25,7 +25,6 @@
 require_once (PATH_t3lib.'class.t3lib_extobjbase.php');
 $BE_USER->modAccess($MCONF,1);
 
-require_once('../class.tx_cfcleague_form_tool.php');
 
 /**
  * Die Klasse verwaltet die Bearbeitung der Spieltage
@@ -63,7 +62,7 @@ class tx_cfcleague_match_edit extends t3lib_extobjbase {
 
     $this->doc = $this->pObj->doc;
 
-    $this->formTool = t3lib_div::makeInstance('tx_cfcleague_form_tool');
+    $this->formTool = tx_div::makeInstance('tx_rnbase_util_FormTool');
     $this->formTool->init($this->pObj->doc);
 
 		// Selector-Instanz bereitstellen

@@ -25,7 +25,6 @@
 require_once (PATH_t3lib.'class.t3lib_extobjbase.php');
 $BE_USER->modAccess($MCONF,1);
 
-require_once('../class.tx_cfcleague_form_tool.php');
 
 /**
  * Die Klasse verwaltet die automatische Erstellung von Spielplänen
@@ -56,7 +55,7 @@ class tx_cfcleague_generator extends t3lib_extobjbase {
 
     $this->doc = $this->pObj->doc;
 
-    $this->formTool = t3lib_div::makeInstance('tx_cfcleague_form_tool');
+    $this->formTool = tx_div::makeInstance('tx_rnbase_util_FormTool');
     $this->formTool->init($this->doc);
 
     // Selector-Instanz bereitstellen
@@ -173,7 +172,7 @@ class tx_cfcleague_generator extends t3lib_extobjbase {
     $content = '';
     // Wir benötigen eine Select-Box mit der man die Rückrunden-Option einstellen kann
     // Bei Änderung soll die Seite neu geladen werden, damit nur die Halbserie angezeigt wird.
-    $content .= $this->formTool->createSelectSingleByArray('option_halfseries', $option_halfseries, Array('0' => 'Mit Rückrunde', '1' => 'Ohne Rückrunde'), 1);
+    $content .= $this->formTool->createSelectSingleByArray('option_halfseries', $option_halfseries, Array('0' => 'Mit Rückrunde', '1' => 'Ohne Rückrunde'), array('reload'=>1));
 
     $content .= '<br />';
 

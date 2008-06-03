@@ -30,6 +30,8 @@ require_once('conf.php');
 require_once($BACK_PATH.'init.php');
 require_once($BACK_PATH.'template.php');
 
+require_once(t3lib_extMgm::extPath('div') . 'class.tx_div.php');
+
 // Dort steckt die ModulDef-Klasse drin
 include_once('../class.tx_cfcleague.php');
 // Die Datenbank-Klasse
