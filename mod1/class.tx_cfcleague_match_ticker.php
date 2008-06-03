@@ -25,7 +25,6 @@
 require_once (PATH_t3lib.'class.t3lib_extobjbase.php');
 $BE_USER->modAccess($MCONF,1);
 
-require_once(t3lib_extMgm::extPath('rn_base') . 'util/class.tx_rnbase_util_FormTool.php');
 
 require_once('../class.tx_cfcleague_db.php');
 
@@ -59,7 +58,7 @@ class tx_cfcleague_match_ticker extends t3lib_extobjbase {
 	 */
 	function getFormTool() {
 		if(!is_object($this->formTool)) {
-			$this->formTool = t3lib_div::makeInstance('tx_rnbase_util_FormTool');
+			$this->formTool = tx_div::makeInstance('tx_rnbase_util_FormTool');
 			$this->formTool->init($this->pObj->doc);
 		}
   	return $this->formTool;
@@ -176,6 +175,7 @@ class tx_cfcleague_match_ticker extends t3lib_extobjbase {
     $out .= $this->getFormTool()->createTxtInput('watch', 0, '5');
     $out .= $this->getFormTool()->createHidden('watch_starttime', $startTime);
     $out .= $this->getFormTool()->createHidden('watch_localtime', 0);
+    $out .= $this->getFormTool()->createHidden('watch_minute', 0);
     if($startTime > 0)
 	  	$out .= $this->getFormTool()->createSubmit('btn_watch_stop', $GLOBALS['LANG']->getLL('btn_watchstop'));
     else
@@ -196,6 +196,7 @@ class tx_cfcleague_match_ticker extends t3lib_extobjbase {
 			std = diff.getHours();
 			min = diff.getMinutes() + ((std - 1) * 60) + offset;
 			sec = diff.getSeconds();
+			form.watch_minute.value = min + 1;
 			form.watch.value = ((min>9) ? min : "0" + min) + ":" + ((sec>9) ? sec : "0" + sec);
 		}
 		setTimeout("ticker()", 1000);
@@ -203,7 +204,22 @@ class tx_cfcleague_match_ticker extends t3lib_extobjbase {
 	function trim(str) {
 		return str ? str.replace(/\s+/,"") : "";
 	}
-ticker();
+  ticker();
+
+	function setMatchMinute(elem) {
+		min = form.watch_minute.value;
+		if(min == 0) return;
+		line = elem.name.match(/NEW(\d+)/)[1];
+		var elements = Form.getInputs(elem.form);
+		for (var i = 0; i < elements.length; i++) {
+			if(elements[i].name == "data[tx_cfcleague_match_notes][NEW"+line+"][minute]_hr") {
+				if(Field.getValue(elements[i]) == "") {
+					elements[i].value = min;
+					typo3FormFieldGet("data[tx_cfcleague_match_notes][NEW"+line+"][minute]", "int", "", 0,0);
+				}
+			}
+		}
+	}
 </script>
     ';
     
@@ -352,17 +368,17 @@ ticker();
       $row[] = $this->getFormTool()->createIntInput('data[tx_cfcleague_match_notes][NEW'.$i.'][minute]', '',2,3) . '+' . 
                $this->getFormTool()->createIntInput('data[tx_cfcleague_match_notes][NEW'.$i.'][extra_time]', '',1,2) . 
                $this->getFormTool()->createHidden('data[tx_cfcleague_match_notes][NEW'.$i.'][game]', $match->uid);
-      $row[] = $this->getFormTool()->createSelectSingle('data[tx_cfcleague_match_notes][NEW'.$i.'][type]', '0','tx_cfcleague_match_notes','type');
+      $row[] = $this->getFormTool()->createSelectSingle('data[tx_cfcleague_match_notes][NEW'.$i.'][type]', '0','tx_cfcleague_match_notes','type',array('onchange' => 'setMatchMinute(this);'));
       $row[] = $this->getFormTool()->createSelectSingleByArray(
-                      'data[tx_cfcleague_match_notes][NEW'.$i.'][player_home]', '0', $match->getPlayerNamesHome(1,1));
+                      'data[tx_cfcleague_match_notes][NEW'.$i.'][player_home]', '0', $match->getPlayerNamesHome(1,1),array('onchange' => 'setMatchMinute(this);'));
       $row[] = $this->getFormTool()->createSelectSingleByArray(
-                      'data[tx_cfcleague_match_notes][NEW'.$i.'][player_guest]', '0', $match->getPlayerNamesGuest(1,1));
+                      'data[tx_cfcleague_match_notes][NEW'.$i.'][player_guest]', '0', $match->getPlayerNamesGuest(1,1),array('onchange' => 'setMatchMinute(this);'));
 
       $arr[] = $row;
 
       // Das Bemerkungsfeld kommt in die nächste Zeile
       $row = array();
-      $row[] = $this->getFormTool()->createTextArea('data[tx_cfcleague_match_notes][NEW'.$i.'][comment]', '', $cols, $rows);
+      $row[] = $this->getFormTool()->createTextArea('data[tx_cfcleague_match_notes][NEW'.$i.'][comment]', '', $cols, $rows,array('onchange' => 'setMatchMinute(this);'));
       $arr[] = $row;
 
     }
