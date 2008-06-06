@@ -1,6 +1,9 @@
 
 Änderungen
 ----------
+v0.3.4 (06.06.2008) (not released)
+* Minute field is automatically filled from running stop watch in liveticker view (BE)
+
 v0.3.3 (21.05.2008) (not released)
 * Simple stop watch in liveticker view (BE)
 * Bugfix: Profile search found deleted profiles
