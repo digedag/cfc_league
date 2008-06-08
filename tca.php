@@ -937,7 +937,7 @@ Beim Trainer funktioniert es allerdings.
 				'foreign_table_where' => 'AND tx_cfcleague_profiles.uid = 0',
 */
 				'itemsProcFunc' => 'tx_cfcleague_handleDataInput->getPlayersHome4Match',
-				'size' => 5,
+				'size' => 9,
 				'minitems' => 0,
 				'maxitems' => 10,
 			)
@@ -952,7 +952,7 @@ Beim Trainer funktioniert es allerdings.
 				'foreign_table_where' => 'AND tx_cfcleague_profiles.uid = 0',
 */
 				'itemsProcFunc' => 'tx_cfcleague_handleDataInput->getPlayersGuest4Match',
-				'size' => 5,
+				'size' => 9,
 				'minitems' => 0,
 				'maxitems' => 10,
 			)
