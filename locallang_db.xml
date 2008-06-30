@@ -73,6 +73,8 @@
 			<label index="tx_cfcleague_teams.link_report">Enable link to team page</label>
 			<label index="tx_cfcleague_teams.dummy">Free of play</label>
 			<label index="tx_cfcleague_games">Game</label>
+			<label index="tx_cfcleague_games.tab_lineup">Line-up</label>
+			<label index="tx_cfcleague_games.tab_score">Score</label>
 			<label index="tx_cfcleague_games.match_no">Match number</label>
 			<label index="tx_cfcleague_games.home">Hometeam</label>
 			<label index="tx_cfcleague_games.guest">Guestteam</label>
@@ -244,6 +246,8 @@
 			<label index="tx_cfcleague_teams.link_report">Link auf Team-Seite möglich</label>
 			<label index="tx_cfcleague_teams.dummy">Spielfrei</label>
 			<label index="tx_cfcleague_games">Spiel</label>
+			<label index="tx_cfcleague_games.tab_lineup">Aufstellung</label>
+			<label index="tx_cfcleague_games.tab_score">Ergebnis</label>
 			<label index="tx_cfcleague_games.match_no">Spielnummer</label>
 			<label index="tx_cfcleague_games.home">Heim</label>
 			<label index="tx_cfcleague_games.guest">Gast</label>
