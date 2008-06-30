@@ -78,24 +78,30 @@ class tx_cfcleague_handleDataInput{
 		global $LANG;
 		$LANG->includeLLFile('EXT:cfc_league/locallang_db.xml');
 		$column = 'team';
-    if($PA['row'][$column])
-    {
-    	$tablename = 'tx_cfcleague_team_notes';
-    	$tcaFieldConf = $GLOBALS['TCA'][$tablename]['columns'][$column]['config'];
-    	$team = t3lib_div::trimExplode('|', $PA['row']['team']);
-    	$team = $team[0];
-			require_once (PATH_t3lib.'class.t3lib_loaddbgroup.php');
-    	$dbAnalysis = t3lib_div::makeInstance('t3lib_loadDBGroup');
-			$dbAnalysis->registerNonTableValues=0;
-			$dbAnalysis->start($team,$tcaFieldConf['allowed'], '', 0, $tablename, $tcaFieldConf);
-			$valueArray = $dbAnalysis->getValueArray(false);
-      // Abfrage aus Spieldatensatz
-      // Es werden alle Spieler des Teams benötigt
-      $players = $this->findPlayers($valueArray[0]);
-      $PA[items] = $players;
-    }
-    else
-      $PA[items] = array();
+		if($PA['row'][$column])
+		{
+			$tablename = 'tx_cfcleague_team_notes';
+			$tcaFieldConf = $GLOBALS['TCA'][$tablename]['columns'][$column]['config'];
+			$team = t3lib_div::trimExplode('|', $PA['row'][$column]);
+			$team = $team[0];
+			if($tcaFieldConf['type'] == 'db') {
+				require_once (PATH_t3lib.'class.t3lib_loaddbgroup.php');
+				$dbAnalysis = t3lib_div::makeInstance('t3lib_loadDBGroup');
+				$dbAnalysis->registerNonTableValues=0;
+				$dbAnalysis->start($team,$tcaFieldConf['allowed'], '', 0, $tablename, $tcaFieldConf);
+				$valueArray = $dbAnalysis->getValueArray(false);
+				// Abfrage aus Spieldatensatz
+				// Es werden alle Spieler des Teams benötigt
+				$players = $this->findPlayers($valueArray[0]);
+			}
+			else {
+				// Sollte ein Select sein
+				$players = $this->findPlayers($team);
+			}
+			$PA[items] = $players;
+		}
+		else
+			$PA[items] = array();
 	}
   /**
    * Die Spieler des Heimteams ermitteln
