@@ -323,7 +323,10 @@ class tx_cfcleague_match_ticker extends t3lib_extobjbase {
 
     foreach($notes As $note){
       $row = array();
-      $row[] = $note['minute'];
+
+      $min = $note['minute'] . ($note['extra_time'] ? '+'. $note['extra_time'] : '' );
+      $min .= $note['hidden'] ? '*' : '';
+      $row[] = $min;
       $row[] = $types[$note['type']];
 
       $row[] = intval($note['player_home']) == -1 ? $LANG->getLL('tx_cfcleague.unknown') : $playersHome[$note['player_home']];
