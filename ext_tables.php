@@ -170,6 +170,7 @@ $TCA['tx_cfcleague_games'] = Array (
 		'label_alt' => 'competition,home,guest',
 		'label_alt_force' => 1,
 		'requestUpdate' => 'competition',
+		'dividers2tabs' => TRUE,
 		'tstamp' => 'tstamp',
 		'crdate' => 'crdate',
 		'cruser_id' => 'cruser_id',
