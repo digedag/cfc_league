@@ -306,8 +306,11 @@ CREATE TABLE tx_cfcleague_team_notes (
 
 	team int(11) DEFAULT '0' NOT NULL,
 	type int(11) DEFAULT '0' NOT NULL,
+	mediatype int(11) DEFAULT '0' NOT NULL,
 	player int(11) DEFAULT '0' NOT NULL,
 	comment text NOT NULL,
+	media int(11) DEFAULT '0' NOT NULL,
+	number int(11) DEFAULT '0' NOT NULL,
 	
 	PRIMARY KEY (uid),
 	KEY parent (pid),

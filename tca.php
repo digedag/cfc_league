@@ -550,7 +550,7 @@ $TCA['tx_cfcleague_club'] = Array (
 				'eval' => 'required,trim',
 			)
 		),
-    'dam_logo' => txdam_getMediaTCA('image_field', 'dam_images'),
+		'dam_logo' => txdam_getMediaTCA('image_field', 'dam_images'),
 		'address' => Array (
 			'exclude' => 0,
 			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_club.address',
@@ -611,7 +611,7 @@ $TCA['tx_cfcleague_teams'] = Array (
 				'maxitems' => 1,
 			)
 		),
-                'dam_logo' => txdam_getMediaTCA('image_field'),
+		'dam_logo' => txdam_getMediaTCA('image_field'),
 		'name' => Array (
 			'exclude' => 1,		
 			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_teams.name',
@@ -668,7 +668,7 @@ $TCA['tx_cfcleague_teams'] = Array (
 				'maxitems' => 5,
 			)
 		),
-                'dam_images' => txdam_getMediaTCA('image_field', 'dam_images'),
+		'dam_images' => txdam_getMediaTCA('image_field', 'dam_images'),
 
 		'coaches_comment' => Array (
 			'exclude' => 1,
@@ -1383,7 +1383,7 @@ $TCA['tx_cfcleague_profiles'] = Array (
 				'default' => '0'
 			)
 		),
-                'dam_images' => txdam_getMediaTCA('image_field', 'dam_images'),
+		'dam_images' => txdam_getMediaTCA('image_field', 'dam_images'),
 		'birthday' => Array (
 			'exclude' => 1,
 			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles.birthday',
@@ -1702,9 +1702,15 @@ $TCA['tx_cfcleague_team_notes'] = Array (
 			'exclude' => 1,
 			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_teams',
 			'config' => Array (
-				'type' => 'group',
-				'internal_type' => 'db',
-				'allowed' => 'tx_cfcleague_teams',
+//				'type' => 'group',
+//				'internal_type' => 'db',
+//				'allowed' => 'tx_cfcleague_teams',
+				'type' => 'select',
+				'items' => Array (
+					Array('', ''),
+					),
+				'foreign_table' => 'tx_cfcleague_teams',
+				'foreign_table_where' => 'AND tx_cfcleague_teams.pid=###CURRENT_PID### ORDER BY tx_cfcleague_teams.sorting ',
 				'eval' => 'required',
 				'size' => 1,
 				'minitems' => 0,
@@ -1724,6 +1730,20 @@ $TCA['tx_cfcleague_team_notes'] = Array (
 				'maxitems' => 1,
 			)
 		),
+		'mediatype' => Array (
+			'exclude' => 1,
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_team_notes.mediatype',
+			'config' => Array (
+				'type' => 'select',
+				'items' => Array (
+					Array('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_team_notes.mediatype.text', '0'),
+					Array('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_team_notes.mediatype.media', '1'),
+					Array('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_team_notes.mediatype.number', '2'),
+					),
+				'size' => 1,
+				'maxitems' => 1,
+			)
+		),
 		'player' => Array (
 			'exclude' => 1,
 			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles',        
@@ -1738,6 +1758,7 @@ $TCA['tx_cfcleague_team_notes'] = Array (
 				'maxitems' => 1,
 			)
 		),
+		'media' => txdam_getMediaTCA('image_field', 'media'),
 		'comment' => Array (
 			'exclude' => 1,
 			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_match_notes.comment',
@@ -1747,14 +1768,29 @@ $TCA['tx_cfcleague_team_notes'] = Array (
 					'rows' => '5',
 			)
 		),
+		'number' => Array (
+			'exclude' => 1,
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_team_notes.number',
+			'config' => Array (
+				'type' => 'input',
+				'size' => '4',
+				'max' => '4',
+				'eval' => 'int',
+			)
+		),
 	),
 	'types' => Array (
-			'0' => Array('showitem' => 'hidden;;1;;1-1-1, team, player, type, comment')
+			'0' => Array('showitem' => 'hidden;;1;;1-1-1, mediatype, team, player, type, comment'),
+			'1' => Array('showitem' => 'hidden;;1;;1-1-1, mediatype, team, player, type, media'),
+			'2' => Array('showitem' => 'hidden;;1;;1-1-1, mediatype, team, player, type, number')
 	),
 	'palettes' => Array (
 			'1' => Array('showitem' => '')
 	)
 );
+$TCA['tx_cfcleague_team_notes']['columns']['media']['label'] = 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_team_notes.media';
+$TCA['tx_cfcleague_team_notes']['columns']['media']['config']['size'] = 1;
+$TCA['tx_cfcleague_team_notes']['columns']['media']['config']['maxitems'] = 1;
 
 $TCA['tx_cfcleague_note_types'] = Array (
 	'ctrl' => $TCA['tx_cfcleague_note_types']['ctrl'],
@@ -1795,7 +1831,7 @@ $TCA['tx_cfcleague_note_types'] = Array (
 		),
 	),
 	'types' => Array (
-			'0' => Array('showitem' => 'label, marker, description')
+			'0' => Array('showitem' => 'ntype,label, marker, description')
 	),
 	'palettes' => Array (
 			'1' => Array('showitem' => '')

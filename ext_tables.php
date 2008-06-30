@@ -187,36 +187,37 @@ $TCA['tx_cfcleague_games'] = Array (
 );
 
 $TCA['tx_cfcleague_match_notes'] = Array (
-    'ctrl' => Array (
-        'title' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_match_notes',        
-        'label' => 'uid',
-        'label_alt' => 'minute,comment',
-        'label_alt_force' => 1,
+	'ctrl' => Array (
+		'title' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_match_notes',
+		'label' => 'uid',
+		'label_alt' => 'minute,comment',
+		'label_alt_force' => 1,
 
-        'tstamp' => 'tstamp',
-        'crdate' => 'crdate',
-        'cruser_id' => 'cruser_id',
-        'default_sortby' => 'ORDER BY crdate',    
-        'delete' => 'deleted',    
-        'enablecolumns' => Array (        
-            'disabled' => 'hidden',
-        ),
-        'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY).'tca.php',
-        'iconfile' => t3lib_extMgm::extRelPath($_EXTKEY).'icon_tx_cfcleague_match_note.gif',
-    ),
-    'feInterface' => Array (
-        'fe_admin_fieldList' => 'hidden, game, minute, extra_time, type, player_home, player_guest, comment',
-    )
+		'tstamp' => 'tstamp',
+		'crdate' => 'crdate',
+		'cruser_id' => 'cruser_id',
+		'default_sortby' => 'ORDER BY crdate',
+		'delete' => 'deleted',
+		'enablecolumns' => Array (
+			'disabled' => 'hidden',
+		),
+		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY).'tca.php',
+		'iconfile' => t3lib_extMgm::extRelPath($_EXTKEY).'icon_table.gif',
+	),
+	'feInterface' => Array (
+		'fe_admin_fieldList' => 'hidden, game, minute, extra_time, type, player_home, player_guest, comment',
+	)
 );
 
 $TCA['tx_cfcleague_team_notes'] = Array (
 	'ctrl' => Array (
 		'title' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_team_notes',
 		'label' => 'uid',
-		'label_alt' => 'team,comment',
+		'label_alt' => 'type,player,team',
 		'label_alt_force' => 1,
 		'requestUpdate' => 'team',
 		'tstamp' => 'tstamp',
+		'type' => 'mediatype',
 		'crdate' => 'crdate',
 		'cruser_id' => 'cruser_id',
 		'delete' => 'deleted',
@@ -235,8 +236,6 @@ $TCA['tx_cfcleague_note_types'] = Array (
 	'ctrl' => Array (
 		'title' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_note_types',
 		'label' => 'label',
-		'label_alt' => 'marker',
-		'label_alt_force' => 1,
 		'tstamp' => 'tstamp',
 		'crdate' => 'crdate',
 		'cruser_id' => 'cruser_id',

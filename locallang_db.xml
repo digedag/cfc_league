@@ -172,6 +172,13 @@
 			<label index="tx_cfcleague_note_types.marker">HTML-Marker</label>
 			<label index="tx_cfcleague_note_types.description">Description</label>
 
+			<label index="tx_cfcleague_team_notes.media">Media file</label>
+			<label index="tx_cfcleague_team_notes.mediatype">Value Type</label>
+			<label index="tx_cfcleague_team_notes.mediatype.text">Text</label>
+			<label index="tx_cfcleague_team_notes.mediatype.media">Media</label>
+			<label index="tx_cfcleague_team_notes.mediatype.number">Number</label>
+			<label index="tx_cfcleague_team_notes.number">Value</label>
+
 			<label index="tx_cfcleague.unknown">Unknown</label>
 		</languageKey>
 		<languageKey index="de" type="array">
@@ -332,6 +339,13 @@
 			<label index="tx_cfcleague_note_types.label">Name</label>
 			<label index="tx_cfcleague_note_types.marker">HTML-Marker</label>
 			<label index="tx_cfcleague_note_types.description">Beschreibung</label>
+
+			<label index="tx_cfcleague_team_notes.media">Mediendatei</label>
+			<label index="tx_cfcleague_team_notes.mediatype">Typ des Werts</label>
+			<label index="tx_cfcleague_team_notes.mediatype.text">Text</label>
+			<label index="tx_cfcleague_team_notes.mediatype.media">Media</label>
+			<label index="tx_cfcleague_team_notes.mediatype.number">Ganzzahl</label>
+			<label index="tx_cfcleague_team_notes.number">Wert</label>
 		</languageKey>
 	</data>
 </T3locallang>
