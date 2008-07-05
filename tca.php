@@ -957,6 +957,43 @@ Beim Trainer funktioniert es allerdings.
 				'maxitems' => 10,
 			)
 		),
+		'players_home_stat' => Array (
+			'exclude' => 1,
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.players_home',
+			'config' => Array (
+				'type' => 'text',
+				'cols' => '30',
+				'rows' => '5',
+			)
+		),
+		'players_guest_stat' => Array (
+			'exclude' => 1,
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.players_guest',
+			'config' => Array (
+				'type' => 'text',
+				'cols' => '30',
+				'rows' => '5',
+			)
+		),
+		'substitutes_home_stat' => Array (
+			'exclude' => 1,
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.substitutes_home',
+			'config' => Array (
+				'type' => 'text',
+				'cols' => '30',
+				'rows' => '5',
+			)
+		),
+		'substitutes_guest_stat' => Array (
+			'exclude' => 1,
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.substitutes_guest',
+			'config' => Array (
+				'type' => 'text',
+				'cols' => '30',
+				'rows' => '5',
+			)
+		),
+		
 		'system_home' => Array (
 			'exclude' => 1,
 			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.system_home',
@@ -995,7 +1032,7 @@ Beim Trainer funktioniert es allerdings.
 		),
 		'referee' => Array (
 			'exclude' => 1,
-			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.referee',		
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.referee',
 			'config' => Array (
 				'type' => 'group',
 				'internal_type' => 'db',
@@ -1020,7 +1057,7 @@ Beim Trainer funktioniert es allerdings.
 
 		'goals_home_1' => Array (
 			'exclude' => 1,
-			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.goals_home_1',		
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.goals_home_1',
 			'config' => Array (
 				'type' => 'input',
 				'size' => '4',
@@ -1036,7 +1073,7 @@ Beim Trainer funktioniert es allerdings.
 		),
 		'goals_guest_1' => Array (
 			'exclude' => 1,
-			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.goals_guest_1',		
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.goals_guest_1',
 			'config' => Array (
 				'type' => 'input',
 				'size' => '4',
@@ -1052,7 +1089,7 @@ Beim Trainer funktioniert es allerdings.
 		),
 		'goals_home_2' => Array (		
 			'exclude' => 1,		
-			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.goals_home_2',		
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.goals_home_2',
 			'config' => Array (
 				'type' => 'input',
 				'size' => '4',
@@ -1068,7 +1105,7 @@ Beim Trainer funktioniert es allerdings.
 		),
 		'goals_guest_2' => Array (		
 			'exclude' => 1,		
-			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.goals_guest_2',		
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.goals_guest_2',
 			'config' => Array (
 				'type' => 'input',
 				'size' => '4',
@@ -1084,7 +1121,7 @@ Beim Trainer funktioniert es allerdings.
 		),
 		'goals_home_3' => Array (
 			'exclude' => 1,
-			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.goals_home_3',		
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.goals_home_3',
 			'config' => Array (
 				'type' => 'input',
 				'size' => '4',
@@ -1100,7 +1137,7 @@ Beim Trainer funktioniert es allerdings.
 		),
 		'goals_guest_3' => Array (
 			'exclude' => 1,
-			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.goals_guest_3',		
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.goals_guest_3',
 			'config' => Array (
 				'type' => 'input',
 				'size' => '4',
@@ -1116,7 +1153,7 @@ Beim Trainer funktioniert es allerdings.
 		),
 		'goals_home_4' => Array (
 			'exclude' => 1,
-			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.goals_home_4',		
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.goals_home_4',
 			'config' => Array (
 				'type' => 'input',
 				'size' => '4',
@@ -1132,7 +1169,7 @@ Beim Trainer funktioniert es allerdings.
 		),
 		'goals_guest_4' => Array (
 			'exclude' => 1,
-			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.goals_guest_4',		
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.goals_guest_4',
 			'config' => Array (
 				'type' => 'input',
 				'size' => '4',
@@ -1147,9 +1184,9 @@ Beim Trainer funktioniert es allerdings.
 			)
 		),
 		
-		'date' => Array (		
-			'exclude' => 1,		
-			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.date',		
+		'date' => Array (
+			'exclude' => 1,
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.date',
 			'config' => Array (
 				'type' => 'input',
 				'size' => '12',
@@ -1322,6 +1359,7 @@ Beim Trainer funktioniert es allerdings.
 		'0' => Array('showitem' => 
 			'hidden;;1;;1-1-1, match_no, competition, home, guest, round, round_name, date, status;;6, stadium, visitors, 
 			--div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.tab_lineup,coach_home, players_home, substitutes_home, system_home, system_guest, coach_guest, players_guest, substitutes_guest, referee, assists,
+			--div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.tab_lineup_stat,players_home_stat, substitutes_home_stat, players_guest_stat, substitutes_guest_stat,
 			--div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.tab_score, is_extratime;;2, is_penalty;;3;;1-1-1,
 			--div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.game_report, game_report;;4;richtext[paste|bold|italic|underline|formatblock|class|left|center|right|orderedlist|unorderedlist|outdent|indent|link|image]:rte_transform[mode=ts], game_report_author;;5, dam_images, dam_media')
 	),

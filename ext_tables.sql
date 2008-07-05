@@ -193,12 +193,16 @@ CREATE TABLE tx_cfcleague_games (
 	assists blob NOT NULL,
 	coach_home int(11) DEFAULT '0' NOT NULL,
 	coach_guest int(11) DEFAULT '0' NOT NULL,
-	players_home blob NOT NULL,
-	players_guest blob NOT NULL,
-	substitutes_home blob NOT NULL,
-	substitutes_guest blob NOT NULL,
+	players_home text NOT NULL,
+	players_guest text NOT NULL,
+	substitutes_home text NOT NULL,
+	substitutes_guest text NOT NULL,
 	system_home varchar(100) DEFAULT '' NOT NULL,
 	system_guest varchar(100) DEFAULT '' NOT NULL,
+	players_home_stat text NOT NULL,
+	players_guest_stat text NOT NULL,
+	substitutes_home_stat text NOT NULL,
+	substitutes_guest_stat text NOT NULL,
 
 	goals_home_1 int(11) DEFAULT '0' NOT NULL,
 	goals_guest_1 int(11) DEFAULT '0' NOT NULL,
@@ -217,14 +221,14 @@ CREATE TABLE tx_cfcleague_games (
 	liveticker_author varchar(100) DEFAULT '' NOT NULL,
 	visitors int(11) DEFAULT '0' NOT NULL,
 
-        dam_images int(11) DEFAULT '0' NOT NULL,
-        dam_media int(11) DEFAULT '0' NOT NULL
+	dam_images int(11) DEFAULT '0' NOT NULL,
+	dam_media int(11) DEFAULT '0' NOT NULL
 
-        is_extratime tinyint(3) DEFAULT '0' NOT NULL,
+	is_extratime tinyint(3) DEFAULT '0' NOT NULL,
 	goals_home_et int(11) DEFAULT '0' NOT NULL,
 	goals_guest_et int(11) DEFAULT '0' NOT NULL,
 
-        is_penalty tinyint(3) DEFAULT '0' NOT NULL,
+	is_penalty tinyint(3) DEFAULT '0' NOT NULL,
 	goals_home_ap int(11) DEFAULT '0' NOT NULL,
 	goals_guest_ap int(11) DEFAULT '0' NOT NULL,
 	

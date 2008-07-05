@@ -74,6 +74,7 @@
 			<label index="tx_cfcleague_teams.dummy">Free of play</label>
 			<label index="tx_cfcleague_games">Game</label>
 			<label index="tx_cfcleague_games.tab_lineup">Line-up</label>
+			<label index="tx_cfcleague_games.tab_lineup_stat">Line-up (static)</label>
 			<label index="tx_cfcleague_games.tab_score">Score</label>
 			<label index="tx_cfcleague_games.match_no">Match number</label>
 			<label index="tx_cfcleague_games.home">Hometeam</label>
@@ -247,6 +248,7 @@
 			<label index="tx_cfcleague_teams.dummy">Spielfrei</label>
 			<label index="tx_cfcleague_games">Spiel</label>
 			<label index="tx_cfcleague_games.tab_lineup">Aufstellung</label>
+			<label index="tx_cfcleague_games.tab_lineup_stat">Aufstellung (statisch)</label>
 			<label index="tx_cfcleague_games.tab_score">Ergebnis</label>
 			<label index="tx_cfcleague_games.match_no">Spielnummer</label>
 			<label index="tx_cfcleague_games.home">Heim</label>
