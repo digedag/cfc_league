@@ -203,6 +203,8 @@ CREATE TABLE tx_cfcleague_games (
 	players_guest_stat text NOT NULL,
 	substitutes_home_stat text NOT NULL,
 	substitutes_guest_stat text NOT NULL,
+	scorer_home_stat text NOT NULL,
+	scorer_guest_stat text NOT NULL,
 
 	goals_home_1 int(11) DEFAULT '0' NOT NULL,
 	goals_guest_1 int(11) DEFAULT '0' NOT NULL,

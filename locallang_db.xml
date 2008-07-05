@@ -95,6 +95,8 @@
 			<label index="tx_cfcleague_games.players_guest">Players Guest</label>
 			<label index="tx_cfcleague_games.substitutes_home">Substitutes Home</label>
 			<label index="tx_cfcleague_games.substitutes_guest">Substitutes Guest</label>
+			<label index="tx_cfcleague_games.scorer_home_stat">Scorer Home</label>
+			<label index="tx_cfcleague_games.scorer_guest_stat">Scorer Guest</label>
 			<label index="tx_cfcleague_games.system_home">System Home</label>
 			<label index="tx_cfcleague_games.system_guest">System Guest</label>
 			<label index="tx_cfcleague_games.referee">Referee</label>
@@ -269,6 +271,8 @@
 			<label index="tx_cfcleague_games.players_guest">Aufstellung Gast</label>
 			<label index="tx_cfcleague_games.substitutes_home">Ersatz Heim</label>
 			<label index="tx_cfcleague_games.substitutes_guest">Ersatz Gast</label>
+			<label index="tx_cfcleague_games.scorer_home_stat">Torschützen Heim</label>
+			<label index="tx_cfcleague_games.scorer_guest_stat">Torschützen Gast</label>
 			<label index="tx_cfcleague_games.system_home">Spielsystem Heim</label>
 			<label index="tx_cfcleague_games.system_guest">Spielsystem Gast</label>
 			<label index="tx_cfcleague_games.referee">Schiedsrichter</label>
