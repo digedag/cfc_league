@@ -2,9 +2,12 @@
 Änderungen
 ----------
 
+v0.4.2 (06.07.2008)
+* New text fields in match record to setup lineups, substitutes and scorers as plain text. 
+
 v0.4.1 (30.06.2008)
 * TCA setup for match with tab dividers now.
-* Match notes completed
+* Team notes completed
 
 v0.4.0 (08.06.2008)
 * new TER release
