@@ -186,6 +186,7 @@ $TCA['tx_cfcleague_games'] = Array (
 		'fe_admin_fieldList' => 'hidden, home, guest, competition, round, round_name, status, coach_home, coach_guest, players_home, players_guest, substitutes_home, substitutes_guest, goals_home_1, goals_guest_1, goals_home_2, goals_guest_2, goals_home_3, goals_guest_3, goals_home_4, goals_guest_4, date, link_report, link_ticker, game_report, visitors, goals_home_et, goals_guest_et, goals_home_ap, goals_guest_ap',
 	)
 );
+t3lib_extMgm::addLLrefForTCAdescr('tx_cfcleague_games','EXT:cfc_league/locallang_csh_games.php');
 
 $TCA['tx_cfcleague_match_notes'] = Array (
 	'ctrl' => Array (

@@ -186,6 +186,7 @@ CREATE TABLE tx_cfcleague_games (
 	competition int(11) DEFAULT '0' NOT NULL,
 	round int(11) DEFAULT '0' NOT NULL,
 	round_name varchar(100) DEFAULT '' NOT NULL,
+	addinfo varchar(254) DEFAULT '' NOT NULL,
 	stadium varchar(200) DEFAULT '' NOT NULL,
 	status int(11) DEFAULT '0' NOT NULL,
 
