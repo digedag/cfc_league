@@ -1,6 +1,8 @@
 <?php
 if (!defined ('TYPO3_MODE')) 	die ('Access denied.');
 
+require_once(t3lib_extMgm::extPath('div') . 'class.tx_div.php');
+tx_div::load('tx_rnbase_configurations');
 // Zur Sicherheit einbinden, da die Funktion schon einmal nicht gefunden wurde...
 require_once(t3lib_extMgm::extPath('dam').'tca_media_field.php');
 
@@ -110,7 +112,6 @@ $TCA['tx_cfcleague_saison'] = Array (
 		'1' => Array('showitem' => '')
 	)
 );
-
 
 
 $TCA['tx_cfcleague_competition'] = Array (
@@ -583,6 +584,25 @@ $TCA['tx_cfcleague_club']['columns']['dam_logo']['label'] = 'LLL:EXT:cfc_league/
 $TCA['tx_cfcleague_club']['columns']['dam_logo']['config']['size'] = 1;
 $TCA['tx_cfcleague_club']['columns']['dam_logo']['config']['maxitems'] = 1;
 
+$clubArr = intval(tx_rnbase_configurations::getExtensionCfgValue('cfc_league', 'useGlobalClubs')) ? 
+		Array (
+				'type' => 'select',
+				'items' => Array (
+					Array(' ', '0'),
+				),
+				'foreign_table' => 'tx_cfcleague_club',
+				'foreign_table_where' => 'ORDER BY tx_cfcleague_club.name',
+				'size' => 1,
+				'minitems' => 0,
+				'maxitems' => 1,
+			) : Array (
+				'type' => 'group',
+				'internal_type' => 'db',
+				'allowed' => 'tx_cfcleague_club',
+				'size' => 1,
+				'minitems' => 0,
+				'maxitems' => 1,
+			);
 
 $TCA['tx_cfcleague_teams'] = Array (
 	'ctrl' => $TCA['tx_cfcleague_teams']['ctrl'],
@@ -602,14 +622,15 @@ $TCA['tx_cfcleague_teams'] = Array (
 		'club' => Array (
 			'exclude' => 1,
 			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_teams.club',
-			'config' => Array (
-				'type' => 'group',
-				'internal_type' => 'db',
-				'allowed' => 'tx_cfcleague_club',
-				'size' => 1,
-				'minitems' => 0,
-				'maxitems' => 1,
-			)
+			'config' => $clubArr
+//		Array (
+//				'type' => 'group',
+//				'internal_type' => 'db',
+//				'allowed' => 'tx_cfcleague_club',
+//				'size' => 1,
+//				'minitems' => 0,
+//				'maxitems' => 1,
+//			)
 		),
 		'dam_logo' => txdam_getMediaTCA('image_field'),
 		'name' => Array (
@@ -1090,7 +1111,7 @@ Beim Trainer funktioniert es allerdings.
 				'size' => '4',
 				'max' => '4',
 				'eval' => 'int',
-				'checkbox' => '0',
+//				'checkbox' => '0',
 				'range' => Array (
 					'upper' => '1000',
 					'lower' => '0'
@@ -1106,7 +1127,7 @@ Beim Trainer funktioniert es allerdings.
 				'size' => '4',
 				'max' => '4',
 				'eval' => 'int',
-				'checkbox' => '0',
+//				'checkbox' => '0',
 				'range' => Array (
 					'upper' => '1000',
 					'lower' => '0'
@@ -1122,7 +1143,7 @@ Beim Trainer funktioniert es allerdings.
 				'size' => '4',
 				'max' => '4',
 				'eval' => 'int',
-				'checkbox' => '0',
+//				'checkbox' => '0',
 				'range' => Array (
 					'upper' => '1000',
 					'lower' => '0'
@@ -1138,7 +1159,7 @@ Beim Trainer funktioniert es allerdings.
 				'size' => '4',
 				'max' => '4',
 				'eval' => 'int',
-				'checkbox' => '0',
+//				'checkbox' => '0',
 				'range' => Array (
 					'upper' => '1000',
 					'lower' => '0'
@@ -1154,7 +1175,7 @@ Beim Trainer funktioniert es allerdings.
 				'size' => '4',
 				'max' => '4',
 				'eval' => 'int',
-				'checkbox' => '0',
+//				'checkbox' => '0',
 				'range' => Array (
 					'upper' => '1000',
 					'lower' => '0'
@@ -1170,7 +1191,7 @@ Beim Trainer funktioniert es allerdings.
 				'size' => '4',
 				'max' => '4',
 				'eval' => 'int',
-				'checkbox' => '0',
+//				'checkbox' => '0',
 				'range' => Array (
 					'upper' => '1000',
 					'lower' => '0'
@@ -1186,7 +1207,7 @@ Beim Trainer funktioniert es allerdings.
 				'size' => '4',
 				'max' => '4',
 				'eval' => 'int',
-				'checkbox' => '0',
+//				'checkbox' => '0',
 				'range' => Array (
 					'upper' => '1000',
 					'lower' => '0'
@@ -1202,7 +1223,7 @@ Beim Trainer funktioniert es allerdings.
 				'size' => '4',
 				'max' => '4',
 				'eval' => 'int',
-				'checkbox' => '0',
+//				'checkbox' => '0',
 				'range' => Array (
 					'upper' => '1000',
 					'lower' => '0'
@@ -1315,7 +1336,7 @@ Beim Trainer funktioniert es allerdings.
 				'size' => '4',
 				'max' => '4',
 				'eval' => 'int',
-				'checkbox' => '0',
+//				'checkbox' => '0',
 				'range' => Array (
 					'upper' => '1000',
 					'lower' => '0'
@@ -1331,7 +1352,7 @@ Beim Trainer funktioniert es allerdings.
 				'size' => '4',
 				'max' => '4',
 				'eval' => 'int',
-				'checkbox' => '0',
+//				'checkbox' => '0',
 				'range' => Array (
 					'upper' => '1000',
 					'lower' => '0'
@@ -1356,7 +1377,7 @@ Beim Trainer funktioniert es allerdings.
 				'size' => '4',
 				'max' => '4',
 				'eval' => 'int',
-				'checkbox' => '0',
+//				'checkbox' => '0',
 				'range' => Array (
 					'upper' => '1000',
 					'lower' => '0'
@@ -1372,7 +1393,7 @@ Beim Trainer funktioniert es allerdings.
 				'size' => '4',
 				'max' => '4',
 				'eval' => 'int',
-				'checkbox' => '0',
+//				'checkbox' => '0',
 				'range' => Array (
 					'upper' => '1000',
 					'lower' => '0'

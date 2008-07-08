@@ -1,2 +1,5 @@
   # cat=basic; type=int; label= PID of profile archive: Module function "Create Profiles" will work only on this page and below.
 profileRootPageId = 0
+
+  # cat=basic; type=boolean; label= Handle clubs globally: If you enable this, the club selection in team record is easier to use.
+useGlobalClubs = 1
