@@ -13,7 +13,7 @@
 *
 *  The GNU General Public License can be found at
 *  http://www.gnu.org/copyleft/gpl.html.
-*ypo3FormFie
+*
 *  This script is distributed in the hope that it will be useful,
 *  but WITHOUT ANY WARRANTY; without even the implied warranty of
 *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -22,14 +22,12 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-require_once (PATH_t3lib.'class.t3lib_extobjbase.php');
-$BE_USER->modAccess($MCONF,1);
 
 
 /**
  * Die Klasse verwaltet die Bearbeitung der Spieltage
  */
-class tx_cfcleague_match_edit extends t3lib_extobjbase {
+class tx_cfcleague_match_edit  {
   var $doc, $MCONF;
 
   /**
@@ -57,85 +55,71 @@ class tx_cfcleague_match_edit extends t3lib_extobjbase {
   /**
    * Bearbeitung von Spielen. Es werden die Paaren je Spieltag angezeigt
    */
-  function main() {
+  function main(&$MCONF,$pid, $doc, &$formTool, &$current_league) {
     global $LANG;
 
-    $this->doc = $this->pObj->doc;
+		$this->MCONF = $MCONF;
+		$this->id = $pid;
+		$this->doc = $doc;
 
-    $this->formTool = tx_div::makeInstance('tx_rnbase_util_FormTool');
-    $this->formTool->init($this->pObj->doc);
-
+		$this->formTool = $formTool;
+		$LANG->includeLLFile('EXT:cfc_league/locallang_db.xml');
+    
 		// Selector-Instanz bereitstellen
 		$this->selector = t3lib_div::makeInstance('tx_cfcleague_selector');
-		$this->selector->init($this->pObj->doc, $this->MCONF);
+		$this->selector->init($this->doc, $this->MCONF);
 
-//t3lib_div::debug($this->pObj->doc, 'doc medit');
+		// Zuerst mal müssen wir die passende Liga auswählen lassen:
+		$content = '';
+		$content.=$this->doc->spacer(5);
 
-    // Zuerst mal müssen wir die passende Liga auswählen lassen:
-    $content = '';
+		if(!count($current_league->getRounds())){
+			$content .= $LANG->getLL('no_round_in_league');
+			return $content;
+		}
+		// Jetzt den Spieltag wählen lassen
+		$current_round = $this->selector->showRoundSelector($content,$this->id,$current_league);
+		$content.=$this->doc->spacer(5);
+		$data = t3lib_div::_GP('data');
+		// Haben wir Daten im Request?
+		if (is_array($data['tx_cfcleague_games'])) {
+			$this->updateMatches($data);
+			// Wir löschen auch die Mementos für diesen Wettbewerb
+			if (is_object($serviceObj = t3lib_div::makeInstanceService('memento'))) {
+				// Memento über den SuperKey (Wettbewerb) löschen
+				$serviceObj->clear('', $current_league->uid);
+			}
+		}
 
-      // Anzeige der vorhandenen Ligen
-    $current_league = $this->selector->showLeagueSelector($content,$this->id);
-    if($current_league) {
-      $content.=$this->doc->spacer(5);
+		// Nun zeigen wir die Spiele des Spieltags
+		$games = $current_league->getGamesByRound($current_round);
+		$arr = $this->createTableArray($games, $current_league);
 
-      if(!count($current_league->getRounds())){
-        $content .= $LANG->getLL('no_round_in_league');
-        return $content;
-      }
-      // Jetzt den Spieltag wählen lassen
-      $current_round = $this->selector->showRoundSelector($content,$this->id,$current_league);
-      $content.=$this->doc->spacer(5);
+		$this->doc->tableLayout = Array (
+			'table' => Array('<table class="typo3-dblist" width="100%" cellspacing="0" cellpadding="0" border="0">', '</table><br/>'),
+			'0' => Array( // Format für 1. Zeile
+					'defCol' => Array('<td valign="top" class="c-headLineTable" style="font-weight:bold;padding:2px 5px;">','</td>') // Format f�r jede Spalte in der 1. Zeile
+				),
+			'defRow' => Array ( // Formate für alle Zeilen
+					'defCol' => Array('<td valign="middle" style="padding:0px 1px;">','</td>') // Format für jede Spalte in jeder Zeile
+			),
+			'defRowEven' => Array ( // Formate für alle Zeilen
+				'defCol' => Array('<td valign="middle" class="db_list_alt" style="padding:0px 1px;">','</td>') // Format für jede Spalte in jeder Zeile
+			)
+		);
+		$content .= $this->doc->table($arr[0]);
 
-      $data = t3lib_div::_GP('data');
-      // Haben wir Daten im Request?
-      if (is_array($data['tx_cfcleague_games'])) {
-        $this->updateMatches($data);
-        // Wir löschen auch die Mementos für diesen Wettbewerb
-        if (is_object($serviceObj = t3lib_div::makeInstanceService('memento'))) {
-          // Memento über den SuperKey (Wettbewerb) löschen
-          $serviceObj->clear('', $current_league->uid);
-        }
-      }
-
-      // Nun zeigen wir die Spiele des Spieltags
-      $games = $current_league->getGamesByRound($current_round);
-      $arr = $this->createTableArray($games, $current_league);
-
-      $this->doc->tableLayout = Array (
-      	'table' => Array('<table class="typo3-dblist" width="100%" cellspacing="0" cellpadding="0" border="0">', '</table><br/>'),
-        '0' => Array( // Format für 1. Zeile
-           'defCol' => Array('<td valign="top" class="c-headLineTable" style="font-weight:bold;padding:2px 5px;">','</td>') // Format f�r jede Spalte in der 1. Zeile
-        ),
-        'defRow' => Array ( // Formate für alle Zeilen
-//          '0' => Array('<td valign="top">','</td>'), // Format für 1. Spalte in jeder Zeile
-          'defCol' => Array('<td valign="top" style="padding:0 5px;">','</td>') // Format für jede Spalte in jeder Zeile
-        ),
-        'defRowEven' => Array ( // Formate für alle Zeilen
-          'defCol' => Array('<td valign="top" class="db_list_alt" style="padding:0 5px;">','</td>') // Format für jede Spalte in jeder Zeile
-        )
-      );
-
-      $content .= $this->doc->table($arr[0]);
-
-      // Den Update-Button einfügen
-      $content .= '<input type="submit" name="update" value="'.$LANG->getLL('btn_update').'" onclick="return confirm('.$GLOBALS['LANG']->JScharCode($GLOBALS['LANG']->getLL('btn_update_msgEditGames')).')">';
-      if($arr[1]) { // Hat ein Team spielfrei?
-        $content .= '<h3 style="margin-top:10px">'.$LANG->getLL('msg_free_of_play') . '</h3><ul>';
-        foreach($arr[1] As $freeOfPlay) {
-          $content .= '<li>'.$freeOfPlay['team'].$freeOfPlay['match_edit'] . '</li>';
-        }
-        $content .= '</ul>';
-      }
-      
-      // Den JS-Code für Validierung einbinden
-      $content  .= $this->formTool->form->JSbottom('editform');
-    }
-    else {
-      $content .= $this->doc->section('Info:',$LANG->getLL('no_league_in_page'),0,1,ICON_WARN);
-    }
-    return $content;
-
+		// Den Update-Button einfügen
+		$content .= $this->formTool->createSubmit('update',$LANG->getLL('btn_update'), $GLOBALS['LANG']->getLL('btn_update_msgEditGames'));
+//		$content .= '<input type="submit" name="update" value="'.$LANG->getLL('btn_update').'" onclick="return confirm('.$GLOBALS['LANG']->JScharCode($GLOBALS['LANG']->getLL('btn_update_msgEditGames')).')">';
+		if($arr[1]) { // Hat ein Team spielfrei?
+			$content .= '<h3 style="margin-top:10px">'.$LANG->getLL('msg_free_of_play') . '</h3><ul>';
+			foreach($arr[1] As $freeOfPlay) {
+				$content .= '<li>'.$freeOfPlay['team'].$freeOfPlay['match_edit'] . '</li>';
+			}
+			$content .= '</ul>';
+		}
+		return $content;
   }
 
   /**
@@ -187,17 +171,23 @@ class tx_cfcleague_match_edit extends t3lib_extobjbase {
 
 //if($isNoMatch) t3lib_div::debug($game, 'edit');
 
-      if(!$isNoMatch) {
-        $row[] = $game['uid'];
-        $row[] = $this->formTool->createDateInput('data[tx_cfcleague_games]['.$game['uid'].'][date]',$game['date']);
-        $row[] = $this->formTool->createSelectSingle('data[tx_cfcleague_games]['.$game['uid'].'][status]', $game['status'], 'tx_cfcleague_games', 'status');
-        $row[] = $this->formTool->createEditLink('tx_cfcleague_teams',$game['home'],$game['short_name_home']);
-        $row[] = $this->formTool->createEditLink('tx_cfcleague_teams',$game['guest'],$game['short_name_guest']);
+      $table = 'tx_cfcleague_games';
+			if(!$isNoMatch) {
+				$row[] = $game['uid'];
+		$dataArr = $this->formTool->getTCEFormArray($table, $game['uid']);
+//t3lib_div::debug($dataArr, 'tx_cfcleague_match_edit'); // TODO: remove me
+				$row[] = $this->formTool->form->getSoloField($table,$dataArr[$table.'_'.$game['uid']],'date');
+//				$row[] = $this->formTool->createDateInput('data[tx_cfcleague_games]['.$game['uid'].'][date]',$game['date']);
 
-        // Jetzt die Spielabschitte einbauen, wobei mit dem letzten begonnen wird
-        for($i=$parts; $i > 0; $i--) {
-          $row[] = $this->formTool->createIntInput('data[tx_cfcleague_games]['.$game['uid'].'][goals_home_'.$i.']',$game['goals_home_'.$i],2) . ' : ' . $this->formTool->createIntInput('data[tx_cfcleague_games]['.$game['uid'].'][goals_guest_'.$i.']',$game['goals_guest_'.$i],2);
-        }
+				$row[] = $this->formTool->form->getSoloField($table,$dataArr[$table.'_'.$game['uid']],'status');
+//				$row[] = $this->formTool->createSelectSingle('data[tx_cfcleague_games]['.$game['uid'].'][status]', $game['status'], 'tx_cfcleague_games', 'status');
+				$row[] = $this->formTool->createEditLink('tx_cfcleague_teams',$game['home'],$game['short_name_home']);
+				$row[] = $this->formTool->createEditLink('tx_cfcleague_teams',$game['guest'],$game['short_name_guest']);
+
+				// Jetzt die Spielabschitte einbauen, wobei mit dem letzten begonnen wird
+				for($i=$parts; $i > 0; $i--) {
+					$row[] = $this->formTool->createIntInput('data[tx_cfcleague_games]['.$game['uid'].'][goals_home_'.$i.']',$game['goals_home_'.$i],2) . ' : ' . $this->formTool->createIntInput('data[tx_cfcleague_games]['.$game['uid'].'][goals_guest_'.$i.']',$game['goals_guest_'.$i],2);
+				}
         
 //        $row[] = $this->formTool->createIntInput('data[tx_cfcleague_games]['.$game['uid'].'][goals_home_2]',$game['goals_home_2'],2) . ' : ' . $this->formTool->createIntInput('data[tx_cfcleague_games]['.$game['uid'].'][goals_guest_2]',$game['goals_guest_2'],2);
 //        $row[] = $this->formTool->createIntInput('data[tx_cfcleague_games]['.$game['uid'].'][goals_home_1]',$game['goals_home_1'],2) . ' : ' . $this->formTool->createIntInput('data[tx_cfcleague_games]['.$game['uid'].'][goals_guest_1]',$game['goals_guest_1'],2);

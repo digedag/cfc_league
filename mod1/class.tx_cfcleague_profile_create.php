@@ -26,7 +26,6 @@ require_once (PATH_t3lib.'class.t3lib_extobjbase.php');
 $BE_USER->modAccess($MCONF,1);
 
 require_once(PATH_site.'typo3/sysext/cms/tslib/class.tslib_content.php');
-require_once('../class.tx_cfcleague_form_tool.php');
 
 /**
  * Die Klasse ermöglicht die schnelle Erstellung von Profilen
@@ -61,73 +60,95 @@ class tx_cfcleague_profile_create extends t3lib_extobjbase {
 
     $rootPage = intval($extConfig['profileRootPageId']);
 
-    $goodPages = tx_cfcleague_db::getPagePath($this->id);
-    if(!in_array($rootPage, $goodPages)) {
-      $content .= $this->doc->section('Message:',$LANG->getLL('msg_pageNotAllowed'),0,1,ICON_WARN);
-      return $content;
-    }
+		$goodPages = tx_cfcleague_db::getPagePath($this->id);
+		if(!in_array($rootPage, $goodPages)) {
+			$content .= $this->doc->section('Message:',$LANG->getLL('msg_pageNotAllowed'),0,1,ICON_WARN);
+			return $content;
+		}
+		$this->formTool = tx_div::makeInstance('tx_rnbase_util_FormTool');
+		$this->formTool->init($this->pObj->doc);
 
-    $this->formTool = t3lib_div::makeInstance('tx_cfcleague_form_tool');
-    $this->formTool->init($this->pObj->doc);
+		// Selector-Instanz bereitstellen
+		$this->selector = t3lib_div::makeInstance('tx_cfcleague_selector');
+		$this->selector->init($this->pObj->doc, $this->MCONF);
 
-    // Selector-Instanz bereitstellen
-    $this->selector = t3lib_div::makeInstance('tx_cfcleague_selector');
-    $this->selector->init($this->pObj->doc, $this->MCONF);
+		// Wir benötigen die $TCA, um die maximalen Spieler pro Team prüfen zu können
+		t3lib_div::loadTCA('tx_cfcleague_teams');
+		$baseInfo['maxCoaches'] = intval($TCA['tx_cfcleague_teams']['columns']['coaches']['config']['maxitems']);
+		$baseInfo['maxPlayers'] = intval($TCA['tx_cfcleague_teams']['columns']['players']['config']['maxitems']);
+		$baseInfo['maxSupporters'] = intval($TCA['tx_cfcleague_teams']['columns']['supporters']['config']['maxitems']);
 
-    // Wir benötigen die $TCA, um die maximalen Spieler pro Team prüfen zu können
-    t3lib_div::loadTCA('tx_cfcleague_teams');
-    $baseInfo['maxCoaches'] = intval($TCA['tx_cfcleague_teams']['columns']['coaches']['config']['maxitems']);
-    $baseInfo['maxPlayers'] = intval($TCA['tx_cfcleague_teams']['columns']['players']['config']['maxitems']);
-    $baseInfo['maxSupporters'] = intval($TCA['tx_cfcleague_teams']['columns']['supporters']['config']['maxitems']);
-    
-    $saison = $this->selector->showSaisonSelector($content,$this->id);
-    if($saison && count($saison->getCompetitions())) {
-      // Anzeige der vorhandenen Ligen
-//      t3lib_div::debug($saison->getCompetitions());
-      $league = $this->selector->showLeagueSelector($content,$this->id,$saison->getCompetitions());
-      $team = $this->selector->showTeamSelector($content,$this->id,$league);
+		$saison = $this->selector->showSaisonSelector($content,$this->id);
+		if($saison && count($saison->getCompetitions())) {
+			// Anzeige der vorhandenen Ligen
+			$league = $this->selector->showLeagueSelector($content,$this->id,$saison->getCompetitions());
+			$team = $this->selector->showTeamSelector($content,$this->id,$league);
 
-      $data = t3lib_div::_GP('data');
-      if(!$team){ // Kein Team gefunden
-        $content.=$this->doc->section('Info:', $LANG->getLL('msg_no_team_found'),0,1,ICON_WARN);
-      }
-      // Haben wir Daten im Request?
-      else {
-        if (is_array($data['tx_cfcleague_profiles'])) {
-          $content .= $this->createProfiles($data,$team, $baseInfo);
-          $team->refresh();
-        }
+			$data = t3lib_div::_GP('data');
+			if(!$team){ // Kein Team gefunden
+				$content.=$this->doc->section('Info:', $LANG->getLL('msg_no_team_found'),0,1,ICON_WARN);
+			}
+			// Haben wir Daten im Request?
+			else {
+				// Wenn ein Team gefunden ist, dann können wir das Modul schreiben
+				$menu = $this->selector->showTabMenu($this->id, 'teamtools', array('0' => $LANG->getLL('create_players'), '1' => $LANG->getLL('add_players')));
+				$content .= $menu['menu'];
+				switch($menu['value']) {
+					case 0:
+						$content .= $this->showCreateProfiles($data, $team, $baseInfo);
+						break;
+					case 1:
+						$content .= $this->showAddProfiles($data, $team, $baseInfo);
+						break;
+				}
+				// Den JS-Code für Validierung einbinden
+				$content .= $this->formTool->form->JSbottom('editform');
+			}
+		}
+		else {
+			// TODO Meldung umbenennen
+			$content.=$this->doc->section('Info:', $saison ? $LANG->getLL('msg_NoCompetitonsFound') : $LANG->getLL('msg_NoSaisonFound'),0,1,ICON_WARN);
+		}
+		return $content;
+	}
+	private function showAddProfiles(&$data, &$team, &$baseInfo) {
+		$baseInfo['freePlayers'] = $baseInfo['maxPlayers'] - $team->getPlayerSize();
+		$baseInfo['freeCoaches'] = $baseInfo['maxCoaches'] - $team->getCoachSize();
+		$baseInfo['freeSupporters'] = $baseInfo['maxSupporters'] - $team->getSupporterSize();
+		if($baseInfo['freePlayers'] < 1 && $baseInfo['freeCoaches'] < 1 && $baseInfo['freeSupporters'] < 1) {
+			// Kann nix mehr angelegt werden
+			$content .= $this->doc->section('Message:',$LANG->getLL('msg_maxPlayers'),0,1,ICON_WARN);
+		}
+		else {
+			$content .= $this->doc->section('Message:',$this->getInfoMessage($baseInfo),0,1, ICON_INFO);
+		}
+		return $content.'TODO!';
+	}
+	
+	private function showCreateProfiles(&$data, &$team, &$baseInfo) {
+		global $LANG;
+		if (is_array($data['tx_cfcleague_profiles'])) {
+			$content .= $this->createProfiles($data,$team, $baseInfo);
+			$team->refresh();
+		}
 
-        $baseInfo['freePlayers'] = $baseInfo['maxPlayers'] - $team->getPlayerSize();
-        $baseInfo['freeCoaches'] = $baseInfo['maxCoaches'] - $team->getCoachSize();
-        $baseInfo['freeSupporters'] = $baseInfo['maxSupporters'] - $team->getSupporterSize();
-        if($baseInfo['freePlayers'] < 1 && $baseInfo['freeCoaches'] < 1 && $baseInfo['freeSupporters'] < 1) {
-          // Kann nix mehr angelegt werden
-          $content .= $this->doc->section('Message:',$LANG->getLL('msg_maxPlayers'),0,1,ICON_WARN);
-        }
-        else {
-          $content .= $this->doc->section('Info:',$LANG->getLL('msg_checkPage') . ': <b>' . t3lib_BEfunc::getRecordPath($this->id,'',0) . '</b>' ,0,1,ICON_WARN);
-
-          $content .= $this->doc->section('Message:',$this->getInfoMessage($baseInfo),0,1, ICON_INFO);
-          // Wir zeigen 15 Zeilen mit Eingabefeldern
-          $content .= $this->prepareInputTable($team);
-
-          // Den Update-Button einfügen
-          $content .= '<input type="submit" name="update" value="'.$LANG->getLL('btn_create').'" onclick="return confirm('.$GLOBALS['LANG']->JScharCode($GLOBALS['LANG']->getLL('msg_CreateProfiles')).')">';
-
-          // Den JS-Code für Validierung einbinden
-          $content .= $this->formTool->form->JSbottom('editform');
-        }
-      }
-    }
-    else {
-      // TODO Meldung umbenennen
-      $content.=$this->doc->section('Info:', $saison ? $LANG->getLL('msg_NoCompetitonsFound') : $LANG->getLL('msg_NoSaisonFound'),0,1,ICON_WARN);
-    }
-
-    return $content;
-  }
-
+		$baseInfo['freePlayers'] = $baseInfo['maxPlayers'] - $team->getPlayerSize();
+		$baseInfo['freeCoaches'] = $baseInfo['maxCoaches'] - $team->getCoachSize();
+		$baseInfo['freeSupporters'] = $baseInfo['maxSupporters'] - $team->getSupporterSize();
+		if($baseInfo['freePlayers'] < 1 && $baseInfo['freeCoaches'] < 1 && $baseInfo['freeSupporters'] < 1) {
+			// Kann nix mehr angelegt werden
+			$content .= $this->doc->section('Message:',$LANG->getLL('msg_maxPlayers'),0,1,ICON_WARN);
+		}
+		else {
+			$content .= $this->doc->section('Info:',$LANG->getLL('msg_checkPage') . ': <b>' . t3lib_BEfunc::getRecordPath($this->id,'',0) . '</b>' ,0,1,ICON_WARN);
+			$content .= $this->doc->section('Message:',$this->getInfoMessage($baseInfo),0,1, ICON_INFO);
+			// Wir zeigen 15 Zeilen mit Eingabefeldern
+			$content .= $this->prepareInputTable($team);
+			// Den Update-Button einfügen
+			$content .= '<input type="submit" name="update" value="'.$LANG->getLL('btn_create').'" onclick="return confirm('.$GLOBALS['LANG']->JScharCode($GLOBALS['LANG']->getLL('msg_CreateProfiles')).')">';
+		}
+		return $content;
+	}
   /**
    * Liefert die Informationen, über den Zustand des Teams.
    *

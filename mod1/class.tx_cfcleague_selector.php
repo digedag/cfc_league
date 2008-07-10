@@ -247,6 +247,62 @@ class tx_cfcleague_selector{
     return $this->SAISON_SETTINGS['saison'] ? new tx_cfcleague_saison($this->SAISON_SETTINGS['saison']) : 0;
   }
 
+  /**
+   * Zeigt ein TabMenu
+   *
+   * @param int $pid
+   * @param string $name
+   * @param array $entries
+   * @return array with keys 'menu' and 'value'
+   */
+	public function showTabMenu($pid, $name, $entries) {
+		$MENU = Array (
+			$name => $entries
+		);
+		$SETTINGS = t3lib_BEfunc::getModuleData(
+			$MENU,t3lib_div::_GP('SET'),$this->MCONF['name'] // Das ist der Name des Moduls
+		);
+
+		$out = '
+		<div class="typo3-dyntabmenu-tabs">
+			<table class="typo3-dyntabmenu" border="0" cellpadding="0" cellspacing="0">
+			<tbody><tr>';
+
+		foreach($entries As $key => $value) {
+			//$out .= '<td class="tab" onmouseover="DTM_mouseOver(this);" onmouseout="DTM_mouseOut(this);" nowrap="nowrap">';
+			$out .= '
+				<td class="tab'.($SETTINGS[$name] == $key ? 'Act' : '').'" nowrap="nowrap">';
+			//$out .= '<a href="#" onclick="jumpToUrl(\'index.php?&amp;id='.$pid.'&amp;SET['.$name.']='. $key .',this);\'>'.$value.'<img name="DTM-307fab8d03-1-REQ" src="clear.gif" alt="" height="10" hspace="4" width="10"></a></td>';
+			$out .= '<a href="#" onclick="jumpToUrl(\'index.php?&amp;id='.$pid.'&amp;SET['.$name.']='. $key .'\',this);">'.$value.'</a></td>';
+
+		}
+		$out .= '
+				</tr>
+			</tbody></table></div>
+		';
+		$ret['menu'] = $out;
+		$ret['value'] = $SETTINGS[$name];
+		return $ret;
+		
+		// jumpToUrl('index.php?&amp;id=5&amp;SET[teamtools]='+this.options[this.selectedIndex].value,this);
+	}
+	/**
+	 * Zeigt eine Art Tab-Menu
+	 *
+	 */
+	public function showMenu($pid, $name, $entries) {
+		$MENU = Array (
+			$name => $entries
+		);
+		$SETTINGS = t3lib_BEfunc::getModuleData(
+			$MENU,t3lib_div::_GP('SET'),$this->MCONF['name'] // Das ist der Name des Moduls
+		);
+		$ret['menu'] = t3lib_BEfunc::getFuncMenu(
+			$pid,'SET['.$name.']',$SETTINGS[$name],$MENU[$name]
+		);
+		$ret['value'] = $SETTINGS[$name];
+		return $ret;
+  }
 
   /**
    * Liefert die Ligen der aktuellen Seite.

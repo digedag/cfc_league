@@ -22,14 +22,11 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-require_once (PATH_t3lib.'class.t3lib_extobjbase.php');
-$BE_USER->modAccess($MCONF,1);
-
 
 /**
  * Die Klasse verwaltet die automatische Erstellung von Spielplänen
  */
-class tx_cfcleague_generator extends t3lib_extobjbase {
+class tx_cfcleague_generator {
   var $doc, $MCONF;
 
   /**
@@ -40,92 +37,70 @@ class tx_cfcleague_generator extends t3lib_extobjbase {
    * @return	void
    */
   function init(&$pObj,$conf)	{
-    parent::init($pObj,$conf);
-    $this->MCONF = $pObj->MCONF;
-    $this->id = $pObj->id;
   }
 
-  /**
-   * Verwaltet die Erstellung von Spielplänen von Ligen
-   */
-  function main() {
-    global $LANG;
-    // Zuerst mal müssen wir die passende Liga auswählen lassen:
-    // Entweder global über die Datenbank oder die Ligen der aktuellen Seite
+	/**
+	 * Verwaltet die Erstellung von Spielplänen von Ligen
+	 */
+	function main(&$MCONF,$pid, $doc, &$formTool, &$current_league) {
+		global $LANG;
+		$this->MCONF = $MCONF;
+		$this->id = $pid;
+		// Zuerst mal müssen wir die passende Liga auswählen lassen:
+		// Entweder global über die Datenbank oder die Ligen der aktuellen Seite
+		$this->doc = $doc;
+		$this->formTool = $formTool;
+		$content = $this->showCreateMatchTable($current_league);
+		return $content;
+  }
+  
+  private function showCreateMatchTable($current_league) {
+  	global $LANG;
+		// Liga darf noch keine Spiele haben
+		$matchCnt = count($current_league->getGames());
 
-    $this->doc = $this->pObj->doc;
+		if($matchCnt > 0){
+			$content.=$this->doc->section($LANG->getLL('warning').':',$LANG->getLL('msg_league_generation_hasmatches'),0,1,ICON_WARN);
+			$content.='<br/><br/>';
+		}
 
-    $this->formTool = tx_div::makeInstance('tx_rnbase_util_FormTool');
-    $this->formTool->init($this->doc);
+		// Wir holen die Mannschaften und den GameString aus der Liga
+		// Beides jagen wir durch den Generator
+		$options['halfseries'] = intval(t3lib_div::_GP('option_halfseries'));
+		$options['nomatch'] = $current_league->hasDummyTeam();
+		$options['firstmatchday'] = $current_league->getNumberOfRounds();
+		$options['firstmatchnumber'] = $current_league->getLastMatchNumber();
 
-    // Selector-Instanz bereitstellen
-    $this->selector = t3lib_div::makeInstance('tx_cfcleague_selector');
-    $this->selector->init($this->doc, $this->MCONF);
-    
-    $content = '';
-
-    // Anzeige der vorhandenen Ligen
-    $current_league = $this->selector->showLeagueSelector($content,$this->id);
-    if($current_league) {
-
-      // Liga darf noch keine Spiele haben
-      $matchCnt = count($current_league->getGames());
-    	
-      if($matchCnt > 0){
-        $content.=$this->doc->section($LANG->getLL('warning').':',$LANG->getLL('msg_league_generation_hasmatches'),0,1,ICON_WARN);
-        $content.='<br/><br/>';
-      }
-
-      // Wir holen die Mannschaften und den GameString aus der Liga
-      // Beides jagen wir durch den Generator
-
-      $options['halfseries'] = intval(t3lib_div::_GP('option_halfseries'));
-      $options['nomatch'] = $current_league->hasDummyTeam();
-      $options['firstmatchday'] = $current_league->getNumberOfRounds();
-      $options['firstmatchnumber'] = $current_league->getLastMatchNumber();
-      
-      // Zunächst mal Anzeige der Daten
-      $gen = t3lib_div::makeInstance('tx_cfcleague_generator2');
-      $table = $gen->main($current_league->getTeamIds(),$current_league->getGenerationKey(), $options);
-
-      $data = t3lib_div::_GP('data');
-      // Haben wir Daten im Request?
-      if (is_array($data['rounds']) && t3lib_div::_GP('update')) {
+		// Zunächst mal Anzeige der Daten
+		$gen = t3lib_div::makeInstance('tx_cfcleague_generator2');
+		$table = $gen->main($current_league->getTeamIds(),$current_league->getGenerationKey(), $options);
+		$data = t3lib_div::_GP('data');
+		// Haben wir Daten im Request?
+		if (is_array($data['rounds']) && t3lib_div::_GP('update')) {
 //  t3lib_div::debug($data['rounds'], 'GP generator') ;
-        $content .= $this->doc->section($LANG->getLL('message').':',
-                          $this->createGames($data['rounds'],$table, $current_league),
-                          0,1,ICON_INFO);
-      }
-      else
-      {
+			$content .= $this->doc->section($LANG->getLL('message').':',
+					$this->createGames($data['rounds'],$table, $current_league),
+					0,1,ICON_INFO);
+		}
+		else {
 //      	t3lib_div::debug(, 'tx_cfcleague_generator'); // TODO: Remove me!
-      	if(count($gen->errors)) {
-          // Da gibt es wohl ein Problem bei der Erzeugung der Spiele...
-          $content.=$this->doc->section($LANG->getLL('error').':','<ul><li>' . implode('<li>',$gen->errors) . '</ul>',0,1,ICON_FATAL);
-		    }
-      	if(count($gen->warnings)) {
-          // Da gibt es wohl ein Problem bei der Erzeugung der Spiele...
-          $content.=$this->doc->section($LANG->getLL('warning').':','<ul><li>' . implode('<li>',$gen->warnings) . '</ul>',0,1,ICON_WARN);
-		    }
-		    if(count($table)) {
-          // Wir zeigen alle Spieltage und fragen nach dem Termin
-          $content .= $this->prepareGameTable($table, $current_league,$options['halfseries']);
-
-          // Den Update-Button einfügen
-          $content .= '<input type="submit" name="update" value="'.$LANG->getLL('btn_create').'" onclick="return confirm('.$GLOBALS['LANG']->JScharCode($GLOBALS['LANG']->getLL('msg_CreateGameTable')).')">';
-
-          // Den JS-Code für Validierung einbinden
-          $content  .= $this->formTool->form->JSbottom('editform');
-        }
-        
-      }
-    }
-    else {
-      $content.=$this->doc->section('Info:',$LANG->getLL('no_league_in_page'),0,1,ICON_WARN);
-    }
-    return $content;
-  }
-
+			if(count($gen->errors)) {
+				// Da gibt es wohl ein Problem bei der Erzeugung der Spiele...
+				$content.=$this->doc->section($LANG->getLL('error').':','<ul><li>' . implode('<li>',$gen->errors) . '</ul>',0,1,ICON_FATAL);
+			}
+			if(count($gen->warnings)) {
+				// Da gibt es wohl ein Problem bei der Erzeugung der Spiele...
+				$content.=$this->doc->section($LANG->getLL('warning').':','<ul><li>' . implode('<li>',$gen->warnings) . '</ul>',0,1,ICON_WARN);
+			}
+			if(count($table)) {
+				// Wir zeigen alle Spieltage und fragen nach dem Termin
+				$content .= $this->prepareGameTable($table, $current_league,$options['halfseries']);
+				// Den Update-Button einfügen
+				$content .= '<input type="submit" name="update" value="'.$LANG->getLL('btn_create').'" onclick="return confirm('.$GLOBALS['LANG']->JScharCode($GLOBALS['LANG']->getLL('msg_CreateGameTable')).')">';
+			}
+		}
+		return $content;
+	}
   /**
    * Erstellt die Spiele der Liga. Diese werden aus den Daten gebildet, die im Request liegen.
    */
