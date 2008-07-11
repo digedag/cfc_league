@@ -51,23 +51,14 @@ class tx_cfcleague_profile_create extends t3lib_extobjbase {
   }
 
 
-  function main() {
-    global $LANG, $TCA;
+	function main() {
+		global $LANG, $TCA;
 
-    $this->doc = $this->pObj->doc;
-    $content = '';
-    $extConfig = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['cfc_league']);
+		$this->doc = $this->pObj->doc;
+		$content = '';
 
-    $rootPage = intval($extConfig['profileRootPageId']);
-
-		$goodPages = tx_cfcleague_db::getPagePath($this->id);
-		if(!in_array($rootPage, $goodPages)) {
-			$content .= $this->doc->section('Message:',$LANG->getLL('msg_pageNotAllowed'),0,1,ICON_WARN);
-			return $content;
-		}
 		$this->formTool = tx_div::makeInstance('tx_rnbase_util_FormTool');
 		$this->formTool->init($this->pObj->doc);
-
 		// Selector-Instanz bereitstellen
 		$this->selector = t3lib_div::makeInstance('tx_cfcleague_selector');
 		$this->selector->init($this->pObj->doc, $this->MCONF);
@@ -79,36 +70,33 @@ class tx_cfcleague_profile_create extends t3lib_extobjbase {
 		$baseInfo['maxSupporters'] = intval($TCA['tx_cfcleague_teams']['columns']['supporters']['config']['maxitems']);
 
 		$saison = $this->selector->showSaisonSelector($content,$this->id);
-		if($saison && count($saison->getCompetitions())) {
-			// Anzeige der vorhandenen Ligen
-			$league = $this->selector->showLeagueSelector($content,$this->id,$saison->getCompetitions());
-			$team = $this->selector->showTeamSelector($content,$this->id,$league);
-
-			$data = t3lib_div::_GP('data');
-			if(!$team){ // Kein Team gefunden
-				$content.=$this->doc->section('Info:', $LANG->getLL('msg_no_team_found'),0,1,ICON_WARN);
-			}
-			// Haben wir Daten im Request?
-			else {
-				// Wenn ein Team gefunden ist, dann können wir das Modul schreiben
-				$menu = $this->selector->showTabMenu($this->id, 'teamtools', array('0' => $LANG->getLL('create_players'), '1' => $LANG->getLL('add_players')));
-				$content .= $menu['menu'];
-				switch($menu['value']) {
-					case 0:
-						$content .= $this->showCreateProfiles($data, $team, $baseInfo);
-						break;
-					case 1:
-						$content .= $this->showAddProfiles($data, $team, $baseInfo);
-						break;
-				}
-				// Den JS-Code für Validierung einbinden
-				$content .= $this->formTool->form->JSbottom('editform');
-			}
-		}
-		else {
-			// TODO Meldung umbenennen
+		if(!($saison && count($saison->getCompetitions()))) {
 			$content.=$this->doc->section('Info:', $saison ? $LANG->getLL('msg_NoCompetitonsFound') : $LANG->getLL('msg_NoSaisonFound'),0,1,ICON_WARN);
+			return $content;
 		}
+		
+		// Anzeige der vorhandenen Ligen
+		$league = $this->selector->showLeagueSelector($content,$this->id,$saison->getCompetitions());
+		$team = $this->selector->showTeamSelector($content,$this->id,$league);
+
+		$data = t3lib_div::_GP('data');
+		if(!$team){ // Kein Team gefunden
+			$content.=$this->doc->section('Info:', $LANG->getLL('msg_no_team_found'),0,1,ICON_WARN);
+			return $content;
+		}
+		// Wenn ein Team gefunden ist, dann können wir das Modul schreiben
+		$menu = $this->selector->showTabMenu($this->id, 'teamtools', array('0' => $LANG->getLL('create_players'), '1' => $LANG->getLL('add_players')));
+		$content .= $menu['menu'];
+		switch($menu['value']) {
+			case 0:
+				$content .= $this->showCreateProfiles($data, $team, $baseInfo);
+				break;
+			case 1:
+				$content .= $this->showAddProfiles($data, $team, $baseInfo);
+				break;
+		}
+		// Den JS-Code für Validierung einbinden
+		$content .= $this->formTool->form->JSbottom('editform');
 		return $content;
 	}
 	private function showAddProfiles(&$data, &$team, &$baseInfo) {
@@ -127,6 +115,13 @@ class tx_cfcleague_profile_create extends t3lib_extobjbase {
 	
 	private function showCreateProfiles(&$data, &$team, &$baseInfo) {
 		global $LANG;
+		$rootPage = tx_rnbase_configurations::getExtensionCfgValue('cfc_league', 'profileRootPageId');
+		$goodPages = tx_cfcleague_db::getPagePath($this->id);
+		if(!in_array($rootPage, $goodPages)) {
+			$content = $this->doc->section('Message:',$LANG->getLL('msg_pageNotAllowed'),0,1,ICON_WARN);
+			return $content;
+		}
+
 		if (is_array($data['tx_cfcleague_profiles'])) {
 			$content .= $this->createProfiles($data,$team, $baseInfo);
 			$team->refresh();
