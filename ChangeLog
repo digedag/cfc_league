@@ -2,8 +2,15 @@
 Änderungen
 ----------
 
+v0.4.3 (11.07.2008)
+* New structure for modules in backend. 
+* Datetime field in module match edit changed. Maybe this will solve some problems with wrong hours.
+* New field addinfo in match record. Can be used for extra info in matchtable.
+* Club selection in team record optionally changed from group type to select type
+
+
 v0.4.2 (06.07.2008)
-* New text fields in match record to setup lineups, substitutes and scorers as plain text. 
+* New text fields in match record to setup lineups, substitutes and scorers as plain text.
 
 v0.4.1 (30.06.2008)
 * TCA setup for match with tab dividers now.
