@@ -42,55 +42,55 @@ class tx_cfcleague_selector{
   }
 
 
-  /**
-   * Darstellung der Select-Box mit allen Ligen der übergebenen Seite. Es wird auf die aktuelle Liga eingestellt.
-   * @return den aktuellen Wettbewerb als Objekt oder 0
-   */
-  function showLeagueSelector(&$content,$pid,$leagues=0){
-    // Wenn vorhanden, nehmen wir die übergebenen Wettbewerbe, sonst schauen wir auf der aktuellen Seite nach
-    $leagues = $leagues ? $leagues : $this->findLeagues($pid);
-    $this->LEAGUE_MENU = Array (
-      'league' => array()
-    );
-    $objLeagues = array();
+	/**
+	 * Darstellung der Select-Box mit allen Ligen der übergebenen Seite. Es wird auf die aktuelle Liga eingestellt.
+	 * @return den aktuellen Wettbewerb als Objekt oder 0
+	 */
+	function showLeagueSelector(&$content,$pid,$leagues=0){
+		// Wenn vorhanden, nehmen wir die übergebenen Wettbewerbe, sonst schauen wir auf der aktuellen Seite nach
+		$leagues = $leagues ? $leagues : $this->findLeagues($pid);
+		$LEAGUE_MENU = Array (
+			'league' => array()
+		);
+		$objLeagues = array();
 		foreach($leagues as $idx=>$league){
 			if(is_object($league)) {
 				$objLeagues[$league->uid] = $league; // Objekt merken
-				$this->LEAGUE_MENU['league'][$league->uid] = $league->record['internal_name'] ? $league->record['internal_name'] : $league->record['name'];
+				$LEAGUE_MENU['league'][$league->uid] = $league->record['internal_name'] ? $league->record['internal_name'] : $league->record['name'];
 			}
 			else
-				$this->LEAGUE_MENU['league'][$league['uid']] = $league['internal_name'] ? $league['internal_name'] : $league['name'];
-    } 
-    $this->LEAGUE_SETTINGS = t3lib_BEfunc::getModuleData(
-      $this->LEAGUE_MENU,t3lib_div::_GP('SET'),$this->MCONF['name'] // Das ist der Name des Moduls
-    );
+				$LEAGUE_MENU['league'][$league['uid']] = $league['internal_name'] ? $league['internal_name'] : $league['name'];
+		}
+		// Ohne Liga-Array ist eine weitere Verarbeitung sinnlosl
+		if(!count($LEAGUE_MENU['league'])) return 0;
+		$this->LEAGUE_SETTINGS = t3lib_BEfunc::getModuleData(
+			$LEAGUE_MENU,t3lib_div::_GP('SET'),$this->MCONF['name'] // Das ist der Name des Moduls
+		);
+		$menu = t3lib_BEfunc::getFuncMenu(
+			$pid,'SET[league]',$this->LEAGUE_SETTINGS['league'],$LEAGUE_MENU['league']
+		);
+		// In den Content einbauen
+		// Zusätzlich noch einen Edit-Link setzen
+		if($menu) {
+			$link = $this->formTool->createEditLink('tx_cfcleague_competition', $this->LEAGUE_SETTINGS['league'],'');
+			$menu .= '</td><td style="width:90px; padding-left:10px;">' . $link;
+			// Jetzt noch den Cache-Link
+			$menu .= ' ' . $this->formTool->createLink('&clearCache=1', $pid, '<img'.t3lib_iconWorks::skinImg($GLOBALS['BACK_PATH'],'gfx/clear_all_cache.gif','width="11" height="12"').' title="Statistik-Cache leeren" border="0" alt="" />');
+		}
+		$content.=$this->doc->section('',$this->doc->funcMenu($headerSection,$menu));
 
-    $menu = t3lib_BEfunc::getFuncMenu(
-      $pid,'SET[league]',$this->LEAGUE_SETTINGS['league'],$this->LEAGUE_MENU['league']
-    );
-    // In den Content einbauen
-    // Zusätzlich noch einen Edit-Link setzen
-    if($menu) {
-      $link = $this->formTool->createEditLink('tx_cfcleague_competition', $this->LEAGUE_SETTINGS['league'],'');
-      $menu .= '</td><td style="width:90px; padding-left:10px;">' . $link;
-      // Jetzt noch den Cache-Link
-      $menu .= ' ' . $this->formTool->createLink('&clearCache=1', $pid, '<img'.t3lib_iconWorks::skinImg($GLOBALS['BACK_PATH'],'gfx/clear_all_cache.gif','width="11" height="12"').' title="Statistik-Cache leeren" border="0" alt="" />');
-    }
-    $content.=$this->doc->section('',$this->doc->funcMenu($headerSection,$menu));
+		if(t3lib_div::_GP('clearCache') && $this->LEAGUE_SETTINGS['league']) {
+			if (is_object($serviceObj = t3lib_div::makeInstanceService('memento'))) {
+				// Cache löschen
+				$serviceObj->clear('', $this->LEAGUE_SETTINGS['league']);
+			}
+		}
 
-    if(t3lib_div::_GP('clearCache') && $this->LEAGUE_SETTINGS['league']) {
-      if (is_object($serviceObj = t3lib_div::makeInstanceService('memento'))) {
-        // Cache löschen
-        $serviceObj->clear('', $this->LEAGUE_SETTINGS['league']);
-      }
-
-    }
-
-    // Aktuellen Wert als Liga-Objekt zurückgeben
-    if(count($objLeagues))
-    	return $this->LEAGUE_SETTINGS['league'] ? $objLeagues[$this->LEAGUE_SETTINGS['league']] :0;
-    return $this->LEAGUE_SETTINGS['league'] ? new tx_cfcleague_league($this->LEAGUE_SETTINGS['league']) :0;
-  }
+		// Aktuellen Wert als Liga-Objekt zurückgeben
+		if(count($objLeagues))
+			return $this->LEAGUE_SETTINGS['league'] ? $objLeagues[$this->LEAGUE_SETTINGS['league']] :0;
+		return $this->LEAGUE_SETTINGS['league'] ? new tx_cfcleague_league($this->LEAGUE_SETTINGS['league']) :0;
+	}
 
   /**
    * Darstellung der Select-Box mit allen Teams des übergebenen Wettbewerbs. Es wird auf das aktuelle Team eingestellt.
