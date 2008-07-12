@@ -2,7 +2,11 @@
 Änderungen
 ----------
 
-v0.4.3 (11.07.2008)
+v0.4.4 (12.07.2008)
+* New submodul to create teams for a competition.
+* date2cal works now
+
+v0.4.3 (11.07.2008) (not released)
 * New structure for modules in backend. 
 * Datetime field in module match edit changed. Maybe this will solve some problems with wrong hours.
 * New field addinfo in match record. Can be used for extra info in matchtable.
