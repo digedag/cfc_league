@@ -69,149 +69,137 @@ include_once('class.tx_cfcleague_selector.php');
  * @subpackage	tx_cfcleague
  */
 class  tx_cfcleague_module1 extends t3lib_SCbase {
-  var $pageinfo;
+	var $pageinfo;
 
-  /**
-   * Initializes the Module
-   * @return	void
-   */
-  function init()	{
-    global $BE_USER,$LANG,$BACK_PATH,$TCA_DESCR,$TCA,$CLIENT,$TYPO3_CONF_VARS;
-    
-    parent::init();
-    
-    /*
-    if (t3lib_div::_GP('clear_all_cache'))	{
-      $this->include_once[] = PATH_t3lib.'class.t3lib_tcemain.php';
-    }
-    */
-  }
+	/**
+	 * Initializes the Module
+	 * @return	void
+	 */
+	function init()	{
+		global $BE_USER,$LANG,$BACK_PATH,$TCA_DESCR,$TCA,$CLIENT,$TYPO3_CONF_VARS;
+		parent::init();
+	}
 
-  /**
-   * Adds items to the ->MOD_MENU array. Used for the function menu selector.
-   *
-   * @return	void
-   */
-  function menuConfig() {
-    global $LANG, $LEAGUE_FUNC;
+	/**
+	 * Adds items to the ->MOD_MENU array. Used for the function menu selector.
+	 *
+	 * @return	void
+	 */
+	function menuConfig() {
+		global $LANG, $LEAGUE_FUNC;
 
-    $this->MOD_MENU = Array ('function' => Array ());
-    // Menu aus den definierten Plugins erstellen
-    foreach($LEAGUE_FUNC As $id => $func) {
-      $this->MOD_MENU['function'][$id] = $LANG->sl($func->label);
-    }
+		$this->MOD_MENU = Array ('function' => Array ());
+		// Menu aus den definierten Plugins erstellen
+		foreach($LEAGUE_FUNC As $id => $func) {
+			$this->MOD_MENU['function'][$id] = $LANG->sl($func->label);
+		}
 
-    parent::menuConfig();
-  }
+		parent::menuConfig();
+	}
 
-  /**
-   * Main function of the module. Write the content to $this->content
-   * If you chose "web" as main module, you will need to consider the $this->id parameter which will contain the uid-number of the page clicked in the page tree
-   *
-   * @return	[type]		...
-   */
-  function main()	{
-    global $BE_USER,$LANG,$BACK_PATH,$TCA_DESCR,$TCA,$CLIENT,$TYPO3_CONF_VARS;
+	/**
+	 * Main function of the module. Write the content to $this->content
+	 * If you chose "web" as main module, you will need to consider the $this->id parameter which will contain the uid-number of the page clicked in the page tree
+	 *
+	 * @return	[type]		...
+	 */
+	function main()	{
+		global $BE_USER,$LANG,$BACK_PATH,$TCA_DESCR,$TCA,$CLIENT,$TYPO3_CONF_VARS;
 
-    // Access check!
-    // The page will show only if there is a valid page and if this page may be viewed by the user
-    $this->pageinfo = t3lib_BEfunc::readPageAccess($this->id,$this->perms_clause);
-    $access = is_array($this->pageinfo) ? 1 : 0;
-      
-    if (($this->id && $access) || ($BE_USER->user['admin'] && !$this->id))	{
-      
-        // Draw the header.
-        $this->doc = t3lib_div::makeInstance('bigDoc');
-        $this->doc->backPath = $BACK_PATH;
-        $this->doc->form='<form action="index.php?id=' . $this->id . '" method="POST" name="editform">';
+		// Access check!
+		// The page will show only if there is a valid page and if this page may be viewed by the user
+		$this->pageinfo = t3lib_BEfunc::readPageAccess($this->id,$this->perms_clause);
+		$access = is_array($this->pageinfo) ? 1 : 0;
 
-        // Selector-Instanz bereitstellen
-        $this->selector = t3lib_div::makeInstance('tx_cfcleague_selector');
-        $this->selector->init($this->doc, $this->MCONF);
-      
-     	// JavaScript
-        $this->doc->JScode .= '
-          <script language="javascript" type="text/javascript">
-      		script_ended = 0;
-      		function jumpToUrl(URL)	{
-      			document.location = URL;
-      		}
-      	  </script>
-        ';
+		if (($this->id && $access) || ($BE_USER->user['admin'] && !$this->id))	{
+			// Draw the header.
+			$this->doc = t3lib_div::makeInstance('bigDoc');
+			$this->doc->backPath = $BACK_PATH;
+			$this->doc->form='<form action="index.php?id=' . $this->id . '" method="POST" name="editform">';
 
-        $this->doc->postCode='
-      	  <script language="javascript" type="text/javascript">
-      		script_ended = 1;
-      		if (top.fsMod) top.fsMod.recentIds["web"] = ' . $this->id . ';</script>';
-      
-        $headerSection = $this->doc->getHeader('pages',$this->pageinfo,$this->pageinfo['_thePath']).'<br />'.$LANG->sL('LLL:EXT:lang/locallang_core.xml:labels.path').': '.t3lib_div::fixed_lgd_pre($this->pageinfo['_thePath'],50);
+			// Selector-Instanz bereitstellen
+			$this->selector = t3lib_div::makeInstance('tx_cfcleague_selector');
+			$this->selector->init($this->doc, $this->MCONF);
 
-        $this->content.=$this->doc->startPage($LANG->getLL('title'));
-        $this->content.=$this->doc->header($LANG->getLL('title'));
-        $this->content.=$this->doc->spacer(5);
-        $this->content.=$this->doc->section('',$this->doc->funcMenu($headerSection,t3lib_BEfunc::getFuncMenu($this->id,'SET[function]',$this->MOD_SETTINGS['function'],$this->MOD_MENU['function'])));
-        $this->content.=$this->doc->divider(5);
-
-
-        // Render content:
-        $this->content.=$this->moduleContent();
-
-
-        // ShortCut
-        if ($BE_USER->mayMakeShortcut())	{
-          $this->content.=$this->doc->spacer(20).$this->doc->section('',$this->doc->makeShortcutIcon('id',implode(',',array_keys($this->MOD_MENU)),$this->MCONF['name']));
-        }
+			// JavaScript
+			$this->doc->JScode .= '
+				<script language="javascript" type="text/javascript">
+					script_ended = 0;
+					function jumpToUrl(URL)	{
+						document.location = URL;
+					}
+				</script>
+				';
         
-        $this->content.=$this->doc->spacer(10);
-    } else {
-     	  // If no access or if ID == zero
+			$this->doc->postCode='
+				<script language="javascript" type="text/javascript">
+					script_ended = 1;
+					if (top.fsMod) top.fsMod.recentIds["web"] = ' . $this->id . ';</script>';
+			// HeaderSection zeigt Icons und Seitenpfad
+			$headerSection = $this->doc->getHeader('pages',$this->pageinfo,$this->pageinfo['_thePath']).'<br />'.$LANG->sL('LLL:EXT:lang/locallang_core.xml:labels.path').': '.t3lib_div::fixed_lgd_pre($this->pageinfo['_thePath'],50);
+			$this->content .= $this->moduleContent(); // Muss vor der Erstellung des Headers geladen werden
+			$this->content .= $this->doc->sectionEnd();  // Zur Sicherheit einen offene Section schließen
 
-        $this->doc = t3lib_div::makeInstance('mediumDoc');
-        $this->doc->backPath = $BACK_PATH;
+			// startPage erzeugt alles bis Beginn Formular
+			$header.=$this->doc->startPage($LANG->getLL('title'));
+			$header.=$this->doc->header($LANG->getLL('title'));
+			$header.=$this->doc->spacer(5);
+			$header.=$this->doc->section('',$this->doc->funcMenu($headerSection,t3lib_BEfunc::getFuncMenu($this->id,'SET[function]',$this->MOD_SETTINGS['function'],$this->MOD_MENU['function'])));
+			$header.=$this->doc->divider(5);
 
-        $this->content.=$this->doc->startPage($LANG->getLL('title'));
-        $this->content.=$this->doc->header($LANG->getLL('title'));
-        $this->content.=$this->doc->spacer(5);
-        $this->content.=$this->doc->spacer(10);
-    }
-  }
-    
-  /**
-   * Prints out the module HTML
-   *
-   * @return	void
-   */
-  function printContent()	{
-    $this->content.=$this->doc->endPage();
-    echo $this->content;
-  }
-    
-  /**
-   * Generates the module content
-   *
-   * @return	void
-   */
-  function moduleContent()	{
-    global $LEAGUE_FUNC;
+			$this->content = $header . $this->content;
 
-    $content = '';
-    $plugin = $LEAGUE_FUNC[$this->MOD_SETTINGS['function']];
-    if($plugin){
-        $clazz = $plugin->clazz_name;
-        include_once('class.' . $clazz . '.php');
-        $func = t3lib_div::makeInstance($clazz);
-        // Plugin initialisieren
-        $func->init($this->doc, $this->MCONF,$this->id);
-        // die Kontrolle weitergeben
-        $content=$func->handleRequest();
-    }
-    else {
-      $content=$this->extObjContent();
-    }
-    $this->content.=$content;
-  }
+			// ShortCut
+			if ($BE_USER->mayMakeShortcut())	{
+				$this->content.=$this->doc->spacer(20).$this->doc->section('',$this->doc->makeShortcutIcon('id',implode(',',array_keys($this->MOD_MENU)),$this->MCONF['name']));
+			}
+			$this->content.=$this->doc->spacer(10);
+		} else {
+			// If no access or if ID == zero
+			$this->doc = t3lib_div::makeInstance('mediumDoc');
+			$this->doc->backPath = $BACK_PATH;
+			$this->content.=$this->doc->startPage($LANG->getLL('title'));
+			$this->content.=$this->doc->header($LANG->getLL('title'));
+			$this->content.=$this->doc->spacer(5);
+			$this->content.=$this->doc->spacer(10);
+		}
+	}
+  
+	/**
+	 * Prints out the module HTML
+	 *
+	 * @return	void
+	 */
+	function printContent()	{
+		$this->content.=$this->doc->endPage();
+		echo $this->content;
+	}
+
+	/**
+	 * Generates the module content
+	 *
+	 * @return	void
+	 */
+	function moduleContent() {
+		global $LEAGUE_FUNC;
+
+		$content = '';
+		$plugin = $LEAGUE_FUNC[$this->MOD_SETTINGS['function']];
+		if($plugin){
+			$clazz = $plugin->clazz_name;
+			include_once('class.' . $clazz . '.php');
+			$func = t3lib_div::makeInstance($clazz);
+			// Plugin initialisieren
+			$func->init($this->doc, $this->MCONF,$this->id);
+			// die Kontrolle weitergeben
+			$content=$func->handleRequest();
+		}
+		else {
+			$content=$this->extObjContent();
+		}
+		return $content;
+	}
 }
-
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/mod1/index.php'])	{
 	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/mod1/index.php']);

@@ -13,6 +13,14 @@
 			<label index="title_recent_tickers">Recent ticker messages</label>
 
 			<label index="mod_competition">Manage Competitions</label>
+			<label index="mod_compteams">Teams</label>
+			<label index="label_current_teams">Teams in competition</label>
+			<label index="label_create_teams">Create teams for competition</label>
+			<label index="label_teamname">Team name</label>
+			<label index="label_teamshortname">Team short name</label>
+			<label index="msg_create_teams">Create all teams on current page?</label>
+			<label index="msg_teams_created">Teams created on current page</label>
+
 			<label index="create_games">Create matches</label>
 			<label index="edit_games">Edit matches</label>
 
@@ -22,7 +30,7 @@
 
 			<label index="search_profiles">Search profiles</label>
 			<label index="match_ticker">Match ticker/Statistics</label>
-			<label index="no_league_in_page">No Leagues found in current page.</label>
+			<label index="no_league_in_page">No leagues found on current page.</label>
 			<label index="no_round_in_league">This Competition containes no matches.</label>
 			<label index="btn_update_msgEditGames">Save changes?</label>
 			<label index="btn_update">Update</label>
@@ -107,6 +115,13 @@
 			<label index="edit_games">Spiele bearbeiten</label>
 
 			<label index="mod_competition">Wettbewerbe verwalten</label>
+			<label index="mod_compteams">Mannschaften</label>
+			<label index="label_current_teams">Mannschaften im Wettbewerb</label>
+			<label index="label_create_teams">Mannschaften für diesen Wettbewerb erstellen</label>
+			<label index="label_teamname">Name</label>
+			<label index="label_teamshortname">Kurzname</label>
+			<label index="msg_create_teams">Sollen alle Teams in der aktuellen Seite erstellt werden?</label>
+			<label index="msg_teams_created">Die Mannschaften wurden auf der aktuellen Seite erstellt.</label>
 
 			<label index="mod_team">Teams verwalten</label>
 			<label index="create_players">Spieler anlegen</label>

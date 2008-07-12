@@ -23,7 +23,7 @@
 ***************************************************************/
 
 require_once (PATH_t3lib.'class.t3lib_extobjbase.php');
-$BE_USER->modAccess($MCONF,1);
+$GLOBALS['BE_USER']->modAccess($MCONF,1);
 
 
 /**
@@ -71,7 +71,10 @@ class tx_cfcleague_mod1_modCompetitions extends t3lib_extobjbase {
       return $content;
     }
     
-		$menu = $this->selector->showTabMenu($this->id, 'comptools', array('0' => $LANG->getLL('edit_games'), '1' => $LANG->getLL('create_games')));
+		$menu = $this->selector->showTabMenu($this->id, 'comptools', 
+				array('0' => $LANG->getLL('edit_games'), 
+							'1' => $LANG->getLL('mod_compteams'),
+							'2' => $LANG->getLL('create_games')));
 		$content .= $menu['menu'];
 		
 		$content .= $this->formTool->form->printNeededJSFunctions_top();
@@ -83,9 +86,12 @@ class tx_cfcleague_mod1_modCompetitions extends t3lib_extobjbase {
 				$content .= $this->showEditMatches($current_league);
 				break;
 			case 1:
+				$mod = tx_div::makeInstance('tx_cfcleague_mod1_modCompTeams');
+				$content .= $mod->main($this->MCONF['name'], $this->id, $this->doc, $this->formTool, $current_league);
+				break;
+			case 2:
 				$content .= $this->showCreateMatchTable($current_league);
 				break;
-				
 		}
 		// Den JS-Code für Validierung einbinden
 		$content .= $this->formTool->form->printNeededJSFunctions();

@@ -26,18 +26,21 @@ require_once(t3lib_extMgm::extPath('cfc_league') . 'class.tx_cfcleague_db.php');
 
 class tx_cfcleague_mod1_tcehook {
 
-  /**
-   * Wir müssen dafür sorgen, daß die neuen IDs der Teams im Wettbewerb und Spielen
-   * verwendet werden.
-   */
-  function processDatamap_preProcessFieldArray(&$incomingFieldArray, $table, $id, &$tcemain)  {
+	/**
+	 * Wir müssen dafür sorgen, daß die neuen IDs der Teams im Wettbewerb und Spielen
+	 * verwendet werden.
+	 */
+	function processDatamap_preProcessFieldArray(&$incomingFieldArray, $table, $id, &$tcemain)  {
 
-    if($table == 'tx_cfcleague_teams') {
-      $this->checkProfiles($incomingFieldArray,'players', $tcemain);
-      $this->checkProfiles($incomingFieldArray,'coaches', $tcemain);
-      $this->checkProfiles($incomingFieldArray,'supporters', $tcemain);
-    }
-  }
+		if($table == 'tx_cfcleague_teams') {
+			$this->checkProfiles($incomingFieldArray,'players', $tcemain);
+			$this->checkProfiles($incomingFieldArray,'coaches', $tcemain);
+			$this->checkProfiles($incomingFieldArray,'supporters', $tcemain);
+		}
+		if($table == 'tx_cfcleague_competition') {
+			$this->checkProfiles($incomingFieldArray,'teams', $tcemain);
+		}
+	}
 
   /**
    * Prüft, ob im für den angegebenen Personentyp neue Personen angelegt wurden
