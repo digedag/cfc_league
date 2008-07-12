@@ -42,6 +42,11 @@ class tx_cfcleague_league{
     $this->record = t3lib_BEfunc::getRecord(TABLE_LEAGUES,$uid);
   }
 
+	function refresh() {
+		$this->record = t3lib_BEfunc::getRecord(TABLE_LEAGUES,$this->uid);
+		$this->teamNames = null;
+  }
+  
   /**
    * Liefert die IDs der zugeordneten Teams als Array
    */
@@ -63,7 +68,7 @@ class tx_cfcleague_league{
   function getNumberOfMatchParts(){
     return intval($this->record['match_parts']) ? intval($this->record['match_parts']) : 2;
   }
-  
+
   /**
    * Liefert die Namen der zugeordneten Teams als Array. Key ist die ID des Teams
    * @param $asArray Wenn 1 wird pro Team ein Array mit Name, Kurzname und Flag spielfrei geliefert
