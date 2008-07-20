@@ -150,9 +150,9 @@ CREATE TABLE tx_cfcleague_teams (
 	club int(11) DEFAULT '0' NOT NULL,
 	name varchar(100) DEFAULT '' NOT NULL,
 	short_name varchar(100) DEFAULT '' NOT NULL,
-	coaches blob NOT NULL,
-	players blob NOT NULL,
-	supporters blob NOT NULL,
+	coaches text NOT NULL,
+	players text NOT NULL,
+	supporters text NOT NULL,
 	dam_images int(11) DEFAULT '0' NOT NULL,
 	dam_logo int(11) DEFAULT '0' NOT NULL,
 
