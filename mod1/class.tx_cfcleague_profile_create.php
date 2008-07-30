@@ -109,8 +109,12 @@ class tx_cfcleague_profile_create extends t3lib_extobjbase {
 		}
 		else {
 			$content .= $this->doc->section('Message:',$this->getInfoMessage($baseInfo),0,1, ICON_INFO);
+			// Einblenden der Personensuche
+			$clazzName = tx_div::makeInstanceClassname('tx_cfcleague_mod1_subAddProfiles');
+			$addMatches = new $clazzName($this);
+			$content .= $addMatches->handleRequest($team, $baseInfo);
 		}
-		return $content.'TODO!';
+		return $content;
 	}
 	
 	private function showCreateProfiles(&$data, &$team, &$baseInfo) {

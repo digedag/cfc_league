@@ -30,6 +30,43 @@ require_once('../class.tx_cfcleague_form_tool.php');
  */
 class tx_cfcleague_mod1_decorator {
 
+	static function prepareTable($entries, $columns, $formTool, $options) {
+		$arr = Array( 0 => Array( self::getHeadline($parts, $columns, $options) ));
+		foreach($entries As $entry){
+			$record = is_object($entry) ? $entry->record : $entry;
+			$row = array();
+			if(isset($options['checkbox'])) {
+				$checkName = isset($options['checkboxname']) ? $options['checkboxname'] : 'checkEntry';
+				// Check if entry is checkable
+				if(!is_array($options['dontcheck']) || !array_key_exists($record['uid'], $options['dontcheck']))
+					$row[] = $formTool->createCheckbox($checkName.'[]', $record['uid']);
+				else
+					$row[] = '<img'.t3lib_iconWorks::skinImg($GLOBALS['BACK_PATH'],'gfx/zoom2.gif','width="11" height="12"').' title="Info: '. $options['dontcheck'][$record['uid']] .'" border="0" alt="" />';
+			}
+			reset($columns);
+			foreach($columns As $column => $data) {
+				// Hier erfolgt die Ausgabe der Daten für die Tabelle. Wenn eine method angegeben
+				// wurde, dann muss das Entry als Objekt vorliegen. Es wird dann die entsprechende
+				// Methode aufgerufen. Es kann auch ein Decorator-Objekt gesetzt werden. Dann wird
+				// von diesem die Methode format aufgerufen und der Wert, sowie der Name der aktuellen
+				// Spalte übergeben. Ist nichts gesetzt wird einfach der aktuelle Wert verwendet.
+				if(isset($data['method'])) {
+					$row[] = call_user_func(array($entry, $data['method']));
+				}
+				elseif(isset($data['decorator'])) {
+					$decor = $data['decorator'];
+					$row[] = $decor->format($record[$column],$column, $record);
+				}
+				else {
+					$row[] = $record[$column];
+				}
+			}
+			if(isset($options['linker']))
+				$row[] = self::addLinker($options, $entry, $formTool);
+			$arr[0][] = $row;
+		}
+		return $arr;
+	}
 	static function prepareMatches($matches, &$competition, $columns, $formTool, $options) {
 		// Ist kein Wettbewerb vorhanden, dann wird nur das Endergebnis angezeigt
 		$parts = (!$competition) ? 0 : $competition->getNumberOfMatchParts();
@@ -85,6 +122,7 @@ class tx_cfcleague_mod1_decorator {
 	 */
 	static function getHeadline($parts, $columns, $options) {
 		global $LANG;
+		$tableName = isset($options['tablename']) ? $options['tablename'] : 'tx_cfcleague_games';
 		$LANG->includeLLFile('EXT:cfc_league/locallang_db.xml');
 		$arr = array();
 		if(isset($options['checkbox'])) {
@@ -93,7 +131,7 @@ class tx_cfcleague_mod1_decorator {
 		foreach($columns As $column => $data) {
 			if(intval($data['nocolumn'])) continue;
 			$arr[] = intval($data['notitle']) ? '' :
-					$LANG->getLL((isset($data['title']) ? $data['title'] : 'tx_cfcleague_games.' . $column));
+					$LANG->getLL((isset($data['title']) ? $data['title'] : $tableName.'.' . $column));
 		}
 		if(isset($options['linker']))
 			$arr[] = $LANG->getLL('label_action');

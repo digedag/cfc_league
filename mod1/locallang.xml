@@ -72,12 +72,20 @@
 			<label index="msg_edit_person">Edit person</label>
 			<label index="msg_person_saved">Person updated</label>
 			<label index="msg_date_saved">Date has been updated</label>
+			<label index="msg_profiles_joined">Profiles were joined to team!</label>
 			<label index="msg_profiles_created">Profiles were created!</label>
 			<label index="msg_profiles_warnings">Could not create the following profiles:</label>
+			<label index="msg_profile_already_joined">This profile is already part of the team!</label>
+			<label index="label_join_players">Join player(s)</label>
+			<label index="msg_join_players">Do you really want to join selected players to team?</label>
+			<label index="msg_no_profile_selected">Sorry, no selected profiles found. Please try again!</label>
+			
 
 			<label index="msg_number_of_players">Number of players to add:</label>
 			<label index="msg_number_of_coaches">Number of coaches to add:</label>
 			<label index="msg_number_of_supporters">Number of supporters to add:</label>
+
+			<label index="msg_searchhelp">The search term should contain at least 3 characters.</label>
 
 			<label index="label_mergehead">Merge two Profiles</label>
 			<label index="msg_merge_selectprofiles">Please select two profiles you want to merge.</label>
@@ -97,11 +105,13 @@
 			<label index="label_page">Page</label>
 			<label index="label_profile1">Profile 1</label>
 			<label index="label_profile2">Profile 2</label>
+			<label index="label_name">Name</label>
 
 			<label index="label_profile_coach">Coach</label>
 			<label index="label_profile_player">Player</label>
 			<label index="label_profile_supporter">Supporter</label>
 			<label index="label_action">Action</label>
+			<label index="label_searchresults">Search results</label>
 
 
 		</languageKey>
@@ -170,11 +180,18 @@
 			<label index="msg_edit_person">Person bearbeiten</label>
 			<label index="msg_person_saved">Person aktualisiert</label>
 			<label index="msg_date_saved">Das Datum wurde aktualisiert</label>
+			<label index="msg_profiles_joined">Die Spieler wurden der Mannschaft zugeordnet!</label>
 			<label index="msg_profiles_created">Die Profile wurden erstellt!</label>
 			<label index="msg_profiles_warnings">Die folgenden Profile konnten nicht angelegt werden:</label>
+			<label index="msg_profile_already_joined">Diese Person ist schon Teil des Teams!</label>
+			<label index="label_join_players">Spieler hinzufügen</label>
+			<label index="msg_join_players">Sollen die Spieler wirklichen dem aktuellen Team hinzugefügt werden?</label>
+
 			<label index="msg_number_of_players">Anzahl Spieler, die zugeordnet werden k&amp;ouml;nnen:</label>
 			<label index="msg_number_of_coaches">Anzahl Trainer, die zugeordnet werden k&amp;ouml;nnen:</label>
 			<label index="msg_number_of_supporters">Anzahl Betreuer, die zugeordnet werden k&amp;ouml;nnen:</label>
+
+			<label index="msg_searchhelp">Der Suchbegriff sollte mindestens drei Buchstaben enthalten.</label>
 
 			<label index="label_mergehead">Zusammenführung zweier Profile</label>
 			<label index="msg_merge_selectprofiles">Bitte wählen Sie die beiden Profile aus, die zusammengeführt werden sollen.</label>
@@ -199,6 +216,7 @@
 			<label index="label_profile_player">Spieler</label>
 			<label index="label_profile_supporter">Betreuer</label>
 			<label index="label_action">Aktion</label>
+			<label index="label_searchresults">Suchergebnisse</label>
 		</languageKey>
 	</data>
 </T3locallang>
