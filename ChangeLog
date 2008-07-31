@@ -2,6 +2,10 @@
 Änderungen
 ----------
 
+v0.4.6 (31.07.2008)
+* BE module finished to join players to team
+* Profiles are sorted by lastname in backend 
+
 v0.4.5 (20.07.2008)
 * Small modification for t3sportsbet
 
