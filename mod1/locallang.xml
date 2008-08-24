@@ -27,6 +27,8 @@
 			<label index="mod_team">Manage Teams</label>
 			<label index="create_players">Create players</label>
 			<label index="add_players">Add players</label>
+			<label index="manage_teamnotes">Team notes</label>
+			<label index="label_club">Club</label>
 
 			<label index="search_profiles">Search profiles</label>
 			<label index="match_ticker">Match ticker/Statistics</label>
@@ -136,6 +138,8 @@
 			<label index="mod_team">Teams verwalten</label>
 			<label index="create_players">Spieler anlegen</label>
 			<label index="add_players">Spieler hinzufügen</label>
+			<label index="manage_teamnotes">Team-Notizen</label>
+			<label index="label_club">Verein</label>
 
 			<label index="search_profiles">Personen suchen</label>
 			<label index="match_ticker">Spielticker/Statistik</label>

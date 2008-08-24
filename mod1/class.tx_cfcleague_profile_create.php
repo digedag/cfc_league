@@ -85,8 +85,13 @@ class tx_cfcleague_profile_create extends t3lib_extobjbase {
 			return $content;
 		}
 		// Wenn ein Team gefunden ist, dann können wir das Modul schreiben
-		$menu = $this->selector->showTabMenu($this->id, 'teamtools', array('0' => $LANG->getLL('create_players'), '1' => $LANG->getLL('add_players')));
+		$menu = $this->selector->showTabMenu($this->id, 'teamtools', 
+						array('0' => $LANG->getLL('create_players'), 
+									'1' => $LANG->getLL('add_players'),
+//									'2' => $LANG->getLL('manage_teamnotes'),
+						));
 		$content .= $menu['menu'];
+		$content .= '<div style="display: block; border: 1px solid #a2aab8;"></div>';
 		switch($menu['value']) {
 			case 0:
 				$content .= $this->showCreateProfiles($data, $team, $baseInfo);
@@ -94,11 +99,22 @@ class tx_cfcleague_profile_create extends t3lib_extobjbase {
 			case 1:
 				$content .= $this->showAddProfiles($data, $team, $baseInfo);
 				break;
+			case 2:
+				$content .= $this->showManageTeamNotes($data, $team);
+				break;
 		}
 		// Den JS-Code für Validierung einbinden
 		$content .= $this->formTool->form->JSbottom('editform');
 		return $content;
 	}
+
+	private function showManageTeamNotes($data, $team) {
+		$clazzName = tx_div::makeInstanceClassname('tx_cfcleague_mod1_subTeamNotes');
+		$subMod = new $clazzName($this);
+		$content .= $subMod->handleRequest($team);
+		return $content;
+	}
+
 	private function showAddProfiles(&$data, &$team, &$baseInfo) {
 		$baseInfo['freePlayers'] = $baseInfo['maxPlayers'] - $team->getPlayerSize();
 		$baseInfo['freeCoaches'] = $baseInfo['maxCoaches'] - $team->getCoachSize();
