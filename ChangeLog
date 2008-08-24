@@ -2,6 +2,9 @@
 Änderungen
 ----------
 
+v0.4.7 (24.07.2008)
+* Additional fields in club record like address, description or email
+
 v0.4.6 (31.07.2008)
 * BE module finished to join players to team
 * Profiles are sorted by lastname in backend 
