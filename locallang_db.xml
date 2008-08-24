@@ -52,11 +52,21 @@
 			<label index="tx_cfcleague_competition_penalty.static_position">Penalty static table position</label>
 			<label index="tx_cfcleague_competition_penalty.correction">Is correction</label>
 			<label index="tx_cfcleague_club">Club</label>
+			<label index="tx_cfcleague_club.tab_contact">Contact</label>
+			<label index="tx_cfcleague_club.tab_info">Description</label>
 			<label index="tx_cfcleague_club.name">Name</label>
 			<label index="tx_cfcleague_club.short_name">Shortname</label>
 			<label index="tx_cfcleague_club.logo">Logo</label>
 			<label index="tx_cfcleague_club.address">Address</label>
 			<label index="tx_cfcleague_club.favorite">Favorite</label>
+			<label index="tx_cfcleague_club.email">Email</label>
+			<label index="tx_cfcleague_club.www">WWW</label>
+			<label index="tx_cfcleague_club.street">Street</label>
+			<label index="tx_cfcleague_club.zip">Zip</label>
+			<label index="tx_cfcleague_club.city">City</label>
+			<label index="tx_cfcleague_club.shortinfo">Short info</label>
+			<label index="tx_cfcleague_club.info">Information</label>
+
 			<label index="tx_cfcleague_teams">Team</label>
 			<label index="tx_cfcleague_teams.club">Club</label>
 			<label index="tx_cfcleague_teams.name">Name</label>
@@ -234,6 +244,13 @@
 			<label index="tx_cfcleague_club.logo">Logo</label>
 			<label index="tx_cfcleague_club.address">Adresse</label>
 			<label index="tx_cfcleague_club.favorite">Lieblingsverein</label>
+			<label index="tx_cfcleague_club.email">Email</label>
+			<label index="tx_cfcleague_club.www">WWW</label>
+			<label index="tx_cfcleague_club.street">Strasse</label>
+			<label index="tx_cfcleague_club.zip">PLZ</label>
+			<label index="tx_cfcleague_club.city">Stadt</label>
+			<label index="tx_cfcleague_club.shortinfo">Kurzinfo</label>
+			<label index="tx_cfcleague_club.info">Information</label>
 			<label index="tx_cfcleague_teams">Mannschaft</label>
 			<label index="tx_cfcleague_teams.club">Verein</label>
 			<label index="tx_cfcleague_teams.name">Name</label>

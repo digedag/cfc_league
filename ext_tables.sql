@@ -129,6 +129,14 @@ CREATE TABLE tx_cfcleague_club (
 	address int(11) DEFAULT '0' NOT NULL,
 	favorite tinyint(4) DEFAULT '0' NOT NULL,
 
+	www varchar(200) DEFAULT '' NOT NULL,
+	email varchar(200) DEFAULT '' NOT NULL,
+	street varchar(200) DEFAULT '' NOT NULL,
+	zip varchar(10) DEFAULT '' NOT NULL,
+	city varchar(200) DEFAULT '' NOT NULL,
+	shortinfo text NOT NULL,
+	info text NOT NULL,
+
 	PRIMARY KEY (uid),
 	KEY parent (pid)
 );

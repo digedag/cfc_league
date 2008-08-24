@@ -572,9 +572,90 @@ $TCA['tx_cfcleague_club'] = Array (
 				'default' => '0'
 			)
 		),
+		'www' => Array (
+			'exclude' => 1,
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_club.www',
+			'config' => Array (
+				'type' => 'input',
+				'size' => '30',
+				'max' => '200',
+				'eval' => 'trim',
+			)
+		),
+		'email' => Array (
+			'exclude' => 1,
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_club.email',
+			'config' => Array (
+				'type' => 'input',
+				'size' => '30',
+				'max' => '200',
+				'eval' => 'trim',
+			)
+		),
+		'street' => Array (
+			'exclude' => 1,
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_club.street',
+			'config' => Array (
+				'type' => 'input',
+				'size' => '30',
+				'max' => '200',
+				'eval' => 'trim',
+			)
+		),
+		'zip' => Array (
+			'exclude' => 1,
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_club.zip',
+			'config' => Array (
+				'type' => 'input',
+				'size' => '10',
+				'max' => '10',
+				'eval' => 'trim',
+			)
+		),
+		'city' => Array (
+			'exclude' => 1,
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_club.city',
+			'config' => Array (
+				'type' => 'input',
+				'size' => '30',
+				'max' => '200',
+				'eval' => 'trim',
+			)
+		),
+		'shortinfo' => Array (
+			'exclude' => 1,
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_club.shortinfo',
+			'config' => Array (
+				'type' => 'text',
+				'cols' => '30',
+				'rows' => '5',
+			)
+		),
+		'info' => Array (
+			'exclude' => 1,
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_club.info',
+			'config' => Array (
+				'type' => 'text',
+				'cols' => '30',
+				'rows' => '5',
+				'wizards' => Array(
+					'_PADDING' => 2,
+					'RTE' => Array(
+						'notNewRecords' => 1,
+						'RTEonly' => 1,
+						'type' => 'script',
+						'title' => 'Full screen Rich Text Editing|Formatteret redigering i hele vinduet',
+						'icon' => 'wizard_rte2.gif',
+						'script' => 'wizard_rte.php',
+					),
+				),
+			)
+		),
 	),
 	'types' => Array (
-		'0' => Array('showitem' => 'hidden;;1;;1-1-1, name,short_name,dam_logo,address,favorite')
+		'0' => Array('showitem' => 'hidden;;1;;1-1-1, name,short_name,dam_logo,favorite,
+			--div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_club.tab_contact,www,email,street,zip,city,address,
+			--div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_club.tab_info,shortinfo,info;;;richtext[paste|bold|italic|underline|formatblock|class|left|center|right|orderedlist|unorderedlist|outdent|indent|link|image]:rte_transform[mode=ts]')
 	),
 	'palettes' => Array (
 		'1' => Array('showitem' => '')
@@ -634,7 +715,7 @@ $TCA['tx_cfcleague_teams'] = Array (
 		),
 		'dam_logo' => txdam_getMediaTCA('image_field'),
 		'name' => Array (
-			'exclude' => 1,		
+			'exclude' => 1,
 			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_teams.name',
 			'config' => Array (
 				'type' => 'input',
@@ -644,7 +725,7 @@ $TCA['tx_cfcleague_teams'] = Array (
 			)
 		),
 		'short_name' => Array (		
-			'exclude' => 1,		
+			'exclude' => 1,
 			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_teams.short_name',
 			'config' => Array (
 				'type' => 'input',	
