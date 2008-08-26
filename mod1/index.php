@@ -70,6 +70,8 @@ include_once('class.tx_cfcleague_selector.php');
  */
 class  tx_cfcleague_module1 extends t3lib_SCbase {
 	var $pageinfo;
+	var $subselector;
+	var $tabs;
 
 	/**
 	 * Initializes the Module
@@ -98,6 +100,14 @@ class  tx_cfcleague_module1 extends t3lib_SCbase {
 	}
 
 	/**
+	 * Check TYPO3 Version >= 4.2.0
+	 *
+	 * @return boolean
+	 */
+	function isTYPO42() {
+		return t3lib_div::int_from_ver(TYPO3_version) >= 4002000;
+	}
+	/**
 	 * Main function of the module. Write the content to $this->content
 	 * If you chose "web" as main module, you will need to consider the $this->id parameter which will contain the uid-number of the page clicked in the page tree
 	 *
@@ -105,18 +115,23 @@ class  tx_cfcleague_module1 extends t3lib_SCbase {
 	 */
 	function main()	{
 		global $BE_USER,$LANG,$BACK_PATH,$TCA_DESCR,$TCA,$CLIENT,$TYPO3_CONF_VARS;
-
 		// Access check!
 		// The page will show only if there is a valid page and if this page may be viewed by the user
 		$this->pageinfo = t3lib_BEfunc::readPageAccess($this->id,$this->perms_clause);
 		$access = is_array($this->pageinfo) ? 1 : 0;
-
 		if (($this->id && $access) || ($BE_USER->user['admin'] && !$this->id))	{
-			// Draw the header.
-			$this->doc = t3lib_div::makeInstance('bigDoc');
+			$this->doc = t3lib_div::makeInstance($this->isTYPO42() ? 'template' : 'bigDoc');
 			$this->doc->backPath = $BACK_PATH;
+			$this->doc->docType = 'xhtml_trans';
+			$this->doc->inDocStyles = $this->getDocStyles();
+			$this->doc->tableLayout = $this->getTableLayout();
+			
+			if($this->isTYPO42()) {
+				$this->doc->setModuleTemplate('../' . t3lib_extMgm::siteRelPath('cfc_league') .  'mod1/cfc_league.html');
+				$this->doc->loadJavascriptLib('contrib/prototype/prototype.js');
+			}
 			$this->doc->form='<form action="index.php?id=' . $this->id . '" method="POST" name="editform">';
-
+			
 			// Selector-Instanz bereitstellen
 			$this->selector = t3lib_div::makeInstance('tx_cfcleague_selector');
 			$this->selector->init($this->doc, $this->MCONF);
@@ -135,33 +150,77 @@ class  tx_cfcleague_module1 extends t3lib_SCbase {
 				<script language="javascript" type="text/javascript">
 					script_ended = 1;
 					if (top.fsMod) top.fsMod.recentIds["web"] = ' . $this->id . ';</script>';
-			// HeaderSection zeigt Icons und Seitenpfad
-			$headerSection = $this->doc->getHeader('pages',$this->pageinfo,$this->pageinfo['_thePath']).'<br />'.$LANG->sL('LLL:EXT:lang/locallang_core.xml:labels.path').': '.t3lib_div::fixed_lgd_pre($this->pageinfo['_thePath'],50);
-			$this->content .= $this->moduleContent(); // Muss vor der Erstellung des Headers geladen werden
-			$this->content .= $this->doc->sectionEnd();  // Zur Sicherheit einen offene Section schließen
-
-			// startPage erzeugt alles bis Beginn Formular
-			$header.=$this->doc->startPage($LANG->getLL('title'));
-			$header.=$this->doc->header($LANG->getLL('title'));
-			$header.=$this->doc->spacer(5);
-			$header.=$this->doc->section('',$this->doc->funcMenu($headerSection,t3lib_BEfunc::getFuncMenu($this->id,'SET[function]',$this->MOD_SETTINGS['function'],$this->MOD_MENU['function'])));
-			$header.=$this->doc->divider(5);
-
-			$this->content = $header . $this->content;
-
-			// ShortCut
-			if ($BE_USER->mayMakeShortcut())	{
-				$this->content.=$this->doc->spacer(20).$this->doc->section('',$this->doc->makeShortcutIcon('id',implode(',',array_keys($this->MOD_MENU)),$this->MCONF['name']));
+			if($this->isTYPO42()) {
+				$this->content .= $this->moduleContent(); // Muss vor der Erstellung des Headers geladen werden
+				$this->content .= $this->doc->sectionEnd();  // Zur Sicherheit eine offene Section schließen
+	
+				$header = $this->doc->header($LANG->getLL('title'));
+				$this->content = $this->content; // ??
+				// ShortCut
+				if ($BE_USER->mayMakeShortcut())	{
+					$this->content.=$this->doc->spacer(20).$this->doc->section('',$this->doc->makeShortcutIcon('id',implode(',',array_keys($this->MOD_MENU)),$this->MCONF['name']));
+				}
+				$this->content.=$this->doc->spacer(10);
+				
+				// Setting up the buttons and markers for docheader
+				$docHeaderButtons = $this->getButtons();
+				$markers['CSH'] = $docHeaderButtons['csh'];
+				$markers['HEADER'] = $header;
+				$markers['SELECTOR'] = $this->subselector;
+				$markers['TABS'] = $this->tabs;
+				$markers['FUNC_MENU'] = t3lib_BEfunc::getFuncMenu($this->id,'SET[function]',$this->MOD_SETTINGS['function'],$this->MOD_MENU['function']);
+				$markers['CONTENT'] = $this->content;
 			}
-			$this->content.=$this->doc->spacer(10);
+			else {
+				// HeaderSection zeigt Icons und Seitenpfad
+				$headerSection = $this->doc->getHeader('pages',$this->pageinfo,$this->pageinfo['_thePath']).'<br />'.$LANG->sL('LLL:EXT:lang/locallang_core.xml:labels.path').': '.t3lib_div::fixed_lgd_pre($this->pageinfo['_thePath'],50);
+				$this->content .= $this->moduleContent(); // Muss vor der Erstellung des Headers geladen werden
+				$this->content .= $this->doc->sectionEnd();  // Zur Sicherheit einen offene Section schließen
+	
+				// startPage erzeugt alles bis Beginn Formular
+				$header.=$this->doc->startPage($LANG->getLL('title'));
+				$header.=$this->doc->header($LANG->getLL('title'));
+				$header.=$this->doc->spacer(5);
+				$header.=$this->doc->section('',$this->doc->funcMenu($headerSection,t3lib_BEfunc::getFuncMenu($this->id,'SET[function]',$this->MOD_SETTINGS['function'],$this->MOD_MENU['function'])));
+				$header.=$this->doc->divider(5);
+	
+				$this->content = $header . $this->content;
+				
+				// ShortCut
+				if ($BE_USER->mayMakeShortcut())	{
+					$this->content.=$this->doc->spacer(20).$this->doc->section('',$this->doc->makeShortcutIcon('id',implode(',',array_keys($this->MOD_MENU)),$this->MCONF['name']));
+				}
+				$this->content.=$this->doc->spacer(10);
+			}
+
 		} else {
-			// If no access or if ID == zero
-			$this->doc = t3lib_div::makeInstance('mediumDoc');
-			$this->doc->backPath = $BACK_PATH;
-			$this->content.=$this->doc->startPage($LANG->getLL('title'));
-			$this->content.=$this->doc->header($LANG->getLL('title'));
-			$this->content.=$this->doc->spacer(5);
-			$this->content.=$this->doc->spacer(10);
+			if($this->isTYPO42()) {
+				$this->content = $this->doc->section($LANG->getLL('title'), $LANG->getLL('clickAPage_content'), 0, 1);
+		
+					// Setting up the buttons and markers for docheader
+				$docHeaderButtons = $this->getButtons();
+				$markers['CSH'] = $docHeaderButtons['csh'];
+				$markers['HEADER'] = $header;
+				$markers['SELECTOR'] = $this->subselector;
+				$markers['TABS'] = '';
+				$markers['FUNC_MENU'] = '';
+				$markers['CONTENT'] = $this->content;
+			}
+			else {
+				// If no access or if ID == zero
+				$this->doc = t3lib_div::makeInstance('mediumDoc');
+				$this->doc->backPath = $BACK_PATH;
+				$this->content.=$this->doc->startPage($LANG->getLL('title'));
+				$this->content.=$this->doc->header($LANG->getLL('title'));
+				$this->content.=$this->doc->spacer(5);
+				$this->content.=$this->doc->spacer(10);
+			}
+		}
+		if($this->isTYPO42()) {
+			$content = $this->doc->startPage($LANG->getLL('title'));
+			$content.= $this->doc->moduleBody($this->pageinfo, $docHeaderButtons, $markers);
+//			$content.= $this->doc->endPage();
+			$this->content = $this->doc->insertStylesAndJS($content);
 		}
 	}
   
@@ -199,6 +258,107 @@ class  tx_cfcleague_module1 extends t3lib_SCbase {
 		}
 		return $content;
 	}
+
+	function getDocStyles() {
+		return '
+				html { overflow: hidden; }
+				body {
+					padding: 0;
+					margin: 0;
+					overflow: hidden;
+					height: 100%;
+				}
+
+				.cfcleague_tabs .selector,
+				.cfcleague_content .selector {
+					margin:0;
+					padding:0;
+				}
+				.cfcleague_tabs .selector {
+					text-align:right;
+					margin-right:15px;
+					float:right
+				}
+				.cfcleague_content .selector {
+					text-align:right;
+					margin:0;
+					padding:0;
+					margin-right:15px;
+					clear:both;
+				}
+				.cfcleague_tabs .selector dt, 
+				.cfcleague_content .selector dt {
+					float:right;
+					text-align:left;
+					width:90px;
+					padding-left:10px;
+				}
+				.cfcleague_content .c-headLineTable td {
+					font-weight:bold;
+					color:#FFF!important;
+				}
+			';
+	}
+	function getTableLayout() {
+		return Array (
+		      	'table' => Array('<table class="typo3-dblist" width="100%" cellspacing="0" cellpadding="0" border="0">', '</table><br/>'),
+		        '0' => Array( // Format für 1. Zeile
+		      	   'tr'		=> Array('<tr class="c-headLineTable">','</tr>'),
+		           'defCol' => Array('<td>','</td>') // Format für jede Spalte in der 1. Zeile
+		        ),
+		        'defRow' => Array ( // Formate für alle Zeilen
+		//          '0' => Array('<td valign="top">','</td>'), // Format für 1. Spalte in jeder Zeile
+				  'tr'	   => Array('<tr class="db_list_normal">', '</tr>'),
+		          'defCol' => Array('<td>','</td>') // Format für jede Spalte in jeder Zeile
+		        ),
+		        'defRowEven' => Array ( // Formate für alle Zeilen
+				  'tr'	   => Array('<tr class="db_list_alt">', '</tr>'),
+		          'defCol' => Array('<td>','</td>') // Format für jede Spalte in jeder Zeile
+		        )
+			);
+		
+	}
+	/**
+	 * Create the panel of buttons for submitting the form or otherwise perform operations.
+	 *
+	 * @return	array	all available buttons as an assoc. array
+	 */
+	function getButtons()	{
+		global $TCA, $LANG, $BACK_PATH, $BE_USER;
+
+		$buttons = array(
+			'csh' => '',
+			'view' => '',
+			'record_list' => '',
+			'shortcut' => '',
+		);
+			// CSH
+		$buttons['csh'] = t3lib_BEfunc::cshItem('_MOD_web_txcfcleagueM1', '', $GLOBALS['BACK_PATH'], '', TRUE);
+
+		if($this->id && is_array($this->pageinfo)) {
+
+				// View page
+			$buttons['view'] = '<a href="#" onclick="' . htmlspecialchars(t3lib_BEfunc::viewOnClick($this->pageinfo['uid'], $BACK_PATH, t3lib_BEfunc::BEgetRootLine($this->pageinfo['uid']))) . '">' .
+					'<img' . t3lib_iconWorks::skinImg($BACK_PATH, 'gfx/zoom.gif') . ' title="' . $GLOBALS['LANG']->sL('LLL:EXT:lang/locallang_core.php:labels.showPage', 1) . '" hspace="3" alt="" />' .
+					'</a>';
+
+				// Shortcut
+			if ($BE_USER->mayMakeShortcut())	{
+				$buttons['shortcut'] = $this->doc->makeShortcutIcon('id, edit_record, pointer, new_unique_uid, search_field, search_levels, showLimit', implode(',', array_keys($this->MOD_MENU)), $this->MCONF['name']);
+			}
+
+				// If access to Web>List for user, then link to that module.
+			if ($BE_USER->check('modules','web_list'))	{
+				$href = $BACK_PATH . 'db_list.php?id=' . $this->pageinfo['uid'] . '&returnUrl=' . rawurlencode(t3lib_div::getIndpEnv('REQUEST_URI'));
+				$buttons['record_list'] = '<a href="' . htmlspecialchars($href) . '">' .
+						'<img' . t3lib_iconWorks::skinImg($BACK_PATH, 'gfx/list.gif') . ' title="' . $GLOBALS['LANG']->sL('LLL:EXT:lang/locallang_core.php:labels.showList', 1) . '" alt="" />' .
+						'</a>';
+			}
+		}
+
+		return $buttons;
+	}
+	
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/mod1/index.php'])	{

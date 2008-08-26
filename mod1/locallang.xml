@@ -65,6 +65,10 @@
 			<label index="msg_wrongmatch_syntax">Matchday %d: Match is wrong. Check syntax: '%s'.</label>
 			<label index="msg_wrongmatch_homeidx">Matchday %d: Team index (home) out of range: '%d'.</label>
 			<label index="msg_wrongmatch_guestidx">Matchday %d: Team index (guest) out of range: '%d'.</label>
+			<label index="label_round">Round</label>
+			<label index="label_roundname">Name</label>
+			<label index="label_rounddate">Date</label>
+			<label index="label_roundset">Fixtures</label>
 
 			<label index="msg_no_team_found">No team found!</label>
 			<label index="msg_no_person_found">No person found!</label>
@@ -151,7 +155,7 @@
 			<label index="btn_watchstop">Uhr stoppen</label>
 			<label index="label_tickerminute">Spielminute</label>
 			<label index="label_tickeroffset">Offset</label>
-			<label index="msg_league_generation_hasmatches">Für diese Liga wurden bereits Spiele angelegt. Bitte prüfen Sie genau, daß Sie wirklich zusätzliche Paarungen anlegen möchten!</label>
+			<label index="msg_league_generation_hasmatches">Für diese Liga wurden bereits Spiele angelegt. Bitte prüfen Sie genau, ob Sie wirklich zusätzliche Paarungen anlegen möchten!</label>
 			<label index="btn_create">Erstellen</label>
 			<label index="btn_edit">Ändern</label>
 			<label index="btn_save">Speichern</label>
@@ -175,6 +179,10 @@
 			<label index="msg_wrongmatch_syntax">Spieltag %d: Das Spiel wurde falsch eingetragen: '%s' Bitte Syntax prüfen!</label>
 			<label index="msg_wrongmatch_homeidx">Spieltag %d: Nummer des Heimteams ist außerhalb des gültigen Bereichs: '%d'.</label>
 			<label index="msg_wrongmatch_guestidx">Spieltag %d: Nummer des Gastteams ist außerhalb des gültigen Bereichs: '%d'.</label>
+			<label index="label_round">Spieltag</label>
+			<label index="label_roundname">Name</label>
+			<label index="label_rounddate">Termin</label>
+			<label index="label_roundset">Ansetzungen</label>
 
 			<label index="msg_no_team_found">Keine Personen gefunden!</label>
 			<label index="msg_no_person_found">Keine Personen gefunden!</label>

@@ -260,85 +260,90 @@ class tx_cfcleague_match_ticker extends t3lib_extobjbase {
     return $out;
   }
 
-  /**
-   * Für das Formular benötigen wir ein spezielles Layout
-   */
-  function _getTableLayoutForm() {
-    $arr = Array (
-      'table' => Array('<table class="typo3-dblist" width="100%" cellspacing="0" cellpadding="0" border="0">', '</table><br/>'),
-      '0' => Array( // Format für 1. Zeile
-           'defCol' => Array('<td valign="top" class="c-headLineTable" style="font-weight:bold;padding:2px 5px;">','</td>') // Format f�r jede Spalte in der 1. Zeile
-      ),
-      'defRowOdd' => Array ( // Formate für alle geraden Zeilen
-          'defCol' => Array('<td valign="top" style="padding:5px 5px;">','</td>') // Format für jede Spalte in jeder Zeile
-      ),
-      'defRowEven' => Array ( // Formate für alle ungeraden Zeilen (die Textbox)
-          'defCol' => Array('<td colspan="2" style="border-bottom:solid 1px #A2AAB8;">&nbsp;</td><td valign="top" align="left" colspan="2" style="padding:2px 5px;border-bottom:solid 1px #A2AAB8;">','</td>') // Format für jede Spalte in jeder Zeile
-      )
-    );
-    return $arr;
-  }
-  function _getTableLayoutTickerList() {
-    $arr = Array (
-      'table' => Array('<table class="typo3-dblist" width="100%" cellspacing="0" cellpadding="0" border="0">', '</table><br/>'),
-      '0' => Array( // Format für 1. Zeile
-           'defCol' => Array('<td valign="top" class="c-headLineTable" style="font-weight:bold;padding:2px 5px;">','</td>') // Format f�r jede Spalte in der 1. Zeile
-      ),
-        'defRow' => Array ( // Formate für alle Zeilen
-          'defCol' => Array('<td valign="top" style="padding:0 5px;">','</td>') // Format für jede Spalte in jeder Zeile
-        ),
-        'defRowEven' => Array ( // Formate für alle Zeilen
-          'defCol' => Array('<td valign="top" class="db_list_alt" style="padding:0 5px;">','</td>') // Format für jede Spalte in jeder Zeile
-        )
-    );
-    return $arr;
-  }
-  
-  /**
-   * Wir listen die Tickermeldungen des Spiels auf
-   *
-   */
-  function createTickerArray(&$match, $showAll) {
-    global $LANG,$TCA;
-    $notes = $match->getMatchNotes($showAll ? '' : 5);
-    if(!count($notes))
-      return 0;
+	/**
+	 * Für das Formular benötigen wir ein spezielles Layout
+	 */
+	function _getTableLayoutForm() {
+		$arr = Array (
+			'table' => Array('<table class="typo3-dblist" width="100%" cellspacing="0" cellpadding="0" border="0">', '</table><br/>'),
+			'0' => Array( // Format für 1. Zeile
+				'tr'		=> Array('<tr class="c-headLineTable">','</tr>'),
+				'defCol' => Array('<td valign="top" class="c-headLineTable" style="font-weight:bold;padding:2px 5px;">','</td>') // Format f�r jede Spalte in der 1. Zeile
+			),
+			'defRowOdd' => Array ( // Formate für alle geraden Zeilen
+				'tr'	   => Array('<tr class="db_list_normal">', '</tr>'),
+				'defCol' => Array('<td valign="top" style="padding:5px 5px;">','</td>') // Format für jede Spalte in jeder Zeile
+			),
+			'defRowEven' => Array ( // Formate für alle ungeraden Zeilen (die Textbox)
+				'tr'	   => Array('<tr class="db_list_alt">', '</tr>'),
+				'defCol' => Array('<td colspan="2" style="border-bottom:solid 1px #A2AAB8;">&nbsp;</td><td valign="top" align="left" colspan="2" style="padding:2px 5px;border-bottom:solid 1px #A2AAB8;">','</td>') // Format für jede Spalte in jeder Zeile
+			)
+		);
+		return $arr;
+	}
+	function _getTableLayoutTickerList() {
+		$arr = Array (
+			'table' => Array('<table class="typo3-dblist" width="100%" cellspacing="0" cellpadding="0" border="0">', '</table><br/>'),
+			'0' => Array( // Format für 1. Zeile
+				'tr'		=> Array('<tr class="c-headLineTable">','</tr>'),
+				'defCol' => Array('<td>','</td>') // Format f�r jede Spalte in der 1. Zeile
+			),
+			'defRow' => Array ( // Formate für alle Zeilen
+				'tr'	   => Array('<tr class="db_list_normal">', '</tr>'),
+				'defCol' => Array('<td>','</td>') // Format für jede Spalte in jeder Zeile
+			),
+			'defRowEven' => Array ( // Formate für alle Zeilen
+				'tr'	   => Array('<tr class="db_list_alt">', '</tr>'),
+				'defCol' => Array('<td>','</td>') // Format für jede Spalte in jeder Zeile
+			)
+		);
+		return $arr;
+	}
 
-    $arr = Array(Array(
-      $LANG->getLL('tx_cfcleague_match_notes.minute'),
-      $LANG->getLL('tx_cfcleague_match_notes.type'),
-      $LANG->getLL('tx_cfcleague_match_notes.player_home'),
-      $LANG->getLL('tx_cfcleague_match_notes.player_guest'),
-      $LANG->getLL('tx_cfcleague_match_notes.comment'),
-      ''));
+	/**
+	 * Wir listen die Tickermeldungen des Spiels auf
+	 *
+	 */
+	function createTickerArray(&$match, $showAll) {
+		global $LANG,$TCA;
+		$notes = $match->getMatchNotes($showAll ? '' : 5);
+		if(!count($notes))
+			return 0;
 
-    // Die NotesTypen laden, Wir gehen mal davon aus, daß die TCA geladen ist...
-    $types = array();
-    foreach($TCA['tx_cfcleague_match_notes']['columns']['type']['config']['items'] As $item){
-      $types[$item[1]] = $LANG->sL($item[0]);
-    }
+		$arr = Array(Array(
+			$LANG->getLL('tx_cfcleague_match_notes.minute'),
+			$LANG->getLL('tx_cfcleague_match_notes.type'),
+			$LANG->getLL('tx_cfcleague_match_notes.player_home'),
+			$LANG->getLL('tx_cfcleague_match_notes.player_guest'),
+			$LANG->getLL('tx_cfcleague_match_notes.comment'),
+			''));
 
-    $playersHome = $match->getPlayerNamesHome();
-    $playersGuest = $match->getPlayerNamesGuest();
+		// Die NotesTypen laden, Wir gehen mal davon aus, daß die TCA geladen ist...
+		$types = array();
+		foreach($TCA['tx_cfcleague_match_notes']['columns']['type']['config']['items'] As $item){
+			$types[$item[1]] = $LANG->sL($item[0]);
+		}
 
-    foreach($notes As $note){
-      $row = array();
+		$playersHome = $match->getPlayerNamesHome();
+		$playersGuest = $match->getPlayerNamesGuest();
 
-      $min = $note['minute'] . ($note['extra_time'] ? '+'. $note['extra_time'] : '' );
-      $min .= $note['hidden'] ? '*' : '';
-      $row[] = $min;
-      $row[] = $types[$note['type']];
+		foreach($notes As $note){
+			$row = array();
 
-      $row[] = intval($note['player_home']) == -1 ? $LANG->getLL('tx_cfcleague.unknown') : $playersHome[$note['player_home']];
-      $row[] = intval($note['player_guest']) == -1 ? $LANG->getLL('tx_cfcleague.unknown') : $playersGuest[$note['player_guest']];
+			$min = $note['minute'] . ($note['extra_time'] ? '+'. $note['extra_time'] : '' );
+			$min .= $note['hidden'] ? '*' : '';
+			$row[] = $min;
+			$row[] = $types[$note['type']];
 
+			$row[] = intval($note['player_home']) == -1 ? $LANG->getLL('tx_cfcleague.unknown') : $playersHome[$note['player_home']];
+			$row[] = intval($note['player_guest']) == -1 ? $LANG->getLL('tx_cfcleague.unknown') : $playersGuest[$note['player_guest']];
 
-      $row[] = $note['comment'];
-      $row[] = $this->getFormTool()->createEditLink('tx_cfcleague_match_notes', $note['uid']);
-      $arr[] = $row;
-    }
-    return $arr;
-  }
+			$row[] = $note['comment'];
+			$row[] = $this->getFormTool()->createEditLink('tx_cfcleague_match_notes', $note['uid']);
+			$arr[] = $row;
+		}
+		return $arr;
+	}
 
   /**
    * Erstellt das Datenarray zur Erstellung der HTML-Tabelle mit den Spielen des Spieltages

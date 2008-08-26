@@ -95,18 +95,18 @@ class tx_cfcleague_match_edit  {
 		$games = $current_league->getGamesByRound($current_round);
 		$arr = $this->createTableArray($games, $current_league);
 
-		$this->doc->tableLayout = Array (
-			'table' => Array('<table class="typo3-dblist" width="100%" cellspacing="0" cellpadding="0" border="0">', '</table><br/>'),
-			'0' => Array( // Format für 1. Zeile
-					'defCol' => Array('<td valign="top" class="c-headLineTable" style="font-weight:bold;padding:2px 5px;">','</td>') // Format f�r jede Spalte in der 1. Zeile
-				),
-			'defRow' => Array ( // Formate für alle Zeilen
-					'defCol' => Array('<td valign="middle" style="padding:0px 1px;">','</td>') // Format für jede Spalte in jeder Zeile
-			),
-			'defRowEven' => Array ( // Formate für alle Zeilen
-				'defCol' => Array('<td valign="middle" class="db_list_alt" style="padding:0px 1px;">','</td>') // Format für jede Spalte in jeder Zeile
-			)
-		);
+//		$this->doc->tableLayout = Array (
+//			'table' => Array('<table class="typo3-dblist" width="100%" cellspacing="0" cellpadding="0" border="0">', '</table><br/>'),
+//			'0' => Array( // Format für 1. Zeile
+//					'defCol' => Array('<td valign="top" class="c-headLineTable" style="font-weight:bold;padding:2px 5px;">','</td>') // Format f�r jede Spalte in der 1. Zeile
+//				),
+//			'defRow' => Array ( // Formate für alle Zeilen
+//					'defCol' => Array('<td valign="middle" style="padding:0px 1px;">','</td>') // Format für jede Spalte in jeder Zeile
+//			),
+//			'defRowEven' => Array ( // Formate für alle Zeilen
+//				'defCol' => Array('<td valign="middle" class="db_list_alt" style="padding:0px 1px;">','</td>') // Format für jede Spalte in jeder Zeile
+//			)
+//		);
 		$content .= $this->doc->table($arr[0]);
 
 		// Den Update-Button einfügen
@@ -169,18 +169,13 @@ class tx_cfcleague_match_edit  {
 
       $isNoMatch = $game['no_match_home'] || $game['no_match_guest'];
 
-//if($isNoMatch) t3lib_div::debug($game, 'edit');
-
       $table = 'tx_cfcleague_games';
 			if(!$isNoMatch) {
 				$row[] = $game['uid'];
-		$dataArr = $this->formTool->getTCEFormArray($table, $game['uid']);
-//t3lib_div::debug($dataArr, 'tx_cfcleague_match_edit'); // TODO: remove me
+				$dataArr = $this->formTool->getTCEFormArray($table, $game['uid']);
 				$row[] = $this->formTool->form->getSoloField($table,$dataArr[$table.'_'.$game['uid']],'date');
-//				$row[] = $this->formTool->createDateInput('data[tx_cfcleague_games]['.$game['uid'].'][date]',$game['date']);
 
 				$row[] = $this->formTool->form->getSoloField($table,$dataArr[$table.'_'.$game['uid']],'status');
-//				$row[] = $this->formTool->createSelectSingle('data[tx_cfcleague_games]['.$game['uid'].'][status]', $game['status'], 'tx_cfcleague_games', 'status');
 				$row[] = $this->formTool->createEditLink('tx_cfcleague_teams',$game['home'],$game['short_name_home']);
 				$row[] = $this->formTool->createEditLink('tx_cfcleague_teams',$game['guest'],$game['short_name_guest']);
 

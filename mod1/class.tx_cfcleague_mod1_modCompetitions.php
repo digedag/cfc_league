@@ -45,41 +45,51 @@ class tx_cfcleague_mod1_modCompetitions extends t3lib_extobjbase {
     $this->id = $pObj->id;
   }
 
-  /**
-   * Verwaltet die Erstellung von Spielplänen von Ligen
-   */
-  function main() {
-    global $LANG;
-    // Zuerst mal müssen wir die passende Liga auswählen lassen:
-    // Entweder global über die Datenbank oder die Ligen der aktuellen Seite
+	/**
+	 * Verwaltet die Erstellung von Spielplänen von Ligen
+	 */
+	function main() {
+		global $LANG;
+		// Zuerst mal müssen wir die passende Liga auswählen lassen:
+		// Entweder global über die Datenbank oder die Ligen der aktuellen Seite
 
-    $this->doc = $this->pObj->doc;
+		$this->doc = $this->pObj->doc;
 
-    $this->formTool = tx_div::makeInstance('tx_rnbase_util_FormTool');
-    $this->formTool->init($this->doc);
+		$this->formTool = tx_div::makeInstance('tx_rnbase_util_FormTool');
+		$this->formTool->init($this->doc);
 
-    // Selector-Instanz bereitstellen
-    $this->selector = t3lib_div::makeInstance('tx_cfcleague_selector');
-    $this->selector->init($this->doc, $this->MCONF);
-    
-    $content = '';
+		// Selector-Instanz bereitstellen
+		$this->selector = t3lib_div::makeInstance('tx_cfcleague_selector');
+		$this->selector->init($this->doc, $this->MCONF);
 
-    // Anzeige der vorhandenen Ligen
-    $current_league = $this->selector->showLeagueSelector($content,$this->id);
-    if(!$current_league) {
-      $content.=$this->doc->section('Info:',$LANG->getLL('no_league_in_page'),0,1,ICON_WARN);
-      return $content;
-    }
-    
+		// Anzeige der vorhandenen Ligen
+		$selector = '';
+		$current_league = $this->selector->showLeagueSelector($selector,$this->id);
+		$content = '';
+
+		if($this->pObj->isTYPO42())
+			$this->pObj->subselector = $selector;
+		else 
+			$content .= $selector;
+
+		if(!$current_league) {
+			$content.=$this->doc->section('Info:',$LANG->getLL('no_league_in_page'),0,1,ICON_WARN);
+			return $content;
+		}
+
 		$menu = $this->selector->showTabMenu($this->id, 'comptools', 
-				array('0' => $LANG->getLL('edit_games'), 
-							'1' => $LANG->getLL('mod_compteams'),
-							'2' => $LANG->getLL('create_games')));
-		$content .= $menu['menu'];
-		
+			array('0' => $LANG->getLL('edit_games'),
+						'1' => $LANG->getLL('mod_compteams'),
+						'2' => $LANG->getLL('create_games')));
 		$content .= $this->formTool->form->printNeededJSFunctions_top();
-		$content .= '<div style="display: block; border: 1px solid #a2aab8;">';
-		$content .= '</div>';
+
+		$tabs .= $menu['menu'];
+		$tabs .= '<div style="display: block; border: 1px solid #a2aab8;" ></div>';
+		
+		if($this->pObj->isTYPO42())
+			$this->pObj->tabs = $tabs;
+		else
+			$content .= $tabs;
 		
 		switch($menu['value']) {
 			case 0:
@@ -97,7 +107,7 @@ class tx_cfcleague_mod1_modCompetitions extends t3lib_extobjbase {
 		$content .= $this->formTool->form->printNeededJSFunctions();
 //		$content  .= $this->formTool->form->JSbottom('editform');
 		return $content;
-  }
+	}
 	private function showEditMatches($current_league) {
 		require_once(t3lib_extMgm::extPath('cfc_league') . 'mod1/class.tx_cfcleague_match_edit.php');
 		$subMod = t3lib_div::makeInstance('tx_cfcleague_match_edit');

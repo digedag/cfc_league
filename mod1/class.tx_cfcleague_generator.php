@@ -138,39 +138,42 @@ class tx_cfcleague_generator {
     return $LANG->getLL('msg_matches_created');
   }
 
-  /**
-   * Erstellt das Vorabformular, daß für jeden Spieltag notwendige Daten abfragt.
-   */
-  function prepareGameTable($table, &$league, $option_halfseries) {
-    global $LANG;
+	/**
+	 * Erstellt das Vorabformular, daß für jeden Spieltag notwendige Daten abfragt.
+	 */
+	function prepareGameTable($table, &$league, $option_halfseries) {
+		global $LANG;
 
-    $content = '';
-    // Wir benötigen eine Select-Box mit der man die Rückrunden-Option einstellen kann
-    // Bei Änderung soll die Seite neu geladen werden, damit nur die Halbserie angezeigt wird.
-    $content .= $this->formTool->createSelectSingleByArray('option_halfseries', $option_halfseries, Array('0' => 'Mit Rückrunde', '1' => 'Ohne Rückrunde'), array('reload'=>1));
+		$content = '';
+		// Wir benötigen eine Select-Box mit der man die Rückrunden-Option einstellen kann
+		// Bei Änderung soll die Seite neu geladen werden, damit nur die Halbserie angezeigt wird.
+		$content .= $this->formTool->createSelectSingleByArray('option_halfseries', $option_halfseries, Array('0' => 'Mit Rückrunde', '1' => 'Ohne Rückrunde'), array('reload'=>1));
 
-    $content .= '<br />';
+		$content .= '<br />';
 
+		$tableLayout = Array (
+			'table' => Array('<table class="typo3-dblist" style="margin:0;" width="100%" cellspacing="0" cellpadding="0" border="0">', '</table><br/>'),
+			'0' => Array( // Format für 1. Zeile
+				'tr'		=> Array('<tr class="c-headLineTable">','</tr>'),
+				'defCol' => Array('<td>','</td>') // Format f�r jede Spalte in der 1. Zeile
+			),
+			'defRow' => Array ( // Formate für alle Zeilen
+				'defCol' => Array('<td valign="top" style="padding:5px 5px 0 5px; border-bottom:solid 1px #A2AAB8;">','</td>') // Format für jede Spalte in jeder Zeile
+			),
+		);
 
-    $tableLayout = Array (
-      'table' => Array('<table class="typo3-dblist" style="margin:0;" width="100%" cellspacing="0" cellpadding="0" border="0">', '</table><br/>'),
-    	'0' => Array( // Format für 1. Zeile
-         'defCol' => Array('<td valign="top" class="c-headLineTable" style="font-weight:bold;padding:2px 5px;">','</td>') // Format f�r jede Spalte in der 1. Zeile
-      ),
-      'defRow' => Array ( // Formate für alle Zeilen
-        'defCol' => Array('<td valign="top" style="padding:5px 5px 0 5px; border-bottom:solid 1px #A2AAB8;">','</td>') // Format für jede Spalte in jeder Zeile
-      ),
-    );
-    $tableLayout2 = $tableLayout;
-    $tableLayout2['defRow'] = Array ( // Formate für alle Zeilen
-        'defCol' => Array('<td valign="top" style="padding:0 5px;">','</td>') // Format für jede Spalte in jeder Zeile
-      );
-    $tableLayout2['defRowEven'] = Array ( // Formate für alle Zeilen
-        'defCol' => Array('<td valign="top" class="db_list_alt" style="padding:0 5px;">','</td>') // Format für jede Spalte in jeder Zeile
-      );
-    
+		$tableLayout2 = $tableLayout;
+		$tableLayout2['defRow'] = Array ( // Formate für alle Zeilen
+			'tr'	   => Array('<tr class="db_list_normal">', '</tr>'),
+			'defCol' => Array('<td>','</td>') // Format für jede Spalte in jeder Zeile
+		);
+		$tableLayout2['defRowEven'] = Array ( // Formate für alle Zeilen
+			'tr'	   => Array('<tr class="db_list_alt">', '</tr>'),
+			'defCol' => Array('<td>','</td>') // Format für jede Spalte in jeder Zeile
+		);
 
-    $arr = Array(Array('Runde','Name','Termin','Ansetzungen'));
+    $arr = Array(Array($LANG->getLL('label_round'),$LANG->getLL('label_roundname'),
+    		$LANG->getLL('label_rounddate'),$LANG->getLL('label_roundset')));
     foreach($table As $round => $matchArr) {
       $row = array();
 

@@ -121,9 +121,8 @@ class tx_cfcleague_mod1_modCompTeams extends t3lib_extobjbase {
 								$this->formTool->createInfoLink('tx_cfcleague_teams',$teamArr['uid']);
 			$arr[] = $row;
 		}
-
-    $content = '<h2>'.$LANG->getLL('label_current_teams').'</h2>';
-		$content .= $this->doc->table($arr, $this->getTableLayout());
+		$content = '<h2>'.$LANG->getLL('label_current_teams').'</h2>';
+		$content .= $this->doc->table($arr); //, $this->getTableLayout()
 		return $content;
 //t3lib_div::debug($arr, 'tx_cfcleague_mod1_modCompTeams'); // TODO: remove me
 	}
