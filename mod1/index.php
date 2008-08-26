@@ -260,15 +260,16 @@ class  tx_cfcleague_module1 extends t3lib_SCbase {
 	}
 
 	function getDocStyles() {
-		return '
-				html { overflow: hidden; }
-				body {
-					padding: 0;
-					margin: 0;
-					overflow: hidden;
-					height: 100%;
-				}
-
+		if($this->isTYPO42())
+			$css = '
+  				html { overflow: hidden; }
+  				body {
+  					padding: 0;
+  					margin: 0;
+  					overflow: hidden;
+  					height: 100%;
+  				}';
+		$css .= '
 				.cfcleague_tabs .selector,
 				.cfcleague_content .selector {
 					margin:0;
@@ -298,25 +299,25 @@ class  tx_cfcleague_module1 extends t3lib_SCbase {
 					color:#FFF!important;
 				}
 			';
+	  return $css;
 	}
 	function getTableLayout() {
 		return Array (
-		      	'table' => Array('<table class="typo3-dblist" width="100%" cellspacing="0" cellpadding="0" border="0">', '</table><br/>'),
-		        '0' => Array( // Format für 1. Zeile
-		      	   'tr'		=> Array('<tr class="c-headLineTable">','</tr>'),
-		           'defCol' => Array('<td>','</td>') // Format für jede Spalte in der 1. Zeile
-		        ),
-		        'defRow' => Array ( // Formate für alle Zeilen
+				'table' => Array('<table class="typo3-dblist" width="100%" cellspacing="0" cellpadding="0" border="0">', '</table><br/>'),
+				'0' => Array( // Format für 1. Zeile
+					'tr'		=> Array('<tr class="c-headLineTable">','</tr>'),
+					'defCol' => ($this->isTYPO42() ? Array('<td>','</td>') : Array('<td class="c-headLineTable" style="font-weight:bold; color:white;">','</td>'))  // Format für jede Spalte in der 1. Zeile
+				),
+				'defRow' => Array ( // Formate für alle Zeilen
 		//          '0' => Array('<td valign="top">','</td>'), // Format für 1. Spalte in jeder Zeile
-				  'tr'	   => Array('<tr class="db_list_normal">', '</tr>'),
-		          'defCol' => Array('<td>','</td>') // Format für jede Spalte in jeder Zeile
-		        ),
-		        'defRowEven' => Array ( // Formate für alle Zeilen
-				  'tr'	   => Array('<tr class="db_list_alt">', '</tr>'),
-		          'defCol' => Array('<td>','</td>') // Format für jede Spalte in jeder Zeile
-		        )
+					'tr'	   => Array('<tr class="db_list_normal">', '</tr>'),
+					'defCol' => Array('<td>','</td>') // Format für jede Spalte in jeder Zeile
+				),
+				'defRowEven' => Array ( // Formate für alle Zeilen
+					'tr'	   => Array('<tr class="db_list_alt">', '</tr>'),
+					'defCol' => Array('<td>','</td>') // Format für jede Spalte in jeder Zeile
+				)
 			);
-		
 	}
 	/**
 	 * Create the panel of buttons for submitting the form or otherwise perform operations.

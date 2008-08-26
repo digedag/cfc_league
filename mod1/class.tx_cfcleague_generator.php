@@ -151,17 +151,12 @@ class tx_cfcleague_generator {
 
 		$content .= '<br />';
 
-		$tableLayout = Array (
-			'table' => Array('<table class="typo3-dblist" style="margin:0;" width="100%" cellspacing="0" cellpadding="0" border="0">', '</table><br/>'),
-			'0' => Array( // Format für 1. Zeile
-				'tr'		=> Array('<tr class="c-headLineTable">','</tr>'),
-				'defCol' => Array('<td>','</td>') // Format f�r jede Spalte in der 1. Zeile
-			),
-			'defRow' => Array ( // Formate für alle Zeilen
+		$tableLayout = $this->doc->tableLayout;
+		$tableLayout['defRow'] = Array ( // Formate für alle Zeilen
 				'defCol' => Array('<td valign="top" style="padding:5px 5px 0 5px; border-bottom:solid 1px #A2AAB8;">','</td>') // Format für jede Spalte in jeder Zeile
-			),
-		);
-
+			);
+		unset($tableLayout['defRowEven']);
+			
 		$tableLayout2 = $tableLayout;
 		$tableLayout2['defRow'] = Array ( // Formate für alle Zeilen
 			'tr'	   => Array('<tr class="db_list_normal">', '</tr>'),
