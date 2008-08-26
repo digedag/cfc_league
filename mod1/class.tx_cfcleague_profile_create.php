@@ -56,7 +56,7 @@ class tx_cfcleague_profile_create extends t3lib_extobjbase {
 
 		$this->doc = $this->pObj->doc;
 		$content = '';
-
+		
 		$this->formTool = tx_div::makeInstance('tx_rnbase_util_FormTool');
 		$this->formTool->init($this->pObj->doc);
 		// Selector-Instanz bereitstellen
@@ -69,15 +69,26 @@ class tx_cfcleague_profile_create extends t3lib_extobjbase {
 		$baseInfo['maxPlayers'] = intval($TCA['tx_cfcleague_teams']['columns']['players']['config']['maxitems']);
 		$baseInfo['maxSupporters'] = intval($TCA['tx_cfcleague_teams']['columns']['supporters']['config']['maxitems']);
 
-		$saison = $this->selector->showSaisonSelector($content,$this->id);
+		$selector = '';
+		$saison = $this->selector->showSaisonSelector($selector,$this->id);
+		if($this->pObj->isTYPO42())
+			$this->pObj->subselector = $selector;
+		else 
+			$content .= $selector;
+		
 		if(!($saison && count($saison->getCompetitions()))) {
 			$content.=$this->doc->section('Info:', $saison ? $LANG->getLL('msg_NoCompetitonsFound') : $LANG->getLL('msg_NoSaisonFound'),0,1,ICON_WARN);
 			return $content;
 		}
 		
 		// Anzeige der vorhandenen Ligen
-		$league = $this->selector->showLeagueSelector($content,$this->id,$saison->getCompetitions());
-		$team = $this->selector->showTeamSelector($content,$this->id,$league);
+		$selector = '';
+		$league = $this->selector->showLeagueSelector($selector,$this->id,$saison->getCompetitions());
+		$team = $this->selector->showTeamSelector($selector,$this->id,$league);
+		if($this->pObj->isTYPO42())
+			$this->pObj->subselector .= $selector;
+		else 
+			$content .= $selector;
 
 		$data = t3lib_div::_GP('data');
 		if(!$team){ // Kein Team gefunden
@@ -90,8 +101,16 @@ class tx_cfcleague_profile_create extends t3lib_extobjbase {
 									'1' => $LANG->getLL('add_players'),
 //									'2' => $LANG->getLL('manage_teamnotes'),
 						));
-		$content .= $menu['menu'];
-		$content .= '<div style="display: block; border: 1px solid #a2aab8;"></div>';
+		$tabs = $menu['menu'];
+		$tabs .= '<div style="display: block; border: 1px solid #a2aab8;clear:both;" ></div>';
+		
+		if($this->pObj->isTYPO42())
+			$this->pObj->tabs = $tabs;
+		else
+			$content .= $tabs;
+
+//		$content .= $menu['menu'];
+//		$content .= '<div style="display: block; border: 1px solid #a2aab8;"></div>';
 		switch($menu['value']) {
 			case 0:
 				$content .= $this->showCreateProfiles($data, $team, $baseInfo);
@@ -164,90 +183,83 @@ class tx_cfcleague_profile_create extends t3lib_extobjbase {
 		}
 		return $content;
 	}
-  /**
-   * Liefert die Informationen, über den Zustand des Teams.
-   *
-   */
-  private function getInfoMessage($baseInfo) {
-    global $LANG;
-    $tableLayout = Array (
-      'table' => Array('<table class="typo3-dblist" cellspacing="0" cellpadding="0" border="0">', '</table><br/>'),
-    	'defRow' => Array ( // Formate für alle Zeilen
-        '0' => Array('<td valign="top" class="c-headLineTable" style="font-weight:bold;padding:0 5px;">','</td>'), // Format für 1. Spalte in jeder Zeile
-      	'defCol' => Array('<td valign="top" style="text-align:right;padding:0 5px;">','</td>') // Format für jede Spalte in jeder Zeile
-      ),
-      'defRowEven' => Array ( // Formate für alle Zeilen
-        '0' => Array('<td valign="top" class="c-headLineTable" style="font-weight:bold;padding:0 5px;">','</td>'), // Format für 1. Spalte in jeder Zeile
-      	'defCol' => Array('<td valign="top" class="db_list_alt" style="text-align:right;padding:0 5px;">','</td>') // Format für jede Spalte in jeder Zeile
-      )
-    );
-    $arr[] = array($LANG->getLL('msg_number_of_players'), $baseInfo['freePlayers']);
-    $arr[] = array($LANG->getLL('msg_number_of_coaches'), $baseInfo['freeCoaches']);
-    $arr[] = array($LANG->getLL('msg_number_of_supporters'), $baseInfo['freeSupporters']);
-    
-    return $this->doc->table($arr, $tableLayout);
-//    
-//    return $LANG->getLL('msg_number_of_players').' ' . $baseInfo['freePlayers'] . 
-//      '<br>'.$LANG->getLL('msg_number_of_coaches').' ' . $baseInfo['freeCoaches'] . 
-//      '<br>'.$LANG->getLL('msg_number_of_supporters').' '.$baseInfo['freeSupporters'];  	
-  }
-  /**
-   * Erstellt eine Tabelle mit den schon vorhandenen Personen und den noch möglichen neuen
-   * Personen.
-   * Wenn keine Personen da sind, gibt es 15 Eingabefelder, sonst nur 5
-   * @param tx_cfcleague_team $team
-   */
-  function prepareInputTable(&$team) {
-    global $LANG;
+	/**
+	 * Liefert die Informationen, über den Zustand des Teams.
+	 *
+	 */
+	private function getInfoMessage($baseInfo) {
+		global $LANG;
+		$tableLayout = Array (
+			'table' => Array('<table class="typo3-dblist" width="100%" cellspacing="0" cellpadding="0" border="0">', '</table><br/>'),
+			'defRow' => Array( // Format für 1. Zeile
+				'tr'		=> Array('<tr class="c-headLineTable">','</tr>'),
+				'defCol' => Array($this->pObj->isTYPO42() ? '<td>': '<td class="c-headLineTable" style="font-weight:bold;color:white;padding:0 5px;">','</td>') // Format für jede Spalte in der 1. Zeile
+			)
+		);
 
-    $tableLayout = Array (
-      '0' => Array( // Format für 1. Zeile
-         'defCol' => Array('<td valign="top" class="c-headLineTable" style="font-weight:bold;padding:2px 5px;">','</td>') // Format f�r jede Spalte in der 1. Zeile
-      ),
-      'defRow' => Array ( // Formate für alle Zeilen
-        'defCol' => Array('<td valign="top" style="padding:0 5px;">','</td>') // Format für jede Spalte in jeder Zeile
-      ),
-      'defRowEven' => Array ( // Formate für alle Zeilen
-          'defCol' => Array('<td valign="top" class="db_list_alt" style="padding:0 5px;">','</td>') // Format für jede Spalte in jeder Zeile
-      )
-    );
+		$arr[] = array($LANG->getLL('msg_number_of_players'), $baseInfo['freePlayers']);
+		$arr[] = array($LANG->getLL('msg_number_of_coaches'), $baseInfo['freeCoaches']);
+		$arr[] = array($LANG->getLL('msg_number_of_supporters'), $baseInfo['freeSupporters']);
+		return $this->doc->table($arr, $tableLayout);
+	}
+	/**
+	 * Erstellt eine Tabelle mit den schon vorhandenen Personen und den noch möglichen neuen
+	 * Personen.
+	 * Wenn keine Personen da sind, gibt es 15 Eingabefelder, sonst nur 5
+	 * @param tx_cfcleague_team $team
+	 */
+	function prepareInputTable(&$team) {
+		global $LANG;
 
-    // Es werden zwei Tabellen erstellt
-    $arr = Array(Array('&nbsp;',$LANG->getLL('label_firstname'),$LANG->getLL('label_lastname'),'&nbsp;'));
+		$tableLayout = Array (
+			'table' => Array('<table class="typo3-dblist" width="100%" cellspacing="0" cellpadding="0" border="0">', '</table><br/>'),
+			'0' => Array( // Format für 1. Zeile
+				'tr'		=> Array('<tr class="c-headLineTable">','</tr>'),
+				'defCol' => Array($this->pObj->isTYPO42() ? '<td>': '<td class="c-headLineTable" style="font-weight:bold;color:white;padding:0 5px;">','</td>') // Format für jede Spalte in der 1. Zeile
+			),
+			'defRow' => Array ( // Formate für alle Zeilen
+				'tr'	   => Array('<tr class="db_list_normal">', '</tr>'),
+				'defCol' => Array('<td>','</td>') // Format für jede Spalte in jeder Zeile
+			),
+			'defRowEven' => Array ( // Formate für alle Zeilen
+				'tr'	   => Array('<tr class="db_list_alt">', '</tr>'),
+				'defCol' => Array($this->pObj->isTYPO42() ? '<td>' : '<td class="db_list_alt">','</td>') // Format für jede Spalte in jeder Zeile
+			)
+		);
 
-    $this->addProfiles($arr, $team->getCoachNames(), $LANG->getLL('label_profile_coach'));
-    $this->addProfiles($arr, $team->getPlayerNames(), $LANG->getLL('label_profile_player'));
-    $this->addProfiles($arr, $team->getSupporterNames(), $LANG->getLL('label_profile_supporter'));
-    
-    $tableProfiles = count($arr) > 1 ? $this->doc->table($arr, $tableLayout) : '';
+		// Es werden zwei Tabellen erstellt
+		$arr = Array(Array('&nbsp;',$LANG->getLL('label_firstname'),$LANG->getLL('label_lastname'),'&nbsp;'));
 
+		$this->addProfiles($arr, $team->getCoachNames(), $LANG->getLL('label_profile_coach'));
+		$this->addProfiles($arr, $team->getPlayerNames(), $LANG->getLL('label_profile_player'));
+		$this->addProfiles($arr, $team->getSupporterNames(), $LANG->getLL('label_profile_supporter'));
 
-    $arr = Array(Array('&nbsp;',$LANG->getLL('label_firstname'),$LANG->getLL('label_lastname'),'&nbsp;'));
-    $maxFields = count($team->getPlayerNames()) > 5 ? 5 : 15;
-    for($i=0; $i < $maxFields; $i++){
-      $row = array();
-      
-      $row[] = $i + 1;
-      $row[] = $this->formTool->createTxtInput('data[tx_cfcleague_profiles][NEW'.$i.'][first_name]', '',10); 
-      $row[] = $this->formTool->createTxtInput('data[tx_cfcleague_profiles][NEW'.$i.'][last_name]', '',10);
-      $row[] = $this->formTool->createSelectSingleByArray('data[tx_cfcleague_profiles][NEW'.$i.'][type]', '',$this->getTypeArray()) .
-               $this->formTool->createHidden('data[tx_cfcleague_profiles][NEW'.$i.'][pid]', $this->id);
-      $arr[] = $row;
-    }
-    $tableForm = $this->doc->table($arr, $tableLayout);
+		$tableProfiles = count($arr) > 1 ? $this->doc->table($arr, $tableLayout) : '';
 
-    $tableLayout = Array (
-      'table' => Array('<table class="typo3-dblist" width="100%" cellspacing="0" cellpadding="0" border="0">', '</table><br/>'),
-      'defRow' => Array ( // Formate für alle Zeilen
-        'defCol' => Array('<td valign="top" style="padding:0 5px;">','</td>') // Format für jede Spalte in jeder Zeile
-      ),
-    );
-    
-    $content .= $this->doc->table(Array(Array($tableForm,$tableProfiles)), $tableLayout);
-    return $content;
-  }
+		$arr = Array(Array('&nbsp;',$LANG->getLL('label_firstname'),$LANG->getLL('label_lastname'),'&nbsp;'));
+		$maxFields = count($team->getPlayerNames()) > 5 ? 5 : 15;
+		for($i=0; $i < $maxFields; $i++){
+			$row = array();
+			$row[] = $i + 1;
+			$row[] = $this->formTool->createTxtInput('data[tx_cfcleague_profiles][NEW'.$i.'][first_name]', '',10);
+			$row[] = $this->formTool->createTxtInput('data[tx_cfcleague_profiles][NEW'.$i.'][last_name]', '',10);
+			$row[] = $this->formTool->createSelectSingleByArray('data[tx_cfcleague_profiles][NEW'.$i.'][type]', '',$this->getTypeArray()) .
+			$this->formTool->createHidden('data[tx_cfcleague_profiles][NEW'.$i.'][pid]', $this->id);
+			$arr[] = $row;
+		}
+		$tableForm = $this->doc->table($arr, $tableLayout);
+		$tableLayout = Array (
+			'table' => Array('<table class="typo3-dblist" width="100%" cellspacing="0" cellpadding="0" border="0">', '</table><br/>'),
+			'defRow' => Array ( // Formate für alle Zeilen
+				'defCol' => Array('<td valign="top" style="padding:0 5px;">','</td>') // Format für jede Spalte in jeder Zeile
+			),
+		);
 
-  function getTypeArray() {
+		$content .= $this->doc->table(Array(Array($tableForm,$tableProfiles)), $tableLayout);
+		return $content;
+	}
+
+	function getTypeArray() {
     global $LANG;
     return Array(
       '1' => $LANG->getLL('label_profile_player'),

@@ -119,30 +119,14 @@ class tx_cfcleague_mod1_profilesearcher {
 		if($profiles) {
 			$comp = null; // PHP ist ja sowas von erbärmlich...
 			$arr = tx_cfcleague_mod1_decorator::prepareTable($profiles, $columns, $this->formTool, $this->options);
-			$out .= $this->doc->table($arr[0], $this->getTableLayout());
+			$out .= $this->doc->table($arr[0]);
 		}
 		else {
 	  	$out = '<p><strong>'.$GLOBALS['LANG']->getLL('msg_no_matches_in_betset').'</strong></p><br/>';
 		}
-    return $this->doc->section($headline.':',$out,0,1,ICON_INFO);
-  }
+		return $this->doc->section($headline.':',$out,0,1,ICON_INFO);
+	}
 
-  function getTableLayout() {
-		$layout = Array (
-			'table' => Array('<table class="typo3-dblist" width="100%" cellspacing="0" cellpadding="0" border="0">', '</table><br/>'),
-			'0' => Array( // Format für 1. Zeile
-				'defCol' => Array('<td valign="top" class="c-headLineTable" style="font-weight:bold;padding:2px 5px;">','</td>') // Format für jede Spalte in der 1. Zeile
-			),
-			'defRow' => Array ( // Formate für alle Zeilen
-//          '0' => Array('<td valign="top">','</td>'), // Format für 1. Spalte in jeder Zeile
-				'defCol' => Array('<td valign="top" style="padding:0 5px;">','</td>') // Format für jede Spalte in jeder Zeile
-				),
-				'defRowEven' => Array ( // Formate für alle Zeilen
-					'defCol' => Array('<td valign="top" class="db_list_alt" style="padding:0 5px;">','</td>') // Format für jede Spalte in jeder Zeile
-				)
-		);
-		return $layout;
-  }
 	/**
 	 * Returns the formTool
 	 * @return tx_rnbase_util_FormTool
