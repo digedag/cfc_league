@@ -270,30 +270,33 @@ class  tx_cfcleague_module1 extends t3lib_SCbase {
   					height: 100%;
   				}';
 		$css .= '
-				.cfcleague_tabs .selector,
-				.cfcleague_content .selector {
+				.cfcleague_selector .cfcselector div {
+					float:left;
+					margin: 0 5px 10px 0;
+				}
+				.cfcleague_content .cfcselector div {
+					float:left;
+					margin: 5px 5px 10px 0;
+				}
+/*
+				.cfcleague_content .cfcselector {
 					margin:0;
 					padding:0;
-				}
-				.cfcleague_tabs .selector {
-					text-align:right;
-					margin-right:15px;
-					float:right
-				}
-				.cfcleague_content .selector {
-					text-align:right;
-					margin:0;
-					padding:0;
-					margin-right:15px;
 					clear:both;
 				}
-				.cfcleague_tabs .selector dt, 
-				.cfcleague_content .selector dt {
+				.cfcleague_selector1 .cfcselector dt {
+					float:right;
+					text-align:left;
+					width1:90px;
+					padding-left1:10px;
+				}
+				.cfcleague_content .cfcselector dt {
 					float:right;
 					text-align:left;
 					width:90px;
 					padding-left:10px;
 				}
+*/
 				.cfcleague_content .c-headLineTable td {
 					font-weight:bold;
 					color:#FFF!important;
@@ -315,7 +318,8 @@ class  tx_cfcleague_module1 extends t3lib_SCbase {
 				),
 				'defRowEven' => Array ( // Formate für alle Zeilen
 					'tr'	   => Array('<tr class="db_list_alt">', '</tr>'),
-					'defCol' => Array('<td>','</td>') // Format für jede Spalte in jeder Zeile
+					'defCol' => Array(($this->isTYPO42() ?'<td>' : '<td class="db_list_alt">'),'</td>')
+//				'defCol' => Array('<td>','</td>') // Format für jede Spalte in jeder Zeile
 				)
 			);
 	}

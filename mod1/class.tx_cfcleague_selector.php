@@ -72,12 +72,16 @@ class tx_cfcleague_selector{
 		// In den Content einbauen
 		// Zusätzlich noch einen Edit-Link setzen
 		if($menu) {
-			$link = $this->formTool->createEditLink('tx_cfcleague_competition', $this->LEAGUE_SETTINGS['league'],'');
-			$menu .= '</td><td style="width:90px; padding-left:10px;">' . $link;
+			$links = $this->formTool->createEditLink('tx_cfcleague_competition', $this->LEAGUE_SETTINGS['league'],'');
 			// Jetzt noch den Cache-Link
-			$menu .= ' ' . $this->formTool->createLink('&clearCache=1', $pid, '<img'.t3lib_iconWorks::skinImg($GLOBALS['BACK_PATH'],'gfx/clear_all_cache.gif','width="11" height="12"').' title="Statistik-Cache leeren" border="0" alt="" />');
+			$links .= ' ' . $this->formTool->createLink('&clearCache=1', $pid, '<img'.t3lib_iconWorks::skinImg($GLOBALS['BACK_PATH'],'gfx/clear_all_cache.gif','width="11" height="12"').' title="Statistik-Cache leeren" border="0" alt="" />');
+			$menu = '<div class="cfcselector"><div class="selector">' . $menu . '</div><div class="links">' . $links . '</div></div>';
+//			$menu .= '</td><td style="width:90px; padding-left:10px;">' . $link;
+//			// Jetzt noch den Cache-Link
+//			$menu .= ' ' . $this->formTool->createLink('&clearCache=1', $pid, '<img'.t3lib_iconWorks::skinImg($GLOBALS['BACK_PATH'],'gfx/clear_all_cache.gif','width="11" height="12"').' title="Statistik-Cache leeren" border="0" alt="" />');
 		}
-		$content.=$this->doc->section('',$this->doc->funcMenu($headerSection,$menu));
+		$content.= $menu;
+//		$content.=$this->doc->section('',$this->doc->funcMenu($headerSection,$menu));
 
 		if(t3lib_div::_GP('clearCache') && $this->LEAGUE_SETTINGS['league']) {
 			if (is_object($serviceObj = t3lib_div::makeInstanceService('memento'))) {
@@ -118,13 +122,14 @@ class tx_cfcleague_selector{
 		// In den Content einbauen
 		// Zusätzlich noch einen Edit-Link setzen
 		if($menu) {
-			$link = $this->formTool->createEditLink('tx_cfcleague_teams', $this->TEAM_SETTINGS['team']);
-			$menu .= '</td><td style="width:90px; padding-left:10px;">' . $link;
+			$links = $this->formTool->createEditLink('tx_cfcleague_teams', $this->TEAM_SETTINGS['team']);
+//			$menu .= '</td><td style="width:90px; padding-left:10px;">' . $links;
 			if($teamObj->record['club'])
-				$menu .= $this->formTool->createEditLink('tx_cfcleague_club', intval($teamObj->record['club']), $GLOBALS['LANG']->getLL('label_club'));
+				$links .= $this->formTool->createEditLink('tx_cfcleague_club', intval($teamObj->record['club']), $GLOBALS['LANG']->getLL('label_club'));
+			$menu = '<div class="cfcselector"><div class="selector">' . $menu . '</div><div class="links">' . $links . '</div></div>';
 		}
-
-    $content.=$this->doc->section('',$this->doc->funcMenu($headerSection,$menu));
+		$content .= $menu;
+//    $content.=$this->doc->section('',$this->doc->funcMenu($headerSection,$menu));
 
     return $teamObj;
   }
@@ -156,41 +161,45 @@ class tx_cfcleague_selector{
 		// In den Content einbauen
 		// Spielrunden sind keine Objekt, die bearbeitet werden können
 		if($menu)
-			$menu .= '</td><td style="width:90px; padding-left:10px;">';
-		$content.=$this->doc->section('',$this->doc->funcMenu($headerSection,$menu));
+			$menu = '<div class="cfcselector"><div class="selector">' . $menu . '</div></div>';
+//		$menu .= '</td><td style="width:90px; padding-left:10px;">';
+//		$content.=$this->doc->section('',$this->doc->funcMenu($headerSection,$menu));
+		$content.= $menu;
 
 		return count($objRounds) ? $objRounds[$this->ROUND_SETTINGS['round']] : $this->ROUND_SETTINGS['round'];
 	}
 
-  /**
-   * Darstellung der Select-Box mit allen übergebenen Spielen. Es wird auf das aktuelle Spiel eingestellt.
-   * @return die aktuelle Match als Objekt
-   */
-  function showMatchSelector(&$content,$pid,$matches){
-    $this->MATCH_MENU = Array (
-      'match' => array()
-    );
-    foreach($matches as $idx=>$match){
-      $this->MATCH_MENU['match'][$match['uid']] = $match['short_name_home'] . ' - ' . $match['short_name_guest'];
-    } 
-    $this->MATCH_SETTINGS = t3lib_BEfunc::getModuleData(
-      $this->MATCH_MENU,t3lib_div::_GP('SET'),$this->MCONF['name'] // Das ist der Name des Moduls
-    );
+	/**
+	 * Darstellung der Select-Box mit allen übergebenen Spielen. Es wird auf das aktuelle Spiel eingestellt.
+	 * @return die aktuelle Match als Objekt
+	 */
+	function showMatchSelector(&$content,$pid,$matches){
+		$this->MATCH_MENU = Array (
+			'match' => array()
+		);
+		foreach($matches as $idx=>$match){
+			$this->MATCH_MENU['match'][$match['uid']] = $match['short_name_home'] . ' - ' . $match['short_name_guest'];
+		}
+		$this->MATCH_SETTINGS = t3lib_BEfunc::getModuleData(
+			$this->MATCH_MENU,t3lib_div::_GP('SET'),$this->MCONF['name'] // Das ist der Name des Moduls
+		);
 
-    $menu = t3lib_BEfunc::getFuncMenu(
-      $pid,'SET[match]',$this->MATCH_SETTINGS['match'],$this->MATCH_MENU['match']
-    );
-    // In den Content einbauen
-    // Zusätzlich noch einen Edit-Link setzen
-    $link = $this->formTool->createEditLink('tx_cfcleague_games', $this->MATCH_SETTINGS['match']);
-    if($menu)
-      $menu .= '</td><td style="width:90px; padding-left:10px;">' . $link;
-    $content.=$this->doc->section('',$this->doc->funcMenu($headerSection,$menu));
+		$menu = t3lib_BEfunc::getFuncMenu(
+			$pid,'SET[match]',$this->MATCH_SETTINGS['match'],$this->MATCH_MENU['match']
+		);
+		// In den Content einbauen
+		// Zusätzlich noch einen Edit-Link setzen
+		$links = $this->formTool->createEditLink('tx_cfcleague_games', $this->MATCH_SETTINGS['match']);
+		if($menu) {
+			//$menu .= '</td><td style="width:90px; padding-left:10px;">' . $link;
+			$menu = '<div class="cfcselector"><div class="selector">' . $menu . '</div><div class="links">' . $links . '</div></div>';
+		}
+		$content .= $menu;
+//		$content.=$this->doc->section('',$this->doc->funcMenu($headerSection,$menu));
 
-    // Aktuellen Wert als Match-Objekt zurückgeben
-    return new tx_cfcleague_match($this->MATCH_SETTINGS['match']);
-
-  }
+		// Aktuellen Wert als Match-Objekt zurückgeben
+		return new tx_cfcleague_match($this->MATCH_SETTINGS['match']);
+	}
 
   /**
    * Darstellung der Select-Box mit allen Altersgruppen in der Datenbank.
@@ -243,9 +252,12 @@ class tx_cfcleague_selector{
     );
     // In den Content einbauen
     // Wir verzichten hier auf den Link und halten nur den Abstand ein
-    if($menu)
-      $menu .= '</td><td style="width:90px; padding-left:10px;">';
-    $content.=$this->doc->section('',$this->doc->funcMenu($headerSection,$menu));
+    if($menu) {
+			$menu = '<div class="cfcselector"><div class="selector">' . $menu . '</div></div>';
+//      $menu .= '</td><td style="width:90px; padding-left:10px;">';
+    }
+    $content.= $menu;
+//    $content.=$this->doc->section('',$this->doc->funcMenu($headerSection,$menu));
 
     // Aktuellen Wert als Saison-Objekt zurückgeben
     return $this->SAISON_SETTINGS['saison'] ? new tx_cfcleague_saison($this->SAISON_SETTINGS['saison']) : 0;

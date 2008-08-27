@@ -78,7 +78,7 @@ class tx_cfcleague_match_ticker extends t3lib_extobjbase {
     // Zuerst mal müssen wir die passende Liga auswählen lassen:
     $content = '';
 
-    $current_league = $this->selector->showLeagueSelector($content,$this->id);
+    $current_league = $this->selector->showLeagueSelector($this->pObj->subselector,$this->id);
     if($current_league) {
       // Anzeige der vorhandenen Ligen
       $content.=$this->doc->spacer(5);
@@ -88,7 +88,7 @@ class tx_cfcleague_match_ticker extends t3lib_extobjbase {
         return $content;
       }
       // Jetzt den Spieltag wählen lassen
-      $current_round = $this->selector->showRoundSelector($content,$this->id,$current_league);
+      $current_round = $this->selector->showRoundSelector($this->pObj->subselector,$this->id,$current_league);
       $content.=$this->doc->spacer(5);
       
       $update = t3lib_div::_GP('update');
@@ -101,7 +101,7 @@ class tx_cfcleague_match_ticker extends t3lib_extobjbase {
 
 
       // Und nun das Spiel wählen
-      $match = $this->selector->showMatchSelector($content,$this->id,$current_league->getGamesByRound($current_round, true));
+      $match = $this->selector->showMatchSelector($this->pObj->subselector,$this->id,$current_league->getGamesByRound($current_round, true));
       $content.=$this->doc->spacer(5);
 
       // Wir zeigen die bisherigen Meldungen
