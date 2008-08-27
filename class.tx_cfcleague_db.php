@@ -34,7 +34,9 @@ class tx_cfcleague_db{
    *              and index 1 the requested tablename
    */
   function queryDB($what, $where, $from=TABLE_GAMES, $groupBy = '', $orderBy = '', $debug=0, $limit = ''){
-    $tableName = $from;
+  	if($debug)
+  		$time = microtime(true);
+  	$tableName = $from;
     $fromClause = $from;
     if(is_array($from)){
       $tableName = $from[1];
@@ -66,7 +68,7 @@ class tx_cfcleague_db{
     $GLOBALS['TYPO3_DB']->sql_free_result($res);
 
     if($debug)
-      t3lib_div::debug(count($rows),'Rows retrieved (tx_cfcleague_db)');
+      t3lib_div::debug(count($rows),'Rows retrieved (tx_cfcleague_db) Time: ' . (microtime(true) - $time) . 's');
 
     return $rows;
   }
