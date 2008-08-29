@@ -70,7 +70,7 @@ class tx_cfcleague_mod1_modCompetitions extends t3lib_extobjbase {
 		if($this->pObj->isTYPO42())
 			$this->pObj->subselector = $selector;
 		else 
-			$content .= $selector;
+			$content .= '<div class="cfcleague_selector">'.$selector.'</div><div class="cleardiv"/>';
 
 		if(!$current_league) {
 			$content.=$this->doc->section('Info:',$LANG->getLL('no_league_in_page'),0,1,ICON_WARN);

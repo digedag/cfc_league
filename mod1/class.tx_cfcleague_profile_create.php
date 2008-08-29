@@ -71,24 +71,23 @@ class tx_cfcleague_profile_create extends t3lib_extobjbase {
 
 		$selector = '';
 		$saison = $this->selector->showSaisonSelector($selector,$this->id);
-		if($this->pObj->isTYPO42())
-			$this->pObj->subselector = $selector;
-		else 
-			$content .= $selector;
 		
 		if(!($saison && count($saison->getCompetitions()))) {
+			if($this->pObj->isTYPO42())
+				$this->pObj->subselector = $selector;
+			else
+				$content .= '<div class="cfcleague_selector">'.$selector.'</div><div class="cleardiv"/>';
 			$content.=$this->doc->section('Info:', $saison ? $LANG->getLL('msg_NoCompetitonsFound') : $LANG->getLL('msg_NoSaisonFound'),0,1,ICON_WARN);
 			return $content;
 		}
 		
 		// Anzeige der vorhandenen Ligen
-		$selector = '';
 		$league = $this->selector->showLeagueSelector($selector,$this->id,$saison->getCompetitions());
 		$team = $this->selector->showTeamSelector($selector,$this->id,$league);
 		if($this->pObj->isTYPO42())
-			$this->pObj->subselector .= $selector;
+			$this->pObj->subselector = $selector;
 		else 
-			$content .= $selector;
+			$content .= '<div class="cfcleague_selector">'.$selector.'</div><div class="cleardiv"/>';
 
 		$data = t3lib_div::_GP('data');
 		if(!$team){ // Kein Team gefunden

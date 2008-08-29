@@ -32,24 +32,23 @@ require_once('../class.tx_cfcleague_db.php');
  * Die Klasse stellt den MatchTicker bereit
  */
 class tx_cfcleague_match_ticker extends t3lib_extobjbase {
-  var $doc, $MCONF;
+	var $doc, $MCONF;
 
-  /**
-   * Initialization of the class
-   *
-   * @param	object		Parent Object
-   * @param	array		Configuration array for the extension
-   * @return	void
-   */
-  function init(&$pObj,$conf)	{
-    global $BACK_PATH,$LANG;
+	/**
+	 * Initialization of the class
+	 *
+	 * @param	object		Parent Object
+	 * @param	array		Configuration array for the extension
+	 * @return	void
+	 */
+	function init(&$pObj,$conf)	{
+		global $BACK_PATH,$LANG;
 
-    $this->MCONF = $pObj->MCONF;
-    $this->id = $pObj->id;
-    // Sprachdatei der Tabellen laden
-    $LANG->includeLLFile('EXT:cfc_league/locallang_db.xml');
-
-  }
+		$this->MCONF = $pObj->MCONF;
+		$this->id = $pObj->id;
+		// Sprachdatei der Tabellen laden
+		$LANG->includeLLFile('EXT:cfc_league/locallang_db.xml');
+	}
 
 	/**
 	 * Returns the formtool
@@ -61,96 +60,85 @@ class tx_cfcleague_match_ticker extends t3lib_extobjbase {
 			$this->formTool = tx_div::makeInstance('tx_rnbase_util_FormTool');
 			$this->formTool->init($this->pObj->doc);
 		}
-  	return $this->formTool;
+		return $this->formTool;
 	}
-  /**
-   * Bearbeitung von Spielen. Es werden die Paaren je Spieltag angezeigt
-   */
-  function main() {
-    global $LANG;
+	/**
+	 * Bearbeitung von Spielen. Es werden die Paaren je Spieltag angezeigt
+	 */
+	function main() {
+		global $LANG;
 
-    $this->doc = $this->pObj->doc;
+		$this->doc = $this->pObj->doc;
 
-    // Selector-Instanz bereitstellen
-    $this->selector = t3lib_div::makeInstance('tx_cfcleague_selector');
-    $this->selector->init($this->pObj->doc, $this->MCONF);
+		// Selector-Instanz bereitstellen
+		$this->selector = t3lib_div::makeInstance('tx_cfcleague_selector');
+		$this->selector->init($this->pObj->doc, $this->MCONF);
 
-    // Zuerst mal müssen wir die passende Liga auswählen lassen:
-    $content = '';
+		// Zuerst mal müssen wir die passende Liga auswählen lassen:
+		$content = '';
 
-    $current_league = $this->selector->showLeagueSelector($this->pObj->subselector,$this->id);
-    if($current_league) {
-      // Anzeige der vorhandenen Ligen
-      $content.=$this->doc->spacer(5);
+		$selector = '';
+		// Anzeige der vorhandenen Ligen
+		$current_league = $this->selector->showLeagueSelector($selector, $this->id);
+		if(!$current_league)
+			return $this->doc->section('Info:',$LANG->getLL('no_league_in_page'),0,1,ICON_WARN);
 
-      if(!count($current_league->getRounds())){
-        $content .= $LANG->getLL('no_round_in_league');
-        return $content;
-      }
-      // Jetzt den Spieltag wählen lassen
-      $current_round = $this->selector->showRoundSelector($this->pObj->subselector,$this->id,$current_league);
-      $content.=$this->doc->spacer(5);
-      
-      $update = t3lib_div::_GP('update');
-      $data = t3lib_div::_GP('data');
-      // Haben wir Daten im Request?
-      if ($update && is_array($data['tx_cfcleague_match_notes'])) {
-        $this->insertNotes($data);
-        $content.= '<i>'.$LANG->getLL('msg_data_saved').'</i>';
-      }
+		if(!count($current_league->getRounds())){
+			if($this->pObj->isTYPO42())
+				$this->pObj->subselector = $selector;
+			else 
+				$content .= '<div class="cfcleague_selector">'.$selector.'</div><div style="clear:both"/>';
+			$content .= $LANG->getLL('no_round_in_league');
+			return $content;
+		}
+		// Jetzt den Spieltag wählen lassen
+		$current_round = $this->selector->showRoundSelector($selector,$this->id,$current_league);
 
+		// Und nun das Spiel wählen
+		$match = $this->selector->showMatchSelector($selector,$this->id,$current_league->getGamesByRound($current_round, true));
+		if($this->pObj->isTYPO42())
+			$this->pObj->subselector = $selector;
+		else 
+			$content .= '<div class="cfcleague_selector">'.$selector.'</div><div style="clear:both"/>';
 
-      // Und nun das Spiel wählen
-      $match = $this->selector->showMatchSelector($this->pObj->subselector,$this->id,$current_league->getGamesByRound($current_round, true));
-      $content.=$this->doc->spacer(5);
+		$update = t3lib_div::_GP('update');
+		$data = t3lib_div::_GP('data');
+		// Haben wir Daten im Request?
+		if ($update && is_array($data['tx_cfcleague_match_notes'])) {
+			$this->insertNotes($data);
+			$content.= '<i>'.$LANG->getLL('msg_data_saved').'</i>';
+		}
 
-      // Wir zeigen die bisherigen Meldungen
-      // Dann zeigen wir die FORM für die nächste Meldung
-//t3lib_div::debug($match);
+		// Wir zeigen die bisherigen Meldungen
+		// Dann zeigen wir die FORM für die nächste Meldung
+		$content .= $this->getFormHeadline();
+		$arr = $this->createFormArray($match);
+		$content .= $this->doc->table($arr, $this->_getTableLayoutForm());
+		$content .= '<br />';
 
-      $content .= $this->getFormHeadline();
-      $arr = $this->createFormArray($match);
-      $content .= $this->doc->table($arr, $this->_getTableLayoutForm());
+		// Das Form für den aktuellen Spielstand
+		$content .= $this->createStandingForm($match, $current_league);
 
-      $content .= '<br>';
-//      t3lib_div::debug($BACK_PATH);
+		$content .= '<br />';
+		// Den Update-Button einfügen
+		$content .= $this->getFormTool()->createSubmit('update', $LANG->getLL('btn_save'));
+		// Den JS-Code für Validierung einbinden
+		$content  .= $this->getFormTool()->form->JSbottom('editform');
+		// Jetzt listen wir noch die zum Spiel vorhandenen Tickermeldungen auf
+		$content.=$this->doc->spacer(5);
+		$content.=$this->doc->divider(5);
+		$content.=$this->doc->spacer(5);
+		$arr = $this->createTickerArray($match, t3lib_div::_GP('showAll'));
+		if($arr) {
+			$tickerContent = $this->getFormTool()->createLink('&showAll=1', $this->id, $LANG->getLL('label_showAllTickers'));
+			$tickerContent .= $this->doc->table($arr);
+		}
+		else
+			$tickerContent .= $LANG->getLL('msg_NoTicker');
 
-      // Das Form für den aktuellen Spielstand
-      $content .= $this->createStandingForm($match, $current_league);
-
-      $content .= '<br>';
-
-      // Den Update-Button einfügen
-      $content .= $this->getFormTool()->createSubmit('update', $LANG->getLL('btn_save'));
-//      $content .= '<input type="submit" name="update" value="'.$LANG->getLL('btn_save').'">';
-
-      // Den JS-Code für Validierung einbinden
-      $content  .= $this->getFormTool()->form->JSbottom('editform');
-
-      // Jetzt listen wir noch die zum Spiel vorhandenen Tickermeldungen auf
-      $content.=$this->doc->spacer(5);
-      $content.=$this->doc->divider(5);
-      $content.=$this->doc->spacer(5);
-
-      
-      $arr = $this->createTickerArray($match, t3lib_div::_GP('showAll'));
-      if($arr) {
-        $tickerContent = $this->getFormTool()->createLink('&showAll=1', $this->id, 'Alle Meldungen anzeigen');
-        $tickerContent .= $this->doc->table($arr, $this->_getTableLayoutTickerList());
-      }
-      else
-        $tickerContent .= $LANG->getLL('msg_NoTicker');
-
-      $content.=$this->doc->section($LANG->getLL('title_recent_tickers'),$tickerContent);
-
-
-    }
-    else {
-      $content .= $this->doc->section('Info:',$LANG->getLL('no_league_in_page'),0,1,ICON_WARN);
-    }
-    return $content;
-
-  }
+		$content.=$this->doc->section($LANG->getLL('title_recent_tickers'),$tickerContent);
+		return $content;
+	}
 
   function getFormHeadline() {
     $stop = t3lib_div::_GP('btn_watch_stop');
@@ -277,24 +265,6 @@ class tx_cfcleague_match_ticker extends t3lib_extobjbase {
 			'defRowEven' => Array ( // Formate für alle ungeraden Zeilen (die Textbox)
 				'tr'	   => Array('<tr class="db_list_alt">', '</tr>'),
 				'defCol' => Array('<td colspan="2" style="border-bottom:solid 1px #A2AAB8;">&nbsp;</td><td valign="top" align="left" colspan="2" style="padding:2px 5px;border-bottom:solid 1px #A2AAB8;">','</td>') // Format für jede Spalte in jeder Zeile
-			)
-		);
-		return $arr;
-	}
-	function _getTableLayoutTickerList() {
-		$arr = Array (
-			'table' => Array('<table class="typo3-dblist" width="100%" cellspacing="0" cellpadding="0" border="0">', '</table><br/>'),
-			'0' => Array( // Format für 1. Zeile
-				'tr'		=> Array('<tr class="c-headLineTable">','</tr>'),
-				'defCol' => Array('<td>','</td>') // Format f�r jede Spalte in der 1. Zeile
-			),
-			'defRow' => Array ( // Formate für alle Zeilen
-				'tr'	   => Array('<tr class="db_list_normal">', '</tr>'),
-				'defCol' => Array('<td>','</td>') // Format für jede Spalte in jeder Zeile
-			),
-			'defRowEven' => Array ( // Formate für alle Zeilen
-				'tr'	   => Array('<tr class="db_list_alt">', '</tr>'),
-				'defCol' => Array('<td>','</td>') // Format für jede Spalte in jeder Zeile
 			)
 		);
 		return $arr;

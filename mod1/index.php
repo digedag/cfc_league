@@ -278,6 +278,7 @@ class  tx_cfcleague_module1 extends t3lib_SCbase {
 					float:left;
 					margin: 5px 5px 10px 0;
 				}
+				.cleardiv {clear:both;}
 /*
 				.cfcleague_content .cfcselector {
 					margin:0;
