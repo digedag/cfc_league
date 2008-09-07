@@ -9,6 +9,7 @@
 			<label index="tx_cfcleague_folder">League</label>
 			<label index="tx_cfcleague_group">Age group</label>
 			<label index="tx_cfcleague_group.name">Name</label>
+			<label index="tx_cfcleague_group.shortname">Short name</label>
 			<label index="tx_cfcleague_saison">Saison</label>
 			<label index="tx_cfcleague_saison.name">Name</label>
 			<label index="tx_cfcleague_saison.halftime">Winters break</label>
@@ -201,6 +202,7 @@
 			<label index="tx_cfcleague_folder">Liga</label>
 			<label index="tx_cfcleague_group">Altersgruppe</label>
 			<label index="tx_cfcleague_group.name">Name</label>
+			<label index="tx_cfcleague_group.shortname">Kurzname</label>
 			<label index="tx_cfcleague_saison">Saison</label>
 			<label index="tx_cfcleague_saison.name">Name</label>
 			<label index="tx_cfcleague_saison.halftime">Winterpause</label>

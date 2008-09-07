@@ -48,18 +48,28 @@ $TCA['tx_cfcleague_group'] = Array (
 				'foreign_table' => 'fe_groups'
 			)
 		),
-		'name' => Array (		
-			'exclude' => 1,		
-			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_group.name',		
+		'name' => Array (
+			'exclude' => 1,
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_group.name',
 			'config' => Array (
-				'type' => 'input',	
-				'size' => '30',	
+				'type' => 'input',
+				'size' => '30',
 				'eval' => 'required,trim',
+			)
+		),
+		'shortname' => Array (
+			'exclude' => 1,
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_group.shortname',
+			'config' => Array (
+				'type' => 'input',
+				'size' => '10',
+				'max' => '8',
+				'eval' => 'trim',
 			)
 		),
 	),
 	'types' => Array (
-		'0' => Array('showitem' => 'hidden;;1;;1-1-1, name')
+		'0' => Array('showitem' => 'hidden;;1;;1-1-1, name, shortname')
 	),
 	'palettes' => Array (
 		'1' => Array('showitem' => 'starttime, fe_group')
