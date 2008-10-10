@@ -119,8 +119,9 @@ class  tx_cfcleague_module1 extends t3lib_SCbase {
 		// The page will show only if there is a valid page and if this page may be viewed by the user
 		$this->pageinfo = t3lib_BEfunc::readPageAccess($this->id,$this->perms_clause);
 		$access = is_array($this->pageinfo) ? 1 : 0;
+		$this->doc = $this->isTYPO42() ? $GLOBALS['TBE_TEMPLATE'] : t3lib_div::makeInstance('bigDoc');
 		if (($this->id && $access) || ($BE_USER->user['admin'] && !$this->id))	{
-			$this->doc = t3lib_div::makeInstance($this->isTYPO42() ? 'template' : 'bigDoc');
+			//$this->doc = t3lib_div::makeInstance($this->isTYPO42() ? 'template' : 'bigDoc');
 			$this->doc->backPath = $BACK_PATH;
 			$this->doc->docType = 'xhtml_trans';
 			$this->doc->inDocStyles = $this->getDocStyles();
@@ -219,7 +220,6 @@ class  tx_cfcleague_module1 extends t3lib_SCbase {
 		if($this->isTYPO42()) {
 			$content = $this->doc->startPage($LANG->getLL('title'));
 			$content.= $this->doc->moduleBody($this->pageinfo, $docHeaderButtons, $markers);
-//			$content.= $this->doc->endPage();
 			$this->content = $this->doc->insertStylesAndJS($content);
 		}
 	}
@@ -262,47 +262,26 @@ class  tx_cfcleague_module1 extends t3lib_SCbase {
 	function getDocStyles() {
 		if($this->isTYPO42())
 			$css = '
-  				html { overflow: hidden; }
-  				body {
-  					padding: 0;
-  					margin: 0;
-  					overflow: hidden;
-  					height: 100%;
-  				}';
+	body {
+		padding: 0;
+		margin: 0;
+		overflow: hidden;
+		height: 100%;
+	}';
 		$css .= '
-				.cfcleague_selector .cfcselector div {
-					float:left;
-					margin: 0 5px 10px 0;
-				}
-				.cfcleague_content .cfcselector div {
-					float:left;
-					margin: 5px 5px 10px 0;
-				}
-				.cleardiv {clear:both;}
-/*
-				.cfcleague_content .cfcselector {
-					margin:0;
-					padding:0;
-					clear:both;
-				}
-				.cfcleague_selector1 .cfcselector dt {
-					float:right;
-					text-align:left;
-					width1:90px;
-					padding-left1:10px;
-				}
-				.cfcleague_content .cfcselector dt {
-					float:right;
-					text-align:left;
-					width:90px;
-					padding-left:10px;
-				}
-*/
-				.cfcleague_content .c-headLineTable td {
-					font-weight:bold;
-					color:#FFF!important;
-				}
-			';
+	.cfcleague_selector .cfcselector div {
+		float:left;
+		margin: 0 5px 10px 0;
+	}
+	.cfcleague_content .cfcselector div {
+		float:left;
+		margin: 5px 5px 10px 0;
+	}
+	.cleardiv {clear:both;}
+	.cfcleague_content .c-headLineTable td {
+		font-weight:bold;
+		color:#FFF!important;
+	}';
 	  return $css;
 	}
 	function getTableLayout() {
