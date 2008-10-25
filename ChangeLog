@@ -2,6 +2,10 @@
 Änderungen
 ----------
 
+v0.5.1 (25.10.2008)
+* Compatible with TYPO3 4.2.2
+* New field shortname in group record
+
 v0.5.0 (07.09.2008)
 * New BE Layout for TYPO3 4.2. Many thanks to Thomas Maroschik!
 * New field shortname in group record
