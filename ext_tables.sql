@@ -200,7 +200,7 @@ CREATE TABLE tx_cfcleague_games (
 	status int(11) DEFAULT '0' NOT NULL,
 
 	referee int(11) DEFAULT '0' NOT NULL,
-	assists blob NOT NULL,
+	assists text NOT NULL,
 	coach_home int(11) DEFAULT '0' NOT NULL,
 	coach_guest int(11) DEFAULT '0' NOT NULL,
 	players_home text NOT NULL,
