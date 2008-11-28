@@ -155,7 +155,7 @@ class tx_cfcleague_match_ticker extends t3lib_extobjbase {
 
   	$out = '<table width="100%"><tr><td style="text-align:left">';
     $out .= $this->getFormTool()->createSubmit('update', $GLOBALS['LANG']->getLL('btn_save'));
-  	$out .= '</td><td style="text-align:right">';
+  	$out .= '</td><td style="text-align:left">';
     
     $out .= $GLOBALS['LANG']->getLL('label_tickeroffset') . ': ';
     $out .= $this->getFormTool()->createTxtInput('watch_offset', $offset, '2') . ' ';
