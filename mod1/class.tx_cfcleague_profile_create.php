@@ -283,6 +283,8 @@ class tx_cfcleague_profile_create extends t3lib_extobjbase {
       $row[] = $i++ == 1 ? $label : '';
       $row[] = $prof[first_name];
       $row[] = $prof[last_name];
+      // TODO: Button to remove a profile from team
+//      $row[] = $this->formTool->createSubmit('remProfileUid['.$uid.']', 'Remove', 'Really??');
       $row[] = $this->formTool->createEditLink('tx_cfcleague_profiles', $uid);
       $arr[] = $row;
     }
