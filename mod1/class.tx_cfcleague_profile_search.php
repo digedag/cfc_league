@@ -60,8 +60,8 @@ class tx_cfcleague_profile_search extends t3lib_extobjbase {
 
 		$this->doc = $this->pObj->doc;
 
-		$this->formTool = t3lib_div::makeInstance('tx_cfcleague_form_tool');
-		$this->formTool->init($this->pObj->doc);
+		$this->formTool = tx_div::makeInstance('tx_rnbase_util_FormTool');
+		$this->formTool->init($this->doc);
 
 		// Selector-Instanz bereitstellen
 		$this->selector = t3lib_div::makeInstance('tx_cfcleague_selector');
@@ -294,7 +294,7 @@ class tx_cfcleague_profile_search extends t3lib_extobjbase {
 													$LANG->getLL('label_firstname'),
 													$LANG->getLL('label_birthday'),
 													$LANG->getLL('label_information'),
-													'&nbsp;','&nbsp;','&nbsp;'));
+													'&nbsp;','&nbsp;','&nbsp;','&nbsp;'));
 			foreach($profiles As $profile) {
 				$row = array();
 				$row[] = $this->formTool->createRadio('data[merge1]', $profile['uid']) . $this->formTool->createRadio('data[merge2]', $profile['uid']);
@@ -311,8 +311,9 @@ class tx_cfcleague_profile_search extends t3lib_extobjbase {
 					}
 
 				$row[] = $infos;
-				$row[] = $this->formTool->createEditLink('tx_cfcleague_profiles', $profile['uid']);
-				$row[] = $this->formTool->createInfoLink('tx_cfcleague_profiles', $profile['uid']);
+				$row[] = $this->formTool->createEditLink('tx_cfcleague_profiles', $profile['uid'],'');
+				$row[] = $this->formTool->createInfoLink('tx_cfcleague_profiles', $profile['uid'],'');
+				$row[] = $this->formTool->createHistoryLink('tx_cfcleague_profiles', $profile['uid']);
 				$row[] = $this->formTool->createMoveLink('tx_cfcleague_profiles', $profile['uid'], $profile['pid']);
 				$arr[] = $row;
 			}
@@ -336,7 +337,7 @@ class tx_cfcleague_profile_search extends t3lib_extobjbase {
     $out .= $LANG->getLL('label_searchterm').': ';
     $out .= $this->formTool->createTxtInput('data[searchterm]', $this->SEARCH_SETTINGS['searchterm'], 20);
     // Den Update-Button einfügen
-    $out .= '<input type="submit" name="search" value="'.$LANG->getLL('btn_search').'"';
+    $out .= $this->formTool->createSubmit('search',$LANG->getLL('btn_search'));
     // Jetzt noch zusätzlichen JavaScriptcode für Buttons auf der Seite
     $out .= $this->formTool->getJSCode($this->id);
 
