@@ -105,6 +105,7 @@ $TCA['tx_cfcleague_profiles'] = Array (
 		'label' => 'last_name',	
 		'label_alt' => 'first_name',
 		'label_alt_force' => 1,
+		'dividers2tabs' => TRUE,
 		'tstamp' => 'tstamp',
 		'crdate' => 'crdate',
 		'cruser_id' => 'cruser_id',
@@ -253,6 +254,7 @@ $TCA['tx_cfcleague_note_types'] = Array (
 		'fe_admin_fieldList' => 'label, marker, description',
 	)
 );
+
 
 if (TYPO3_MODE=='BE')	{
 		
