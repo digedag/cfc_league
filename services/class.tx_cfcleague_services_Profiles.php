@@ -34,6 +34,16 @@ tx_div::load('tx_rnbase_util_DB');
  */
 class tx_cfcleague_services_Profiles extends t3lib_svbase {
 	/**
+	 * Returns all team notes for a given profile
+	 *
+	 * @param int $profileUID
+	 */
+	function getTeamsNotes4Profile($profileUID) {
+		$options['where'] = 'player = ' . $profileUID;
+		return tx_rnbase_util_DB::doSelect('*','tx_cfcleague_team_notes',$options);
+	}
+
+	/**
 	 * Returns all available profile types for a TCA select item
 	 *
 	 * @return array 
@@ -47,7 +57,7 @@ class tx_cfcleague_services_Profiles extends t3lib_svbase {
 			$types = array_merge($items, $srv->getProfileTypes());
 		}
 		foreach($types AS $typedef) {
-			$items[] = array($this->translate($typedef[0]), $typedef[1]);
+			$items[] = array(tx_rnbase_util_Misc::translateLLL($typedef[0]), $typedef[1]);
 		}
 		return $items;
 	}
@@ -71,17 +81,11 @@ class tx_cfcleague_services_Profiles extends t3lib_svbase {
 		}
 		$items = array();
 		foreach($uidArr AS $uid => $label) {
-			$items[] = $uid.'|'.self::translate($label);
+			$items[] = $uid.'|'.tx_rnbase_util_Misc::translateLLL($label);
 		}
 		return implode(',',$items);
 	}
 
-	private static function translate($title) {
-		if(substr($title, 0, 4) === 'LLL:') {
-			$title = $GLOBALS['LANG']->sL($title);
-		}
-		return $title;
-	}
 }
 
 

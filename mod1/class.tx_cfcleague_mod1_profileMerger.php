@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2007 Rene Nitzsche <rene@system25.de>
+*  (c) 2007-2009 Rene Nitzsche <rene@system25.de>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -24,6 +24,7 @@
 
 require_once(t3lib_extMgm::extPath('cfc_league') . 'class.tx_cfcleague_db.php');
 require_once(t3lib_extMgm::extPath('div') . 'class.tx_div.php');
+tx_div::load('tx_cfcleague_util_ServiceRegistry');
 tx_div::load('tx_cfcleague_team');
 tx_div::load('tx_cfcleague_match');
 
@@ -43,18 +44,28 @@ class tx_cfcleague_mod1_profileMerger {
 		// tx_cfcleague_teams
 		// tx_cfcleague_games
 		// tx_cfcleague_match_notes
+		// TODO: tx_cfcleague_teamnotes
 
 		// Wir machen alles über die TCA, also das Array aufbauen
 		$data = array();
 		self::mergeTeams($data, $leadingProfileUID, $obsoleteProfileUID);
 		self::mergeMatches($data, $leadingProfileUID, $obsoleteProfileUID);
 		self::mergeMatchNotes($data, $leadingProfileUID, $obsoleteProfileUID);
+		self::mergeTeamNotes($data, $leadingProfileUID, $obsoleteProfileUID);
 
     $tce =& tx_cfcleague_db::getTCEmain($data);
     $tce->process_datamap();
 
 	}
 
+	private function mergeTeamNotes(&$data, $leading, $obsolete) {
+		$srv = tx_cfcleague_util_ServiceRegistry::getProfileService();	
+		$rows = $srv->getTeamsNotes4Profile($obsolete);
+		foreach($rows As $row) {
+			$data['tx_cfcleague_team_notes'][$row['uid']]['player'] = $leading;
+		}
+//		t3lib_div::debug($rows, 'tx_cfcleague_mod1_profileMerger'); // TODO: remove me
+	}
 	private function mergeMatchNotes(&$data, $leading, $obsolete) {
 		$rows = tx_cfcleague_match::getMatchNotes4Profile($obsolete);
 		foreach($rows As $row) {
