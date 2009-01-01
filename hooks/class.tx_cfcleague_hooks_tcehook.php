@@ -31,7 +31,7 @@ class tx_cfcleague_hooks_tcehook {
 	 * Werte aus der Datenbank können vor deren Darstellung manipuliert werden.
 	 */
 	function getMainFields_preProcess($table,&$row, $tceform) {
-		if($table == 'tx_cfcleague_profiles') {
+		if($table == 'tx_cfcleague_profiles' && !strstr($row['uid'], 'NEW')) {
 			//'2|Trainer'
 			$options['where'] = 'uid_foreign='.$row['uid'];
 			$options['orderby'] = 'sorting_foreign asc';
