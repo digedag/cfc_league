@@ -5,7 +5,7 @@ require_once(t3lib_extMgm::extPath('div') . 'class.tx_div.php');
 tx_div::load('tx_rnbase_configurations');
 // Zur Sicherheit einbinden, da die Funktion schon einmal nicht gefunden wurde...
 require_once(t3lib_extMgm::extPath('dam').'tca_media_field.php');
-
+tx_div::load('tx_cfcleague_tca_Lookup');
 
 $TCA['tx_cfcleague_group'] = Array (
 	'ctrl' => $TCA['tx_cfcleague_group']['ctrl'],
@@ -1705,9 +1705,21 @@ $TCA['tx_cfcleague_profiles'] = Array (
 				),
 			)
 		),
-		'description' => Array (		
-			'exclude' => 1,		
-			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles.description',		
+		'types' => Array (
+			'exclude' => 1,
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles.type',
+			'config' => Array (
+				'type' => 'select',
+				'itemsProcFunc' => 'tx_cfcleague_tca_Lookup->getProfileTypes',
+				'size' => 5,
+				'autoSizeMax' => 10,
+				'minitems' => 0,
+				'maxitems' => 20,
+			)
+		),
+		'description' => Array (
+			'exclude' => 1,
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles.description',
 			'config' => Array (
 				'type' => 'text',
 				'cols' => '30',
@@ -1727,7 +1739,8 @@ $TCA['tx_cfcleague_profiles'] = Array (
 		),
 	),
 	'types' => Array (
-		'0' => Array('showitem' => 'hidden;;1;;1-1-1, first_name, last_name, stage_name, home_town, dam_images, birthday, native_town, nationality, height, weight, position, duration_of_contract, start_of_contract, email, nickname, link_report, summary;;;richtext[cut|copy|paste|formatblock|textcolor|bold|italic|underline|left|center|right|orderedlist|unorderedlist|outdent|indent|link|table|image|line|chMode]:rte_transform[mode=ts_css|imgpath=uploads/tx_cfcleague/rte/], description;;;richtext[cut|copy|paste|formatblock|textcolor|bold|italic|underline|left|center|right|orderedlist|unorderedlist|outdent|indent|link|table|image|line|chMode]:rte_transform[mode=ts_css|imgpath=uploads/tx_cfcleague/rte/]')
+		'0' => Array('showitem' => 'hidden;;1;;1-1-1, first_name, last_name, stage_name, home_town, birthday, native_town, nationality, height, weight, position, duration_of_contract, start_of_contract, email, nickname,
+		--div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles.description,link_report,dam_images,types, summary;;;richtext[cut|copy|paste|formatblock|textcolor|bold|italic|underline|left|center|right|orderedlist|unorderedlist|outdent|indent|link|table|image|line|chMode]:rte_transform[mode=ts_css|imgpath=uploads/tx_cfcleague/rte/], description;;;richtext[cut|copy|paste|formatblock|textcolor|bold|italic|underline|left|center|right|orderedlist|unorderedlist|outdent|indent|link|table|image|line|chMode]:rte_transform[mode=ts_css|imgpath=uploads/tx_cfcleague/rte/]')
 	),
 	'palettes' => Array (
 		'1' => Array('showitem' => '')

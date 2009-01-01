@@ -23,7 +23,10 @@ t3lib_extMgm::addUserTSConfig('
 ');
 
 // Der TCE-Hook für das Anlegen neuer Spieler
-$GLOBALS ['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass'][] = 'EXT:' . $_EXTKEY . '/mod1/class.tx_cfcleague_mod1_tcehook.php:tx_cfcleague_mod1_tcehook';
+$GLOBALS ['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass'][] = 'EXT:' . $_EXTKEY . '/hooks/class.tx_cfcleague_hooks_tcehook.php:tx_cfcleague_hooks_tcehook';
+$GLOBALS ['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tceforms.php']['getMainFieldsClass'][] = 'EXT:' . $_EXTKEY . '/hooks/class.tx_cfcleague_hooks_tcehook.php:tx_cfcleague_hooks_tcehook';
 
+// Include services
+require_once(t3lib_extMgm::extPath('cfc_league').'services/ext_localconf.php');
 
 ?>

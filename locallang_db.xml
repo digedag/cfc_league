@@ -143,6 +143,7 @@
 			<label index="tx_cfcleague_games.goals_home_ap">Goals Home after Penalty</label>
 			<label index="tx_cfcleague_games.goals_guest_ap">Goals Guest after Penalty</label>
 			<label index="tx_cfcleague_profiles">Profile</label>
+			<label index="tx_cfcleague_profiles_tab_description">Description</label>
 			<label index="tx_cfcleague_profiles.first_name">First name</label>
 			<label index="tx_cfcleague_profiles.last_name">Last name</label>
 			<label index="tx_cfcleague_profiles.stage_name">Stage name</label>
@@ -161,6 +162,11 @@
 			<label index="tx_cfcleague_profiles.nickname">Nickname</label>
 			<label index="tx_cfcleague_profiles.summary">Summary</label>
 			<label index="tx_cfcleague_profiles.description">Description</label>
+			<label index="tx_cfcleague_profiles.type">Type of profile</label>
+			<label index="tx_cfcleague_profiles_type_player">Player</label>
+			<label index="tx_cfcleague_profiles_type_coach">Coach</label>
+			<label index="tx_cfcleague_profiles_type_referee">Referee</label>
+			<label index="tx_cfcleague_profiles_type_supporter">Supporter</label>
 			<label index="tx_cfcleague_match_notes">Match note</label>
 			<label index="tx_cfcleague_match_notes.match">Match</label>
 			<label index="tx_cfcleague_match_notes.minute">Minute</label>
@@ -195,6 +201,7 @@
 			<label index="tx_cfcleague_team_notes.mediatype.media">Media</label>
 			<label index="tx_cfcleague_team_notes.mediatype.number">Number</label>
 			<label index="tx_cfcleague_team_notes.number">Value</label>
+
 
 			<label index="tx_cfcleague.unknown">Unknown</label>
 		</languageKey>
@@ -324,6 +331,7 @@
 			<label index="tx_cfcleague_games.goals_home_ap">Tore Heim n.E.</label>
 			<label index="tx_cfcleague_games.goals_guest_ap">Tore Gast n.E.</label>
 			<label index="tx_cfcleague_profiles">Person</label>
+			<label index="tx_cfcleague_profiles_tab_description">Beschreibung</label>
 			<label index="tx_cfcleague_profiles.stage_name">Künstlername</label>
 			<label index="tx_cfcleague_profiles.first_name">Vorname</label>
 			<label index="tx_cfcleague_profiles.last_name">Nachname</label>
@@ -342,6 +350,11 @@
 			<label index="tx_cfcleague_profiles.nickname">Spitzname</label>
 			<label index="tx_cfcleague_profiles.summary">Kurzbeschreibung</label>
 			<label index="tx_cfcleague_profiles.description">Beschreibung</label>
+			<label index="tx_cfcleague_profiles.type">Typ der Person</label>
+			<label index="tx_cfcleague_profiles_type_player">Spieler</label>
+			<label index="tx_cfcleague_profiles_type_coach">Trainer</label>
+			<label index="tx_cfcleague_profiles_type_referee">Schiedsrichter</label>
+			<label index="tx_cfcleague_profiles_type_supporter">Betreuer</label>
 			<label index="tx_cfcleague_match_notes">Spielnotiz</label>
 			<label index="tx_cfcleague_match_notes.match">Spiel</label>
 			<label index="tx_cfcleague_match_notes.minute">Minute</label>

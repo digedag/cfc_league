@@ -264,7 +264,7 @@ CREATE TABLE tx_cfcleague_profiles (
 	first_name varchar(50) DEFAULT '' NOT NULL,
 	last_name varchar(70) DEFAULT '' NOT NULL,
 	link_report tinyint(4) DEFAULT '0' NOT NULL,
-        dam_images int(11) DEFAULT '0' NOT NULL,
+	dam_images int(11) DEFAULT '0' NOT NULL,
 	birthday int(11) DEFAULT '0' NOT NULL,
 	home_town varchar(150) DEFAULT '' NOT NULL,
 	native_town varchar(150) DEFAULT '' NOT NULL,
@@ -278,9 +278,24 @@ CREATE TABLE tx_cfcleague_profiles (
 	nickname varchar(150) DEFAULT '' NOT NULL,
 	summary text NOT NULL,
 	description text NOT NULL,
+	types varchar(150) DEFAULT '' NOT NULL,
 	
 	PRIMARY KEY (uid),
 	KEY parent (pid)
+);
+
+#
+# Table structure for table 'tx_cfcleague_profiletypes_mm'
+# uid_local used for profiletype
+#
+CREATE TABLE tx_cfcleague_profiletypes_mm (
+	uid_local int(11) unsigned DEFAULT '0' NOT NULL,
+	uid_foreign int(11) unsigned DEFAULT '0' NOT NULL,
+	tablenames varchar(50) DEFAULT '' NOT NULL,
+	sorting int(11) unsigned DEFAULT '0' NOT NULL,
+	sorting_foreign int(11) unsigned DEFAULT '0' NOT NULL,
+	KEY uid_local (uid_local),
+	KEY uid_foreign (uid_foreign)
 );
 
 #
