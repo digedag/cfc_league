@@ -24,8 +24,53 @@
 
 require_once(t3lib_extMgm::extPath('cfc_league') . 'class.tx_cfcleague_db.php');
 
-class tx_cfcleague_mod1_tcehook {
+class tx_cfcleague_hooks_tcehook {
 
+	/**
+	 * Dieser Hook wird vor der Darstellung eines TCE-Formulars aufgerufen.
+	 * Werte aus der Datenbank können vor deren Darstellung manipuliert werden.
+	 */
+	function getMainFields_preProcess($table,&$row, $tceform) {
+		if($table == 'tx_cfcleague_profiles') {
+			//'2|Trainer'
+			$options['where'] = 'uid_foreign='.$row['uid'];
+			$options['orderby'] = 'sorting_foreign asc';
+			$options['enablefieldsoff'] = 1;
+			$types = array();
+			$rows = tx_rnbase_util_DB::doSelect('uid_local', 'tx_cfcleague_profiletypes_mm',$options);
+			foreach($rows As $type) {
+				$types[] = $type['uid_local'];
+			}
+			$row['types'] = tx_cfcleague_tca_Lookup::getProfileTypeItems($types);
+		}
+	}
+	/**
+	 * Nachbearbeitungen, unmittelbar BEVOR die Daten gespeichert werden. Das POST bezieht sich
+	 * auf die Arbeit der TCE und nicht auf die Speicherung in der DB.
+	 *
+	 * @param string $status new oder update
+	 * @param string $table Name der Tabelle
+	 * @param int $id UID des Datensatzes
+	 * @param array $fieldArray Felder des Datensatzes, die sich ändern
+	 * @param tce_main $tcemain
+	 */
+	function processDatamap_postProcessFieldArray($status, $table, $id, &$fieldArray, &$tcemain) {
+		if($table == 'tx_cfcleague_profiles') {
+			if(array_key_exists('types', $fieldArray)){
+				// Die Types werden zusätzlich in einer MM-Tabelle gespeichert
+				tx_rnbase_util_DB::doDelete('tx_cfcleague_profiletypes_mm','uid_foreign='.$id,0);
+				$types = t3lib_div::intExplode(',',$fieldArray['types']);
+				$i = 0;
+				foreach($types As $type) {
+					$values['uid_local'] = $type;
+					$values['uid_foreign'] = $id;
+					$values['tablenames'] = 'tx_cfcleague_profiles';
+					$values['sorting_foreign'] = $i++;
+					tx_rnbase_util_DB::doInsert('tx_cfcleague_profiletypes_mm',$values,0);
+				}
+			}
+		}
+	}
 	/**
 	 * Wir müssen dafür sorgen, daß die neuen IDs der Teams im Wettbewerb und Spielen
 	 * verwendet werden.
@@ -66,8 +111,8 @@ class tx_cfcleague_mod1_tcehook {
   }
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/mod1/class.tx_cfcleague_mod1_tcehook.php'])	{
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/mod1/class.tx_cfcleague_mod1_tcehook.php']);
+if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/hooks/class.tx_cfcleague_hooks_tcehook.php'])	{
+	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/hooks/class.tx_cfcleague_hooks_tcehook.php']);
 }
 
 ?>
