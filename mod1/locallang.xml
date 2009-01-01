@@ -84,7 +84,6 @@
 			<label index="msg_profiles_warnings">Could not create the following profiles:</label>
 			<label index="msg_profile_already_joined">This profile is already part of the team!</label>
 			<label index="label_join_players">Join player(s)</label>
-			<label index="msg_join_players">Do you really want to join selected players to team?</label>
 			<label index="msg_no_profile_selected">Sorry, no selected profiles found. Please try again!</label>
 			
 
@@ -200,7 +199,6 @@
 			<label index="msg_profiles_warnings">Die folgenden Profile konnten nicht angelegt werden:</label>
 			<label index="msg_profile_already_joined">Diese Person ist schon Teil des Teams!</label>
 			<label index="label_join_players">Spieler hinzufügen</label>
-			<label index="msg_join_players">Sollen die Spieler wirklichen dem aktuellen Team hinzugefügt werden?</label>
 
 			<label index="msg_number_of_players">Anzahl Spieler, die zugeordnet werden k&amp;ouml;nnen:</label>
 			<label index="msg_number_of_coaches">Anzahl Trainer, die zugeordnet werden k&amp;ouml;nnen:</label>

@@ -78,7 +78,7 @@ class tx_cfcleague_mod1_subAddProfiles {
 		$out.= $searcher->getResultList();
 		if($searcher->getSize()) {
 			// Button für Zuordnung
-			$out .= $this->mod->formTool->createSubmit('profile2team', $GLOBALS['LANG']->getLL('label_join_players'), $GLOBALS['LANG']->getLL('msg_join_players'));
+			$out .= $this->mod->formTool->createSubmit('profile2team', $GLOBALS['LANG']->getLL('label_join_players'));
 		}
 		return $out;
 	}
