@@ -61,7 +61,7 @@ CREATE TABLE tx_cfcleague_competition (
 	saison int(11) DEFAULT '0' NOT NULL,
 	type int(11) DEFAULT '0' NOT NULL,
 	obligation tinyint(4) DEFAULT '1' NOT NULL,
-	teams blob NOT NULL,
+	teams text NOT NULL,
 	point_system int(11) DEFAULT '0' NOT NULL,
 	match_keys text NOT NULL,
 	table_marks text NOT NULL,
