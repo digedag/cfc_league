@@ -7,6 +7,8 @@ tx_div::load('tx_rnbase_configurations');
 require_once(t3lib_extMgm::extPath('dam').'tca_media_field.php');
 tx_div::load('tx_cfcleague_tca_Lookup');
 
+$globalClubs = intval(tx_rnbase_configurations::getExtensionCfgValue('cfc_league', 'useGlobalClubs')) > 0;
+
 $TCA['tx_cfcleague_group'] = Array (
 	'ctrl' => $TCA['tx_cfcleague_group']['ctrl'],
 	'interface' => Array (
@@ -694,7 +696,7 @@ $TCA['tx_cfcleague_club']['columns']['dam_logo']['label'] = 'LLL:EXT:cfc_league/
 $TCA['tx_cfcleague_club']['columns']['dam_logo']['config']['size'] = 1;
 $TCA['tx_cfcleague_club']['columns']['dam_logo']['config']['maxitems'] = 1;
 
-$clubArr = intval(tx_rnbase_configurations::getExtensionCfgValue('cfc_league', 'useGlobalClubs')) ? 
+$clubArr = $globalClubs ? 
 		Array (
 				'type' => 'select',
 				'items' => Array (
@@ -999,22 +1001,34 @@ $TCA['tx_cfcleague_games'] = Array (
 			)
 		),
 		'stadium' => Array (
-			'exclude' => 1,		
-			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.stadium',		
+			'exclude' => 1,
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.stadium',
 			'config' => Array (
-				'type' => 'input',	
-				'size' => '30',	
-				'max' => '200',	
+				'type' => 'input',
+				'size' => '30',
+				'max' => '200',
 				'eval' => 'trim',
 			)
 		),
+		'arena' => Array (
+			'exclude' => 1,
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_stadiums',
+			'config' => Array (
+				'type' => 'select',
+				'items' => Array(Array('','0')),
+				'size' => '1',
+				'itemsProcFunc' => 'tx_cfcleague_tca_Lookup->getStadium4Match',
+				'minitems' => 0,
+				'maxitems' => 1,
+			)
+		),
 		'coach_home' => Array (
-			'exclude' => 0,		
+			'exclude' => 0,
 			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.coach_home',
 			'config' => Array (
-				'type' => 'select',	
+				'type' => 'select',
 				'foreign_table' => 'tx_cfcleague_profiles',
-				'foreign_table_where' => 'AND tx_cfcleague_profiles.uid = 0',	
+				'foreign_table_where' => 'AND tx_cfcleague_profiles.uid = 0',
 				'itemsProcFunc' => 'tx_cfcleague_handleDataInput->getCoachesHome4Match',
 				'size' => 1,
 				'minitems' => 0,
@@ -1515,7 +1529,7 @@ Beim Trainer funktioniert es allerdings.
 	'types' => Array (
 	// goals_home_1, goals_guest_1, goals_home_2, goals_guest_2, 
 		'0' => Array('showitem' => 
-			'hidden;;1;;1-1-1, match_no, competition, home, guest, round, round_name, date, addinfo, status;;6, stadium, visitors, 
+			'hidden;;1;;1-1-1,match_no,competition,home,guest,round,round_name,date,addinfo,status;;6,arena,stadium,visitors, 
 			--div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.tab_lineup,coach_home, players_home, substitutes_home, system_home, system_guest, coach_guest, players_guest, substitutes_guest, referee, assists,
 			--div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.tab_lineup_stat,players_home_stat, substitutes_home_stat, players_guest_stat, substitutes_guest_stat, scorer_home_stat, scorer_guest_stat,
 			--div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.tab_score, is_extratime;;2, is_penalty;;3;;1-1-1,
@@ -2052,6 +2066,32 @@ $TCA['tx_cfcleague_note_types'] = Array (
 	)
 );
 
+$stadiumClubArr = $globalClubs ? 
+		Array (
+				'type' => 'select',
+				'foreign_table' => 'tx_cfcleague_club',
+				'foreign_table_where' => 'ORDER BY name',
+				'size' => 10,
+				'autoSizeMax' => 30,
+				'minitems' => 0,
+				'maxitems' => 100,
+				'MM' => 'tx_cfcleague_stadiums_mm',
+				'MM_match_fields' => Array(
+					'tablenames' => 'tx_cfcleague_club',
+				),
+			) : Array (
+				'type' => 'group',
+				'internal_type' => 'db',
+				'allowed' => 'tx_cfcleague_club',
+				'size' => 10,
+				'autoSizeMax' => 30,
+				'minitems' => 0,
+				'maxitems' => 100,
+				'MM' => 'tx_cfcleague_stadiums_mm',
+				'MM_match_fields' => Array(
+					'tablenames' => 'tx_cfcleague_club',
+				),
+			);
 $TCA['tx_cfcleague_stadiums'] = Array (
 	'ctrl' => $TCA['tx_cfcleague_stadiums']['ctrl'],
 	'interface' => Array (
@@ -2079,9 +2119,9 @@ $TCA['tx_cfcleague_stadiums'] = Array (
 				'eval' => 'trim',
 			)
 		),
-		'seats' => Array (
+		'capacity' => Array (
 			'exclude' => 0,
-			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_stadiums_seats',
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_stadiums_capacity',
 			'config' => Array (
 				'type' => 'input',
 				'size' => '10',
@@ -2185,23 +2225,11 @@ $TCA['tx_cfcleague_stadiums'] = Array (
 		'clubs' => Array (
 			'exclude' => 1,
 			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_club',
-			'config' => Array (
-				'type' => 'select',
-				'foreign_table' => 'tx_cfcleague_club',
-				'foreign_table_where' => 'ORDER BY name',
-				'size' => 10,
-				'autoSizeMax' => 30,
-				'minitems' => 0,
-				'maxitems' => 100,
-				'MM' => 'tx_cfcleague_stadiums_mm',
-				'MM_match_fields' => Array(
-					'tablenames' => 'tx_cfcleague_club',
-				),
-			)
+			'config' => $stadiumClubArr,
 		),
 	),
 	'types' => Array (
-			'0' => Array('showitem' => 'name,altname,seats,logo,pictures,clubs,
+			'0' => Array('showitem' => 'name,altname,capacity,logo,pictures,clubs,
 						--div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_stadiums_tab_description,description;;4;richtext[paste|bold|italic|underline|formatblock|class|left|center|right|orderedlist|unorderedlist|outdent|indent|link|image]:rte_transform[mode=ts],description2;;4;richtext[paste|bold|italic|underline|formatblock|class|left|center|right|orderedlist|unorderedlist|outdent|indent|link|image]:rte_transform[mode=ts],
 						--div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_stadiums_tab_location,street,city,zip,lng,lat')
 	),

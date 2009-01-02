@@ -22,37 +22,36 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-
 require_once(t3lib_extMgm::extPath('div') . 'class.tx_div.php');
-tx_div::load('tx_rnbase_util_Misc');
+require_once(PATH_t3lib.'class.t3lib_svbase.php');
+tx_div::load('tx_rnbase_util_DB');
+
 
 /**
+ * Service for accessing teams
+ * 
+ * @author Rene Nitzsche
  */
-class tx_cfcleague_util_ServiceRegistry {
+class tx_cfcleague_services_Teams extends t3lib_svbase {
 
 	/**
-	 * Liefert den Profile-Service
-	 * @return tx_cfcleague_services_Stadiums
+	 * Returns all stadiums for a team.
+	 * This works only if a club is referenced by this team
+	 *
+	 * @param int $teamUid
+	 * @return array[tx_cfcleague_models_stadium]
 	 */
-	static function getStadiumService() {
-		return tx_rnbase_util_Misc::getService('t3sports_srv', 'stadiums');
-	}
-	/**
-	 * Liefert den Profile-Service
-	 * @return tx_cfcleague_services_Profiles
-	 */
-	static function getProfileService() {
-		return tx_rnbase_util_Misc::getService('t3sports_srv', 'profiles');
-	}
-	/**
-	 * Liefert den Profile-Service
-	 * @return tx_cfcleague_services_Teams
-	 */
-	static function getTeamService() {
-		return tx_rnbase_util_Misc::getService('t3sports_srv', 'teams');
+	public function getStadiums($teamUid) {
+		$fields['TEAM.UID'][OP_EQ_INT] = $teamUid;
+		$options['orderby']['STADIUM.NAME'] = 'asc';
+		$srv = tx_cfcleague_util_ServiceRegistry::getStadiumService();
+		return $srv->search($fields, $options);
 	}
 }
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/util/class.tx_cfcleague_util_ServiceRegistry.php'])	{
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/util/class.tx_cfcleague_util_ServiceRegistry.php']);
+
+
+if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/services/class.tx_cfcleague_services_Teams.php']) {
+  include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/services/class.tx_cfcleague_services_Teams.php']);
 }
+
 ?>

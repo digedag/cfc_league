@@ -22,37 +22,34 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-
 require_once(t3lib_extMgm::extPath('div') . 'class.tx_div.php');
-tx_div::load('tx_rnbase_util_Misc');
+require_once(PATH_t3lib.'class.t3lib_svbase.php');
+
 
 /**
+ * Service for accessing stadiums
+ * 
+ * @author Rene Nitzsche
  */
-class tx_cfcleague_util_ServiceRegistry {
+class tx_cfcleague_services_Stadiums extends t3lib_svbase {
 
 	/**
-	 * Liefert den Profile-Service
-	 * @return tx_cfcleague_services_Stadiums
+	 * Search database for trades
+	 *
+	 * @param array $fields
+	 * @param array $options
+	 * @return array of tx_a4base_models_trade
 	 */
-	static function getStadiumService() {
-		return tx_rnbase_util_Misc::getService('t3sports_srv', 'stadiums');
-	}
-	/**
-	 * Liefert den Profile-Service
-	 * @return tx_cfcleague_services_Profiles
-	 */
-	static function getProfileService() {
-		return tx_rnbase_util_Misc::getService('t3sports_srv', 'profiles');
-	}
-	/**
-	 * Liefert den Profile-Service
-	 * @return tx_cfcleague_services_Teams
-	 */
-	static function getTeamService() {
-		return tx_rnbase_util_Misc::getService('t3sports_srv', 'teams');
+	function search($fields, $options) {
+		tx_div::load('tx_rnbase_util_SearchBase');
+		$searcher = tx_rnbase_util_SearchBase::getInstance('tx_cfcleague_search_Stadium');
+		return $searcher->search($fields, $options);
 	}
 }
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/util/class.tx_cfcleague_util_ServiceRegistry.php'])	{
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/util/class.tx_cfcleague_util_ServiceRegistry.php']);
+
+
+if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/services/class.tx_cfcleague_services_Stadiums.php']) {
+  include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/services/class.tx_cfcleague_services_Stadiums.php']);
 }
+
 ?>

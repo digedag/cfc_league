@@ -44,7 +44,31 @@ class tx_cfcleague_tca_Lookup {
 		$srv = tx_cfcleague_util_ServiceRegistry::getProfileService();
 		return $srv->getProfileTypeItems4TCA($uids);
 	}
-
+	/**
+	 * Set possible stadiums for a match. The stadiums are selected from home club.
+	 *
+	 * @param array $PA
+	 * @param t3lib_TCEforms $fobj
+	 */
+  function getStadium4Match($PA, $fobj){
+ 		$current = intval($PA['row']['arena']);
+ 		$currentAvailable = false;
+    if($PA['row']['home']) {
+    	$srv = tx_cfcleague_util_ServiceRegistry::getTeamService();
+    	$stadiums = $srv->getStadiums($PA['row']['home']);
+    	foreach ($stadiums As $stadium) {
+    		$currentAvailable = $currentAvailable ? $currentAvailable : ($current == $stadium->getUid() || $current == 0);
+    		$PA['items'][] = array($stadium->getName(), $stadium->getUid());
+    	}
+    }
+    if(!$currentAvailable) {
+    	// Das aktuelle Stadium ist nicht mehr im Verein gefunden worden. Es wird daher nachgeladen
+    	$clazz = tx_div::makeInstanceClassname('tx_cfcleague_models_Stadium');
+    	$stadium = new $clazz($current);
+    	if($stadium->isValid())
+    		$PA['items'][] = array($stadium->getName(), $stadium->getUid());
+    }
+  }
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/tca/class.tx_cfcleague_tca_Lookup.php']) {
