@@ -24,6 +24,7 @@
 
 			<label index="create_games">Create matches</label>
 			<label index="edit_games">Edit matches</label>
+			<label index="label_create_match">Create new match</label>
 
 			<label index="mod_team">Manage Teams</label>
 			<label index="create_players">Create players</label>
@@ -130,6 +131,7 @@
 			<label index="title_recent_tickers">Letzte Tickermeldungen</label>
 			<label index="create_games">Spielplan erstellen</label>
 			<label index="edit_games">Spiele bearbeiten</label>
+			<label index="label_create_match">Ein neues Spiel anlegen</label>
 
 			<label index="mod_competition">Wettbewerbe verwalten</label>
 			<label index="mod_compteams">Mannschaften</label>

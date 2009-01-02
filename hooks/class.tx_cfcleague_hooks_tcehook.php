@@ -31,6 +31,20 @@ class tx_cfcleague_hooks_tcehook {
 	 * Werte aus der Datenbank können vor deren Darstellung manipuliert werden.
 	 */
 	function getMainFields_preProcess($table,&$row, $tceform) {
+		if($table == 'tx_cfcleague_games') {
+			$compUid = intval(t3lib_div::_GP('competition'));
+			if($compUid) $row['competition'] = $compUid;
+			$round = intval(t3lib_div::_GP('round'));
+			if($round && $compUid) {
+				$row['round'] = $round;
+				// Den Namen aus der DB holen
+				$options['where'] = 'round='.$round .' AND competition='.$compUid;
+				$options['limit'] = 1;
+				$rows = tx_rnbase_util_DB::doSelect('round_name','tx_cfcleague_games', $options);
+				if(count($rows))
+					$row['round_name'] = $rows[0]['round_name'];
+			}
+		}
 		if($table == 'tx_cfcleague_profiles' && !strstr($row['uid'], 'NEW')) {
 			//'2|Trainer'
 			$options['where'] = 'uid_foreign='.$row['uid'];

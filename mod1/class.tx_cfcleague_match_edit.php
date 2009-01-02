@@ -75,6 +75,8 @@ class tx_cfcleague_match_edit  {
 
 		if(!count($current_league->getRounds())){
 			$content .= $LANG->getLL('no_round_in_league');
+			$content .= '<br /><br />';
+			$content .= $this->getFooter($current_league, 0, $pid, $this->formTool);
 			return $content;
 		}
 		// Jetzt den Spieltag wählen lassen
@@ -107,9 +109,19 @@ class tx_cfcleague_match_edit  {
 			}
 			$content .= '</ul>';
 		}
+		$content .= '<br /><br />';
+		$content .= $this->getFooter($current_league, $current_round, $pid, $this->formTool);
 		return $content;
   }
 
+  function getFooter($current_league, $current_round, $pid, $formTool) {
+		$params['params'] = '&competition='.$current_league->uid;
+		if($current_round)
+			$params['params'] .= '&round='.($current_round);
+		$params['title'] = $GLOBALS['LANG']->getLL('label_create_match');
+		$content = $formTool->createNewLink('tx_cfcleague_games', $pid,$GLOBALS['LANG']->getLL('label_create_match'),$params);
+		return $content;
+  }
   /**
    * Liefert die passenden Überschrift für die Tabelle
    *
