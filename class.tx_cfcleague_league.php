@@ -80,7 +80,7 @@ class tx_cfcleague_league{
 			// Ohne zugeordnete Team, muss nicht gefragt werden
 			if($this->record['teams']) {
 	      $rows = 
-	         tx_cfcleague_db::queryDB('uid,name,short_name,dummy','uid IN (' . $this->record['teams'] . ')',
+	         tx_cfcleague_db::queryDB('uid,name,short_name,dummy,club','uid IN (' . $this->record['teams'] . ')',
 	              'tx_cfcleague_teams');
 	      $this->teamNames[$asArray]= array();
 	      foreach($rows As $row) {
