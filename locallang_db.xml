@@ -202,6 +202,21 @@
 			<label index="tx_cfcleague_team_notes.mediatype.number">Number</label>
 			<label index="tx_cfcleague_team_notes.number">Value</label>
 
+			<label index="tx_cfcleague_stadiums">Stadium</label>
+			<label index="tx_cfcleague_stadiums_tab_location">Location</label>
+			<label index="tx_cfcleague_stadiums_tab_description">Description</label>
+			<label index="tx_cfcleague_stadiums_name">Name</label>
+			<label index="tx_cfcleague_stadiums_altname">Alternative name</label>
+			<label index="tx_cfcleague_stadiums_seats">Seats</label>
+			<label index="tx_cfcleague_stadiums_description">Description</label>
+			<label index="tx_cfcleague_stadiums_description2">Description 2</label>
+			<label index="tx_cfcleague_stadiums_street">Street</label>
+			<label index="tx_cfcleague_stadiums_city">City</label>
+			<label index="tx_cfcleague_stadiums_zip">Zip</label>
+			<label index="tx_cfcleague_stadiums_lng">Longtitude</label>
+			<label index="tx_cfcleague_stadiums_lat">Latidude</label>
+			<label index="tx_cfcleague_stadiums_logo">Logo</label>
+			<label index="tx_cfcleague_stadiums_pictures">Pictures</label>
 
 			<label index="tx_cfcleague.unknown">Unknown</label>
 		</languageKey>
@@ -390,6 +405,22 @@
 			<label index="tx_cfcleague_team_notes.mediatype.media">Media</label>
 			<label index="tx_cfcleague_team_notes.mediatype.number">Ganzzahl</label>
 			<label index="tx_cfcleague_team_notes.number">Wert</label>
+
+			<label index="tx_cfcleague_stadiums">Stadion</label>
+			<label index="tx_cfcleague_stadiums_tab_location">Adresse</label>
+			<label index="tx_cfcleague_stadiums_tab_description">Beschreibung</label>
+			<label index="tx_cfcleague_stadiums_name">Name</label>
+			<label index="tx_cfcleague_stadiums_altname">Alternativer Name</label>
+			<label index="tx_cfcleague_stadiums_seats">Plätze</label>
+			<label index="tx_cfcleague_stadiums_description">Beschreibung 1</label>
+			<label index="tx_cfcleague_stadiums_description2">Beschreibung 2</label>
+			<label index="tx_cfcleague_stadiums_street">Strasse</label>
+			<label index="tx_cfcleague_stadiums_city">Ort</label>
+			<label index="tx_cfcleague_stadiums_zip">PLZ</label>
+			<label index="tx_cfcleague_stadiums_lng">Längengrad</label>
+			<label index="tx_cfcleague_stadiums_lat">Breitengrad</label>
+			<label index="tx_cfcleague_stadiums_logo">Logo</label>
+			<label index="tx_cfcleague_stadiums_pictures">Bilder</label>
 		</languageKey>
 	</data>
 </T3locallang>

@@ -255,6 +255,25 @@ $TCA['tx_cfcleague_note_types'] = Array (
 	)
 );
 
+$TCA['tx_cfcleague_stadiums'] = Array (
+	'ctrl' => Array (
+		'title' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_stadiums',		
+		'label' => 'name',	
+		'tstamp' => 'tstamp',
+		'crdate' => 'crdate',
+		'cruser_id' => 'cruser_id',
+		'dividers2tabs' => TRUE,
+		'default_sortby' => 'ORDER BY name',
+		'delete' => 'deleted',	
+		'enablecolumns' => Array (		
+		),
+		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY).'tca.php',
+		'iconfile' => t3lib_extMgm::extRelPath($_EXTKEY).'icon_table.gif',
+	),
+	'feInterface' => Array (
+		'fe_admin_fieldList' => 'hidden, starttime, fe_group, name',
+	)
+);
 
 if (TYPO3_MODE=='BE')	{
 		

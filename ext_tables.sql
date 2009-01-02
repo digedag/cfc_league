@@ -137,6 +137,7 @@ CREATE TABLE tx_cfcleague_club (
 	city varchar(200) DEFAULT '' NOT NULL,
 	shortinfo text NOT NULL,
 	info text NOT NULL,
+	stadiums int(11) DEFAULT '0' NOT NULL,
 
 	PRIMARY KEY (uid),
 	KEY parent (pid)
@@ -365,3 +366,46 @@ CREATE TABLE tx_cfcleague_note_types (
 	KEY parent (pid)
 );
 
+#
+# Table structure for table 'tx_cfcleague_stadiums'
+#
+CREATE TABLE tx_cfcleague_stadiums (
+	uid int(11) NOT NULL auto_increment,
+	pid int(11) DEFAULT '0' NOT NULL,
+	tstamp int(11) DEFAULT '0' NOT NULL,
+	crdate int(11) DEFAULT '0' NOT NULL,
+	cruser_id int(11) DEFAULT '0' NOT NULL,
+	deleted tinyint(4) DEFAULT '0' NOT NULL,
+
+	name varchar(255) DEFAULT '' NOT NULL,
+	altname varchar(255) DEFAULT '' NOT NULL,
+	seats int(11) DEFAULT '0' NOT NULL,
+	description text NOT NULL,
+	description2 text NOT NULL,
+
+	street varchar(255) DEFAULT '' NOT NULL,
+	city varchar(255) DEFAULT '' NOT NULL,
+	zip varchar(150) DEFAULT '' NOT NULL,
+    lng tinytext NOT NULL,
+    lat tinytext NOT NULL,
+
+	logo int(11) DEFAULT '0' NOT NULL,
+	pictures int(11) DEFAULT '0' NOT NULL,
+	clubs int(11) DEFAULT '0' NOT NULL,
+
+	PRIMARY KEY (uid),
+	KEY parent (pid)
+);
+#
+# Table structure for table 'tx_cfcleague_stadiums_mm'
+# uid_local used for stadium
+#
+CREATE TABLE tx_cfcleague_stadiums_mm (
+	uid_local int(11) unsigned DEFAULT '0' NOT NULL,
+	uid_foreign int(11) unsigned DEFAULT '0' NOT NULL,
+	tablenames varchar(50) DEFAULT '' NOT NULL,
+	sorting int(11) unsigned DEFAULT '0' NOT NULL,
+	sorting_foreign int(11) unsigned DEFAULT '0' NOT NULL,
+	KEY uid_local (uid_local),
+	KEY uid_foreign (uid_foreign)
+);

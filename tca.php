@@ -661,9 +661,28 @@ $TCA['tx_cfcleague_club'] = Array (
 				),
 			)
 		),
+		'stadiums' => Array (
+			'exclude' => 1,
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_stadiums',
+			'config' => Array (
+				'type' => 'select',
+				'size' => 10,
+				'autoSizeMax' => 50,
+				'minitems' => 0,
+				'maxitems' => 100,
+				'foreign_table' => 'tx_cfcleague_stadiums',
+				'foreign_table_where' => 'ORDER BY name',
+				'MM' => 'tx_cfcleague_stadiums_mm',
+				'MM_foreign_select' => 1,
+				'MM_opposite_field' => 'clubs',
+				'MM_match_fields' => Array (
+					'tablenames' => 'tx_cfcleague_club',
+				),
+			)
+		),
 	),
 	'types' => Array (
-		'0' => Array('showitem' => 'hidden;;1;;1-1-1, name,short_name,dam_logo,favorite,
+		'0' => Array('showitem' => 'hidden;;1;;1-1-1, name,short_name,dam_logo,favorite,stadiums,
 			--div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_club.tab_contact,www,email,street,zip,city,address,
 			--div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_club.tab_info,shortinfo,info;;;richtext[paste|bold|italic|underline|formatblock|class|left|center|right|orderedlist|unorderedlist|outdent|indent|link|image]:rte_transform[mode=ts]')
 	),
@@ -2032,5 +2051,166 @@ $TCA['tx_cfcleague_note_types'] = Array (
 			'1' => Array('showitem' => '')
 	)
 );
+
+$TCA['tx_cfcleague_stadiums'] = Array (
+	'ctrl' => $TCA['tx_cfcleague_stadiums']['ctrl'],
+	'interface' => Array (
+		'showRecordFieldList' => 'name'
+	),
+	'feInterface' => $TCA['tx_cfcleague_stadiums']['feInterface'],
+	'columns' => Array (
+		'name' => Array (
+			'exclude' => 1,
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_stadiums_name',
+			'config' => Array (
+				'type' => 'input',
+				'size' => '30',
+				'max' => '50',
+				'eval' => 'required,trim',
+			)
+		),
+		'altname' => Array (
+			'exclude' => 1,
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_stadiums_altname',
+			'config' => Array (
+				'type' => 'input',
+				'size' => '30',
+				'max' => '50',
+				'eval' => 'trim',
+			)
+		),
+		'seats' => Array (
+			'exclude' => 0,
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_stadiums_seats',
+			'config' => Array (
+				'type' => 'input',
+				'size' => '10',
+				'max' => '7',
+				'eval' => 'int',
+				'default' => 0
+			)
+		),
+		'description' => Array (
+			'exclude' => 1,
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_stadiums_description',
+			'config' => Array (
+				'type' => 'text',
+				'cols' => '30',
+				'rows' => '5',
+				'wizards' => Array(
+					'_PADDING' => 2,
+					'RTE' => Array(
+						'notNewRecords' => 1,
+						'RTEonly' => 1,
+						'type' => 'script',
+						'title' => 'Full screen Rich Text Editing|Formatteret redigering i hele vinduet',
+						'icon' => 'wizard_rte2.gif',
+						'script' => 'wizard_rte.php',
+					),
+				),
+			)
+		),
+		'description2' => Array (
+			'exclude' => 1,
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_stadiums_description2',
+			'config' => Array (
+				'type' => 'text',
+				'cols' => '30',
+				'rows' => '5',
+				'wizards' => Array(
+					'_PADDING' => 2,
+					'RTE' => Array(
+						'notNewRecords' => 1,
+						'RTEonly' => 1,
+						'type' => 'script',
+						'title' => 'Full screen Rich Text Editing|Formatteret redigering i hele vinduet',
+						'icon' => 'wizard_rte2.gif',
+						'script' => 'wizard_rte.php',
+					),
+				),
+			)
+		),
+		'street' => Array (
+			'exclude' => 1,
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_stadiums_street',
+			'config' => Array (
+				'type' => 'input',
+				'size' => '30',
+				'max' => '250',
+				'eval' => 'trim',
+			)
+		),
+		'city' => Array (
+			'exclude' => 1,
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_stadiums_city',
+			'config' => Array (
+				'type' => 'input',
+				'size' => '30',
+				'max' => '250',
+				'eval' => 'trim',
+			)
+		),
+		'zip' => Array (
+			'exclude' => 1,
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_stadiums_zip',
+			'config' => Array (
+				'type' => 'input',
+				'size' => '10',
+				'max' => '50',
+				'eval' => 'trim',
+			)
+		),
+		'lng' => Array (
+			'exclude' => 1,
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_stadiums_lng',
+			'config' => Array (
+				'type' => 'input',
+				'size' => '20',
+				'max' => '50',
+				'eval' => 'trim',
+			)
+		),
+		'lat' => Array (
+			'exclude' => 1,
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_stadiums_lat',
+			'config' => Array (
+				'type' => 'input',
+				'size' => '20',
+				'max' => '50',
+				'eval' => 'trim',
+			)
+		),
+		'logo' => txdam_getMediaTCA('image_field', 'logo'),
+		'pictures' => txdam_getMediaTCA('image_field', 'pictures'),
+		'clubs' => Array (
+			'exclude' => 1,
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_club',
+			'config' => Array (
+				'type' => 'select',
+				'foreign_table' => 'tx_cfcleague_club',
+				'foreign_table_where' => 'ORDER BY name',
+				'size' => 10,
+				'autoSizeMax' => 30,
+				'minitems' => 0,
+				'maxitems' => 100,
+				'MM' => 'tx_cfcleague_stadiums_mm',
+				'MM_match_fields' => Array(
+					'tablenames' => 'tx_cfcleague_club',
+				),
+			)
+		),
+	),
+	'types' => Array (
+			'0' => Array('showitem' => 'name,altname,seats,logo,pictures,clubs,
+						--div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_stadiums_tab_description,description;;4;richtext[paste|bold|italic|underline|formatblock|class|left|center|right|orderedlist|unorderedlist|outdent|indent|link|image]:rte_transform[mode=ts],description2;;4;richtext[paste|bold|italic|underline|formatblock|class|left|center|right|orderedlist|unorderedlist|outdent|indent|link|image]:rte_transform[mode=ts],
+						--div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_stadiums_tab_location,street,city,zip,lng,lat')
+	),
+	'palettes' => Array (
+			'1' => Array('showitem' => '')
+	)
+);
+$TCA['tx_cfcleague_stadiums']['columns']['logo']['label'] = 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_stadiums_logo';
+$TCA['tx_cfcleague_stadiums']['columns']['logo']['config']['size'] = 1;
+$TCA['tx_cfcleague_stadiums']['columns']['logo']['config']['maxitems'] = 1;
 
 ?>
