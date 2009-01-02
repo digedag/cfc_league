@@ -207,7 +207,7 @@
 			<label index="tx_cfcleague_stadiums_tab_description">Description</label>
 			<label index="tx_cfcleague_stadiums_name">Name</label>
 			<label index="tx_cfcleague_stadiums_altname">Alternative name</label>
-			<label index="tx_cfcleague_stadiums_seats">Seats</label>
+			<label index="tx_cfcleague_stadiums_capacity">Capacity</label>
 			<label index="tx_cfcleague_stadiums_description">Description</label>
 			<label index="tx_cfcleague_stadiums_description2">Description 2</label>
 			<label index="tx_cfcleague_stadiums_street">Street</label>
@@ -411,7 +411,7 @@
 			<label index="tx_cfcleague_stadiums_tab_description">Beschreibung</label>
 			<label index="tx_cfcleague_stadiums_name">Name</label>
 			<label index="tx_cfcleague_stadiums_altname">Alternativer Name</label>
-			<label index="tx_cfcleague_stadiums_seats">Plätze</label>
+			<label index="tx_cfcleague_stadiums_capacity">Zuschauerkapazität</label>
 			<label index="tx_cfcleague_stadiums_description">Beschreibung 1</label>
 			<label index="tx_cfcleague_stadiums_description2">Beschreibung 2</label>
 			<label index="tx_cfcleague_stadiums_street">Strasse</label>

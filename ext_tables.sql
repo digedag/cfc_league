@@ -198,6 +198,7 @@ CREATE TABLE tx_cfcleague_games (
 	round_name varchar(100) DEFAULT '' NOT NULL,
 	addinfo varchar(254) DEFAULT '' NOT NULL,
 	stadium varchar(200) DEFAULT '' NOT NULL,
+	arena int(11) DEFAULT '0' NOT NULL,
 	status int(11) DEFAULT '0' NOT NULL,
 
 	referee int(11) DEFAULT '0' NOT NULL,
@@ -379,7 +380,7 @@ CREATE TABLE tx_cfcleague_stadiums (
 
 	name varchar(255) DEFAULT '' NOT NULL,
 	altname varchar(255) DEFAULT '' NOT NULL,
-	seats int(11) DEFAULT '0' NOT NULL,
+	capacity int(11) DEFAULT '0' NOT NULL,
 	description text NOT NULL,
 	description2 text NOT NULL,
 
