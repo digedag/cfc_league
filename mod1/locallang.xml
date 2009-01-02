@@ -18,6 +18,7 @@
 			<label index="label_create_teams">Create teams for competition</label>
 			<label index="label_teamname">Team name</label>
 			<label index="label_teamshortname">Team short name</label>
+			<label index="label_edit_club">Club</label>
 			<label index="msg_create_teams">Create all teams on current page?</label>
 			<label index="msg_teams_created">Teams created on current page</label>
 
@@ -136,6 +137,7 @@
 			<label index="label_create_teams">Mannschaften für diesen Wettbewerb erstellen</label>
 			<label index="label_teamname">Name</label>
 			<label index="label_teamshortname">Kurzname</label>
+			<label index="label_edit_club">Verein</label>
 			<label index="msg_create_teams">Sollen alle Teams in der aktuellen Seite erstellt werden?</label>
 			<label index="msg_teams_created">Die Mannschaften wurden auf der aktuellen Seite erstellt.</label>
 

@@ -117,8 +117,11 @@ class tx_cfcleague_mod1_modCompTeams extends t3lib_extobjbase {
 			$row = array();
 			$row[] = $teamArr['uid'];
 			$row[] = $teamArr['name'];
-			$row[] = $this->formTool->createEditLink('tx_cfcleague_teams',$teamArr['uid']) .
+			$buttons = $this->formTool->createEditLink('tx_cfcleague_teams',$teamArr['uid']) .
 								$this->formTool->createInfoLink('tx_cfcleague_teams',$teamArr['uid']);
+			if(intval($teamArr['club']))
+				$buttons .= $this->formTool->createEditLink('tx_cfcleague_club',$teamArr['club'], $LANG->getLL('label_edit_club'));
+			$row[] = $buttons;
 			$arr[] = $row;
 		}
 		$content = '<h2>'.$LANG->getLL('label_current_teams').'</h2>';
