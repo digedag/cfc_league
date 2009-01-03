@@ -34,7 +34,7 @@ require_once('class.tx_cfcleague_db.php');
 /**
  * Datenobjekt für eine Spiel in der Datenbank
  */
-class tx_cfcleague_match{
+class tx_cfcleague_match {
   var $uid;
   var $record;
   var $playerNamesHome;
@@ -45,9 +45,12 @@ class tx_cfcleague_match{
    */
   function tx_cfcleague_match($uid){
     $this->uid = $uid;
-    $this->record = t3lib_BEfunc::getRecord(TABLE_GAMES,$uid);
+    $this->reset();
   }
 
+  function reset() {
+    $this->record = t3lib_BEfunc::getRecord(TABLE_GAMES,$this->uid);
+  }
   /**
    * Liefert die vorhandenen Tickermeldungen zu diesem Spiel.
    * @param $limit

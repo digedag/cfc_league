@@ -171,7 +171,7 @@ class tx_cfcleague_selector{
 
 	/**
 	 * Darstellung der Select-Box mit allen übergebenen Spielen. Es wird auf das aktuelle Spiel eingestellt.
-	 * @return die aktuelle Match als Objekt
+	 * @return tx_cfcleague_match current match
 	 */
 	function showMatchSelector(&$content,$pid,$matches){
 		$this->MATCH_MENU = Array (

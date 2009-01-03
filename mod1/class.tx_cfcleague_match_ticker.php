@@ -79,7 +79,7 @@ class tx_cfcleague_match_ticker extends t3lib_extobjbase {
 
 		$selector = '';
 		// Anzeige der vorhandenen Ligen
-		$current_league = $this->selector->showLeagueSelector($selector, $this->id);
+		$current_league = $this->getSelector()->showLeagueSelector($selector, $this->id);
 		if(!$current_league)
 			return $this->doc->section('Info:',$LANG->getLL('no_league_in_page'),0,1,ICON_WARN);
 
@@ -92,10 +92,10 @@ class tx_cfcleague_match_ticker extends t3lib_extobjbase {
 			return $content;
 		}
 		// Jetzt den Spieltag wählen lassen
-		$current_round = $this->selector->showRoundSelector($selector,$this->id,$current_league);
+		$current_round = $this->getSelector()->showRoundSelector($selector,$this->id,$current_league);
 
 		// Und nun das Spiel wählen
-		$match = $this->selector->showMatchSelector($selector,$this->id,$current_league->getGamesByRound($current_round, true));
+		$match = $this->getSelector()->showMatchSelector($selector,$this->id,$current_league->getGamesByRound($current_round, true));
 		if($this->pObj->isTYPO42())
 			$this->pObj->subselector = $selector;
 		else 
@@ -107,6 +107,8 @@ class tx_cfcleague_match_ticker extends t3lib_extobjbase {
 		if ($update && is_array($data['tx_cfcleague_match_notes'])) {
 			$this->insertNotes($data);
 			$content.= '<i>'.$LANG->getLL('msg_data_saved').'</i>';
+			// Jetzt das Spiel nochmal laden, da sich Daten geändert haben könnten
+			$match->reset();
 		}
 
 		// Wir zeigen die bisherigen Meldungen
@@ -398,8 +400,14 @@ class tx_cfcleague_match_ticker extends t3lib_extobjbase {
     reset($data);
     $tce =& tx_cfcleague_db::getTCEmain($data);
     $tce->process_datamap();
-//    t3lib_div::debug($data, 'Saved Note!!');
-
+  }
+  /**
+   * Liefert die Selector Instanz
+   *
+   * @return tx_cfcleague_selector
+   */
+  function getSelector() {
+  	return $this->selector;
   }
 }
 
