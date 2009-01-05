@@ -47,6 +47,41 @@ class tx_cfcleague_services_Teams extends t3lib_svbase {
 		$srv = tx_cfcleague_util_ServiceRegistry::getStadiumService();
 		return $srv->search($fields, $options);
 	}
+
+	/**
+	 * Returns all team note types
+	 * @return array[tx_cfcleague_models_TeamNoteType]
+	 */
+	public function getNoteTypes() {
+		tx_div::load('tx_cfcleague_models_TeamNoteType');
+		return tx_cfcleague_models_TeamNoteType::getAll();
+	}
+	/**
+	 * Returns all teamnotes for with team with specific type
+	 *
+	 * @param tx_cfcleague_models_Team $team
+	 * @param tx_cfcleague_models_TeamNoteType $type
+	 */
+	public function getTeamNotes($team, $type=false) {
+		$fields['TEAMNOTE.TEAM'][OP_EQ_INT] = $team->getUid();
+		if(is_object($type))
+			$fields['TEAMNOTE.TYPE'][OP_EQ_INT] = $type->getUid();
+		$options = array();
+		return $this->searchTeamNotes($fields, $options);
+	}
+	/**
+	 * Search database for team notes
+	 *
+	 * @param array $fields
+	 * @param array $options
+	 * @return array[tx_cfcleague_models_TeamNote]
+	 */
+	function searchTeamNotes($fields, $options) {
+		tx_div::load('tx_rnbase_util_SearchBase');
+		$searcher = tx_rnbase_util_SearchBase::getInstance('tx_cfcleague_search_TeamNote');
+		return $searcher->search($fields, $options);
+	}
+
 }
 
 
