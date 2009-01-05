@@ -55,7 +55,7 @@ class tx_cfcleague_mod1_decorator {
 				}
 				elseif(isset($data['decorator'])) {
 					$decor = $data['decorator'];
-					$row[] = $decor->format($record[$column],$column, $record);
+					$row[] = $decor->format($record[$column],$column, $record, $entry);
 				}
 				else {
 					$row[] = $record[$column];
