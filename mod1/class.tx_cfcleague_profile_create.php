@@ -98,7 +98,7 @@ class tx_cfcleague_profile_create extends t3lib_extobjbase {
 		$menu = $this->selector->showTabMenu($this->id, 'teamtools', 
 						array('0' => $LANG->getLL('create_players'), 
 									'1' => $LANG->getLL('add_players'),
-//									'2' => $LANG->getLL('manage_teamnotes'),
+									'2' => $LANG->getLL('manage_teamnotes'),
 						));
 		$tabs = $menu['menu'];
 		$tabs .= '<div style="display: block; border: 1px solid #a2aab8;clear:both;" ></div>';

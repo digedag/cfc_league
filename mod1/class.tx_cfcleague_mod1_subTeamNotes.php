@@ -24,7 +24,7 @@
 
 require_once(t3lib_extMgm::extPath('div') . 'class.tx_div.php');
 tx_div::load('tx_rnbase_util_Misc');
-tx_div::load('tx_cfcleague_mod1_profilesearcher');
+tx_div::load('tx_cfcleague_mod1_decorator');
 
 
 /**
@@ -44,15 +44,27 @@ class tx_cfcleague_mod1_subTeamNotes {
 	 * @return string
 	 */
 	public function handleRequest(&$currTeam) {
+		// Tasks:
+		// 1. Alle Team-Notizen des Teams anzeigen
+		// SELECT * FROM notizen where team=123
+		// Notizen nach Typ anzeigen
+		$srv = tx_cfcleague_util_ServiceRegistry::getTeamService();
+		$types = $srv->getNoteTypes();
+		if(!count($types)) {
+			$content.=$this->mod->doc->section($GLOBALS['LANG']->getLL('message').':',$GLOBALS['LANG']->getLL('msg_create_notetypes'),0,1,ICON_INFO);
+			return $content;
+		}
+		// Für jeden Typ einen Block anzeigen
+		foreach($types As $type) {
+			$content .= $this->showTeamNotes($currTeam, $type);
+		}
+		// 2. Neue Notiz für einen Spiele anlegen lassen
 		// ggf. Daten im Request verarbeiten
-		$entries = $currTeam->getPlayerNames(0,1);
-		$menu = tx_rnbase_util_FormTool::showMenu($this->pid, 'player', $this->modName, $entries);
-		$content .= $menu['menu'];
-		$player = $menu['value'];
+//		$entries = $currTeam->getPlayerNames(0,1);
+//		$menu = tx_rnbase_util_FormTool::showMenu($this->pid, 'player', $this->modName, $entries);
+//		$content .= $menu['menu'];
+//		$player = $menu['value'];
 		return $content;
-		$out .= $this->handleAddProfiles($currTeam, $baseInfo);
-		$out .= $this->showAddProfiles($currTeam);
-		return $out;
 	}
 	/**
 	 * Liefert das FormTool
@@ -67,27 +79,37 @@ class tx_cfcleague_mod1_subTeamNotes {
 	 * Darstellung der gefundenen Personen
 	 *
 	 * @param tx_cfcleague_team $currTeam
+	 * @param tx_cfcleague_models_TeamNoteType $type
 	 * @return string
 	 */
-	function showAddProfiles($currTeam) {
+	function showTeamNotes($currTeam, $type) {
+		$out = '<h2>'.$type->getLabel().'</h2>';
+		if($type->getDescription())
+			$out .= '<p>'.$type->getDescription().'</p>';
 		
-		$options['checkbox'] = 1;
-
-		// Todo: wir müssen wissen, welche Teil des Teams selectiert ist
-		$profiles = $currTeam->getPlayerNames();
-		foreach($profiles As $profile) {
-			$options['dontcheck'][$profile['uid']] = $GLOBALS['LANG']->getLL('msg_profile_already_joined');
-		}
-
-		$searcher = $this->getProfileSearcher($options);
-		$out .= $searcher->getSearchForm();
-		$out .= $this->mod->doc->spacer(15);
-		$out.= $searcher->getResultList();
-		if($searcher->getSize()) {
-			// Button für Zuordnung
-			$out .= $this->mod->formTool->createSubmit('profile2team', $GLOBALS['LANG']->getLL('label_join_players'), $GLOBALS['LANG']->getLL('msg_join_players'));
-		}
-		return $out;
+		// Alle Notes dieses Teams laden
+		$srv = tx_cfcleague_util_ServiceRegistry::getTeamService();
+		$notes = $srv->getTeamNotes($currTeam, $type);
+		
+		$decor = tx_div::makeInstanceClassname('tx_cfcleague_util_TeamNoteDecorator');
+		$decor = new $decor($this->getFormTool());
+		$columns = array(
+			'uid' => array('decorator' => $decor),
+			'profile' => array('decorator' => $decor, 'title' => 'label_name'),
+			'value' => array('decorator' => $decor, 'title' => 'label_value'),
+			'mediatype' => array('decorator' => $decor, 'title' => 'tx_cfcleague_team_notes.mediatype'),
+		);
+		$rows = tx_cfcleague_mod1_decorator::prepareTable($notes,$columns,$this->getFormTool(),$options);
+		$out .= $this->mod->doc->table($rows[0]);
+		
+		// We use the mediatype from first entry
+		if(count($notes))
+			$options['params'] = '&mediatype='.$notes[0]->getMediaType();
+		$options['params'] .= '&type='.$type->getUid();
+		$options['params'] .= '&team='.$currTeam->getUid();
+		$options['title'] = $GLOBALS['LANG']->getLL('label_create_new') .': ' . $type->getLabel();
+		$out .= $this->getFormTool()->createNewButton('tx_cfcleague_team_notes', $this->pid,$options);
+		return $out.'<br /><br />';
 	}
 	/**
 	 * Add matches to a betset
