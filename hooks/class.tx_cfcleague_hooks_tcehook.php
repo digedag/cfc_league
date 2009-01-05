@@ -31,6 +31,14 @@ class tx_cfcleague_hooks_tcehook {
 	 * Werte aus der Datenbank können vor deren Darstellung manipuliert werden.
 	 */
 	function getMainFields_preProcess($table,&$row, $tceform) {
+		if($table == 'tx_cfcleague_team_notes') {
+			$teamUid = intval(t3lib_div::_GP('team'));
+			if($teamUid) $row['team'] = $teamUid;
+			$typeUid = intval(t3lib_div::_GP('type'));
+			if($typeUid) $row['type'] = $typeUid;
+			$typeUid = intval(t3lib_div::_GP('mediatype'));
+			if($typeUid) $row['mediatype'] = $typeUid;
+		}
 		if($table == 'tx_cfcleague_games') {
 			$compUid = intval(t3lib_div::_GP('competition'));
 			if($compUid) $row['competition'] = $compUid;
