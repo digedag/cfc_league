@@ -46,6 +46,9 @@ class tx_cfcleague_team{
     $this->refresh();
   }
 
+  function getUid() {
+  	return $this->uid;
+  }
   /**
    * Lädt die Daten des Teams neu aus der Datenbank
    *
