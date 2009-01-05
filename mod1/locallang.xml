@@ -11,6 +11,7 @@
 			<label index="error">Error</label>
 			<label index="title">T3sports - League Management</label>
 			<label index="title_recent_tickers">Recent ticker messages</label>
+			<label index="label_value">Value</label>
 
 			<label index="mod_competition">Manage Competitions</label>
 			<label index="mod_compteams">Teams</label>
@@ -22,6 +23,7 @@
 			<label index="msg_create_teams">Create all teams on current page?</label>
 			<label index="msg_teams_created">Teams created on current page</label>
 
+			<label index="label_create_new">Create new</label>
 			<label index="create_games">Create matches</label>
 			<label index="edit_games">Edit matches</label>
 			<label index="label_create_match">Create new match</label>
@@ -31,6 +33,7 @@
 			<label index="add_players">Add players</label>
 			<label index="manage_teamnotes">Team notes</label>
 			<label index="label_club">Club</label>
+			<label index="msg_create_notetypes">To use this module, you have to create one or more records of type "Note type".</label>
 
 			<label index="search_profiles">Search profiles</label>
 			<label index="match_ticker">Match ticker/Statistics</label>
@@ -129,6 +132,9 @@
 			<label index="error">Fehler</label>
 			<label index="title">T3sports - Ligaverwaltung</label>
 			<label index="title_recent_tickers">Letzte Tickermeldungen</label>
+			<label index="label_value">Wert</label>
+
+			<label index="label_create_new">Neu anlegen</label>
 			<label index="create_games">Spielplan erstellen</label>
 			<label index="edit_games">Spiele bearbeiten</label>
 			<label index="label_create_match">Ein neues Spiel anlegen</label>
@@ -148,6 +154,7 @@
 			<label index="add_players">Spieler hinzufügen</label>
 			<label index="manage_teamnotes">Team-Notizen</label>
 			<label index="label_club">Verein</label>
+			<label index="msg_create_notetypes">Damit dieses Modul verwendet werden kann, müssen zunächst ein oder mehrere Datensätze vom Typ "Notiz-Typ" angelegt werden.</label>
 
 			<label index="search_profiles">Personen suchen</label>
 			<label index="match_ticker">Spielticker/Statistik</label>
