@@ -2,6 +2,14 @@
 Änderungen
 ----------
 
+v0.5.2 (06.01.2009)
+* New field to set profile types
+* Profile merge supports team notes
+* New History-Button in profile search
+* New BE module to manage team notes
+* It is now possible to create new matches from BE modul
+* New datatype stadium with relations to club und games
+
 v0.5.1 (25.10.2008)
 * Compatible with TYPO3 4.2.2
 * New field shortname in group record
