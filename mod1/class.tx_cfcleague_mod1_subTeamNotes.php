@@ -108,7 +108,8 @@ class tx_cfcleague_mod1_subTeamNotes {
 		$options['params'] .= '&type='.$type->getUid();
 		$options['params'] .= '&team='.$currTeam->getUid();
 		$options['title'] = $GLOBALS['LANG']->getLL('label_create_new') .': ' . $type->getLabel();
-		$out .= $this->getFormTool()->createNewButton('tx_cfcleague_team_notes', $this->pid,$options);
+		// Zielseite muss immer die Seite des Teams sein
+		$out .= $this->getFormTool()->createNewButton('tx_cfcleague_team_notes', $currTeam->record['pid'],$options);
 		return $out.'<br /><br />';
 	}
 	/**
