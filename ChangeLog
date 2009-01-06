@@ -2,7 +2,11 @@
 Änderungen
 ----------
 
-v0.5.2 (06.01.2009)
+v0.5.3 (06.01.2009) (not released)
+* Target page for new team notes is always taken from team
+* Missing include of tx_div fixed
+
+v0.5.2 (06.01.2009) (not released)
 * New field to set profile types
 * Profile merge supports team notes
 * New History-Button in profile search
