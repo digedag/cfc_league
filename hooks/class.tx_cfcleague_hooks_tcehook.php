@@ -67,33 +67,6 @@ class tx_cfcleague_hooks_tcehook {
 		}
 	}
 	/**
-	 * Nachbearbeitungen, unmittelbar BEVOR die Daten gespeichert werden. Das POST bezieht sich
-	 * auf die Arbeit der TCE und nicht auf die Speicherung in der DB.
-	 *
-	 * @param string $status new oder update
-	 * @param string $table Name der Tabelle
-	 * @param int $id UID des Datensatzes
-	 * @param array $fieldArray Felder des Datensatzes, die sich ändern
-	 * @param tce_main $tcemain
-	 */
-	function processDatamap_postProcessFieldArray($status, $table, $id, &$fieldArray, &$tcemain) {
-		if($table == 'tx_cfcleague_profiles') {
-			if(array_key_exists('types', $fieldArray)){
-				// Die Types werden zusätzlich in einer MM-Tabelle gespeichert
-				tx_rnbase_util_DB::doDelete('tx_cfcleague_profiletypes_mm','uid_foreign='.$id,0);
-				$types = t3lib_div::intExplode(',',$fieldArray['types']);
-				$i = 0;
-				foreach($types As $type) {
-					$values['uid_local'] = $type;
-					$values['uid_foreign'] = $id;
-					$values['tablenames'] = 'tx_cfcleague_profiles';
-					$values['sorting_foreign'] = $i++;
-					tx_rnbase_util_DB::doInsert('tx_cfcleague_profiletypes_mm',$values,0);
-				}
-			}
-		}
-	}
-	/**
 	 * Wir müssen dafür sorgen, daß die neuen IDs der Teams im Wettbewerb und Spielen
 	 * verwendet werden.
 	 */
