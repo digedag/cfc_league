@@ -2,7 +2,10 @@
 Änderungen
 ----------
 
-v0.5.3 (06.01.2009) (not released)
+v0.5.4 (25.01.2009)
+* Bugfix: Mayday message occurred when new profiles were created
+
+v0.5.3 (06.01.2009)
 * Target page for new team notes is always taken from team
 * Missing include of tx_div fixed
 
