@@ -81,28 +81,29 @@ class tx_cfcleague_mod1_modCompetitions extends t3lib_extobjbase {
 			array('0' => $LANG->getLL('edit_games'),
 						'1' => $LANG->getLL('mod_compteams'),
 						'2' => $LANG->getLL('create_games')));
-		$content .= $this->formTool->form->printNeededJSFunctions_top();
 
 		$tabs .= $menu['menu'];
 		$tabs .= '<div style="display: block; border: 1px solid #a2aab8;" ></div>';
-		
+
 		if($this->pObj->isTYPO42())
 			$this->pObj->tabs = $tabs;
 		else
 			$content .= $tabs;
-		
+
 		switch($menu['value']) {
 			case 0:
-				$content .= $this->showEditMatches($current_league);
+				$modContent = $this->showEditMatches($current_league);
 				break;
 			case 1:
 				$mod = tx_div::makeInstance('tx_cfcleague_mod1_modCompTeams');
-				$content .= $mod->main($this->MCONF['name'], $this->id, $this->doc, $this->formTool, $current_league);
+				$modContent = $mod->main($this->MCONF['name'], $this->id, $this->doc, $this->formTool, $current_league);
 				break;
 			case 2:
-				$content .= $this->showCreateMatchTable($current_league);
+				$modContent = $this->showCreateMatchTable($current_league);
 				break;
 		}
+		$content .= $this->formTool->form->printNeededJSFunctions_top();
+		$content .= $modContent;
 		// Den JS-Code für Validierung einbinden
 		$content .= $this->formTool->form->printNeededJSFunctions();
 //		$content  .= $this->formTool->form->JSbottom('editform');
