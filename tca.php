@@ -735,14 +735,6 @@ $TCA['tx_cfcleague_teams'] = Array (
 			'exclude' => 1,
 			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_teams.club',
 			'config' => $clubArr
-//		Array (
-//				'type' => 'group',
-//				'internal_type' => 'db',
-//				'allowed' => 'tx_cfcleague_club',
-//				'size' => 1,
-//				'minitems' => 0,
-//				'maxitems' => 1,
-//			)
 		),
 		'dam_logo' => txdam_getMediaTCA('image_field'),
 		'name' => Array (
@@ -1049,18 +1041,10 @@ $TCA['tx_cfcleague_games'] = Array (
 			)
 		),
 		'players_home' => Array (
-			'exclude' => 0,		
+			'exclude' => 0,
 			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.players_home',
 			'config' => Array (
-				'type' => 'select',	
-				'foreign_table' => 'tx_cfcleague_profiles',
-/*
-Die Daten kommen auch hier aus der ItemProcFunc
-Eine Einschränkung der ausgangsdaten funktioniert aber nicht, weil dann die
-ausgewählten Spieler im T3-Formular nicht mher angezeigt werden...
-Beim Trainer funktioniert es allerdings.
-				'foreign_table_where' => 'AND tx_cfcleague_profiles.uid = 0',
-*/
+				'type' => 'select',
 				'itemsProcFunc' => 'tx_cfcleague_handleDataInput->getPlayersHome4Match',
 				'size' => 11,
 				'minitems' => 0,
@@ -1068,14 +1052,10 @@ Beim Trainer funktioniert es allerdings.
 			)
 		),
 		'players_guest' => Array (
-			'exclude' => 0,		
+			'exclude' => 0,
 			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.players_guest',
 			'config' => Array (
 				'type' => 'select',
-				'foreign_table' => 'tx_cfcleague_profiles',
-/*
-				'foreign_table_where' => 'AND tx_cfcleague_profiles.uid = 0',
-*/
 				'itemsProcFunc' => 'tx_cfcleague_handleDataInput->getPlayersGuest4Match',
 				'size' => 11,
 				'minitems' => 0,
@@ -1083,14 +1063,10 @@ Beim Trainer funktioniert es allerdings.
 			)
 		),
 		'substitutes_home' => Array (
-			'exclude' => 0,		
+			'exclude' => 0,
 			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.substitutes_home',
 			'config' => Array (
-				'type' => 'select',	
-				'foreign_table' => 'tx_cfcleague_profiles',
-/*
-				'foreign_table_where' => 'AND tx_cfcleague_profiles.uid = 0',
-*/
+				'type' => 'select',
 				'itemsProcFunc' => 'tx_cfcleague_handleDataInput->getPlayersHome4Match',
 				'size' => 9,
 				'minitems' => 0,
@@ -1098,14 +1074,10 @@ Beim Trainer funktioniert es allerdings.
 			)
 		),
 		'substitutes_guest' => Array (
-			'exclude' => 0,		
+			'exclude' => 0,
 			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.substitutes_guest',
 			'config' => Array (
 				'type' => 'select',
-				'foreign_table' => 'tx_cfcleague_profiles',
-/*
-				'foreign_table_where' => 'AND tx_cfcleague_profiles.uid = 0',
-*/
 				'itemsProcFunc' => 'tx_cfcleague_handleDataInput->getPlayersGuest4Match',
 				'size' => 9,
 				'minitems' => 0,
@@ -1235,7 +1207,6 @@ Beim Trainer funktioniert es allerdings.
 				'size' => '4',
 				'max' => '4',
 				'eval' => 'int',
-//				'checkbox' => '0',
 				'range' => Array (
 					'upper' => '1000',
 					'lower' => '0'
@@ -1251,7 +1222,6 @@ Beim Trainer funktioniert es allerdings.
 				'size' => '4',
 				'max' => '4',
 				'eval' => 'int',
-//				'checkbox' => '0',
 				'range' => Array (
 					'upper' => '1000',
 					'lower' => '0'
@@ -1267,7 +1237,6 @@ Beim Trainer funktioniert es allerdings.
 				'size' => '4',
 				'max' => '4',
 				'eval' => 'int',
-//				'checkbox' => '0',
 				'range' => Array (
 					'upper' => '1000',
 					'lower' => '0'
@@ -1283,7 +1252,6 @@ Beim Trainer funktioniert es allerdings.
 				'size' => '4',
 				'max' => '4',
 				'eval' => 'int',
-//				'checkbox' => '0',
 				'range' => Array (
 					'upper' => '1000',
 					'lower' => '0'
@@ -1299,7 +1267,6 @@ Beim Trainer funktioniert es allerdings.
 				'size' => '4',
 				'max' => '4',
 				'eval' => 'int',
-//				'checkbox' => '0',
 				'range' => Array (
 					'upper' => '1000',
 					'lower' => '0'
@@ -1315,7 +1282,6 @@ Beim Trainer funktioniert es allerdings.
 				'size' => '4',
 				'max' => '4',
 				'eval' => 'int',
-//				'checkbox' => '0',
 				'range' => Array (
 					'upper' => '1000',
 					'lower' => '0'
@@ -1331,7 +1297,6 @@ Beim Trainer funktioniert es allerdings.
 				'size' => '4',
 				'max' => '4',
 				'eval' => 'int',
-//				'checkbox' => '0',
 				'range' => Array (
 					'upper' => '1000',
 					'lower' => '0'
@@ -1347,7 +1312,6 @@ Beim Trainer funktioniert es allerdings.
 				'size' => '4',
 				'max' => '4',
 				'eval' => 'int',
-//				'checkbox' => '0',
 				'range' => Array (
 					'upper' => '1000',
 					'lower' => '0'
