@@ -261,6 +261,7 @@ $TCA['tx_cfcleague_competition'] = Array (
 				'default' => 0
 			)
 		),
+		'logo' => txdam_getMediaTCA('image_field', 'logo'),
 		'teams' => Array (
 			'exclude' => 1,
 			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition.teams',
@@ -296,6 +297,9 @@ $TCA['tx_cfcleague_competition'] = Array (
 		'2' => Array('showitem' => 'obligation')
 	)
 );
+$TCA['tx_cfcleague_competition']['columns']['logo']['label'] = 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_club.logo';
+$TCA['tx_cfcleague_competition']['columns']['logo']['config']['size'] = 1;
+$TCA['tx_cfcleague_competition']['columns']['logo']['config']['maxitems'] = 1;
 
 $TCA['tx_cfcleague_competition_penalty'] = Array (
 	'ctrl' => $TCA['tx_cfcleague_competition_penalty']['ctrl'],

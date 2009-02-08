@@ -65,6 +65,7 @@ CREATE TABLE tx_cfcleague_competition (
 	point_system int(11) DEFAULT '0' NOT NULL,
 	match_keys text NOT NULL,
 	table_marks text NOT NULL,
+	logo int(11) DEFAULT '0' NOT NULL,
 
 	match_parts tinyint(4) DEFAULT '0' NOT NULL,
 	parent int(11) DEFAULT '0' NOT NULL,
