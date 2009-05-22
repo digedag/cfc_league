@@ -86,6 +86,18 @@ class tx_cfcleague_services_Profiles extends t3lib_svbase {
 		return implode(',',$items);
 	}
 
+	/**
+	 * Search database for profiles
+	 *
+	 * @param array $fields
+	 * @param array $options
+	 * @return array[tx_cfcleague_models_Profile]
+	 */
+	function search($fields, $options) {
+		tx_div::load('tx_rnbase_util_SearchBase');
+		$searcher = tx_rnbase_util_SearchBase::getInstance('tx_cfcleague_search_Profile');
+		return $searcher->search($fields, $options);
+	}
 }
 
 
