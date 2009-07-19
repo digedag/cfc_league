@@ -37,18 +37,6 @@ include_once('../class.tx_cfcleague.php');
 // Die Datenbank-Klasse
 include_once('../class.tx_cfcleague_db.php');
 
-  $LEAGUE_FUNC = array();
-//  $LEAGUE_FUNC[] = new tx_cfcleague_mod_def('tx_cfcleague_match_edit', 'LLL:EXT:cfc_league/mod1/locallang.xml:edit_games');
-//  $LEAGUE_FUNC[] = new tx_cfcleague_mod_def('tx_cfcleague_generator', 'LLL:EXT:cfc_league/mod1/locallang.xml:create_games');
-//  $LEAGUE_FUNC[] = new tx_cfcleague_mod_def('tx_cfcleague_match_ticker', 'LLL:EXT:cfc_league/mod1/locallang.xml:match_ticker');
-//  $LEAGUE_FUNC[] = new tx_cfcleague_mod_def('tx_cfcleague_profile_create', 'LLL:EXT:cfc_league/mod1/locallang.xml:create_players');
-//  $LEAGUE_FUNC[] = new tx_cfcleague_mod_def('tx_cfcleague_profile_search', 'LLL:EXT:cfc_league/mod1/locallang.xml:search_profiles');
-
-//$LEAGUE_FUNC[] = new tx_cfcleague_mod_def('tx_cfcleague_generator', 'create_games');
-
-
-//require_once (PATH_t3lib.'class.tslib_content.php');
-
 $LANG->includeLLFile('EXT:cfc_league/mod1/locallang.xml');
 require_once(PATH_t3lib.'class.t3lib_scbase.php');
 $BE_USER->modAccess($MCONF,1);	// This checks permissions and exits if the users has no permission for entry.
@@ -88,14 +76,8 @@ class  tx_cfcleague_module1 extends t3lib_SCbase {
 	 * @return	void
 	 */
 	function menuConfig() {
-		global $LANG, $LEAGUE_FUNC;
-
+		global $LANG;
 		$this->MOD_MENU = Array ('function' => Array ());
-		// Menu aus den definierten Plugins erstellen
-		foreach($LEAGUE_FUNC As $id => $func) {
-			$this->MOD_MENU['function'][$id] = $LANG->sl($func->label);
-		}
-
 		parent::menuConfig();
 	}
 
@@ -240,22 +222,7 @@ class  tx_cfcleague_module1 extends t3lib_SCbase {
 	 * @return	void
 	 */
 	function moduleContent() {
-		global $LEAGUE_FUNC;
-
-		$content = '';
-		$plugin = $LEAGUE_FUNC[$this->MOD_SETTINGS['function']];
-		if($plugin){
-			$clazz = $plugin->clazz_name;
-			include_once('class.' . $clazz . '.php');
-			$func = t3lib_div::makeInstance($clazz);
-			// Plugin initialisieren
-			$func->init($this->doc, $this->MCONF,$this->id);
-			// die Kontrolle weitergeben
-			$content=$func->handleRequest();
-		}
-		else {
-			$content=$this->extObjContent();
-		}
+		$content=$this->extObjContent();
 		return $content;
 	}
 
