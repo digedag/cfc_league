@@ -25,9 +25,10 @@
 tx_div::load('tx_rnbase_model_base');
 
 /**
- * Model für einen Verein.
+ * Model for a stadium.
  */
 class tx_cfcleague_models_Stadium extends tx_rnbase_model_base {
+	private static $instances = array();
 
 	function getTableName(){return 'tx_cfcleague_stadiums';}
 
@@ -38,6 +39,21 @@ class tx_cfcleague_models_Stadium extends tx_rnbase_model_base {
 	 */
 	function getName() {
 		return $this->record['name'];
+	}
+	/**
+	 * Liefert die Instance mit der übergebenen UID. Die Daten werden gecached, so daß
+	 * bei zwei Anfragen für die selbe UID nur ein DB Zugriff erfolgt.
+	 *
+	 * @param int $uid
+	 * @return tx_netfewo_models_Objekt
+	 */
+	static function getInstance($uid) {
+		$uid = intval($uid);
+		if(!$uid) throw new Exception('No uid for '.self::getTableName().' given!');
+		if(!is_object(self::$instances[$uid])) {
+			self::$instances[$uid] = new tx_cfcleague_models_Stadium($uid);
+		}
+		return self::$instances[$uid];
 	}
 }
 
