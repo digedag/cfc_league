@@ -91,7 +91,7 @@ class tx_cfcleague_mod1_profilesearcher {
 			$where .= tx_rnbase_util_DB::searchWhere($searchterm, 'last_name, first_name');
 		}
 
-    $rows = tx_cfcleague_db::queryDB($what, $where, $from,'',$orderBy, 0);
+    $rows = tx_cfcleague_db::queryDB($what, $where, $from,'',$orderby, 0);
     $this->resultSize = count($rows);
 		return $rows;
 	}
