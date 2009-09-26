@@ -74,6 +74,7 @@ class tx_cfcleague_mod1_modCompetitions extends t3lib_extobjbase {
 
 		if(!$current_league) {
 			$content.=$this->doc->section('Info:',$LANG->getLL('no_league_in_page'),0,1,ICON_WARN);
+			$content .= '<p style="margin-top:5px; font-weight:bold;">'.$this->formTool->createNewLink('tx_cfcleague_competition', $this->pObj->id,$LANG->getLL('msg_create_new_competition')).'</p>';
 			return $content;
 		}
 
