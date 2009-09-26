@@ -29,19 +29,26 @@ require_once('../class.tx_cfcleague_form_tool.php');
  * Die Klasse stellt Auswahlmenus zur Verfügung
  */
 class tx_cfcleague_selector{
-  var $doc, $MCONF;
+	var $doc, $MCONF;
 
-  /**
-   * Initialisiert das Objekt mit dem Template und der Modul-Config.
-   */
-  function init($doc, $MCONF){
-    $this->doc = $doc;
-    $this->MCONF = $MCONF;
-    $this->formTool = t3lib_div::makeInstance('tx_cfcleague_form_tool');
-    $this->formTool->init($this->doc);
-  }
-
-
+	/**
+	 * Initialisiert das Objekt mit dem Template und der Modul-Config.
+	 */
+	function init($doc, $MCONF){
+		$this->doc = $doc;
+		$this->MCONF = $MCONF;
+	}
+	/**
+	 * Returns the form tool
+	 * @return tx_rnbase_util_FormTool
+	 */
+	function getFormTool() {
+		if(!$this->formTool) {
+			$this->formTool = tx_div::makeInstance('tx_rnbase_util_FormTool');
+			$this->formTool->init($this->doc);
+		}
+		return $this->formTool;
+	}
 	/**
 	 * Darstellung der Select-Box mit allen Ligen der übergebenen Seite. Es wird auf die aktuelle Liga eingestellt.
 	 * @return den aktuellen Wettbewerb als Objekt oder 0
@@ -72,13 +79,14 @@ class tx_cfcleague_selector{
 		// In den Content einbauen
 		// Zusätzlich noch einen Edit-Link setzen
 		if($menu) {
-			$links = $this->formTool->createEditLink('tx_cfcleague_competition', $this->LEAGUE_SETTINGS['league'],'');
+			$links = $this->getFormTool()->createEditLink('tx_cfcleague_competition', $this->LEAGUE_SETTINGS['league'],'');
 			// Jetzt noch den Cache-Link
-			$links .= ' ' . $this->formTool->createLink('&clearCache=1', $pid, '<img'.t3lib_iconWorks::skinImg($GLOBALS['BACK_PATH'],'gfx/clear_all_cache.gif','width="11" height="12"').' title="Statistik-Cache leeren" border="0" alt="" />');
+			$links .= ' ' . $this->getFormTool()->createLink('&clearCache=1', $pid, '<img'.t3lib_iconWorks::skinImg($GLOBALS['BACK_PATH'],'gfx/clear_all_cache.gif','width="11" height="12"').' title="Statistik-Cache leeren" border="0" alt="" />');
+			$links .= $this->getFormTool()->createNewLink('tx_cfcleague_competition', $pid,'');
 			$menu = '<div class="cfcselector"><div class="selector">' . $menu . '</div><div class="links">' . $links . '</div></div>';
 //			$menu .= '</td><td style="width:90px; padding-left:10px;">' . $link;
 //			// Jetzt noch den Cache-Link
-//			$menu .= ' ' . $this->formTool->createLink('&clearCache=1', $pid, '<img'.t3lib_iconWorks::skinImg($GLOBALS['BACK_PATH'],'gfx/clear_all_cache.gif','width="11" height="12"').' title="Statistik-Cache leeren" border="0" alt="" />');
+//			$menu .= ' ' . $this->getFormTool()->createLink('&clearCache=1', $pid, '<img'.t3lib_iconWorks::skinImg($GLOBALS['BACK_PATH'],'gfx/clear_all_cache.gif','width="11" height="12"').' title="Statistik-Cache leeren" border="0" alt="" />');
 		}
 		$content.= $menu;
 //		$content.=$this->doc->section('',$this->doc->funcMenu($headerSection,$menu));
@@ -122,10 +130,10 @@ class tx_cfcleague_selector{
 		// In den Content einbauen
 		// Zusätzlich noch einen Edit-Link setzen
 		if($menu) {
-			$links = $this->formTool->createEditLink('tx_cfcleague_teams', $this->TEAM_SETTINGS['team']);
+			$links = $this->getFormTool()->createEditLink('tx_cfcleague_teams', $this->TEAM_SETTINGS['team']);
 //			$menu .= '</td><td style="width:90px; padding-left:10px;">' . $links;
 			if($teamObj->record['club'])
-				$links .= $this->formTool->createEditLink('tx_cfcleague_club', intval($teamObj->record['club']), $GLOBALS['LANG']->getLL('label_club'));
+				$links .= $this->getFormTool()->createEditLink('tx_cfcleague_club', intval($teamObj->record['club']), $GLOBALS['LANG']->getLL('label_club'));
 			$menu = '<div class="cfcselector"><div class="selector">' . $menu . '</div><div class="links">' . $links . '</div></div>';
 		}
 		$content .= $menu;
@@ -189,7 +197,7 @@ class tx_cfcleague_selector{
 		);
 		// In den Content einbauen
 		// Zusätzlich noch einen Edit-Link setzen
-		$links = $this->formTool->createEditLink('tx_cfcleague_games', $this->MATCH_SETTINGS['match']);
+		$links = $this->getFormTool()->createEditLink('tx_cfcleague_games', $this->MATCH_SETTINGS['match']);
 		if($menu) {
 			//$menu .= '</td><td style="width:90px; padding-left:10px;">' . $link;
 			$menu = '<div class="cfcselector"><div class="selector">' . $menu . '</div><div class="links">' . $links . '</div></div>';
