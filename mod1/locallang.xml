@@ -20,8 +20,13 @@
 			<label index="label_teamname">Team name</label>
 			<label index="label_teamshortname">Team short name</label>
 			<label index="label_edit_club">Club</label>
+			<label index="label_uid">UID</label>
 			<label index="msg_create_teams">Create all teams on current page?</label>
 			<label index="msg_teams_created">Teams created on current page</label>
+			<label index="label_add_teams_from_page">Add teams from current page</label>
+			<label index="msg_noteams_in_comp">No teams in competition found.</label>
+			<label index="label_add_teams">Add teams to competition</label>
+			<label index="msg_add_teams">Add selected teams to current competition?</label>
 
 			<label index="label_create_new">Create new</label>
 			<label index="create_games">Create matches</label>
@@ -37,7 +42,7 @@
 
 			<label index="search_profiles">Search profiles</label>
 			<label index="match_ticker">Match ticker/Statistics</label>
-			<label index="no_league_in_page">No leagues found on current page.</label>
+			<label index="no_league_in_page">No compatitions found on current page.</label>
 			<label index="no_round_in_league">This Competition containes no matches.</label>
 			<label index="btn_update_msgEditGames">Save changes?</label>
 			<label index="btn_update">Update</label>
@@ -90,7 +95,8 @@
 			<label index="msg_profile_already_joined">This profile is already part of the team!</label>
 			<label index="label_join_players">Join player(s)</label>
 			<label index="msg_no_profile_selected">Sorry, no selected profiles found. Please try again!</label>
-			
+			<label index="msg_create_new_competition">Create a new competition at this page.</label>
+
 
 			<label index="msg_number_of_players">Number of players to add:</label>
 			<label index="msg_number_of_coaches">Number of coaches to add:</label>
@@ -103,6 +109,7 @@
 			<label index="msg_merge_selectprofile">Please select the leading profile. This profile will receive all data (matches, goals...) from the other one.</label>
 			<label index="msg_merge_confirm">Are you sure? It is not possible to revoke this action!</label>
 			<label index="msg_merge_done">Profiles were merged! The leading profile has now all references. After a manual data check you can delete the obsolete profile.</label>
+
 
 			<label index="createGameTable_round">. Round</label>
 			<label index="label_firstname">Firstname</label>
@@ -148,6 +155,8 @@
 			<label index="label_edit_club">Verein</label>
 			<label index="msg_create_teams">Sollen alle Teams in der aktuellen Seite erstellt werden?</label>
 			<label index="msg_teams_created">Die Mannschaften wurden auf der aktuellen Seite erstellt.</label>
+			<label index="label_add_teams_from_page">Mannschaften der aktuellen Seite hinzufügen</label>
+			<label index="msg_noteams_in_comp">In diesem Wettbewerb wurden keine Mannschaften gefunden.</label>
 
 			<label index="mod_team">Teams verwalten</label>
 			<label index="create_players">Spieler anlegen</label>
@@ -158,7 +167,7 @@
 
 			<label index="search_profiles">Personen suchen</label>
 			<label index="match_ticker">Spielticker/Statistik</label>
-			<label index="no_league_in_page">Die aktuelle Seite enth&amp;auml;lt keine Ligen.</label>
+			<label index="no_league_in_page">Die aktuelle Seite enth&amp;auml;lt keine Wettbewerbe.</label>
 			<label index="no_round_in_league">Dieser Wettbewerb enth&amp;auml;lt keine Spiele.</label>
 			<label index="btn_update_msgEditGames">Sollen die Ergebnisse gespeichert werden?</label>
 			<label index="btn_update">Aktualisieren</label>
@@ -210,6 +219,7 @@
 			<label index="msg_profiles_warnings">Die folgenden Profile konnten nicht angelegt werden:</label>
 			<label index="msg_profile_already_joined">Diese Person ist schon Teil des Teams!</label>
 			<label index="label_join_players">Spieler hinzufügen</label>
+			<label index="msg_create_new_competition">Jetzt einen neuen Wettbewerb auf dieser Seite anlegen.</label>
 
 			<label index="msg_number_of_players">Anzahl Spieler, die zugeordnet werden k&amp;ouml;nnen:</label>
 			<label index="msg_number_of_coaches">Anzahl Trainer, die zugeordnet werden k&amp;ouml;nnen:</label>

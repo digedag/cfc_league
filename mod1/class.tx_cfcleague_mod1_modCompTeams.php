@@ -22,6 +22,7 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
+tx_rnbase::load('tx_cfcleague_mod1_decorator');
 
 /**
  * Die Klasse verwaltet die Erstellung Teams für Wettbewerbe
@@ -43,12 +44,67 @@ class tx_cfcleague_mod1_modCompTeams extends t3lib_extobjbase {
 		$this->formTool = $formTool;
 
 		$content = '';
+		// Zuerst auf neue Teams prüfen, damit sie direkt in der Teamliste angezeigt werden
 		$newTeams = $this->showNewTeamForm($pid, $competition);
+		$addTeams = $this->showTeamsFromPage($pid, $competition);
+
 		$content .= $this->showCurrentTeams($competition);
+		$content .= $addTeams;
 		$content .= $newTeams;
 		return $content;
 	}
 
+	/**
+	 * Returns the formtool
+	 * @return tx_rnbase_util_FormTool
+	 */
+	function getFormTool() {
+		return $this->formTool;
+	}
+	/**
+	 * Show all teams from current page and not part of current competition
+	 * @param int $pid
+	 * @param tx_cfcleague_league $competition
+	 * @return string
+	 */
+	function showTeamsFromPage($pid, $competition) {
+		global $LANG;
+		// Liegen Daten im Request
+		$teamIds = t3lib_div::_GP('checkEntry');
+		if(t3lib_div::_GP('addteams') && is_array($teamIds) && count($teamIds)) {
+			$tcaData['tx_cfcleague_competition'][$competition->record['uid']]['teams'] = implode(',',$this->mergeArrays(t3lib_div::intExplode(',',$competition->record['teams']), $teamIds));
+			tx_rnbase::load('tx_rnbase_util_DB');
+			$tce =& tx_rnbase_util_DB::getTCEmain($tcaData, array());
+			$tce->process_datamap();
+			$competition->refresh();
+		}
+
+		$srv = tx_cfcleague_util_ServiceRegistry::getTeamService();
+		// Team-IDs im aktuellen Wettbewerb
+		$teamIds = $competition->record['teams'];
+		// Teams der Seite laden
+		$fields = array();
+		$fields['TEAM.PID'][OP_EQ_INT] = $pid;
+		if($teamIds)
+			$fields['TEAM.UID'][OP_NOTIN_INT] = $teamIds;
+		$options = array();
+		$options['orderby']['TEAM.NAME'] = 'asc';
+//		$options['debug']=1;
+		$teams = $srv->searchTeams($fields, $options);
+		if(!count($teams)) return '';
+		$options = array();
+		$options['checkbox'] = 1;
+		$columns = array(
+			'uid' => array('title' => 'label_uid'),
+			'name' => array('title' => 'label_teamname', 'method' => 'getName'),
+		);
+		$arr = tx_cfcleague_mod1_decorator::prepareTable($teams,$columns,$this->getFormTool(),$options);
+
+		$content = '<h2>'.$LANG->getLL('label_add_teams_from_page').'</h2>';
+		$content .= $this->doc->table($arr[0]); //, $this->getTableLayout()
+		$content .= $this->formTool->createSubmit('addteams',$LANG->getLL('label_add_teams'), $GLOBALS['LANG']->getLL('msg_add_teams'));
+		return $content;
+	}
 	/**
 	 * Darstellung einer Tabelle mit den Teams auf der Seite und der Option diese hinzuzufügen.
 	 *
@@ -80,6 +136,12 @@ class tx_cfcleague_mod1_modCompTeams extends t3lib_extobjbase {
 		$content .= $this->formTool->createSubmit('update',$LANG->getLL('btn_create'), $GLOBALS['LANG']->getLL('msg_create_teams'));
 		return $content;
 	}
+	/**
+	 * Creates new teams and adds to current competition
+	 * @param array $data request data
+	 * @param tx_cfcleague_league $competition
+	 * @return string
+	 */
 	function createTeams($data, &$competition) {
 		global $LANG;
 		if (!is_array($data['tx_cfcleague_teams'])) return '';
@@ -111,8 +173,12 @@ class tx_cfcleague_mod1_modCompTeams extends t3lib_extobjbase {
 	 */
 	function showCurrentTeams(&$competition) {
 		global $LANG;
+		$content = '<h2>'.$LANG->getLL('label_current_teams').'</h2>';
 		$arr[] = array('UID', 'Team', 'Info');
 		$teams = $competition->getTeamNames(1);
+		if(!count($teams)) {
+			return $content . $this->doc->section('Message:',$LANG->getLL('msg_noteams_in_comp'),0,1, ICON_INFO);
+		}
 		foreach($teams As $teamArr) {
 			$row = array();
 			$row[] = $teamArr['uid'];
@@ -124,7 +190,6 @@ class tx_cfcleague_mod1_modCompTeams extends t3lib_extobjbase {
 			$row[] = $buttons;
 			$arr[] = $row;
 		}
-		$content = '<h2>'.$LANG->getLL('label_current_teams').'</h2>';
 		$content .= $this->doc->table($arr); //, $this->getTableLayout()
 		return $content;
 //t3lib_div::debug($arr, 'tx_cfcleague_mod1_modCompTeams'); // TODO: remove me
