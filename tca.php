@@ -697,8 +697,8 @@ $TCA['tx_cfcleague_club'] = Array (
 	)
 );
 $TCA['tx_cfcleague_club']['columns']['dam_logo']['label'] = 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_club.logo';
-$TCA['tx_cfcleague_club']['columns']['dam_logo']['config']['size'] = 1;
-$TCA['tx_cfcleague_club']['columns']['dam_logo']['config']['maxitems'] = 1;
+//$TCA['tx_cfcleague_club']['columns']['dam_logo']['config']['size'] = 1;
+//$TCA['tx_cfcleague_club']['columns']['dam_logo']['config']['maxitems'] = 1;
 
 $clubArr = $globalClubs ? 
 		Array (
@@ -741,6 +741,7 @@ $TCA['tx_cfcleague_teams'] = Array (
 			'config' => $clubArr
 		),
 		'dam_logo' => txdam_getMediaTCA('image_field'),
+		'logo' => tx_cfcleague_tca_Lookup::getTeamLogoField(),
 		'name' => Array (
 			'exclude' => 1,
 			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_teams.name',
@@ -865,7 +866,7 @@ $TCA['tx_cfcleague_teams'] = Array (
 
 	),
 	'types' => Array (
-		'0' => Array('showitem' => 'hidden;;1;;1-1-1, club, name, short_name, coaches, players, supporters, dam_images, players_comment, coaches_comment, supporters_comment, comment;;;richtext[paste|bold|italic|underline|formatblock|class|left|center|right|orderedlist|unorderedlist|outdent|indent|link|image]:rte_transform[mode=ts], dam_logo, link_report, dummy')
+		'0' => Array('showitem' => 'hidden;;1;;1-1-1, club,logo, name, short_name, coaches, players, supporters, dam_images, players_comment, coaches_comment, supporters_comment, comment;;;richtext[paste|bold|italic|underline|formatblock|class|left|center|right|orderedlist|unorderedlist|outdent|indent|link|image]:rte_transform[mode=ts], dam_logo, link_report, dummy')
 	),
 	'palettes' => Array (
 		'1' => Array('showitem' => '')

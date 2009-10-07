@@ -166,6 +166,7 @@ CREATE TABLE tx_cfcleague_teams (
 	supporters text NOT NULL,
 	dam_images int(11) DEFAULT '0' NOT NULL,
 	dam_logo int(11) DEFAULT '0' NOT NULL,
+	logo int(11) DEFAULT '0' NOT NULL,
 
 	comment text NOT NULL,
 	players_comment text NOT NULL,

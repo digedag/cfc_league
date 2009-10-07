@@ -48,6 +48,13 @@ class tx_cfcleague_services_Teams extends t3lib_svbase {
 		$srv = tx_cfcleague_util_ServiceRegistry::getStadiumService();
 		return $srv->search($fields, $options);
 	}
+	public function getLogos($clubUid) {
+		$fields['MEDIAREFMM.UID_FOREIGN'][OP_EQ_INT] = $clubUid;
+		$fields['MEDIAREFMM.TABLENAMES'][OP_EQ] = 'tx_cfcleague_club';
+		$fields['MEDIAREFMM.IDENT'][OP_EQ] = 'dam_images';
+		$options['orderby']['MEDIAREFMM.SORTING_FOREIGN'] = 'asc';
+		return $this->searchMedia($fields, $options);
+	}
 
 	/**
 	 * Returns all team note types
@@ -94,6 +101,11 @@ class tx_cfcleague_services_Teams extends t3lib_svbase {
 		return $searcher->search($fields, $options);
 	}
 
+	function searchMedia($fields, $options) {
+		tx_div::load('tx_rnbase_util_SearchBase');
+		$searcher = tx_rnbase_util_SearchBase::getInstance('tx_cfcleague_search_Media');
+		return $searcher->search($fields, $options);
+	}
 }
 
 

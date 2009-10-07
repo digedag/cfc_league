@@ -69,6 +69,38 @@ class tx_cfcleague_tca_Lookup {
     		$PA['items'][] = array($stadium->getName(), $stadium->getUid());
     }
   }
+	/**
+	 * Set possible logos for a team. The logos are selected from club.
+	 *
+	 * @param array $PA
+	 * @param t3lib_TCEforms $fobj
+	 */
+  function getLogo4Team($PA, $fobj){
+    if($PA['row']['club']) {
+    	$srv = tx_cfcleague_util_ServiceRegistry::getTeamService();
+    	$items = $srv->getLogos($PA['row']['club']);
+    	if(count($items)) $PA['items'] = array(); // Es muss immer eine Farbe zugeordnet werden
+    	foreach ($items As $item) {
+    		$currentAvailable = $currentAvailable ? $currentAvailable : ($current == $item->getUid() || $current == 0);
+    		$PA['items'][] = array($item->record['title'], $item->getUid());
+    	}
+    }
+  }
+  
+  static function getTeamLogoField() {
+		require_once(t3lib_extMgm::extPath('dam').'tca_media_field.php');
+		$ret = txdam_getMediaTCA('image_field','logo');
+		$ret['label'] = 'Team Logo';
+		unset($ret['config']['form_type']);
+		$ret['config']['type'] = 'select';
+		$ret['config']['itemsProcFunc'] = 'tx_cfcleague_tca_Lookup->getLogo4Team';
+		$ret['config']['maxitems'] = '1';
+		$ret['config']['size'] = '1';
+		$ret['config']['items'] = Array(Array('','0'));
+		
+//		t3lib_div::debug($ret['config']['form_type'], 'tx_cfcleague_tca_Lookup :: getTeamLogoField'); // TODO: remove me
+  	return $ret;
+  }
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/tca/class.tx_cfcleague_tca_Lookup.php']) {
