@@ -81,7 +81,7 @@ class tx_cfcleague_match_edit  {
 		}
 		// Jetzt den Spieltag wählen lassen
 		$current_round = $this->selector->showRoundSelector($content,$this->id,$current_league);
-		$content.=$this->doc->spacer(5);
+		$content.='<div class="cleardiv"/>';
 		$data = t3lib_div::_GP('data');
 		// Haben wir Daten im Request?
 		if (is_array($data['tx_cfcleague_games'])) {
