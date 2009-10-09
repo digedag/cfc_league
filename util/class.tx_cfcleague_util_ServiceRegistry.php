@@ -32,6 +32,13 @@ class tx_cfcleague_util_ServiceRegistry {
 
 	/**
 	 * Liefert den Profile-Service
+	 * @return tx_cfcleague_services_Match
+	 */
+	static function getMatchService() {
+		return tx_rnbase_util_Misc::getService('t3sports_srv', 'match');
+	}
+	/**
+	 * Liefert den Profile-Service
 	 * @return tx_cfcleague_services_Stadiums
 	 */
 	static function getStadiumService() {

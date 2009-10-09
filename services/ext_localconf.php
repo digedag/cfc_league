@@ -14,6 +14,16 @@ t3lib_extMgm::addService($_EXTKEY,  't3sports_srv' /* sv type */,  'tx_cfcleague
   )
 );
 
+t3lib_extMgm::addService($_EXTKEY,  't3sports_srv' /* sv type */,  'tx_cfcleague_services_Match' /* sv key */,
+  array(
+    'title' => 'T3sports match service', 'description' => 'Operations for matches', 'subtype' => 'match',
+    'available' => TRUE, 'priority' => 50, 'quality' => 50,
+    'os' => '', 'exec' => '',
+    'classFile' => t3lib_extMgm::extPath($_EXTKEY).'services/class.tx_cfcleague_services_Match.php',
+    'className' => 'tx_cfcleague_services_Match',
+  )
+);
+
 t3lib_extMgm::addService($_EXTKEY,  't3sports_srv' /* sv type */,  'tx_cfcleague_services_Teams' /* sv key */,
   array(
     'title' => 'T3sports team service', 'description' => 'Operations for teams', 'subtype' => 'teams',

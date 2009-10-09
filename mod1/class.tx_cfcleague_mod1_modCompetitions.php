@@ -81,7 +81,8 @@ class tx_cfcleague_mod1_modCompetitions extends t3lib_extobjbase {
 		$menu = $this->selector->showTabMenu($this->id, 'comptools', 
 			array('0' => $LANG->getLL('edit_games'),
 						'1' => $LANG->getLL('mod_compteams'),
-						'2' => $LANG->getLL('create_games')));
+						'2' => $LANG->getLL('create_games'),
+						'3' => $LANG->getLL('create_games')));
 
 		$tabs .= $menu['menu'];
 		$tabs .= '<div style="display: block; border: 1px solid #a2aab8;" ></div>';
@@ -101,6 +102,10 @@ class tx_cfcleague_mod1_modCompetitions extends t3lib_extobjbase {
 				break;
 			case 2:
 				$modContent = $this->showCreateMatchTable($current_league);
+				break;
+			case 3:
+				$mod = tx_div::makeInstance('tx_cfcleague_mod1_modCompCreateMatchTable');
+				$modContent = $mod->main($this->MCONF['name'], $this->id, $this->doc, $this->formTool, $current_league);
 				break;
 		}
 		$content .= $this->formTool->form->printNeededJSFunctions_top();

@@ -21,6 +21,9 @@
 			<label index="label_teamshortname">Team short name</label>
 			<label index="label_edit_club">Club</label>
 			<label index="label_uid">UID</label>
+			<label index="label_home">Home</label>
+			<label index="label_guest">Guest</label>
+			<label index="label_match_no">Match-No.</label>
 			<label index="msg_create_teams">Create all teams on current page?</label>
 			<label index="msg_teams_created">Teams created on current page</label>
 			<label index="label_add_teams_from_page">Add teams from current page</label>
@@ -140,6 +143,9 @@
 			<label index="title">T3sports - Ligaverwaltung</label>
 			<label index="title_recent_tickers">Letzte Tickermeldungen</label>
 			<label index="label_value">Wert</label>
+			<label index="label_home">Heim</label>
+			<label index="label_guest">Gast</label>
+			<label index="label_match_no">Spiel-Nr.</label>
 
 			<label index="label_create_new">Neu anlegen</label>
 			<label index="create_games">Spielplan erstellen</label>
