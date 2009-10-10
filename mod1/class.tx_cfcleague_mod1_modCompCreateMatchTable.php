@@ -26,7 +26,7 @@ tx_rnbase::load('tx_cfcleague_mod1_decorator');
 tx_rnbase::load('tx_cfcleague_models_Competition');
 
 /**
- * Die Klasse verwaltet die Erstellung Teams für Wettbewerbe
+ * Die Klasse verwaltet die Erstellung von Spielplänen für Wettbewerbe
  */
 class tx_cfcleague_mod1_modCompCreateMatchTable extends t3lib_extobjbase {
 	var $doc, $modName;
@@ -38,24 +38,38 @@ class tx_cfcleague_mod1_modCompCreateMatchTable extends t3lib_extobjbase {
 	 */
 	function main($modName, $pid, &$doc, &$formTool, &$competition) {
 		global $LANG;
-		// Zuerst mal müssen wir die passende Liga auswählen lassen:
-		// Entweder global über die Datenbank oder die Ligen der aktuellen Seite
 
 		$this->doc = $doc;
 		$this->formTool = $formTool;
+		$comp = tx_cfcleague_models_Competition::getInstance($competition->uid);
+//		$start = microtime(true);
 
-		$content = '';
-		// Zuerst auf neue Teams prüfen, damit sie direkt in der Teamliste angezeigt werden
-		$content .= $this->showCreateMatchTable($competition);
+		$content = $this->handleCreateMatchTable($comp);
+		if(!$content)
+			$content .= $this->showMatchTable($comp);
+//		t3lib_div::debug((microtime(true)-$start), 'class.tx_cfcleague_mod1_modCompCreateMatchTable.php'); // TODO: remove me
 
-		$content .= $addTeams;
-		$content .= $newTeams;
 		return $content;
 	}
 
-	private function showCreateMatchTable($current_league) {
+	function handleCreateMatchTable($comp) {
   	global $LANG;
-		$comp = tx_cfcleague_models_Competition::getInstance($current_league->uid);
+		// Haben wir Daten im Request?
+  	$data = t3lib_div::_GP('data');
+		if (is_array($data['rounds']) && t3lib_div::_GP('update')) {
+			$result = $this->createMatches($data['rounds'], $comp);
+			$content .= $this->doc->section($LANG->getLL('message').':', $result, 0,1,ICON_INFO);
+			return $content; 
+		}
+	}
+	/**
+	 * Zeigt den Spielplan an
+	 * @param tx_cfcleague_models_Competition $comp
+	 * @return string
+	 */
+	private function showMatchTable($comp) {
+  	global $LANG;
+
 		$matchCnt = $comp->getNumberOfMatches(false);
 		if($matchCnt > 0){
 			$content.=$this->doc->section($LANG->getLL('warning').':',$LANG->getLL('msg_league_generation_hasmatches'),0,1,ICON_WARN);
@@ -73,29 +87,19 @@ class tx_cfcleague_mod1_modCompCreateMatchTable extends t3lib_extobjbase {
 		$gen = tx_div::makeInstance('tx_cfcleague_util_Generator');
 		$table = $gen->main($comp->getTeamIds(),$comp->getGenerationKey(), $options);
 
-		$data = t3lib_div::_GP('data');
-		// Haben wir Daten im Request?
-		if (is_array($data['rounds']) && t3lib_div::_GP('update')) {
-//  t3lib_div::debug($data['rounds'], 'GP generator') ;
-			$content .= $this->doc->section($LANG->getLL('message').':',
-					$this->createGames($data['rounds'],$table, $current_league),
-					0,1,ICON_INFO);
+		if(count($gen->errors)) {
+			// Da gibt es wohl ein Problem bei der Erzeugung der Spiele...
+			$content.=$this->doc->section($LANG->getLL('error').':','<ul><li>' . implode('<li>',$gen->errors) . '</ul>',0,1,ICON_FATAL);
 		}
-		else {
-			if(count($gen->errors)) {
-				// Da gibt es wohl ein Problem bei der Erzeugung der Spiele...
-				$content.=$this->doc->section($LANG->getLL('error').':','<ul><li>' . implode('<li>',$gen->errors) . '</ul>',0,1,ICON_FATAL);
-			}
-			if(count($gen->warnings)) {
-				// Da gibt es wohl ein Problem bei der Erzeugung der Spiele...
-				$content.=$this->doc->section($LANG->getLL('warning').':','<ul><li>' . implode('<li>',$gen->warnings) . '</ul>',0,1,ICON_WARN);
-			}
-			if(count($table)) {
-				// Wir zeigen alle Spieltage und fragen nach dem Termin
-				$content .= $this->prepareGameTable($table, $current_league,$options['halfseries']);
-				// Den Update-Button einfügen
-				$content .= '<input type="submit" name="update" value="'.$LANG->getLL('btn_create').'" onclick="return confirm('.$GLOBALS['LANG']->JScharCode($GLOBALS['LANG']->getLL('msg_CreateGameTable')).')">';
-			}
+		if(count($gen->warnings)) {
+			// Da gibt es wohl ein Problem bei der Erzeugung der Spiele...
+			$content.=$this->doc->section($LANG->getLL('warning').':','<ul><li>' . implode('<li>',$gen->warnings) . '</ul>',0,1,ICON_WARN);
+		}
+		if(count($table)) {
+			// Wir zeigen alle Spieltage und fragen nach dem Termin
+			$content .= $this->prepareGameTable($table, $comp,$options['halfseries']);
+			// Den Update-Button einfügen
+			$content .= '<input type="submit" name="update" value="'.$LANG->getLL('btn_create').'" onclick="return confirm('.$GLOBALS['LANG']->JScharCode($GLOBALS['LANG']->getLL('msg_CreateGameTable')).')">';
 		}
 
 		//t3lib_div::debug($table, 'tx_cfcleague_mod1_modCompCreateMatchTable :: showCreateMatchTable'); // TODO: remove me
@@ -130,20 +134,21 @@ class tx_cfcleague_mod1_modCompCreateMatchTable extends t3lib_extobjbase {
 			'tr'	   => Array('<tr class="db_list_alt">', '</tr>'),
 			'defCol' => Array('<td>','</td>') // Format für jede Spalte in jeder Zeile
 		);
+//t3lib_div::debug($table[1][0], 'class.tx_cfcleague_mod1_modCompCreateMatchTable.php'); // TODO: remove me
 
-		$arr = Array(Array($LANG->getLL('label_round'),$LANG->getLL('label_roundname'),
-			$LANG->getLL('label_rounddate'),$LANG->getLL('label_roundset')));
+		$arr = Array(Array($LANG->getLL('label_roundset')));
+//		$arr = Array(Array($LANG->getLL('label_round'),$LANG->getLL('label_roundname').' / '.
+//			$LANG->getLL('label_rounddate'),$LANG->getLL('label_roundset')));
 		foreach($table As $round => $matchArr) {
 			$row = array();
 
 			// Die Formularfelder, die jetzt erstellt werden, wandern später direkt in die neuen Game-Records
 			// Ein Hidden-Field für die Runde
-			$row[] = $round . $this->formTool->createHidden('data[rounds][round_'.$round.'][round]',$round);
-			// Vorschlag für den Namen des Spieltags
-			$row[] = $this->formTool->createTxtInput('data[rounds][round_'.$round.'][round_name]',$round . $LANG->getLL('createGameTable_round'),10);
-			$row[] = $this->formTool->createDateInput('data[rounds][round_'.$round.'][date]',time());
-			// Anzeige der Paarungen
-			$row[] = $this->doc->table($this->createMatchTableArray($matchArr, $league), $tableLayout2);
+			$row[] = '<div>' . $this->formTool->createHidden('data[rounds][round_'.$round.'][round]',$round) . 
+							$this->formTool->createTxtInput('data[rounds][round_'.$round.'][round_name]',$round . $LANG->getLL('createGameTable_round'),10) . 
+							$this->formTool->createDateInput('data[rounds][round_'.$round.'][date]',time()) .'</div>'.
+							// Anzeige der Paarungen
+			 				$this->doc->table($this->createMatchTableArray($matchArr, $league, 'data[rounds][round_'.$round.']'), $tableLayout2);
 
 			$arr[] = $row;
 		}
@@ -152,20 +157,32 @@ class tx_cfcleague_mod1_modCompCreateMatchTable extends t3lib_extobjbase {
 	}
 	/**
 	 * Erstellt das Datenarray zur Erstellung der HTML-Tabelle mit den Spielen des Spieltages
-	 * @param $league
+	 * @param tx_cfcleague_models_Competition $league
 	 */
-	function createMatchTableArray(&$games, &$league) {
+	private function createMatchTableArray(&$matches, &$league, $namePrefix) {
 		global $LANG;
 		$teamNames = $league->getTeamNames();
 		$arr = Array(Array($LANG->getLL('label_match_no'),$LANG->getLL('label_home'),$LANG->getLL('label_guest')));
-		foreach($games As $match){
+		foreach($matches As $match){
 			$row = array();
 			$row[] = $match->noMatch ? '' : str_pad($match->nr2,3,'000',STR_PAD_LEFT);
-			$row[] = $teamNames[$match->home];
-			$row[] = $teamNames[$match->guest];
+			$row[] = $this->createSelectBox($teamNames,$match->home, $namePrefix.'[matches]['.$match->nr.'][home]');
+			$row[] = $this->createSelectBox($teamNames,$match->guest,$namePrefix.'[matches]['.$match->nr.'][guest]') .
+								$this->formTool->createHidden($namePrefix.'[matches]['.$match->nr.'][nr2]',$match->nr2);
+//			$row[] = $teamNames[$match->home];
+//			$row[] = $teamNames[$match->guest];
 			$arr[] = $row;
 		}
+
 		return $arr;
+	}
+	private function createSelectBox($teamNames, $currentTeam, $name) {
+		$ret = '<select name="'.$name.'">';
+		foreach($teamNames As $key => $teamName) {
+			$ret.='<option value="'.$key.'"'. ($key == $currentTeam ? ' selected="selected" ' : '') .'>'.$teamName.'</option>';
+		}
+		$ret .= "</select>\n";
+		return $ret;
 	}
 	/**
 	 * Returns the formtool
@@ -175,7 +192,48 @@ class tx_cfcleague_mod1_modCompCreateMatchTable extends t3lib_extobjbase {
 		return $this->formTool;
 	}
 
-	function getTableLayout() {
+	/**
+	 * Erstellt die Spiele der Liga. Diese werden aus den Daten gebildet, die im Request liegen.
+	 */
+	function createMatches($rounds, &$league) {
+		global $LANG;
+
+		// Aus den Spielen der $table die TCA-Datensätze erzeugen
+		$data['tx_cfcleague_games'] = array();
+
+		// Wir erstellen die Spiel je Spieltag
+		foreach($rounds As $roundId => $roundData){
+			// Die ID des Spieltags ermitteln
+			$roundId = $roundData['round'];
+			$matches = $roundData['matches'];
+			// Die Paarungen holen
+//			$games = $table[$roundId];
+			foreach($matches As $matchId => $match) {
+				// Die Basis des Spieldatensatzes ist $roundData
+				$new_match = array();
+				$new_match['round'] = $roundData['round'];
+				$new_match['round_name'] = $roundData['round_name'];
+				$new_match['date'] = $roundData['date'];
+				$new_match['home'] = $match['home'];
+				$new_match['guest'] = $match['guest'];
+				$new_match['match_no'] = $match['nr2'];
+				$new_match['competition'] = $league->uid;
+				$new_match['pid'] = $league->record['pid'];
+				$data['tx_cfcleague_games']['NEW'.$matchId] = $new_match;
+			}
+		}
+t3lib_div::debug($roundData, 'class.tx_cfcleague_mod1_modCompCreateMatchTable.php'); // TODO: remove me
+exit();
+		
+		// Die neuen Notes werden jetzt gespeichert
+		reset($data);
+		$tce =& tx_cfcleague_db::getTCEmain($data);
+		$tce->process_datamap();
+
+		return $LANG->getLL('msg_matches_created');
+	}
+
+	private function getTableLayout() {
 		return Array (
 			'table' => Array('<table class="typo3-dblist" cellspacing="0" cellpadding="0" border="0">', '</table><br/>'),
 			'0' => Array( // Format für 1. Zeile

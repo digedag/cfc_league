@@ -209,39 +209,34 @@ class tx_cfcleague_models_Competition extends tx_rnbase_model_base {
    */
 	function getDummyTeamIds() {
 		if(!array_key_exists('dummyteamids', $this->cache)) {
-			$fields = array();
-			$fields['TEAM.DUMMY'][OP_EQ_INT] = 1;
-			$fields['TEAM.UID'][OP_IN_INT] = $this->record['teams'];
-			$options = array();
-			$options['what'] = 'uid';
-			//$options['debug'] = 1;
-			$srv = tx_cfcleague_util_ServiceRegistry::getTeamService();
-			$rows = $srv->searchTeams($fields, $options);
-			$ret = array();
-			foreach($rows As $row)
-				$ret[] = $row['uid'];
-			$this->cache['dummyteamids'] = $ret;
+			$srv = tx_cfcleague_util_ServiceRegistry::getCompetitionService();
+			$this->cache['dummyteamids'] = $srv->getDummyTeamIds($this);
 		}
 		return $this->cache['dummyteamids'];
 	}
-  
+	/**
+	 * Liefert die Namen der zugeordneten Teams als Array. Key ist die ID des Teams
+	 * @param int $asArray Wenn 1 wird pro Team ein Array mit Name, Kurzname und Flag spielfrei geliefert
+	 * @return array
+	 */
+	function getTeamNames($asArray = 0) {
+		$key = 'teamnames'.$asArray;
+		if(!array_key_exists($key, $this->cache)){
+			$srv = tx_cfcleague_util_ServiceRegistry::getTeamService();
+			$this->cache[$key] = $srv->getTeamNames($this, $asArray);
+    }
+    return $this->cache[$key];
+  }
+
   /**
    * Anzahl der Spiele des/der Teams in diesem Wettbewerb
    */
   function getNumberOfMatches($teamIds, $status = '0,1,2'){
-    $what = 'count(uid) As matches';
-    $from = 'tx_cfcleague_games';
-    $options['where'] = 'status IN(' . $status . ') AND ';
-    if($teamIds) {
-      $options['where'] .= '( home IN(' . $teamIds . ') OR ';
-      $options['where'] .= 'guest IN(' . $teamIds . ')) AND ';
-    }
-    $options['where'] .= 'competition = ' . $this->uid . ' ';
-    $rows = tx_rnbase_util_DB::doSelect($what,$from,$options,0);
-    $ret = 0;
-    if(count($rows))
-      $ret = intval($rows[0]['matches']);
-    return $ret;
+		if(!array_key_exists('numofmatches', $this->cache)) {
+			$srv = tx_cfcleague_util_ServiceRegistry::getCompetitionService();
+			$this->cache['numofmatches'] = $srv->getNumberOfMatches($this, $teamIds, $status);
+		}
+		return $this->cache['numofmatches'];
   }
 
   /**

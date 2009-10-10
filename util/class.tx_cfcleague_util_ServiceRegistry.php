@@ -31,7 +31,14 @@ tx_div::load('tx_rnbase_util_Misc');
 class tx_cfcleague_util_ServiceRegistry {
 
 	/**
-	 * Liefert den Profile-Service
+	 * Liefert den Competition-Service
+	 * @return tx_cfcleague_services_Competition
+	 */
+	static function getCompetitionService() {
+		return tx_rnbase_util_Misc::getService('t3sports_srv', 'competition');
+	}
+	/**
+	 * Liefert den Match-Service
 	 * @return tx_cfcleague_services_Match
 	 */
 	static function getMatchService() {

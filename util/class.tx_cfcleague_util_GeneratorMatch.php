@@ -27,7 +27,7 @@
  */
 class tx_cfcleague_util_GeneratorMatch {
 	var $home, $guest, $nr, $nr2, $noMatch;
-	function Match($n,$n2,$h,$g, $noMatch){
+	function __construct($n,$n2,$h,$g, $noMatch){
 		$this->nr = $n; // ID
 		$this->nr2 = $n2; // Spielnummer
 		$this->home = $h;

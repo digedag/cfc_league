@@ -77,6 +77,30 @@ class tx_cfcleague_services_Teams extends t3lib_svbase {
 		$options = array();
 		return $this->searchTeamNotes($fields, $options);
 	}
+
+	/**
+	 * Liefert die Namen der zugeordneten Teams als Array. Key ist die ID des Teams
+	 * @param tx_cfcleague_models_Competition $comp
+	 * @param $asArray Wenn 1 wird pro Team ein Array mit Name, Kurzname und Flag spielfrei geliefert
+	 * @return array
+	 */
+	function getTeamNames($comp, $asArray = 0) {
+		$teamNames = array();
+		// Ohne zugeordnete Team, muss nicht gefragt werden
+		if(!$comp->record['teams']) 
+			return $teamNames;
+
+		$fields = array();
+		$fields['TEAM.UID'][OP_IN_INT] = $comp->record['teams'];
+		$options = array();
+		$options['what'] = 'uid,name,short_name,dummy,club';
+		$rows = $this->searchTeams($fields, $options);
+		foreach($rows As $row) {
+			$teamNames[$row['uid']] = $asArray ? $row : $row['name'];
+		}
+		return $teamNames;
+  }
+
 	/**
 	 * Search database for team notes
 	 *
