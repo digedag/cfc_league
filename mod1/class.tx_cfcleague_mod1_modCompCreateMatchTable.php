@@ -82,7 +82,6 @@ class tx_cfcleague_mod1_modCompCreateMatchTable extends t3lib_extobjbase {
 		$options['nomatch'] = $comp->getDummyTeamIds();
 		$options['firstmatchday'] = $comp->getNumberOfRounds();
 		$options['firstmatchnumber'] = $comp->getLastMatchNumber();
-
 		// Zunächst mal Anzeige der Daten
 		$gen = tx_div::makeInstance('tx_cfcleague_util_Generator');
 		$table = $gen->main($comp->getTeamIds(),$comp->getGenerationKey(), $options);
@@ -207,7 +206,6 @@ class tx_cfcleague_mod1_modCompCreateMatchTable extends t3lib_extobjbase {
 			$roundId = $roundData['round'];
 			$matches = $roundData['matches'];
 			// Die Paarungen holen
-//			$games = $table[$roundId];
 			foreach($matches As $matchId => $match) {
 				// Die Basis des Spieldatensatzes ist $roundData
 				$new_match = array();
@@ -222,8 +220,6 @@ class tx_cfcleague_mod1_modCompCreateMatchTable extends t3lib_extobjbase {
 				$data['tx_cfcleague_games']['NEW'.$matchId] = $new_match;
 			}
 		}
-t3lib_div::debug($roundData, 'class.tx_cfcleague_mod1_modCompCreateMatchTable.php'); // TODO: remove me
-exit();
 		
 		// Die neuen Notes werden jetzt gespeichert
 		reset($data);

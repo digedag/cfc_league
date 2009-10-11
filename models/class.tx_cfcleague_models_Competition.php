@@ -171,6 +171,7 @@ class tx_cfcleague_models_Competition extends tx_rnbase_model_base {
 			$fields['MATCHROUND.COMPETITION'][OP_EQ_INT] = $this->uid;
 			$this->cache['rounds'] = $srv->searchMatchRound($fields, $options);
 		}
+		return $this->cache['rounds'];
 	}
 	/**
 	 * Liefert die Spiele einer bestimmten Spielrunde
@@ -196,7 +197,8 @@ class tx_cfcleague_models_Competition extends tx_rnbase_model_base {
 		$fields = array();
 	  $fields['MATCH.COMPETITION'][OP_EQ_INT] = $this->uid;
 		$options = array();
-	  $options['what'] = 'max(match_no) AS max_no';
+		//$options['debug'] =1;
+	  $options['what'] = 'max(convert(match_no,signed)) AS max_no';
 		$srv = tx_cfcleague_util_ServiceRegistry::getMatchService();
 	  $arr = $srv->search($fields, $options);
 		return count($arr) ? $arr[0]['max_no'] : 0;

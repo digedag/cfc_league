@@ -4,6 +4,10 @@
 	<comment></comment>
 	<projects>
 		<project>rn_base</project>
+		<project>t3s rn_base</project>
+		<project>Thalia rn_base</project>
+		<project>Wanit rn_base</project>
+		<project>A4 rn_base</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
