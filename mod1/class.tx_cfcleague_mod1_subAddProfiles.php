@@ -41,10 +41,16 @@ class tx_cfcleague_mod1_subAddProfiles {
 	 * @param tx_cfcleague_models_betset $currTeam
 	 * @return string
 	 */
-	public function handleRequest(&$currTeam, $baseInfo) {
+	public function handleRequest(&$currTeam, $teamInfo) {
+		if($teamInfo->isTeamFull()) {
+			// Kann nix mehr angelegt werden
+			return $this->mod->doc->section('Message:',$GLOBALS['LANG']->getLL('msg_maxPlayers'),0,1,ICON_WARN);
+		}
+
+		$out = $this->mod->doc->section('Message:',$teamInfo->getInfoTable($this->mod->doc),0,1, ICON_INFO);
 		// ggf. Daten im Request verarbeiten
-		$out .= $this->handleAddProfiles($currTeam, $baseInfo);
-		$out .= $this->showAddProfiles($currTeam);
+		$out .= $this->handleAddProfiles($currTeam, $teamInfo);
+		$out .= $this->showAddProfiles($currTeam, $teamInfo);
 		return $out;
 	}
 	/**
@@ -59,10 +65,11 @@ class tx_cfcleague_mod1_subAddProfiles {
 	/**
 	 * Darstellung der gefundenen Personen
 	 *
-	 * @param tx_cfcleague_team $currTeam
+	 * @param tx_cfcleague_models_Team $currTeam
+	 * @param tx_cfcleague_util_TeamInfo $teamInfo
 	 * @return string
 	 */
-	function showAddProfiles($currTeam) {
+	function showAddProfiles($currTeam, $teamInfo) {
 		
 		$options['checkbox'] = 1;
 
@@ -73,19 +80,44 @@ class tx_cfcleague_mod1_subAddProfiles {
 		}
 
 		$searcher = $this->getProfileSearcher($options);
-		$out .= $searcher->getSearchForm();
-		$out .= $this->mod->doc->spacer(15);
-		$out.= $searcher->getResultList();
+		$tableForm = '<div style="margin-top:10px">'.$searcher->getSearchForm().'</div>';
+		$tableForm .= $this->mod->doc->spacer(15);
+		$tableForm.= $searcher->getResultList();
 		if($searcher->getSize()) {
+			tx_rnbase::load('tx_cfcleague_mod1_modTeamsProfileCreate');
+			$tableForm .= $this->mod->formTool->createSelectSingleByArray('profileType', '',tx_cfcleague_mod1_modTeamsProfileCreate::getProfileTypeArray());
 			// Button für Zuordnung
-			$out .= $this->mod->formTool->createSubmit('profile2team', $GLOBALS['LANG']->getLL('label_join_players'));
+			$tableForm .= $this->mod->formTool->createSubmit('profile2team', $GLOBALS['LANG']->getLL('label_join_profiles'));
 		}
+		// Ein Formular für die Neuanlage
+		$tableForm .= $this->getCreateForm();
+		// Jetzt noch die Team-Liste
+		$teamTable = $teamInfo->getTeamTable($this->mod->doc);
+
+		$tableLayout = Array (
+			'table' => Array('<table class="typo3-dblist" width="100%" cellspacing="0" cellpadding="0" border="0">', '</table><br/>'),
+			'defRow' => Array ( // Formate für alle Zeilen
+				'defCol' => Array('<td valign="top" style="padding:0 5px;">','</td>') // Format für jede Spalte in jeder Zeile
+			),
+		);
+
+		$content = $this->mod->doc->table(Array(Array($tableForm,$teamTable)), $tableLayout);
+
+		return $content;
+	}
+	/**
+	 * Blendet ein kleines Formular für die Neuanlage einer Person ein
+	 *
+	 */
+	private function getCreateForm() {
+		$out = '<div>Neu</div>';
 		return $out;
 	}
 	/**
-	 * Add matches to a betset
+	 * Add profiles to a betset
 	 *
-	 * @param tx_t3sportsbet_models_betset $currBetSet
+	 * @param tx_cfcleague_models_Team $currTeam
+	 * @param tx_cfcleague_util_TeamInfo $baseInfo
 	 * @return string
 	 */
 	private function handleAddProfiles(&$currTeam, $baseInfo) {
@@ -97,26 +129,49 @@ class tx_cfcleague_mod1_subAddProfiles {
 				$out = $GLOBALS['LANG']->getLL('msg_no_profile_selected').'<br/><br/>';
 			}
 			else {
-				if($baseInfo['freePlayers'] < count($entryUids)) {
-					// Team ist schon voll
-					$out = $GLOBALS['LANG']->getLL('msg_maxPlayers').'<br/><br/>';
+				$type = intval(t3lib_div::_GP('profileType'));
+				if($type == 1) {
+					if($baseInfo->get('freePlayers') < count($entryUids)) {
+						// Team ist schon voll
+						$out = $GLOBALS['LANG']->getLL('msg_maxPlayers').'<br/><br/>';
+					}
+					else {
+						// Die Spieler hinzufügen
+						$this->addProfiles2Team($currTeam, 'players', $entryUids);
+						$out .= $GLOBALS['LANG']->getLL('msg_profiles_joined').'<br/><br/>';
+					}
+				}
+				elseif($type == 2) {
+					// Die Trainer hinzufügen
+					$this->addProfiles2Team($currTeam, 'coaches', $entryUids);
+					$out .= $GLOBALS['LANG']->getLL('msg_profiles_joined').'<br/><br/>';
 				}
 				else {
-					// Die Spieler hinzufügen
-					$playerUids = implode(',',tx_cfcleague_profile_create::mergeArrays(t3lib_div::intExplode(',',$currTeam->record['players']), $entryUids));
-					$data['tx_cfcleague_teams'][$currTeam->record['uid']]['players'] = $playerUids;
-							
-					reset($data);
-					$tce =& tx_cfcleague_db::getTCEmain($data);
-					$tce->process_datamap();
+					// Die Trainer hinzufügen
+					$this->addProfiles2Team($currTeam, 'supporters', $entryUids);
 					$out .= $GLOBALS['LANG']->getLL('msg_profiles_joined').'<br/><br/>';
-					$currTeam->record['players'] = $playerUids;
 				}
 			}
 		}
 		return (strlen($out)) ? $this->mod->doc->section($GLOBALS['LANG']->getLL('message').':',$out, 0, 1,ICON_INFO) : '';
 	}
-	
+	/**
+	 * Fügt Personen einem Team hinzu
+	 *
+	 * @param tx_cfcleague_models_Team $currTeam
+	 * @param string $profileCol
+	 * @param array $entryUids
+	 */
+	private function addProfiles2Team(&$currTeam, $profileCol, $entryUids) {
+		tx_rnbase::load('tx_cfcleague_util_Misc');
+		$playerUids = implode(',',tx_cfcleague_util_Misc::mergeArrays(t3lib_div::intExplode(',',$currTeam->record[$profileCol]), $entryUids));
+		$data['tx_cfcleague_teams'][$currTeam->record['uid']][$profileCol] = $playerUids;
+				
+		reset($data);
+		$tce =& tx_cfcleague_db::getTCEmain($data);
+		$tce->process_datamap();
+		$currTeam->record[$profileCol] = $playerUids;
+	}
 	/**
 	 * Get a match searcher
 	 *

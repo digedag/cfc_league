@@ -29,6 +29,8 @@ require_once(PATH_site.'typo3/sysext/cms/tslib/class.tslib_content.php');
 
 /**
  * Die Klasse ermöglicht die schnelle Erstellung von Profilen
+ * @deprecated 
+ * @see tx_cfcleague_mod1_modTeamsProfileCreate
  */
 class tx_cfcleague_profile_create extends t3lib_extobjbase {
   var $doc, $MCONF;

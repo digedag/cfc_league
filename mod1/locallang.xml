@@ -96,7 +96,7 @@
 			<label index="msg_profiles_created">Profiles were created!</label>
 			<label index="msg_profiles_warnings">Could not create the following profiles:</label>
 			<label index="msg_profile_already_joined">This profile is already part of the team!</label>
-			<label index="label_join_players">Join player(s)</label>
+			<label index="label_join_profiles">Join profile(s)</label>
 			<label index="msg_no_profile_selected">Sorry, no selected profiles found. Please try again!</label>
 			<label index="msg_create_new_competition">Create a new competition at this page.</label>
 
@@ -224,7 +224,7 @@
 			<label index="msg_profiles_created">Die Profile wurden erstellt!</label>
 			<label index="msg_profiles_warnings">Die folgenden Profile konnten nicht angelegt werden:</label>
 			<label index="msg_profile_already_joined">Diese Person ist schon Teil des Teams!</label>
-			<label index="label_join_players">Spieler hinzufügen</label>
+			<label index="label_join_profiles">Personen hinzufügen</label>
 			<label index="msg_create_new_competition">Jetzt einen neuen Wettbewerb auf dieser Seite anlegen.</label>
 
 			<label index="msg_number_of_players">Anzahl Spieler, die zugeordnet werden k&amp;ouml;nnen:</label>

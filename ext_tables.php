@@ -297,7 +297,11 @@ if (TYPO3_MODE=='BE')	{
 		t3lib_extMgm::extPath($_EXTKEY).'mod1/class.tx_cfcleague_profile_create.php',
 		'LLL:EXT:cfc_league/mod1/locallang.xml:mod_team'
 	);
-  t3lib_extMgm::insertModuleFunction('web_txcfcleagueM1','tx_cfcleague_profile_search',
+  t3lib_extMgm::insertModuleFunction('web_txcfcleagueM1','tx_cfcleague_mod1_modTeams',
+		t3lib_extMgm::extPath($_EXTKEY).'mod1/class.tx_cfcleague_mod1_modTeams.php',
+		'LLL:EXT:cfc_league/mod1/locallang.xml:mod_team'
+	);
+	t3lib_extMgm::insertModuleFunction('web_txcfcleagueM1','tx_cfcleague_profile_search',
 		t3lib_extMgm::extPath($_EXTKEY).'mod1/class.tx_cfcleague_profile_search.php',
 		'LLL:EXT:cfc_league/mod1/locallang.xml:search_profiles'
 	);
