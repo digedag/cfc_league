@@ -47,6 +47,9 @@ class tx_cfcleague_util_TeamInfo {
 		$this->baseInfo['freeCoaches'] = $this->baseInfo['maxCoaches'] - $team->getCoachSize();
 		$this->baseInfo['freeSupporters'] = $this->baseInfo['maxSupporters'] - $team->getSupporterSize();
 	}
+	public function refresh() {
+		$this->init($this->team);
+	}
 
 	public function get($item) {
 		return $this->baseInfo[$item];
