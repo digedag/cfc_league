@@ -25,6 +25,7 @@
 require_once(t3lib_extMgm::extPath('div') . 'class.tx_div.php');
 tx_div::load('tx_rnbase_util_Misc');
 tx_div::load('tx_cfcleague_mod1_profilesearcher');
+tx_div::load('tx_cfcleague_mod1_modTeamsProfileCreate');
 
 
 /**
@@ -32,24 +33,28 @@ tx_div::load('tx_cfcleague_mod1_profilesearcher');
  */
 class tx_cfcleague_mod1_subAddProfiles {
 	var $mod;
-	public function tx_cfcleague_mod1_subAddProfiles(&$mod) {
+	public function __construct(&$mod) {
 		$this->mod = $mod;
 	}
 	/**
 	 * Ausführung des Requests. Das Team muss bekannt sein
 	 *
-	 * @param tx_cfcleague_models_betset $currTeam
+	 * @param tx_cfcleague_util_TeamInfo $currTeam
 	 * @return string
 	 */
 	public function handleRequest(&$currTeam, $teamInfo) {
+
 		if($teamInfo->isTeamFull()) {
 			// Kann nix mehr angelegt werden
 			return $this->mod->doc->section('Message:',$GLOBALS['LANG']->getLL('msg_maxPlayers'),0,1,ICON_WARN);
 		}
 
-		$out = $this->mod->doc->section('Message:',$teamInfo->getInfoTable($this->mod->doc),0,1, ICON_INFO);
 		// ggf. Daten im Request verarbeiten
 		$out .= $this->handleAddProfiles($currTeam, $teamInfo);
+		$out .= $this->handleNewProfiles($currTeam, $teamInfo);
+		$currTeam->refresh();
+		$teamInfo->refresh();
+		$out .= $teamInfo->getInfoTable($this->mod->doc);
 		$out .= $this->showAddProfiles($currTeam, $teamInfo);
 		return $out;
 	}
@@ -85,9 +90,9 @@ class tx_cfcleague_mod1_subAddProfiles {
 		$tableForm.= $searcher->getResultList();
 		if($searcher->getSize()) {
 			tx_rnbase::load('tx_cfcleague_mod1_modTeamsProfileCreate');
-			$tableForm .= $this->mod->formTool->createSelectSingleByArray('profileType', '',tx_cfcleague_mod1_modTeamsProfileCreate::getProfileTypeArray());
+			$tableForm .= $this->getFormTool()->createSelectSingleByArray('profileType', '',tx_cfcleague_mod1_modTeamsProfileCreate::getProfileTypeArray());
 			// Button für Zuordnung
-			$tableForm .= $this->mod->formTool->createSubmit('profile2team', $GLOBALS['LANG']->getLL('label_join_profiles'));
+			$tableForm .= $this->getFormTool()->createSubmit('profile2team', $GLOBALS['LANG']->getLL('label_join_profiles'));
 		}
 		// Ein Formular für die Neuanlage
 		$tableForm .= $this->getCreateForm();
@@ -110,11 +115,54 @@ class tx_cfcleague_mod1_subAddProfiles {
 	 *
 	 */
 	private function getCreateForm() {
-		$out = '<div>Neu</div>';
+		global $LANG;
+
+		if(!tx_cfcleague_mod1_modTeamsProfileCreate::isProfilePage($this->mod->id)) {
+			$content = $this->mod->doc->section('Message:',$LANG->getLL('msg_pageNotAllowed'),0,1,ICON_WARN);
+			return $content;
+		}
+		$arr = Array(Array($LANG->getLL('label_firstname'),$LANG->getLL('label_lastname'),'&nbsp;','&nbsp;'));
+		$row = array();
+		$i = 1;
+		$row[] = $this->getFormTool()->createTxtInput('data[tx_cfcleague_profiles][NEW'.$i.'][first_name]', '',10);
+		$row[] = $this->getFormTool()->createTxtInput('data[tx_cfcleague_profiles][NEW'.$i.'][last_name]', '',10);
+		$row[] = $this->getFormTool()->createSelectSingleByArray('data[tx_cfcleague_profiles][NEW'.$i.'][type]', '',tx_cfcleague_mod1_modTeamsProfileCreate::getProfileTypeArray());
+		$row[] = $this->getFormTool()->createSubmit('newprofile2team', $GLOBALS['LANG']->getLL('btn_create'), $GLOBALS['LANG']->getLL('msg_CreateProfiles')).
+			$this->getFormTool()->createHidden('data[tx_cfcleague_profiles][NEW'.$i.'][pid]', $this->mod->id);
+		$arr[] = $row;
+		$formTable = $this->mod->doc->table($arr);
+
+		$out = $this->mod->doc->spacer(10);
+		$out .= $this->mod->doc->section($LANG->getLL('label_create_profile4team'),$formTable,0,1);
 		return $out;
 	}
 	/**
-	 * Add profiles to a betset
+	 * Add profiles to a team
+	 *
+	 * @param tx_cfcleague_models_Team $currTeam
+	 * @param tx_cfcleague_util_TeamInfo $teamInfo
+	 * @return string
+	 */
+	private function handleNewProfiles(&$currTeam, $teamInfo) {
+		$profile2team = strlen(t3lib_div::_GP('newprofile2team')) > 0; // Wurde der Submit-Button gedrückt?
+		$out = '';
+		if(!$profile2team) return $out;
+		$request = t3lib_div::_GP('data');
+		$profiles['tx_cfcleague_profiles'] = $request['tx_cfcleague_profiles'];
+
+		$out = tx_cfcleague_mod1_modTeamsProfileCreate::createProfiles($profiles, $currTeam, $teamInfo);
+		return $out;
+	}
+	/**
+	 * Name is required
+	 * @param $profileArr
+	 * @return boolean
+	 */
+	public function isValidProfile($profileArr) {
+		return strlen($profileArr['last_name']) > 0;
+	}
+	/**
+	 * Add profiles to a team
 	 *
 	 * @param tx_cfcleague_models_Team $currTeam
 	 * @param tx_cfcleague_util_TeamInfo $baseInfo

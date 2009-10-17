@@ -12,6 +12,7 @@
 			<label index="title">T3sports - League Management</label>
 			<label index="title_recent_tickers">Recent ticker messages</label>
 			<label index="label_value">Value</label>
+			<label index="msg_tce_errors">Some unexpected errors occured. See TYPO3 Log for more information.</label>
 
 			<label index="mod_competition">Manage Competitions</label>
 			<label index="mod_compteams">Teams</label>
@@ -97,6 +98,7 @@
 			<label index="msg_profiles_warnings">Could not create the following profiles:</label>
 			<label index="msg_profile_already_joined">This profile is already part of the team!</label>
 			<label index="label_join_profiles">Join profile(s)</label>
+			<label index="label_create_profile4team">Create a new team member</label>
 			<label index="msg_no_profile_selected">Sorry, no selected profiles found. Please try again!</label>
 			<label index="msg_create_new_competition">Create a new competition at this page.</label>
 
@@ -140,6 +142,8 @@
 			<label index="message">Hinweis</label>
 			<label index="warning">Warnung</label>
 			<label index="error">Fehler</label>
+			<label index="msg_tce_errors">Bei der Verarbeitung sind unerwartete Fehler aufgetreten. Nähere Informationen befinden sich im TYPO3 Log.</label>
+
 			<label index="title">T3sports - Ligaverwaltung</label>
 			<label index="title_recent_tickers">Letzte Tickermeldungen</label>
 			<label index="label_value">Wert</label>
@@ -224,6 +228,7 @@
 			<label index="msg_profiles_created">Die Profile wurden erstellt!</label>
 			<label index="msg_profiles_warnings">Die folgenden Profile konnten nicht angelegt werden:</label>
 			<label index="msg_profile_already_joined">Diese Person ist schon Teil des Teams!</label>
+			<label index="label_create_profile4team">Neues Teammitglied anlegen</label>
 			<label index="label_join_profiles">Personen hinzufügen</label>
 			<label index="msg_create_new_competition">Jetzt einen neuen Wettbewerb auf dieser Seite anlegen.</label>
 

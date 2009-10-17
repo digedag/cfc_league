@@ -51,12 +51,20 @@ class tx_cfcleague_mod1_modTeamsProfileCreate extends t3lib_extobjbase {
 		return $content;
 	}
 
+	/**
+	 * Whether or not the given pid is inside the profile archive
+	 * @param int $pid
+	 * @return boolean
+	 */
+	public static function isProfilePage($pid) {
+		$rootPage = tx_rnbase_configurations::getExtensionCfgValue('cfc_league', 'profileRootPageId');
+		$goodPages = tx_cfcleague_db::getPagePath($pid);
+		return in_array($rootPage, $goodPages);
+	}
 	private function showCreateProfiles(&$data, &$team, $teamInfo) {
 		global $LANG;
 
-		$rootPage = tx_rnbase_configurations::getExtensionCfgValue('cfc_league', 'profileRootPageId');
-		$goodPages = tx_cfcleague_db::getPagePath($this->pid);
-		if(!in_array($rootPage, $goodPages)) {
+		if(!self::isProfilePage($this->pid)) {
 			$content = $this->doc->section('Message:',$LANG->getLL('msg_pageNotAllowed'),0,1,ICON_WARN);
 			return $content;
 		}
@@ -72,7 +80,7 @@ class tx_cfcleague_mod1_modTeamsProfileCreate extends t3lib_extobjbase {
 		}
 		else {
 			$content .= $this->doc->section('Info:',$LANG->getLL('msg_checkPage') . ': <b>' . t3lib_BEfunc::getRecordPath($this->pid,'',0) . '</b>' ,0,1,ICON_WARN);
-			$content .= $this->doc->section('Message:',$teamInfo->getInfoTable($this->doc),0,1, ICON_INFO);
+			$content .= $teamInfo->getInfoTable($this->doc);
 			// Wir zeigen 15 Zeilen mit Eingabefeldern
 			$content .= $this->prepareInputTable($team, $teamInfo);
 			// Den Update-Button einfügen
@@ -153,7 +161,7 @@ class tx_cfcleague_mod1_modTeamsProfileCreate extends t3lib_extobjbase {
    * @param $team das aktuelle Team, dem die Personen zugeordnet werden
    * @param tx_cfcleague_util_TeamInfo $teamInfo
    */
-  function createProfiles(&$profiles, &$team, $teamInfo) {
+  public static function createProfiles(&$profiles, &$team, $teamInfo) {
     global $BE_USER, $LANG;
 
     $maxCoaches = $teamInfo->get('maxCoaches');
@@ -218,11 +226,12 @@ class tx_cfcleague_mod1_modTeamsProfileCreate extends t3lib_extobjbase {
       reset($data);
       $tce =& tx_cfcleague_db::getTCEmain($data);
       $tce->process_datamap();
-      $content .= $LANG->getLL('msg_profiles_created'). '<br /><br />';
+      $content .= count($tce->errorLog) ? $LANG->getLL('msg_tce_errors') : $LANG->getLL('msg_profiles_created');
+      $content .= '<br /><br />';
     }
     else
       $content .= $LANG->getLL('msg_no_person_found'). '<br /><br />';
-    
+
     if($warnings) {
       $content .= '<b>'. $LANG->getLL('msg_profiles_warnings'). '</b><br><ul><li>';
       $content .= implode('<li>',$warnings);
