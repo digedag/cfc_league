@@ -2,14 +2,15 @@
 Änderungen
 ----------
 
-v0.5.5 (??.10.2009)
+v0.5.5 (18.10.2009) (not released)
 * Performance-Issue in Match-Record solved. Unnecessary lookup of profiles removed.
 * Logo for competition added
 * BE-Modules: Create competition from BE-Module
 * BE-Modules: Module competition->teams extended. It is possible to add teams from current page to a competition.
 * BE-Modules: orderby in profile search fixed
 * Handling of logos changed. Club records can handle several logos. There is a new selectbox in team record to select one of these club logos.
-
+* BE-Modules: Module competition->match table rewritten. Opponents can be changed before match creation. Automatic lookup for keystrings.
+* BE-Modules: Module "Manage Team" rewritten.
 
 v0.5.4 (25.01.2009)
 * Bugfix: Mayday message occurred when new profiles were created
