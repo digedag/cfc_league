@@ -45,6 +45,16 @@ class tx_cfcleague_tca_Lookup {
 		return $srv->getProfileTypeItems4TCA($uids);
 	}
 	/**
+	 * Liefert die vorhandenen MatchNote-Typen
+	 * @param $config
+	 * @return array
+	 */
+	function getMatchNoteTypes($config) {
+		tx_div::load('tx_cfcleague_util_ServiceRegistry');
+		$srv = tx_cfcleague_util_ServiceRegistry::getMatchService();
+		$config['items'] = $srv->getMatchNoteTypes4TCA();
+	}
+	/**
 	 * Set possible stadiums for a match. The stadiums are selected from home club.
 	 *
 	 * @param array $PA

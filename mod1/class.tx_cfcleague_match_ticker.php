@@ -291,10 +291,11 @@ class tx_cfcleague_match_ticker extends t3lib_extobjbase {
 			''));
 
 		// Die NotesTypen laden, Wir gehen mal davon aus, daß die TCA geladen ist...
-		$types = array();
-		foreach($TCA['tx_cfcleague_match_notes']['columns']['type']['config']['items'] As $item){
-			$types[$item[1]] = $LANG->sL($item[0]);
-		}
+//		$types = array();
+//		foreach($TCA['tx_cfcleague_match_notes']['columns']['type']['config']['items'] As $item){
+//			$types[$item[1]] = $LANG->sL($item[0]);
+//		}
+		$types = $this->getTickerTypes();
 
 		$playersHome = $match->getPlayerNamesHome();
 		$playersGuest = $match->getPlayerNamesGuest();
@@ -317,6 +318,15 @@ class tx_cfcleague_match_ticker extends t3lib_extobjbase {
 		return $arr;
 	}
 
+	private function getTickerTypes() {
+		$srv = tx_cfcleague_util_ServiceRegistry::getMatchService();
+		$tcaTypes = $srv->getMatchNoteTypes4TCA();
+		$types = array();
+		foreach($tcaTypes As $typeDef) {
+			$types[$typeDef[1]] = $typeDef[0];
+		}
+		return $types;
+	}
   /**
    * Erstellt das Datenarray zur Erstellung der HTML-Tabelle mit den Spielen des Spieltages
    */
@@ -339,7 +349,9 @@ class tx_cfcleague_match_ticker extends t3lib_extobjbase {
 		  intval($pageTSconfig['tx_cfcleague.']['matchTickerCfg.']['commentFieldCols']) : 30;
 		$rows = (is_array($pageTSconfig) && is_array($pageTSconfig['tx_cfcleague.']['matchTickerCfg.'])) ?
 		  intval($pageTSconfig['tx_cfcleague.']['matchTickerCfg.']['commentFieldRows']) : 5;
-		  
+
+		$types = $this->getTickerTypes();
+
 		// Wenn kein sinnvoller Wert vorhanden ist, bleibt der Standard bei 3
 		$inputFields = $inputFields ? $inputFields : 3;
     for($i=0; $i < $inputFields; $i++){
@@ -348,9 +360,12 @@ class tx_cfcleague_match_ticker extends t3lib_extobjbase {
       $row[] = $this->getFormTool()->createIntInput('data[tx_cfcleague_match_notes][NEW'.$i.'][minute]', '',2,3) . '+' . 
                $this->getFormTool()->createIntInput('data[tx_cfcleague_match_notes][NEW'.$i.'][extra_time]', '',1,2) . 
                $this->getFormTool()->createHidden('data[tx_cfcleague_match_notes][NEW'.$i.'][game]', $match->uid);
-      $row[] = $this->getFormTool()->createSelectSingle('data[tx_cfcleague_match_notes][NEW'.$i.'][type]', '0','tx_cfcleague_match_notes','type',array('onchange' => 'setMatchMinute(this);'));
-      $row[] = $this->getFormTool()->createSelectSingleByArray(
-                      'data[tx_cfcleague_match_notes][NEW'.$i.'][player_home]', '0', $match->getPlayerNamesHome(1,1),array('onchange' => 'setMatchMinute(this);'));
+//			$row[] = $this->getFormTool()->createSelectSingle(
+//							'data[tx_cfcleague_match_notes][NEW'.$i.'][type]', '0','tx_cfcleague_match_notes','type',array('onchange' => 'setMatchMinute(this);'));
+			$row[] = $this->getFormTool()->createSelectSingleByArray(
+							'data[tx_cfcleague_match_notes][NEW'.$i.'][type]', '0', $types, array('onchange' => 'setMatchMinute(this);'));
+			$row[] = $this->getFormTool()->createSelectSingleByArray(
+							'data[tx_cfcleague_match_notes][NEW'.$i.'][player_home]', '0', $match->getPlayerNamesHome(1,1),array('onchange' => 'setMatchMinute(this);'));
       $row[] = $this->getFormTool()->createSelectSingleByArray(
                       'data[tx_cfcleague_match_notes][NEW'.$i.'][player_guest]', '0', $match->getPlayerNamesGuest(1,1),array('onchange' => 'setMatchMinute(this);'));
 

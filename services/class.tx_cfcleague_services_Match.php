@@ -38,6 +38,29 @@ interface tx_cfcleague_MatchService {
 class tx_cfcleague_services_Match extends t3lib_svbase implements tx_cfcleague_MatchService  {
 
 	/**
+	 * Returns all available profile types for a TCA select item
+	 *
+	 * @return array 
+	 */
+	function getMatchNoteTypes4TCA() {
+		$types = array();
+		// Zuerst in der Ext_Conf die BasisTypen laden
+		$types = $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['matchnotetypes'];
+
+		// Jetzt schauen, ob noch weitere Typpen per Service geliefert werden
+		$baseType = 't3sports_matchnotetype';
+		$services = tx_rnbase_util_Misc::lookupServices($baseType);
+		foreach ($services As $subtype => $info) {
+			$srv = tx_rnbase_util_Misc::getService($baseType, $subtype);
+			$types = array_merge($types, $srv->getMatchNoteTypes());
+		}
+		foreach($types AS $typedef) {
+			$items[] = array(tx_rnbase_util_Misc::translateLLL($typedef[0]), $typedef[1]);
+		}
+		return $items;
+	}
+
+	/**
 	 * Search database for matches
 	 *
 	 * @param array $fields
