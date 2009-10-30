@@ -148,14 +148,15 @@ t3lib_extMgm::addLLrefForTCAdescr('tx_cfcleague_club','EXT:cfc_league/locallang_
 
 $TCA['tx_cfcleague_teams'] = Array (
 	'ctrl' => Array (
-		'title' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_teams',		
-		'label' => 'name',	
+		'title' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_teams',
+		'label' => 'name',
 		'tstamp' => 'tstamp',
 		'crdate' => 'crdate',
 		'cruser_id' => 'cruser_id',
-		'sortby' => 'sorting',	
-		'delete' => 'deleted',	
-		'enablecolumns' => Array (		
+		'dividers2tabs' => TRUE,
+		'sortby' => 'sorting',
+		'delete' => 'deleted',
+		'enablecolumns' => Array (
 			'disabled' => 'hidden',
 		),
 		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY).'tca.php',

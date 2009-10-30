@@ -69,6 +69,7 @@
 			<label index="tx_cfcleague_club.info">Information</label>
 
 			<label index="tx_cfcleague_teams">Team</label>
+			<label index="tx_cfcleague_teams_tab_members">Members</label>
 			<label index="tx_cfcleague_teams.club">Club</label>
 			<label index="tx_cfcleague_teams.name">Name</label>
 			<label index="tx_cfcleague_teams.short_name">Shortname</label>
@@ -276,6 +277,7 @@
 			<label index="tx_cfcleague_club.shortinfo">Kurzinfo</label>
 			<label index="tx_cfcleague_club.info">Information</label>
 			<label index="tx_cfcleague_teams">Mannschaft</label>
+			<label index="tx_cfcleague_teams_tab_members">Mitglieder</label>
 			<label index="tx_cfcleague_teams.club">Verein</label>
 			<label index="tx_cfcleague_teams.name">Name</label>
 			<label index="tx_cfcleague_teams.short_name">Kurzname</label>

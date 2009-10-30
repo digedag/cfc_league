@@ -188,26 +188,26 @@ $TCA['tx_cfcleague_competition'] = Array (
 				'eval' => 'trim',
 			)
 		),
-		'agegroup' => Array (		
+		'agegroup' => Array (
 			'exclude' => 1,
-			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition.agegroup',		
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_group',
 			'config' => Array (
 				'type' => 'select',
-				'foreign_table' => 'tx_cfcleague_group',	
-				'foreign_table_where' => 'ORDER BY tx_cfcleague_group.sorting',	
-				'size' => 1,	
+				'foreign_table' => 'tx_cfcleague_group',
+				'foreign_table_where' => 'ORDER BY tx_cfcleague_group.sorting',
+				'size' => 5,
 				'minitems' => 0,
-				'maxitems' => 1,
+				'maxitems' => 5,
 			)
 		),
-		'saison' => Array (		
+		'saison' => Array (
 			'exclude' => 1,
-			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition.saison',		
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition.saison',
 			'config' => Array (
-				'type' => 'select',	
-				'foreign_table' => 'tx_cfcleague_saison',	
-				'foreign_table_where' => 'ORDER BY tx_cfcleague_saison.name desc',	
-				'size' => 1,	
+				'type' => 'select',
+				'foreign_table' => 'tx_cfcleague_saison',
+				'foreign_table_where' => 'ORDER BY tx_cfcleague_saison.name desc',
+				'size' => 1,
 				'minitems' => 0,
 				'maxitems' => 1,
 			)
@@ -752,14 +752,27 @@ $TCA['tx_cfcleague_teams'] = Array (
 				'eval' => 'required,trim',
 			)
 		),
-		'short_name' => Array (		
+		'short_name' => Array (
 			'exclude' => 1,
 			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_teams.short_name',
 			'config' => Array (
-				'type' => 'input',	
-				'size' => '30',	
-				'max' => '100',	
+				'type' => 'input',
+				'size' => '30',
+				'max' => '100',
 				'eval' => 'required,trim',
+			)
+		),
+		'agegroup' => Array (
+			'exclude' => 1,
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_group',
+			'config' => Array (
+				'type' => 'select',
+				'items' => Array (Array('', ''),),
+				'foreign_table' => 'tx_cfcleague_group',
+				'foreign_table_where' => 'ORDER BY tx_cfcleague_group.sorting',
+				'size' => 1,
+				'minitems' => 0,
+				'maxitems' => 1,
 			)
 		),
 		'coaches' => Array (
@@ -866,7 +879,8 @@ $TCA['tx_cfcleague_teams'] = Array (
 
 	),
 	'types' => Array (
-		'0' => Array('showitem' => 'hidden;;1;;1-1-1, club,logo, name, short_name, coaches, players, supporters, dam_images, players_comment, coaches_comment, supporters_comment, comment;;;richtext[paste|bold|italic|underline|formatblock|class|left|center|right|orderedlist|unorderedlist|outdent|indent|link|image]:rte_transform[mode=ts], dam_logo, link_report, dummy')
+		'0' => Array('showitem' => 'hidden;;1;;1-1-1, club,logo, name, short_name, agegroup, dam_images, dam_logo, link_report, dummy,
+		--div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_teams_tab_members,coaches, players, supporters, players_comment, coaches_comment, supporters_comment, comment;;;richtext[paste|bold|italic|underline|formatblock|class|left|center|right|orderedlist|unorderedlist|outdent|indent|link|image]:rte_transform[mode=ts]')
 	),
 	'palettes' => Array (
 		'1' => Array('showitem' => '')
