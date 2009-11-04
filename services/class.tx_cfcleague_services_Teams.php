@@ -114,7 +114,7 @@ class tx_cfcleague_services_Teams extends t3lib_svbase {
 	}
 
 	/**
-	 * Search database for team notes
+	 * Search database for teams
 	 *
 	 * @param array $fields
 	 * @param array $options
@@ -122,6 +122,18 @@ class tx_cfcleague_services_Teams extends t3lib_svbase {
 	 */
 	function searchTeams($fields, $options) {
 		$searcher = tx_rnbase_util_SearchBase::getInstance('tx_cfcleague_search_Team');
+		return $searcher->search($fields, $options);
+	}
+
+	/**
+	 * Search database for clubs
+	 *
+	 * @param array $fields
+	 * @param array $options
+	 * @return array[tx_cfcleague_models_Club]
+	 */
+	function searchClubs($fields, $options) {
+		$searcher = tx_rnbase_util_SearchBase::getInstance('tx_cfcleague_search_Club');
 		return $searcher->search($fields, $options);
 	}
 
