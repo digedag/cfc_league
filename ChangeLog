@@ -2,6 +2,12 @@
 Änderungen
 ----------
 
+v0.5.6 (06.11.2009) (not released)
+* Multiple agegroups for competitions
+* Age group field for teams
+* New service class for clubs
+* Matchnote types can be extended without PHP code
+
 v0.5.5 (18.10.2009) (not released)
 * Performance-Issue in Match-Record solved. Unnecessary lookup of profiles removed.
 * Logo for competition added
