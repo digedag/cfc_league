@@ -2,162 +2,165 @@
 Änderungen
 ----------
 
+v0.6.0 (07.11.2009)
+ * New class tx_cfcleague_util_Cache
+
 v0.5.6 (06.11.2009) (not released)
-* Multiple agegroups for competitions
-* Age group field for teams
-* New service class for clubs
-* Matchnote types can be extended without PHP code
+ * Multiple agegroups for competitions
+ * Age group field for teams
+ * New service class for clubs
+ * Matchnote types can be extended without PHP code
 
 v0.5.5 (18.10.2009) (not released)
-* Performance-Issue in Match-Record solved. Unnecessary lookup of profiles removed.
-* Logo for competition added
-* BE-Modules: Create competition from BE-Module
-* BE-Modules: Module competition->teams extended. It is possible to add teams from current page to a competition.
-* BE-Modules: orderby in profile search fixed
-* Handling of logos changed. Club records can handle several logos. There is a new selectbox in team record to select one of these club logos.
-* BE-Modules: Module competition->match table rewritten. Opponents can be changed before match creation. Automatic lookup for keystrings.
-* BE-Modules: Module "Manage Team" rewritten.
+ * Performance-Issue in Match-Record solved. Unnecessary lookup of profiles removed.
+ * Logo for competition added
+ * BE-Modules: Create competition from BE-Module
+ * BE-Modules: Module competition->teams extended. It is possible to add teams from current page to a competition.
+ * BE-Modules: orderby in profile search fixed
+ * Handling of logos changed. Club records can handle several logos. There is a new selectbox in team record to select one of these club logos.
+ * BE-Modules: Module competition->match table rewritten. Opponents can be changed before match creation. Automatic lookup for keystrings.
+ * BE-Modules: Module "Manage Team" rewritten.
 
 v0.5.4 (25.01.2009)
-* Bugfix: Mayday message occurred when new profiles were created
+ * Bugfix: Mayday message occurred when new profiles were created
 
 v0.5.3 (06.01.2009)
-* Target page for new team notes is always taken from team
-* Missing include of tx_div fixed
+ * Target page for new team notes is always taken from team
+ * Missing include of tx_div fixed
 
 v0.5.2 (06.01.2009) (not released)
-* New field to set profile types
-* Profile merge supports team notes
-* New History-Button in profile search
-* New BE module to manage team notes
-* It is now possible to create new matches from BE modul
-* New datatype stadium with relations to club und games
+ * New field to set profile types
+ * Profile merge supports team notes
+ * New History-Button in profile search
+ * New BE module to manage team notes
+ * It is now possible to create new matches from BE modul
+ * New datatype stadium with relations to club und games
 
 v0.5.1 (25.10.2008)
-* Compatible with TYPO3 4.2.2
-* New field shortname in group record
+ * Compatible with TYPO3 4.2.2
+ * New field shortname in group record
 
 v0.5.0 (07.09.2008)
-* New BE Layout for TYPO3 4.2. Many thanks to Thomas Maroschik!
-* New field shortname in group record
+ * New BE Layout for TYPO3 4.2. Many thanks to Thomas Maroschik!
+ * New field shortname in group record
 
 v0.4.7 (24.08.2008)
-* Additional fields in club record like address, description or email
+ * Additional fields in club record like address, description or email
 
 v0.4.6 (31.07.2008)
-* BE module finished to join players to team
-* Profiles are sorted by lastname in backend 
+ * BE module finished to join players to team
+ * Profiles are sorted by lastname in backend 
 
 v0.4.5 (20.07.2008)
-* Small modification for t3sportsbet
+ * Small modification for t3sportsbet
 
 v0.4.4 (12.07.2008)
-* New submodul to create teams for a competition.
-* date2cal works now
+ * New submodul to create teams for a competition.
+ * date2cal works now
 
 v0.4.3 (11.07.2008) (not released)
-* New structure for modules in backend. 
-* Datetime field in module match edit changed. Maybe this will solve some problems with wrong hours.
-* New field addinfo in match record. Can be used for extra info in matchtable.
-* Club selection in team record optionally changed from group type to select type
+ * New structure for modules in backend. 
+ * Datetime field in module match edit changed. Maybe this will solve some problems with wrong hours.
+ * New field addinfo in match record. Can be used for extra info in matchtable.
+ * Club selection in team record optionally changed from group type to select type
 
 
 v0.4.2 (06.07.2008)
-* New text fields in match record to setup lineups, substitutes and scorers as plain text.
+ * New text fields in match record to setup lineups, substitutes and scorers as plain text.
 
 v0.4.1 (30.06.2008)
-* TCA setup for match with tab dividers now.
-* Team notes completed
+ * TCA setup for match with tab dividers now.
+ * Team notes completed
 
 v0.4.0 (08.06.2008)
-* new TER release
+ * new TER release
 
 v0.3.4 (06.06.2008) (not released)
-* Minute field is automatically filled from running stop watch in liveticker view (BE)
+ * Minute field is automatically filled from running stop watch in liveticker view (BE)
 
 v0.3.3 (21.05.2008) (not released)
-* Simple stop watch in liveticker view (BE)
-* Bugfix: Profile search found deleted profiles
+ * Simple stop watch in liveticker view (BE)
+ * Bugfix: Profile search found deleted profiles
 
 v0.3.2 (17.05.2008) (not released)
-* Some minor changes
+ * Some minor changes
 
 v0.3.1 (07.05.2008) (not released)
-* New data types "Team note" and "Note type". With these types it is possible to add team relative data in a generic way. What does it mean? So you can add jersey number or position of a player in a specific team.
+ * New data types "Team note" and "Note type". With these types it is possible to add team relative data in a generic way. What does it mean? So you can add jersey number or position of a player in a specific team.
 
 v0.3.0 (02.05.2008) (not released)
-* Mostly internal changes. This project depends now on rn_base. Make sure to load the latest version!
-* New field liveticker author
-* Value for competition type other changed from 0 to 3. You must resave these competitions.
+ * Mostly internal changes. This project depends now on rn_base. Make sure to load the latest version!
+ * New field liveticker author
+ * Value for competition type other changed from 0 to 3. You must resave these competitions.
 
 v0.2.9 (30.03.2008) (not released)
-* Profile search remembers last search string
-* New field correction in competition penalty
-* New field for liveticker author in match
-* Key value for competition type "single matches" changed from 0 to 3. You should resave that competitions.
+ * Profile search remembers last search string
+ * New field correction in competition penalty
+ * New field for liveticker author in match
+ * Key value for competition type "single matches" changed from 0 to 3. You should resave that competitions.
 
 v0.2.8 (23.03.2008)
-* Possible to change match status in ticker form
-* New field stage_name for profiles
-* Online help for profiles
-* flag for favorite club added
-* Some optical improvements in backend forms
-* Include dam_media_field in tca.php
+ * Possible to change match status in ticker form
+ * New field stage_name for profiles
+ * Online help for profiles
+ * flag for favorite club added
+ * Some optical improvements in backend forms
+ * Include dam_media_field in tca.php
 
 v0.2.7 (18.02.2008)
-* Neues Feld Obligation um Pflichtwettbewerbe zu markieren. Auswertung kann im Frontend interessant sein.
-* Spielplanerstellung ist nicht mehr so restriktiv. Es können auch zu bestehenden Wettbewerben weitere Spiele hinzugefügt werden.
+ * Neues Feld Obligation um Pflichtwettbewerbe zu markieren. Auswertung kann im Frontend interessant sein.
+ * Spielplanerstellung ist nicht mehr so restriktiv. Es können auch zu bestehenden Wettbewerben weitere Spiele hinzugefügt werden.
 
 v0.2.6 (29.01.2008)
-* Vereinen kann Adresse zugeordnet werden (tt_address notwendig)
-* Neuer Spielstatus "verlegt"
-* In Personensuche gibt es nur noch ein Suchfeld. Es wird automatisch in Vor- und Nachname gesucht.
-* Profile können jetzt einfach zusammengeführt werden. Über die Personensuche können dazu zwei Spieler ausgewählt werden. Einer der beiden erhält dann alle Referenzen des anderen Spielers. Letzterer kann anschließend gelöscht werden.
+ * Vereinen kann Adresse zugeordnet werden (tt_address notwendig)
+ * Neuer Spielstatus "verlegt"
+ * In Personensuche gibt es nur noch ein Suchfeld. Es wird automatisch in Vor- und Nachname gesucht.
+ * Profile können jetzt einfach zusammengeführt werden. Über die Personensuche können dazu zwei Spieler ausgewählt werden. Einer der beiden erhält dann alle Referenzen des anderen Spielers. Letzterer kann anschließend gelöscht werden.
 
 v0.2.5 (31.10.2007)
-* Die Anzahl der Eingabefelder im Tickermodul kann per TS im PageSetup festgelegt werden: tx_cfcleague.matchTickerCfg.numberOfInputFields = 4
+ * Die Anzahl der Eingabefelder im Tickermodul kann per TS im PageSetup festgelegt werden: tx_cfcleague.matchTickerCfg.numberOfInputFields = 4
 
 
 v0.2.4 (30.10.2007)
-* Bei Wettbewerbsstrafe kann in allen Werten jetzt auch eine negative Zahl angegeben werden
+ * Bei Wettbewerbsstrafe kann in allen Werten jetzt auch eine negative Zahl angegeben werden
 
 v0.2.3 (20.10.2007)
-* Funktion "Spieler anlegen" ist jetzt voll TCA-kompatibel
-* In Funktion "Spieler anlegen" können jetzt auch Betreuer angelegt werden
-* Experimentell: bis zu 4 Spielabschnitte werden unterstützt (Eishockey, Basketball...)
+ * Funktion "Spieler anlegen" ist jetzt voll TCA-kompatibel
+ * In Funktion "Spieler anlegen" können jetzt auch Betreuer angelegt werden
+ * Experimentell: bis zu 4 Spielabschnitte werden unterstützt (Eishockey, Basketball...)
 
 v0.2.2 (09.10.2007)
-* CSH für Wettbewerb erstellt.
-* Bugfix: Geburtstag kann jetzt wieder über Personensuche geändert werden
+ * CSH für Wettbewerb erstellt.
+ * Bugfix: Geburtstag kann jetzt wieder über Personensuche geändert werden
 
 v0.2.1 (29.09.2007)
-* Zuschauerzahl jetzt maximal 6-stellig
+ * Zuschauerzahl jetzt maximal 6-stellig
 
 v0.2.0 (27.09.2007)
-* Wettbewerbsstrafe zeigt nur noch Wettbewerbe der aktuellen Seite
-* Wettbewerbsstrafe wurde um zusätzliche Optionen erweitert
-* Zusätzliche Übersetzungen in der Personensuche
-* "Ligaerstellung" und "Spiele bearbeiten" berücksichtigen jetzt das Team "Spielfrei"
-* Dokumentation aktualisiert
+ * Wettbewerbsstrafe zeigt nur noch Wettbewerbe der aktuellen Seite
+ * Wettbewerbsstrafe wurde um zusätzliche Optionen erweitert
+ * Zusätzliche Übersetzungen in der Personensuche
+ * "Ligaerstellung" und "Spiele bearbeiten" berücksichtigen jetzt das Team "Spielfrei"
+ * Dokumentation aktualisiert
 
 v0.1.5 (17.09.2007)
-* Layoutänderung im Ticker/Statistik-Modul. Die Bemerkungsbox steht jetzt unter den Auswahlboxen der Spieler
-* im Ticker/Statistik-Modul kann jetzt auch direkt das Ergebnis des Spiel geändert werden. Dies ist vor allem bei Betrieb eines Liveticker von Vorteil, da für die Ergebnisänderung der View nicht mehr gewechselt werden muss.
-* die Integration der Modulfunktionen wurde intern auf den TYPO3-Standard umgestellt. Dadurch können jetzt auch Module von anderen Extensions integriert werden.
-* In der Funktion "Spiele bearbeiten" wurde der Update der Ergebnisse intern auf den TYPO3-Standard umgestellt.
-* Es wurden einige neue Datenbankfelder integriert. Diese werden aber noch nicht genutzt!
+ * Layoutänderung im Ticker/Statistik-Modul. Die Bemerkungsbox steht jetzt unter den Auswahlboxen der Spieler
+ * im Ticker/Statistik-Modul kann jetzt auch direkt das Ergebnis des Spiel geändert werden. Dies ist vor allem bei Betrieb eines Liveticker von Vorteil, da für die Ergebnisänderung der View nicht mehr gewechselt werden muss.
+ * die Integration der Modulfunktionen wurde intern auf den TYPO3-Standard umgestellt. Dadurch können jetzt auch Module von anderen Extensions integriert werden.
+ * In der Funktion "Spiele bearbeiten" wurde der Update der Ergebnisse intern auf den TYPO3-Standard umgestellt.
+ * Es wurden einige neue Datenbankfelder integriert. Diese werden aber noch nicht genutzt!
 
 
 v0.1.4 (28.08.2007)
-Der Teamdatensatz hat ein neues Feld zur Verlinkung auf die Teamseite. Dieses wird im FE verwendet, um
+ * Der Teamdatensatz hat ein neues Feld zur Verlinkung auf die Teamseite. Dieses wird im FE verwendet, um
 direkte Links auf die Teamseiten aus Spielplan und Ligatabelle zu ermöglichen oder zu verhindern.
 
 v0.1.3 (23.08.2007)
-Im Spielticker können jetzt Nachspielzeiten gesondert eingegeben werden. Fällt zum Beispiel ein 
+ * Im Spielticker können jetzt Nachspielzeiten gesondert eingegeben werden. Fällt zum Beispiel ein 
 Tor in der 47. Minute der ersten Halbzeit, dann sollte man 45+2 im Ticker eingeben. Dadurch kann 
 im Frontend die Tickermeldung korrekt ausgegeben werden. Der Anstoss zur zweiten Halbzeit in der 
 46. Minute steht dann nach der Tormeldung.
 
 
 v0.1.2 (16.08.2007)
-* Bugfix: Team-Logo hatte fehlerhaften TCA Eintrag. Dadurch wurde das Team-Foto angezeigt.
+ * Bugfix: Team-Logo hatte fehlerhaften TCA Eintrag. Dadurch wurde das Team-Foto angezeigt.
