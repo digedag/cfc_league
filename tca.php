@@ -684,6 +684,29 @@ $TCA['tx_cfcleague_club'] = Array (
 				'MM_match_fields' => Array (
 					'tablenames' => 'tx_cfcleague_club',
 				),
+				'wizards' => Array(
+//					'_PADDING' => 1,
+//					'_VERTICAL' => 1,
+					'edit' => array(
+						'type' => 'popup',
+						'title' => 'Edit',
+						'script' => 'wizard_edit.php',
+						'popup_onlyOpenIfSelected' => 1,
+						'icon' => 'edit2.gif',
+						'JSopenParams' => 'height=350,width=580,status=0,menubar=0,scrollbars=1',
+					),
+					'add' => Array(
+						'type' => 'script',
+						'title' => 'Create new record',
+						'icon' => 'add.gif',
+						'params' => Array(
+							'table'=>'tx_cfcleague_stadiums',
+							'pid' => '###CURRENT_PID###',
+							'setValue' => 'prepend'
+						),
+						'script' => 'wizard_add.php',
+					),
+				),
 			)
 		),
 	),
