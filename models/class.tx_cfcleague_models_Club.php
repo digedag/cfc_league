@@ -47,6 +47,36 @@ class tx_cfcleague_models_Club extends tx_rnbase_model_base {
 	public function getCity() {
 		return $this->record['city'];
 	}
+
+	/**
+	 * Returns the zip
+	 * @return string
+	 */
+	public function getZip() {
+		return $this->record['zip'];
+	}
+	/**
+	 * Returns the street
+	 * @return string
+	 */
+	public function getStreet() {
+		return $this->record['street'];
+	}
+
+	/**
+	 * Returns the url of the first club logo.
+	 *
+	 * @return string
+	 */
+	public function getFirstLogo() {
+		if($this->record['dam_logo']) {
+			$damPics = tx_dam_db::getReferencedFiles('tx_cfcleague_club', $this->uid, 'dam_images');
+			if(list($uid, $filePath) = each($damPics['files'])) {
+				return $filePath;
+			}
+		}
+		return '';
+	}
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/models/class.tx_cfcleague_models_Club.php']) {

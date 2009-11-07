@@ -4,6 +4,7 @@
 
 v0.6.0 (07.11.2009)
  * New class tx_cfcleague_util_Cache
+ * New methods in tx_cfcleague_models_Club
 
 v0.5.6 (06.11.2009) (not released)
  * Multiple agegroups for competitions
