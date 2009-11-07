@@ -39,6 +39,14 @@ class tx_cfcleague_models_Club extends tx_rnbase_model_base {
 	function getNameShort() {
 		return $this->record['short_name'];
 	}
+
+	/**
+	 * Returns the city
+	 * @return string
+	 */
+	public function getCity() {
+		return $this->record['city'];
+	}
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/models/class.tx_cfcleague_models_Club.php']) {
