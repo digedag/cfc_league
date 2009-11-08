@@ -27,7 +27,7 @@ $GLOBALS['BE_USER']->modAccess($MCONF,1);
 
 
 /**
- * Die Klasse verwaltet die automatische Erstellung von Spielplänen
+ * Die Klasse ist die Einstiegsklasse für das Modul "Wettbewerbe verwalten"
  */
 class tx_cfcleague_mod1_modCompetitions extends t3lib_extobjbase {
   var $doc, $MCONF;
@@ -81,7 +81,7 @@ class tx_cfcleague_mod1_modCompetitions extends t3lib_extobjbase {
 		$menu = $this->selector->showTabMenu($this->id, 'comptools', 
 			array('0' => $LANG->getLL('edit_games'),
 						'1' => $LANG->getLL('mod_compteams'),
-						'2' => $LANG->getLL('create_games'),
+//						'2' => $LANG->getLL('create_games'),
 						'3' => $LANG->getLL('create_games')));
 
 		$tabs .= $menu['menu'];
