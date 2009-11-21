@@ -390,12 +390,13 @@ CREATE TABLE tx_cfcleague_stadiums (
 	street varchar(255) DEFAULT '' NOT NULL,
 	city varchar(255) DEFAULT '' NOT NULL,
 	zip varchar(150) DEFAULT '' NOT NULL,
-    lng tinytext NOT NULL,
-    lat tinytext NOT NULL,
+	lng tinytext NOT NULL,
+	lat tinytext NOT NULL,
 
 	logo int(11) DEFAULT '0' NOT NULL,
 	pictures int(11) DEFAULT '0' NOT NULL,
 	clubs int(11) DEFAULT '0' NOT NULL,
+	address int(11) DEFAULT '0' NOT NULL,
 
 	PRIMARY KEY (uid),
 	KEY parent (pid)

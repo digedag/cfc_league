@@ -40,6 +40,18 @@ class tx_cfcleague_models_Stadium extends tx_rnbase_model_base {
 	function getName() {
 		return $this->record['name'];
 	}
+  /**
+   * Returns address dataset or null
+   * @return tx_cfcleague_models_Address or null
+   */
+  function getAddress() {
+  	if(!$this->record['address'])
+  		return null;
+    $classname = tx_div::makeInstanceClassName('tx_cfcleague_models_Address');
+    $address = new $classname($this->record['address']);
+		return $address->isValid() ? $address : null;
+  }
+
 	/**
 	 * Liefert die Instance mit der übergebenen UID. Die Daten werden gecached, so daß
 	 * bei zwei Anfragen für die selbe UID nur ein DB Zugriff erfolgt.

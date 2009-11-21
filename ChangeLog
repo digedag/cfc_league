@@ -2,8 +2,11 @@
 Änderungen
 ----------
 
+v0.6.2 (22.11.2009)
+ * #17: New relation stadiums to tt_address 
+
 v0.6.1 (08.11.2009)
-* #12 old sub-module for matchtable creation removed
+ * #12 old sub-module for matchtable creation removed
 
 v0.6.0 (07.11.2009)
  * New class tx_cfcleague_util_Cache

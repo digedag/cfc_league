@@ -2244,11 +2244,25 @@ $TCA['tx_cfcleague_stadiums'] = Array (
 			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_club',
 			'config' => $stadiumClubArr,
 		),
+		'address' => Array (
+			'exclude' => 0,
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_club.address',
+			'config' => Array (
+        'type' => 'inline',
+        'foreign_table' => 'tt_address',
+        'appearance' => Array(
+          'collapseAll' => 0,
+          'expandSingle' => 1,
+        ),
+				'minitems' => 0,
+				'maxitems' => 1,
+			)
+		),
 	),
 	'types' => Array (
 			'0' => Array('showitem' => 'name,altname,capacity,logo,pictures,clubs,
 						--div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_stadiums_tab_description,description;;4;richtext[paste|bold|italic|underline|formatblock|class|left|center|right|orderedlist|unorderedlist|outdent|indent|link|image]:rte_transform[mode=ts],description2;;4;richtext[paste|bold|italic|underline|formatblock|class|left|center|right|orderedlist|unorderedlist|outdent|indent|link|image]:rte_transform[mode=ts],
-						--div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_stadiums_tab_location,street,city,zip,lng,lat')
+						--div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_stadiums_tab_location,street,city,zip,lng,lat,address')
 	),
 	'palettes' => Array (
 			'1' => Array('showitem' => '')
