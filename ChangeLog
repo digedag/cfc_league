@@ -2,6 +2,9 @@
 Änderungen
 ----------
 
+v0.6.3 (01.01.2010)
+ * #25: Quick input field for liveticker 
+
 v0.6.2 (22.11.2009)
  * #17: New relation stadiums to tt_address 
 
