@@ -55,6 +55,7 @@
 			<label index="label_tickerminute">Match minute</label>
 			<label index="label_tickeroffset">Offset</label>
 			<label index="label_showAllTickers">Show all events</label>
+			<label index="msg_sendInstant">Klick here to send an instant message.</label>
 			
 			<label index="msg_league_generation_hasmatches">Current league has already matches. Please ensure that you really want to create additional matches!</label>
 			<label index="btn_create">Create</label>
@@ -186,6 +187,7 @@
 			<label index="label_tickerminute">Spielminute</label>
 			<label index="label_tickeroffset">Offset</label>
 			<label index="label_showAllTickers">Alle Meldungen anzeigen</label>
+			<label index="msg_sendInstant">Klicken Sie hier, um eine Sofortmeldung abzusetzen.</label>
 
 			<label index="msg_league_generation_hasmatches">Für diese Liga wurden bereits Spiele angelegt. Bitte prüfen Sie genau, ob Sie wirklich zusätzliche Paarungen anlegen möchten!</label>
 			<label index="btn_create">Erstellen</label>

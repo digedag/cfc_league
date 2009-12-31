@@ -114,7 +114,7 @@ class  tx_cfcleague_module1 extends t3lib_SCbase {
 				$this->doc->setModuleTemplate('../' . t3lib_extMgm::siteRelPath('cfc_league') .  'mod1/cfc_league.html');
 				$this->doc->loadJavascriptLib('contrib/prototype/prototype.js');
 			}
-			$this->doc->form='<form action="index.php?id=' . $this->id . '" method="POST" name="editform">';
+			$this->doc->form='<form action="index.php?id=' . $this->id . '" method="POST" name="editform" id="editform">';
 			
 			// Selector-Instanz bereitstellen
 			$this->selector = t3lib_div::makeInstance('tx_cfcleague_selector');

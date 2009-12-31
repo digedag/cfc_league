@@ -113,6 +113,7 @@ class tx_cfcleague_match_ticker extends t3lib_extobjbase {
 
 		// Wir zeigen die bisherigen Meldungen
 		// Dann zeigen wir die FORM für die nächste Meldung
+		$content .= $this->getInstantMessageField();
 		$content .= $this->getFormHeadline();
 		$arr = $this->createFormArray($match);
 		$content .= $this->doc->table($arr, $this->_getTableLayoutForm());
@@ -142,7 +143,19 @@ class tx_cfcleague_match_ticker extends t3lib_extobjbase {
 		return $content;
 	}
 
-  function getFormHeadline() {
+	/**
+	 * Liefert ein Textfeld für eine SofortMeldung per Ajax
+	 * @return string
+	 */
+	private function getInstantMessageField() {
+		$this->doc->loadJavascriptLib('contrib/scriptaculous/scriptaculous.js?load=builder,effects,controls');
+		$ret = '';
+		$ret = $this->doc->backPath;
+		$ret = '<script type="text/javascript" src="js/ticker.js"></script>';
+		$ret .= '<p id="instant" style="background:yellow; margin-bottom:10px; padding:3px">'.$GLOBALS['LANG']->getLL('msg_sendInstant').'</p>';
+		return '<div id="t3sportsTicker">'.$ret.'</div>';
+	}
+  private function getFormHeadline() {
     $stop = t3lib_div::_GP('btn_watch_stop');
   	$start = t3lib_div::_GP('btn_watch_start');
   		// Daten: Startuhrzeit auf dem Client und gewünschtes offset
@@ -240,15 +253,13 @@ class tx_cfcleague_match_ticker extends t3lib_extobjbase {
       $out .= ':';
       $out .= $this->getFormTool()->createIntInput('data[tx_cfcleague_games]['.$match->uid.'][goals_guest_'.$i.']', $match->record['goals_guest_'.$i],2);
     }
-    $out .= $this->getFormTool()->createSelectSingle('data[tx_cfcleague_games]['.$match->uid.'][status]', $match->record['status'], 'tx_cfcleague_games', 'status');
-    $out .= $LANG->getLL('tx_cfcleague_games.visitors') .': ';
-    $out .= $this->getFormTool()->createIntInput('data[tx_cfcleague_games]['.$match->uid.'][visitors]', $match->record['visitors'],5);
-    
-    $out .= '<br />';
-
-// t3lib_div::debug($match->record, 'match');
-    return $out;
-  }
+		$out .= $this->getFormTool()->createSelectSingle('data[tx_cfcleague_games]['.$match->uid.'][status]', $match->record['status'], 'tx_cfcleague_games', 'status');
+		$out .= $LANG->getLL('tx_cfcleague_games.visitors') .': ';
+		$out .= $this->getFormTool()->createIntInput('data[tx_cfcleague_games]['.$match->uid.'][visitors]', $match->record['visitors'],5);
+		$out .= $this->getFormTool()->createHidden('t3matchid', $match->uid);
+		$out .= '<br />';
+		return $out;
+	}
 
 	/**
 	 * Für das Formular benötigen wir ein spezielles Layout
@@ -344,11 +355,11 @@ class tx_cfcleague_match_ticker extends t3lib_extobjbase {
     // TS-Config der aktuellen Seite laden, um die Anzahl der Felder zu ermitteln
 		$pageTSconfig = t3lib_BEfunc::getPagesTSconfig($this->id);
 		$inputFields = (is_array($pageTSconfig) && is_array($pageTSconfig['tx_cfcleague.']['matchTickerCfg.'])) ?
-		  intval($pageTSconfig['tx_cfcleague.']['matchTickerCfg.']['numberOfInputFields']) : 3;
+			intval($pageTSconfig['tx_cfcleague.']['matchTickerCfg.']['numberOfInputFields']) : 3;
 		$cols = (is_array($pageTSconfig) && is_array($pageTSconfig['tx_cfcleague.']['matchTickerCfg.'])) ?
-		  intval($pageTSconfig['tx_cfcleague.']['matchTickerCfg.']['commentFieldCols']) : 30;
+			intval($pageTSconfig['tx_cfcleague.']['matchTickerCfg.']['commentFieldCols']) : 30;
 		$rows = (is_array($pageTSconfig) && is_array($pageTSconfig['tx_cfcleague.']['matchTickerCfg.'])) ?
-		  intval($pageTSconfig['tx_cfcleague.']['matchTickerCfg.']['commentFieldRows']) : 5;
+			intval($pageTSconfig['tx_cfcleague.']['matchTickerCfg.']['commentFieldRows']) : 3;
 
 		$types = $this->getTickerTypes();
 
