@@ -51,7 +51,7 @@ class tx_cfcleague_models_TeamNote extends tx_rnbase_model_base {
 	 * @return tx_cfcleaguefe_models_teamNoteType
 	 */
 	function getType() {
-		tx_div::load('tx_cfcleague_models_TeamNoteType');
+		tx_rnbase::load('tx_cfcleague_models_TeamNoteType');
 		return tx_cfcleague_models_TeamNoteType::getInstance($this->record['type']);
 	}
 	/**
@@ -70,15 +70,14 @@ class tx_cfcleague_models_TeamNote extends tx_rnbase_model_base {
 	 */
 	function getProfile() {
 		if(!$this->profile) {
-			$clazz = tx_div::makeInstanceClassname('tx_cfcleague_models_Profile');
-			$this->profile = new $clazz($this->record['player']);
+			$this->profile = tx_rnbase::makeInstance('tx_cfcleague_models_Profile', $this->record['player']);
 		}
 		return $this->profile;
 	}
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/models/class.tx_cfcleague_models_TeamNote.php']) {
-  include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/models/class.tx_cfcleague_models_TeamNote.php']);
+	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/models/class.tx_cfcleague_models_TeamNote.php']);
 }
 
 ?>

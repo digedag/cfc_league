@@ -22,9 +22,9 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-require_once(t3lib_extMgm::extPath('div') . 'class.tx_div.php');
+require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
 require_once(PATH_t3lib.'class.t3lib_svbase.php');
-tx_div::load('tx_rnbase_util_DB');
+tx_rnbase::load('tx_rnbase_util_DB');
 
 interface tx_cfcleague_MatchService {
   function search($fields, $options);
@@ -68,7 +68,7 @@ class tx_cfcleague_services_Match extends t3lib_svbase implements tx_cfcleague_M
 	 * @return array of tx_cfcleague_models_Match
 	 */
 	function search($fields, $options) {
-		tx_div::load('tx_rnbase_util_SearchBase');
+		tx_rnbase::load('tx_rnbase_util_SearchBase');
 		$searcher = tx_rnbase_util_SearchBase::getInstance('tx_cfcleague_search_Match');
 		return $searcher->search($fields, $options);
 	}
@@ -81,7 +81,7 @@ class tx_cfcleague_services_Match extends t3lib_svbase implements tx_cfcleague_M
 	 * @return array of tx_cfcleague_models_MatchRound
 	 */
 	function searchMatchRound($fields, $options) {
-		tx_div::load('tx_rnbase_util_SearchBase');
+		tx_rnbase::load('tx_rnbase_util_SearchBase');
 		$searcher = tx_rnbase_util_SearchBase::getInstance('tx_cfcleague_search_MatchRound');
 		return $searcher->search($fields, $options);
 	}

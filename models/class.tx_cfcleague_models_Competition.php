@@ -22,7 +22,7 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-tx_div::load('tx_rnbase_model_base');
+tx_rnbase::load('tx_rnbase_model_base');
 
 /**
  * Model für einen Wettbewerb.
@@ -247,7 +247,7 @@ class tx_cfcleague_models_Competition extends tx_rnbase_model_base {
    * @return tx_cfcleaguefe_models_group
    */
   function getGroup() {
-		tx_div::load('tx_cfcleaguefe_models_group');
+		tx_rnbase::load('tx_cfcleaguefe_models_group');
   	return tx_cfcleaguefe_models_group::getInstance($this->record['agegroup']);
   }
   /**
@@ -390,7 +390,6 @@ class tx_cfcleague_models_Competition extends tx_rnbase_model_base {
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/models/class.tx_cfcleague_models_Competition.php']) {
-  include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/models/class.tx_cfcleague_models_Competition.php']);
+	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/models/class.tx_cfcleague_models_Competition.php']);
 }
-
 ?>

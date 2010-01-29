@@ -22,9 +22,9 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-require_once(t3lib_extMgm::extPath('div') . 'class.tx_div.php');
-tx_div::load('tx_rnbase_util_Misc');
-tx_div::load('tx_cfcleague_mod1_decorator');
+require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
+tx_rnbase::load('tx_rnbase_util_Misc');
+tx_rnbase::load('tx_cfcleague_mod1_decorator');
 
 
 /**
@@ -91,8 +91,7 @@ class tx_cfcleague_mod1_subTeamNotes {
 		$srv = tx_cfcleague_util_ServiceRegistry::getTeamService();
 		$notes = $srv->getTeamNotes($currTeam, $type);
 		
-		$decor = tx_div::makeInstanceClassname('tx_cfcleague_util_TeamNoteDecorator');
-		$decor = new $decor($this->getFormTool());
+		$decor = tx_rnbase::makeInstance('tx_cfcleague_util_TeamNoteDecorator', $this->getFormTool());
 		$columns = array(
 			'uid' => array('decorator' => $decor),
 			'profile' => array('decorator' => $decor, 'title' => 'label_name'),
@@ -148,14 +147,13 @@ class tx_cfcleague_mod1_subTeamNotes {
 	}
 	
 	/**
-	 * Get a match searcher
+	 * Get a profile searcher
 	 *
 	 * @param array $options
 	 * @return tx_cfcleague_mod1_profilesearcher
 	 */
 	private function getProfileSearcher(&$options) {
-		$clazz = tx_div::makeInstanceClassname('tx_cfcleague_mod1_profilesearcher');
-		$searcher = new $clazz($this->mod, $options);
+		$searcher = tx_rnbase::makeInstance('tx_cfcleague_mod1_profilesearcher', $this->mod, $options);
 		return $searcher;
 	}
 

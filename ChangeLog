@@ -2,6 +2,9 @@
 Änderungen
 ----------
 
+v0.6.4 (02.01.2010)
+ * All dependencies to tx_div removed
+
 v0.6.3 (02.01.2010)
  * #25: Quick input field for liveticker 
 

@@ -83,7 +83,7 @@ class tx_cfcleague_mod1_modCompCreateMatchTable extends t3lib_extobjbase {
 		$options['firstmatchday'] = $comp->getNumberOfRounds();
 		$options['firstmatchnumber'] = $comp->getLastMatchNumber();
 		// Zunächst mal Anzeige der Daten
-		$gen = tx_div::makeInstance('tx_cfcleague_util_Generator');
+		$gen = tx_rnbase::makeInstance('tx_cfcleague_util_Generator');
 		$table = $gen->main($comp->getTeamIds(),$comp->getGenerationKey(), $options);
 
 		if(count($gen->errors)) {

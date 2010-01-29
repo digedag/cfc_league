@@ -22,7 +22,7 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-tx_div::load('tx_rnbase_model_base');
+tx_rnbase::load('tx_rnbase_model_base');
 
 /**
  * Model for a stadium.
@@ -47,8 +47,7 @@ class tx_cfcleague_models_Stadium extends tx_rnbase_model_base {
   function getAddress() {
   	if(!$this->record['address'])
   		return null;
-    $classname = tx_div::makeInstanceClassName('tx_cfcleague_models_Address');
-    $address = new $classname($this->record['address']);
+    $address = tx_rnbase::makeInstance('tx_cfcleague_models_Address', $this->record['address']);
 		return $address->isValid() ? $address : null;
   }
 

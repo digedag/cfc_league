@@ -57,7 +57,7 @@ class tx_cfcleague_match_ticker extends t3lib_extobjbase {
 	 */
 	function getFormTool() {
 		if(!is_object($this->formTool)) {
-			$this->formTool = tx_div::makeInstance('tx_rnbase_util_FormTool');
+			$this->formTool = tx_rnbase::makeInstance('tx_rnbase_util_FormTool');
 			$this->formTool->init($this->pObj->doc);
 		}
 		return $this->formTool;

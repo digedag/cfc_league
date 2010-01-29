@@ -2,26 +2,40 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2007 Rene Nitzsche (r.nitzsche@kuehlhaus.com)
+*  (c) 2008 Rene Nitzsche (rene@system25.de)
 *  All rights reserved
+*
+*  This script is part of the TYPO3 project. The TYPO3 project is
+*  free software; you can redistribute it and/or modify
+*  it under the terms of the GNU General Public License as published by
+*  the Free Software Foundation; either version 2 of the License, or
+*  (at your option) any later version.
+*
+*  The GNU General Public License can be found at
+*  http://www.gnu.org/copyleft/gpl.html.
+*
+*  This script is distributed in the hope that it will be useful,
+*  but WITHOUT ANY WARRANTY; without even the implied warranty of
+*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*  GNU General Public License for more details.
 *
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-require_once(t3lib_extMgm::extPath('div') . 'class.tx_div.php');
+require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
 
 
 
 
 /**
- * Suche von Personen im BE
+ * TODO: Suche von Personen im BE
  */
 class tx_cfcleague_util_ProfileSearcher {
 	private $mod;
 	private $data;
 	private $SEARCH_SETTINGS;
 
-	public function tx_cfcleague_util_ProfileSearcher(&$mod, $options = array()) {
+	public function __construct(&$mod, $options = array()) {
 		$this->init($mod, $options);
 	}
 	
@@ -47,7 +61,7 @@ class tx_cfcleague_util_ProfileSearcher {
     global $LANG;
     $out = '';
     $out .= (strlen($label) ? $label : $LANG->getLL('label_searchterm')).': ';
-    $out .= $this->formTool->createTxtInput('searchdata[searchtermCompany]', $this->SEARCH_SETTINGS['searchtermCompany'], 20);
+    $out .= $this->formTool->createTxtInput('searchdata[searchterm]', $this->SEARCH_SETTINGS['searchterm'], 20);
     // Den Update-Button einfügen
     $out .= '<input type="submit" name="search" value="'.$LANG->getLL('btn_search').'" />';
     // Jetzt noch zusätzlichen JavaScriptcode für Buttons auf der Seite
@@ -57,13 +71,13 @@ class tx_cfcleague_util_ProfileSearcher {
 	}
 	public function getResultList() {
 		$content = '';
-    $searchterm = $this->SEARCH_SETTINGS['searchtermCompany'];
+    $searchterm = $this->SEARCH_SETTINGS['searchterm'];
     if(strlen($searchterm)>0) {
     	$searchterm = trim($this->validateSearchString($searchterm));
     	if(strlen($searchterm)>2) {
-		    $companies = $this->searchCompanies($searchterm);
+		    $companies = $this->searchProfiles($searchterm);
 		    $this->resultSize = count($companies);
-		    $label = $this->resultSize . (($this->resultSize == 1) ? ' gefundene Firma' : ' gefundene Firmen');
+		    $label = $this->resultSize . (($this->resultSize == 1) ? ' gefundene Person' : ' gefundene Personen');
 		    $this->showCompanies($content, $label, $companies);
     	}
     	else {
@@ -83,47 +97,14 @@ class tx_cfcleague_util_ProfileSearcher {
 		return $this->resultSize;		
 	}
 
-  function searchCompanies($searchterm) {
-  	tx_div::load('tx_dsagbase_search_Builder');
-  	$fields = array();
-  	$options = array();
-  	$options['orderby'] = array('COMPANY.FNAME1' => 'asc');
-  	// Wir müssen dafür sorgen, daß vesteckte Firmen noch angezeigt werden.
-  	// Gelöscht dürfen wir nicht anzeigen, da hier keine Weiterverarbeitung möglich ist!
-  	$options['enablefieldsoff'] = 1;
-  	$fields['COMPANY.DELETED'][OP_EQ_INT] = 0;
-  	tx_dsagbase_search_Builder::buildCompanyFreeText($fields, $searchterm);
-  	// Zusätzlich im BE nach UID (DSAG-Nummer) mit suchen
-  	$fields[SEARCH_FIELD_JOINED][0]['cols'][] = 'COMPANY.UID';
-  	$companySrv = tx_dsagbase_util_serviceRegistry::getCompanyService();
-  	$companies = $companySrv->search($fields, $options);
-  	return $companies;
+  function searchProfiles($searchterm) {
+  	// TODO
   }
 	
-  function showCompanies(&$content, $headline, &$companies) {
-  	if($companies) {
-		  $out = '
-		  	<table class="typo3-dblist" width="100%" cellspacing="0" cellpadding="0" border="0">
-		  	<tr>
-		  	'. (isset($this->options['checkbox']) ? '<td class="c-headLineTable"></td>' : '')  .'
-		  		<td class="c-headLineTable">Name</td>
-		  		<td class="c-headLineTable">Informationen</td>
-		  		<td class="c-headLineTable">Aktion</td></tr>';
-  		$i = 0;
-  		foreach($companies As $company) {
-	  		$out .= tx_dsagbase_mod1_decorator::showCompanyTR($company, $this->formTool, $this->mod->pObj->id, ($i++ % 2) ? '' : 'db_list_alt',$this->options);
-	  	}
-	  	$out .= '</table>';
-  	}
-	  else
-	  	$out = '-';
-	  	
-    $content .= $this->mod->doc->section($headline.':',$out,0,1,ICON_INFO);
-  }
-  
+
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/util/class.tx_cfcleague_util_ProfileSearcher.php'])	{
-  include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/util/class.tx_cfcleague_util_ProfileSearcher.php']);
+	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/util/class.tx_cfcleague_util_ProfileSearcher.php']);
 }
 ?>

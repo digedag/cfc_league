@@ -55,7 +55,7 @@ class tx_cfcleague_mod1_modCompetitions extends t3lib_extobjbase {
 
 		$this->doc = $this->pObj->doc;
 
-		$this->formTool = tx_div::makeInstance('tx_rnbase_util_FormTool');
+		$this->formTool = tx_rnbase::makeInstance('tx_rnbase_util_FormTool');
 		$this->formTool->init($this->doc);
 
 		// Selector-Instanz bereitstellen
@@ -97,14 +97,14 @@ class tx_cfcleague_mod1_modCompetitions extends t3lib_extobjbase {
 				$modContent = $this->showEditMatches($current_league);
 				break;
 			case 1:
-				$mod = tx_div::makeInstance('tx_cfcleague_mod1_modCompTeams');
+				$mod = tx_rnbase::makeInstance('tx_cfcleague_mod1_modCompTeams');
 				$modContent = $mod->main($this->MCONF['name'], $this->id, $this->doc, $this->formTool, $current_league);
 				break;
 			case 2:
 				$modContent = $this->showCreateMatchTable($current_league);
 				break;
 			case 3:
-				$mod = tx_div::makeInstance('tx_cfcleague_mod1_modCompCreateMatchTable');
+				$mod = tx_rnbase::makeInstance('tx_cfcleague_mod1_modCompCreateMatchTable');
 				$modContent = $mod->main($this->MCONF['name'], $this->id, $this->doc, $this->formTool, $current_league);
 				break;
 		}

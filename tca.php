@@ -1,11 +1,11 @@
 <?php
 if (!defined ('TYPO3_MODE')) 	die ('Access denied.');
 
-require_once(t3lib_extMgm::extPath('div') . 'class.tx_div.php');
-tx_div::load('tx_rnbase_configurations');
+require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
+tx_rnbase::load('tx_rnbase_configurations');
 // Zur Sicherheit einbinden, da die Funktion schon einmal nicht gefunden wurde...
 require_once(t3lib_extMgm::extPath('dam').'tca_media_field.php');
-tx_div::load('tx_cfcleague_tca_Lookup');
+tx_rnbase::load('tx_cfcleague_tca_Lookup');
 
 $globalClubs = intval(tx_rnbase_configurations::getExtensionCfgValue('cfc_league', 'useGlobalClubs')) > 0;
 

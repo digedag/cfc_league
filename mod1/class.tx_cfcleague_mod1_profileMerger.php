@@ -23,10 +23,10 @@
 ***************************************************************/
 
 require_once(t3lib_extMgm::extPath('cfc_league') . 'class.tx_cfcleague_db.php');
-require_once(t3lib_extMgm::extPath('div') . 'class.tx_div.php');
-tx_div::load('tx_cfcleague_util_ServiceRegistry');
-tx_div::load('tx_cfcleague_team');
-tx_div::load('tx_cfcleague_match');
+require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
+tx_rnbase::load('tx_cfcleague_util_ServiceRegistry');
+tx_rnbase::load('tx_cfcleague_team');
+tx_rnbase::load('tx_cfcleague_match');
 
 class tx_cfcleague_mod1_profileMerger {
 

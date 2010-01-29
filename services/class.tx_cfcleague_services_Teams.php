@@ -61,7 +61,7 @@ class tx_cfcleague_services_Teams extends t3lib_svbase {
 	 * @return array[tx_cfcleague_models_TeamNoteType]
 	 */
 	public function getNoteTypes() {
-		tx_div::load('tx_cfcleague_models_TeamNoteType');
+		tx_rnbase::load('tx_cfcleague_models_TeamNoteType');
 		return tx_cfcleague_models_TeamNoteType::getAll();
 	}
 	/**
@@ -138,7 +138,7 @@ class tx_cfcleague_services_Teams extends t3lib_svbase {
 	}
 
 	function searchMedia($fields, $options) {
-		tx_div::load('tx_rnbase_util_SearchBase');
+		tx_rnbase::load('tx_rnbase_util_SearchBase');
 		$searcher = tx_rnbase_util_SearchBase::getInstance('tx_cfcleague_search_Media');
 		return $searcher->search($fields, $options);
 	}
@@ -146,7 +146,7 @@ class tx_cfcleague_services_Teams extends t3lib_svbase {
 
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/services/class.tx_cfcleague_services_Teams.php']) {
-  include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/services/class.tx_cfcleague_services_Teams.php']);
+	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/services/class.tx_cfcleague_services_Teams.php']);
 }
 
 ?>

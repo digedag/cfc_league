@@ -44,7 +44,7 @@ class tx_cfcleague_selector{
 	 */
 	function getFormTool() {
 		if(!$this->formTool) {
-			$this->formTool = tx_div::makeInstance('tx_rnbase_util_FormTool');
+			$this->formTool = tx_rnbase::makeInstance('tx_rnbase_util_FormTool');
 			$this->formTool->init($this->doc);
 		}
 		return $this->formTool;

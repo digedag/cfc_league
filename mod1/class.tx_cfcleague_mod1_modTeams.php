@@ -55,7 +55,7 @@ class tx_cfcleague_mod1_modTeams extends t3lib_extobjbase {
 
 		$this->doc = $this->pObj->doc;
 
-		$this->formTool = tx_div::makeInstance('tx_rnbase_util_FormTool');
+		$this->formTool = tx_rnbase::makeInstance('tx_rnbase_util_FormTool');
 		$this->formTool->init($this->doc);
 
 		// Selector-Instanz bereitstellen
@@ -109,18 +109,15 @@ class tx_cfcleague_mod1_modTeams extends t3lib_extobjbase {
 
 		switch($menu['value']) {
 			case 0:
-				$mod = tx_div::makeInstance('tx_cfcleague_mod1_modTeamsProfileCreate');
+				$mod = tx_rnbase::makeInstance('tx_cfcleague_mod1_modTeamsProfileCreate');
 				$content .= $mod->main($this->MCONF['name'], $this->id, $this->doc, $this->formTool, $team, $teamInfo);
 				break;
 			case 1:
-				$clazzName = tx_div::makeInstanceClassname('tx_cfcleague_mod1_subAddProfiles');
-				$addMatches = new $clazzName($this);
-				$content .= $addMatches->handleRequest($team, $teamInfo);
-//				$content .= $this->showAddProfiles($data, $team, $teamInfo);
+				$mod = tx_rnbase::makeInstance('tx_cfcleague_mod1_subAddProfiles', $this);
+				$content .= $mod->handleRequest($team, $teamInfo);
 				break;
 			case 2:
-				$clazzName = tx_div::makeInstanceClassname('tx_cfcleague_mod1_subTeamNotes');
-				$mod = new $clazzName($this);
+				$mod = tx_rnbase::makeInstance('tx_cfcleague_mod1_subTeamNotes',$this);
 				$content .= $mod->handleRequest($team);
 				break;
 		}
@@ -131,75 +128,9 @@ class tx_cfcleague_mod1_modTeams extends t3lib_extobjbase {
 //		$content  .= $this->formTool->form->JSbottom('editform');
 		return $content;
 	}
-
-//	private function showCreateProfiles(&$team) {
-//
-//		global $LANG;
-//		$rootPage = tx_rnbase_configurations::getExtensionCfgValue('cfc_league', 'profileRootPageId');
-//		$goodPages = tx_cfcleague_db::getPagePath($this->id);
-//		if(!in_array($rootPage, $goodPages)) {
-//			$content = $this->doc->section('Message:',$LANG->getLL('msg_pageNotAllowed'),0,1,ICON_WARN);
-//			return $content;
-//		}
-//
-//		if (is_array($data['tx_cfcleague_profiles'])) {
-//			$content .= $this->createProfiles($data,$team, $baseInfo);
-//			$team->refresh();
-//		}
-//
-//		if($baseInfo->isTeamFull()) {
-//			// Kann nix mehr angelegt werden
-//			$content .= $this->doc->section('Message:',$LANG->getLL('msg_maxPlayers'),0,1,ICON_WARN);
-//		}
-//		else {
-//			$content .= $this->doc->section('Info:',$LANG->getLL('msg_checkPage') . ': <b>' . t3lib_BEfunc::getRecordPath($this->id,'',0) . '</b>' ,0,1,ICON_WARN);
-//			$content .= $this->doc->section('Message:',$baseInfo->getInfoTable($this->doc),0,1, ICON_INFO);
-//			// Wir zeigen 15 Zeilen mit Eingabefeldern
-////			$content .= $this->prepareInputTable($team);
-//			// Den Update-Button einfügen
-//			$content .= '<input type="submit" name="update" value="'.$LANG->getLL('btn_create').'" onclick="return confirm('.$GLOBALS['LANG']->JScharCode($GLOBALS['LANG']->getLL('msg_CreateProfiles')).')">';
-//		}
-//		return $content;
-//	}
-//
-//	private function showAddProfiles(&$data, &$team, &$baseInfo) {
-//		if($baseInfo->isTeamFull()) {
-//			// Kann nix mehr angelegt werden
-//			$content .= $this->doc->section('Message:',$GLOBALS['LANG']->getLL('msg_maxPlayers'),0,1,ICON_WARN);
-//		}
-//		else {
-//			$content .= $this->doc->section('Message:',$baseInfo->getInfoTable($this->doc),0,1, ICON_INFO);
-//			// Einblenden der Personensuche
-//			$clazzName = tx_div::makeInstanceClassname('tx_cfcleague_mod1_subAddProfiles');
-//			$addMatches = new $clazzName($this);
-//			$content .= $addMatches->handleRequest($team, $baseInfo);
-//		}
-//		return $content;
-//	}
-//
-//	/**
-//	 * Liefert die Informationen, über den Zustand des Teams.
-//	 *
-//	 */
-//	private function getInfoMessage($baseInfo) {
-//		global $LANG;
-//		$tableLayout = Array (
-//			'table' => Array('<table class="typo3-dblist" width="100%" cellspacing="0" cellpadding="0" border="0">', '</table><br/>'),
-//			'defRow' => Array( // Format für 1. Zeile
-//				'tr'		=> Array('<tr class="c-headLineTable">','</tr>'),
-//				'defCol' => Array($this->pObj->isTYPO42() ? '<td>': '<td class="c-headLineTable" style="font-weight:bold;color:white;padding:0 5px;">','</td>') // Format für jede Spalte in der 1. Zeile
-//			)
-//		);
-//
-//		$arr[] = array($LANG->getLL('msg_number_of_players'), $baseInfo['freePlayers']);
-//		$arr[] = array($LANG->getLL('msg_number_of_coaches'), $baseInfo['freeCoaches']);
-//		$arr[] = array($LANG->getLL('msg_number_of_supporters'), $baseInfo['freeSupporters']);
-//		return $this->doc->table($arr, $tableLayout);
-//	}
-
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/mod1/class.tx_cfcleague_mod1_modTeams.php'])	{
-  include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/mod1/class.tx_cfcleague_mod1_modTeams.php']);
+	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/mod1/class.tx_cfcleague_mod1_modTeams.php']);
 }
 ?>

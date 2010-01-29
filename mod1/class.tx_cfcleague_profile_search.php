@@ -22,7 +22,7 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-require_once(t3lib_extMgm::extPath('div') . 'class.tx_div.php');
+require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
 require_once (PATH_t3lib.'class.t3lib_extobjbase.php');
 $BE_USER->modAccess($MCONF,1);
 
@@ -60,7 +60,7 @@ class tx_cfcleague_profile_search extends t3lib_extobjbase {
 
 		$this->doc = $this->pObj->doc;
 
-		$this->formTool = tx_div::makeInstance('tx_rnbase_util_FormTool');
+		$this->formTool = tx_rnbase::makeInstance('tx_rnbase_util_FormTool');
 		$this->formTool->init($this->doc);
 
 		// Selector-Instanz bereitstellen
@@ -117,7 +117,7 @@ class tx_cfcleague_profile_search extends t3lib_extobjbase {
 		elseif ($data['merge_profiles_do']) { // Step 2
 			//Welches ist das führende Profil?
 			$leading = intval($data['merge']);
-			tx_div::load('tx_cfcleague_mod1_profileMerger');
+			tx_rnbase::load('tx_cfcleague_mod1_profileMerger');
 			$errors = tx_cfcleague_mod1_profileMerger::merge($leading, $leading == $profile1 ? $profile2 : $profile1);
 
 			$out .= $this->doc->icons(ICON_OK) . $LANG->getLL('msg_merge_done');
@@ -136,7 +136,7 @@ class tx_cfcleague_profile_search extends t3lib_extobjbase {
 	 */
 	function createProfileMergeForm($uid1, $uid2) {
 		global $LANG;
-		tx_div::load('tx_cfcleague_showItem');
+		tx_rnbase::load('tx_cfcleague_showItem');
 		$info = t3lib_div::makeInstance('tx_cfcleague_showItem');
 
 		$out = '<table width="100%" cellspacing="0" cellpadding="0" border="0">';

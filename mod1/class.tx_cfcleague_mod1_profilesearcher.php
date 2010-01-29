@@ -108,9 +108,8 @@ class tx_cfcleague_mod1_profilesearcher {
 
 	function showProfiles($headline, &$profiles) {
 		$this->options['tablename'] = 'tx_cfcleague_profiles';
-		tx_div::load('tx_cfcleague_mod1_decorator');
-		$decor = tx_div::makeInstanceClassname('tx_cfcleague_util_ProfileDecorator');
-		$decor = new $decor($this->formTool);
+		tx_rnbase::load('tx_cfcleague_mod1_decorator');
+		$decor = tx_rnbase::makeInstance('tx_cfcleague_util_ProfileDecorator', $this->formTool);
 		$columns = array(
 			'uid' => array(),
 			'last_name' => array('decorator' => $decor, 'title' => 'label_name'),

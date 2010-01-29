@@ -22,7 +22,7 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-require_once(t3lib_extMgm::extPath('div') . 'class.tx_div.php');
+require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
 
 
 /**
@@ -30,7 +30,7 @@ require_once(t3lib_extMgm::extPath('div') . 'class.tx_div.php');
 class tx_cfcleague_util_DAM {
 
 	static function fetchFiles($tablename, $uid, $refField) {
-		tx_div::load('tx_rnbase_util_TSDAM');
+		tx_rnbase::load('tx_rnbase_util_TSDAM');
 		return tx_rnbase_util_TSDAM::fetchFiles($tablename, $uid, $refField);
 	}
 	

@@ -22,9 +22,9 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-require_once(t3lib_extMgm::extPath('div') . 'class.tx_div.php');
+require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
 
-require_once(t3lib_extMgm::extPath('rn_base') . 'util/class.tx_rnbase_util_Misc.php');
+tx_rnbase::load('tx_rnbase_util_Misc');
 
 /**
  */
@@ -35,12 +35,12 @@ class tx_cfcleague_tca_Lookup {
 	 * @param array $config
 	 */
 	function getProfileTypes($config) {
-		tx_div::load('tx_cfcleague_util_ServiceRegistry');
+		tx_rnbase::load('tx_cfcleague_util_ServiceRegistry');
 		$srv = tx_cfcleague_util_ServiceRegistry::getProfileService();
 		$config['items'] = $srv->getProfileTypes4TCA();
 	}
 	function getProfileTypeItems($uids) {
-		tx_div::load('tx_cfcleague_util_ServiceRegistry');
+		tx_rnbase::load('tx_cfcleague_util_ServiceRegistry');
 		$srv = tx_cfcleague_util_ServiceRegistry::getProfileService();
 		return $srv->getProfileTypeItems4TCA($uids);
 	}
@@ -50,7 +50,7 @@ class tx_cfcleague_tca_Lookup {
 	 * @return array
 	 */
 	function getMatchNoteTypes($config) {
-		tx_div::load('tx_cfcleague_util_ServiceRegistry');
+		tx_rnbase::load('tx_cfcleague_util_ServiceRegistry');
 		$srv = tx_cfcleague_util_ServiceRegistry::getMatchService();
 		$config['items'] = $srv->getMatchNoteTypes4TCA();
 	}
@@ -73,8 +73,7 @@ class tx_cfcleague_tca_Lookup {
     }
     if(!$currentAvailable) {
     	// Das aktuelle Stadium ist nicht mehr im Verein gefunden worden. Es wird daher nachgeladen
-    	$clazz = tx_div::makeInstanceClassname('tx_cfcleague_models_Stadium');
-    	$stadium = new $clazz($current);
+    	$stadium = tx_rnbase::makeInstance('tx_cfcleague_models_Stadium', $current);
     	if($stadium->isValid())
     		$PA['items'][] = array($stadium->getName(), $stadium->getUid());
     }

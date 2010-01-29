@@ -22,7 +22,7 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-require_once(t3lib_extMgm::extPath('div') . 'class.tx_div.php');
+require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
 require_once(PATH_t3lib.'class.t3lib_svbase.php');
 
 
@@ -41,7 +41,7 @@ class tx_cfcleague_services_Stadiums extends t3lib_svbase {
 	 * @return array of tx_a4base_models_trade
 	 */
 	function search($fields, $options) {
-		tx_div::load('tx_rnbase_util_SearchBase');
+		tx_rnbase::load('tx_rnbase_util_SearchBase');
 		$searcher = tx_rnbase_util_SearchBase::getInstance('tx_cfcleague_search_Stadium');
 		return $searcher->search($fields, $options);
 	}
@@ -49,7 +49,7 @@ class tx_cfcleague_services_Stadiums extends t3lib_svbase {
 
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/services/class.tx_cfcleague_services_Stadiums.php']) {
-  include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/services/class.tx_cfcleague_services_Stadiums.php']);
+	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/services/class.tx_cfcleague_services_Stadiums.php']);
 }
 
 ?>

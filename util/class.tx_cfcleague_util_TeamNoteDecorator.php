@@ -22,7 +22,7 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-require_once(t3lib_extMgm::extPath('div') . 'class.tx_div.php');
+require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
 
 
 /**
@@ -70,7 +70,7 @@ class tx_cfcleague_util_TeamNoteDecorator {
 		elseif($colName == 'value') {
 			$ret = $item->getValue();
 			if($item->getMediaType() == 1) {
-				tx_div::load('tx_cfcleague_util_DAM');
+				tx_rnbase::load('tx_cfcleague_util_DAM');
 				$size = '50x50';
 				$damFiles = tx_cfcleague_util_DAM::fetchFiles('tx_cfcleague_team_notes', $item->getUid(), 'media');
 				$data = $damFiles['rows'];
