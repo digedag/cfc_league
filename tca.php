@@ -730,7 +730,7 @@ $clubArr = $globalClubs ?
 					Array(' ', '0'),
 				),
 				'foreign_table' => 'tx_cfcleague_club',
-				'foreign_table_where' => 'ORDER BY tx_cfcleague_club.name',
+				'foreign_table_where' => 'ORDER BY tx_cfcleague_club.city, tx_cfcleague_club.name',
 				'size' => 1,
 				'minitems' => 0,
 				'maxitems' => 1,

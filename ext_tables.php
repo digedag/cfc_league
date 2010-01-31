@@ -127,7 +127,9 @@ t3lib_extMgm::addLLrefForTCAdescr('tx_cfcleague_profiles','EXT:cfc_league/locall
 $TCA['tx_cfcleague_club'] = Array (
 	'ctrl' => Array (
 		'title' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_club',
-		'label' => 'name',
+		'label' => 'city',
+		'label_alt' => 'name',
+		'label_alt_force' => 1,
 		'tstamp' => 'tstamp',
 		'crdate' => 'crdate',
 		'cruser_id' => 'cruser_id',
