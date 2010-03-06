@@ -100,20 +100,45 @@ class tx_cfcleague_tca_Lookup {
 		require_once(t3lib_extMgm::extPath('dam').'tca_media_field.php');
 		$ret = txdam_getMediaTCA('image_field','logo');
 		$ret['label'] = 'Team Logo';
-		unset($ret['config']['form_type']);
+		$ret['config']['userFunc'] = 'EXT:cfc_league/tca/class.tx_cfcleague_tca_Lookup.php:&tx_cfcleague_tca_Lookup->getSingleField_teamLogo';
 		$ret['config']['type'] = 'select';
 		$ret['config']['itemsProcFunc'] = 'tx_cfcleague_tca_Lookup->getLogo4Team';
 		$ret['config']['maxitems'] = '1';
 		$ret['config']['size'] = '1';
 		$ret['config']['items'] = Array(Array('','0'));
-		
-//		t3lib_div::debug($ret['config']['form_type'], 'tx_cfcleague_tca_Lookup :: getTeamLogoField'); // TODO: remove me
-  	return $ret;
+		unset($ret['config']['MM']);
+		unset($ret['config']['MM_foreign_select']);
+		unset($ret['config']['MM_match_fields']);
+		unset($ret['config']['MM_opposite_field']);
+
+		return $ret;
   }
+	function getSingleField_teamLogo($PA, &$fObj)	{
+		global $TYPO3_CONF_VARS;
+
+		$tceforms = &$PA['pObj'];
+		$table = $PA['table'];
+		$field = $PA['field'];
+		$row = $PA['row'];
+		if(!$row['club']) 
+			return $tceforms->sL('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_tca_noclubselected');
+		$config = $PA['fieldConf']['config'];
+
+		$item = $tceforms->getSingleField_typeSelect($table,$field,$row,$PA);
+		if($row['logo']) {
+			// Logo anzeigen
+			$currPic = t3lib_BEfunc::getRecord('tx_dam',$row['logo']);
+			require_once(t3lib_extMgm::extPath('dam').'lib/class.tx_dam_tcefunc.php');
+			$tcefunc = t3lib_div::makeInstance('tx_dam_tcefunc');
+			$tcefunc->tceforms = &$tceforms;
+			$item .= $tcefunc->renderFileList(array('rows' => array($currPic)));
+		}
+		return $item;
+	}
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/tca/class.tx_cfcleague_tca_Lookup.php']) {
-  include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/tca/class.tx_cfcleague_tca_Lookup.php']);
+	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/tca/class.tx_cfcleague_tca_Lookup.php']);
 }
 
 ?>

@@ -2,9 +2,10 @@
 Änderungen
 ----------
 
-v0.6.4 (02.01.2010)
+v0.6.4 (??.02.2010)
  * All dependencies to tx_div removed
  * Clubs: Main sorting field for Selectbox is now city and then name. 
+ * Team: Thumbnail for logo in TCA-Form
 
 v0.6.3 (02.01.2010)
  * #25: Quick input field for liveticker 
