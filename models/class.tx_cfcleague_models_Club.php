@@ -69,12 +69,15 @@ class tx_cfcleague_models_Club extends tx_rnbase_model_base {
 	 * @return string
 	 */
 	public function getFirstLogo() {
-		if($this->record['dam_logo']) {
-			$damPics = tx_dam_db::getReferencedFiles('tx_cfcleague_club', $this->uid, 'dam_images');
-			if(list($uid, $filePath) = each($damPics['files'])) {
-				return $filePath;
+		if(t3lib_extMgm::isLoaded('dam')) {
+			if($this->record['dam_logo']) {
+				$damPics = tx_dam_db::getReferencedFiles('tx_cfcleague_club', $this->uid, 'dam_images');
+				if(list($uid, $filePath) = each($damPics['files'])) {
+					return $filePath;
+				}
 			}
 		}
+		// TODO: Return logo for simple image field
 		return '';
 	}
 }
