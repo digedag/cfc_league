@@ -66,6 +66,7 @@ CREATE TABLE tx_cfcleague_competition (
 	match_keys text NOT NULL,
 	table_marks text NOT NULL,
 	logo int(11) DEFAULT '0' NOT NULL,
+	t3logo text NOT NULL,
 
 	match_parts tinyint(4) DEFAULT '0' NOT NULL,
 	parent int(11) DEFAULT '0' NOT NULL,
@@ -127,7 +128,7 @@ CREATE TABLE tx_cfcleague_club (
 	name varchar(150) DEFAULT '' NOT NULL,
 	short_name varchar(100) DEFAULT '' NOT NULL,
 	dam_logo int(11) DEFAULT '0' NOT NULL,
-	logo blob NOT NULL,
+	logo text NOT NULL,
 	address int(11) DEFAULT '0' NOT NULL,
 	favorite tinyint(4) DEFAULT '0' NOT NULL,
 
@@ -168,6 +169,8 @@ CREATE TABLE tx_cfcleague_teams (
 	dam_images int(11) DEFAULT '0' NOT NULL,
 	dam_logo int(11) DEFAULT '0' NOT NULL,
 	logo int(11) DEFAULT '0' NOT NULL,
+	t3logo text NOT NULL,
+	t3images text NOT NULL,
 
 	comment text NOT NULL,
 	players_comment text NOT NULL,
@@ -240,6 +243,8 @@ CREATE TABLE tx_cfcleague_games (
 
 	dam_images int(11) DEFAULT '0' NOT NULL,
 	dam_media int(11) DEFAULT '0' NOT NULL
+	dam_media2 int(11) DEFAULT '0' NOT NULL
+	t3images text NOT NULL,
 
 	is_extratime tinyint(3) DEFAULT '0' NOT NULL,
 	goals_home_et int(11) DEFAULT '0' NOT NULL,
@@ -270,6 +275,7 @@ CREATE TABLE tx_cfcleague_profiles (
 	last_name varchar(70) DEFAULT '' NOT NULL,
 	link_report tinyint(4) DEFAULT '0' NOT NULL,
 	dam_images int(11) DEFAULT '0' NOT NULL,
+	t3images text NOT NULL,
 	birthday int(11) DEFAULT '0' NOT NULL,
 	home_town varchar(150) DEFAULT '' NOT NULL,
 	native_town varchar(150) DEFAULT '' NOT NULL,
@@ -395,6 +401,8 @@ CREATE TABLE tx_cfcleague_stadiums (
 
 	logo int(11) DEFAULT '0' NOT NULL,
 	pictures int(11) DEFAULT '0' NOT NULL,
+	t3logo text NOT NULL,
+	t3pictures text NOT NULL,
 	clubs int(11) DEFAULT '0' NOT NULL,
 	address int(11) DEFAULT '0' NOT NULL,
 
