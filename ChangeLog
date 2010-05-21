@@ -2,10 +2,13 @@
 Änderungen
 ----------
 
+v0.7.1 (??.05.2010)
+ * Model classes extended
+
 v0.7.0 (17.05.2010)
  * Manage Teams: SQL error fixed
 
-v0.6.5 (11.05.2010)
+v0.6.5 (11.05.2010) (not released)
  * All dependencies to tx_div removed
  * Clubs: Main sorting field for Selectbox is now city and then name. 
  * Team: Thumbnail for logo in TCA-Form

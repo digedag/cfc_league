@@ -39,6 +39,12 @@ class tx_cfcleague_models_Team extends tx_rnbase_model_base {
 	function getNameShort() {
 		return $this->record['short_name'];
 	}
+	/**
+	 * Liefert true, wenn für das Team eine Einzelansicht verlinkt werden kann.
+	 */
+	function hasReport() {
+		return intval($this->record['link_report']);
+	}
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/models/class.tx_cfcleague_models_Team.php']) {

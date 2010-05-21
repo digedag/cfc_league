@@ -45,7 +45,7 @@ class tx_cfcleague_util_ServiceRegistry {
 		return tx_rnbase_util_Misc::getService('t3sports_srv', 'match');
 	}
 	/**
-	 * Liefert den Profile-Service
+	 * Liefert den Stadium-Service
 	 * @return tx_cfcleague_services_Stadiums
 	 */
 	static function getStadiumService() {
@@ -59,11 +59,18 @@ class tx_cfcleague_util_ServiceRegistry {
 		return tx_rnbase_util_Misc::getService('t3sports_srv', 'profiles');
 	}
 	/**
-	 * Liefert den Profile-Service
+	 * Return den Team-Service
 	 * @return tx_cfcleague_services_Teams
 	 */
 	static function getTeamService() {
 		return tx_rnbase_util_Misc::getService('t3sports_srv', 'teams');
+	}
+	/**
+	 * Returns Group-Service
+	 * @return tx_cfcleague_services_Group
+	 */
+	static function getGroupService() {
+		return tx_rnbase_util_Misc::getService('t3sports_srv', 'group');
 	}
 }
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/util/class.tx_cfcleague_util_ServiceRegistry.php'])	{

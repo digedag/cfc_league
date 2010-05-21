@@ -70,6 +70,19 @@ class tx_cfcleague_services_Competition extends t3lib_svbase {
       $ret = intval($rows[0]['matches']);
     return $ret;
   }
+
+	/**
+	 * Search database for competitions
+	 *
+	 * @param array $fields
+	 * @param array $options
+	 * @return array of tx_cfcleague_models_Competition
+	 */
+	function search($fields, $options) {
+		tx_rnbase::load('tx_rnbase_util_SearchBase');
+		$searcher = tx_rnbase_util_SearchBase::getInstance('tx_cfcleague_search_Competition');
+		return $searcher->search($fields, $options);
+	}
 }
 
 

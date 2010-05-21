@@ -26,6 +26,7 @@ require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
 require_once(PATH_t3lib.'class.t3lib_svbase.php');
 tx_rnbase::load('tx_rnbase_util_SearchBase');
 tx_rnbase::load('tx_rnbase_util_DB');
+tx_rnbase::load('tx_cfcleague_search_Builder');
 
 
 /**
@@ -100,6 +101,47 @@ class tx_cfcleague_services_Teams extends t3lib_svbase {
 		}
 		return $teamNames;
   }
+
+	/**
+	 * Returns the teams age group. This value is retrieved from the teams competitions. So 
+	 * the first competition found, decides about the age group.
+	 * @return tx_cfcleague_models_group or null
+	 */
+	public function getAgeGroup($team) {
+		if(!is_object($team) || !$team->isValid()) return null;
+		
+		tx_rnbase::load('tx_rnbase_cache_Manager');
+		$cache = tx_rnbase_cache_Manager::getCache('t3sports');
+		$agegroup = $cache->get('team_'.$team->getUid());
+		if(!$agegroup) {
+			if(intval($team->record['agegroup']))
+				$agegroup = tx_cfcleague_models_group::getInstance($this->record['agegroup']);
+			if(!$agegroup) {
+				$comps = $this->getCompetitions4Team($team, true);
+				for($i=0, $cnt = count($comps); $i < $cnt; $i++) {
+					if(is_object($comps[$i]->getGroup())) {
+						$agegroup = $comps[$i]->getGroup();
+						break;
+					}
+				}
+			}
+			$cache->set('team_'.$team->getUid(), $agegroup, 600); // 10 minutes
+		}
+		return $agegroup;
+	}
+
+	/**
+	 * Returns the competitons of this team
+	 * @param tx_cfcleague_models_Team
+	 * @param boolean $obligateOnly if true, only obligate competitions are returned
+	 * @return array of tx_cfcleaguefe_models_competition
+	 */
+	public function getCompetitions4Team($team, $obligateOnly = false) {
+		$fields = array();
+		tx_cfcleague_search_Builder::buildCompetitionByTeam($fields, $team->getUid(),$obligateOnly);
+		$srv = tx_cfcleague_util_ServiceRegistry::getCompetitionService();
+		return $srv->search($fields, $options);
+	}
 
 	/**
 	 * Search database for team notes

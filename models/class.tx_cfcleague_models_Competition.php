@@ -247,8 +247,8 @@ class tx_cfcleague_models_Competition extends tx_rnbase_model_base {
    * @return tx_cfcleaguefe_models_group
    */
   function getGroup() {
-		tx_rnbase::load('tx_cfcleaguefe_models_group');
-  	return tx_cfcleaguefe_models_group::getInstance($this->record['agegroup']);
+		tx_rnbase::load('tx_cfcleague_models_Group');
+  	return tx_cfcleague_models_Group::getInstance($this->record['agegroup']);
   }
   /**
    * Returns all team participating this competition.
