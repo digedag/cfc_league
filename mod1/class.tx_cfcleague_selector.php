@@ -146,35 +146,34 @@ class tx_cfcleague_selector{
 	 * Darstellung der Select-Box mit allen Spielrunden des übergebenen Wettbewerbs. Es wird auf die aktuelle Runde eingestellt.
 	 */
 	function showRoundSelector(&$content,$pid,$league){
-		$this->ROUND_MENU = Array (
-			'round' => array()
-		);
+		$entries = Array ();
 
 		$objRounds = array();
 		foreach($league->getRounds() as $round){
 			if(is_object($round)) {
 				$objRounds[$round->uid] = $round;
-				$this->ROUND_MENU['round'][$round->uid] = $round->record['name'] . ( intval($round->record['finished']) ? ' *' : '' );
+				$entries[$round->uid] = $round->record['name'] . ( intval($round->record['finished']) ? ' *' : '' );
 			}
 			else
-				$this->ROUND_MENU['round'][$round['round']] = $round['round_name'] . ( intval($round['max_status']) ? ' *' : '' );
+				$entries[$round['round']] = $round['round_name'] . ( intval($round['max_status']) ? ' *' : '' );
 		}
 
-		$this->ROUND_SETTINGS = t3lib_BEfunc::getModuleData(
-			$this->ROUND_MENU,t3lib_div::_GP('SET'),$this->MCONF['name'] // Das ist der Name des Moduls
-		);
-		$menu = t3lib_BEfunc::getFuncMenu(
-			$pid,'SET[round]',$this->ROUND_SETTINGS['round'],$this->ROUND_MENU['round']
-		);
+		$data = $this->getFormTool()->showMenu($pid, 'round',$this->MCONF['name'], $entries);
 		// In den Content einbauen
 		// Spielrunden sind keine Objekt, die bearbeitet werden können
-		if($menu)
-			$menu = '<div class="cfcselector"><div class="selector">' . $menu . '</div></div>';
-//		$menu .= '</td><td style="width:90px; padding-left:10px;">';
-//		$content.=$this->doc->section('',$this->doc->funcMenu($headerSection,$menu));
+		if($data['menu']) {
+			$keys = array_flip(array_keys($entries));
+			$currIdx = $keys[$data['value']];
+			$keys = array_flip($keys);
+			$prevIdx = ($currIdx > 0) ? $currIdx-1 : count($entries)-1;
+			$nextIdx = ($currIdx < (count($entries)-1)) ? $currIdx+1 : 0;
+			$prev = $this->getFormTool()->createLink('&SET[round]='.($keys[$prevIdx]), $pid,'&lt;');
+			$next = $this->getFormTool()->createLink('&SET[round]='.($keys[$nextIdx]), $pid,'&gt;');
+			$menu = '<div class="cfcselector"><div class="selector">' . $prev.$data['menu'].$next . '</div></div>';
+		}
 		$content.= $menu;
 
-		return count($objRounds) ? $objRounds[$this->ROUND_SETTINGS['round']] : $this->ROUND_SETTINGS['round'];
+		return count($objRounds) ? $objRounds[$data['value']] : $data['value'];
 	}
 
 	/**
