@@ -5,6 +5,7 @@
 v0.7.1 (??.05.2010)
  * Model classes extended
  * Prev/Next-Buttons in Round-Selector
+ * search_Teams: Relation to competition is possible
 
 v0.7.0 (17.05.2010)
  * Manage Teams: SQL error fixed
