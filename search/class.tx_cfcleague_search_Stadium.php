@@ -39,6 +39,9 @@ class tx_cfcleague_search_Stadium extends tx_rnbase_util_SearchBase {
 		$tableMapping['STADIUMMM'] = 'tx_cfcleague_stadiums_mm';
 		$tableMapping['CLUB'] = 'tx_cfcleague_club';
 		$tableMapping['TEAM'] = 'tx_cfcleague_teams';
+		$tableMapping['MATCH'] = 'tx_cfcleague_games';
+		$tableMapping['COMPETITION'] = 'tx_cfcleague_competition';
+		
 		// Hook to append other tables
 		tx_rnbase_util_Misc::callHook('cfc_league','search_Stadium_getTableMapping_hook',
 			array('tableMapping' => &$tableMapping), $this);
@@ -62,6 +65,12 @@ class tx_cfcleague_search_Stadium extends tx_rnbase_util_SearchBase {
 		}
 		if(isset($tableAliases['TEAM'])) {
 			$join .= ' JOIN tx_cfcleague_teams ON tx_cfcleague_teams.club = tx_cfcleague_club.uid ';
+		}
+		if(isset($tableAliases['MATCH']) || isset($tableAliases['COMPETITION'])) {
+			$join .= ' JOIN tx_cfcleague_games ON tx_cfcleague_stadiums.uid = tx_cfcleague_games.arena ';
+		}
+		if(isset($tableAliases['COMPETITION'])) {
+			$join .= ' JOIN tx_cfcleague_competition ON tx_cfcleague_competition.uid = tx_cfcleague_games.competition ';
 		}
 
 		// Hook to append other tables
