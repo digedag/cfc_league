@@ -37,14 +37,57 @@ class tx_cfcleague_models_Stadium extends tx_rnbase_model_base {
 	 *
 	 * @return string
 	 */
-	function getName() {
+	public function getName() {
 		return $this->record['name'];
 	}
-  /**
+	/**
+	 * Returns the city
+	 *
+	 * @return string
+	 */
+	public function getCity() {
+		return $this->record['city'];
+	}
+	/**
+	 * Returns the zip
+	 *
+	 * @return string
+	 */
+	public function getZip() {
+		return $this->record['zip'];
+	}
+	/**
+	 * Returns the street
+	 *
+	 * @return string
+	 */
+	public function getStreet() {
+		return $this->record['street'];
+	}
+	public function getLongitute() {
+		return floatval($this->record['lng']);
+	}
+	public function getLatitute() {
+		return floatval($this->record['lat']);
+	}
+	/**
+	 * Returns coords
+	 * @return tx_rnbase_maps_ICoord or false
+	 */
+	public function getCoords() {
+		$coords = false;
+		if($this->getLongitute() || $this->getLatitute()) {
+			$coords = tx_rnbase::makeInstance('tx_rnbase_maps_Coord');
+			$coords->setLatitude($this->getLatitute());
+			$coords->setLongitude($this->getLongitute());
+		}
+		return $coords;
+	}
+	/**
    * Returns address dataset or null
    * @return tx_cfcleague_models_Address or null
    */
-  function getAddress() {
+  public function getAddress() {
   	if(!$this->record['address'])
   		return null;
     $address = tx_rnbase::makeInstance('tx_cfcleague_models_Address', $this->record['address']);
@@ -66,10 +109,27 @@ class tx_cfcleague_models_Stadium extends tx_rnbase_model_base {
 		}
 		return self::$instances[$uid];
 	}
+	/**
+	 * Returns the url of the first stadium logo.
+	 *
+	 * @return string
+	 */
+	public function getLogoPath() {
+		if(t3lib_extMgm::isLoaded('dam')) {
+			if($this->record['logo']) {
+				$damPics = tx_dam_db::getReferencedFiles('tx_cfcleague_stadiums', $this->uid, 'logo');
+				if(list($uid, $filePath) = each($damPics['files'])) {
+					return $filePath;
+				}
+			}
+		}
+		// TODO: Return logo for simple image field
+		return '';
+	}
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/models/class.tx_cfcleague_models_Stadium.php']) {
-  include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/models/class.tx_cfcleague_models_Stadium.php']);
+	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/models/class.tx_cfcleague_models_Stadium.php']);
 }
 
 ?>
