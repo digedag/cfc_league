@@ -214,11 +214,11 @@
 			<label index="tx_cfcleague_stadiums_street">Street</label>
 			<label index="tx_cfcleague_stadiums_city">City</label>
 			<label index="tx_cfcleague_stadiums_zip">Zip</label>
-			<label index="tx_cfcleague_stadiums_lng">Longtitude</label>
-			<label index="tx_cfcleague_stadiums_lat">Latidude</label>
 			<label index="tx_cfcleague_stadiums_logo">Logo</label>
 			<label index="tx_cfcleague_stadiums_pictures">Pictures</label>
 
+			<label index="tx_cfcleague_common_lng">Longitude</label>
+			<label index="tx_cfcleague_common_lat">Latitude</label>
 			<label index="tx_cfcleague.unknown">Unknown</label>
 			<label index="tx_cfcleague_tca_noclubselected">Select a club and save record.</label>
 		</languageKey>
@@ -420,11 +420,11 @@
 			<label index="tx_cfcleague_stadiums_street">Strasse</label>
 			<label index="tx_cfcleague_stadiums_city">Ort</label>
 			<label index="tx_cfcleague_stadiums_zip">PLZ</label>
-			<label index="tx_cfcleague_stadiums_lng">Längengrad</label>
-			<label index="tx_cfcleague_stadiums_lat">Breitengrad</label>
 			<label index="tx_cfcleague_stadiums_logo">Logo</label>
 			<label index="tx_cfcleague_stadiums_pictures">Bilder</label>
 
+			<label index="tx_cfcleague_common_lng">Längengrad</label>
+			<label index="tx_cfcleague_common_lat">Breitengrad</label>
 			<label index="tx_cfcleague_tca_noclubselected">Zuerst einen Verein auswählen und den Datensatz speichern.</label>
 		</languageKey>
 	</data>

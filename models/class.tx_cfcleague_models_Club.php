@@ -62,6 +62,25 @@ class tx_cfcleague_models_Club extends tx_rnbase_model_base {
 	public function getStreet() {
 		return $this->record['street'];
 	}
+	public function getLongitute() {
+		return floatval($this->record['lng']);
+	}
+	public function getLatitute() {
+		return floatval($this->record['lat']);
+	}
+	/**
+	 * Returns coords
+	 * @return tx_rnbase_maps_ICoord or false
+	 */
+	public function getCoords() {
+		$coords = false;
+		if($this->getLongitute() || $this->getLatitute()) {
+			$coords = tx_rnbase::makeInstance('tx_rnbase_maps_Coord');
+			$coords->setLatitude($this->getLatitute());
+			$coords->setLongitude($this->getLongitute());
+		}
+		return $coords;
+	}
 
 	/**
 	 * Returns the url of the first club logo.

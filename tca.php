@@ -659,6 +659,26 @@ $TCA['tx_cfcleague_club'] = Array (
 				'eval' => 'trim',
 			)
 		),
+		'lng' => Array (
+			'exclude' => 1,
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_common_lng',
+			'config' => Array (
+				'type' => 'input',
+				'size' => '20',
+				'max' => '50',
+				'eval' => 'trim',
+			)
+		),
+		'lat' => Array (
+			'exclude' => 1,
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_common_lat',
+			'config' => Array (
+				'type' => 'input',
+				'size' => '20',
+				'max' => '50',
+				'eval' => 'trim',
+			)
+		),
 		'shortinfo' => Array (
 			'exclude' => 1,
 			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_club.shortinfo',
@@ -733,7 +753,7 @@ $TCA['tx_cfcleague_club'] = Array (
 	),
 	'types' => Array (
 		'0' => Array('showitem' => 'hidden;;1;;1-1-1, name,short_name,dam_logo, logo,favorite,stadiums,
-			--div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_club.tab_contact,www,email,street,zip,city,address,
+			--div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_club.tab_contact,www,email,street,zip,city,address,lng,lat,
 			--div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_club.tab_info,shortinfo,info;;;richtext[paste|bold|italic|underline|formatblock|class|left|center|right|orderedlist|unorderedlist|outdent|indent|link|image]:rte_transform[mode=ts]')
 	),
 	'palettes' => Array (
@@ -2344,7 +2364,7 @@ $TCA['tx_cfcleague_stadiums'] = Array (
 		),
 		'lng' => Array (
 			'exclude' => 1,
-			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_stadiums_lng',
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_common_lng',
 			'config' => Array (
 				'type' => 'input',
 				'size' => '20',
@@ -2354,7 +2374,7 @@ $TCA['tx_cfcleague_stadiums'] = Array (
 		),
 		'lat' => Array (
 			'exclude' => 1,
-			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_stadiums_lat',
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_common_lat',
 			'config' => Array (
 				'type' => 'input',
 				'size' => '20',
