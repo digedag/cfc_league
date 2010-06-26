@@ -70,7 +70,7 @@ class tx_cfcleague_hooks_tcehook {
 	 * Wir müssen dafür sorgen, daß die neuen IDs der Teams im Wettbewerb und Spielen
 	 * verwendet werden.
 	 */
-	function processDatamap_preProcessFieldArray(&$incomingFieldArray, $table, $id, &$tcemain)  {
+	public function processDatamap_preProcessFieldArray(&$incomingFieldArray, $table, $id, &$tcemain)  {
 
 		if($table == 'tx_cfcleague_teams') {
 			$this->checkProfiles($incomingFieldArray,'players', $tcemain);
@@ -80,6 +80,25 @@ class tx_cfcleague_hooks_tcehook {
 		if($table == 'tx_cfcleague_competition') {
 			$this->checkProfiles($incomingFieldArray,'teams', $tcemain);
 		}
+		if($table == 'tx_cfcleague_games') {
+			if($incomingFieldArray['arena'] > 0 && !$incomingFieldArray['stadium']) {
+				$stadium = tx_rnbase::makeInstance('tx_cfcleague_models_Stadium', $incomingFieldArray['arena']);
+				$incomingFieldArray['stadium'] = $stadium->getName();
+			}
+		}
+	}
+
+	/**
+	 * Nachbearbeitungen, unmittelbar BEVOR die Daten gespeichert werden. Das POST bezieht sich
+	 * auf die Arbeit der TCE und nicht auf die Speicherung in der DB.
+	 *
+	 * @param string $status new oder update
+	 * @param string $table Name der Tabelle
+	 * @param int $id UID des Datensatzes
+	 * @param array $fieldArray Felder des Datensatzes, die sich ändern
+	 * @param tce_main $tcemain
+	 */
+	public function processDatamap_postProcessFieldArray($status, $table, $id, &$fieldArray, &$tce) {
 	}
 
   /**
