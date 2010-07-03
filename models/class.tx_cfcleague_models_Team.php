@@ -45,10 +45,29 @@ class tx_cfcleague_models_Team extends tx_rnbase_model_base {
 	function hasReport() {
 		return intval($this->record['link_report']);
 	}
+	/**
+	 * Returns the url of the first stadium logo.
+	 *
+	 * @return string
+	 */
+	public function getLogoPath() {
+		if(t3lib_extMgm::isLoaded('dam')) {
+			if($this->record['logo']) {
+				// LogoFeld
+				$media = tx_rnbase::makeInstance('tx_rnbase_model_media', $this->record['logo']);
+				return $media->record['file'];
+			}
+			elseif($this->record['club']) {
+				$club = tx_rnbase::makeInstance('tx_cfcleague_models_Club', $this->record['club']);
+				return $club->getFirstLogo();
+			}
+		}
+		return '';
+	}
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/models/class.tx_cfcleague_models_Team.php']) {
-  include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/models/class.tx_cfcleague_models_Team.php']);
+	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/models/class.tx_cfcleague_models_Team.php']);
 }
 
 ?>
