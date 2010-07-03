@@ -110,12 +110,13 @@ class tx_cfcleague_services_Teams extends t3lib_svbase {
 	public function getAgeGroup($team) {
 		if(!is_object($team) || !$team->isValid()) return null;
 		
+		tx_rnbase::load('tx_cfcleague_models_Group');
 		tx_rnbase::load('tx_rnbase_cache_Manager');
 		$cache = tx_rnbase_cache_Manager::getCache('t3sports');
 		$agegroup = $cache->get('team_'.$team->getUid());
 		if(!$agegroup) {
 			if(intval($team->record['agegroup']))
-				$agegroup = tx_cfcleague_models_group::getInstance($this->record['agegroup']);
+				$agegroup = tx_cfcleague_models_Group::getInstance($this->record['agegroup']);
 			if(!$agegroup) {
 				$comps = $this->getCompetitions4Team($team, true);
 				for($i=0, $cnt = count($comps); $i < $cnt; $i++) {
