@@ -40,6 +40,9 @@ class tx_cfcleague_models_Stadium extends tx_rnbase_model_base {
 	public function getName() {
 		return $this->record['name'];
 	}
+	public function getCountryCode() {
+		return $this->record['countrycode'];
+	}
 	/**
 	 * Returns the city
 	 *

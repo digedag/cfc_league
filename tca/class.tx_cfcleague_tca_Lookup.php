@@ -135,6 +135,25 @@ class tx_cfcleague_tca_Lookup {
 		}
 		return $item;
 	}
+
+	public static function getCountryField() {
+		return Array (
+			'exclude' => 0,
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_common_country',
+			'config' => Array (
+				'type' => 'select',
+				'items' => Array (
+					Array(' ', '0'),
+				),
+		    'foreign_table' => 'static_countries',
+				'foreign_table_where' => ' ORDER BY static_countries.cn_short_en ',
+				'size' => 1,
+				'default' => 54,
+				'minitems' => 0,
+				'maxitems' => 1,
+			)
+		);
+	}
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/tca/class.tx_cfcleague_tca_Lookup.php']) {

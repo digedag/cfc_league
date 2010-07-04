@@ -33,11 +33,14 @@ class tx_cfcleague_models_Club extends tx_rnbase_model_base {
 
 	function getTableName(){return 'tx_cfcleague_club';}
 
-	function getName() {
+	public function getName() {
 		return $this->record['name'];
 	}
-	function getNameShort() {
+	public function getNameShort() {
 		return $this->record['short_name'];
+	}
+	public function getCountryCode() {
+		return $this->record['countrycode'];
 	}
 
 	/**

@@ -139,6 +139,8 @@ CREATE TABLE tx_cfcleague_club (
 	city varchar(200) DEFAULT '' NOT NULL,
 	lng tinytext NOT NULL,
 	lat tinytext NOT NULL,
+	country int(11) DEFAULT '0' NOT NULL,
+	countrycode varchar(20) DEFAULT '' NOT NULL,
 	shortinfo text NOT NULL,
 	info text NOT NULL,
 	stadiums int(11) DEFAULT '0' NOT NULL,
@@ -398,6 +400,8 @@ CREATE TABLE tx_cfcleague_stadiums (
 	street varchar(255) DEFAULT '' NOT NULL,
 	city varchar(255) DEFAULT '' NOT NULL,
 	zip varchar(150) DEFAULT '' NOT NULL,
+	country int(11) DEFAULT '0' NOT NULL,
+	countrycode varchar(20) DEFAULT '' NOT NULL,
 	lng tinytext NOT NULL,
 	lat tinytext NOT NULL,
 

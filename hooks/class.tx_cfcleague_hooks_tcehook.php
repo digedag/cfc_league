@@ -86,6 +86,12 @@ class tx_cfcleague_hooks_tcehook {
 				$incomingFieldArray['stadium'] = $stadium->getName();
 			}
 		}
+		if($table == 'tx_cfcleague_stadiums' || $table == 'tx_cfcleague_club') {
+			if($incomingFieldArray['country'] > 0 && !$incomingFieldArray['countrycode']) {
+				$country = t3lib_BEfunc::getRecord('static_countries', intval($incomingFieldArray['country']));
+				$incomingFieldArray['countrycode'] = $country['cn_iso_2'];
+			}
+		}
 	}
 
 	/**

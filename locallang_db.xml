@@ -219,6 +219,8 @@
 
 			<label index="tx_cfcleague_common_lng">Longitude</label>
 			<label index="tx_cfcleague_common_lat">Latitude</label>
+			<label index="tx_cfcleague_common_country">Country</label>
+			<label index="tx_cfcleague_common_countrycode">Country code</label>
 			<label index="tx_cfcleague.unknown">Unknown</label>
 			<label index="tx_cfcleague_tca_noclubselected">Select a club and save record.</label>
 		</languageKey>
@@ -425,6 +427,8 @@
 
 			<label index="tx_cfcleague_common_lng">Längengrad</label>
 			<label index="tx_cfcleague_common_lat">Breitengrad</label>
+			<label index="tx_cfcleague_common_country">Land</label>
+			<label index="tx_cfcleague_common_countrycode">Landeskürzel</label>
 			<label index="tx_cfcleague_tca_noclubselected">Zuerst einen Verein auswählen und den Datensatz speichern.</label>
 		</languageKey>
 	</data>

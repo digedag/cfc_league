@@ -659,6 +659,16 @@ $TCA['tx_cfcleague_club'] = Array (
 				'eval' => 'trim',
 			)
 		),
+		'countrycode' => Array (
+			'exclude' => 1,
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_common_countrycode',
+			'config' => Array (
+				'type' => 'input',
+				'size' => '10',
+				'max' => '20',
+				'eval' => 'trim',
+			)
+		),
 		'lng' => Array (
 			'exclude' => 1,
 			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_common_lng',
@@ -753,7 +763,7 @@ $TCA['tx_cfcleague_club'] = Array (
 	),
 	'types' => Array (
 		'0' => Array('showitem' => 'hidden;;1;;1-1-1, name,short_name,dam_logo, logo,favorite,stadiums,
-			--div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_club.tab_contact,www,email,street,zip,city,address,lng,lat,
+			--div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_club.tab_contact,www,email,street,zip,city,country,countrycode,address,lng,lat,
 			--div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_club.tab_info,shortinfo,info;;;richtext[paste|bold|italic|underline|formatblock|class|left|center|right|orderedlist|unorderedlist|outdent|indent|link|image]:rte_transform[mode=ts]')
 	),
 	'palettes' => Array (
@@ -761,6 +771,9 @@ $TCA['tx_cfcleague_club'] = Array (
 	)
 );
 
+if(t3lib_extMgm::isLoaded('static_info_tables')) {
+	$TCA['tx_cfcleague_club']['columns']['country'] = tx_cfcleague_tca_Lookup::getCountryField();
+}
 if(t3lib_extMgm::isLoaded('dam')) {
 	$TCA['tx_cfcleague_club']['columns']['dam_logo'] = txdam_getMediaTCA('image_field', 'dam_images');
 	$TCA['tx_cfcleague_club']['columns']['dam_logo']['label'] = 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_club.logo';
@@ -2362,6 +2375,16 @@ $TCA['tx_cfcleague_stadiums'] = Array (
 				'eval' => 'trim',
 			)
 		),
+		'countrycode' => Array (
+			'exclude' => 1,
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_common_countrycode',
+			'config' => Array (
+				'type' => 'input',
+				'size' => '10',
+				'max' => '20',
+				'eval' => 'trim',
+			)
+		),
 		'lng' => Array (
 			'exclude' => 1,
 			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_common_lng',
@@ -2405,12 +2428,15 @@ $TCA['tx_cfcleague_stadiums'] = Array (
 	'types' => Array (
 			'0' => Array('showitem' => 'name,altname,capacity,logo,t3logo,pictures,t3pictures,clubs,
 						--div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_stadiums_tab_description,description;;4;richtext[paste|bold|italic|underline|formatblock|class|left|center|right|orderedlist|unorderedlist|outdent|indent|link|image]:rte_transform[mode=ts],description2;;4;richtext[paste|bold|italic|underline|formatblock|class|left|center|right|orderedlist|unorderedlist|outdent|indent|link|image]:rte_transform[mode=ts],
-						--div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_stadiums_tab_location,street,city,zip,lng,lat,address')
+						--div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_stadiums_tab_location,street,city,zip,country,countrycode,lng,lat,address')
 	),
 	'palettes' => Array (
 			'1' => Array('showitem' => '')
 	)
 );
+if(t3lib_extMgm::isLoaded('static_info_tables')) {
+	$TCA['tx_cfcleague_stadiums']['columns']['country'] = tx_cfcleague_tca_Lookup::getCountryField();
+}
 if(t3lib_extMgm::isLoaded('dam')) {
 	$TCA['tx_cfcleague_stadiums']['columns']['logo'] = txdam_getMediaTCA('image_field', 'logo');
 	$TCA['tx_cfcleague_stadiums']['columns']['logo']['label'] = 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_stadiums_logo';
