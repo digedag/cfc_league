@@ -25,6 +25,7 @@
 require_once (PATH_t3lib.'class.t3lib_extobjbase.php');
 $BE_USER->modAccess($MCONF,1);
 
+tx_rnbase::load('tx_rnbase_util_TYPO3');
 
 require_once('../class.tx_cfcleague_db.php');
 
@@ -148,7 +149,9 @@ class tx_cfcleague_match_ticker extends t3lib_extobjbase {
 	 * @return string
 	 */
 	private function getInstantMessageField() {
-		$this->doc->loadJavascriptLib('contrib/scriptaculous/scriptaculous.js?load=builder,effects,controls');
+		if(tx_rnbase_util_TYPO3::isTYPO3VersionOrHigher(4004000)) return '';
+//		$this->doc->loadJavascriptLib('contrib/scriptaculous/scriptaculous.js?load=builder,effects,controls');
+		$this->doc->loadJavascriptLib('contrib/scriptaculous/scriptaculous.js');
 		$ret = '';
 		$ret = $this->doc->backPath;
 		$ret = '<script type="text/javascript" src="js/ticker.js"></script>';
