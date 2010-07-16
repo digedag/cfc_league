@@ -100,22 +100,6 @@ class tx_cfcleague_mod1_modTeamsProfileCreate extends t3lib_extobjbase {
 		global $LANG;
 		tx_rnbase::load('tx_rnbase_util_TYPO3');
 		
-		$tableLayout = Array (
-			'table' => Array('<table class="typo3-dblist" width="100%" cellspacing="0" cellpadding="0" border="0">', '</table><br/>'),
-			'0' => Array( // Format für 1. Zeile
-				'tr'		=> Array('<tr class="c-headLineTable">','</tr>'),
-				'defCol' => Array(tx_rnbase_util_TYPO3::isTYPO42OrHigher() ? '<td>': '<td class="c-headLineTable" style="font-weight:bold;color:white;padding:0 5px;">','</td>') // Format für jede Spalte in der 1. Zeile
-			),
-			'defRow' => Array ( // Formate für alle Zeilen
-				'tr'	   => Array('<tr class="db_list_normal">', '</tr>'),
-				'defCol' => Array('<td>','</td>') // Format für jede Spalte in jeder Zeile
-			),
-			'defRowEven' => Array ( // Formate für alle Zeilen
-				'tr'	   => Array('<tr class="db_list_alt">', '</tr>'),
-				'defCol' => Array(tx_rnbase_util_TYPO3::isTYPO42OrHigher() ? '<td>' : '<td class="db_list_alt">','</td>') // Format für jede Spalte in jeder Zeile
-			)
-		);
-
 		// Es werden zwei Tabellen erstellt
 		$tableProfiles = $teamInfo->getTeamTable($this->doc);
 

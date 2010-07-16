@@ -39,7 +39,8 @@ class tx_cfcleague_mod1_subAddProfiles {
 	/**
 	 * Ausführung des Requests. Das Team muss bekannt sein
 	 *
-	 * @param tx_cfcleague_util_TeamInfo $currTeam
+	 * @param tx_cfcleague_team $currTeam
+	 * @param tx_cfcleague_util_TeamInfo $teamInfo
 	 * @return string
 	 */
 	public function handleRequest(&$currTeam, $teamInfo) {

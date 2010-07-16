@@ -256,7 +256,7 @@ class  tx_cfcleague_module1 extends t3lib_SCbase {
 		return Array (
 				'table' => Array('<table class="typo3-dblist" width="100%" cellspacing="0" cellpadding="0" border="0">', '</table><br/>'),
 				'0' => Array( // Format für 1. Zeile
-					'tr'		=> Array('<tr class="c-headLineTable">','</tr>'),
+					'tr'		=> Array('<tr class="t3-row-header c-headLineTable">','</tr>'),
 					'defCol' => ($this->isTYPO42() ? Array('<td>','</td>') : Array('<td class="c-headLineTable" style="font-weight:bold; color:white;">','</td>'))  // Format für jede Spalte in der 1. Zeile
 				),
 				'defRow' => Array ( // Formate für alle Zeilen
