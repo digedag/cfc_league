@@ -33,9 +33,9 @@ require_once($BACK_PATH.'template.php');
 require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
 
 // Dort steckt die ModulDef-Klasse drin
-include_once('../class.tx_cfcleague.php');
+require_once(t3lib_extMgm::extPath('cfc_league').'class.tx_cfcleague.php');
 // Die Datenbank-Klasse
-include_once('../class.tx_cfcleague_db.php');
+require_once(t3lib_extMgm::extPath('cfc_league').'class.tx_cfcleague_db.php');
 
 $LANG->includeLLFile('EXT:cfc_league/mod1/locallang.xml');
 require_once(PATH_t3lib.'class.t3lib_scbase.php');
@@ -43,11 +43,11 @@ require_once(PATH_t3lib.'class.t3lib_transferdata.php');
 $BE_USER->modAccess($MCONF,1);	// This checks permissions and exits if the users has no permission for entry.
 	// DEFAULT initialization of a module [END]
 
-include_once('../class.tx_cfcleague_league.php');
-include_once('../class.tx_cfcleague_match.php');
-include_once('../class.tx_cfcleague_team.php');
-include_once('../class.tx_cfcleague_saison.php');
-include_once('class.tx_cfcleague_selector.php');
+require_once(t3lib_extMgm::extPath('cfc_league').'class.tx_cfcleague_league.php');
+require_once(t3lib_extMgm::extPath('cfc_league').'class.tx_cfcleague_match.php');
+require_once(t3lib_extMgm::extPath('cfc_league').'class.tx_cfcleague_team.php');
+require_once(t3lib_extMgm::extPath('cfc_league').'class.tx_cfcleague_saison.php');
+require_once(t3lib_extMgm::extPath('cfc_league').'mod1/class.tx_cfcleague_selector.php');
 
 
 /**
