@@ -23,7 +23,6 @@
 ***************************************************************/
 
 
-require_once('../class.tx_cfcleague_form_tool.php');
 
 /**
  * Die Klasse stellt Auswahlmenus zur Verfügung
