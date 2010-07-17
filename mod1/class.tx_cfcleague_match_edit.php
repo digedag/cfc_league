@@ -147,7 +147,7 @@ class tx_cfcleague_match_edit  {
       $arr[] = $label ? $label : $i.'. part';
     }
     $arr[] = $LANG->getLL('tx_cfcleague_games.visitors');
-    $arr[] = '';
+//    $arr[] = '';
     return $arr;
   }
   /**
@@ -171,7 +171,7 @@ class tx_cfcleague_match_edit  {
 
       $table = 'tx_cfcleague_games';
 			if(!$isNoMatch) {
-				$row[] = $game['uid'];
+				$row[] = $game['uid'].$this->formTool->createEditLink('tx_cfcleague_games',$game['uid'],'');
 				$dataArr = $this->formTool->getTCEFormArray($table, $game['uid']);
 				$row[] = $this->formTool->form->getSoloField($table,$dataArr[$table.'_'.$game['uid']],'date');
 
@@ -188,7 +188,6 @@ class tx_cfcleague_match_edit  {
 //        $row[] = $this->formTool->createIntInput('data[tx_cfcleague_games]['.$game['uid'].'][goals_home_1]',$game['goals_home_1'],2) . ' : ' . $this->formTool->createIntInput('data[tx_cfcleague_games]['.$game['uid'].'][goals_guest_1]',$game['goals_guest_1'],2);
 
         $row[] = $this->formTool->createIntInput('data[tx_cfcleague_games]['.$game['uid'].'][visitors]',$game['visitors'],6);
-        $row[] = $this->formTool->createEditLink('tx_cfcleague_games',$game['uid']);
         $arr[0][] = $row;
       }
       else {
