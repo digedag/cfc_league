@@ -2,6 +2,10 @@
 Änderungen
 ----------
 
+v0.7.3 (17.07.2010)
+ * BE modul CSS styles fixed for TYPO3 4.4
+ * Matches: New field sets for set results
+
 v0.7.2 (04.07.2010)
  * Quick input field for liveticker in TYPO3 4.4 deactivated (JS problems)
  * Country fields for stadiums and clubs

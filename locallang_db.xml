@@ -121,6 +121,7 @@
 			<label index="tx_cfcleague_games.parts_2_1">Halftime</label>
 			<label index="tx_cfcleague_games.goals_1">Halftime</label>
 			<label index="tx_cfcleague_games.goals_2">Result</label>
+			<label index="tx_cfcleague_games_sets">Set results</label>
 			<label index="tx_cfcleague_games.goals_home_1">Goals Home Part 1</label>
 			<label index="tx_cfcleague_games.goals_guest_1">Goals Guest Part 1</label>
 			<label index="tx_cfcleague_games.goals_home_2">Goals Home Part 2</label>
@@ -332,6 +333,7 @@
 			<label index="tx_cfcleague_games.parts_2_1">Halbzeit</label>
 			<label index="tx_cfcleague_games.goals_1">Halbzeit</label>
 			<label index="tx_cfcleague_games.goals_2">Endstand</label>
+			<label index="tx_cfcleague_games_sets">Satz Ergebnisse</label>
 			<label index="tx_cfcleague_games.goals_home_1">Tore Heim Halbzeit</label>
 			<label index="tx_cfcleague_games.goals_guest_1">Tore Gast Halbzeit</label>
 			<label index="tx_cfcleague_games.goals_home_2">Tore Heim</label>

@@ -203,6 +203,7 @@ CREATE TABLE tx_cfcleague_games (
 	match_no varchar(5) DEFAULT '' NOT NULL,
 	home int(11) DEFAULT '0' NOT NULL,
 	guest int(11) DEFAULT '0' NOT NULL,
+	sets varchar(254) DEFAULT '' NOT NULL,
 	competition int(11) DEFAULT '0' NOT NULL,
 	round int(11) DEFAULT '0' NOT NULL,
 	round_name varchar(100) DEFAULT '' NOT NULL,

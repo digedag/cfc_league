@@ -1077,6 +1077,16 @@ $TCA['tx_cfcleague_games'] = Array (
 				'maxitems' => 1,
 			)
 		),
+		'sets' => Array (
+			'exclude' => 1,
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games_sets',
+			'config' => Array (
+				'type' => 'input',
+				'size' => '30',
+				'max' => '254',
+				'eval' => 'trim',
+			)
+		),
 		'competition' => Array (
 			'exclude' => 0,
 			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.competition',
@@ -1641,7 +1651,7 @@ $TCA['tx_cfcleague_games'] = Array (
 	'types' => Array (
 	// goals_home_1, goals_guest_1, goals_home_2, goals_guest_2, 
 		'0' => Array('showitem' => 
-			'hidden;;1;;1-1-1,match_no,competition,home,guest,round,round_name,date,addinfo,status;;6,arena,stadium,visitors, 
+			'hidden;;1;;1-1-1,match_no,competition,home,guest,round,round_name,date,addinfo,status;;6,sets,arena,stadium,visitors, 
 			--div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.tab_lineup,coach_home, players_home, substitutes_home, system_home, system_guest, coach_guest, players_guest, substitutes_guest, referee, assists,
 			--div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.tab_lineup_stat,players_home_stat, substitutes_home_stat, players_guest_stat, substitutes_guest_stat, scorer_home_stat, scorer_guest_stat,
 			--div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.tab_score, is_extratime;;2, is_penalty;;3;;1-1-1,
