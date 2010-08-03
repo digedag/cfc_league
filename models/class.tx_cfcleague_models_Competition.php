@@ -241,31 +241,45 @@ class tx_cfcleague_models_Competition extends tx_rnbase_model_base {
 		return $this->cache['numofmatches'];
   }
 
-  /**
-   * Returns the age croup of this competition
-   *
-   * @return tx_cfcleaguefe_models_group
-   */
-  function getGroup() {
+	/**
+	 * Returns the first agegroup of this competition
+	 *
+	 * @return tx_cfcleaguefe_models_group
+	 */
+	public function getGroup() {
 		tx_rnbase::load('tx_cfcleague_models_Group');
-  	return tx_cfcleague_models_Group::getInstance($this->record['agegroup']);
-  }
-  /**
-   * Returns all team participating this competition.
-   * @return array of tx_cfcleaguefe_models_team
-   */
-  function getTeams($ignoreDummies = true) {
-    if(!is_array($this->teams)) {
-      $uids = $this->record['teams'];
-      $options['where'] = 'uid IN (' . $uids .') ';
-      if($ignoreDummies)
-      	$options['where'] .= ' AND dummy = 0  ';
-      
-      $options['wrapperclass'] = 'tx_cfcleaguefe_models_team';
-      $options['orderby'] = 'sorting';
-      $this->teams = tx_rnbase_util_DB::doSelect('*','tx_cfcleague_teams',$options, 0);
-    }
-    return $this->teams;
+		$groupIds = t3lib_div::intExplode(',',$this->record['agegroup']);
+		return count($groupIds) ? tx_cfcleague_models_Group::getInstance($groupIds[0]) : false;
+	}
+	/**
+	 * Returns the agegroups of this competition
+	 *
+	 * @return array[tx_cfcleaguefe_models_group]
+	 */
+	public function getGroups() {
+		tx_rnbase::load('tx_cfcleaguefe_models_group');
+		$groupIds = t3lib_div::intExplode(',',$this->record['agegroup']);
+		$ret = array();
+		foreach($groupIds As $groupId) {
+			$ret[] = tx_cfcleaguefe_models_group::getInstance($groupId);
+		}
+  	return $ret;
+	}
+	/**
+	 * Returns all team participating this competition.
+	 * @return array[tx_cfcleaguefe_models_team]
+	 */
+	public function getTeams($ignoreDummies = true) {
+		if(!is_array($this->teams)) {
+			$uids = $this->record['teams'];
+			$options['where'] = 'uid IN (' . $uids .') ';
+			if($ignoreDummies)
+				$options['where'] .= ' AND dummy = 0  ';
+			$options['wrapperclass'] = 'tx_cfcleaguefe_models_team';
+			$options['orderby'] = 'sorting';
+			$this->teams = tx_rnbase_util_DB::doSelect('*','tx_cfcleague_teams',$options, 0);
+		}
+		return $this->teams;
 	}
 	/**
 	 * Returns all team ids as array
