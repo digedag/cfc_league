@@ -49,6 +49,17 @@ class tx_cfcleague_services_Teams extends t3lib_svbase {
 		$srv = tx_cfcleague_util_ServiceRegistry::getStadiumService();
 		return $srv->search($fields, $options);
 	}
+	/**
+	 * Returns a team.
+	 *
+	 * @param int $teamUid
+	 * @return tx_cfcleague_models_team
+	 */
+	public function getTeam($teamUid) {
+		if(!$teamUid) return false;
+		$team = tx_rnbase::makeInstance('tx_cfcleague_models_team', $teamUid);
+		return $team;
+	}
 	public function getLogos($clubUid) {
 		$fields['MEDIAREFMM.UID_FOREIGN'][OP_EQ_INT] = $clubUid;
 		$fields['MEDIAREFMM.TABLENAMES'][OP_EQ] = 'tx_cfcleague_club';
