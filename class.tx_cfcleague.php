@@ -92,12 +92,10 @@ class tx_cfcleague_handleDataInput{
 				$valueArray = $dbAnalysis->getValueArray(false);
 				// Abfrage aus Spieldatensatz
 				// Es werden alle Spieler des Teams benötigt
-				$players = $this->findPlayers($valueArray[0]);
+				$team = $valueArray[0];
 			}
-			else {
-				// Sollte ein Select sein
-				$players = $this->findPlayers($team);
-			}
+			$players = $this->findPlayers($team);
+			$players = array_merge($players, $this->findSupporters($team));
 			$PA[items] = $players;
 		}
 		else
@@ -228,23 +226,35 @@ class tx_cfcleague_handleDataInput{
 
   }
 
-  /**
-   * Liefert die Spieler (uid und name) einer Mannschaft.
-   */
-  function findPlayers($teamId) {
+	/**
+	 * Liefert die Spieler (uid und name) einer Mannschaft.
+	 */
+	function findPlayers($teamId) {
+		$rows = array();
+		if(intval($teamId) == 0) return rows;
+
+		require_once('class.tx_cfcleague_team.php');
+		$team = new tx_cfcleague_team($teamId);
+		$players = $team->getPlayerNames(0,1);
+		foreach($players As $uid => $name) {
+			$rows[] = Array($name ,$uid,);
+		}
+		return $rows;
+	}
+	/**
+	 * Liefert die Betreuer (uid und name) einer Mannschaft.
+	 */
+	private function findSupporters($teamId) {
     $rows = array();
     if(intval($teamId) == 0) return rows;
-
-    require_once('class.tx_cfcleague_team.php');
-    $team = new tx_cfcleague_team($teamId);
-    $players = $team->getPlayerNames(0,1);
-    foreach($players As $uid => $name) {
-      $rows[] = Array($name ,$uid,);
-    }
-//t3lib_div::debug($rows, 'cfcleague');
-    return $rows;
-
-  }
+		require_once('class.tx_cfcleague_team.php');
+		$team = new tx_cfcleague_team($teamId);
+		$players = $team->getSupporterNames(0,1);
+		foreach($players As $uid => $name) {
+			$rows[] = Array($name ,$uid,);
+		}
+		return $rows;
+	}
 
   /**
    * Liefert die verschachtelte UID eines Strings der Form
