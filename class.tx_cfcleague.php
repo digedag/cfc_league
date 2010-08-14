@@ -95,6 +95,7 @@ class tx_cfcleague_handleDataInput{
 				$team = $valueArray[0];
 			}
 			$players = $this->findPlayers($team);
+			$players = array_merge($players, $this->findCoaches($team));
 			$players = array_merge($players, $this->findSupporters($team));
 			$PA[items] = $players;
 		}
