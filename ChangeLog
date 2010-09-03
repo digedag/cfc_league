@@ -2,8 +2,10 @@
 Änderungen
 ----------
 
-v0.7.4 (??.07.2010)
+v0.7.4 (03.09.2010)
  * Quick input field for liveticker in TYPO3 4.4 works again
+ * TeamNotes for coaches and supporters possible
+ * Bugfix tx_cfcleague_models_Competition::getGroup()
 
 v0.7.3 (17.07.2010)
  * BE modul CSS styles fixed for TYPO3 4.4
