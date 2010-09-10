@@ -42,7 +42,7 @@ class tx_cfcleague_services_Match extends t3lib_svbase implements tx_cfcleague_M
 	 *
 	 * @return array 
 	 */
-	function getMatchNoteTypes4TCA() {
+	public function getMatchNoteTypes4TCA() {
 		$types = array();
 		// Zuerst in der Ext_Conf die BasisTypen laden
 		$types = $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['matchnotetypes'];
@@ -61,13 +61,20 @@ class tx_cfcleague_services_Match extends t3lib_svbase implements tx_cfcleague_M
 	}
 
 	/**
+	 * @return tx_cfcleague_util_MatchTableBuilder
+	 */
+	public function getMatchTableBuilder() {
+		return tx_rnbase::makeInstance('tx_cfcleague_util_MatchTableBuilder');
+	}
+
+	/**
 	 * Search database for matches
 	 *
 	 * @param array $fields
 	 * @param array $options
 	 * @return array of tx_cfcleague_models_Match
 	 */
-	function search($fields, $options) {
+	public function search($fields, $options) {
 		tx_rnbase::load('tx_rnbase_util_SearchBase');
 		$searcher = tx_rnbase_util_SearchBase::getInstance('tx_cfcleague_search_Match');
 		return $searcher->search($fields, $options);
@@ -80,10 +87,30 @@ class tx_cfcleague_services_Match extends t3lib_svbase implements tx_cfcleague_M
 	 * @param array $options
 	 * @return array of tx_cfcleague_models_MatchRound
 	 */
-	function searchMatchRound($fields, $options) {
+	public function searchMatchRound($fields, $options) {
 		tx_rnbase::load('tx_rnbase_util_SearchBase');
 		$searcher = tx_rnbase_util_SearchBase::getInstance('tx_cfcleague_search_MatchRound');
 		return $searcher->search($fields, $options);
+	}
+
+
+	/**
+	 * Ermittelt für das übergebene Spiel die MatchNotes. Wenn $types = 1 dann
+	 * werden nur die Notes mit dem Typ != 100 geliefert.
+	 * @param tx_cfcleague_models_Match $match
+	 * @param boolean $excludeTicker
+	 * @return array[tx_cfcleague_models_MatchNote]
+	 */
+	public function retrieveMatchNotes($match, $excludeTicker=true) {
+		$options['where'] = 'game = ' .$match->getUid();
+		if($excludeTicker) {
+			$options['where'] .= ' AND type != 100';
+		}
+		$options['orderby'] = 'minute asc';
+		$options['wrapperclass'] = 'tx_cfcleague_models_MatchNote';
+
+		$matchNotes = tx_rnbase_util_DB::doSelect('*', 'tx_cfcleague_match_notes', $options);
+		return $matchNotes;
 	}
 }
 
