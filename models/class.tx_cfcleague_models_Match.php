@@ -48,6 +48,34 @@ class tx_cfcleague_models_Match extends tx_rnbase_model_base {
 		return $this->sets;
 	}
 
+	/**
+	 * Liefert die Spieler des Heimteams der Startelf 
+	 * @param $all wenn true werden auch die Ersatzspieler mit geliefert
+	 * @return string comma separated uids
+	 */
+	public function getPlayersHome($all = false) {
+		$ids = $this->record['players_home'];
+		if($all &&  strlen($this->record['substitutes_home']) > 0){
+			// Auch Ersatzspieler anhängen
+			if(strlen($ids) > 0)
+				$ids = $ids . ',' . $this->record['substitutes_home'];
+		}
+		return $ids;
+	}
+	/**
+	 * Liefert die Spieler des Gastteams der Startelf 
+	 * @param $all wenn true werden auch die Ersatzspieler mit geliefert
+	 * @return string comma separated uids
+	 */
+	public function getPlayersGuest($all = false) {
+		$ids = $this->record['players_guest'];
+		if($all &&  strlen($this->record['substitutes_guest']) > 0){
+			// Auch Ersatzspieler anhängen
+			if(strlen($ids) > 0)
+				$ids = $ids . ',' . $this->record['substitutes_guest'];
+		}
+		return $ids;
+	}
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/models/class.tx_cfcleague_models_Match.php']) {
