@@ -41,6 +41,9 @@ class tx_cfcleague_models_Competition extends tx_rnbase_model_base {
 
 	function getTableName(){return 'tx_cfcleague_competition';}
 
+	public function getSaisonUid() {
+		return $this->record['saison'];
+	}
 	/**
 	 * Liefert alle Spiele des Wettbewerbs mit einem bestimmten Status.
 	 * Der Status kann sein:
@@ -51,7 +54,7 @@ class tx_cfcleague_models_Competition extends tx_rnbase_model_base {
 	 * </ul>
 	 * @param scope - 0,1,2 für alle, Hin-, Rückrunde
 	 */
-	function getMatches($status, $scope=0) {
+	public function getMatches($status, $scope=0) {
 		// Sicherstellen, dass wir eine Zahl bekommen
 		if((isset($status) && t3lib_div::testInt($status))) {
 			$status = intval($status);
@@ -159,7 +162,7 @@ class tx_cfcleague_models_Competition extends tx_rnbase_model_base {
 	 * 
 	 * @return array
 	 */
-	function getRounds(){
+	public function getRounds(){
 		if(!array_key_exists('rounds', $this->cache)) {
 			$srv = tx_cfcleague_util_ServiceRegistry::getMatchService();
 			# build SQL for select
@@ -178,7 +181,7 @@ class tx_cfcleague_models_Competition extends tx_rnbase_model_base {
 	 *
 	 * @param int $roundId
 	 */
-	function getMatchesByRound($roundId) {
+	public function getMatchesByRound($roundId) {
 		$fields = array();
 		$options = array();
 	  $fields['MATCH.ROUND'][OP_EQ_INT] = $roundId;
@@ -209,7 +212,7 @@ class tx_cfcleague_models_Competition extends tx_rnbase_model_base {
    * Liefert ein Array mit UIDs der Dummy-Teams.
    * @return array
    */
-	function getDummyTeamIds() {
+	public function getDummyTeamIds() {
 		if(!array_key_exists('dummyteamids', $this->cache)) {
 			$srv = tx_cfcleague_util_ServiceRegistry::getCompetitionService();
 			$this->cache['dummyteamids'] = $srv->getDummyTeamIds($this);
@@ -221,7 +224,7 @@ class tx_cfcleague_models_Competition extends tx_rnbase_model_base {
 	 * @param int $asArray Wenn 1 wird pro Team ein Array mit Name, Kurzname und Flag spielfrei geliefert
 	 * @return array
 	 */
-	function getTeamNames($asArray = 0) {
+	public function getTeamNames($asArray = 0) {
 		$key = 'teamnames'.$asArray;
 		if(!array_key_exists($key, $this->cache)){
 			$srv = tx_cfcleague_util_ServiceRegistry::getTeamService();
@@ -233,7 +236,7 @@ class tx_cfcleague_models_Competition extends tx_rnbase_model_base {
   /**
    * Anzahl der Spiele des/der Teams in diesem Wettbewerb
    */
-  function getNumberOfMatches($teamIds, $status = '0,1,2'){
+  public function getNumberOfMatches($teamIds, $status = '0,1,2'){
 		if(!array_key_exists('numofmatches', $this->cache)) {
 			$srv = tx_cfcleague_util_ServiceRegistry::getCompetitionService();
 			$this->cache['numofmatches'] = $srv->getNumberOfMatches($this, $teamIds, $status);
@@ -250,6 +253,16 @@ class tx_cfcleague_models_Competition extends tx_rnbase_model_base {
 		tx_rnbase::load('tx_cfcleague_models_Group');
 		$groupIds = t3lib_div::intExplode(',',$this->record['agegroup']);
 		return count($groupIds) ? tx_cfcleague_models_Group::getInstance($groupIds[0]) : false;
+	}
+	/**
+	 * Returns the uid of first agegroup of this competition
+	 *
+	 * @return int
+	 */
+	public function getFirstGroupUid() {
+		tx_rnbase::load('tx_cfcleague_models_Group');
+		$groupIds = t3lib_div::intExplode(',',$this->record['agegroup']);
+		return count($groupIds) ? $groupIds[0] : 0;
 	}
 	/**
 	 * Returns the agegroups of this competition

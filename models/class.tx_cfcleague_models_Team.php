@@ -30,19 +30,20 @@ tx_rnbase::load('tx_rnbase_model_base');
  * Model für ein Team.
  */
 class tx_cfcleague_models_Team extends tx_rnbase_model_base {
+	private static $instances = array();
 
 	function getTableName(){return 'tx_cfcleague_teams';}
 
-	function getName() {
+	public function getName() {
 		return $this->record['name'];
 	}
-	function getNameShort() {
+	public function getNameShort() {
 		return $this->record['short_name'];
 	}
 	/**
 	 * Liefert true, wenn für das Team eine Einzelansicht verlinkt werden kann.
 	 */
-	function hasReport() {
+	public function hasReport() {
 		return intval($this->record['link_report']);
 	}
 	/**
@@ -63,6 +64,25 @@ class tx_cfcleague_models_Team extends tx_rnbase_model_base {
 			}
 		}
 		return '';
+	}
+	public function getGroupUid() {
+		return $this->record['agegroup'];
+	}
+	public function getClubUid() {
+		return $this->record['club'];
+	}
+	/**
+	 * Returns an instance of tx_cfcleague_models_Team
+	 * @param int $uid
+	 * @return tx_cfcleague_models_Team or null
+	 */
+	public static function &getInstance($uid, $record = 0) {
+		$uid = intval($uid);
+		if(!array_key_exists($uid, self::$instances)) {
+			$item = new tx_cfcleague_models_Team(is_array($record) ? $record : $uid);
+			self::$instances[$uid] = $item->isValid() ? $item : null;
+		}
+		return self::$instances[$uid];
 	}
 }
 

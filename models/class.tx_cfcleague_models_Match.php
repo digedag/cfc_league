@@ -76,6 +76,72 @@ class tx_cfcleague_models_Match extends tx_rnbase_model_base {
 		}
 		return $ids;
 	}
+	/**
+	 * Returns the competition
+ 	 *
+	 * @return tx_cfcleague_models_Competition
+	 */
+	public function getCompetition() {
+		if(!$this->competition) {
+			tx_rnbase::load('tx_cfcleague_models_Competition');
+			$this->competition = tx_cfcleague_models_Competition::getInstance($this->record['competition']);
+		}
+		return $this->competition;
+	}
+	public function setCompetition($competition) {
+		$this->competition = $competition;
+	}
+
+	/**
+	 * Liefert das Heim-Team als Objekt
+	 * @return tx_cfcleague_models_Team
+	 */
+	public function getHome() {
+		if(!$this->_teamHome) {
+			$this->_teamHome = $this->getTeam($this->record['home']);
+		}
+		return $this->_teamHome;
+	}
+
+	/**
+	 * Setzt das Heim-Team
+	 */
+	public function setHome($team) {
+		$this->_teamHome = $team;
+	}
+
+	/**
+	 * Liefert das Gast-Team als Objekt
+	 * @return tx_cfcleague_models_Team
+	 */
+	public function getGuest() {
+		if(!$this->_teamGuest) {
+			$this->_teamGuest = $this->getTeam($this->record['guest']);
+		}
+		return $this->_teamGuest;
+	}
+	/**
+	 * Setzt das Gast-Team
+	 */
+	public function setGuest($team) {
+		$this->_teamGuest = $team;
+	}
+	/**
+	 * Liefert das Team als Objekt
+	 * @return tx_cfcleague_models_Team
+	 */
+	private function getTeam($uid) {
+		if(!$uid) throw new Exception('Invalid match with uid ' . $this->getUid() . ': At least one team is not set.');
+		tx_rnbase::load('tx_cfcleague_models_Team');
+		$team = tx_cfcleague_models_Team::getInstance($uid);
+		return $team;
+	}
+	function getHomeNameShort() {
+		return $this->getHome()->getNameShort();
+	}
+	function getGuestNameShort() {
+		return $this->getGuest()->getNameShort();
+	}
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/models/class.tx_cfcleague_models_Match.php']) {
