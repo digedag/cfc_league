@@ -91,10 +91,14 @@ class tx_cfcleague_selector{
 //		$content.=$this->doc->section('',$this->doc->funcMenu($headerSection,$menu));
 
 		if(t3lib_div::_GP('clearCache') && $this->LEAGUE_SETTINGS['league']) {
-			if (is_object($serviceObj = t3lib_div::makeInstanceService('memento'))) {
-				// Cache löschen
-				$serviceObj->clear('', $this->LEAGUE_SETTINGS['league']);
-			}
+			// Hook aufrufen
+			tx_rnbase_util_Misc::callHook('cfc_league','clearStatistics_hook', 
+				array('compUid' => $this->LEAGUE_SETTINGS['league']), $this);
+
+//			if (is_object($serviceObj = t3lib_div::makeInstanceService('memento'))) {
+//				// Cache löschen
+//				$serviceObj->clear('', $this->LEAGUE_SETTINGS['league']);
+//			}
 		}
 
 		// Aktuellen Wert als Liga-Objekt zurückgeben
