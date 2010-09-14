@@ -30,6 +30,7 @@ tx_rnbase::load('tx_rnbase_model_base');
  * Model für eine Person.
  */
 class tx_cfcleague_models_Profile extends tx_rnbase_model_base {
+	private static $instances = array();
 
 	function getTableName(){return 'tx_cfcleague_profiles';}
 
@@ -48,6 +49,38 @@ class tx_cfcleague_models_Profile extends tx_rnbase_model_base {
 	function getName($reverse=false) {
 		return $reverse ? $this->getLastName() . ', ' . $this->getFirstName() : 
 											$this->getFirstName() .' ' . $this->getLastName();
+	}
+	/**
+	 * Liefert die Instance mit der übergebenen UID. Die Daten werden gecached, so daß
+	 * bei zwei Anfragen für die selbe UID nur ein DB Zugriff erfolgt.
+	 *
+	 * @param int $uid
+	 * @return tx_netfewo_models_Objekt
+	 */
+	public static function getInstance($uid) {
+		$uid = intval($uid);
+		if(!$uid) throw new Exception('No uid for '.self::getTableName().' given!');
+		if(!is_object(self::$instances[$uid])) {
+			self::$instances[$uid] = new tx_cfcleague_models_Profile($uid);
+		}
+		return self::$instances[$uid];
+	}
+	public function addTeamNotes(&$team) {
+		// TODO: Umstellen!
+	}
+	/**
+	 * Liefert true, wenn für den Spieler eine Einzelansicht verlinkt werden soll.
+	 */
+	public function hasReport() {
+		return intval($this->record['link_report']);
+	}
+	/**
+	 * Liefert das Sternzeichen der Person.
+	 */
+	public function getSign() {
+		return 'TODO';
+//		$signs = Signs::getInstance();
+//		return intval($this->record['birthday']) != 0 ? $signs->getSign($this->record['birthday']) : '';
 	}
 }
 
