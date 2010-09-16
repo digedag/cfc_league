@@ -40,6 +40,20 @@ class tx_cfcleague_util_Misc {
       $ret = $arr2;
     return $ret;
   }
+
+	/**
+	 * Register a new matchnote.
+	 * @param string $column
+	 * @param mixed $types commaseparated list of match event uids
+	 */
+	public static function registerMatchNote($label, $typeId) {
+		if(!is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['matchnotetypes']))
+			$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['matchnotetypes'] = array();
+		$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['matchnotetypes'][] = array($label, $typeId);
+//$GLOBALS ['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['matchnotetypes'] = array(
+//			Array('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_match_notes.type.ticker', '100'),
+			
+	}
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/util/class.tx_cfcleague_util_Misc.php']) {
