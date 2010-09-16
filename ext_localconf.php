@@ -30,6 +30,7 @@ $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['proc
 
 $GLOBALS ['TYPO3_CONF_VARS']['BE']['AJAX']['T3sports::saveTickerMessage'] = 'EXT:' . $_EXTKEY . '/mod1/class.tx_cfcleague_mod1_AjaxTicker.php:tx_cfcleague_mod1_AjaxTicker->ajaxSaveTickerMessage';
 
+require_once(t3lib_extMgm::extPath('rn_base').'class.tx_rnbase.php');
 
 tx_rnbase::load('tx_cfcleague_util_Misc');
 
@@ -48,7 +49,6 @@ tx_cfcleague_util_Misc::registerMatchNote('LLL:EXT:cfc_league/locallang_db.xml:t
 tx_cfcleague_util_Misc::registerMatchNote('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_match_notes.type.changein', '81');
 tx_cfcleague_util_Misc::registerMatchNote('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_match_notes.type.captain', '200');
 
-require_once(t3lib_extMgm::extPath('rn_base').'class.tx_rnbase.php');
 
 // Include services
 require_once(t3lib_extMgm::extPath('cfc_league').'services/ext_localconf.php');
