@@ -10,6 +10,7 @@ if(t3lib_extMgm::isLoaded('dam')) {
 tx_rnbase::load('tx_cfcleague_tca_Lookup');
 
 $globalClubs = intval(tx_rnbase_configurations::getExtensionCfgValue('cfc_league', 'useGlobalClubs')) > 0;
+$clubOrdering = intval(tx_rnbase_configurations::getExtensionCfgValue('cfc_league', 'clubOrdering')) > 0;
 
 $TCA['tx_cfcleague_group'] = Array (
 	'ctrl' => $TCA['tx_cfcleague_group']['ctrl'],
@@ -804,7 +805,7 @@ $clubArr = $globalClubs ?
 					Array(' ', '0'),
 				),
 				'foreign_table' => 'tx_cfcleague_club',
-				'foreign_table_where' => 'ORDER BY tx_cfcleague_club.city, tx_cfcleague_club.name',
+				'foreign_table_where' => 'ORDER BY ' . ($clubOrdering ? 'tx_cfcleague_club.city,' : '').' tx_cfcleague_club.name',
 				'size' => 1,
 				'minitems' => 0,
 				'maxitems' => 1,

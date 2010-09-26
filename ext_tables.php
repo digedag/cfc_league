@@ -124,11 +124,15 @@ $TCA['tx_cfcleague_profiles'] = Array (
 );
 t3lib_extMgm::addLLrefForTCAdescr('tx_cfcleague_profiles','EXT:cfc_league/locallang_csh_profiles.php');
 
+$clubOrdering = intval(tx_rnbase_configurations::getExtensionCfgValue('cfc_league', 'clubOrdering')) > 0;
+$labelClub = $clubOrdering ? 'city' : 'name';
+$altLabelClub = $clubOrdering ? 'name' : 'city';
+
 $TCA['tx_cfcleague_club'] = Array (
 	'ctrl' => Array (
 		'title' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_club',
-		'label' => 'city',
-		'label_alt' => 'name',
+		'label' => $labelClub,
+		'label_alt' => $altLabelClub,
 		'label_alt_force' => 1,
 		'tstamp' => 'tstamp',
 		'crdate' => 'crdate',

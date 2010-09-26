@@ -3,3 +3,6 @@ profileRootPageId = 0
 
   # cat=basic; type=boolean; label= Handle clubs globally: If you enable this, the club selection in team record is easier to use.
 useGlobalClubs = 1
+
+  # cat=basic; type=boolean; label= Sort order of clubs by city name: If you enable this, the clubs in club selection will be ordered by city name first.
+clubOrdering = 1
