@@ -32,9 +32,71 @@ tx_rnbase::load('tx_rnbase_model_base');
 class tx_cfcleague_models_Match extends tx_rnbase_model_base {
 
 	private $sets;
+	private $resultInited = false;
+	
+	function __construct($rowOrUid) {
+		parent::__construct($rowOrUid);
+	}
 
 	function getTableName(){return 'tx_cfcleague_games';}
 
+	public function getGoalsHome($matchPart = '') {
+		$this->initResult();
+		$ret = $this->record['goals_home'];
+		if(strlen($matchPart))
+			$ret = $this->record['goals_home_'.(($matchPart == 'last') ? $this->record['matchparts'] : $matchPart) ];
+		return $ret;
+	}
+	public function getGoalsGuest($matchPart = '') {
+		$this->initResult();
+		$ret = $this->record['goals_guest'];
+		if(strlen($matchPart))
+			$ret = $this->record['goals_guest_'.(($matchPart == 'last') ? $this->record['matchparts'] : $matchPart) ];
+		return $ret;
+	}
+
+	/**
+	 * Liefert den TOTO-Wert des Spiels. Als 0 für ein Unentschieden, 1 für einen Heim- 
+	 * und 2 für einen Auswärstsieg.
+	 * @param string $matchPart The matchpart is 1,2,3...,et,ap,last
+	 */
+	public function getToto($matchPart = '') {
+		$goalsHome = $this->getGoalsHome($matchPart);
+		$goalsGuest = $this->getGoalsGuest($matchPart);
+
+		$goalsDiff = $goalsHome - $goalsGuest;
+
+		if($goalsDiff == 0)
+			return 0;
+		return ($goalsDiff < 0) ? 2 : 1;
+	}
+
+	/**
+	 * Notwendige Initialisierung für das Ergebnis des Spieldatensatzes
+	 *
+	 */
+	public function initResult() {
+		if($this->resultInited) return;
+
+		// Um das Endergebnis zu ermitteln, muss bekannt sein, wieviele Spielabschnitte
+		// es gibt. Dies steht im Wettbewerb
+		$comp = $this->getCompetition();
+		$this->record['matchparts'] = $comp->getMatchParts();
+		$goalsHome = $this->record['goals_home_'.$comp->getMatchParts()];
+		$goalsGuest = $this->record['goals_guest_'.$comp->getMatchParts()];
+		// Gab es Verländerung oder Elfmeterschiessen
+		if($this->isPenalty()) {
+			$goalsHome = $this->record['goals_home_ap'];
+			$goalsGuest = $this->record['goals_guest_ap'];
+		}
+		elseif($this->isExtraTime()) {
+			$goalsHome = $this->record['goals_home_et'];
+			$goalsGuest = $this->record['goals_guest_et'];
+		}
+		$this->record['goals_home'] = $goalsHome;
+		$this->record['goals_guest'] = $goalsGuest;
+		$this->resultInited = true;
+	}
 	/**
 	 * Return sets if available
 	 * @return array[tx_cfcleague_models_Set]
@@ -136,12 +198,44 @@ class tx_cfcleague_models_Match extends tx_rnbase_model_base {
 		$team = tx_cfcleague_models_Team::getInstance($uid);
 		return $team;
 	}
-	function getHomeNameShort() {
+	public function getHomeNameShort() {
 		return $this->getHome()->getNameShort();
 	}
-	function getGuestNameShort() {
+	public function getGuestNameShort() {
 		return $this->getGuest()->getNameShort();
 	}
+  /**
+   * Returns true if match is finished
+   *
+   * @return boolean
+   */
+  public function isFinished(){
+    return intval($this->record['status']) == 2;
+  }
+  /**
+   * Returns true if match is running
+   *
+   * @return boolean
+   */
+  public function isRunning(){
+    return intval($this->record['status']) == 1;
+  }
+  /**
+   * Returns true if match has extra time
+   *
+   * @return boolean
+   */
+  public function isExtraTime() {
+    return intval($this->record['is_extratime']) == 1;
+  }
+  /**
+   * Returns true if match has extra time
+   *
+   * @return boolean
+   */
+  public function isPenalty() {
+    return intval($this->record['is_penalty']) == 1;
+  }
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/models/class.tx_cfcleague_models_Match.php']) {
