@@ -28,18 +28,22 @@ tx_rnbase::load('tx_cfcleague_models_Competition');
 /**
  * Die Klasse verwaltet die Erstellung von Spielplänen für Wettbewerbe
  */
-class tx_cfcleague_mod1_modCompCreateMatchTable extends t3lib_extobjbase {
-	var $doc, $modName;
+class tx_cfcleague_mod1_modCompCreateMatchTable {
+	var $doc;
 
 
 	/**
 	 * Verwaltet die Erstellung von Spielplänen von Ligen
+   * @param tx_rnbase_mod_IModule $module
 	 * @param tx_cfcleague_league $competition
 	 */
-	function main($modName, $pid, &$doc, &$formTool, &$competition) {
+	public function main($module, $competition) {
 		global $LANG;
 
-		$this->doc = $doc;
+		$pid = $module->getPid();
+		$this->doc = $module->getDoc();
+
+		$formTool = $module->getFormTool();
 		$this->formTool = $formTool;
 		$comp = tx_cfcleague_models_Competition::getInstance($competition->uid);
 //		$start = microtime(true);

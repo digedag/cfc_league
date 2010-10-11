@@ -33,9 +33,9 @@ class tx_cfcleague_selector{
 	/**
 	 * Initialisiert das Objekt mit dem Template und der Modul-Config.
 	 */
-	function init($doc, $MCONF){
+	function init($doc, $modName){
 		$this->doc = $doc;
-		$this->MCONF = $MCONF;
+		$this->MCONF['name'] = $modName;
 	}
 	/**
 	 * Returns the form tool

@@ -9,6 +9,7 @@
 			<label index="message">Message</label>
 			<label index="warning">Warning</label>
 			<label index="error">Error</label>
+			<label index="label_t3sports_modname">T3sports - League Management</label>
 			<label index="title">T3sports - League Management</label>
 			<label index="title_recent_tickers">Recent ticker messages</label>
 			<label index="label_value">Value</label>

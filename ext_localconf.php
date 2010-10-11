@@ -32,6 +32,11 @@ $GLOBALS ['TYPO3_CONF_VARS']['BE']['AJAX']['T3sports::saveTickerMessage'] = 'EXT
 
 require_once(t3lib_extMgm::extPath('rn_base').'class.tx_rnbase.php');
 
+if (TYPO3_MODE == 'BE') {
+	// Einbindung einer PageTSConfig
+	t3lib_extMgm::addPageTSConfig('<INCLUDE_TYPOSCRIPT: source="FILE:EXT:cfc_league/mod1/pageTSconfig.txt">');
+}
+
 tx_rnbase::load('tx_cfcleague_util_Misc');
 
 tx_cfcleague_util_Misc::registerMatchNote('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_match_notes.type.ticker', '100');

@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2007 Rene Nitzsche (rene@system25.de)
+*  (c) 2007-2010 Rene Nitzsche (rene@system25.de)
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -28,59 +28,39 @@
  * Die Klasse verwaltet die Bearbeitung der Spieltage
  */
 class tx_cfcleague_match_edit  {
-  var $doc, $MCONF;
 
-  /**
-   * Initialisiert das Objekt mit dem Template und der Modul-Config.
-   */
-  /**
-   * Initialization of the class
-   *
-   * @param	object		Parent Object
-   * @param	array		Configuration array for the extension
-   * @return	void
-   */
-  function init(&$pObj,$conf)	{
-    global $BACK_PATH,$LANG;
-
-    parent::init($pObj,$conf);
-
-    $this->MCONF = $pObj->MCONF;
-    $this->id = $pObj->id;
-    // Sprachdatei der Tabellen laden
-    $LANG->includeLLFile('EXT:cfc_league/locallang_db.xml');
-
-  }
 
   /**
    * Bearbeitung von Spielen. Es werden die Paaren je Spieltag angezeigt
+   * @param tx_rnbase_mod_IModule $module
    */
-  function main(&$MCONF,$pid, $doc, &$formTool, &$current_league) {
+  function main($module, $current_league) {
     global $LANG;
 
-		$this->MCONF = $MCONF;
-		$this->id = $pid;
-		$this->doc = $doc;
+		$pid = $module->getPid();
+    $this->id = $module->getPid();
+		$this->doc = $module->getDoc();
 
+		$formTool = $module->getFormTool();
 		$this->formTool = $formTool;
 		$LANG->includeLLFile('EXT:cfc_league/locallang_db.xml');
     
 		// Selector-Instanz bereitstellen
 		$this->selector = t3lib_div::makeInstance('tx_cfcleague_selector');
-		$this->selector->init($this->doc, $this->MCONF);
+		$this->selector->init($module->getDoc(), $module->getName());
 
 		// Zuerst mal müssen wir die passende Liga auswählen lassen:
 		$content = '';
-		$content.=$this->doc->spacer(5);
+		$content.=$module->getDoc()->spacer(5);
 
 		if(!count($current_league->getRounds())){
 			$content .= $LANG->getLL('no_round_in_league');
 			$content .= '<br /><br />';
-			$content .= $this->getFooter($current_league, 0, $pid, $this->formTool);
+			$content .= $this->getFooter($current_league, 0, $pid, $formTool);
 			return $content;
 		}
 		// Jetzt den Spieltag wählen lassen
-		$current_round = $this->selector->showRoundSelector($content,$this->id,$current_league);
+		$current_round = $this->selector->showRoundSelector($content,$pid,$current_league);
 		$content.='<div class="cleardiv"/>';
 		$data = t3lib_div::_GP('data');
 		// Haben wir Daten im Request?
@@ -97,10 +77,10 @@ class tx_cfcleague_match_edit  {
 		$games = $current_league->getGamesByRound($current_round);
 		$arr = $this->createTableArray($games, $current_league);
 
-		$content .= $this->doc->table($arr[0]);
+		$content .= $module->getDoc()->table($arr[0]);
 
 		// Den Update-Button einfügen
-		$content .= $this->formTool->createSubmit('update',$LANG->getLL('btn_update'), $GLOBALS['LANG']->getLL('btn_update_msgEditGames'));
+		$content .= $formTool->createSubmit('update',$LANG->getLL('btn_update'), $GLOBALS['LANG']->getLL('btn_update_msgEditGames'));
 //		$content .= '<input type="submit" name="update" value="'.$LANG->getLL('btn_update').'" onclick="return confirm('.$GLOBALS['LANG']->JScharCode($GLOBALS['LANG']->getLL('btn_update_msgEditGames')).')">';
 		if($arr[1]) { // Hat ein Team spielfrei?
 			$content .= '<h3 style="margin-top:10px">'.$LANG->getLL('msg_free_of_play') . '</h3><ul>';
@@ -110,7 +90,7 @@ class tx_cfcleague_match_edit  {
 			$content .= '</ul>';
 		}
 		$content .= '<br /><br />';
-		$content .= $this->getFooter($current_league, $current_round, $pid, $this->formTool);
+		$content .= $this->getFooter($current_league, $current_round, $pid, $formTool);
 		return $content;
   }
 

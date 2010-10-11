@@ -27,21 +27,25 @@ tx_rnbase::load('tx_cfcleague_mod1_decorator');
 /**
  * Die Klasse verwaltet die Erstellung Teams für Wettbewerbe
  */
-class tx_cfcleague_mod1_modCompTeams extends t3lib_extobjbase {
-  var $doc, $modName;
+class tx_cfcleague_mod1_modCompTeams {
+  var $doc;
 
 
 	/**
 	 * Verwaltet die Erstellung von Spielplänen von Ligen
+   * @param tx_rnbase_mod_IModule $module
 	 * @param tx_cfcleague_league $competition
 	 */
-	function main($modName, $pid, &$doc, &$formTool, &$competition) {
+	public function main($module, $competition) {
 		global $LANG;
 		// Zuerst mal müssen wir die passende Liga auswählen lassen:
 		// Entweder global über die Datenbank oder die Ligen der aktuellen Seite
+		$pid = $module->getPid();
+		$this->doc = $module->getDoc();
 
-		$this->doc = $doc;
+		$formTool = $module->getFormTool();
 		$this->formTool = $formTool;
+
 
 		$content = '';
 		// Zuerst auf neue Teams prüfen, damit sie direkt in der Teamliste angezeigt werden
