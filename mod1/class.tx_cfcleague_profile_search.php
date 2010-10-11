@@ -23,55 +23,47 @@
 ***************************************************************/
 
 require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
-require_once (PATH_t3lib.'class.t3lib_extobjbase.php');
 $BE_USER->modAccess($MCONF,1);
 
-require_once('../class.tx_cfcleague_form_tool.php');
+tx_rnbase::load('tx_rnbase_util_TYPO3');
+tx_rnbase::load('tx_rnbase_mod_BaseModFunc');
+
 
 /**
  * Die Klasse ermöglicht die Suche von Profilen unabhängig vom Seitenbaum. Das Modul
  * wurde relativ schnell runterprogrammiert und ist daher nicht auf Erweiterbarkeit
  * ausgelegt.
  */
-class tx_cfcleague_profile_search extends t3lib_extobjbase {
+class tx_cfcleague_profile_search extends tx_rnbase_mod_BaseModFunc {
 	var $doc, $MCONF;
 	/** Verstecken der Suchergebnisse */
 	var $hideResults = false;
 
 	/**
-	 * Initialization of the class
-	 *
-	 * @param	object		Parent Object
-	 * @param	array		Configuration array for the extension
-	 * @return	void
+	 * Method getFuncId
+	 * 
+	 * @return	string
 	 */
-	function init(&$pObj,$conf)	{
-		global $BACK_PATH,$LANG;
-
-		parent::init($pObj,$conf);
-
-		$this->MCONF = $pObj->MCONF;
-		$this->id = $pObj->id;
+	function getFuncId() {
+		return 'functicker';
 	}
 
-	function main() {
+	protected function getContent($template, &$configurations, &$formatter, $formTool) {
 		global $LANG, $TCA;
 		$content = '';
 
-		$this->doc = $this->pObj->doc;
-
-		$this->formTool = tx_rnbase::makeInstance('tx_rnbase_util_FormTool');
-		$this->formTool->init($this->doc);
-
+		$this->doc = $this->getModule()->getDoc();
+		$this->formTool = $this->getModule()->getFormTool();
+		
 		// Selector-Instanz bereitstellen
 		$this->selector = t3lib_div::makeInstance('tx_cfcleague_selector');
-		$this->selector->init($this->pObj->doc, $this->MCONF);
+		$this->selector->init($this->getModule()->getDoc(), $this->getModule()->getName());
 
 		// Wir benötigen die $TCA, um die maximalen Spieler pro Team prüfen zu können
 		t3lib_div::loadTCA('tx_cfcleague_teams');
 
 		$data = t3lib_div::_GP('data');
-		$this->SEARCH_SETTINGS = t3lib_BEfunc::getModuleData(array ('searchterm' => ''),$data,$this->MCONF['name'] );
+		$this->SEARCH_SETTINGS = t3lib_BEfunc::getModuleData(array ('searchterm' => ''),$data,$this->getModule()->getName() );
 
 		$content .= $this->doc->section($LANG->getLL('msg_search_person'),$this->createSearchForm($data), 0, 1);
 		$content.=$this->doc->spacer(5);
@@ -320,7 +312,7 @@ class tx_cfcleague_profile_search extends t3lib_extobjbase {
 
 			$tableLayout = $this->doc->tableLayout;
 			$tableLayout['defRow']['defCol'] = Array('<td style="vertical-align:top;padding:5px 0;">','</td>');
-			$tableLayout['defRowEven']['defCol'] = Array(($this->pObj->isTYPO42() ?'<td style="vertical-align:top;padding:5px 0;">' : '<td style="vertical-align:top; padding:5px 0;" class="db_list_alt">'),'</td>');
+			$tableLayout['defRowEven']['defCol'] = Array((tx_rnbase_util_TYPO3::isTYPO42OrHigher() ?'<td style="vertical-align:top;padding:5px 0;">' : '<td style="vertical-align:top; padding:5px 0;" class="db_list_alt">'),'</td>');
 
 			$out .= $this->doc->table($arr, $tableLayout);
 			if(count($arr)) {
@@ -347,6 +339,6 @@ class tx_cfcleague_profile_search extends t3lib_extobjbase {
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/mod1/class.tx_cfcleague_profile_search.php'])	{
-  include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/mod1/class.tx_cfcleague_profile_search.php']);
+	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/mod1/class.tx_cfcleague_profile_search.php']);
 }
 ?>
