@@ -22,53 +22,50 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-require_once (PATH_t3lib.'class.t3lib_extobjbase.php');
 $GLOBALS['BE_USER']->modAccess($MCONF,1);
 
+tx_rnbase::load('tx_rnbase_util_TYPO3');
+tx_rnbase::load('tx_rnbase_mod_BaseModFunc');
 
 /**
  * Die Klasse verwaltet die automatische Erstellung von Spielplänen
  */
-class tx_cfcleague_mod1_modTeams extends t3lib_extobjbase {
-  var $doc, $MCONF;
+class tx_cfcleague_mod1_modTeams extends tx_rnbase_mod_BaseModFunc {
+	var $doc, $MCONF;
 
-  /**
-   * Initialization of the class
-   *
-   * @param	object		Parent Object
-   * @param	array		Configuration array for the extension
-   * @return	void
-   */
-  function init(&$pObj,$conf)	{
-    parent::init($pObj,$conf);
-    $this->MCONF = $pObj->MCONF;
-    $this->id = $pObj->id;
-  }
+	/**
+	 * Method getFuncId
+	 * 
+	 * @return	string
+	 */
+	function getFuncId() {
+		return 'functicker';
+	}
+
 
 	/**
 	 * Verwaltet die Erstellung von Spielplänen von Ligen
 	 */
-	function main() {
+	protected function getContent($template, &$configurations, &$formatter, $formTool) {
 		global $LANG;
 		// Zuerst mal müssen wir die passende Liga auswählen lassen:
 		// Entweder global über die Datenbank oder die Ligen der aktuellen Seite
 
-		$this->doc = $this->pObj->doc;
+		$this->doc = $this->getModule()->getDoc();
 
-		$this->formTool = tx_rnbase::makeInstance('tx_rnbase_util_FormTool');
-		$this->formTool->init($this->doc);
+		$this->formTool = $formTool;
 
 		// Selector-Instanz bereitstellen
 		$this->selector = t3lib_div::makeInstance('tx_cfcleague_selector');
-		$this->selector->init($this->doc, $this->MCONF);
+		$this->selector->init($this->doc, $this->getModule()->getName());
 
 		// Anzeige der vorhandenen Ligen
 		$selector = '';
-		$saison = $this->selector->showSaisonSelector($selector,$this->id);
+		$saison = $this->selector->showSaisonSelector($selector,$this->getModule()->getPid());
 		$content = '';
 
 		if(!($saison && count($saison->getCompetitions()))) {
-			if($this->pObj->isTYPO42())
+			if(tx_rnbase_util_TYPO3::isTYPO42OrHigher())
 				$this->pObj->subselector = $selector;
 			else
 				$content .= '<div class="cfcleague_selector">'.$selector.'</div><div class="cleardiv"/>';
@@ -79,7 +76,7 @@ class tx_cfcleague_mod1_modTeams extends t3lib_extobjbase {
 		// Anzeige der vorhandenen Ligen
 		$league = $this->selector->showLeagueSelector($selector,$this->id,$saison->getCompetitions());
 		$team = $this->selector->showTeamSelector($selector,$this->id,$league);
-		if($this->pObj->isTYPO42())
+		if(tx_rnbase_util_TYPO3::isTYPO42OrHigher())
 			$this->pObj->subselector = $selector;
 		else 
 			$content .= '<div class="cfcleague_selector">'.$selector.'</div><div class="cleardiv"/>';
@@ -90,7 +87,7 @@ class tx_cfcleague_mod1_modTeams extends t3lib_extobjbase {
 			return $content;
 		}
 		// Wenn ein Team gefunden ist, dann können wir das Modul schreiben
-		$menu = $this->selector->showTabMenu($this->id, 'teamtools', 
+		$menu = $this->selector->showTabMenu($this->getModule()->getPid(), 'teamtools', 
 						array('0' => $LANG->getLL('create_players'), 
 									'1' => $LANG->getLL('add_players'),
 									'2' => $LANG->getLL('manage_teamnotes'),
@@ -99,7 +96,7 @@ class tx_cfcleague_mod1_modTeams extends t3lib_extobjbase {
 		$tabs .= $menu['menu'];
 		$tabs .= '<div style="display: block; border: 1px solid #a2aab8;" ></div>';
 
-		if($this->pObj->isTYPO42())
+		if(tx_rnbase_util_TYPO3::isTYPO42OrHigher())
 			$this->pObj->tabs = $tabs;
 		else
 			$content .= $tabs;
@@ -110,15 +107,15 @@ class tx_cfcleague_mod1_modTeams extends t3lib_extobjbase {
 		switch($menu['value']) {
 			case 0:
 				$mod = tx_rnbase::makeInstance('tx_cfcleague_mod1_modTeamsProfileCreate');
-				$content .= $mod->main($this->MCONF['name'], $this->id, $this->doc, $this->formTool, $team, $teamInfo);
+				$content .= $mod->handleRequest($this->getModule(), $team, $teamInfo);
 				break;
 			case 1:
-				$mod = tx_rnbase::makeInstance('tx_cfcleague_mod1_subAddProfiles', $this);
-				$content .= $mod->handleRequest($team, $teamInfo);
+				$mod = tx_rnbase::makeInstance('tx_cfcleague_mod1_subAddProfiles');
+				$content .= $mod->handleRequest($this->getModule(), $team, $teamInfo);
 				break;
 			case 2:
-				$mod = tx_rnbase::makeInstance('tx_cfcleague_mod1_subTeamNotes',$this);
-				$content .= $mod->handleRequest($team);
+				$mod = tx_rnbase::makeInstance('tx_cfcleague_mod1_subTeamNotes');
+				$content .= $mod->handleRequest($this->getModule(), $team, $teamInfo);
 				break;
 		}
 		$content .= $this->formTool->form->printNeededJSFunctions_top();

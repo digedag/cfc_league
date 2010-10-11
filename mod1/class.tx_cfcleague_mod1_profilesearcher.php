@@ -39,18 +39,22 @@ class tx_cfcleague_mod1_profilesearcher {
 		$this->init($mod, $options);
 	}
 
+	/**
+	 * 
+	 * @param tx_rnbase_mod_IModule $mod
+	 * @param array $options
+	 */
 	private function init($mod, $options) {
 		$this->options = $options;
-		$this->modName = $mod->MCONF['name'];
-		$this->doc = $mod->doc;
-		$this->pid = $this->mod->id;
-		$this->options['pid'] = $this->mod->id;
-		$this->formTool = $mod->formTool;
+		$this->doc = $mod->getDoc();
+		$this->pid = $mod->getPid();
+		$this->options['pid'] = $mod->getPid();
+		$this->formTool = $mod->getFormTool();
 		$this->resultSize = 0;
 		$this->data = t3lib_div::_GP('data');
 
 		if(!isset($options['nopersist']))
-			$this->SEARCH_SETTINGS = t3lib_BEfunc::getModuleData(array ('searchterm' => ''),$this->data,$this->modName );
+			$this->SEARCH_SETTINGS = t3lib_BEfunc::getModuleData(array ('searchterm' => ''),$this->data, $mod->getName() );
 		else
 			$this->SEARCH_SETTINGS = $this->data;
 	}

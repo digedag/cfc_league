@@ -10,5 +10,8 @@ mod {
 		funccompetitions {
 			template = EXT:cfc_league/mod1/templates/funccompetitions.html
 		}
+		functicker {
+			template = EXT:cfc_league/mod1/templates/funccompetitions.html
+		}
 	}
 }

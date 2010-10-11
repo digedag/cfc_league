@@ -129,6 +129,7 @@ class tx_cfcleague_selector{
 		$menu = t3lib_BEfunc::getFuncMenu(
 			$pid,'SET[team]',$this->TEAM_SETTINGS['team'],$this->TEAM_MENU['team']
 		);
+    tx_rnbase::load('tx_cfcleague_team');
 		$teamObj = new tx_cfcleague_team($this->TEAM_SETTINGS['team']);
 		// In den Content einbauen
 		// Zusätzlich noch einen Edit-Link setzen
@@ -208,6 +209,7 @@ class tx_cfcleague_selector{
 //		$content.=$this->doc->section('',$this->doc->funcMenu($headerSection,$menu));
 
 		// Aktuellen Wert als Match-Objekt zurückgeben
+		tx_rnbase::load('tx_cfcleague_match');
 		return new tx_cfcleague_match($this->MATCH_SETTINGS['match']);
 	}
 
@@ -270,6 +272,7 @@ class tx_cfcleague_selector{
 //    $content.=$this->doc->section('',$this->doc->funcMenu($headerSection,$menu));
 
     // Aktuellen Wert als Saison-Objekt zurückgeben
+    tx_rnbase::load('tx_cfcleague_saison');
     return $this->SAISON_SETTINGS['saison'] ? new tx_cfcleague_saison($this->SAISON_SETTINGS['saison']) : 0;
   }
 

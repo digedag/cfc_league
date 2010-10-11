@@ -32,18 +32,19 @@ tx_rnbase::load('tx_cfcleague_mod1_decorator');
  */
 class tx_cfcleague_mod1_subTeamNotes {
 	var $mod;
-	public function tx_cfcleague_mod1_subTeamNotes(&$mod) {
-		$this->mod = $mod;
-		$this->pid = $mod->id;
-		$this->modName = $mod->MCONF['name'];
-	}
+
 	/**
 	 * Ausführung des Requests. Das Team muss bekannt sein
 	 *
+   * @param tx_rnbase_mod_IModule $module
 	 * @param tx_cfcleague_team $currTeam
 	 * @return string
 	 */
-	public function handleRequest(&$currTeam) {
+	public function handleRequest($module, $currTeam, $teamInfo) {
+		$this->mod = $module;
+		$this->pid = $module->getPid();
+		$this->modName = $module->getName();
+
 		// Tasks:
 		// 1. Alle Team-Notizen des Teams anzeigen
 		// SELECT * FROM notizen where team=123
@@ -72,7 +73,7 @@ class tx_cfcleague_mod1_subTeamNotes {
 	 * @return tx_rnbase_util_FormTool
 	 */
 	private function getFormTool() {
-		return $this->mod->formTool;
+		return $this->mod->getFormTool();
 	}
 
 	/**
@@ -99,7 +100,7 @@ class tx_cfcleague_mod1_subTeamNotes {
 			'mediatype' => array('decorator' => $decor, 'title' => 'tx_cfcleague_team_notes.mediatype'),
 		);
 		$rows = tx_cfcleague_mod1_decorator::prepareTable($notes,$columns,$this->getFormTool(),$options);
-		$out .= $this->mod->doc->table($rows[0]);
+		$out .= $this->mod->getDoc()->table($rows[0]);
 		
 		// We use the mediatype from first entry
 		if(count($notes))
@@ -143,7 +144,7 @@ class tx_cfcleague_mod1_subTeamNotes {
 				}
 			}
 		}
-		return (strlen($out)) ? $this->mod->doc->section($GLOBALS['LANG']->getLL('message').':',$out, 0, 1,ICON_INFO) : '';
+		return (strlen($out)) ? $this->mod->getDoc()->section($GLOBALS['LANG']->getLL('message').':',$out, 0, 1,ICON_INFO) : '';
 	}
 	
 	/**

@@ -65,14 +65,6 @@ class  tx_cfcleague_module1 extends tx_rnbase_mod_BaseModule {
 		return 'cfc_league';
 	}
 	
-	/**
-	 * Method to set the tabs for the mainmenu
-	 */
-	function setMainMenuTabs() {
-		$formTool = $this->getFormTool();
-		$mainmenu = $formTool->showMenu($this->id, 'function', $this->MCONF['name'], $this->MOD_MENU['function']);
-		$this->tabs = $mainmenu['menu'];
-	}
 	protected function getFormTag() {
 		return '<form action="index.php?id=' . $this->getPid() . '" method="POST" name="editform" id="editform">';
 	}
@@ -89,7 +81,6 @@ $SOBE->init();
 // Include files?
 foreach($SOBE->include_once as $INC_FILE)	include_once($INC_FILE);
 
-$SOBE->setMainMenuTabs();
 $SOBE->main();
 $SOBE->printContent();
 

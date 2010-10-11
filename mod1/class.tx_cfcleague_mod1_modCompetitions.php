@@ -49,18 +49,6 @@ class tx_cfcleague_mod1_modCompetitions extends tx_rnbase_mod_BaseModFunc {
 		return 'funccompetitions';
 	}
 
-  /**
-   * Initialization of the class
-   *
-   * @param	object		Parent Object
-   * @param	array		Configuration array for the extension
-   * @return	void
-   */
-//  function init(&$pObj,$conf)	{
-//    parent::init($pObj,$conf);
-//    $this->MCONF = $pObj->MCONF;
-//    $this->id = $pObj->id;
-//  }
 
 	/**
 	 * Verwaltet die Erstellung von Spielplänen von Ligen

@@ -27,19 +27,24 @@ tx_rnbase::load('tx_cfcleague_mod1_decorator');
 /**
  * Die Klasse verwaltet die Erstellung von Spielern für Teams
  */
-class tx_cfcleague_mod1_modTeamsProfileCreate extends t3lib_extobjbase {
+class tx_cfcleague_mod1_modTeamsProfileCreate {
   var $doc, $modName;
 
 
 	/**
 	 * Verwaltet die Erstellung von Spielplänen von Ligen
-	 * @param tx_cfcleague_league $competition
+   * @param tx_rnbase_mod_IModule $module
+	 * @param tx_cfcleague_team $team
 	 */
-	function main($modName, $pid, &$doc, &$formTool, &$team, $teamInfo) {
+	function handleRequest($module, $team, $teamInfo) {
 		global $LANG;
 		// Zuerst mal müssen wir die passende Liga auswählen lassen:
 		// Entweder global über die Datenbank oder die Ligen der aktuellen Seite
+		// $pid, &$doc, &$formTool
 
+		$pid = $module->getPid();
+		$doc = $module->getDoc();
+		$formTool = $module->getFormTool();
 		$this->pid = $pid;
 		$this->doc = $doc;
 		$this->formTool = $formTool;
