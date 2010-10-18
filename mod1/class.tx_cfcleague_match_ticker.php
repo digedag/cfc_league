@@ -115,7 +115,7 @@ class tx_cfcleague_match_ticker extends tx_rnbase_mod_BaseModFunc {
 		$content.=$this->doc->spacer(5);
 		$arr = $this->createTickerArray($match, t3lib_div::_GP('showAll'));
 		if($arr) {
-			$tickerContent = $this->getModule()->getFormTool()->createLink('&showAll=1', $this->id, $LANG->getLL('label_showAllTickers'));
+			$tickerContent = $formTool->createLink('&showAll=1', $this->getModule()->getPid(), $LANG->getLL('label_showAllTickers'));
 			$tickerContent .= $this->doc->table($arr);
 		}
 		else
@@ -137,6 +137,7 @@ class tx_cfcleague_match_ticker extends tx_rnbase_mod_BaseModFunc {
 			$pageRenderer->loadScriptaculous('builder,effects,controls');
 		}
 		else {
+			if(!method_exists($this->doc, 'loadJavascriptLib')) return '';
 			$this->doc->loadJavascriptLib('contrib/scriptaculous/scriptaculous.js?load=builder,effects,controls');
 		}
 		$ret = '';
@@ -399,7 +400,7 @@ class tx_cfcleague_match_ticker extends tx_rnbase_mod_BaseModFunc {
       // Ohne Minute (Feld ist leer) wird nix gespeichert
       // kleinste Minute ist -1 für versteckte Meldungen
       if(strlen($note['minute']) > 0 && intval($note['minute']) >= -1 && $playerOk) { // Minute ist Pflichtfeld
-        $data['tx_cfcleague_match_notes'][$noteId]['pid'] = $this->id;
+        $data['tx_cfcleague_match_notes'][$noteId]['pid'] = $this->getModule()->getPid();
 //        $data['tx_cfcleague_match_notes'][$noteId]['tstamp'] = $tstamp;
 //        $data['tx_cfcleague_match_notes'][$noteId]['sorting'] = intval($note['game']) * 100 + intval($note['minute']) ;
 //        $data['tx_cfcleague_match_notes'][$noteId]['cruser_id'] = $BE_USER->user['uid'];
