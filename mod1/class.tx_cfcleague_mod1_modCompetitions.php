@@ -80,7 +80,7 @@ class tx_cfcleague_mod1_modCompetitions extends tx_rnbase_mod_BaseModFunc {
 
 		if(!$current_league) {
 			$content.=$this->getModule()->getDoc()->section('Info:',$LANG->getLL('no_league_in_page'),0,1,ICON_WARN);
-			$content .= '<p style="margin-top:5px; font-weight:bold;">'.$formTool->createNewLink('tx_cfcleague_competition', $this->pObj->id,$LANG->getLL('msg_create_new_competition')).'</p>';
+			$content .= '<p style="margin-top:5px; font-weight:bold;">'.$formTool->createNewLink('tx_cfcleague_competition', $this->getModule()->getPid(),$LANG->getLL('msg_create_new_competition')).'</p>';
 			return $content;
 		}
 

@@ -117,7 +117,7 @@ class tx_cfcleague_mod1_subAddProfiles {
 	private function getCreateForm() {
 		global $LANG;
 
-		if(!tx_cfcleague_mod1_modTeamsProfileCreate::isProfilePage($this->mod->id)) {
+		if(!tx_cfcleague_mod1_modTeamsProfileCreate::isProfilePage($this->mod->getPid())) {
 			$content = $this->mod->getDoc()->section('Message:',$LANG->getLL('msg_pageNotAllowed'),0,1,ICON_WARN);
 			return $content;
 		}
@@ -128,7 +128,7 @@ class tx_cfcleague_mod1_subAddProfiles {
 		$row[] = $this->getFormTool()->createTxtInput('data[tx_cfcleague_profiles][NEW'.$i.'][last_name]', '',10);
 		$row[] = $this->getFormTool()->createSelectSingleByArray('data[tx_cfcleague_profiles][NEW'.$i.'][type]', '',tx_cfcleague_mod1_modTeamsProfileCreate::getProfileTypeArray());
 		$row[] = $this->getFormTool()->createSubmit('newprofile2team', $GLOBALS['LANG']->getLL('btn_create'), $GLOBALS['LANG']->getLL('msg_CreateProfiles')).
-			$this->getFormTool()->createHidden('data[tx_cfcleague_profiles][NEW'.$i.'][pid]', $this->mod->id);
+			$this->getFormTool()->createHidden('data[tx_cfcleague_profiles][NEW'.$i.'][pid]', $this->mod->getPid());
 		$arr[] = $row;
 		$formTable = $this->mod->getDoc()->table($arr);
 

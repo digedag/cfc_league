@@ -28,7 +28,7 @@ require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
 
 
 /**
- * TODO: Suche von Personen im BE
+ * TODO: Suche von Personen im BE. Wird wohl noch nicht verwendet...
  */
 class tx_cfcleague_util_ProfileSearcher {
 	private $mod;
@@ -65,7 +65,7 @@ class tx_cfcleague_util_ProfileSearcher {
     // Den Update-Button einfügen
     $out .= '<input type="submit" name="search" value="'.$LANG->getLL('btn_search').'" />';
     // Jetzt noch zusätzlichen JavaScriptcode für Buttons auf der Seite
-    $out .= $this->formTool->getJSCode($this->mod->id);
+    $out .= $this->formTool->getJSCode($this->mod->getPid());
 
     return $out;
 	}

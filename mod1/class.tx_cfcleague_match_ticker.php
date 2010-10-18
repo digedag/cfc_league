@@ -75,10 +75,10 @@ class tx_cfcleague_match_ticker extends tx_rnbase_mod_BaseModFunc {
 			return $content;
 		}
 		// Jetzt den Spieltag wählen lassen
-		$current_round = $this->getSelector()->showRoundSelector($selector,$this->id,$current_league);
+		$current_round = $this->getSelector()->showRoundSelector($selector,$this->getModule()->getPid(),$current_league);
 
 		// Und nun das Spiel wählen
-		$match = $this->getSelector()->showMatchSelector($selector,$this->id,$current_league->getGamesByRound($current_round, true));
+		$match = $this->getSelector()->showMatchSelector($selector,$this->getModule()->getPid(),$current_league->getGamesByRound($current_round, true));
 		if(tx_rnbase_util_TYPO3::isTYPO42OrHigher())
 			$this->pObj->subselector = $selector;
 		else 
@@ -344,7 +344,7 @@ class tx_cfcleague_match_ticker extends tx_rnbase_mod_BaseModFunc {
       ));
 
     // TS-Config der aktuellen Seite laden, um die Anzahl der Felder zu ermitteln
-		$pageTSconfig = t3lib_BEfunc::getPagesTSconfig($this->id);
+		$pageTSconfig = t3lib_BEfunc::getPagesTSconfig($this->getModule()->getPid());
 		$inputFields = (is_array($pageTSconfig) && is_array($pageTSconfig['tx_cfcleague.']['matchTickerCfg.'])) ?
 			intval($pageTSconfig['tx_cfcleague.']['matchTickerCfg.']['numberOfInputFields']) : 3;
 		$cols = (is_array($pageTSconfig) && is_array($pageTSconfig['tx_cfcleague.']['matchTickerCfg.'])) ?

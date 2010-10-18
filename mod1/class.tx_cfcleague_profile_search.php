@@ -331,7 +331,7 @@ class tx_cfcleague_profile_search extends tx_rnbase_mod_BaseModFunc {
     // Den Update-Button einfügen
     $out .= $this->formTool->createSubmit('search',$LANG->getLL('btn_search'));
     // Jetzt noch zusätzlichen JavaScriptcode für Buttons auf der Seite
-    $out .= $this->formTool->getJSCode($this->id);
+    $out .= $this->formTool->getJSCode($this->getModule()->getPid());
 
     return $out;
   }

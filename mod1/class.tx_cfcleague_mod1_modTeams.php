@@ -74,8 +74,8 @@ class tx_cfcleague_mod1_modTeams extends tx_rnbase_mod_BaseModFunc {
 		}
 
 		// Anzeige der vorhandenen Ligen
-		$league = $this->selector->showLeagueSelector($selector,$this->id,$saison->getCompetitions());
-		$team = $this->selector->showTeamSelector($selector,$this->id,$league);
+		$league = $this->selector->showLeagueSelector($selector,$this->getModule()->getPid(),$saison->getCompetitions());
+		$team = $this->selector->showTeamSelector($selector,$this->getModule()->getPid(),$league);
 		if(tx_rnbase_util_TYPO3::isTYPO42OrHigher())
 			$this->pObj->subselector = $selector;
 		else 
