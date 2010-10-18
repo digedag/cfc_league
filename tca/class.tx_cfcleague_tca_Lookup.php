@@ -130,6 +130,7 @@ class tx_cfcleague_tca_Lookup {
 			$currPic = t3lib_BEfunc::getRecord('tx_dam',$row['logo']);
 			require_once(t3lib_extMgm::extPath('dam').'lib/class.tx_dam_tcefunc.php');
 			$tcefunc = t3lib_div::makeInstance('tx_dam_tcefunc');
+			if(!method_exists($tcefunc, 'renderFileList')) return $item;
 			$tcefunc->tceforms = &$tceforms;
 			$item .= $tcefunc->renderFileList(array('rows' => array($currPic)));
 		}
