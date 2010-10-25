@@ -27,6 +27,8 @@ require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
 tx_rnbase::load('tx_cfcleague_util_ServiceRegistry');
 tx_rnbase::load('tx_cfcleague_team');
 tx_rnbase::load('tx_cfcleague_match');
+tx_rnbase::load('tx_rnbase_util_Misc');
+
 
 class tx_cfcleague_mod1_profileMerger {
 
@@ -52,6 +54,9 @@ class tx_cfcleague_mod1_profileMerger {
 		self::mergeMatches($data, $leadingProfileUID, $obsoleteProfileUID);
 		self::mergeMatchNotes($data, $leadingProfileUID, $obsoleteProfileUID);
 		self::mergeTeamNotes($data, $leadingProfileUID, $obsoleteProfileUID);
+
+		tx_rnbase_util_Misc::callHook('cfc_league','mergeProfiles_hook', 
+			array('data' => &$data, 'leadingUid' => $leadingProfileUID, 'obsoleteUid' => $obsoleteProfileUID), $this);
 
     $tce =& tx_cfcleague_db::getTCEmain($data);
     $tce->process_datamap();
