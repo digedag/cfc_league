@@ -52,6 +52,13 @@ class tx_cfcleague_util_TeamInfo {
 		return $this->baseInfo[$item];
 	}
 	/**
+	 * 
+	 * @return tx_rnbase_util_FormTool
+	 */
+	public function getFormTool() {
+		return $this->formTool;
+	}
+	/**
 	 * Liefert true, wenn keine Personen zugeordnet werden können.
 	 * @return boolean
 	 */
@@ -89,35 +96,61 @@ class tx_cfcleague_util_TeamInfo {
 		global $LANG;
 		$arr = Array(Array('&nbsp;',$LANG->getLL('label_firstname'),$LANG->getLL('label_lastname'),'&nbsp;'));
 
-		$this->addProfiles($arr, $this->getTeam()->getCoachNames(), $LANG->getLL('label_profile_coach'));
-		$this->addProfiles($arr, $this->getTeam()->getPlayerNames(), $LANG->getLL('label_profile_player'));
-		$this->addProfiles($arr, $this->getTeam()->getSupporterNames(), $LANG->getLL('label_profile_supporter'));
+		$this->addProfiles($arr, $this->getTeam()->getCoachNames(), $LANG->getLL('label_profile_coach'), 'coach');
+		$this->addProfiles($arr, $this->getTeam()->getPlayerNames(), $LANG->getLL('label_profile_player'), 'player');
+		$this->addProfiles($arr, $this->getTeam()->getSupporterNames(), $LANG->getLL('label_profile_supporter'), 'supporter');
 
 		$tableProfiles = count($arr) > 1 ? $doc->table($arr, $tableLayout) : '';
 		return $tableProfiles;
 	}
-  /**
-   * Add profiles to profile list
-   *
-   * @param array $arr
-   * @param array $profiles
-   * @param string $label
-   */
-  private function addProfiles (&$arr, &$profileNames, $label) {
-    $i = 1;
-    if($profileNames) foreach($profileNames As $uid => $prof) {
-    	if($i == 1)
-      	$arr[] = array('','&nbsp;',''); // Leere Zeile als Trenner;
-    	$row = array();
-      $row[] = $i++ == 1 ? $label : '';
-      $row[] = $prof[first_name];
-      $row[] = $prof[last_name];
-      // TODO: Button to remove a profile from team
-//      $row[] = $this->formTool->createSubmit('remProfileUid['.$uid.']', 'Remove', 'Really??');
-      $row[] = $this->formTool->createEditLink('tx_cfcleague_profiles', $uid);
-      $arr[] = $row;
-    }
-  }
+	/**
+	 * Bearbeitung von Anweisungen aus dem Request.
+	 */
+	public function handleRequest() {
+		global $LANG;
+		$data = t3lib_div::_GP('remFromTeam');
+		if(!is_array($data)) return '';
+
+		$fields = array('player' => 'players', 'coach'=>'coaches', 'supporter'=>'supporters');
+		$team = $this->getTeam();
+		foreach($data As $type => $uid) {
+			$profileUids = $team->record[$fields[$type]];
+			if(!$profileUids) continue;
+
+			if(t3lib_div::inList($profileUids, $uid)) {
+				$profileUids = t3lib_div::rmFromList($uid, $profileUids);
+				$tceData['tx_cfcleague_teams'][$team->getUid()][$fields[$type]] = $profileUids;
+				$team->record[$fields[$type]] = $profileUids;
+			}
+		}
+    $tce =& tx_rnbase_util_DB::getTCEmain($tceData);
+    $tce->process_datamap();
+    
+    return $this->getFormTool()->getDoc()->section('Info:', $LANG->getLL('msg_removedProfileFromTeam'),0,1,ICON_INFO);
+	}
+	/**
+	 * Add profiles to profile list
+	 *
+	 * @param array $arr
+	 * @param array $profiles
+	 * @param string $label
+	 */
+	private function addProfiles (&$arr, &$profileNames, $label, $type) {
+		global $LANG;
+		$i = 1;
+		if($profileNames) foreach($profileNames As $uid => $prof) {
+			if($i == 1)
+				$arr[] = array('','&nbsp;',''); // Leere Zeile als Trenner;
+			$row = array();
+			$row[] = $i++ == 1 ? $label : '';
+			$row[] = $prof[first_name];
+			$row[] = $prof[last_name];
+			$row[] = $this->getFormTool()->createEditLink('tx_cfcleague_profiles', $uid);
+			$row[] = $this->formTool->createSubmit('remFromTeam['.$type.']', $uid, $LANG->getLL('msg_remove_team_'.$type), array('icon' => 'delete_record.gif'));
+			//$row[] = $this->getFormTool()->createLink('&'. 'remProfileUid['.$uid.']',0,'Remove from team',array('icon' => 'delete_record.gif'));
+			$arr[] = $row;
+		}
+	}
   /**
    * @return tx_cfcleague_models_Team
    */
@@ -127,7 +160,7 @@ class tx_cfcleague_util_TeamInfo {
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/util/class.tx_cfcleague_util_TeamInfo.php']) {
-  include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/util/class.tx_cfcleague_util_TeamInfo.php']);
+	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/util/class.tx_cfcleague_util_TeamInfo.php']);
 }
 
 ?>

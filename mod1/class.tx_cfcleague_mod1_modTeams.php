@@ -103,6 +103,7 @@ class tx_cfcleague_mod1_modTeams extends tx_rnbase_mod_BaseModFunc {
 
 		tx_rnbase::load('tx_cfcleague_util_TeamInfo');
 		$teamInfo = new tx_cfcleague_util_TeamInfo($team, $this->formTool);
+		$content .= $teamInfo->handleRequest();
 
 		switch($menu['value']) {
 			case 0:

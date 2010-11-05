@@ -41,6 +41,10 @@
 			<label index="mod_team">Manage Teams</label>
 			<label index="create_players">Create players</label>
 			<label index="add_players">Add players</label>
+			<label index="msg_remove_team_player">Remove player from team?</label>
+			<label index="msg_remove_team_coach">Remove coach from team?</label>
+			<label index="msg_remove_team_supporter">Remove supporter from team?</label>
+			<label index="msg_removedProfileFromTeam">Profile removed from team.</label>
 			<label index="manage_teamnotes">Team notes</label>
 			<label index="label_club">Club</label>
 			<label index="msg_create_notetypes">To use this module, you have to create one or more records of type "Note type".</label>
@@ -173,6 +177,10 @@
 			<label index="mod_team">Teams verwalten</label>
 			<label index="create_players">Spieler anlegen</label>
 			<label index="add_players">Spieler hinzufügen</label>
+			<label index="msg_remove_team_player">Spieler aus Team entfernen?</label>
+			<label index="msg_remove_team_coach">Trainer aus Team entfernen?</label>
+			<label index="msg_remove_team_supporter">Betreuer aus Team entfernen?</label>
+			<label index="msg_removedProfileFromTeam">Die Person wurde aus dem Team entfernt.</label>
 			<label index="manage_teamnotes">Team-Notizen</label>
 			<label index="label_club">Verein</label>
 			<label index="msg_create_notetypes">Damit dieses Modul verwendet werden kann, müssen zunächst ein oder mehrere Datensätze vom Typ "Notiz-Typ" angelegt werden.</label>
