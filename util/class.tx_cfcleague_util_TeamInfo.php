@@ -94,7 +94,7 @@ class tx_cfcleague_util_TeamInfo {
 	 */
 	public function getTeamTable(&$doc) {
 		global $LANG;
-		$arr = Array(Array('&nbsp;',$LANG->getLL('label_firstname'),$LANG->getLL('label_lastname'),'&nbsp;'));
+		$arr = Array(Array('&nbsp;',$LANG->getLL('label_firstname'),$LANG->getLL('label_lastname'),'&nbsp;','&nbsp;'));
 
 		$this->addProfiles($arr, $this->getTeam()->getCoachNames(), $LANG->getLL('label_profile_coach'), 'coach');
 		$this->addProfiles($arr, $this->getTeam()->getPlayerNames(), $LANG->getLL('label_profile_player'), 'player');
