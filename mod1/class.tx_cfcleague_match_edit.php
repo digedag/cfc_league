@@ -34,9 +34,10 @@ class tx_cfcleague_match_edit  {
    * Bearbeitung von Spielen. Es werden die Paaren je Spieltag angezeigt
    * @param tx_rnbase_mod_IModule $module
    */
-  function main($module, $current_league) {
+  public function main($module, $current_league) {
     global $LANG;
 
+    $this->setModule($module);
 		$pid = $module->getPid();
     $this->id = $module->getPid();
 		$this->doc = $module->getDoc();
@@ -45,10 +46,6 @@ class tx_cfcleague_match_edit  {
 		$this->formTool = $formTool;
 		$LANG->includeLLFile('EXT:cfc_league/locallang_db.xml');
     
-		// Selector-Instanz bereitstellen
-		$this->selector = t3lib_div::makeInstance('tx_cfcleague_selector');
-		$this->selector->init($module->getDoc(), $module->getName());
-
 		// Zuerst mal müssen wir die passende Liga auswählen lassen:
 		$content = '';
 		$content.=$module->getDoc()->spacer(5);
@@ -59,23 +56,28 @@ class tx_cfcleague_match_edit  {
 			$content .= $this->getFooter($current_league, 0, $pid, $formTool);
 			return $content;
 		}
+
+		$currentTeam = $this->makeTeamSelector($content,$pid,$current_league);
 		// Jetzt den Spieltag wählen lassen
-		$current_round = $this->selector->showRoundSelector($content,$pid,$current_league);
+		if($currentTeam == null)
+			$current_round = $this->getSelector()->showRoundSelector($content,$pid,$current_league);
+
 		$content.='<div class="cleardiv"/>';
 		$data = t3lib_div::_GP('data');
 		// Haben wir Daten im Request?
 		if (is_array($data['tx_cfcleague_games'])) {
 			$this->updateMatches($data);
-			// Wir löschen auch die Mementos für diesen Wettbewerb
-			if (is_object($serviceObj = t3lib_div::makeInstanceService('memento'))) {
-				// Memento über den SuperKey (Wettbewerb) löschen
-				$serviceObj->clear('', $current_league->uid);
-			}
 		}
 
-		// Nun zeigen wir die Spiele des Spieltags
-		$games = $current_league->getGamesByRound($current_round);
-		$arr = $this->createTableArray($games, $current_league);
+		$matches = array();
+		if($currentTeam == null) {
+			// Nun zeigen wir die Spiele des Spieltags
+			$matches = $current_league->getGamesByRound($current_round);
+		}
+		else {
+			// TODO: Jetzt die alle Spiele des ausgewählten Teams laden
+		}
+		$arr = $this->createTableArray($matches, $current_league);
 
 		$content .= $module->getDoc()->table($arr[0]);
 
@@ -92,16 +94,44 @@ class tx_cfcleague_match_edit  {
 		$content .= '<br /><br />';
 		$content .= $this->getFooter($current_league, $current_round, $pid, $formTool);
 		return $content;
-  }
+	}
 
-  function getFooter($current_league, $current_round, $pid, $formTool) {
+	private function makeTeamSelector(&$content,$pid,$current_league) {
+		$teamOptions = array();
+		$teamOptions['selectorId'] = 'teamMatchEdit';
+		$teamOptions['noLinks'] = true;
+		$teamOptions['firstItem']['id'] = -1;
+		$teamOptions['firstItem']['label'] = 'Round mode';
+		return $this->getSelector()->showTeamSelector($content,$pid,$current_league, $teamOptions);
+	}
+	/**
+	 * @return tx_cfcleague_selector
+	 */
+	private function getSelector() {
+		if(!is_object($this->selector)) {
+			$this->selector = t3lib_div::makeInstance('tx_cfcleague_selector');
+			$this->selector->init($this->getModule()->getDoc(), $this->getModule()->getName());
+		}
+		return $this->selector;
+	}
+	/**
+	 * @return tx_rnbase_mod_BaseModule
+	 */
+	private function getModule() {
+		return $this->module;
+	}
+	private function setModule($module) {
+		$this->module = $module;
+	}
+	
+	function getFooter($current_league, $current_round, $pid, $formTool) {
 		$params['params'] = '&competition='.$current_league->uid;
 		if($current_round)
 			$params['params'] .= '&round='.($current_round);
 		$params['title'] = $GLOBALS['LANG']->getLL('label_create_match');
 		$content = $formTool->createNewLink('tx_cfcleague_games', $pid,$GLOBALS['LANG']->getLL('label_create_match'),$params);
 		return $content;
-  }
+	}
   /**
    * Liefert die passenden Überschrift für die Tabelle
    *

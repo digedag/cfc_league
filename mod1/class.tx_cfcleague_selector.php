@@ -35,7 +35,8 @@ class tx_cfcleague_selector{
 	 */
 	function init($doc, $modName){
 		$this->doc = $doc;
-		$this->MCONF['name'] = $modName;
+		$this->MCONF['name'] = $modName; // deprecated
+		$this->modName = $modName;
 	}
 	/**
 	 * Returns the form tool
@@ -111,30 +112,37 @@ class tx_cfcleague_selector{
 	 * Darstellung der Select-Box mit allen Teams des übergebenen Wettbewerbs. Es wird auf das aktuelle Team eingestellt.
 	 * @return die aktuelle Team als Objekt
 	 */
-	function showTeamSelector(&$content,$pid,$league){
+	public function showTeamSelector(&$content,$pid,$league, $options=array()){
 		if(!$league)
 			return 0;
 
-		$this->TEAM_MENU = Array (
-			'team' => array()
+		$selectorId = $options['selectorId'] ? $options['selectorId'] : 'team';
+		$TEAM_MENU = Array (
+			$selectorId => array()
 		);
-
-		foreach($league->getTeamNames() as $id => $team_name){
-			$this->TEAM_MENU['team'][$id] = $team_name;
+		if($options['firstItem']) {
+			$TEAM_MENU[$selectorId][$options['firstItem']['id']] = $options['firstItem']['label'];
 		}
 
-		$this->TEAM_SETTINGS = t3lib_BEfunc::getModuleData(
-			$this->TEAM_MENU,t3lib_div::_GP('SET'),$this->MCONF['name'] // Das ist der Name des Moduls
-		);
+		foreach($league->getTeamNames() as $id => $team_name){
+			$TEAM_MENU[$selectorId][$id] = $team_name;
+		}
+
+		$TEAM_SETTINGS = t3lib_BEfunc::getModuleData($TEAM_MENU,t3lib_div::_GP('SET'),$this->modName);
+
 		$menu = t3lib_BEfunc::getFuncMenu(
-			$pid,'SET[team]',$this->TEAM_SETTINGS['team'],$this->TEAM_MENU['team']
+			$pid,'SET['.$selectorId.']',$TEAM_SETTINGS[$selectorId],$TEAM_MENU[$selectorId]
 		);
-    tx_rnbase::load('tx_cfcleague_team');
-		$teamObj = new tx_cfcleague_team($this->TEAM_SETTINGS['team']);
+		$teamObj = null;
+		if($TEAM_SETTINGS[$selectorId] > 0) {
+	    tx_rnbase::load('tx_cfcleague_team');
+			$teamObj = new tx_cfcleague_team($TEAM_SETTINGS[$selectorId]);
+		}
 		// In den Content einbauen
 		// Zusätzlich noch einen Edit-Link setzen
-		if($menu) {
-			$links = $this->getFormTool()->createEditLink('tx_cfcleague_teams', $this->TEAM_SETTINGS['team']);
+		$noLinks = $options['noLinks'] ? true : false;
+		if(!$noLinks && $menu) {
+			$links = $this->getFormTool()->createEditLink('tx_cfcleague_teams', $TEAM_SETTINGS[$selectorId]);
 //			$menu .= '</td><td style="width:90px; padding-left:10px;">' . $links;
 			if($teamObj->record['club'])
 				$links .= $this->getFormTool()->createEditLink('tx_cfcleague_club', intval($teamObj->record['club']), $GLOBALS['LANG']->getLL('label_club'));
