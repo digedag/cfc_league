@@ -109,6 +109,7 @@ class tx_cfcleague_match_edit  {
 		}
 		else {
 			// TODO: Jetzt die alle Spiele des ausgewählten Teams laden
+			$matchTable->setTeams($currentTeam->getUid());
 		}
 
 		$fields = array();
