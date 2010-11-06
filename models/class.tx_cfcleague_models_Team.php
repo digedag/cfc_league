@@ -84,6 +84,13 @@ class tx_cfcleague_models_Team extends tx_rnbase_model_base {
 		}
 		return self::$instances[$uid];
 	}
+	/**
+	 * Check if team is a dummy for free_of_match.
+	 * @return boolean
+	 */
+	public function isDummy(){
+		return intval($this->record['dummy']) != 0;
+	}
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/models/class.tx_cfcleague_models_Team.php']) {

@@ -69,14 +69,7 @@ class tx_cfcleague_match_edit  {
 			$this->updateMatches($data);
 		}
 
-		$matches = array();
-		if($currentTeam == null) {
-			// Nun zeigen wir die Spiele des Spieltags
-			$matches = $current_league->getGamesByRound($current_round);
-		}
-		else {
-			// TODO: Jetzt die alle Spiele des ausgewählten Teams laden
-		}
+		$matches = $this->findMatches($currentTeam, $current_round, $current_league);
 		$arr = $this->createTableArray($matches, $current_league);
 
 		$content .= $module->getDoc()->table($arr[0]);
@@ -96,6 +89,36 @@ class tx_cfcleague_match_edit  {
 		return $content;
 	}
 
+	/**
+	 * 
+	 * @param tx_cfcleague_models_Team $currentTeam
+	 * @param int $current_round
+	 * @param tx_cfcleague_league $current_league
+	 */
+	private function findMatches($currentTeam, $current_round, $current_league) {
+		// Mit Matchtable nach Spielen suchen
+		$service = tx_cfcleague_util_ServiceRegistry::getMatchService();
+		$matchTable = $service->getMatchTableBuilder();
+		$matchTable->setCompetitions($current_league->uid);
+
+		$matches = array();
+		if($currentTeam == null) {
+			// Nun zeigen wir die Spiele des Spieltags
+			$matchTable->setRounds($current_round);
+//			$matches = $current_league->getGamesByRound($current_round);
+		}
+		else {
+			// TODO: Jetzt die alle Spiele des ausgewählten Teams laden
+		}
+
+		$fields = array();
+		$options = array();
+		$options['orderby']['MATCH.DATE'] = 'ASC';
+		$matchTable->getFields($fields, $options);
+		$matches = $service->search($fields, $options);
+		
+		return $matches;
+	}
 	private function makeTeamSelector(&$content,$pid,$current_league) {
 		$teamOptions = array();
 		$teamOptions['selectorId'] = 'teamMatchEdit';
@@ -162,51 +185,52 @@ class tx_cfcleague_match_edit  {
   }
   /**
    * Erstellt das Datenarray zur Erstellung der HTML-Tabelle mit den Spielen des Spieltages
-   * @param array $matches
+   * @param array[tx_cfcleague_models_Match] $matches
    * @param tx_cfcleague_league $competition
    * @return array mit zwei Elementen: Idx 0 enthält Array für Darstellung als Tabelle, Idx 1
    *         enthält, falls vorhanden den Namen des spielfreien Teams
    */
-  function createTableArray($matches, &$competition) {
-    global $LANG;
+	private function createTableArray($matches, &$competition) {
+		global $LANG;
 
-    $parts = $competition->getNumberOfMatchParts();
-    $arr = Array( 0 => Array( $this->getHeadline($parts) ));
-    
+		$parts = $competition->getNumberOfMatchParts();
+		$arr = Array( 0 => Array( $this->getHeadline($parts) ));
 
-    foreach($matches As $game){
-      $row = array();
+		foreach($matches As $game) {
+			$row = array();
 
-      $isNoMatch = $game['no_match_home'] || $game['no_match_guest'];
+			$isNoMatch = $game->isDummy();
+//      $isNoMatch = $game['no_match_home'] || $game['no_match_guest'];
 
-      $table = 'tx_cfcleague_games';
+			$table = 'tx_cfcleague_games';
 			if(!$isNoMatch) {
-				$row[] = $game['uid'].$this->formTool->createEditLink('tx_cfcleague_games',$game['uid'],'');
-				$dataArr = $this->formTool->getTCEFormArray($table, $game['uid']);
-				$row[] = $this->formTool->form->getSoloField($table,$dataArr[$table.'_'.$game['uid']],'date');
+				$row[] = $game->getUid().$this->formTool->createEditLink('tx_cfcleague_games',$game->getUid(),'');
+				$dataArr = $this->formTool->getTCEFormArray($table, $game->getUid());
+				$row[] = $this->formTool->form->getSoloField($table,$dataArr[$table.'_'.$game->getUid()],'date');
 
-				$row[] = $this->formTool->form->getSoloField($table,$dataArr[$table.'_'.$game['uid']],'status');
-				$row[] = $this->formTool->createEditLink('tx_cfcleague_teams',$game['home'],$game['short_name_home']);
-				$row[] = $this->formTool->createEditLink('tx_cfcleague_teams',$game['guest'],$game['short_name_guest']);
+				$row[] = $this->formTool->form->getSoloField($table,$dataArr[$table.'_'.$game->getUid()],'status');
+				$row[] = $this->formTool->createEditLink('tx_cfcleague_teams',$game->record['home'],$game->getHome()->getNameShort());
+				$row[] = $this->formTool->createEditLink('tx_cfcleague_teams',$game->record['guest'],$game->getGuest()->getNameShort());
 
 				// Jetzt die Spielabschitte einbauen, wobei mit dem letzten begonnen wird
 				for($i=$parts; $i > 0; $i--) {
-					$row[] = $this->formTool->createIntInput('data[tx_cfcleague_games]['.$game['uid'].'][goals_home_'.$i.']',$game['goals_home_'.$i],2) . ' : ' . $this->formTool->createIntInput('data[tx_cfcleague_games]['.$game['uid'].'][goals_guest_'.$i.']',$game['goals_guest_'.$i],2);
+					$row[] = $this->formTool->createIntInput('data[tx_cfcleague_games]['.$game->getUid().'][goals_home_'.$i.']',$game->record['goals_home_'.$i],2) . ' : ' . $this->formTool->createIntInput('data[tx_cfcleague_games]['.$game->getUid().'][goals_guest_'.$i.']',$game->record['goals_guest_'.$i],2);
 				}
         
 //        $row[] = $this->formTool->createIntInput('data[tx_cfcleague_games]['.$game['uid'].'][goals_home_2]',$game['goals_home_2'],2) . ' : ' . $this->formTool->createIntInput('data[tx_cfcleague_games]['.$game['uid'].'][goals_guest_2]',$game['goals_guest_2'],2);
 //        $row[] = $this->formTool->createIntInput('data[tx_cfcleague_games]['.$game['uid'].'][goals_home_1]',$game['goals_home_1'],2) . ' : ' . $this->formTool->createIntInput('data[tx_cfcleague_games]['.$game['uid'].'][goals_guest_1]',$game['goals_guest_1'],2);
 
-        $row[] = $this->formTool->createIntInput('data[tx_cfcleague_games]['.$game['uid'].'][visitors]',$game['visitors'],6);
+        $row[] = $this->formTool->createIntInput('data[tx_cfcleague_games]['.$game->getUid().'][visitors]',$game->record['visitors'],6);
         $arr[0][] = $row;
       }
       else {
         $row = array();
-        $row['team'] = $game['no_match_home'] ? $game['name_guest'] : $game['name_home'];
+        $isHomeDummy = $game->getHome()->isDummy();
+        $row['team'] = $isHomeDummy ? $game->getGuest()->getName() : $game->getHome()->getName();
         $row['team_edit'] = $this->formTool->createEditLink('tx_cfcleague_teams', 
-                                     ($game['no_match_home'] ? $game['guest'] : $game['home']), 
-                                     ($game['no_match_home'] ? $game['short_name_guest'] :$game['short_name_home']));
-        $row['match_edit'] = $this->formTool->createEditLink('tx_cfcleague_games',$game['uid']);
+                                     ($isHomeDummy ? $game->record['guest'] : $game->record['home']), 
+                                     ($isHomeDummy ? $game->getGuest()->getNameShort() : $game->getHome()->getNameShort()));
+        $row['match_edit'] = $this->formTool->createEditLink('tx_cfcleague_games',$game->getUid());
         $arr[1][] = $row;
       }
     }

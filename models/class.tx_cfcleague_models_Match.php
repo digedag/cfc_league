@@ -204,38 +204,46 @@ class tx_cfcleague_models_Match extends tx_rnbase_model_base {
 	public function getGuestNameShort() {
 		return $this->getGuest()->getNameShort();
 	}
-  /**
-   * Returns true if match is finished
-   *
-   * @return boolean
-   */
-  public function isFinished(){
-    return intval($this->record['status']) == 2;
-  }
-  /**
-   * Returns true if match is running
-   *
-   * @return boolean
-   */
-  public function isRunning(){
-    return intval($this->record['status']) == 1;
-  }
-  /**
-   * Returns true if match has extra time
-   *
-   * @return boolean
-   */
-  public function isExtraTime() {
-    return intval($this->record['is_extratime']) == 1;
-  }
-  /**
-   * Returns true if match has extra time
-   *
-   * @return boolean
-   */
-  public function isPenalty() {
-    return intval($this->record['is_penalty']) == 1;
-  }
+	/**
+	 * Returns true if match is finished
+	 *
+	 * @return boolean
+	 */
+	public function isFinished(){
+		return intval($this->record['status']) == 2;
+	}
+	/**
+	 * Returns true if match is running
+	 *
+	 * @return boolean
+	 */
+	public function isRunning() {
+		return intval($this->record['status']) == 1;
+	}
+	/**
+	 * Returns true if match has extra time
+	 *
+	 * @return boolean
+	 */
+	public function isExtraTime() {
+		return intval($this->record['is_extratime']) == 1;
+	}
+	/**
+	 * Returns true if match has extra time
+	 *
+	 * @return boolean
+	 */
+	public function isPenalty() {
+		return intval($this->record['is_penalty']) == 1;
+	}
+	/**
+	 * Returns true of match is a dummy (free of play).
+	 *
+	 * @return boolean
+	 */
+	public function isDummy() {
+		return $this->getHome()->isDummy() || $this->getGuest()->isDummy();
+	}
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/models/class.tx_cfcleague_models_Match.php']) {
