@@ -68,7 +68,14 @@ class tx_cfcleague_league{
   function getNumberOfMatchParts(){
     return intval($this->record['match_parts']) ? intval($this->record['match_parts']) : 2;
   }
-
+  /**
+   * Teilergebnisse addieren
+   * @return boolean
+   */
+  public function isAddedPartResults(){
+    return intval($this->record['addparts']) > 0;
+  }
+  
   /**
    * Liefert die Namen der zugeordneten Teams als Array. Key ist die ID des Teams
    * @param $asArray Wenn 1 wird pro Team ein Array mit Name, Kurzname und Flag spielfrei geliefert

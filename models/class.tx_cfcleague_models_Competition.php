@@ -150,6 +150,14 @@ class tx_cfcleague_models_Competition extends tx_rnbase_model_base {
 		return $parts > 0 ? $parts : 2;
 	}
 	/**
+	 * Whether or not the match result should be calculated from part results.
+	 *
+	 * @return boolean
+   */
+	public function isAddPartResults() {
+		return intval($this->record['addparts']) > 0;
+	}
+	/**
 	 * Liefert die Anzahl der Spielrunden
 	 *
 	 * @return int

@@ -82,8 +82,20 @@ class tx_cfcleague_models_Match extends tx_rnbase_model_base {
 		// es gibt. Dies steht im Wettbewerb
 		$comp = $this->getCompetition();
 		$this->record['matchparts'] = $comp->getMatchParts();
-		$goalsHome = $this->record['goals_home_'.$comp->getMatchParts()];
-		$goalsGuest = $this->record['goals_guest_'.$comp->getMatchParts()];
+		if($comp->isAddPartResults())
+			$this->initResultAdded($comp, $comp->getMatchParts());
+		else
+			$this->initResultSimple($comp, $comp->getMatchParts());
+		$this->resultInited = true;
+	}
+	/**
+	 * Init result and expect the endresult in last match part.
+	 * @param tx_cfcleague_models_Competition $comp
+	 * @param int $matchParts
+	 */
+	private function initResultSimple($comp, $matchParts) {
+		$goalsHome = $this->record['goals_home_'.$matchParts];
+		$goalsGuest = $this->record['goals_guest_'.$matchParts];
 		// Gab es Verländerung oder Elfmeterschiessen
 		if($this->isPenalty()) {
 			$goalsHome = $this->record['goals_home_ap'];
@@ -95,7 +107,40 @@ class tx_cfcleague_models_Match extends tx_rnbase_model_base {
 		}
 		$this->record['goals_home'] = $goalsHome;
 		$this->record['goals_guest'] = $goalsGuest;
-		$this->resultInited = true;
+	}
+	/**
+	 * Init result and add all matchpart results.
+	 * @param tx_cfcleague_models_Competition $comp
+	 * @param int $matchParts
+	 */
+	private function initResultAdded($comp, $matchParts) {
+		$goalsHome = 0;
+		$goalsGuest = 0;
+
+		// Teilergebnisse holen
+		$matchParts = $matchParts > 0 ? $matchParts : 1;
+		for($i=1; $i<=$matchParts; $i++) {
+			$goalsHome += $this->record['goals_home_'.$i];
+			$goalsGuest += $this->record['goals_guest_'.$i];
+		}
+		// Gab es Verländerung oder Elfmeterschiessen
+		if($this->isPenalty()) {
+			$goalsHome += $this->record['goals_home_ap'];
+			$goalsGuest += $this->record['goals_guest_ap'];
+		}
+		elseif($this->isExtraTime()) {
+			$goalsHome += $this->record['goals_home_et'];
+			$goalsGuest += $this->record['goals_guest_et'];
+		}
+		$this->record['goals_home'] = $goalsHome;
+		$this->record['goals_guest'] = $goalsGuest;
+	}
+	/**
+	 * 
+	 * @return string
+	 */
+	public function getResult() {
+		return $this->record['status'] > 0 ? $this->getGoalsHome() .' : ' . $this->getGoalsGuest() : '- : -';
 	}
 	/**
 	 * Return sets if available

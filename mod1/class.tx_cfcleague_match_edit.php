@@ -105,10 +105,8 @@ class tx_cfcleague_match_edit  {
 		if($currentTeam == null) {
 			// Nun zeigen wir die Spiele des Spieltags
 			$matchTable->setRounds($current_round);
-//			$matches = $current_league->getGamesByRound($current_round);
 		}
 		else {
-			// TODO: Jetzt die alle Spiele des ausgewählten Teams laden
 			$matchTable->setTeams($currentTeam->getUid());
 		}
 
@@ -162,7 +160,7 @@ class tx_cfcleague_match_edit  {
    * @param int $parts
    * @return array
    */
-  function getHeadline($parts) {
+  private function getHeadline($parts, $extraResultCol) {
     global $LANG;
     $arr = array( '',
       $LANG->getLL('tx_cfcleague_games.date'),
@@ -170,6 +168,8 @@ class tx_cfcleague_match_edit  {
       $LANG->getLL('tx_cfcleague_games.home'),
       $LANG->getLL('tx_cfcleague_games.guest'));
 
+    if($extraResultCol)
+    	$arr[] = $LANG->getLL('tx_cfcleague_games.endresult');
     // Hier je Spielart die Überschrift setzen
     for($i=$parts; $i > 0; $i--) {
       $label = $LANG->getLL('tx_cfcleague_games.parts_'.$parts.'_'.$i);
@@ -195,7 +195,7 @@ class tx_cfcleague_match_edit  {
 		global $LANG;
 
 		$parts = $competition->getNumberOfMatchParts();
-		$arr = Array( 0 => Array( $this->getHeadline($parts) ));
+		$arr = Array( 0 => Array( $this->getHeadline($parts, $competition->isAddedPartResults()) ));
 
 		foreach($matches As $game) {
 			$row = array();
@@ -213,6 +213,9 @@ class tx_cfcleague_match_edit  {
 				$row[] = $this->formTool->createEditLink('tx_cfcleague_teams',$game->record['home'],$game->getHome()->getNameShort());
 				$row[] = $this->formTool->createEditLink('tx_cfcleague_teams',$game->record['guest'],$game->getGuest()->getNameShort());
 
+				if($competition->isAddedPartResults()) {
+					$row[] = $game->getResult();
+				}
 				// Jetzt die Spielabschitte einbauen, wobei mit dem letzten begonnen wird
 				for($i=$parts; $i > 0; $i--) {
 					$row[] = $this->formTool->createIntInput('data[tx_cfcleague_games]['.$game->getUid().'][goals_home_'.$i.']',$game->record['goals_home_'.$i],2) . ' : ' . $this->formTool->createIntInput('data[tx_cfcleague_games]['.$game->getUid().'][goals_guest_'.$i.']',$game->record['goals_guest_'.$i],2);

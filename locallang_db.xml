@@ -116,7 +116,7 @@
 			<label index="tx_cfcleague_games.referee">Referee</label>
 			<label index="tx_cfcleague_games.assists">Assists</label>
 			<label index="tx_cfcleague_games.parts_4_default">Quarter</label>
-			<label index="tx_cfcleague_games.parts_3_3">Result</label>
+			<label index="tx_cfcleague_games.endresult">Result</label>
 			<label index="tx_cfcleague_games.parts_3_default">Thirt</label>
 			<label index="tx_cfcleague_games.parts_2_2">Result</label>
 			<label index="tx_cfcleague_games.parts_2_1">Halftime</label>
@@ -329,7 +329,7 @@
 			<label index="tx_cfcleague_games.referee">Schiedsrichter</label>
 			<label index="tx_cfcleague_games.assists">Linienrichter</label>
 			<label index="tx_cfcleague_games.parts_4_default">Viertel</label>
-			<label index="tx_cfcleague_games.parts_3_3">Endstand</label>
+			<label index="tx_cfcleague_games.endresult">Endstand</label>
 			<label index="tx_cfcleague_games.parts_3_default">Drittel</label>
 			<label index="tx_cfcleague_games.parts_2_2">Endstand</label>
 			<label index="tx_cfcleague_games.parts_2_1">Halbzeit</label>
