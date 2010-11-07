@@ -252,6 +252,14 @@ $TCA['tx_cfcleague_competition'] = Array (
 				'default' => 0
 			)
 		),
+		'addparts' => Array (
+			'exclude' => 1,
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition_addparts',
+			'config' => Array (
+				'type' => 'check',
+				'default' => '0'
+			)
+		),
 		'point_system' => Array (
 			'exclude' => 1,
 			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition.point_system',
@@ -292,7 +300,7 @@ $TCA['tx_cfcleague_competition'] = Array (
 */
 	),
 	'types' => Array (
-		'0' => Array('showitem' => 'hidden;;1;;1-1-1, name, internal_name, short_name, agegroup, saison, type;;2, point_system, logo, t3logo, teams, match_keys, table_marks, match_parts')
+		'0' => Array('showitem' => 'hidden;;1;;1-1-1, name, internal_name, short_name, agegroup, saison, type;;2, point_system, logo, t3logo, teams, match_keys, table_marks, match_parts, addparts')
 	),
 	'palettes' => Array (
 		'1' => Array('showitem' => ''),

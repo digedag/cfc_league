@@ -41,7 +41,12 @@ $LOCAL_LANG = Array(
 1-17,3-14,5-12,7-10,9-8,11-6,13-4,15-2,18-16|2-13,4-11,6-9,8-7,10-5,12-3,14-18,16-1,17-15|1-15,3-10,5-8,7-6,9-4,11-2,13-17,16-14,18-12|2-9,4-7,6-5,8-3,10-18,12-16,14-1,15-13,17-11|1-13,3-6,5-4,7-2,9-17,11-15,14-12,16-10,18-8|2-5,4-3,6-18,8-16,10-14,12-1,13-11,15-9,17-7|1-11,3-2,5-17,7-15,9-13,12-10,14-8,16-6,18-4|2-18,4-16,6-14,8-12,10-1,11-9,13-7,15-5,17-3|1-9,3-15,5-13,7-11,10-8,12-6,14-4,16-2,18-17|2-14,4-12,6-10,8-1,9-7,11-5,13-3,15-18,17-16|1-7,3-11,5-9,8-6,10-4,12-2,14-17,16-15,18-13|2-10,4-8,6-1,7-5,9-3,11-18,13-16,15-14,17-12|1-5,3-7,6-4,8-2,10-17,12-15,14-13,16-11,18-9|2-6,4-1,5-3,7-18,9-16,11-14,13-12,15-10,17-8|1-3,4-2,6-17,8-15,10-13,12-11,14-9,16-7,18-5|1-2,3-18,5-16,7-14,9-12,11-10,13-8,15-6,17-4|2-17,4-15,6-13,8-11,10-9,12-7,14-5,16-3,18-1
 </pre>
     ',
-    'teams.description' => 'Select all teams that belong to this competition.',
+    'addparts.description' => 'Add results of match parts for end result.',
+    'addparts.details' => '
+    This is useful if you want to show results of match parts in FE. 
+    For an icehockey match you can input 0:2, 1:1, 2:1. The end result would be 3:4.
+    ',
+		'teams.description' => 'Select all teams that belong to this competition.',
     'teams.details' => '
       <p><b>Note:</b> You can only create matches for this competition if there are at least 
       two teams selected!</p>
@@ -110,7 +115,13 @@ The default template uses this marker to create a predefined CSS-Class. Have a l
 1-17,3-14,5-12,7-10,9-8,11-6,13-4,15-2,18-16|2-13,4-11,6-9,8-7,10-5,12-3,14-18,16-1,17-15|1-15,3-10,5-8,7-6,9-4,11-2,13-17,16-14,18-12|2-9,4-7,6-5,8-3,10-18,12-16,14-1,15-13,17-11|1-13,3-6,5-4,7-2,9-17,11-15,14-12,16-10,18-8|2-5,4-3,6-18,8-16,10-14,12-1,13-11,15-9,17-7|1-11,3-2,5-17,7-15,9-13,12-10,14-8,16-6,18-4|2-18,4-16,6-14,8-12,10-1,11-9,13-7,15-5,17-3|1-9,3-15,5-13,7-11,10-8,12-6,14-4,16-2,18-17|2-14,4-12,6-10,8-1,9-7,11-5,13-3,15-18,17-16|1-7,3-11,5-9,8-6,10-4,12-2,14-17,16-15,18-13|2-10,4-8,6-1,7-5,9-3,11-18,13-16,15-14,17-12|1-5,3-7,6-4,8-2,10-17,12-15,14-13,16-11,18-9|2-6,4-1,5-3,7-18,9-16,11-14,13-12,15-10,17-8|1-3,4-2,6-17,8-15,10-13,12-11,14-9,16-7,18-5|1-2,3-18,5-16,7-14,9-12,11-10,13-8,15-6,17-4|2-17,4-15,6-13,8-11,10-9,12-7,14-5,16-3,18-1
 </pre>
     ',
-    'teams.description' => 'Geben Sie alle Teams zu diesem Wettbewerb an.',
+    'addparts.description' => 'Addiere Teilergebnisse zum Endergebnis.',
+    'addparts.details' => '
+    Das ist sinnvoll, wenn man die Teilergebnisse der einzelnen Spielabschnitte im FE anzeigen 
+    will. Dies ist in einigen Sportarten üblich. Bei einem Eishockeyspiel
+    gibt man 0:2, 1:1, 2:1 ein. Das Endergebnis wäre dann 3:4.
+    ',
+  	'teams.description' => 'Geben Sie alle Teams zu diesem Wettbewerb an.',
     'teams.details' => '
       <p><b>Hinweis:</b> Für einen Wettbewerb können nur Spiele angelegt werden, wenn mindestens 
       zwei Teams zugeordnet sind!</p>

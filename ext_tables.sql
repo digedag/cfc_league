@@ -69,6 +69,7 @@ CREATE TABLE tx_cfcleague_competition (
 	t3logo text NOT NULL,
 
 	match_parts tinyint(4) DEFAULT '0' NOT NULL,
+	addparts tinyint(4) DEFAULT '0' NOT NULL,
 	parent int(11) DEFAULT '0' NOT NULL,
 
 	PRIMARY KEY (uid),

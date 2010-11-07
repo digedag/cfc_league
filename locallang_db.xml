@@ -28,6 +28,7 @@
 			<label index="tx_cfcleague_competition.type_ko">Cup</label>
 			<label index="tx_cfcleague_competition.type_other">Single Matches</label>
 			<label index="tx_cfcleague_competition.type_combined">Combined</label>
+			<label index="tx_cfcleague_competition_addparts">Add part results</label>
 			<label index="tx_cfcleague_competition.match_parts">Match parts</label>
 			<label index="tx_cfcleague_competition.match_parts_0">Default 2</label>
 			<label index="tx_cfcleague_competition.match_parts_1">1</label>
@@ -249,6 +250,7 @@
 			<label index="tx_cfcleague_competition.type_ko">Pokal</label>
 			<label index="tx_cfcleague_competition.type_other">Einzelspiele</label>
 			<label index="tx_cfcleague_competition.type_combined">Kombiniert</label>
+			<label index="tx_cfcleague_competition_addparts">Addiere Spielabschnitte für Endergebnis</label>
 			<label index="tx_cfcleague_competition.match_parts">Spielabschnitte</label>
 			<label index="tx_cfcleague_competition.match_parts_0">Standard 2</label>
 			<label index="tx_cfcleague_competition.point_system">Punkte System</label>
