@@ -119,11 +119,12 @@ class tx_cfcleague_match_edit  {
 		return $matches;
 	}
 	private function makeTeamSelector(&$content,$pid,$current_league) {
+    global $LANG;
 		$teamOptions = array();
 		$teamOptions['selectorId'] = 'teamMatchEdit';
 		$teamOptions['noLinks'] = true;
 		$teamOptions['firstItem']['id'] = -1;
-		$teamOptions['firstItem']['label'] = 'Round mode';
+		$teamOptions['firstItem']['label'] = $LANG->getLL('label_roundmode');
 		return $this->getSelector()->showTeamSelector($content,$pid,$current_league, $teamOptions);
 	}
 	/**
