@@ -320,7 +320,8 @@ if (TYPO3_MODE=='BE')	{
 
 
   // add folder icon
-  $ICON_TYPES['cfcleague'] = array('icon' => t3lib_extMgm::extRelPath($_EXTKEY).'ext_icon_cfcleague_folder.gif');
+	t3lib_SpriteManager::addTcaTypeIcon('pages', 'contains-cfcleague', '../typo3conf/ext/cfc_league/ext_icon_cfcleague_folder.gif');
+
   $TCA['pages']['columns']['module']['config']['items'][] = array('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_folder', 'cfcleague');
 //  t3lib_div::debug($TCA['pages']['columns']['module']['config'], 'ext_tables');
 /*
