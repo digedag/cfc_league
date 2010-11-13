@@ -39,7 +39,7 @@ class tx_cfcleague_mod1_modTeams extends tx_rnbase_mod_BaseModFunc {
 	 * @return	string
 	 */
 	function getFuncId() {
-		return 'functicker';
+		return 'functeams';
 	}
 
 
