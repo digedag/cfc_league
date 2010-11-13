@@ -144,7 +144,12 @@ CREATE TABLE tx_cfcleague_club (
 	countrycode varchar(20) DEFAULT '' NOT NULL,
 	shortinfo text NOT NULL,
 	info text NOT NULL,
+	info2 text NOT NULL,
 	stadiums int(11) DEFAULT '0' NOT NULL,
+	established date DEFAULT '0000-00-00',
+	yearestablished int(11) DEFAULT '0' NOT NULL,
+	colors varchar(100) DEFAULT '' NOT NULL,
+	members int(11) DEFAULT '0' NOT NULL,
 
 	PRIMARY KEY (uid),
 	KEY parent (pid)

@@ -67,7 +67,12 @@
 			<label index="tx_cfcleague_club.zip">Zip</label>
 			<label index="tx_cfcleague_club.city">City</label>
 			<label index="tx_cfcleague_club.shortinfo">Short info</label>
-			<label index="tx_cfcleague_club.info">Information</label>
+			<label index="tx_cfcleague_club_info">Information</label>
+			<label index="tx_cfcleague_club_info2">Approach</label>
+			<label index="tx_cfcleague_club_established">Established</label>
+			<label index="tx_cfcleague_club_yearestablished">Year established</label>
+			<label index="tx_cfcleague_club_colors">Club colors</label>
+			<label index="tx_cfcleague_club_members">Members</label>
 
 			<label index="tx_cfcleague_teams">Team</label>
 			<label index="tx_cfcleague_teams_tab_members">Members</label>
@@ -281,7 +286,13 @@
 			<label index="tx_cfcleague_club.zip">PLZ</label>
 			<label index="tx_cfcleague_club.city">Stadt</label>
 			<label index="tx_cfcleague_club.shortinfo">Kurzinfo</label>
-			<label index="tx_cfcleague_club.info">Information</label>
+			<label index="tx_cfcleague_club_info">Information</label>
+			<label index="tx_cfcleague_club_info2">Anreise</label>
+			<label index="tx_cfcleague_club_established">Gründungsdatum</label>
+			<label index="tx_cfcleague_club_yearestablished">Gründungsjahr</label>
+			<label index="tx_cfcleague_club_colors">Vereinsfarben</label>
+			<label index="tx_cfcleague_club_members">Mitglieder</label>
+
 			<label index="tx_cfcleague_teams">Mannschaft</label>
 			<label index="tx_cfcleague_teams_tab_members">Mitglieder</label>
 			<label index="tx_cfcleague_teams.club">Verein</label>

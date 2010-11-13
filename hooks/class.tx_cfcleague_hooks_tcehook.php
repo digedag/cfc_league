@@ -65,6 +65,10 @@ class tx_cfcleague_hooks_tcehook {
 			}
 			$row['types'] = tx_cfcleague_tca_Lookup::getProfileTypeItems($types);
 		}
+		if($table == 'tx_cfcleague_club') {
+			tx_rnbase::load('tx_rnbase_util_Dates');
+			$row['established'] = $row['established'] ? tx_rnbase_util_Dates::datetime_mysql2tstamp($row['established']) : time();
+		}
 	}
 	/**
 	 * Wir müssen dafür sorgen, daß die neuen IDs der Teams im Wettbewerb und Spielen
@@ -105,6 +109,13 @@ class tx_cfcleague_hooks_tcehook {
 	 * @param tce_main $tcemain
 	 */
 	public function processDatamap_postProcessFieldArray($status, $table, $id, &$fieldArray, &$tce) {
+		if($table == 'tx_cfcleague_club') {
+			if(array_key_exists('established', $fieldArray)) {
+				tx_rnbase::load('tx_rnbase_util_Dates');
+				$estDate = tx_rnbase_util_Dates::date_tstamp2mysql($fieldArray['established']);
+				$fieldArray['established'] = $estDate;
+			}
+		}
 	}
 
   /**

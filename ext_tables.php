@@ -143,7 +143,7 @@ $TCA['tx_cfcleague_club'] = Array (
 		'enablecolumns' => Array (
 			'disabled' => 'hidden',
 		),
-		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY).'tca.php',
+		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY).'Configuration/TCA/Club.php',
 		'iconfile' => t3lib_extMgm::extRelPath($_EXTKEY).'icon_tx_cfcleague_clubs.gif',
 	),
 	'feInterface' => Array (
@@ -312,6 +312,10 @@ if (TYPO3_MODE=='BE')	{
   t3lib_extMgm::insertModuleFunction('web_txcfcleagueM1','tx_cfcleague_mod1_modTeams',
 		t3lib_extMgm::extPath($_EXTKEY).'mod1/class.tx_cfcleague_mod1_modTeams.php',
 		'LLL:EXT:cfc_league/mod1/locallang.xml:mod_team'
+	);
+  t3lib_extMgm::insertModuleFunction('web_txcfcleagueM1','tx_cfcleague_mod1_modClubs',
+		t3lib_extMgm::extPath($_EXTKEY).'mod1/class.tx_cfcleague_mod1_modClubs.php',
+		'LLL:EXT:cfc_league/mod1/locallang.xml:mod_club'
 	);
 	t3lib_extMgm::insertModuleFunction('web_txcfcleagueM1','tx_cfcleague_profile_search',
 		t3lib_extMgm::extPath($_EXTKEY).'mod1/class.tx_cfcleague_profile_search.php',
