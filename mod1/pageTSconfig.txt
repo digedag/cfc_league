@@ -13,5 +13,11 @@ mod {
 		functicker {
 			template = EXT:cfc_league/mod1/templates/funccompetitions.html
 		}
+		functeams {
+			template = EXT:cfc_league/mod1/templates/funccompetitions.html
+		}
+		funcclubs {
+			template = EXT:cfc_league/mod1/templates/funccompetitions.html
+		}
 	}
 }

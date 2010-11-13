@@ -15,8 +15,9 @@
 			<label index="label_value">Value</label>
 			<label index="msg_tce_errors">Some unexpected errors occured. See TYPO3 Log for more information.</label>
 
-			<label index="mod_competition">Manage Competitions</label>
+			<label index="mod_competition">Competition management</label>
 			<label index="mod_compteams">Teams</label>
+			<label index="mod_club">Club management</label>
 			<label index="label_current_teams">Teams in competition</label>
 			<label index="label_create_teams">Create teams for competition</label>
 			<label index="label_teamname">Team name</label>
@@ -166,6 +167,7 @@
 
 			<label index="mod_competition">Wettbewerbe verwalten</label>
 			<label index="mod_compteams">Mannschaften</label>
+			<label index="mod_club">Vereine verwalten</label>
 			<label index="label_current_teams">Mannschaften im Wettbewerb</label>
 			<label index="label_create_teams">Mannschaften für diesen Wettbewerb erstellen</label>
 			<label index="label_teamname">Name</label>
