@@ -51,9 +51,24 @@ class tx_cfcleague_mod1_modClubs extends tx_rnbase_mod_BaseModFunc {
 	protected function getContent($template, &$configurations, &$formatter, $formTool) {
 		global $LANG;
 
+		$selector = t3lib_div::makeInstance('tx_cfcleague_selector');
+		$selector->init($this->doc, $this->getModule()->getName());
+
+		$selectorStr = '';
+		$club = $selector->showClubSelector($selectorStr, $this->getModule()->getPid());
+		if(tx_rnbase_util_TYPO3::isTYPO42OrHigher())
+			$this->pObj->subselector = $selectorStr;
+		else 
+			$content .= '<div class="cfcleague_selector">'.$selectorStr.'</div><div class="cleardiv"/>';
+
+		if(!$club) {
+			$content .= '###LABEL_MSG_NOCLUBONPAGE###';
+			return $content;
+		}
+
 		// Wenn ein Team gefunden ist, dann können wir das Modul schreiben
 		$menu = $formTool->showTabMenu($this->getModule()->getPid(), 'clubtools', $this->getModule()->getName(),
-						array('0' => $LANG->getLL('create_players'), 
+						array('0' => $LANG->getLL('create_players'),
 									'1' => $LANG->getLL('add_players'),
 						));
 		

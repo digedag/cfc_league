@@ -155,6 +155,57 @@ class tx_cfcleague_selector{
   }
 
 	/**
+	 * Darstellung der Select-Box mit allen Vereinen. Es wird auf den aktuellen Verein eingestellt.
+	 * @return tx_cfcleague_models_Club
+	 */
+	public function showClubSelector(&$content, $pid, $options=array()){
+		$globalClubs = intval(tx_rnbase_configurations::getExtensionCfgValue('cfc_league', 'useGlobalClubs')) > 0;
+		$clubOrdering = intval(tx_rnbase_configurations::getExtensionCfgValue('cfc_league', 'clubOrdering')) > 0;
+
+		$selectorId = $options['selectorId'] ? $options['selectorId'] : 'club';
+		$menuData = Array (
+			$selectorId => array()
+		);
+		if($options['firstItem']) {
+			$menuData[$selectorId][$options['firstItem']['id']] = $options['firstItem']['label'];
+		}
+		$fields = array();
+		if(!$globalClubs)
+			$fields['CLUB.PID'][OP_EQ_INT] = $pid;
+		$options = array();
+		if($clubOrdering)
+			$options['orderby']['CLUB.CITY'] = 'asc';
+		$options['orderby']['CLUB.NAME'] = 'asc';
+		$clubs = tx_cfcleague_util_ServiceRegistry::getTeamService()->searchClubs($fields, $options);
+
+		foreach($clubs as $club){
+			$label = ($clubOrdering ? $club->getCity().' - ' : '') . $club->getName();
+			$menuData[$selectorId][$club->getUid()] = $label;
+		}
+
+		$menuSettings = t3lib_BEfunc::getModuleData($menuData,t3lib_div::_GP('SET'),$this->modName);
+
+		$menu = t3lib_BEfunc::getFuncMenu(
+			$pid,'SET['.$selectorId.']',$menuSettings[$selectorId],$menuData[$selectorId]
+		);
+		$currItem = null;
+		if($menuSettings[$selectorId] > 0) {
+	    tx_rnbase::load('tx_cfcleague_team');
+			$currItem = new tx_cfcleague_team($menuSettings[$selectorId]);
+		}
+		// In den Content einbauen
+		// Zusätzlich noch einen Edit-Link setzen
+		$noLinks = $options['noLinks'] ? true : false;
+		if(!$noLinks && $menu) {
+			$links = $this->getFormTool()->createEditLink('tx_cfcleague_club', $menuSettings[$selectorId]);
+			$menu = '<div class="cfcselector"><div class="selector">' . $menu . '</div><div class="links">' . $links . '</div></div>';
+		}
+		$content .= $menu;
+
+    return $currItem;
+	}
+
+	/**
 	 * Darstellung der Select-Box mit allen Spielrunden des übergebenen Wettbewerbs. Es wird auf die aktuelle Runde eingestellt.
 	 */
 	function showRoundSelector(&$content,$pid,$league){
