@@ -1422,7 +1422,7 @@ $TCA['tx_cfcleague_games'] = Array (
 			--div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.tab_lineup,coach_home, players_home, substitutes_home, system_home, system_guest, coach_guest, players_guest, substitutes_guest, referee, assists,
 			--div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.tab_lineup_stat,players_home_stat, substitutes_home_stat, players_guest_stat, substitutes_guest_stat, scorer_home_stat, scorer_guest_stat,
 			--div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.tab_score, is_extratime;;2, is_penalty;;3;;1-1-1,
-			--div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.game_report, game_report;;4;richtext[paste|bold|italic|underline|formatblock|class|left|center|right|orderedlist|unorderedlist|outdent|indent|link|image]:rte_transform[mode=ts], game_report_author;;5, dam_images, t3images, dam_media, dam_media2')
+			--div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.game_report, game_report;;4;richtext[paste|bold|italic|underline|formatblock|class|left|center|right|orderedlist|unorderedlist|outdent|indent|link|image]:rte_transform[mode=ts], game_report_author;;5, dam_images, t3images, dam_media, dam_media2, video, videoimg')
 	),
 	'palettes' => Array (
 		'1' => Array('showitem' => ''),
@@ -1433,6 +1433,44 @@ $TCA['tx_cfcleague_games'] = Array (
 		'6' => Array('showitem' => 'goals_home_2, goals_guest_2, goals_home_1, goals_guest_1'),
 	)
 );
+
+if(t3lib_extMgm::isLoaded('rgmediaimages')) {
+	$TCA['tx_cfcleague_games']['columns']['video'] = Array (
+		'exclude' => 1,
+		'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games_video',
+		'config' => Array (
+			'type' => 'group',
+			'internal_type' => 'file',
+			'allowed' => 'flv',
+			'uploadfolder' => 'uploads/tx_cfcleague',
+			'size' => 5,
+			'minitems' => 0,
+			'maxitems' => 20,
+			'max_size' => 225280, // 220MB
+		)
+	);
+	$TCA['tx_cfcleague_games']['columns']['videoimg'] = Array (
+		'exclude' => 1,
+		'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games_videoimg',
+		'config' => Array (
+			'type' => 'text',
+			'cols' => '30',	
+			'rows' => '5',
+			'wizards' => Array(
+				'_PADDING' => 2,
+				'example' => Array(
+						'title' => 'rgmediaimages Wizard:',
+						'type' => 'script',
+						'notNewRecords' => 1,
+						'icon' => t3lib_extMgm::extRelPath('rgmediaimages').'wizard/icon.png',
+						'script' => t3lib_extMgm::extRelPath('rgmediaimages').'wizard/index.php?table=tx_cfcleague_games&config=videoimg&internal=video',
+						'JSopenParams' => 'height=750,width=900,status=0,menubar=0,scrollbars=0',
+						'notNewRecords' => 1, 
+				),
+        ),
+		)
+	);
+}
 
 
 if(t3lib_extMgm::isLoaded('dam')) {

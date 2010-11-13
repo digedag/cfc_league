@@ -9,6 +9,7 @@ v0.8.1 (??.10.2010)
  * Some new fields for clubs
  * #19: New BE form to manually create matches
  * #19: New team mode to edit matches in BE
+ * New video field if extension rgmediaimages is installed
 
 v0.8.0 (21.10.2010)
  * BE module refactoring

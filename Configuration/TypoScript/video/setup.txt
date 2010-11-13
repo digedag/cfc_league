@@ -1,0 +1,11 @@
+lib.t3sports.match {
+  video =< tt_content.image.20
+  video {
+    imgList.field = video
+    imgPath = uploads/tx_cfcleague/
+#    maxH = 130
+#    maxW = 130
+    1.stdWrap.override.postCObject.10.field = video
+    1.stdWrap.override.postCObject.10.postUserFunc.override.field = videoimg
+  }
+}

@@ -291,6 +291,11 @@ $TCA['tx_cfcleague_stadiums'] = Array (
 	)
 );
 
+
+if(t3lib_extMgm::isLoaded('rgmediaimages')) {
+	t3lib_extMgm::addStaticFile($_EXTKEY,'Configurations/TypoScript/video', 'Ext: cfcleague video support');
+}
+
 if (TYPO3_MODE=='BE')	{
 		
   t3lib_extMgm::addModule('web','txcfcleagueM1','',t3lib_extMgm::extPath($_EXTKEY).'mod1/');

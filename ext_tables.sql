@@ -257,6 +257,9 @@ CREATE TABLE tx_cfcleague_games (
 	dam_media2 int(11) DEFAULT '0' NOT NULL
 	t3images text NOT NULL,
 
+	video text NOT NULL,
+	videoimg text NOT NULL,
+
 	is_extratime tinyint(3) DEFAULT '0' NOT NULL,
 	goals_home_et int(11) DEFAULT '0' NOT NULL,
 	goals_guest_et int(11) DEFAULT '0' NOT NULL,

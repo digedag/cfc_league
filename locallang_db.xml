@@ -150,6 +150,8 @@
 			<label index="tx_cfcleague_games.goals_guest_et">Goals Guest Extratime</label>
 			<label index="tx_cfcleague_games.goals_home_ap">Goals Home after Penalty</label>
 			<label index="tx_cfcleague_games.goals_guest_ap">Goals Guest after Penalty</label>
+			<label index="tx_cfcleague_games_video">Video</label>
+			<label index="tx_cfcleague_games_videoimg">Preview image for video</label>
 			<label index="tx_cfcleague_profiles">Profile</label>
 			<label index="tx_cfcleague_profiles_tab_description">Description</label>
 			<label index="tx_cfcleague_profiles.first_name">First name</label>
@@ -365,6 +367,8 @@
 			<label index="tx_cfcleague_games.goals_guest_et">Tore Gast n.V.</label>
 			<label index="tx_cfcleague_games.goals_home_ap">Tore Heim n.E.</label>
 			<label index="tx_cfcleague_games.goals_guest_ap">Tore Gast n.E.</label>
+			<label index="tx_cfcleague_games_video">Video</label>
+			<label index="tx_cfcleague_games_videoimg">Vorschaubild für Video</label>
 			<label index="tx_cfcleague_profiles">Person</label>
 			<label index="tx_cfcleague_profiles_tab_description">Beschreibung</label>
 			<label index="tx_cfcleague_profiles.stage_name">Künstlername</label>
