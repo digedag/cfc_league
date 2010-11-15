@@ -890,7 +890,7 @@ $TCA['tx_cfcleague_games'] = Array (
 			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.round_name',
 			'config' => Array (
 				'type' => 'input',
-				'size' => '30',
+				'size' => '10',
 				'max' => '100',
 				'eval' => 'required,trim',
 			)

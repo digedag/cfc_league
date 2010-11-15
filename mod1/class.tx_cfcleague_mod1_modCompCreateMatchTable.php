@@ -30,6 +30,7 @@ tx_rnbase::load('tx_cfcleague_models_Competition');
  */
 class tx_cfcleague_mod1_modCompCreateMatchTable {
 	var $doc;
+	private $module;
 
 
 	/**
@@ -40,6 +41,7 @@ class tx_cfcleague_mod1_modCompCreateMatchTable {
 	public function main($module, $competition) {
 		global $LANG;
 
+		$this->module = $module;
 		$pid = $module->getPid();
 		$this->doc = $module->getDoc();
 
@@ -48,7 +50,9 @@ class tx_cfcleague_mod1_modCompCreateMatchTable {
 		$comp = tx_cfcleague_models_Competition::getInstance($competition->uid);
 //		$start = microtime(true);
 
-		$content = $this->handleCreateMatchTable($comp);
+		tx_rnbase::load('tx_cfcleague_mod1_handler_MatchCreator');
+		$content .= tx_cfcleague_mod1_handler_MatchCreator::getInstance()->handleRequest($this->getModule());
+		$content .= $this->handleCreateMatchTable($comp);
 		if(!$content)
 			$content .= $this->showMatchTable($comp);
 //		t3lib_div::debug((microtime(true)-$start), 'class.tx_cfcleague_mod1_modCompCreateMatchTable.php'); // TODO: remove me
@@ -80,6 +84,26 @@ class tx_cfcleague_mod1_modCompCreateMatchTable {
 			$content.='<br/><br/>';
 		}
 
+		// Hier zwischen Automatisch und Manuell unterscheiden
+		$menu = $this->getFormTool()->showMenu($this->getModule()->getPid(), 't3s_mcmode', $this->getModule()->getName(), array(0=>'Auto','1'=>'Manual'));
+		$content .= $menu['menu'];
+		$mode = $menu['value'];
+		$content .= '<br>';
+
+		if($mode == 0)
+			$content .= $this->showMatchTableAuto($comp);
+		else {
+			tx_rnbase::load('tx_cfcleague_mod1_handler_MatchCreator');
+			$content .= tx_cfcleague_mod1_handler_MatchCreator::getInstance()->showScreen($comp, $this->getModule());
+		}
+
+		//t3lib_div::debug($table, 'tx_cfcleague_mod1_modCompCreateMatchTable :: showCreateMatchTable'); // TODO: remove me
+		return $content;
+	}
+
+	private function showMatchTableAuto($comp) {
+  	global $LANG;
+		$content = '';
 		// Wir holen die Mannschaften und den GameString aus der Liga
 		// Beides jagen wir durch den Generator
 		$options['halfseries'] = intval(t3lib_div::_GP('option_halfseries'));
@@ -104,11 +128,8 @@ class tx_cfcleague_mod1_modCompCreateMatchTable {
 			// Den Update-Button einfügen
 			$content .= '<input type="submit" name="update" value="'.$LANG->getLL('btn_create').'" onclick="return confirm('.$GLOBALS['LANG']->JScharCode($GLOBALS['LANG']->getLL('msg_CreateGameTable')).')">';
 		}
-
-		//t3lib_div::debug($table, 'tx_cfcleague_mod1_modCompCreateMatchTable :: showCreateMatchTable'); // TODO: remove me
 		return $content;
 	}
-
 	/**
 	 * Erstellt das Vorabformular, daß für jeden Spieltag notwendige Daten abfragt.
 	 */
@@ -193,6 +214,12 @@ class tx_cfcleague_mod1_modCompCreateMatchTable {
 	 */
 	function getFormTool() {
 		return $this->formTool;
+	}
+	/**
+	 * @return tx_rnbase_mod_IModule
+	 */
+	protected function getModule() {
+		return $this->module;
 	}
 
 	/**

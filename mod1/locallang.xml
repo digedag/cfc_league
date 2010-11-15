@@ -27,6 +27,8 @@
 			<label index="label_uid">UID</label>
 			<label index="label_home">Home</label>
 			<label index="label_guest">Guest</label>
+			<label index="label_match">Match</label>
+			<label index="label_matches">Matches</label>
 			<label index="label_match_no">Match-No.</label>
 			<label index="label_roundmode">Round mode</label>
 			<label index="msg_create_teams">Create all teams on current page?</label>
@@ -40,6 +42,7 @@
 			<label index="create_games">Create matches</label>
 			<label index="edit_games">Edit matches</label>
 			<label index="label_create_match">Create new match</label>
+			<label index="label_msg_matches_created">Matches created successfully!</label>
 
 			<label index="mod_team">Manage Teams</label>
 			<label index="create_players">Create players</label>
@@ -158,6 +161,8 @@
 			<label index="label_value">Wert</label>
 			<label index="label_home">Heim</label>
 			<label index="label_guest">Gast</label>
+			<label index="label_match">Spiel</label>
+			<label index="label_matches">Spiele</label>
 			<label index="label_match_no">Spiel-Nr.</label>
 			<label index="label_roundmode">Spieltagsmodus</label>
 			<label index="label_msg_noclubonpage">Auf der aktuellen Seite wurde kein Verein gefunden.</label>
@@ -166,6 +171,7 @@
 			<label index="create_games">Spielplan erstellen</label>
 			<label index="edit_games">Spiele bearbeiten</label>
 			<label index="label_create_match">Ein neues Spiel anlegen</label>
+			<label index="label_msg_matches_created">Die Spiele wurden angelegt!</label>
 
 			<label index="mod_competition">Wettbewerbe verwalten</label>
 			<label index="mod_compteams">Mannschaften</label>

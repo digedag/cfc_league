@@ -130,14 +130,14 @@ class tx_cfcleague_mod1_modCompTeams {
 		$maxFields = 6;
 		for($i=0; $i < $maxFields; $i++){
 			$row = array();
-			$row[] = ($i + 1) . $this->formTool->createHidden('data[tx_cfcleague_teams][NEW'.$i.'][pid]', $pid);
-			$row[] = $this->formTool->createTxtInput('data[tx_cfcleague_teams][NEW'.$i.'][name]', '',20);
-			$row[] = $this->formTool->createTxtInput('data[tx_cfcleague_teams][NEW'.$i.'][short_name]', '',10);
+			$row[] = ($i + 1) . $this->getFormTool()->createHidden('data[tx_cfcleague_teams][NEW'.$i.'][pid]', $pid);
+			$row[] = $this->getFormTool()->createTxtInput('data[tx_cfcleague_teams][NEW'.$i.'][name]', '',20);
+			$row[] = $this->getFormTool()->createTxtInput('data[tx_cfcleague_teams][NEW'.$i.'][short_name]', '',10);
 			$arr[] = $row;
 		}
 //t3lib_div::debug($teams, 'tx_cfcleague_mod1_modCompTeams'); // TODO: remove me
 		$content .= $this->doc->table($arr, $this->getTableLayout());
-		$content .= $this->formTool->createSubmit('update',$LANG->getLL('btn_create'), $GLOBALS['LANG']->getLL('msg_create_teams'));
+		$content .= $this->getFormTool()->createSubmit('update',$LANG->getLL('btn_create'), $GLOBALS['LANG']->getLL('msg_create_teams'));
 		return $content;
 	}
 	/**

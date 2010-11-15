@@ -90,7 +90,7 @@
 			<label index="tx_cfcleague_teams.logo">Alternative team logo</label>
 			<label index="tx_cfcleague_teams.link_report">Enable link to team page</label>
 			<label index="tx_cfcleague_teams.dummy">Free of play</label>
-			<label index="tx_cfcleague_games">Game</label>
+			<label index="tx_cfcleague_games">Match</label>
 			<label index="tx_cfcleague_games.tab_lineup">Line-up</label>
 			<label index="tx_cfcleague_games.tab_lineup_stat">Line-up (static)</label>
 			<label index="tx_cfcleague_games.tab_score">Score</label>
@@ -98,8 +98,8 @@
 			<label index="tx_cfcleague_games.home">Hometeam</label>
 			<label index="tx_cfcleague_games.guest">Guestteam</label>
 			<label index="tx_cfcleague_games.competition">Competition</label>
-			<label index="tx_cfcleague_games.round">Gameround</label>
-			<label index="tx_cfcleague_games.round_name">Gameround Name</label>
+			<label index="tx_cfcleague_games.round">Round</label>
+			<label index="tx_cfcleague_games.round_name">Round Name</label>
 			<label index="tx_cfcleague_games.stadium">Stadium name</label>
 			<label index="tx_cfcleague_games.addinfo">Additional information</label>
 			<label index="tx_cfcleague_games.status">State</label>
