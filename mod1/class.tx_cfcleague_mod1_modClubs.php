@@ -54,6 +54,18 @@ class tx_cfcleague_mod1_modClubs extends tx_rnbase_mod_BaseModFunc {
 		$selector = t3lib_div::makeInstance('tx_cfcleague_selector');
 		$selector->init($this->doc, $this->getModule()->getName());
 
+		// Zuerst holen wir alle Tabs, erstellen die MenuItems und werten den Request aus
+		$tabItems = array();
+		$tabItems[] = tx_rnbase::makeInstance('tx_cfcleague_mod1_handler_ClubStadiums');
+		tx_rnbase_util_Misc::callHook('cfc_league','modClub_tabItems', 
+			array('tabItems' => &$tabItems), $this);
+
+		$menuItems = array();
+		foreach($tabItems As $idx => $tabItem) {
+			$menuItems[$idx] = $tabItem->getTabLabel();
+			$tabItem->handleRequest($this->getModule());
+		}
+
 		$selectorStr = '';
 		$club = $selector->showClubSelector($selectorStr, $this->getModule()->getPid());
 		if(tx_rnbase_util_TYPO3::isTYPO42OrHigher())
@@ -66,11 +78,10 @@ class tx_cfcleague_mod1_modClubs extends tx_rnbase_mod_BaseModFunc {
 			return $content;
 		}
 
+
 		// Wenn ein Team gefunden ist, dann können wir das Modul schreiben
 		$menu = $formTool->showTabMenu($this->getModule()->getPid(), 'clubtools', $this->getModule()->getName(),
-						array('0' => $LANG->getLL('create_players'),
-									'1' => $LANG->getLL('add_players'),
-						));
+						$menuItems);
 		
 		$tabs .= $menu['menu'];
 		$tabs .= '<div style="display: block; border: 1px solid #a2aab8;" ></div>';
@@ -80,21 +91,14 @@ class tx_cfcleague_mod1_modClubs extends tx_rnbase_mod_BaseModFunc {
 		else
 			$content .= $tabs;
 
+		$handler = $tabItems[$menu['value']];
+		if(is_object($handler))
+			$content .= $handler->showScreen($club, $this->getModule());
 
-//		switch($menu['value']) {
-//			case 0:
-//				$mod = tx_rnbase::makeInstance('tx_cfcleague_mod1_modTeamsProfileCreate');
-//				$content .= $mod->handleRequest($this->getModule(), $team, $teamInfo);
-//				break;
-//			case 1:
-//				$mod = tx_rnbase::makeInstance('tx_cfcleague_mod1_subAddProfiles');
-//				$content .= $mod->handleRequest($this->getModule(), $team, $teamInfo);
-//				break;
-//		}
-		$content .= $formTool->form->printNeededJSFunctions_top();
+		$content .= $formTool->getTCEForm()->printNeededJSFunctions_top();
 		$content .= $modContent;
 		// Den JS-Code für Validierung einbinden
-		$content .= $formTool->form->printNeededJSFunctions();
+		$content .= $formTool->getTCEForm()->printNeededJSFunctions();
 		return $content;
 	}
 }

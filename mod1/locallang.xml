@@ -148,6 +148,7 @@
 			<label index="label_action">Action</label>
 			<label index="label_searchresults">Search results</label>
 
+			<label index="label_tab_stadiums">Stadiums</label>
 
 		</languageKey>
 		<languageKey index="de" type="array">
@@ -285,6 +286,8 @@
 			<label index="label_profile_supporter">Betreuer</label>
 			<label index="label_action">Aktion</label>
 			<label index="label_searchresults">Suchergebnisse</label>
+
+			<label index="label_tab_stadiums">Stadien</label>
 		</languageKey>
 	</data>
 </T3locallang>
