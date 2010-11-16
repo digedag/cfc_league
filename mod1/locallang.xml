@@ -149,6 +149,11 @@
 			<label index="label_searchresults">Search results</label>
 
 			<label index="label_tab_stadiums">Stadiums</label>
+			<label index="label_msg_nostadiumsfound">No stadium found.</label>
+			<label index="label_capacity">Capacity</label>
+			<label index="label_address">Address</label>
+			<label index="label_longlat">Long/Lat</label>
+			<label index="label_btn_addstadium">Add stadium</label>
 
 		</languageKey>
 		<languageKey index="de" type="array">
@@ -288,6 +293,12 @@
 			<label index="label_searchresults">Suchergebnisse</label>
 
 			<label index="label_tab_stadiums">Stadien</label>
+			<label index="label_msg_nostadiumsfound">Es wurde kein Stadion gefunden.</label>
+			<label index="label_capacity">Kapazität</label>
+			<label index="label_address">Adresse</label>
+			<label index="label_longlat">Geodaten</label>
+			<label index="label_btn_addstadium">Stadion anlegen</label>
+
 		</languageKey>
 	</data>
 </T3locallang>

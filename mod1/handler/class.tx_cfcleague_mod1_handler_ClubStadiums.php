@@ -53,7 +53,22 @@ class tx_cfcleague_mod1_handler_ClubStadiums {
 	public function showScreen($club, tx_rnbase_mod_IModule $mod) {
 		global $LANG;
 
-		$content = 'Zeige Stadien';
+		$searcher = tx_rnbase::makeInstance('tx_cfcleague_mod1_searcher_Stadium', $mod);
+		$searcher->setClub($club->getUid());
+
+		$result = $searcher->getResultList();
+		if($result['totalsize'] > 0) {
+			$content .= $result['pager'];
+			$content .= $result['table'];
+			$content .= $result['pager'];
+			
+		}
+		else {
+			$content .= $mod->getDoc()->section($LANG->getLL('label_msg_nostadiumsfound'),'',0,1,ICON_INFO);
+		}
+
+		$options['params'] = '&defVals[tx_cfcleague_stadiums][clubs]=tx_cfcleague_club_'.$club->getUid();
+		$content .= $mod->getFormTool()->createNewLink('tx_cfcleague_stadiums', $club->record['pid'],  $GLOBALS['LANG']->getLL('label_btn_addstadium'), $options);
 		return $content;
 	}
 	
