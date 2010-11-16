@@ -146,7 +146,7 @@ class tx_cfcleague_util_TeamInfo {
 			$row[] = $prof[first_name];
 			$row[] = $prof[last_name];
 			$row[] = $this->getFormTool()->createEditLink('tx_cfcleague_profiles', $uid);
-			$row[] = $this->formTool->createSubmit('remFromTeam['.$type.']', $uid, $LANG->getLL('msg_remove_team_'.$type), array('icon' => 'delete_record.gif'));
+			$row[] = $this->getFormTool()->createSubmit('remFromTeam['.$type.']', $uid, $LANG->getLL('msg_remove_team_'.$type), array('icon' => 'i/be_users__h.gif', 'infomsg' => 'Remove from Team'));
 			//$row[] = $this->getFormTool()->createLink('&'. 'remProfileUid['.$uid.']',0,'Remove from team',array('icon' => 'delete_record.gif'));
 			$arr[] = $row;
 		}
