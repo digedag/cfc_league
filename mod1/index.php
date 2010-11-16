@@ -46,11 +46,10 @@ tx_rnbase::load('tx_rnbase_mod_BaseModule');
 
 
 /**
- * Module 'HOGA-Portal' for the 'mkhoga' extension.
+ * Module 'T3sports' 
  *
- * @author	das MedienKombinat <nitzsche@das-medienkombinat.de>
+ * @author	René Nitzsche rene@system25.de
  * @package	TYPO3
- * @subpackage	tx_mkhoga
  */
 class  tx_cfcleague_module1 extends tx_rnbase_mod_BaseModule {
 	var $pageinfo;

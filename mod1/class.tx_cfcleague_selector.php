@@ -190,8 +190,7 @@ class tx_cfcleague_selector{
 		);
 		$currItem = null;
 		if($menuSettings[$selectorId] > 0) {
-	    tx_rnbase::load('tx_cfcleague_team');
-			$currItem = new tx_cfcleague_team($menuSettings[$selectorId]);
+			$currItem = tx_rnbase::makeInstance('tx_cfcleague_models_Club', $menuSettings[$selectorId]);
 		}
 		// In den Content einbauen
 		// Zusätzlich noch einen Edit-Link setzen
