@@ -232,6 +232,8 @@
 			<label index="tx_cfcleague_common_countrycode">Country code</label>
 			<label index="tx_cfcleague.unknown">Unknown</label>
 			<label index="tx_cfcleague_tca_noclubselected">Select a club and save record.</label>
+			<label index="label_msg_refError">The record cannot be deleted. It still has references to other records.</label>
+			
 		</languageKey>
 		<languageKey index="de" type="array">
 			<label index="tx_cfcleague_folder">Liga</label>
@@ -449,6 +451,8 @@
 			<label index="tx_cfcleague_common_country">Land</label>
 			<label index="tx_cfcleague_common_countrycode">Landeskürzel</label>
 			<label index="tx_cfcleague_tca_noclubselected">Zuerst einen Verein auswählen und den Datensatz speichern.</label>
+
+			<label index="label_msg_refError">Der Datensatz kann nicht gelöscht werden. Es existieren noch Referenzen zu anderen Datensätzen.</label>
 		</languageKey>
 	</data>
 </T3locallang>

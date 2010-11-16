@@ -85,6 +85,19 @@ class tx_cfcleague_services_Match extends t3lib_svbase implements tx_cfcleague_M
 	 *
 	 * @param array $fields
 	 * @param array $options
+	 * @return array of tx_cfcleague_models_Match
+	 */
+	public function searchMatchNotes($fields, $options) {
+		tx_rnbase::load('tx_rnbase_util_SearchBase');
+		$searcher = tx_rnbase_util_SearchBase::getInstance('tx_cfcleague_search_MatchNote');
+		return $searcher->search($fields, $options);
+	}
+
+	/**
+	 * Search database for matches
+	 *
+	 * @param array $fields
+	 * @param array $options
 	 * @return array of tx_cfcleague_models_MatchRound
 	 */
 	public function searchMatchRound($fields, $options) {

@@ -40,6 +40,18 @@ class tx_cfcleague_hooks_cmhooks {
 	function processCmdmap_preProcess(&$command,$table,$id, $value, &$pObj)	{
 		if($command == 'delete' && $table == 'tx_cfcleague_profiles') {
 			// TODO: Check references
+			$profile = tx_rnbase::makeInstance('tx_cfcleague_models_Profile', $id);
+			$refArr = tx_cfcleague_util_ServiceRegistry::getProfileService()->checkReferences($profile);
+			if(count($refArr) > 0) {
+				// Abbruch
+				$addInfo = '<p>';
+				foreach($refArr As $table => $data) {
+					$addInfo .= '<b>'.$table . ':</b> ' . count($data) . '<br />';
+				}
+				$addInfo .= '</p>';
+				tx_rnbase::load('tx_cfcleague_util_Misc');
+				tx_cfcleague_util_Misc::tceError('LLL:EXT:cfc_league/locallang_db.xml:label_msg_refError', $addInfo);
+			}
 		}
 	}
 

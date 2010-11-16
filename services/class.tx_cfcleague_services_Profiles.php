@@ -36,6 +36,57 @@ class tx_cfcleague_services_Profiles extends t3lib_svbase {
 	/**
 	 * Returns all team notes for a given profile
 	 *
+	 * @param tx_cfcleague_models_Profile $profile
+	 * @return array An array with all references by table
+	 */
+	public function checkReferences($profile) {
+		$ret = array();
+		// Zuerst die Teams
+		$options['what'] = 'uid';
+
+		$fields = array();
+		$fields[SEARCH_FIELD_JOINED][0] = array(
+			'value' => $profile->getUid(), 
+			'cols' => array('TEAM.PLAYERS', 'TEAM.SUPPORTERS', 'TEAM.COACHES'),
+			'operator' => OP_INSET_INT
+		);
+		$result = tx_cfcleague_util_ServiceRegistry::getTeamService()->searchTeams($fields, $options);
+		if(count($result))
+			$ret['tx_cfcleague_teams'] = $result;
+
+
+		$fields = array();
+		$fields['TEAMNOTE.PLAYER'][OP_EQ_INT] = $profile->getUid();
+		$result = tx_cfcleague_util_ServiceRegistry::getTeamService()->searchTeamNotes($fields, $options);
+		if(count($result))
+			$ret['tx_cfcleague_team_notes'] = $result;
+
+		$fields = array();
+		$fields[SEARCH_FIELD_JOINED][0] = array(
+			'value' => $profile->getUid(), 
+			'cols' => array('MATCH.REFEREE', 'MATCH.ASSISTS', 'MATCH.PLAYERS_HOME', 'MATCH.PLAYERS_GUEST', 
+											'MATCH.SUBSTITUTES_HOME', 'MATCH.SUBSTITUTES_GUEST', 'MATCH.COACH_HOME', 'MATCH.COACH_GUEST'),
+			'operator' => OP_INSET_INT
+		);
+		$result = tx_cfcleague_util_ServiceRegistry::getMatchService()->search($fields, $options);
+		if(count($result))
+			$ret['tx_cfcleague_games'] = $result;
+
+		$fields = array();
+		$fields[SEARCH_FIELD_JOINED][0] = array(
+			'value' => $profile->getUid(), 
+			'cols' => array('MATCHNOTE.PLAYER_HOME', 'MATCHNOTE.PLAYER_GUEST'),
+			'operator' => OP_EQ_INT
+		);
+		$result = tx_cfcleague_util_ServiceRegistry::getMatchService()->searchMatchNotes($fields, $options);
+		if(count($result))
+			$ret['tx_cfcleague_match_notes'] = $result;
+
+		return $ret;
+	}
+	/**
+	 * Returns all team notes for a given profile
+	 *
 	 * @param int $profileUID
 	 */
 	function getTeamsNotes4Profile($profileUID) {
