@@ -155,6 +155,10 @@
 			<label index="label_longlat">Long/Lat</label>
 			<label index="label_btn_addstadium">Add stadium</label>
 
+			<label index="label_addclub">Create a new club record.</label>
+			<label index="label_msg_confirmNewClub">Do you really want to create a new club record?</label>
+			<label index="label_msg_confirmNewClubPage">ATTENTION: There is no other club record at this page! Do you really want to create a new club record here?</label>
+
 		</languageKey>
 		<languageKey index="de" type="array">
 			<label index="message">Hinweis</label>
@@ -298,6 +302,10 @@
 			<label index="label_address">Adresse</label>
 			<label index="label_longlat">Geodaten</label>
 			<label index="label_btn_addstadium">Stadion anlegen</label>
+
+			<label index="label_addclub">Einen neuen Verein anlegen.</label>
+			<label index="label_msg_confirmNewClub">Soll wirklich ein neuer Verein angelegt werden?</label>
+			<label index="label_msg_confirmNewClubPage">ACHTUNG: Auf dieser Seite befinden sich noch keine Vereinsdatensätze. Wollen Sie wirklich auf dieser Seite einen Verein anlegen?</label>
 
 		</languageKey>
 	</data>

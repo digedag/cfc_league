@@ -197,11 +197,24 @@ class tx_cfcleague_selector{
 		$noLinks = $options['noLinks'] ? true : false;
 		if(!$noLinks && $menu) {
 			$links = $this->getFormTool()->createEditLink('tx_cfcleague_club', $menuSettings[$selectorId]);
+			$links .= $this->createNewClubLink($pid);
 			$menu = '<div class="cfcselector"><div class="selector">' . $menu . '</div><div class="links">' . $links . '</div></div>';
 		}
 		$content .= $menu;
 
     return $currItem;
+	}
+	private function createNewClubLink($pid) {
+		$ret = '';
+		// Gibt es auf der Seite schon Vereine?
+		$fields['CLUB.PID'][OP_EQ_INT] = $pid;
+		$options = array('count'=>1);
+		$cnt = tx_cfcleague_util_ServiceRegistry::getTeamService()->searchClubs($fields, $options);
+		$options = array();
+		$options['confirm'] = $cnt == 0 ? $GLOBALS['LANG']->getLL('label_msg_confirmNewClubPage') : $GLOBALS['LANG']->getLL('label_msg_confirmNewClub');
+		$options['title'] = $GLOBALS['LANG']->getLL('label_addclub');
+		$ret .= $this->getFormTool()->createNewLink('tx_cfcleague_club', $pid, '', $options);
+		return $ret;
 	}
 
 	/**
