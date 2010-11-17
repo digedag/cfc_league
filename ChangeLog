@@ -2,7 +2,7 @@
 Änderungen
 ----------
 
-v0.8.1 (??.10.2010)
+v0.8.1 (17.10.2010)
  * New hook in merge profiles
  * #46: Remove profiles from team
  * #47: It is possible to calculate end result from results of match parts.
@@ -11,6 +11,7 @@ v0.8.1 (??.10.2010)
  * #19: New team mode to edit matches in BE
  * New video field if extension rgmediaimages is installed
  * Avoid deletion of profiles with references to other records
+ * New BE module to manage clubs and stadiums
 
 v0.8.0 (21.10.2010)
  * BE module refactoring
