@@ -74,7 +74,14 @@ class tx_cfcleague_mod1_modClubs extends tx_rnbase_mod_BaseModFunc {
 			$content .= '<div class="cfcleague_selector">'.$selectorStr.'</div><div class="cleardiv"/>';
 
 		if(!$club) {
-			$content .= '###LABEL_MSG_NOCLUBONPAGE###';
+			$addInfo = '###LABEL_MSG_CREATENEWCLUBNOW###';
+			$linker = tx_rnbase::makeInstance('tx_cfcleague_mod1_linker_NewClub');
+			$addInfo .= $linker->makeLink(null, $formTool, $this->getModule()->getPid(), array());
+
+			$content .= $this->getModule()->getDoc()->section('###LABEL_MSG_NOCLUBONPAGE###',$addInfo,0,1,ICON_INFO);
+			
+			//$content .= $mod->getDoc()->section($LANG->getLL('label_msg_nostadiumsfound'),'',0,1,ICON_INFO);
+//			$content .= '###LABEL_MSG_NOCLUBONPAGE###';
 			return $content;
 		}
 

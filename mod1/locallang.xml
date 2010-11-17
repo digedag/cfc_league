@@ -15,6 +15,7 @@
 			<label index="label_value">Value</label>
 			<label index="msg_tce_errors">Some unexpected errors occured. See TYPO3 Log for more information.</label>
 			<label index="label_msg_noclubonpage">No club found at current page.</label>
+			<label index="label_msg_createnewclubnow">You can create a new club now.</label>
 
 			<label index="mod_competition">Competition management</label>
 			<label index="mod_compteams">Teams</label>
@@ -176,6 +177,7 @@
 			<label index="label_match_no">Spiel-Nr.</label>
 			<label index="label_roundmode">Spieltagsmodus</label>
 			<label index="label_msg_noclubonpage">Auf der aktuellen Seite wurde kein Verein gefunden.</label>
+			<label index="label_msg_createnewclubnow">Sie können jetzt einen neuen Verein auf dieser Seite anlegen.</label>
 
 			<label index="label_create_new">Neu anlegen</label>
 			<label index="create_games">Spielplan erstellen</label>
