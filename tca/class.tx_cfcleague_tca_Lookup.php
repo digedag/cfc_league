@@ -49,10 +49,21 @@ class tx_cfcleague_tca_Lookup {
 	 * @param $config
 	 * @return array
 	 */
-	function getMatchNoteTypes($config) {
+	public function getMatchNoteTypes($config) {
 		tx_rnbase::load('tx_cfcleague_util_ServiceRegistry');
 		$srv = tx_cfcleague_util_ServiceRegistry::getMatchService();
 		$config['items'] = $srv->getMatchNoteTypes4TCA();
+	}
+	/**
+	 * Liefert die vorhandenen Liga Tabellen-Typen
+	 * @param $config
+	 * @return array
+	 */
+	public function getLeagueTableTypes($config) {
+		tx_rnbase::load('tx_cfcleague_util_ServiceRegistry');
+		$srv = tx_cfcleague_util_ServiceRegistry::getCompetitionService();
+		$config['items'] = $srv->getTableTypes4TCA();
+
 	}
 	/**
 	 * Set possible stadiums for a match. The stadiums are selected from home club.

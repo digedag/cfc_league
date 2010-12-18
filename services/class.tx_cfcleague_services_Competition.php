@@ -78,10 +78,31 @@ class tx_cfcleague_services_Competition extends t3lib_svbase {
 	 * @param array $options
 	 * @return array of tx_cfcleague_models_Competition
 	 */
-	function search($fields, $options) {
+	public function search($fields, $options) {
 		tx_rnbase::load('tx_rnbase_util_SearchBase');
 		$searcher = tx_rnbase_util_SearchBase::getInstance('tx_cfcleague_search_Competition');
 		return $searcher->search($fields, $options);
+	}
+	/**
+	 * Returns all available table types for a TCA select item
+	 *
+	 * @return array 
+	 */
+	public function getTableTypes4TCA() {
+		$types = array();
+
+		// Jetzt schauen, ob noch weitere Typpen per Service geliefert werden
+		$baseType = 't3sports_leaguetable';
+		$services = tx_rnbase_util_Misc::lookupServices($baseType);
+		foreach ($services As $subtype => $info) {
+			$srv = tx_rnbase_util_Misc::getService($baseType, $subtype);
+			$types[] = array($srv->getTCALabel(), $subtype);
+		}
+
+		foreach($types AS $typedef) {
+			$items[] = array(tx_rnbase_util_Misc::translateLLL($typedef[0]), $typedef[1]);
+		}
+		return $items;
 	}
 }
 

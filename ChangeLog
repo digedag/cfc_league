@@ -2,6 +2,9 @@
 Änderungen
 ----------
 
+v0.8.2 (??.12.2010)
+ * New field in competition for league table type
+
 v0.8.1 (17.10.2010)
  * New hook in merge profiles
  * #46: Remove profiles from team

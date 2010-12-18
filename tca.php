@@ -215,6 +215,17 @@ $TCA['tx_cfcleague_competition'] = Array (
 				'maxitems' => 1,
 			)
 		),
+		'leaguetable' => Array (
+			'exclude' => 1,
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition.leaguetable',
+			'config' => Array (
+				'type' => 'select',
+				'itemsProcFunc' => 'tx_cfcleague_tca_Lookup->getLeagueTableTypes',
+				'size' => 1,
+				'minitems' => 0,
+				'maxitems' => 1,
+			)
+		),
 		'type' => Array (
 			'exclude' => 1,
 			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition.type',
@@ -300,7 +311,7 @@ $TCA['tx_cfcleague_competition'] = Array (
 */
 	),
 	'types' => Array (
-		'0' => Array('showitem' => 'hidden;;1;;1-1-1, name, internal_name, short_name, agegroup, saison, type;;2, point_system, logo, t3logo, teams, match_keys, table_marks, match_parts, addparts')
+		'0' => Array('showitem' => 'hidden;;1;;1-1-1, name, internal_name, short_name, agegroup, saison, type;;2, leaguetable, point_system, logo, t3logo, teams, match_keys, table_marks, match_parts, addparts')
 	),
 	'palettes' => Array (
 		'1' => Array('showitem' => ''),

@@ -417,8 +417,15 @@ class tx_cfcleague_models_Competition extends tx_rnbase_model_base {
    *
    * @param array $penalties
    */
-  function setPenalties($penalties) {
+  public function setPenalties($penalties) {
     $this->penalties = is_array($penalties) ? $penalties : NULL;
+  }
+  /**
+   * Returns the table type if competition is a league
+   * @return string 
+   */
+  public function getTableType() {
+  	return '';
   }
 }
 
