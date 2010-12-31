@@ -328,8 +328,15 @@ if (TYPO3_MODE=='BE')	{
 	);
 
 
-  // add folder icon
-	t3lib_SpriteManager::addTcaTypeIcon('pages', 'contains-cfcleague', '../typo3conf/ext/cfc_league/ext_icon_cfcleague_folder.gif');
+	require_once(t3lib_extMgm::extPath('rn_base').'class.tx_rnbase.php');
+	tx_rnbase::load('tx_rnbase_util_TYPO3');
+	// add folder icon
+	if(tx_rnbase_util_TYPO3::isTYPO43OrHigher()) {
+		t3lib_SpriteManager::addTcaTypeIcon('pages', 'contains-cfcleague', '../typo3conf/ext/cfc_league/ext_icon_cfcleague_folder.gif');
+	}
+	else {
+		$ICON_TYPES['cfcleague'] = array('icon' => t3lib_extMgm::extRelPath($_EXTKEY).'ext_icon_cfcleague_folder.gif');
+	}
 
   $TCA['pages']['columns']['module']['config']['items'][] = array('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_folder', 'cfcleague');
 //  t3lib_div::debug($TCA['pages']['columns']['module']['config'], 'ext_tables');
