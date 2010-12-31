@@ -421,11 +421,11 @@ class tx_cfcleague_models_Competition extends tx_rnbase_model_base {
     $this->penalties = is_array($penalties) ? $penalties : NULL;
   }
   /**
-   * Returns the table type if competition is a league
-   * @return string 
+   * Returns the table type if set. Default is football.
+   * @return string default is 'football'
    */
   public function getTableType() {
-  	return '';
+  	return $this->record['leaguetable'] ? $this->record['leaguetable'] : 'football';
   }
 }
 
