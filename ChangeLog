@@ -2,8 +2,9 @@
 Änderungen
 ----------
 
-v0.8.2 (??.12.2010)
+v0.8.2 (??.01.2011)
  * New field in competition for league table type
+ * Avoid t3lib_SpriteManager for TYPO4 4.3 and older.
 
 v0.8.1 (17.10.2010)
  * New hook in merge profiles

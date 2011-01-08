@@ -331,7 +331,7 @@ if (TYPO3_MODE=='BE')	{
 	require_once(t3lib_extMgm::extPath('rn_base').'class.tx_rnbase.php');
 	tx_rnbase::load('tx_rnbase_util_TYPO3');
 	// add folder icon
-	if(tx_rnbase_util_TYPO3::isTYPO43OrHigher()) {
+	if(tx_rnbase_util_TYPO3::isTYPO3VersionOrHigher(4004000)) {
 		t3lib_SpriteManager::addTcaTypeIcon('pages', 'contains-cfcleague', '../typo3conf/ext/cfc_league/ext_icon_cfcleague_folder.gif');
 	}
 	else {
