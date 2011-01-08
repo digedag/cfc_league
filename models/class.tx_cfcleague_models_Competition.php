@@ -399,34 +399,34 @@ class tx_cfcleague_models_Competition extends tx_rnbase_model_base {
     return $ret;
   }
 
-  /**
-   * Liefert die verhängten Strafen für Teams des Wettbewerbs.
-   */
-  function getPenalties() {
-    if(!is_array($this->penalties)) {
-      # Die UID der Liga setzen
-      $where = 'competition="'.$this->uid.'" ';
-  
-      $this->penalties = tx_rnbase_util_DB::queryDB('*','tx_cfcleague_competition_penalty',$where,
-                     '','sorting','tx_cfcleaguefe_models_competition_penalty',0);
-    }
-    return $this->penalties;
-  }
-  /**
-   * Set penalties
-   *
-   * @param array $penalties
-   */
-  public function setPenalties($penalties) {
-    $this->penalties = is_array($penalties) ? $penalties : NULL;
-  }
-  /**
-   * Returns the table type if set. Default is football.
-   * @return string default is 'football'
-   */
-  public function getTableType() {
-  	return $this->record['leaguetable'] ? $this->record['leaguetable'] : 'football';
-  }
+	/**
+	 * Liefert die verhängten Strafen für Teams des Wettbewerbs.
+	 */
+	public function getPenalties() {
+		if(!is_array($this->penalties)) {
+			// Die UID der Liga setzen
+			$options['where'] = 'competition="'.$this->uid.'" ';
+			$options['wrapperclass'] = 'tx_cfcleague_models_CompetitionPenalty';
+
+			$this->penalties = tx_rnbase_util_DB::doSelect('*','tx_cfcleague_competition_penalty',$options);
+		}
+		return $this->penalties;
+	}
+	/**
+	 * Set penalties
+	 *
+	 * @param array $penalties
+	 */
+	public function setPenalties($penalties) {
+		$this->penalties = is_array($penalties) ? $penalties : NULL;
+	}
+	/**
+	 * Returns the table type if set. Default is football.
+	 * @return string default is 'football'
+	 */
+	public function getTableType() {
+		return $this->record['leaguetable'] ? $this->record['leaguetable'] : 'football';
+	}
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/models/class.tx_cfcleague_models_Competition.php']) {
