@@ -101,7 +101,7 @@ class tx_cfcleague_tca_Lookup {
     	// FIXME: Wenn Teams nicht global verwaltet werden, dann kommt der Verein nicht als UID
     	// tx_cfcleague_club_1|M%C3%BCnchen%2C%20FC%20Bayern%20M%C3%BCnchen
     	$items = $srv->getLogos($PA['row']['club']);
-    	t3lib_div::debug($PA['row']['club'], 'class.tx_cfcleague_tca_Lookup.php '); // TODO: remove me
+//    	t3lib_div::debug($PA['row']['club'], 'class.tx_cfcleague_tca_Lookup.php '); // TODO: remove me
     	if(count($items)) $PA['items'] = array(); // Es muss immer eine Farbe zugeordnet werden
     	foreach ($items As $item) {
     		$currentAvailable = $currentAvailable ? $currentAvailable : ($current == $item->getUid() || $current == 0);
