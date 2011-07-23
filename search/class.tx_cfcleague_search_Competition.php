@@ -37,6 +37,7 @@ class tx_cfcleague_search_Competition extends tx_rnbase_util_SearchBase {
 	protected function getTableMappings() {
 		$tableMapping['TEAM'] = 'tx_cfcleague_teams';
 		$tableMapping['COMPETITION'] = 'tx_cfcleague_competition';
+		$tableMapping['MATCH'] = 'tx_cfcleague_games';
 		return $tableMapping;
 	}
 
@@ -46,12 +47,19 @@ class tx_cfcleague_search_Competition extends tx_rnbase_util_SearchBase {
   function getWrapperClass() {
   	return 'tx_cfcleague_models_Competition';
   }
-	
+	protected function getBaseTableAlias() {return 'COMPETITION';}
+  protected function useAlias() {
+		return true;
+	}
+
   protected function getJoins($tableAliases) {
   	$join = '';
     if(isset($tableAliases['TEAM'])) {
-    	$join .= ' JOIN tx_cfcleague_teams ON FIND_IN_SET( tx_cfcleague_teams.uid, tx_cfcleague_competition.teams )';
+    	$join .= ' JOIN tx_cfcleague_teams AS TEAM ON FIND_IN_SET( TEAM.uid, COMPETITION.teams )';
     }
+		if(isset($tableAliases['MATCH'])) {
+			$join .= ' JOIN tx_cfcleague_games AS `MATCH` ON MATCH.competition = COMPETITION.uid ';
+		}
     return $join;
   }
 }
