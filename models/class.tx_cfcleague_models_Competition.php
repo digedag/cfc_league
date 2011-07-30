@@ -326,19 +326,20 @@ class tx_cfcleague_models_Competition extends tx_rnbase_model_base {
   function setTeams($teamsArr) {
     $this->teams = is_array($teamsArr) ? $teamsArr : NULL;
   }
-  /**
-   * Returns an instance of tx_cfcleague_models_competition
-   * @param int $uid
-   * @return tx_cfcleague_models_competition or null
-   */
-  public static function &getInstance($uid, $record = 0) {
-    $uid = intval($uid);
-    if(!array_key_exists($uid, self::$instances)) {
-      $comp = new tx_cfcleague_models_Competition(is_array($record) ? $record : $uid);
-      self::$instances[$uid] = $comp->isValid() ? $comp : null;
-    }
-    return self::$instances[$uid];
-  }
+	/**
+	 * Returns an instance of tx_cfcleague_models_competition
+	 * @param int $uid
+	 * @return tx_cfcleague_models_competition or null
+	 */
+	public static function &getInstance($uid, $record = 0) {
+
+		$uid = intval($uid);
+		if(!array_key_exists($uid, self::$instances)) {
+			$comp = new tx_cfcleague_models_Competition(is_array($record) ? $record : $uid);
+			self::$instances[$uid] = $comp->isValid() ? $comp : null;
+		}
+		return self::$instances[$uid];
+	}
   /**
    * statische Methode, die ein Array mit Instanzen dieser Klasse liefert. 
    * Es werden entweder alle oder nur bestimmte Wettkämpfe einer Saison geliefert.

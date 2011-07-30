@@ -84,6 +84,9 @@ class tx_cfcleague_models_Team extends tx_rnbase_model_base {
 		}
 		return self::$instances[$uid];
 	}
+	public static function addInstance($team) {
+		self::$instances[$team->uid] = $team;
+	}
 	/**
 	 * Check if team is a dummy for free_of_match.
 	 * @return boolean
