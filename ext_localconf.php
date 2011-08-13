@@ -57,5 +57,6 @@ tx_cfcleague_util_Misc::registerMatchNote('LLL:EXT:cfc_league/locallang_db.xml:t
 
 // Include services
 require_once(t3lib_extMgm::extPath('cfc_league').'services/ext_localconf.php');
+require_once(t3lib_extMgm::extPath('cfc_league').'sports/ext_localconf.php');
 
 ?>

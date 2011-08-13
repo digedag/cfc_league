@@ -59,6 +59,7 @@ $TCA['tx_cfcleague_competition'] = Array (
 		'label_alt' => 'internal_name',
 		'label_alt_force' => 1,
 		'tstamp' => 'tstamp',
+		'type' => 'sports',
 		'crdate' => 'crdate',
 		'cruser_id' => 'cruser_id',
 		'sortby' => 'sorting',	

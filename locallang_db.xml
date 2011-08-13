@@ -23,7 +23,7 @@
 			<label index="tx_cfcleague_competition.saison">Saison</label>
 			<label index="tx_cfcleague_competition.parent">Parent Competition</label>
 			<label index="tx_cfcleague_competition.type">Competition Type</label>
-			<label index="tx_cfcleague_competition.leaguetable">League table type</label>
+			<label index="tx_cfcleague_competition.sports">Kind of sports</label>
 			<label index="tx_cfcleague_competition.obligation">Obligation</label>
 			<label index="tx_cfcleague_competition.type_league">League</label>
 			<label index="tx_cfcleague_competition.type_ko">Cup</label>
@@ -39,6 +39,8 @@
 			<label index="tx_cfcleague_competition.point_system">Point System</label>
 			<label index="tx_cfcleague_competition.point_system_2">2 Point-Rule</label>
 			<label index="tx_cfcleague_competition.point_system_3">3 Point-Rule</label>
+			<label index="tx_cfcleague_competition.point_system_2_icehockey">2 Point-Rule (Icehockey)</label>
+			<label index="tx_cfcleague_competition.point_system_3_icehockey">3 Point-Rule (Icehockey)</label>
 			<label index="tx_cfcleague_competition.teams">Teams</label>
 			<label index="tx_cfcleague_competition_penalty">Competition penalty</label>
 			<label index="tx_cfcleague_competition_penalty.team">Team</label>
@@ -247,6 +249,7 @@
 			<label index="tx_cfcleague_competition">Wettbewerb</label>
 			<label index="tx_cfcleague_competition.name">Name</label>
 			<label index="tx_cfcleague_competition.internal_name">Interner Name</label>
+			<label index="tx_cfcleague_competition.sports">Sportart</label>
 			<label index="tx_cfcleague_competition.short_name">Kurzname</label>
 			<label index="tx_cfcleague_competition.match_keys">Spielplanschlüssel</label>
 			<label index="tx_cfcleague_competition.table_marks">Markierung von Ligatabellen</label>
@@ -266,6 +269,8 @@
 			<label index="tx_cfcleague_competition.point_system">Punkte System</label>
 			<label index="tx_cfcleague_competition.point_system_2">2 Punkte-Regel</label>
 			<label index="tx_cfcleague_competition.point_system_3">3 Punkte-Regel</label>
+			<label index="tx_cfcleague_competition.point_system_2_icehockey">2 Punkte-Regel (Eishockey)</label>
+			<label index="tx_cfcleague_competition.point_system_3_icehockey">3 Punkte-Regel (Eishockey)</label>
 			<label index="tx_cfcleague_competition_penalty">Wettbewerbsstrafe</label>
 			<label index="tx_cfcleague_competition_penalty.game">Spiel (optional)</label>
 			<label index="tx_cfcleague_competition_penalty.comment">Kommentar</label>

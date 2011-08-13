@@ -215,9 +215,9 @@ $TCA['tx_cfcleague_competition'] = Array (
 				'maxitems' => 1,
 			)
 		),
-		'leaguetable' => Array (
+		'sports' => Array (
 			'exclude' => 1,
-			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition.leaguetable',
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition.sports',
 			'config' => Array (
 				'type' => 'select',
 				'itemsProcFunc' => 'tx_cfcleague_tca_Lookup->getLeagueTableTypes',
@@ -276,10 +276,11 @@ $TCA['tx_cfcleague_competition'] = Array (
 			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition.point_system',
 			'config' => Array (
 				'type' => 'radio',
-				'items' => Array(
-					Array('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition.point_system_2',1),
-					Array('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition.point_system_3',0)
-				),
+				'itemsProcFunc' => 'tx_cfcleague_tca_Lookup->getPointSystems',
+//				'items' => Array(
+//					Array('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition.point_system_2',1),
+//					Array('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition.point_system_3',0)
+//				),
 				'default' => 0
 			)
 		),
@@ -311,7 +312,9 @@ $TCA['tx_cfcleague_competition'] = Array (
 */
 	),
 	'types' => Array (
-		'0' => Array('showitem' => 'hidden;;1;;1-1-1, name, internal_name, short_name, agegroup, saison, type;;2, leaguetable, point_system, logo, t3logo, teams, match_keys, table_marks, match_parts, addparts')
+		'0' => Array('showitem' => 'hidden;;1;;1-1-1, name, sports'),
+		'football' => Array('showitem' => 'hidden;;1;;1-1-1, name, sports, internal_name, short_name, agegroup, saison, type;;2, point_system, logo, t3logo, teams, match_keys, table_marks, match_parts, addparts'),
+		'icehockey' => Array('showitem' => 'hidden;;1;;1-1-1, name, sports, internal_name, short_name, agegroup, saison, type;;2, point_system, logo, t3logo, teams, match_keys, table_marks, match_parts, addparts'),
 	),
 	'palettes' => Array (
 		'1' => Array('showitem' => ''),

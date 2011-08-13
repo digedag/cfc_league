@@ -65,6 +65,17 @@ class tx_cfcleague_tca_Lookup {
 		$config['items'] = $srv->getTableTypes4TCA();
 
 	}
+	public function getPointSystems($config) {
+		$sports = $config['row']['sports'];
+		$srv = tx_cfcleague_util_ServiceRegistry::getCompetitionService();
+		// TODO: Fehler wegfangen
+		$config['items'] = $srv->getPointSystems($sports);
+
+//		$config['items'] = array(
+//					Array(tx_rnbase_util_Misc::translateLLL('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition.point_system_2'),1),
+//					Array(tx_rnbase_util_Misc::translateLLL('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition.point_system_3'),0)
+//		);
+	}
 	/**
 	 * Set possible stadiums for a match. The stadiums are selected from home club.
 	 *
