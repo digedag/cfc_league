@@ -33,10 +33,13 @@ class tx_cfcleague_sports_IceHockey extends t3lib_svbase implements tx_cfcleague
 
 	/**
 	 * Get match provider
-	 * @return tx_cfcleaguefe_table_ITableType
+	 * @return tx_cfcleaguefe_table_ITableType or null
 	 */
 	public function getLeagueTable() {
-		
+		if(t3lib_extMgm::isLoaded('cfc_league_fe')) {
+			return tx_rnbase::makeInstance('tx_cfcleaguefe_table_football_Table');
+		}
+		return null;
 	}
 	/**
 	 * @return array

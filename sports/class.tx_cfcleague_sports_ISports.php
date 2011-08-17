@@ -29,7 +29,7 @@
 interface tx_cfcleague_sports_ISports {
 	/**
 	 * Get match provider
-	 * @return tx_cfcleaguefe_table_ITableType
+	 * @return tx_cfcleaguefe_table_ITableType or null if none available
 	 */
 	public function getLeagueTable();
 	/**
