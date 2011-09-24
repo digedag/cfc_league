@@ -67,7 +67,7 @@ $TCA['tx_cfcleague_competition'] = Array (
 		'enablecolumns' => Array (		
 			'disabled' => 'hidden',
 		),
-		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY).'tca.php',
+		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY).'Configuration/TCA/Competition.php',
 		'iconfile' => t3lib_extMgm::extRelPath($_EXTKEY).'icon_tx_cfcleague_competition.gif',
 	),
 	'feInterface' => Array (
