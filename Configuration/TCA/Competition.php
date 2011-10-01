@@ -151,12 +151,15 @@ $TCA['tx_cfcleague_competition'] = Array (
 			'exclude' => 1,
 			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition.point_system',
 			'config' => Array (
-				'type' => 'radio',
+				'type' => 'select',
 				'itemsProcFunc' => 'tx_cfcleague_tca_Lookup->getPointSystems',
 //				'items' => Array(
 //					Array('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition.point_system_2',1),
 //					Array('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition.point_system_3',0)
 //				),
+				'size' => 1,
+				'minitems' => 0,
+				'maxitems' => 1,
 				'default' => 0
 			)
 		),
