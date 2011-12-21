@@ -6,6 +6,7 @@ v0.8.2 (??.01.2011)
  * New field in competition for league table type
  * Avoid t3lib_SpriteManager for TYPO4 4.3 and older.
  * TCA config for point_system changed from radio to select, since radio can't handle itemsprocfunc.
+ * tx_cfcleague_search_Match: ignore deleted and hidden competitions and teams
 
 v0.8.1 (17.10.2010)
  * New hook in merge profiles

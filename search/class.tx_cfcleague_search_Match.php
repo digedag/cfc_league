@@ -59,13 +59,13 @@ class tx_cfcleague_search_Match extends tx_rnbase_util_SearchBase {
 	protected function getJoins($tableAliases) {
 		$join = '';
 		if(isset($tableAliases['COMPETITION'])) {
-			$join .= ' JOIN tx_cfcleague_competition ON tx_cfcleague_games.competition = tx_cfcleague_competition.uid ';
+			$join .= ' JOIN tx_cfcleague_competition ON tx_cfcleague_games.competition = tx_cfcleague_competition.uid AND tx_cfcleague_competition.deleted=0 AND tx_cfcleague_competition.hidden=0 ';
 		}
 		if(isset($tableAliases['TEAM1'])) {
-			$join .= ' INNER JOIN tx_cfcleague_teams As t1 ON tx_cfcleague_games.home = t1.uid ';
+			$join .= ' INNER JOIN tx_cfcleague_teams As t1 ON tx_cfcleague_games.home = t1.uid AND t1.deleted=0 AND t1.hidden=0 ';
 		}
 		if(isset($tableAliases['TEAM2'])) {
-			$join .= ' INNER JOIN tx_cfcleague_teams As t2 ON tx_cfcleague_games.guest = t2.uid ';
+			$join .= ' INNER JOIN tx_cfcleague_teams As t2 ON tx_cfcleague_games.guest = t2.uid  AND t2.deleted=0 AND t2.hidden=0 ';
 		}
 		// Hook to append other tables
 		tx_rnbase_util_Misc::callHook('cfc_league','search_Match_getJoins_hook',
