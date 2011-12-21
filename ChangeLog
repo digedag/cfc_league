@@ -2,7 +2,7 @@
 Änderungen
 ----------
 
-v0.8.2 (??.01.2011)
+v0.8.2 (21.12.2011)
  * New field in competition for league table type
  * Avoid t3lib_SpriteManager for TYPO4 4.3 and older.
  * TCA config for point_system changed from radio to select, since radio can't handle itemsprocfunc.
