@@ -92,10 +92,10 @@ class tx_cfcleague_services_Competition extends t3lib_svbase {
 	 *
 	 * @return array 
 	 */
-	public function getTableTypes4TCA() {
+	public function getSports4TCA() {
 		$types = array();
 
-		// Jetzt schauen, ob noch weitere Typpen per Service geliefert werden
+		// Jetzt schauen, ob noch weitere Sportarten per Service geliefert werden
 		$baseType = 't3sports_sports';
 		$services = tx_rnbase_util_Misc::lookupServices($baseType);
 		foreach ($services As $subtype => $info) {

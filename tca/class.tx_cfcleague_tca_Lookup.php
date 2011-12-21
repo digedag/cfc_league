@@ -59,10 +59,10 @@ class tx_cfcleague_tca_Lookup {
 	 * @param $config
 	 * @return array
 	 */
-	public function getLeagueTableTypes($config) {
+	public function getSportsTypes($config) {
 		tx_rnbase::load('tx_cfcleague_util_ServiceRegistry');
 		$srv = tx_cfcleague_util_ServiceRegistry::getCompetitionService();
-		$config['items'] = $srv->getTableTypes4TCA();
+		$config['items'] = $srv->getSports4TCA();
 
 	}
 	public function getPointSystems($config) {
