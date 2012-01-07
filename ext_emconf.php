@@ -37,7 +37,7 @@ $EM_CONF[$_EXTKEY] = array(
 			'php' => '5.0.0-0.0.0',
 			'cms' => '',
 			'rn_memento' => '',
-			'rn_base' => '0.9.5-0.0.0',
+			'rn_base' => '0.11.8-0.0.0',
 		),
 		'conflicts' => array(
 		),
