@@ -54,6 +54,8 @@ CREATE TABLE tx_cfcleague_competition (
 	sorting int(10) DEFAULT '0' NOT NULL,
 	deleted tinyint(4) DEFAULT '0' NOT NULL,
 	hidden tinyint(4) DEFAULT '0' NOT NULL,
+
+	tournament tinyint(4) DEFAULT '0' NOT NULL,
 	name varchar(255) DEFAULT '' NOT NULL,
 	short_name varchar(150) DEFAULT '' NOT NULL,
 	internal_name varchar(255) DEFAULT '' NOT NULL,

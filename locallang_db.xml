@@ -14,6 +14,7 @@
 			<label index="tx_cfcleague_saison.name">Name</label>
 			<label index="tx_cfcleague_saison.halftime">Winters break</label>
 			<label index="tx_cfcleague_competition">Competition</label>
+			<label index="tx_cfcleague_competition_tournament">Tournament</label>
 			<label index="tx_cfcleague_competition.name">Name</label>
 			<label index="tx_cfcleague_competition.internal_name">Internal name</label>
 			<label index="tx_cfcleague_competition.short_name">Short name</label>
@@ -247,6 +248,7 @@
 			<label index="tx_cfcleague_saison.name">Name</label>
 			<label index="tx_cfcleague_saison.halftime">Winterpause</label>
 			<label index="tx_cfcleague_competition">Wettbewerb</label>
+			<label index="tx_cfcleague_competition_tournament">Turnier</label>
 			<label index="tx_cfcleague_competition.name">Name</label>
 			<label index="tx_cfcleague_competition.internal_name">Interner Name</label>
 			<label index="tx_cfcleague_competition.sports">Sportart</label>
