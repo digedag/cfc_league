@@ -34,7 +34,7 @@ class tx_cfcleague_tca_Lookup {
 	 *
 	 * @param array $config
 	 */
-	function getProfileTypes($config) {
+	function getProfileTypes(&$config) {
 		tx_rnbase::load('tx_cfcleague_util_ServiceRegistry');
 		$srv = tx_cfcleague_util_ServiceRegistry::getProfileService();
 		$config['items'] = $srv->getProfileTypes4TCA();
@@ -49,7 +49,7 @@ class tx_cfcleague_tca_Lookup {
 	 * @param $config
 	 * @return array
 	 */
-	public function getMatchNoteTypes($config) {
+	public function getMatchNoteTypes(&$config) {
 		tx_rnbase::load('tx_cfcleague_util_ServiceRegistry');
 		$srv = tx_cfcleague_util_ServiceRegistry::getMatchService();
 		$config['items'] = $srv->getMatchNoteTypes4TCA();
@@ -59,17 +59,17 @@ class tx_cfcleague_tca_Lookup {
 	 * @param $config
 	 * @return array
 	 */
-	public function getSportsTypes($config) {
+	public function getSportsTypes(&$config) {
 		tx_rnbase::load('tx_cfcleague_util_ServiceRegistry');
 		$srv = tx_cfcleague_util_ServiceRegistry::getCompetitionService();
 		$config['items'] = $srv->getSports4TCA();
-
 	}
-	public function getPointSystems($config) {
+	public function getPointSystems(&$config) {
 		$sports = $config['row']['sports'];
-		$srv = tx_cfcleague_util_ServiceRegistry::getCompetitionService();
-		// TODO: Fehler wegfangen
-		$config['items'] = $srv->getPointSystems($sports);
+		if($sports) {
+			$srv = tx_cfcleague_util_ServiceRegistry::getCompetitionService();
+			$config['items'] = $srv->getPointSystems($sports);
+		}
 
 //		$config['items'] = array(
 //					Array(tx_rnbase_util_Misc::translateLLL('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition.point_system_2'),1),
