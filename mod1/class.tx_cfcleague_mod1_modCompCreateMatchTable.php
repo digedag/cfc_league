@@ -139,7 +139,7 @@ class tx_cfcleague_mod1_modCompCreateMatchTable {
 		$content = '';
 		// Wir benötigen eine Select-Box mit der man die Rückrunden-Option einstellen kann
 		// Bei Änderung soll die Seite neu geladen werden, damit nur die Halbserie angezeigt wird.
-		$content .= $this->formTool->createSelectSingleByArray('option_halfseries', $option_halfseries, Array('0' => 'Mit Rückrunde', '1' => 'Ohne Rückrunde'), array('reload'=>1));
+		$content .= $this->formTool->createSelectSingleByArray('option_halfseries', $option_halfseries, Array('0' => '###LABEL_CREATE_SAISON###', '1' => '###LABEL_CREATE_FIRSTHALF###', '2' => '###LABEL_CREATE_SECONDHALF###'), array('reload'=>1));
 
 		$content .= '<br />';
 

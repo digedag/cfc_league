@@ -103,18 +103,21 @@ class tx_cfcleague_util_Generator {
 		$dayCnt = isset($options['firstmatchday']) ? intval($options['firstmatchday']) : 0;
 
 		$ret = array();
-		foreach($table as $day => $matches) {
-			$dayArr = array(); // Hier kommen die Spiele rein
-			foreach($matches as $k => $match) {
-				$teamIds = explode('-',$match);
-				// Ist es ein spielfreies Spiel
-				$isNoMatch = $teams[$teamIds[0]] == $option_nomatch || $teams[$teamIds[1]] == $option_nomatch;
-				$dayArr[] = new tx_cfcleague_util_GeneratorMatch(++$matchCnt, $isNoMatch ? '': ++$matchCnt2, $teams[$teamIds[0]], $teams[$teamIds[1]], $isNoMatch);
+		// die Hinrunde hinzufügen
+		if($option_halfseries != 2) {
+			foreach($table as $day => $matches) {
+				$dayArr = array(); // Hier kommen die Spiele rein
+				foreach($matches as $k => $match) {
+					$teamIds = explode('-',$match);
+					// Ist es ein spielfreies Spiel
+					$isNoMatch = $teams[$teamIds[0]] == $option_nomatch || $teams[$teamIds[1]] == $option_nomatch;
+					$dayArr[] = new tx_cfcleague_util_GeneratorMatch(++$matchCnt, $isNoMatch ? '': ++$matchCnt2, $teams[$teamIds[0]], $teams[$teamIds[1]], $isNoMatch);
+				}
+				$ret[++$dayCnt] = $dayArr;
 			}
-			$ret[++$dayCnt] = $dayArr;
 		}
-		// die Rückspiele
-		if($option_halfseries == 0) {
+		// die Rückspiele hinzufügen
+		if($option_halfseries == 0 || $option_halfseries == 2) {
 			foreach($table as $day => $matches) {
 				$dayArr = array(); // Hier kommen die Spiele rein
 				foreach($matches as $k => $match) {

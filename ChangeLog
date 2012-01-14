@@ -2,6 +2,10 @@
 Änderungen
 ----------
 
+v0.8.4 (??.01.2011)
+ * Competition record: sports is now an update field
+ * #59: Make it possible to create matches for second half of saison only
+
 v0.8.3 (14.01.2011)
  * Competition record: sports is now an update field
 

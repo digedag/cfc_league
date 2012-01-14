@@ -44,6 +44,9 @@
 			<label index="edit_games">Edit matches</label>
 			<label index="label_create_match">Create new match</label>
 			<label index="label_msg_matches_created">Matches created successfully!</label>
+			<label index="label_create_saison">Complete saison</label>
+			<label index="label_create_firsthalf">First half of saison only</label>
+			<label index="label_create_secondhalf">Second half of saison only</label>
 
 			<label index="mod_team">Manage Teams</label>
 			<label index="create_players">Create players</label>
@@ -184,6 +187,9 @@
 			<label index="edit_games">Spiele bearbeiten</label>
 			<label index="label_create_match">Ein neues Spiel anlegen</label>
 			<label index="label_msg_matches_created">Die Spiele wurden angelegt!</label>
+			<label index="label_create_saison">Komplette Saison</label>
+			<label index="label_create_firsthalf">Nur Hinrunde</label>
+			<label index="label_create_secondhalf">Nur Rückrunde</label>
 
 			<label index="mod_competition">Wettbewerbe verwalten</label>
 			<label index="mod_compteams">Mannschaften</label>
