@@ -156,7 +156,12 @@ class tx_cfcleague_models_Match extends tx_rnbase_model_base {
 	}
 
 	/**
-	 * Liefert die Spieler des Heimteams der Startelf 
+	 * Liefert die UIDs der Spieler des Heimteams der Startelf.
+	 * Wird derzeit nur in T3sportstats verwendet.
+	 * if you need instances of profiles use this call:
+	 * <pre>
+	 *  $profiles = $profileSrv->loadProfiles($match->getPlayersHome());
+	 * </pre>
 	 * @param $all wenn true werden auch die Ersatzspieler mit geliefert
 	 * @return string comma separated uids
 	 */
@@ -288,6 +293,41 @@ class tx_cfcleague_models_Match extends tx_rnbase_model_base {
 	 */
 	public function isDummy() {
 		return $this->getHome()->isDummy() || $this->getGuest()->isDummy();
+	}
+  /**
+   * Liefert alle MatchNotes des Spiels als Referenz auf ein Array.
+   * Die Ticker werden in chronologischer Reihenfolge geliefert.
+   * Alle MatchNotes haben eine Referenz auf das zugehörige Spiel
+   * @return array[tx_cfcleague_models_MatchNotes]
+   */
+  public function getMatchNotes() {
+    $notes = $this->resolveMatchNotes();
+    return $notes;
+  }
+
+	/**
+	 * Lädt die MatchNotes dieses Spiels. Sollten sie schon geladen sein, dann
+	 * wird nix gemacht.
+	 * @param string $orderBy
+	 */
+	private function resolveMatchNotes($orderBy = 'asc') {
+		if(!isset($this->matchNotes)) {
+			$what = '*';
+			$from = 'tx_cfcleague_match_notes';
+			$options['where'] = 'game = ' .$this->uid;
+			$options['wrapperclass'] = 'tx_cfcleague_models_MatchNote';
+			// HINT: Die Sortierung nach dem Typ ist für die Auswechslungen wichtig.
+			$options['orderby'] = 'minute asc, extra_time asc, uid asc';
+			$this->matchNotes = tx_rnbase_util_DB::doSelect($what, $from, $options,0);
+			// Das Match setzen (foreach geht hier nicht weil es nicht mit Referenzen arbeitet...)
+			$anz = count($this->matchNotes);
+			for($i=0; $i<$anz; $i++) {
+				$this->matchNotes[$i]->setMatch($this);
+				// Zusätzlich die Notes nach ihrem Typ sortieren
+				$this->matchNoteTypes[intval($this->matchNotes[$i]->record['type'])][] = $this->matchNotes[$i];
+			}
+		}
+		return $orderBy == 'asc' ? $this->matchNotes : array_reverse($this->matchNotes);
 	}
 }
 

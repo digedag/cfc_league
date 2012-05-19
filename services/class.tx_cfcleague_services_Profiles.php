@@ -33,6 +33,36 @@ tx_rnbase::load('tx_rnbase_util_DB');
  * @author Rene Nitzsche
  */
 class tx_cfcleague_services_Profiles extends t3lib_svbase {
+	private $profiles = array();
+
+	/**
+	 * Return all instances of all requested profiles
+	 * @param string $uids commaseparated uids
+	 * @return array[tx_cfcleague_models_Profile]
+	 */
+	public function loadProfiles($uids) {
+		$uids = is_array($uids) ? $uids : t3lib_div::intExplode(',', $uids);
+		$ret = array();
+		$toLoad = array();
+		foreach($uids As $key => $uid) {
+			if(array_key_exists($uid, $this->profiles))
+				$ret[$key] = $this->profiles[$uid];
+			else
+				$toLoad[$key] = $uid;
+		}
+
+		if(!empty($toLoad)) {
+			$fields['PROFILE.UID'][OP_IN_INT] = implode(',', $toLoad);
+			$options = array();
+			$rows = $this->search($fields,$options);
+			$toLoadFlip = array_flip($toLoad);
+			foreach($rows As $profile) {
+				$this->profiles[$profile->getUid()] = $profile;
+				$ret[$toLoadFlip[$profile->getUid()]] = $profile;
+			}
+		}
+		return $ret;
+	}
 	/**
 	 * Returns all team notes for a given profile
 	 *

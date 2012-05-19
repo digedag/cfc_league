@@ -2,9 +2,12 @@
 Änderungen
 ----------
 
-v0.8.4 (??.01.2011)
+v0.8.4 (??.01.2012)
  * Competition record: sports is now an update field
  * #59: Make it possible to create matches for second half of saison only
+ * new image fields for agegroups
+ * models_Match: new method loadMatchNotes()
+ * srv_Profile: new method loadProfiles()
 
 v0.8.3 (14.01.2011)
  * Competition record: sports is now an update field
