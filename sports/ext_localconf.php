@@ -26,5 +26,14 @@ t3lib_extMgm::addService($_EXTKEY,  't3sports_sports' /* sv type */,  'tx_cfclea
 	)
 );
 
+t3lib_extMgm::addService($_EXTKEY,  't3sports_sports' /* sv type */,  'tx_cfcleague_sports_Volleyball' /* sv key */,
+	array(
+		'title' => 'T3sports Volleyball', 'description' => 'Special configurations for Volleyball.', 
+		'subtype' => 'volleyball',
+		'available' => TRUE, 'priority' => 50, 'quality' => 50,
+		'os' => '', 'exec' => '',
+		'classFile' => t3lib_extMgm::extPath($_EXTKEY).'sports/class.tx_cfcleague_sports_Volleyball.php',
+		'className' => 'tx_cfcleague_sports_Volleyball',
+	)
+);
 
-?>
