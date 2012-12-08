@@ -20,6 +20,14 @@ $TCA['tx_cfcleague_competition'] = Array (
 				'default' => '0'
 			)
 		),
+		'tournament' => Array (
+			'exclude' => 1,
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition_tournament',
+			'config' => Array (
+				'type' => 'check',
+				'default' => '0'
+			)
+		),
 		'name' => Array (
 			'exclude' => 1,		
 			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition.name',
@@ -191,8 +199,8 @@ $TCA['tx_cfcleague_competition'] = Array (
 */
 	),
 	'types' => Array (
-//		'0' => Array('showitem' => 'hidden;;1;;1-1-1, name, sports'),
-		'0' => Array('showitem' => 'hidden;;1;;1-1-1, name, sports, internal_name, short_name, agegroup, saison, type;;2, point_system, logo, t3logo, teams, match_keys, table_marks, match_parts, addparts'),
+		'0' => Array('showitem' => 'hidden;;1;;1-1-1, name, tournament, sports, internal_name, short_name, agegroup, saison, type;;2, point_system, logo, t3logo, teams, match_keys, table_marks, match_parts, addparts'),
+		'1' => Array('showitem' => 'hidden;;1;;1-1-1, name, tournament'),
 //		'icehockey' => Array('showitem' => 'hidden;;1;;1-1-1, name, sports, internal_name, short_name, agegroup, saison, type;;2, point_system, logo, t3logo, teams, match_keys, table_marks, match_parts, addparts'),
 	),
 	'palettes' => Array (
