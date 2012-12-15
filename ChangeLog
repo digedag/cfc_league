@@ -2,6 +2,10 @@
 Änderungen
 ----------
 
+v0.8.5 (??.12.2012)
+ * Refactoring in BE module
+ * New method isSetBased in ISport
+
 v0.8.4 (08.12.2012)
  * #59: Make it possible to create matches for second half of saison only
  * new image fields for agegroups
