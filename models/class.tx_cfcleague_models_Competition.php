@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2009 Rene Nitzsche (rene@system25.de)
+*  (c) 2009-2013 Rene Nitzsche (rene@system25.de)
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -31,6 +31,7 @@ class tx_cfcleague_models_Competition extends tx_rnbase_model_base {
 	private static $instances = array();
 	/** array of teams */
 	private $teams;
+
 	/**
 	 * array of matches
 	 * Containes retrieved matches by state
@@ -38,9 +39,14 @@ class tx_cfcleague_models_Competition extends tx_rnbase_model_base {
 	private $matchesByState = array();
 	/** array of penalties */
 	private $penalties;
+  private $cache = array();
 
 	function getTableName(){return 'tx_cfcleague_competition';}
 
+	public function refresh() {
+		parent::reset();
+		$this->cache = array();
+	}
 	public function getSaisonUid() {
 		return $this->record['saison'];
 	}
@@ -175,7 +181,8 @@ class tx_cfcleague_models_Competition extends tx_rnbase_model_base {
 			$srv = tx_cfcleague_util_ServiceRegistry::getMatchService();
 			# build SQL for select
 			$options = array();
-			$options['what'] = 'distinct round as uid,round AS number,round_name As name, max(status) As finished';
+			// TODO: Die vielen Spaltennamen haben historische Gründe. Da müsste bei den Clients aufgeräumt werden...
+			$options['what'] = 'distinct round as uid,round AS number,round,round_name,round_name As name, max(status) As finished, max(status) As max_status';
 			$options['groupby'] = 'round,round_name';
 			$options['orderby']['MATCHROUND.ROUND'] = 'asc';
 			$fields = array();
@@ -183,6 +190,15 @@ class tx_cfcleague_models_Competition extends tx_rnbase_model_base {
 			$this->cache['rounds'] = $srv->searchMatchRound($fields, $options);
 		}
 		return $this->cache['rounds'];
+	}
+	/**
+	 * @deprecated MatchService::getMatches4Competition und getMatchesByRound verwenden!
+	 */
+	public function getGames($round = '') {
+		if($round)
+			return $this->getMatchesByRound(round);
+		$srv = tx_cfcleague_util_ServiceRegistry::getMatchService();
+		return $srv->getMatches4Competition($this);
 	}
 	/**
 	 * Liefert die Spiele einer bestimmten Spielrunde
@@ -200,6 +216,53 @@ class tx_cfcleague_models_Competition extends tx_rnbase_model_base {
 //t3lib_div::debug($roundId, 'tx_cfcleaguefe_models_competition'); // TODO: Remove me!
   	return $matches;
   }
+	/**
+	 * Diese Funktion ermittelt die Spiele eines Spieltags. Die Namen der Teams werden aufgelöst.
+	 * @param int $round
+	 * @param boolean $ignoreFreeOfPlay
+	 * @deprecated
+	 */
+	public function getGamesByRound($round, $ignoreFreeOfPlay = false){
+		$what = 'tx_cfcleague_games.uid,home,guest, t1.name AS name_home, t2.name AS name_guest, '.
+						't1.short_name AS short_name_home, t1.dummy AS no_match_home, t2.short_name AS short_name_guest, t2.dummy AS no_match_guest, '.
+						'goals_home_1,goals_guest_1,goals_home_2,goals_guest_2, '.
+						'goals_home_3,goals_guest_3,goals_home_4,goals_guest_4, '.
+						'goals_home_et,goals_guest_et,goals_home_ap,goals_guest_ap, visitors,date,status';
+		$from = Array('tx_cfcleague_games ' .
+						'INNER JOIN tx_cfcleague_teams t1 ON (home= t1.uid) ' . 
+						'INNER JOIN tx_cfcleague_teams t2 ON (guest= t2.uid) ' 
+						, 'tx_cfcleague_games');
+
+
+		$where = 'competition="'.$this->uid.'"';
+		$where .= ' AND round='.$round;
+		if($ignoreFreeOfPlay) { // keine spielfreien Spiele laden
+			$where .= ' AND t1.dummy = 0 AND t2.dummy = 0 ';
+		}
+
+		return tx_cfcleague_db::queryDB($what,$where, 
+				$from,'','',0);
+
+/*
+SELECT tx_cfcleague_games.uid, t1.name, t2.name, goals_home_1,goals_guest_1 
+FROM `tx_cfcleague_games` 
+INNER JOIN tx_cfcleague_teams AS t1 
+INNER JOIN tx_cfcleague_teams AS t2
+ON home= t1.uid
+ON guest= t2.uid
+
+$res = $TYPO3_DB->exec_SELECTquery(
+	'sys_language.uid',
+	'sys_language LEFT JOIN static_languages ON sys_language.static_lang_isocode=static_languages.uid',
+	'static_languages.lg_typo3='.$TYPO3_DB->fullQuoteStr($LANG->lang,'static_languages').
+		t3lib_BEfunc::BEenableFields('sys_language').
+		t3lib_BEfunc::deleteClause('sys_language').
+		t3lib_BEfunc::deleteClause('static_languages')
+				);
+*/
+
+	}
+
   /**
    * Returns the last match number
    * @return int
@@ -215,11 +278,23 @@ class tx_cfcleague_models_Competition extends tx_rnbase_model_base {
 		return count($arr) ? $arr[0]['max_no'] : 0;
 	}
 
-  private $cache = array();
   /**
-   * Liefert ein Array mit UIDs der Dummy-Teams.
-   * @return array
+   * Wenn vorhanden, wird die ID des Spielfrei-Teams geliefert.
+   * TODO: sollte nur boolean liefern
+   * @return ID des Spielfrei-Teams oder 0
    */
+  public function hasDummyTeam() {
+    $teams = $this->getTeamNames(1);
+    foreach ($teams as $team) {
+    	if($team['dummy']) return $team['uid'];
+    }
+    return 0;
+  }
+
+	/**
+	 * Liefert ein Array mit UIDs der Dummy-Teams.
+	 * @return array
+	 */
 	public function getDummyTeamIds() {
 		if(!array_key_exists('dummyteamids', $this->cache)) {
 			$srv = tx_cfcleague_util_ServiceRegistry::getCompetitionService();
@@ -237,20 +312,28 @@ class tx_cfcleague_models_Competition extends tx_rnbase_model_base {
 		if(!array_key_exists($key, $this->cache)){
 			$srv = tx_cfcleague_util_ServiceRegistry::getTeamService();
 			$this->cache[$key] = $srv->getTeamNames($this, $asArray);
-    }
-    return $this->cache[$key];
-  }
+		}
+		return $this->cache[$key];
+	}
 
-  /**
-   * Anzahl der Spiele des/der Teams in diesem Wettbewerb
-   */
-  public function getNumberOfMatches($teamIds, $status = '0,1,2'){
+	/**
+	 * Anzahl der Spiele des/der Teams in diesem Wettbewerb
+	 */
+	public function getNumberOfMatches($teamIds, $status = '0,1,2'){
 		if(!array_key_exists('numofmatches', $this->cache)) {
 			$srv = tx_cfcleague_util_ServiceRegistry::getCompetitionService();
 			$this->cache['numofmatches'] = $srv->getNumberOfMatches($this, $teamIds, $status);
 		}
 		return $this->cache['numofmatches'];
-  }
+	}
+	/**
+	 * Liefert die Anzahl der Spielabschnitte in diesem Wettbewerb
+	 *
+	 * @return int
+	 */
+	function getNumberOfMatchParts(){
+		return intval($this->record['match_parts']) ? intval($this->record['match_parts']) : 2;
+	}
 
 	/**
 	 * Returns the first agegroup of this competition
@@ -428,6 +511,15 @@ class tx_cfcleague_models_Competition extends tx_rnbase_model_base {
 	public function getSports() {
 		return $this->record['sports'] ? $this->record['sports'] : 'football';
 	}
+
+	/**
+	 * @return tx_cfcleague_sports_ISports
+	 */
+	public function getSportsService() {
+		tx_rnbase::load('tx_rnbase_util_Misc');
+		return tx_rnbase_util_Misc::getService('t3sports_sports', $this->getSports());
+	}
+
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/models/class.tx_cfcleague_models_Competition.php']) {

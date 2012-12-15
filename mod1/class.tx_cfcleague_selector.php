@@ -22,7 +22,7 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-
+tx_rnbase::load('tx_cfcleague_models_Competition');
 
 /**
  * Die Klasse stellt Auswahlmenus zur Verfügung
@@ -53,7 +53,7 @@ class tx_cfcleague_selector{
 	 * Darstellung der Select-Box mit allen Ligen der übergebenen Seite. Es wird auf die aktuelle Liga eingestellt.
 	 * @return den aktuellen Wettbewerb als Objekt oder 0
 	 */
-	function showLeagueSelector(&$content,$pid,$leagues=0){
+	public function showLeagueSelector(&$content,$pid,$leagues=0){
 		// Wenn vorhanden, nehmen wir die übergebenen Wettbewerbe, sonst schauen wir auf der aktuellen Seite nach
 		$leagues = $leagues ? $leagues : $this->findLeagues($pid);
 		$LEAGUE_MENU = Array (
@@ -105,7 +105,8 @@ class tx_cfcleague_selector{
 		// Aktuellen Wert als Liga-Objekt zurückgeben
 		if(count($objLeagues))
 			return $this->LEAGUE_SETTINGS['league'] ? $objLeagues[$this->LEAGUE_SETTINGS['league']] :0;
-		return $this->LEAGUE_SETTINGS['league'] ? new tx_cfcleague_league($this->LEAGUE_SETTINGS['league']) :0;
+//		return $this->LEAGUE_SETTINGS['league'] ? new tx_cfcleague_league($this->LEAGUE_SETTINGS['league']) :0;
+		return $this->LEAGUE_SETTINGS['league'] ? new tx_cfcleague_models_Competition($this->LEAGUE_SETTINGS['league']) :0;
 	}
 
 	/**

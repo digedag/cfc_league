@@ -52,25 +52,25 @@ class tx_cfcleague_services_Competition extends t3lib_svbase {
 			$ret[] = $row['uid'];
 		return $ret;
 	}
-  /**
-   * Anzahl der Spiele des/der Teams in diesem Wettbewerb
-   */
-  function getNumberOfMatches($comp, $teamIds='', $status = '0,1,2'){
-    $what = 'count(uid) As matches';
-    $from = 'tx_cfcleague_games';
-    $options['where'] = 'status IN(' . $status . ') AND ';
-    if($teamIds) {
-      $options['where'] .= '( home IN(' . $teamIds . ') OR ';
-      $options['where'] .= 'guest IN(' . $teamIds . ')) AND ';
-    }
-    $options['where'] .= 'competition = ' . $comp->uid . ' ';
-    $rows = tx_rnbase_util_DB::doSelect($what,$from,$options,0);
-    $ret = 0;
-    if(count($rows))
-      $ret = intval($rows[0]['matches']);
-    return $ret;
-  }
-
+	/**
+	 * Anzahl der Spiele des/der Teams in diesem Wettbewerb
+	 */
+	public function getNumberOfMatches($comp, $teamIds='', $status = '0,1,2'){
+		$what = 'count(uid) As matches';
+		$from = 'tx_cfcleague_games';
+		$options['where'] = 'status IN(' . $status . ') AND ';
+		if($teamIds) {
+			$options['where'] .= '( home IN(' . $teamIds . ') OR ';
+			$options['where'] .= 'guest IN(' . $teamIds . ')) AND ';
+		}
+		$options['where'] .= 'competition = ' . $comp->uid . ' ';
+		$rows = tx_rnbase_util_DB::doSelect($what,$from,$options,0);
+		$ret = 0;
+		if(count($rows))
+			$ret = intval($rows[0]['matches']);
+		return $ret;
+	}
+	
 	/**
 	 * Search database for competitions
 	 *

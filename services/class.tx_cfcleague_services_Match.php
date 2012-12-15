@@ -61,6 +61,27 @@ class tx_cfcleague_services_Match extends t3lib_svbase implements tx_cfcleague_M
 	}
 
 	/**
+	 * Spiele des/der Teams in einem Wettbewerb
+	 * @param tx_cfcleague_models_Competition $comp
+	 * @param string $teamIds
+	 * @param string $status
+	 * @return array[tx_cfcleague_models_Match]
+	 */
+	public function getMatches4Competition($comp, $teamIds='', $status = '0,1,2'){
+		$fields = array();
+		$options = array();
+//	  $options['debug'] = 1;
+		$builder = $this->getMatchTableBuilder();
+		$builder->setCompetitions($comp->getUid());
+		$builder->setStatus($status);
+		$builder->setTeams($teamIds);
+		$builder->getFields($fields, $options);
+		
+  	$matches = $this->search($fields, $options);
+  	return $matches;
+	}
+
+	/**
 	 * @return tx_cfcleague_util_MatchTableBuilder
 	 */
 	public function getMatchTableBuilder() {

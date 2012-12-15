@@ -159,9 +159,10 @@ class tx_cfcleague_match_edit  {
    * Liefert die passenden Überschrift für die Tabelle
    *
    * @param int $parts
+   * @param tx_cfcleague_models_Competition $competition
    * @return array
    */
-  private function getHeadline($parts, $extraResultCol) {
+  private function getHeadline($parts, $competition) {
     global $LANG;
     $arr = array( '',
       $LANG->getLL('tx_cfcleague_games.date'),
@@ -169,17 +170,23 @@ class tx_cfcleague_match_edit  {
       $LANG->getLL('tx_cfcleague_games.home'),
       $LANG->getLL('tx_cfcleague_games.guest'));
 
-    if($extraResultCol)
-    	$arr[] = $LANG->getLL('tx_cfcleague_games.endresult');
-    // Hier je Spielart die Überschrift setzen
-    for($i=$parts; $i > 0; $i--) {
-      $label = $LANG->getLL('tx_cfcleague_games.parts_'.$parts.'_'.$i);
-      if(!$label) {
-        // Prüfen ob ein default gesetzt ist
-        $label = $LANG->getLL('tx_cfcleague_games.parts_'.$parts.'_default');
-        if($label) $label = $i. '. ' . $label;
-      }
-      $arr[] = $label ? $label : $i.'. part';
+		// TODO: Spalte für Sätze
+		$sports = $competition->getSportsService();
+		if($sports->isSetBased()) {
+			
+		}
+
+		if($competition->isAddPartResults())
+			$arr[] = $LANG->getLL('tx_cfcleague_games.endresult');
+		// Hier je Spielart die Überschrift setzen
+		for($i=$parts; $i > 0; $i--) {
+			$label = $LANG->getLL('tx_cfcleague_games.parts_'.$parts.'_'.$i);
+			if(!$label) {
+				// Prüfen ob ein default gesetzt ist
+				$label = $LANG->getLL('tx_cfcleague_games.parts_'.$parts.'_default');
+				if($label) $label = $i. '. ' . $label;
+			}
+			$arr[] = $label ? $label : $i.'. part';
     }
     $arr[] = $LANG->getLL('tx_cfcleague_games.visitors');
 //    $arr[] = '';
@@ -188,15 +195,15 @@ class tx_cfcleague_match_edit  {
   /**
    * Erstellt das Datenarray zur Erstellung der HTML-Tabelle mit den Spielen des Spieltages
    * @param array[tx_cfcleague_models_Match] $matches
-   * @param tx_cfcleague_league $competition
+   * @param tx_cfcleague_models_Competition $competition
    * @return array mit zwei Elementen: Idx 0 enthält Array für Darstellung als Tabelle, Idx 1
    *         enthält, falls vorhanden den Namen des spielfreien Teams
    */
-	private function createTableArray($matches, &$competition) {
+	private function createTableArray($matches, $competition) {
 		global $LANG;
 
 		$parts = $competition->getNumberOfMatchParts();
-		$arr = Array( 0 => Array( $this->getHeadline($parts, $competition->isAddedPartResults()) ));
+		$arr = Array( 0 => Array( $this->getHeadline($parts, $competition) ));
 
 		foreach($matches As $game) {
 			$row = array();
@@ -214,7 +221,7 @@ class tx_cfcleague_match_edit  {
 				$row[] = $this->formTool->createEditLink('tx_cfcleague_teams',$game->record['home'],$game->getHome()->getNameShort());
 				$row[] = $this->formTool->createEditLink('tx_cfcleague_teams',$game->record['guest'],$game->getGuest()->getNameShort());
 
-				if($competition->isAddedPartResults()) {
+				if($competition->isAddPartResults()) {
 					$row[] = $game->getResult();
 				}
 				// Jetzt die Spielabschitte einbauen, wobei mit dem letzten begonnen wird
