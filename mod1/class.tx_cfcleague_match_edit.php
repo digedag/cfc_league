@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2007-2010 Rene Nitzsche (rene@system25.de)
+*  (c) 2007-2013 Rene Nitzsche (rene@system25.de)
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -170,28 +170,29 @@ class tx_cfcleague_match_edit  {
       $LANG->getLL('tx_cfcleague_games.home'),
       $LANG->getLL('tx_cfcleague_games.guest'));
 
-		// TODO: Spalte für Sätze
-		$sports = $competition->getSportsService();
-		if($sports->isSetBased()) {
-			
-		}
-
-		if($competition->isAddPartResults())
+		if($competition->isAddPartResults() || $parts == 1)
 			$arr[] = $LANG->getLL('tx_cfcleague_games.endresult');
 		// Hier je Spielart die Überschrift setzen
-		for($i=$parts; $i > 0; $i--) {
-			$label = $LANG->getLL('tx_cfcleague_games.parts_'.$parts.'_'.$i);
-			if(!$label) {
-				// Prüfen ob ein default gesetzt ist
-				$label = $LANG->getLL('tx_cfcleague_games.parts_'.$parts.'_default');
-				if($label) $label = $i. '. ' . $label;
+		if($parts > 1)
+			for($i=$parts; $i > 0; $i--) {
+				$label = $LANG->getLL('tx_cfcleague_games.parts_'.$parts.'_'.$i);
+				if(!$label) {
+					// Prüfen ob ein default gesetzt ist
+					$label = $LANG->getLL('tx_cfcleague_games.parts_'.$parts.'_default');
+					if($label) $label = $i. '. ' . $label;
+				}
+				$arr[] = $label ? $label : $i.'. part';
 			}
-			$arr[] = $label ? $label : $i.'. part';
-    }
-    $arr[] = $LANG->getLL('tx_cfcleague_games.visitors');
+
+		$sports = $competition->getSportsService();
+		if($sports->isSetBased()) {
+			$arr[] = $LANG->getLL('tx_cfcleague_games_sets');
+		}
+
+		$arr[] = $LANG->getLL('tx_cfcleague_games.visitors');
 //    $arr[] = '';
-    return $arr;
-  }
+		return $arr;
+	}
   /**
    * Erstellt das Datenarray zur Erstellung der HTML-Tabelle mit den Spielen des Spieltages
    * @param array[tx_cfcleague_models_Match] $matches
@@ -221,16 +222,18 @@ class tx_cfcleague_match_edit  {
 				$row[] = $this->formTool->createEditLink('tx_cfcleague_teams',$game->record['home'],$game->getHome()->getNameShort());
 				$row[] = $this->formTool->createEditLink('tx_cfcleague_teams',$game->record['guest'],$game->getGuest()->getNameShort());
 
-				if($competition->isAddPartResults()) {
+				if($competition->isAddPartResults() && $parts != 1) {
 					$row[] = $game->getResult();
 				}
 				// Jetzt die Spielabschitte einbauen, wobei mit dem letzten begonnen wird
 				for($i=$parts; $i > 0; $i--) {
 					$row[] = $this->formTool->createIntInput('data[tx_cfcleague_games]['.$game->getUid().'][goals_home_'.$i.']',$game->record['goals_home_'.$i],2) . ' : ' . $this->formTool->createIntInput('data[tx_cfcleague_games]['.$game->getUid().'][goals_guest_'.$i.']',$game->record['goals_guest_'.$i],2);
 				}
-        
-//        $row[] = $this->formTool->createIntInput('data[tx_cfcleague_games]['.$game['uid'].'][goals_home_2]',$game['goals_home_2'],2) . ' : ' . $this->formTool->createIntInput('data[tx_cfcleague_games]['.$game['uid'].'][goals_guest_2]',$game['goals_guest_2'],2);
-//        $row[] = $this->formTool->createIntInput('data[tx_cfcleague_games]['.$game['uid'].'][goals_home_1]',$game['goals_home_1'],2) . ' : ' . $this->formTool->createIntInput('data[tx_cfcleague_games]['.$game['uid'].'][goals_guest_1]',$game['goals_guest_1'],2);
+
+				$sports = $competition->getSportsService();
+				if($sports->isSetBased()) {
+        	$row[] = $this->formTool->createIntInput('data[tx_cfcleague_games]['.$game->getUid().'][sets]',$game->record['sets'],12);
+				}
 
         $row[] = $this->formTool->createIntInput('data[tx_cfcleague_games]['.$game->getUid().'][visitors]',$game->record['visitors'],6);
         $arr[0][] = $row;
