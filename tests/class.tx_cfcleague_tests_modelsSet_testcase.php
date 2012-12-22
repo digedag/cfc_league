@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2010 Rene Nitzsche (rene@system25.de)
+*  (c) 2012-2013 Rene Nitzsche (rene@system25.de)
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -37,14 +37,16 @@ class tx_cfcleague_tests_modelsSets_testcase extends tx_phpunit_testcase {
 	 */
 	public function testBuildFromString($setString, $setCnt, $setResult) {
 		$sets = tx_cfcleague_models_Set::buildFromString($setString);
+
 		$this->assertEquals($setCnt, count($sets));
 		$i = 0;
 		foreach($sets As $set) {
 			$expResult = $setResult[$i];
+			$this->assertEquals($i+1, $set->getSet());
 			$this->assertEquals($expResult[0], $set->getPointsHome());
 			$this->assertEquals($expResult[1], $set->getPointsGuest());
-			$this->assertEquals($expResult[0], $set->record['home']);
-			$this->assertEquals($expResult[1], $set->record['guest']);
+			$this->assertEquals($expResult[0], $set->record['pointshome']);
+			$this->assertEquals($expResult[1], $set->record['pointsguest']);
 			$i++;
 		}
 	}
