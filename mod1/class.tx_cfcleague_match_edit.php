@@ -232,7 +232,7 @@ class tx_cfcleague_match_edit  {
 
 				$sports = $competition->getSportsService();
 				if($sports->isSetBased()) {
-        	$row[] = $this->formTool->createIntInput('data[tx_cfcleague_games]['.$game->getUid().'][sets]',$game->record['sets'],12);
+        	$row[] = $this->formTool->createTxtInput('data[tx_cfcleague_games]['.$game->getUid().'][sets]',$game->record['sets'],12);
 				}
 
         $row[] = $this->formTool->createIntInput('data[tx_cfcleague_games]['.$game->getUid().'][visitors]',$game->record['visitors'],6);
