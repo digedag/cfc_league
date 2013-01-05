@@ -2,7 +2,7 @@
 Änderungen
 ----------
 
-v0.8.5 (??.12.2012)
+v0.8.5 (??.01.2013)
  * Refactoring in BE module
  * New method isSetBased in ISport
  * Displaying set results field in BE module

@@ -55,7 +55,8 @@ class tx_cfcleague_models_Set {
 	}
 	public static function buildFromString($sets) {
 		if(!$sets) return false;
-		$sets = t3lib_div::trimExplode(';', $sets);
+		$sets = preg_split("/[\s]*[;,|][\s]*/", $sets);
+//		$sets = t3lib_div::trimExplode(';', $sets);
 		$ret = array();
 		foreach($sets As $idx => $setStr) {
 			list($p1, $p2) = t3lib_div::intExplode(':', $setStr);
