@@ -23,6 +23,7 @@
 ***************************************************************/
 
 tx_rnbase::load('tx_rnbase_model_base');
+tx_rnbase::load('tx_rnbase_util_Math');
 
 /**
  * Model für einen Wettbewerb.
@@ -62,7 +63,7 @@ class tx_cfcleague_models_Competition extends tx_rnbase_model_base {
 	 */
 	public function getMatches($status, $scope=0) {
 		// Sicherstellen, dass wir eine Zahl bekommen
-		if((isset($status) && t3lib_div::testInt($status))) {
+		if((isset($status) && tx_rnbase_util_Math::testInt($status))) {
 			$status = intval($status);
 			// Wir laden die Spieldaten zunächst ohne die Teams
 			// Um die Datenmenge in Grenzen zu halten
