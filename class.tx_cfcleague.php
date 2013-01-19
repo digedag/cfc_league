@@ -41,7 +41,7 @@ class tx_cfcleague_handleDataInput{
     else
       $PA[items] = array(); 
 
-//    t3lib_div::debug($PA,'cfcleague');
+//    tx_rnbase_util_Debug::debug($PA,'cfcleague');
 
   }
 
@@ -110,7 +110,7 @@ class tx_cfcleague_handleDataInput{
     global $LANG;
     $LANG->includeLLFile('EXT:cfc_league/locallang_db.xml');
 
-// t3lib_div::debug(count($PA[items]), 'items cfcleague');
+// tx_rnbase_util_Debug::debug(count($PA[items]), 'items cfcleague');
 
     if($PA['row']['home'])
     {
@@ -136,12 +136,6 @@ class tx_cfcleague_handleDataInput{
     }
     else
       $PA[items] = array();
-
-
-//t3lib_div::debug($LANG->getLL('tx_cfcleague.unknown'), 'cfcleague');
-
-
-
   }
   /**
    * Die Spieler des Gastteams ermitteln

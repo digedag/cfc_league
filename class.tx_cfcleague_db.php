@@ -48,8 +48,8 @@ class tx_cfcleague_db{
 
     if($debug) {
       $sql = $GLOBALS['TYPO3_DB']->SELECTquery($what,$fromClause,$where,$groupBy,$orderBy);
-      t3lib_div::debug($sql, 'SQL (tx_cfcleague_db)');
-      t3lib_div::debug(array($what,$from,$where), 'Params (tx_cfcleague_db)');
+      tx_rnbase_util_Debug::debug($sql, 'SQL (tx_cfcleague_db)');
+      tx_rnbase_util_Debug::debug(array($what,$from,$where), 'Params (tx_cfcleague_db)');
     }
 
     $res = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
@@ -68,7 +68,7 @@ class tx_cfcleague_db{
     $GLOBALS['TYPO3_DB']->sql_free_result($res);
 
     if($debug)
-      t3lib_div::debug(count($rows),'Rows retrieved (tx_cfcleague_db) Time: ' . (microtime(true) - $time) . 's');
+      tx_rnbase_util_Debug::debug(count($rows),'Rows retrieved (tx_cfcleague_db) Time: ' . (microtime(true) - $time) . 's');
 
     return $rows;
   }
