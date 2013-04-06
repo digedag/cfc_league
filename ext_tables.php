@@ -167,7 +167,8 @@ $TCA['tx_cfcleague_teams'] = Array (
 		'enablecolumns' => Array (
 			'disabled' => 'hidden',
 		),
-		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY).'tca.php',
+		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY).'Configuration/TCA/Team.php',
+		//'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY).'tca.php',
 		'iconfile' => t3lib_extMgm::extRelPath($_EXTKEY).'icon_tx_cfcleague_teams.gif',
 	),
 	'feInterface' => Array (
@@ -285,7 +286,7 @@ $TCA['tx_cfcleague_stadiums'] = Array (
 		'delete' => 'deleted',
 		'enablecolumns' => Array (
 		),
-		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY).'tca.php',
+		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY).'Configuration/TCA/Stadium.php',
 		'iconfile' => t3lib_extMgm::extRelPath($_EXTKEY).'icon_table.gif',
 	),
 	'feInterface' => Array (
