@@ -193,8 +193,8 @@ tx_rnbase::load('tx_cfcleague_tca_Lookup');
 tx_rnbase::load('tx_rnbase_util_TYPO3');
 if(tx_rnbase_util_TYPO3::isTYPO60OrHigher()) {
 	tx_rnbase::load('tx_rnbase_util_TSFAL');
-	// TODO: Muss integriert werden
-//	$TCA['tx_cfcleague_teams']['columns']['logo'] = tx_cfcleague_tca_Lookup::getTeamLogoField();
+	// Auswahlbox Vereinslogos
+	$TCA['tx_cfcleague_teams']['columns']['logo'] = tx_cfcleague_tca_Lookup::getTeamLogoField();
 
 	$TCA['tx_cfcleague_teams']['columns']['t3logo'] = tx_rnbase_util_TSFAL::getMediaTCA('t3logo', array(
 		'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_teams.logo',

@@ -60,7 +60,17 @@ class tx_cfcleague_services_Teams extends t3lib_svbase {
 		$team = tx_rnbase::makeInstance('tx_cfcleague_models_team', $teamUid);
 		return $team;
 	}
+	/**
+	 * Find all logos for a club.
+	 * FIXME: update for FAL.
+	 * @return array[tx_rnbase_model_media]
+	 */
 	public function getLogos($clubUid) {
+		tx_rnbase::load('tx_rnbase_util_TYPO3');
+		if(tx_rnbase_util_TYPO3::isTYPO60OrHigher()) {
+			tx_rnbase::load('tx_rnbase_util_TSFAL');
+			return tx_rnbase_util_TSFAL::fetchFiles('tx_cfcleague_club', $clubUid, 'logo');
+		}
 		$fields['MEDIAREFMM.UID_FOREIGN'][OP_EQ_INT] = $clubUid;
 		$fields['MEDIAREFMM.TABLENAMES'][OP_EQ] = 'tx_cfcleague_club';
 		$fields['MEDIAREFMM.IDENT'][OP_EQ] = 'dam_images';

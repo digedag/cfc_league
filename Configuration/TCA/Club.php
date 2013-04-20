@@ -297,7 +297,13 @@ $TCA['tx_cfcleague_club'] = Array (
 if(t3lib_extMgm::isLoaded('static_info_tables')) {
 	$TCA['tx_cfcleague_club']['columns']['country'] = tx_cfcleague_tca_Lookup::getCountryField();
 }
-if(t3lib_extMgm::isLoaded('dam')) {
+if(tx_rnbase_util_TYPO3::isTYPO60OrHigher()) {
+	tx_rnbase::load('tx_rnbase_util_TSFAL');
+	$TCA['tx_cfcleague_club']['columns']['logo'] = tx_rnbase_util_TSFAL::getMediaTCA('logo', array(
+		'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_club.logo',
+	));
+}
+elseif(t3lib_extMgm::isLoaded('dam')) {
 	$TCA['tx_cfcleague_club']['columns']['dam_logo'] = txdam_getMediaTCA('image_field', 'dam_images');
 	$TCA['tx_cfcleague_club']['columns']['dam_logo']['label'] = 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_club.logo';
 }
