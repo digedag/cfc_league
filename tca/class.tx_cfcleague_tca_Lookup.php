@@ -151,7 +151,8 @@ class tx_cfcleague_tca_Lookup {
 		$ret['label'] = 'Team Logo';
 		// Die Auswahlbox rendern
 		$ret['config']['userFunc'] = 'EXT:cfc_league/tca/class.tx_cfcleague_tca_Lookup.php:&tx_cfcleague_tca_Lookup->getSingleField_teamLogo';
-		$ret['config']['type'] = 'select';
+		
+		$ret['config']['type'] = tx_rnbase_util_TYPO3::isTYPO60OrHigher() ? 'user' : 'select';
 		// Die passenden Logos suchen
 		$ret['config']['itemsProcFunc'] = 'tx_cfcleague_tca_Lookup->getLogo4Team';
 		$ret['config']['maxitems'] = '1';
@@ -172,19 +173,29 @@ class tx_cfcleague_tca_Lookup {
 		$table = $PA['table'];
 		$field = $PA['field'];
 		$row = $PA['row'];
+		
 		if(!$row['club']) 
 			return $tceforms->sL('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_tca_noclubselected');
 		$config = $PA['fieldConf']['config'];
 
 		$item = $tceforms->getSingleField_typeSelect($table,$field,$row,$PA);
-		if($row['logo'] && !tx_rnbase_util_TYPO3::isTYPO60OrHigher()) {
-			// Logo anzeigen
-			$currPic = t3lib_BEfunc::getRecord('tx_dam',$row['logo']);
-			require_once(t3lib_extMgm::extPath('dam').'lib/class.tx_dam_tcefunc.php');
-			$tcefunc = t3lib_div::makeInstance('tx_dam_tcefunc');
-			if(!method_exists($tcefunc, 'renderFileList')) return $item;
-			$tcefunc->tceforms = &$tceforms;
-			$item .= $tcefunc->renderFileList(array('rows' => array($currPic)));
+		if($row['logo']) {
+			if(tx_rnbase_util_TYPO3::isTYPO60OrHigher()) {
+				$fileReference = \TYPO3\CMS\Core\Resource\ResourceFactory::getInstance()->getFileReferenceObject($row['logo']);
+
+				tx_rnbase::load('tx_rnbase_util_TSFAL');
+				$thumbs = tx_rnbase_util_TSFAL::createThumbnails(array($fileReference));
+				$item .= ''.$thumbs[0];
+			}
+			else {
+				// Logo anzeigen
+				$currPic = t3lib_BEfunc::getRecord('tx_dam',$row['logo']);
+				require_once(t3lib_extMgm::extPath('dam').'lib/class.tx_dam_tcefunc.php');
+				$tcefunc = t3lib_div::makeInstance('tx_dam_tcefunc');
+				if(!method_exists($tcefunc, 'renderFileList')) return $item;
+				$tcefunc->tceforms = &$tceforms;
+				$item .= $tcefunc->renderFileList(array('rows' => array($currPic)));
+			}
 		}
 		return $item;
 	}
