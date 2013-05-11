@@ -211,11 +211,11 @@ if(t3lib_extMgm::isLoaded('static_info_tables')) {
 tx_rnbase::load('tx_rnbase_util_TYPO3');
 if(tx_rnbase_util_TYPO3::isTYPO60OrHigher()) {
 	tx_rnbase::load('tx_rnbase_util_TSFAL');
-	$TCA['tx_cfcleague_stadiums']['columns']['t3logo'] = tx_rnbase_util_TSFAL::getMediaTCA('t3logo', array(
+	$TCA['tx_cfcleague_stadiums']['columns']['logo'] = tx_rnbase_util_TSFAL::getMediaTCA('logo', array(
 		'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_stadiums_logo',
 		'config' => array('size' => 1, 'maxitems' => 1),
 	));
-	$TCA['tx_cfcleague_stadiums']['columns']['t3pictures'] = tx_rnbase_util_TSFAL::getMediaTCA('t3pictures', array(
+	$TCA['tx_cfcleague_stadiums']['columns']['pictures'] = tx_rnbase_util_TSFAL::getMediaTCA('pictures', array(
 		'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_stadiums_pictures',
 	));
 }
