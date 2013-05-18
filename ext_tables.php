@@ -24,7 +24,7 @@ $TCA['tx_cfcleague_group'] = Array (
 			'starttime' => 'starttime',	
 			'fe_group' => 'fe_group',
 		),
-		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY).'tca.php',
+		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY).'Configuration/TCA/Group.php',
 		'iconfile' => t3lib_extMgm::extRelPath($_EXTKEY).'icon_tx_cfcleague_group.gif',
 	),
 	'feInterface' => Array (
@@ -117,7 +117,7 @@ $TCA['tx_cfcleague_profiles'] = Array (
 		'enablecolumns' => Array (		
 			'disabled' => 'hidden',	
 		),
-		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY).'tca.php',
+		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY).'Configuration/TCA/Profile.php',
 		'iconfile' => t3lib_extMgm::extRelPath($_EXTKEY).'icon_tx_cfcleague_profiles.gif',
 	),
 	'feInterface' => Array (
