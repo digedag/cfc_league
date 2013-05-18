@@ -74,7 +74,15 @@ $TCA['tx_cfcleague_group'] = Array (
 	)
 );
 
-if(t3lib_extMgm::isLoaded('dam')) {
+if(tx_rnbase_util_TYPO3::isTYPO60OrHigher()) {
+	tx_rnbase::load('tx_rnbase_util_TSFAL');
+	$TCA['tx_cfcleague_group']['columns']['logo'] = tx_rnbase_util_TSFAL::getMediaTCA('logo', array(
+		'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_club.logo',
+		'size' => 1,
+		'maxitems' => 1
+	));
+}
+elseif(t3lib_extMgm::isLoaded('dam')) {
 	$TCA['tx_cfcleague_group']['columns']['logo'] = txdam_getMediaTCA('image_field', 'logo');
 	$TCA['tx_cfcleague_group']['columns']['logo']['label'] = 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_club.logo';
 	$TCA['tx_cfcleague_group']['columns']['logo']['config']['size'] = 1;

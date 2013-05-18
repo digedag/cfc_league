@@ -978,7 +978,19 @@ if(t3lib_extMgm::isLoaded('rgmediaimages')) {
 }
 
 
-if(t3lib_extMgm::isLoaded('dam')) {
+if(tx_rnbase_util_TYPO3::isTYPO60OrHigher()) {
+	tx_rnbase::load('tx_rnbase_util_TSFAL');
+	$TCA['tx_cfcleague_games']['columns']['t3images'] = tx_rnbase_util_TSFAL::getMediaTCA('t3images', array(
+		'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.pictures',
+	));
+//	$TCA['tx_cfcleague_games']['columns']['dam_media'] = tx_rnbase_util_TSFAL::getMediaTCA('dam_media', array(
+//		'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.pictures',
+//	));
+//	$TCA['tx_cfcleague_games']['columns']['dam_media2'] = tx_rnbase_util_TSFAL::getMediaTCA('dam_media2', array(
+//		'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.pictures',
+//	));
+}
+elseif(t3lib_extMgm::isLoaded('dam')) {
 	$TCA['tx_cfcleague_games']['columns']['dam_images'] = txdam_getMediaTCA('image_field', 'dam_images');
 	$TCA['tx_cfcleague_games']['columns']['dam_media'] = txdam_getMediaTCA('media_field', 'dam_media');
 	$TCA['tx_cfcleague_games']['columns']['dam_media2'] = txdam_getMediaTCA('media_field', 'dam_media2');
