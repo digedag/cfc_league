@@ -1,26 +1,26 @@
 <?php
 /***************************************************************
-*  Copyright notice
-*
-*  (c) 2007-2008 Rene Nitzsche (rene@system25.de)
-*  All rights reserved
-*
-*  This script is part of the TYPO3 project. The TYPO3 project is
-*  free software; you can redistribute it and/or modify
-*  it under the terms of the GNU General Public License as published by
-*  the Free Software Foundation; either version 2 of the License, or
-*  (at your option) any later version.
-*
-*  The GNU General Public License can be found at
-*  http://www.gnu.org/copyleft/gpl.html.
-*
-*  This script is distributed in the hope that it will be useful,
-*  but WITHOUT ANY WARRANTY; without even the implied warranty of
-*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-*  GNU General Public License for more details.
-*
-*  This copyright notice MUST APPEAR in all copies of the script!
-***************************************************************/
+ *  Copyright notice
+ *
+ *  (c) 2007-2013 Rene Nitzsche (rene@system25.de)
+ *  All rights reserved
+ *
+ *  This script is part of the TYPO3 project. The TYPO3 project is
+ *  free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  The GNU General Public License can be found at
+ *  http://www.gnu.org/copyleft/gpl.html.
+ *
+ *  This script is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  This copyright notice MUST APPEAR in all copies of the script!
+ ***************************************************************/
 
 require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
 
@@ -70,17 +70,11 @@ class tx_cfcleague_util_TeamNoteDecorator {
 		elseif($colName == 'value') {
 			$ret = $item->getValue();
 			if($item->getMediaType() == 1) {
-				tx_rnbase::load('tx_cfcleague_util_DAM');
-				$size = '50x50';
-				$damFiles = tx_cfcleague_util_DAM::fetchFiles('tx_cfcleague_team_notes', $item->getUid(), 'media');
-				$data = $damFiles['rows'];
-				if(count($data)) {
-					$thumbs = tx_cfcleague_util_DAM::createThumbnails($damFiles, $size, $addAttr);
-					$ret = $thumbs[0];
-					list($key, $file) = each($data);
-					$ret .= ' ' . $file['file_name'];
-//					t3lib_div::debug($file, 'tx_cfcleague_util_TeamNoteDecorator'); // TODO: remove me
-					$ret .= $this->formTool->createEditLink('tx_dam', $file['uid']);
+				if(tx_rnbase_util_TYPO3::isTYPO60OrHigher()) {
+					$ret .= $this->showMediaFAL($item);
+				}
+				else {
+					$ret .= $this->showMediaDAM($item);
 				}
 			}
 		}
@@ -89,6 +83,28 @@ class tx_cfcleague_util_TeamNoteDecorator {
 			$ret .= $this->formTool->createEditLink('tx_cfcleague_profiles', $item->getProfile()->getUid());
 		}
 		
+		return $ret;
+	}
+
+	private function showMediaFAL($item) {
+		tx_rnbase::load('tx_rnbase_util_TSFAL');
+		$fileReference = tx_rnbase_util_TSFAL::getFirstReference('tx_cfcleague_team_notes', $item->getUid(), 'media');
+		$thumbs = tx_rnbase_util_TSFAL::createThumbnails(array($fileReference), array('width' => 50, 'height' => 50));
+		return ''.$thumbs[0];
+	}
+	private function showMediaDAM($item) {
+		tx_rnbase::load('tx_cfcleague_util_DAM');
+		$size = '50x50';
+		$damFiles = tx_cfcleague_util_DAM::fetchFiles('tx_cfcleague_team_notes', $item->getUid(), 'media');
+		$data = $damFiles['rows'];
+		if(count($data)) {
+			$thumbs = tx_cfcleague_util_DAM::createThumbnails($damFiles, $size, $addAttr);
+			$ret = $thumbs[0];
+			list($key, $file) = each($data);
+			$ret .= ' ' . $file['file_name'];
+//					t3lib_div::debug($file, 'tx_cfcleague_util_TeamNoteDecorator'); // TODO: remove me
+			$ret .= $this->formTool->createEditLink('tx_dam', $file['uid']);
+		}
 		return $ret;
 	}
 }

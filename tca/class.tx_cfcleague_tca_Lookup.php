@@ -181,7 +181,7 @@ class tx_cfcleague_tca_Lookup {
 		$item = $tceforms->getSingleField_typeSelect($table,$field,$row,$PA);
 		if($row['logo']) {
 			if(tx_rnbase_util_TYPO3::isTYPO60OrHigher()) {
-				$fileReference = \TYPO3\CMS\Core\Resource\ResourceFactory::getInstance()->getFileReferenceObject($row['logo']);
+				$fileReference = tx_rnbase_util_TSFAL::getFileReferenceById($row['logo']);
 
 				tx_rnbase::load('tx_rnbase_util_TSFAL');
 				$thumbs = tx_rnbase_util_TSFAL::createThumbnails(array($fileReference));

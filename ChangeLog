@@ -2,6 +2,9 @@
 Änderungen
 ----------
 
+v0.9.1 (??.06.2013)
+ * Support for TYPO3 6.x with FAL
+
 v0.9.0 (12.01.2013)
  * Refactoring in BE module
  * New method isSetBased in ISport
