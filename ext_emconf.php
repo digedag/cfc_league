@@ -15,7 +15,7 @@ $EM_CONF[$_EXTKEY] = array(
 	'description' => 'Umfangreiche Extension zur Verwaltung von Sportvereinen und -wettbewerben. Funktioniert nur mit PHP5! Extensive extension to manage sports clubs and competitions. Requires PHP5! http://cfcleague.sf.net/',
 	'category' => 'module',
 	'shy' => 0,
-	'version' => '0.9.0',
+	'version' => '0.9.1',
 	'dependencies' => 'cms,rn_memento,rn_base',
 	'conflicts' => '',
 	'priority' => '',
@@ -36,8 +36,7 @@ $EM_CONF[$_EXTKEY] = array(
 		'depends' => array(
 			'typo3' => '4.1.0-6.1.99',
 			'php' => '5.0.0-0.0.0',
-			'rn_memento' => '',
-			'rn_base' => '0.12.5-0.0.0',
+			'rn_base' => '0.13.0-0.0.0',
 		),
 		'conflicts' => array(
 		),
