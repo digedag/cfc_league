@@ -37,7 +37,6 @@ class tx_cfcleague_sports_Volleyball extends t3lib_svbase implements tx_cfcleagu
 	 */
 	public function getLeagueTable() {
 		if(t3lib_extMgm::isLoaded('cfc_league_fe')) {
-			// FIXME:
 			return tx_rnbase::makeInstance('tx_cfcleaguefe_table_volleyball_Table');
 		}
 		return null;
@@ -48,7 +47,7 @@ class tx_cfcleague_sports_Volleyball extends t3lib_svbase implements tx_cfcleagu
 	public function getTCAPointSystems() {
 		return array(
 			Array(tx_rnbase_util_Misc::translateLLL('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition.point_system_2'),0),
-//			Array(tx_rnbase_util_Misc::translateLLL('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition.point_system_3_icehockey'),0)
+			Array(tx_rnbase_util_Misc::translateLLL('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition.point_system_3'),1)
 		);
 	}
 	public function getTCALabel() {
