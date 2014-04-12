@@ -94,7 +94,6 @@ class tx_cfcleague_db{
 
     if(!$tce || $data) {
       // Die TCEmain laden
-      require_once(PATH_t3lib.'class.t3lib_tcemain.php');
       $tce = t3lib_div::makeInstance('t3lib_tcemain');
       $tce->stripslashes_values = 0;
       // Wenn wir ein data-Array bekommen verwenden wir das

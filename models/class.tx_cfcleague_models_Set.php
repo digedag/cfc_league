@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2010 Rene Nitzsche (rene@system25.de)
+*  (c) 2010-2014 Rene Nitzsche (rene@system25.de)
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -24,13 +24,13 @@
 
 require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
 
+tx_rnbase::load('tx_rnbase_model_base');
 
 /**
  * Model for a match set.
  */
-class tx_cfcleague_models_Set {
+class tx_cfcleague_models_Set extends tx_rnbase_model_base {
 	protected $p1, $p2, $set;
-	public $record = array();
 	public function __construct($set, $p1=0, $p2=0) {
 		$this->setResult($set, $p1, $p2);
 	}
@@ -73,4 +73,3 @@ if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_lea
 	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/models/class.tx_cfcleague_models_Set.php']);
 }
 
-?>

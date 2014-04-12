@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2007 Rene Nitzsche (rene@system25.de)
+*  (c) 2007-2014 Rene Nitzsche (rene@system25.de)
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -225,7 +225,6 @@ class tx_cfcleague_showItem {
 		global $LANG;
 
 			// Initialize object to work on the image:
-		require_once(PATH_t3lib.'class.t3lib_stdgraphic.php');
 		$imgObj = t3lib_div::makeInstance('t3lib_stdGraphic');
 		$imgObj->init();
 		$imgObj->mayScaleUp = 0;
