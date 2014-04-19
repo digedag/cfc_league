@@ -2,7 +2,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2007-2013 Rene Nitzsche (rene@system25.de)
+ *  (c) 2007-2014 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -65,6 +65,21 @@ class tx_cfcleague_tca_Lookup {
 		$srv = tx_cfcleague_util_ServiceRegistry::getCompetitionService();
 		$config['items'] = $srv->getSports4TCA();
 	}
+	/**
+	 * Liefert die möglichen Spielsysteme.
+	 * Das könnte man noch abhängig von der Sportart machen,
+	 * aber hier reicht es erstmal, wenn wir das über die 
+	 * TCA erweitern können!
+	 * 
+	 * @param $config
+	 * @return array
+	 */
+	public function getFormations(&$config) {
+		tx_rnbase::load('tx_cfcleague_util_ServiceRegistry');
+		$items = $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['formations'];
+		$config['items'] = $items;
+	}
+
 	public function getPointSystems(&$config) {
 		$sports = $config['row']['sports'];
 		if($sports) {

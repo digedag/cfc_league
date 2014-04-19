@@ -54,9 +54,18 @@ tx_cfcleague_util_Misc::registerMatchNote('LLL:EXT:cfc_league/locallang_db.xml:t
 tx_cfcleague_util_Misc::registerMatchNote('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_match_notes.type.changein', '81');
 tx_cfcleague_util_Misc::registerMatchNote('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_match_notes.type.captain', '200');
 
+tx_cfcleague_util_Misc::registerFormation('', '0');
+tx_cfcleague_util_Misc::registerFormation('3-5-2', '1-3-5-2');
+tx_cfcleague_util_Misc::registerFormation('3-4-3', '1-3-4-3');
+tx_cfcleague_util_Misc::registerFormation('4-2-3-1', '1-4-2-3-1');
+tx_cfcleague_util_Misc::registerFormation('4-3-3', '1-4-3-3');
+tx_cfcleague_util_Misc::registerFormation('4-4-2', '1-4-4-2');
+tx_cfcleague_util_Misc::registerFormation('4-5-1', '1-4-5-1');
+tx_cfcleague_util_Misc::registerFormation('5-3-2', '1-5-3-2');
+tx_cfcleague_util_Misc::registerFormation('5-4-1', '1-5-4-1');
+
 
 // Include services
 require_once(t3lib_extMgm::extPath('cfc_league').'services/ext_localconf.php');
 require_once(t3lib_extMgm::extPath('cfc_league').'sports/ext_localconf.php');
 
-?>

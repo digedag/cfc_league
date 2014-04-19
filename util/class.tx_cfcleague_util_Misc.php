@@ -43,8 +43,8 @@ class tx_cfcleague_util_Misc {
 
 	/**
 	 * Register a new matchnote.
-	 * @param string $column
-	 * @param mixed $types commaseparated list of match event uids
+	 * @param string $label
+	 * @param mixed $typeId
 	 */
 	public static function registerMatchNote($label, $typeId) {
 		if(!is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['matchnotetypes']))
@@ -52,9 +52,18 @@ class tx_cfcleague_util_Misc {
 		$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['matchnotetypes'][] = array($label, $typeId);
 //$GLOBALS ['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['matchnotetypes'] = array(
 //			Array('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_match_notes.type.ticker', '100'),
-			
 	}
-
+	/**
+	 * Register a new match formation.
+	 * @param string $label
+	 * @param mixed $formationString
+	 */
+	public static function registerFormation($label, $formationString) {
+		if(!is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['formations']))
+			$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['formations'] = array();
+		$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['formations'][] = array($label, $formationString);
+	}
+	
 	/**
 	 * 
 	 * Prints out the error

@@ -290,16 +290,7 @@ $TCA['tx_cfcleague_games'] = Array (
 			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.system_home',
 			'config' => Array (
 				'type' => 'select',
-				'items' => Array(
-					Array('','0'),
-					Array('3-5-2','1-3-5-2'),
-					Array('3-4-3','1-3-4-3'),
-					Array('4-4-2','1-4-4-2'),
-					Array('4-3-3','1-4-3-3'),
-					Array('4-5-1','1-4-5-1'),
-					Array('5-3-2','1-5-3-2'),
-					Array('5-4-1','1-5-4-1')
-				),
+				'itemsProcFunc' => 'tx_cfcleague_tca_Lookup->getFormations',
 				'default' => 0
 			)
 		),
@@ -308,16 +299,7 @@ $TCA['tx_cfcleague_games'] = Array (
 			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.system_guest',
 			'config' => Array (
 				'type' => 'select',
-				'items' => Array(
-					Array('','0'),
-					Array('3-5-2','1-3-5-2'),
-					Array('3-4-3','1-3-4-3'),
-					Array('4-4-2','1-4-4-2'),
-					Array('4-3-3','1-4-3-3'),
-					Array('4-5-1','1-4-5-1'),
-					Array('5-3-2','1-5-3-2'),
-					Array('5-4-1','1-5-4-1')
-				),
+				'itemsProcFunc' => 'tx_cfcleague_tca_Lookup->getFormations',
 				'default' => 0
 			)
 		),
