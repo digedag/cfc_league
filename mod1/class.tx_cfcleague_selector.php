@@ -70,11 +70,15 @@ class tx_cfcleague_selector{
 		}
 		// Ohne Liga-Array ist eine weitere Verarbeitung sinnlosl
 		if(!count($LEAGUE_MENU['league'])) return 0;
+		// TODO: auf rn_base umstellen
 		$this->LEAGUE_SETTINGS = t3lib_BEfunc::getModuleData(
 			$LEAGUE_MENU,t3lib_div::_GP('SET'),$this->MCONF['name'] // Das ist der Name des Moduls
 		);
-		$menu = t3lib_BEfunc::getFuncMenu(
-			$pid,'SET[league]',$this->LEAGUE_SETTINGS['league'],$LEAGUE_MENU['league']
+
+		$menu = (tx_rnbase_util_TYPO3::isTYPO62OrHigher() && is_array($LEAGUE_MENU['league']) && count($LEAGUE_MENU['league']) == 1) ?
+				$this->buildDummyMenu('SET[league]', $LEAGUE_MENU['league']) :
+				t3lib_BEfunc::getFuncMenu(
+			$pid,'SET[league]',$this->LEAGUE_SETTINGS['league'],$LEAGUE_MENU['league'], 'index.php'
 		);
 		// In den Content einbauen
 		// Zusätzlich noch einen Edit-Link setzen
@@ -84,11 +88,9 @@ class tx_cfcleague_selector{
 			$links .= ' ' . $this->getFormTool()->createLink('&clearCache=1', $pid, '<img'.t3lib_iconWorks::skinImg($GLOBALS['BACK_PATH'],'gfx/clear_all_cache.gif','width="11" height="12"').' title="Statistik-Cache leeren" border="0" alt="" />');
 			$links .= $this->getFormTool()->createNewLink('tx_cfcleague_competition', $pid,'');
 			$menu = '<div class="cfcselector"><div class="selector">' . $menu . '</div><div class="links">' . $links . '</div></div>';
-//			$menu .= '</td><td style="width:90px; padding-left:10px;">' . $link;
-//			// Jetzt noch den Cache-Link
-//			$menu .= ' ' . $this->getFormTool()->createLink('&clearCache=1', $pid, '<img'.t3lib_iconWorks::skinImg($GLOBALS['BACK_PATH'],'gfx/clear_all_cache.gif','width="11" height="12"').' title="Statistik-Cache leeren" border="0" alt="" />');
 		}
 		$content.= $menu;
+
 //		$content.=$this->doc->section('',$this->doc->funcMenu($headerSection,$menu));
 
 		if(t3lib_div::_GP('clearCache') && $this->LEAGUE_SETTINGS['league']) {
@@ -109,6 +111,24 @@ class tx_cfcleague_selector{
 		return $this->LEAGUE_SETTINGS['league'] ? new tx_cfcleague_models_Competition($this->LEAGUE_SETTINGS['league']) :0;
 	}
 
+	private function buildDummyMenu($elementName, $menuItems) {
+		// Ab T3 6.2 wird bei einem Menu-Eintrag keine Selectbox mehr erzeugt.
+		// Also sieht man nicht, wo man sich befindet. Somit wird eine Dummy-Box
+		// benötigt.
+		$options = array();
+		
+		foreach ($menuItems as $value => $label) {
+			$options[] = '<option value="' . htmlspecialchars($value) . '" selected="selected">' . htmlspecialchars($label, ENT_COMPAT, 'UTF-8', FALSE) . '</option>';
+		}
+		return '
+
+				<!-- Function Menu of module -->
+				<select name="' . $elementName . '" >
+					' . implode('
+					', $options) . '
+				</select>
+						';
+	}
 	/**
 	 * Darstellung der Select-Box mit allen Teams des übergebenen Wettbewerbs. Es wird auf das aktuelle Team eingestellt.
 	 * @return die aktuelle Team als Objekt
@@ -226,7 +246,7 @@ class tx_cfcleague_selector{
 				$entries[$round['round']] = $round['round_name'] . ( intval($round['max_status']) ? ' *' : '' );
 		}
 
-		$data = $this->getFormTool()->showMenu($pid, 'round',$this->MCONF['name'], $entries);
+		$data = $this->getFormTool()->showMenu($pid, 'round',$this->MCONF['name'], $entries, 'index.php');
 		// In den Content einbauen
 		// Spielrunden sind keine Objekt, die bearbeitet werden können
 		if($data['menu']) {
@@ -401,7 +421,7 @@ class tx_cfcleague_selector{
    * Liefert die Ligen der aktuellen Seite.
    * @return ein Array mit Rows
    */
-  function findLeagues($pid){
+  private function findLeagues($pid){
     return tx_cfcleague_db::queryDB('*','pid="'.$pid.'"','tx_cfcleague_competition','','sorting');
   }
 

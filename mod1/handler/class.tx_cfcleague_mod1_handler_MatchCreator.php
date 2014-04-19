@@ -57,7 +57,7 @@ class tx_cfcleague_mod1_handler_MatchCreator {
 		$items = array();
 		for($i=1; $i<33; $i++)
 			$items[$i] = $i .($i==1 ? ' ###LABEL_MATCH###' : ' ###LABEL_MATCHES###' );
-		$menu = $mod->getFormTool()->showMenu($mod->getPid(), 'matchs3create', $mod->getName(), $items);
+		$menu = $mod->getFormTool()->showMenu($mod->getPid(), 'matchs3create', $mod->getName(), $items, 'index.php');
 		$content .= $menu['menu'];
 		$maxMatches = $menu['value'];
 

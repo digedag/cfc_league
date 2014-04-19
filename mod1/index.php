@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2007 Rene Nitzsche <rene@system25.de>
+*  (c) 2007-2014 Rene Nitzsche <rene@system25.de>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -29,11 +29,15 @@
  */
 
 unset($MCONF);
+
+
 require_once('conf.php');
 require_once($BACK_PATH.'init.php');
-require_once($BACK_PATH.'template.php');
 
 require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
+tx_rnbase::load('tx_rnbase_util_TYPO3');
+if(!tx_rnbase_util_TYPO3::isTYPO62OrHigher())
+	require_once(PATH_typo3.'template.php');
 
 $LANG->includeLLFile('EXT:cfc_league/mod1/locallang.xml');
 $BE_USER->modAccess($MCONF,1);	// This checks permissions and exits if the users has no permission for entry.
@@ -66,6 +70,9 @@ class  tx_cfcleague_module1 extends tx_rnbase_mod_BaseModule {
 	
 	protected function getFormTag() {
 		return '<form action="index.php?id=' . $this->getPid() . '" method="POST" name="editform" id="editform">';
+	}
+	protected function getModuleScript() {
+		return 'index.php';
 	}
 }
 

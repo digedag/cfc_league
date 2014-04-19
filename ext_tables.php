@@ -301,15 +301,9 @@ if(t3lib_extMgm::isLoaded('rgmediaimages')) {
 }
 
 if (TYPO3_MODE=='BE')	{
-		
+
   t3lib_extMgm::addModule('web','txcfcleagueM1','',t3lib_extMgm::extPath($_EXTKEY).'mod1/');
 
-//'', ''
-
-//  t3lib_extMgm::insertModuleFunction('web_txcfcleagueM1','tx_cfcleague_match_edit',
-//		t3lib_extMgm::extPath($_EXTKEY).'mod1/class.tx_cfcleague_match_edit.php',
-//		'LLL:EXT:cfc_league/mod1/locallang.xml:edit_games'
-//	);
   t3lib_extMgm::insertModuleFunction('web_txcfcleagueM1','tx_cfcleague_mod1_modCompetitions',
 		t3lib_extMgm::extPath($_EXTKEY).'mod1/class.tx_cfcleague_mod1_modCompetitions.php',
 		'LLL:EXT:cfc_league/mod1/locallang.xml:mod_competition'

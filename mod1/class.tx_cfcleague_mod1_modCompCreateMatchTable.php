@@ -85,7 +85,10 @@ class tx_cfcleague_mod1_modCompCreateMatchTable {
 		}
 
 		// Hier zwischen Automatisch und Manuell unterscheiden
-		$menu = $this->getFormTool()->showMenu($this->getModule()->getPid(), 't3s_mcmode', $this->getModule()->getName(), array(0=>'Auto','1'=>'Manual'));
+		$menu = $this->getFormTool()->showMenu(
+				$this->getModule()->getPid(), 't3s_mcmode', 
+				$this->getModule()->getName(), 
+				array(0=>'Auto','1'=>'Manual'), 'index.php');
 		$content .= $menu['menu'];
 		$mode = $menu['value'];
 		$content .= '<br>';

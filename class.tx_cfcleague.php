@@ -85,7 +85,6 @@ class tx_cfcleague_handleDataInput{
 			$team = t3lib_div::trimExplode('|', $PA['row'][$column]);
 			$team = $team[0];
 			if($tcaFieldConf['type'] == 'db') {
-				require_once (PATH_t3lib.'class.t3lib_loaddbgroup.php');
 				$dbAnalysis = t3lib_div::makeInstance('t3lib_loadDBGroup');
 				$dbAnalysis->registerNonTableValues=0;
 				$dbAnalysis->start($team,$tcaFieldConf['allowed'], '', 0, $tablename, $tcaFieldConf);
