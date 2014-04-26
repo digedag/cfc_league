@@ -95,7 +95,7 @@ class tx_cfcleague_util_Generator {
 		$option_halfseries = isset($options['halfseries']) ? intval($options['halfseries']) : 0;
 		$option_nomatch = isset($options['nomatch']) ? intval($options['nomatch']) : 0;
 		// Alle Elemente einen Indexplatz hochschieben, damit die Team-Nr stimmt.
-		array_unshift($teams,0);
+		array_unshift($teams, 0);
 		$matchCnt = 0; // ID des Spieldatensatzes. Wird für jedes angelegte Spiel gezählt
 		// Spielnummer. Spielfreie Spiele werden nicht gezählt
 		$matchCnt2 = isset($options['firstmatchnumber']) ? intval($options['firstmatchnumber']) : 0; 
@@ -108,7 +108,7 @@ class tx_cfcleague_util_Generator {
 			foreach($table as $day => $matches) {
 				$dayArr = array(); // Hier kommen die Spiele rein
 				foreach($matches as $k => $match) {
-					$teamIds = explode('-',$match);
+					$teamIds = explode('-', $match);
 					// Ist es ein spielfreies Spiel
 					$isNoMatch = $teams[$teamIds[0]] == $option_nomatch || $teams[$teamIds[1]] == $option_nomatch;
 					$dayArr[] = new tx_cfcleague_util_GeneratorMatch(++$matchCnt, $isNoMatch ? '': ++$matchCnt2, $teams[$teamIds[0]], $teams[$teamIds[1]], $isNoMatch);
@@ -121,7 +121,7 @@ class tx_cfcleague_util_Generator {
 			foreach($table as $day => $matches) {
 				$dayArr = array(); // Hier kommen die Spiele rein
 				foreach($matches as $k => $match) {
-					$teamIds = explode('-',$match);
+					$teamIds = explode('-', $match);
 					$isNoMatch = $teams[$teamIds[0]] == $option_nomatch || $teams[$teamIds[1]] == $option_nomatch;
 					$dayArr[] = new tx_cfcleague_util_GeneratorMatch(++$matchCnt, $isNoMatch ? '': ++$matchCnt2, $teams[$teamIds[1]], $teams[$teamIds[0]], $isNoMatch);
 //					$dayArr[] = new Match(++$matchCnt, $teams[$teamIds[1]], $teams[$teamIds[0]]);
@@ -153,7 +153,7 @@ class tx_cfcleague_util_Generator {
 			}
 			// Stimmen die Indizes?
 			foreach($matches as $k => $match) {
-				$matchArr = explode('-',$match);
+				$matchArr = explode('-', $match);
 				if(count($matchArr) != 2)
 					$warnings[] = sprintf($LANG->getLL('msg_wrongmatch_syntax'), $day, $match);
 				if(intval($matchArr[0]) < 1 || intval($matchArr[0]) > $teamCnt)
@@ -174,9 +174,9 @@ class tx_cfcleague_util_Generator {
 	function splitTableString($table) {
 		$ret = array();
 		if(!strlen(trim($table))) return $ret; // Kein String gesetzt
-		$days = explode('|',$table);
+		$days = explode('|', $table);
 		foreach($days as $key => $matches) {
-			$ret[$key+1] = explode(',',$matches);
+			$ret[$key+1] = explode(',', $matches);
 		}
 		return $ret;
 	}

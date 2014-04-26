@@ -46,7 +46,7 @@ class tx_cfcleague_profile {
    *
    */
   function refresh() {
-    $this->record = t3lib_BEfunc::getRecord(TABLE_PROFILES,$this->uid);
+    $this->record = t3lib_BEfunc::getRecord(TABLE_PROFILES, $this->uid);
   }
 
   /**

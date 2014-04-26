@@ -46,7 +46,7 @@ class tx_cfcleague_mod1_subAddProfiles {
 		
 		if($teamInfo->isTeamFull()) {
 			// Kann nix mehr angelegt werden
-			return $this->mod->doc->section('Message:',$GLOBALS['LANG']->getLL('msg_maxPlayers'),0,1,ICON_WARN);
+			return $this->mod->doc->section('Message:', $GLOBALS['LANG']->getLL('msg_maxPlayers'), 0, 1, ICON_WARN);
 		}
 
 		// ggf. Daten im Request verarbeiten
@@ -90,7 +90,7 @@ class tx_cfcleague_mod1_subAddProfiles {
 		$tableForm.= $searcher->getResultList();
 		if($searcher->getSize()) {
 			tx_rnbase::load('tx_cfcleague_mod1_modTeamsProfileCreate');
-			$tableForm .= $this->getFormTool()->createSelectSingleByArray('profileType', '',tx_cfcleague_mod1_modTeamsProfileCreate::getProfileTypeArray());
+			$tableForm .= $this->getFormTool()->createSelectSingleByArray('profileType', '', tx_cfcleague_mod1_modTeamsProfileCreate::getProfileTypeArray());
 			// Button für Zuordnung
 			$tableForm .= $this->getFormTool()->createSubmit('profile2team', $GLOBALS['LANG']->getLL('label_join_profiles'));
 		}
@@ -102,11 +102,11 @@ class tx_cfcleague_mod1_subAddProfiles {
 		$tableLayout = Array (
 			'table' => Array('<table class="typo3-dblist" width="100%" cellspacing="0" cellpadding="0" border="0">', '</table><br/>'),
 			'defRow' => Array ( // Formate für alle Zeilen
-				'defCol' => Array('<td valign="top" style="padding:0 5px;">','</td>') // Format für jede Spalte in jeder Zeile
+				'defCol' => Array('<td valign="top" style="padding:0 5px;">', '</td>') // Format für jede Spalte in jeder Zeile
 			),
 		);
 
-		$content = $this->mod->getDoc()->table(Array(Array($tableForm,$teamTable)), $tableLayout);
+		$content = $this->mod->getDoc()->table(Array(Array($tableForm, $teamTable)), $tableLayout);
 
 		return $content;
 	}
@@ -118,22 +118,22 @@ class tx_cfcleague_mod1_subAddProfiles {
 		global $LANG;
 
 		if(!tx_cfcleague_mod1_modTeamsProfileCreate::isProfilePage($this->mod->getPid())) {
-			$content = $this->mod->getDoc()->section('Message:',$LANG->getLL('msg_pageNotAllowed'),0,1,ICON_WARN);
+			$content = $this->mod->getDoc()->section('Message:', $LANG->getLL('msg_pageNotAllowed'), 0, 1, ICON_WARN);
 			return $content;
 		}
-		$arr = Array(Array($LANG->getLL('label_firstname'),$LANG->getLL('label_lastname'),'&nbsp;','&nbsp;'));
+		$arr = Array(Array($LANG->getLL('label_firstname'), $LANG->getLL('label_lastname'), '&nbsp;', '&nbsp;'));
 		$row = array();
 		$i = 1;
-		$row[] = $this->getFormTool()->createTxtInput('data[tx_cfcleague_profiles][NEW'.$i.'][first_name]', '',10);
-		$row[] = $this->getFormTool()->createTxtInput('data[tx_cfcleague_profiles][NEW'.$i.'][last_name]', '',10);
-		$row[] = $this->getFormTool()->createSelectSingleByArray('data[tx_cfcleague_profiles][NEW'.$i.'][type]', '',tx_cfcleague_mod1_modTeamsProfileCreate::getProfileTypeArray());
+		$row[] = $this->getFormTool()->createTxtInput('data[tx_cfcleague_profiles][NEW'.$i.'][first_name]', '', 10);
+		$row[] = $this->getFormTool()->createTxtInput('data[tx_cfcleague_profiles][NEW'.$i.'][last_name]', '', 10);
+		$row[] = $this->getFormTool()->createSelectSingleByArray('data[tx_cfcleague_profiles][NEW'.$i.'][type]', '', tx_cfcleague_mod1_modTeamsProfileCreate::getProfileTypeArray());
 		$row[] = $this->getFormTool()->createSubmit('newprofile2team', $GLOBALS['LANG']->getLL('btn_create'), $GLOBALS['LANG']->getLL('msg_CreateProfiles')).
 			$this->getFormTool()->createHidden('data[tx_cfcleague_profiles][NEW'.$i.'][pid]', $this->mod->getPid());
 		$arr[] = $row;
 		$formTable = $this->mod->getDoc()->table($arr);
 
 		$out = $this->mod->getDoc()->spacer(10);
-		$out .= $this->mod->getDoc()->section($LANG->getLL('label_create_profile4team'),$formTable,0,1);
+		$out .= $this->mod->getDoc()->section($LANG->getLL('label_create_profile4team'), $formTable, 0, 1);
 		return $out;
 	}
 	/**
@@ -201,7 +201,7 @@ class tx_cfcleague_mod1_subAddProfiles {
 				}
 			}
 		}
-		return (strlen($out)) ? $this->mod->getDoc()->section($GLOBALS['LANG']->getLL('message').':',$out, 0, 1,ICON_INFO) : '';
+		return (strlen($out)) ? $this->mod->getDoc()->section($GLOBALS['LANG']->getLL('message').':', $out, 0, 1, ICON_INFO) : '';
 	}
 	/**
 	 * Fügt Personen einem Team hinzu
@@ -212,7 +212,7 @@ class tx_cfcleague_mod1_subAddProfiles {
 	 */
 	private function addProfiles2Team(&$currTeam, $profileCol, $entryUids) {
 		tx_rnbase::load('tx_cfcleague_util_Misc');
-		$playerUids = implode(',',tx_cfcleague_util_Misc::mergeArrays(t3lib_div::intExplode(',',$currTeam->record[$profileCol]), $entryUids));
+		$playerUids = implode(',', tx_cfcleague_util_Misc::mergeArrays(t3lib_div::intExplode(',', $currTeam->record[$profileCol]), $entryUids));
 		$data['tx_cfcleague_teams'][$currTeam->record['uid']][$profileCol] = $playerUids;
 				
 		reset($data);

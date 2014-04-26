@@ -52,9 +52,9 @@ class tx_cfcleague_tests_modelsSets_testcase extends tx_phpunit_testcase {
 	}
 	public function getStrings() {
 		return array(
-			array('20:11;10:8', 2, array(array(20,11), array(10,8))),
-			array('20:11', 1, array(array(20,11))),
-			array('b:11', 1, array(array(0,11))),
+			array('20:11;10:8', 2, array(array(20, 11), array(10, 8))),
+			array('20:11', 1, array(array(20, 11))),
+			array('b:11', 1, array(array(0, 11))),
 		);
 	}
 }

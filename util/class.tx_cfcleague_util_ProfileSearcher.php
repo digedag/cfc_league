@@ -47,7 +47,7 @@ class tx_cfcleague_util_ProfileSearcher {
     $this->data = t3lib_div::_GP('searchdata');
 
     if(!isset($options['nopersist']))
-			$this->SEARCH_SETTINGS = t3lib_BEfunc::getModuleData(array ('searchtermProfile' => ''),$this->data,$this->mod->MCONF['name'] );
+			$this->SEARCH_SETTINGS = t3lib_BEfunc::getModuleData(array ('searchtermProfile' => ''), $this->data, $this->mod->MCONF['name'] );
 		else
 			$this->SEARCH_SETTINGS = $this->data;
 	}
@@ -82,7 +82,7 @@ class tx_cfcleague_util_ProfileSearcher {
     	}
     	else {
     		// Suchbefriff zu kurz
-		    $content .= $this->mod->doc->section('Hinweis:','Der Suchbegriff sollte mindestens drei Zeichen lang sein', 0, 1,ICON_INFO);
+		    $content .= $this->mod->doc->section('Hinweis:', 'Der Suchbegriff sollte mindestens drei Zeichen lang sein', 0, 1, ICON_INFO);
     	}
     }
 		return $content;

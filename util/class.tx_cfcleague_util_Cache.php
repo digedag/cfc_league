@@ -33,7 +33,7 @@ class tx_cfcleague_util_Cache {
    * @param string $key
    * @param mixed $value
    */
-  public static function add($key,$value){
+  public static function add($key, $value){
   	self::$cache[$key] = $value;
   }
   /**

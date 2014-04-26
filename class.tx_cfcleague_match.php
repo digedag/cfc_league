@@ -49,7 +49,7 @@ class tx_cfcleague_match {
   }
 
   function reset() {
-    $this->record = t3lib_BEfunc::getRecord(TABLE_GAMES,$this->uid);
+    $this->record = t3lib_BEfunc::getRecord(TABLE_GAMES, $this->uid);
   }
   /**
    * Liefert die vorhandenen Tickermeldungen zu diesem Spiel.
@@ -63,7 +63,7 @@ class tx_cfcleague_match {
     # Die UID der Liga setzen
     $where = 'game="'.$this->uid.'"';
 
-    return tx_cfcleague_db::queryDB($what,$where,
+    return tx_cfcleague_db::queryDB($what, $where,
               'tx_cfcleague_match_notes', '', $orderBy, 0, $limit);
 
   }
@@ -77,8 +77,8 @@ class tx_cfcleague_match {
 
     if(!is_array($this->playerNamesHome)){
       $this->playerNamesHome = tx_cfcleague_team::retrievePlayers(
-          $this->mergeIdStrings($this->record['players_home'],$this->record['substitutes_home']), 
-          $firstEmpty,'1',$appendUnknown);
+          $this->mergeIdStrings($this->record['players_home'], $this->record['substitutes_home']), 
+          $firstEmpty, '1', $appendUnknown);
     }
     return $this->playerNamesHome;
 
@@ -93,8 +93,8 @@ class tx_cfcleague_match {
 
     if(!is_array($this->playerNamesGuest)){
       $this->playerNamesGuest = tx_cfcleague_team::retrievePlayers(
-          $this->mergeIdStrings($this->record['players_guest'],$this->record['substitutes_guest']), 
-          $firstEmpty,'1',$appendUnknown);
+          $this->mergeIdStrings($this->record['players_guest'], $this->record['substitutes_guest']), 
+          $firstEmpty, '1', $appendUnknown);
     }
     return $this->playerNamesGuest;
 
@@ -115,7 +115,7 @@ class tx_cfcleague_match {
   	$where .= ' OR FIND_IN_SET(' . $profileUID . ', substitutes_home) ';
   	$where .= ' OR FIND_IN_SET(' . $profileUID . ', substitutes_guest) ';
   	$rows = tx_cfcleague_db::queryDB('*', $where,
-              'tx_cfcleague_games','','',0);
+              'tx_cfcleague_games', '', '', 0);
   	return $rows;
   }
   /**
@@ -127,7 +127,7 @@ class tx_cfcleague_match {
   	$where = 'FIND_IN_SET(' . $profileUID . ', player_home) ';
   	$where .= ' OR FIND_IN_SET(' . $profileUID . ', player_guest) ';
   	$rows = tx_cfcleague_db::queryDB('*', $where,
-              'tx_cfcleague_match_notes','','',0);
+              'tx_cfcleague_match_notes', '', '', 0);
   	return $rows;
   }
   
@@ -137,9 +137,9 @@ class tx_cfcleague_match {
    * Merged zwei ID-Strings zu einem gemeinsamen ID-String
    */
   function mergeIdStrings($str1, $str2){
-    $arr = t3lib_div::intExplode(',',$str1);
-    $arr = array_merge($arr,t3lib_div::intExplode(',',$str2));
-    return implode(',',$arr);
+    $arr = t3lib_div::intExplode(',', $str1);
+    $arr = array_merge($arr, t3lib_div::intExplode(',', $str2));
+    return implode(',', $arr);
   }
 
 

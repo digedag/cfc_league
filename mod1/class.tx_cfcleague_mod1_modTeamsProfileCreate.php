@@ -70,21 +70,21 @@ class tx_cfcleague_mod1_modTeamsProfileCreate {
 		global $LANG;
 
 		if(!self::isProfilePage($this->pid)) {
-			$content = $this->doc->section('Message:',$LANG->getLL('msg_pageNotAllowed'),0,1,ICON_WARN);
+			$content = $this->doc->section('Message:', $LANG->getLL('msg_pageNotAllowed'), 0, 1, ICON_WARN);
 			return $content;
 		}
 
 		if (is_array($data['tx_cfcleague_profiles'])) {
-			$content .= $this->createProfiles($data,$team, $teamInfo);
+			$content .= $this->createProfiles($data, $team, $teamInfo);
 			$team->refresh();
 		}
 
 		if($teamInfo->isTeamFull()) {
 			// Kann nix mehr angelegt werden
-			$content .= $this->doc->section('Message:',$LANG->getLL('msg_maxPlayers'),0,1,ICON_WARN);
+			$content .= $this->doc->section('Message:', $LANG->getLL('msg_maxPlayers'), 0, 1, ICON_WARN);
 		}
 		else {
-			$content .= $this->doc->section('Info:',$LANG->getLL('msg_checkPage') . ': <b>' . t3lib_BEfunc::getRecordPath($this->pid,'',0) . '</b>' ,0,1,ICON_WARN);
+			$content .= $this->doc->section('Info:', $LANG->getLL('msg_checkPage') . ': <b>' . t3lib_BEfunc::getRecordPath($this->pid, '', 0) . '</b>', 0, 1, ICON_WARN);
 			$content .= $teamInfo->getInfoTable($this->doc);
 			// Wir zeigen 15 Zeilen mit Eingabefeldern
 			$content .= $this->prepareInputTable($team, $teamInfo);
@@ -108,14 +108,14 @@ class tx_cfcleague_mod1_modTeamsProfileCreate {
 		// Es werden zwei Tabellen erstellt
 		$tableProfiles = $teamInfo->getTeamTable($this->doc);
 
-		$arr = Array(Array('&nbsp;',$LANG->getLL('label_firstname'),$LANG->getLL('label_lastname'),'&nbsp;'));
+		$arr = Array(Array('&nbsp;', $LANG->getLL('label_firstname'), $LANG->getLL('label_lastname'), '&nbsp;'));
 		$maxFields = count($team->getPlayerNames()) > 5 ? 5 : 15;
 		for($i=0; $i < $maxFields; $i++){
 			$row = array();
 			$row[] = $i + 1;
-			$row[] = $this->formTool->createTxtInput('data[tx_cfcleague_profiles][NEW'.$i.'][first_name]', '',10);
-			$row[] = $this->formTool->createTxtInput('data[tx_cfcleague_profiles][NEW'.$i.'][last_name]', '',10);
-			$row[] = $this->formTool->createSelectSingleByArray('data[tx_cfcleague_profiles][NEW'.$i.'][type]', '',self::getProfileTypeArray()) .
+			$row[] = $this->formTool->createTxtInput('data[tx_cfcleague_profiles][NEW'.$i.'][first_name]', '', 10);
+			$row[] = $this->formTool->createTxtInput('data[tx_cfcleague_profiles][NEW'.$i.'][last_name]', '', 10);
+			$row[] = $this->formTool->createSelectSingleByArray('data[tx_cfcleague_profiles][NEW'.$i.'][type]', '', self::getProfileTypeArray()) .
 			$this->formTool->createHidden('data[tx_cfcleague_profiles][NEW'.$i.'][pid]', $this->pid);
 			$arr[] = $row;
 		}
@@ -123,11 +123,11 @@ class tx_cfcleague_mod1_modTeamsProfileCreate {
 		$tableLayout = Array (
 			'table' => Array('<table class="typo3-dblist" width="100%" cellspacing="0" cellpadding="0" border="0">', '</table><br/>'),
 			'defRow' => Array ( // Formate für alle Zeilen
-				'defCol' => Array('<td valign="top" style="padding:0 5px;">','</td>') // Format für jede Spalte in jeder Zeile
+				'defCol' => Array('<td valign="top" style="padding:0 5px;">', '</td>') // Format für jede Spalte in jeder Zeile
 			),
 		);
 
-		$content .= $this->doc->table(Array(Array($tableForm,$tableProfiles)), $tableLayout);
+		$content .= $this->doc->table(Array(Array($tableForm, $tableProfiles)), $tableLayout);
 		return $content;
 	}
 
@@ -201,13 +201,13 @@ class tx_cfcleague_mod1_modTeamsProfileCreate {
 		tx_rnbase::load('tx_cfcleague_util_Misc');
     // Die IDs der Trainer, Spieler und Betreuer mergen
     if(count($coachIds)) {
-      $data['tx_cfcleague_teams'][$team->record['uid']]['coaches'] = implode(',',tx_cfcleague_util_Misc::mergeArrays(t3lib_div::intExplode(',',$team->record['coaches']), $coachIds));
+      $data['tx_cfcleague_teams'][$team->record['uid']]['coaches'] = implode(',', tx_cfcleague_util_Misc::mergeArrays(t3lib_div::intExplode(',', $team->record['coaches']), $coachIds));
     }
     if(count($playerIds)) {
-      $data['tx_cfcleague_teams'][$team->record['uid']]['players'] = implode(',',tx_cfcleague_util_Misc::mergeArrays(t3lib_div::intExplode(',',$team->record['players']), $playerIds));
+      $data['tx_cfcleague_teams'][$team->record['uid']]['players'] = implode(',', tx_cfcleague_util_Misc::mergeArrays(t3lib_div::intExplode(',', $team->record['players']), $playerIds));
     }
     if(count($supportIds)) {
-      $data['tx_cfcleague_teams'][$team->record['uid']]['supporters'] = implode(',',tx_cfcleague_util_Misc::mergeArrays(t3lib_div::intExplode(',',$team->record['supporters']), $supportIds));
+      $data['tx_cfcleague_teams'][$team->record['uid']]['supporters'] = implode(',', tx_cfcleague_util_Misc::mergeArrays(t3lib_div::intExplode(',', $team->record['supporters']), $supportIds));
     }
 
 //    t3lib_div::debug($data, 'tx_cfcleague_profile_create');
@@ -223,7 +223,7 @@ class tx_cfcleague_mod1_modTeamsProfileCreate {
 
     if($warnings) {
       $content .= '<b>'. $LANG->getLL('msg_profiles_warnings'). '</b><br><ul><li>';
-      $content .= implode('<li>',$warnings);
+      $content .= implode('<li>', $warnings);
       $content .= '</ul>';
     }
     return $content;
@@ -245,7 +245,7 @@ class tx_cfcleague_mod1_modTeamsProfileCreate {
     
 //    t3lib_div::debug($where, 'WHERE');
 
-    $rows = tx_cfcleague_db::queryDB($what,$where,$from,'','',0);
+    $rows = tx_cfcleague_db::queryDB($what, $where, $from, '', '', 0);
 
     return count($rows) > 1 ? 0 : $rows;
   }

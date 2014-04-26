@@ -47,9 +47,9 @@ class tx_cfcleague_db{
     $where .= t3lib_BEfunc::deleteClause($tableName);
 
     if($debug) {
-      $sql = $GLOBALS['TYPO3_DB']->SELECTquery($what,$fromClause,$where,$groupBy,$orderBy);
+      $sql = $GLOBALS['TYPO3_DB']->SELECTquery($what, $fromClause, $where, $groupBy, $orderBy);
       tx_rnbase_util_Debug::debug($sql, 'SQL (tx_cfcleague_db)');
-      tx_rnbase_util_Debug::debug(array($what,$from,$where), 'Params (tx_cfcleague_db)');
+      tx_rnbase_util_Debug::debug(array($what, $from, $where), 'Params (tx_cfcleague_db)');
     }
 
     $res = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
@@ -68,7 +68,7 @@ class tx_cfcleague_db{
     $GLOBALS['TYPO3_DB']->sql_free_result($res);
 
     if($debug)
-      tx_rnbase_util_Debug::debug(count($rows),'Rows retrieved (tx_cfcleague_db) Time: ' . (microtime(true) - $time) . 's');
+      tx_rnbase_util_Debug::debug(count($rows), 'Rows retrieved (tx_cfcleague_db) Time: ' . (microtime(true) - $time) . 's');
 
     return $rows;
   }
@@ -81,7 +81,7 @@ class tx_cfcleague_db{
    */
   function updateDB($table, $uid, $dataArr){
     $tce =& tx_cfcleague_db::getTCEmain();
-    $tce->updateDB($table,$uid,$dataArr);
+    $tce->updateDB($table, $uid, $dataArr);
   }
 
 
@@ -97,7 +97,7 @@ class tx_cfcleague_db{
       $tce = t3lib_div::makeInstance('t3lib_tcemain');
       $tce->stripslashes_values = 0;
       // Wenn wir ein data-Array bekommen verwenden wir das
-      $tce->start($data ? $data : Array(),Array());
+      $tce->start($data ? $data : Array(), Array());
 
       // set default TCA values specific for the user
       $TCAdefaultOverride = $GLOBALS['BE_USER']->getTSConfigProp('TCAdefaults');
@@ -105,7 +105,7 @@ class tx_cfcleague_db{
         $tce->setDefaultsFromUserTS($TCAdefaultOverride);
       }
 
-//      t3lib_div::debug('NEW TCEmain instance created','cfcleague_db');
+//      t3lib_div::debug('NEW TCEmain instance created', 'cfcleague_db');
     }
     return $tce;
   }
@@ -127,8 +127,8 @@ class tx_cfcleague_db{
                          (strlen(trim($clause)) ? ' AND '.$clause : '')
                       );
       if ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
-        t3lib_BEfunc::workspaceOL('pages',$row);
-        t3lib_BEfunc::fixVersioningPid('pages',$row);
+        t3lib_BEfunc::workspaceOL('pages', $row);
+        t3lib_BEfunc::fixVersioningPid('pages', $row);
 
         $uid = $row['pid'];
         $output[] = $uid;

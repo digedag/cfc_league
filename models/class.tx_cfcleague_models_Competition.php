@@ -71,7 +71,7 @@ class tx_cfcleague_models_Competition extends tx_rnbase_model_base {
 			$scope = intval($scope);
 			if($scope) {
 				// Feststellen wann die Hinrunde endet: Anz Teams - 1
-				$round = count(t3lib_div::intExplode(',',$this->record['teams']));
+				$round = count(t3lib_div::intExplode(',', $this->record['teams']));
 				$round = ($round) ? $round - 1 : $round;
 			}
 			// Check if data is already cached
@@ -100,7 +100,7 @@ class tx_cfcleague_models_Competition extends tx_rnbase_model_base {
 				$options['wrapperclass'] = 'tx_cfcleaguefe_models_match';
 				// Issue 1880237: Return matches sorted by round
 				$options['orderby'] = 'round, date';
-				$this->matchesByState[$status . '_' . $scope] = tx_rnbase_util_DB::doSelect($what,'tx_cfcleague_games',$options, 0);
+				$this->matchesByState[$status . '_' . $scope] = tx_rnbase_util_DB::doSelect($what, 'tx_cfcleague_games', $options, 0);
 			}
 			return $this->matchesByState[$status . '_' . $scope];
 		}
@@ -241,8 +241,8 @@ class tx_cfcleague_models_Competition extends tx_rnbase_model_base {
 			$where .= ' AND t1.dummy = 0 AND t2.dummy = 0 ';
 		}
 
-		return tx_cfcleague_db::queryDB($what,$where, 
-				$from,'','',0);
+		return tx_cfcleague_db::queryDB($what, $where, 
+				$from, '', '', 0);
 
 /*
 SELECT tx_cfcleague_games.uid, t1.name, t2.name, goals_home_1,goals_guest_1 
@@ -343,7 +343,7 @@ $res = $TYPO3_DB->exec_SELECTquery(
 	 */
 	public function getGroup() {
 		tx_rnbase::load('tx_cfcleague_models_Group');
-		$groupIds = t3lib_div::intExplode(',',$this->record['agegroup']);
+		$groupIds = t3lib_div::intExplode(',', $this->record['agegroup']);
 		return count($groupIds) ? tx_cfcleague_models_Group::getInstance($groupIds[0]) : false;
 	}
 	/**
@@ -353,7 +353,7 @@ $res = $TYPO3_DB->exec_SELECTquery(
 	 */
 	public function getFirstGroupUid() {
 		tx_rnbase::load('tx_cfcleague_models_Group');
-		$groupIds = t3lib_div::intExplode(',',$this->record['agegroup']);
+		$groupIds = t3lib_div::intExplode(',', $this->record['agegroup']);
 		return count($groupIds) ? $groupIds[0] : 0;
 	}
 	/**
@@ -363,7 +363,7 @@ $res = $TYPO3_DB->exec_SELECTquery(
 	 */
 	public function getGroups() {
 		tx_rnbase::load('tx_cfcleaguefe_models_group');
-		$groupIds = t3lib_div::intExplode(',',$this->record['agegroup']);
+		$groupIds = t3lib_div::intExplode(',', $this->record['agegroup']);
 		$ret = array();
 		foreach($groupIds As $groupId) {
 			$ret[] = tx_cfcleaguefe_models_group::getInstance($groupId);
@@ -382,7 +382,7 @@ $res = $TYPO3_DB->exec_SELECTquery(
 				$options['where'] .= ' AND dummy = 0  ';
 			$options['wrapperclass'] = 'tx_cfcleaguefe_models_team';
 			$options['orderby'] = 'sorting';
-			$this->teams = tx_rnbase_util_DB::doSelect('*','tx_cfcleague_teams',$options, 0);
+			$this->teams = tx_rnbase_util_DB::doSelect('*', 'tx_cfcleague_teams', $options, 0);
 		}
 		return $this->teams;
 	}
@@ -392,7 +392,7 @@ $res = $TYPO3_DB->exec_SELECTquery(
 	 * @return array[int]
 	 */
 	function getTeamIds() {
-		return t3lib_div::intExplode(',',$this->record['teams']);
+		return t3lib_div::intExplode(',', $this->record['teams']);
 	}
 	/**
 	 * Liefert den Generation-String für die Liga
@@ -456,8 +456,8 @@ $res = $TYPO3_DB->exec_SELECTquery(
     SELECT * FROM tx_cfcleague_competition WHERE uid IN ($uid)
     */
 
-    return tx_rnbase_util_DB::queryDB('*','tx_cfcleague_competition',$where,
-              '','sorting','tx_cfcleaguefe_models_competition',0);
+    return tx_rnbase_util_DB::queryDB('*', 'tx_cfcleague_competition', $where,
+              '', 'sorting', 'tx_cfcleaguefe_models_competition', 0);
   }
 
   /**
@@ -469,12 +469,12 @@ $res = $TYPO3_DB->exec_SELECTquery(
     if(!$str) return 0;
 
     $ret = array();
-    $arr = t3lib_div::trimExplode('|',$str);
+    $arr = t3lib_div::trimExplode('|', $str);
     foreach($arr As $item) {
       // Jedes Item splitten
-      $mark = t3lib_div::trimExplode(';',$item);
-      $positions = t3lib_div::intExplode(',',$mark[0]);
-      $comments = t3lib_div::trimExplode(',',$mark[1]);
+      $mark = t3lib_div::trimExplode(';', $item);
+      $positions = t3lib_div::intExplode(',', $mark[0]);
+      $comments = t3lib_div::trimExplode(',', $mark[1]);
       // Jetzt das Ergebnisarray aufbauen
       foreach($positions As $position) {
         $ret[$position] = Array($comments[0], $comments[1]);
@@ -493,7 +493,7 @@ $res = $TYPO3_DB->exec_SELECTquery(
 			$options['where'] = 'competition="'.$this->uid.'" ';
 			$options['wrapperclass'] = 'tx_cfcleague_models_CompetitionPenalty';
 
-			$this->penalties = tx_rnbase_util_DB::doSelect('*','tx_cfcleague_competition_penalty',$options);
+			$this->penalties = tx_rnbase_util_DB::doSelect('*', 'tx_cfcleague_competition_penalty', $options);
 		}
 		return $this->penalties;
 	}

@@ -22,7 +22,7 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-$GLOBALS['BE_USER']->modAccess($MCONF,1);
+$GLOBALS['BE_USER']->modAccess($MCONF, 1);
 
 tx_rnbase::load('tx_rnbase_util_TYPO3');
 tx_rnbase::load('tx_rnbase_mod_BaseModFunc');
@@ -57,7 +57,7 @@ class tx_cfcleague_mod1_modClubs extends tx_rnbase_mod_BaseModFunc {
 		// Zuerst holen wir alle Tabs, erstellen die MenuItems und werten den Request aus
 		$tabItems = array();
 		$tabItems[] = tx_rnbase::makeInstance('tx_cfcleague_mod1_handler_ClubStadiums');
-		tx_rnbase_util_Misc::callHook('cfc_league','modClub_tabItems', 
+		tx_rnbase_util_Misc::callHook('cfc_league', 'modClub_tabItems', 
 			array('tabItems' => &$tabItems), $this);
 
 		$menuItems = array();
@@ -78,10 +78,7 @@ class tx_cfcleague_mod1_modClubs extends tx_rnbase_mod_BaseModFunc {
 			$linker = tx_rnbase::makeInstance('tx_cfcleague_mod1_linker_NewClub');
 			$addInfo .= $linker->makeLink(null, $formTool, $this->getModule()->getPid(), array());
 
-			$content .= $this->getModule()->getDoc()->section('###LABEL_MSG_NOCLUBONPAGE###',$addInfo,0,1,ICON_INFO);
-			
-			//$content .= $mod->getDoc()->section($LANG->getLL('label_msg_nostadiumsfound'),'',0,1,ICON_INFO);
-//			$content .= '###LABEL_MSG_NOCLUBONPAGE###';
+			$content .= $this->getModule()->getDoc()->section('###LABEL_MSG_NOCLUBONPAGE###', $addInfo, 0, 1, ICON_INFO);
 			return $content;
 		}
 

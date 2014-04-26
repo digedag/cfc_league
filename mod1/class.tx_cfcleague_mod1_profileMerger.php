@@ -55,7 +55,7 @@ class tx_cfcleague_mod1_profileMerger {
 		self::mergeMatchNotes($data, $leadingProfileUID, $obsoleteProfileUID);
 		self::mergeTeamNotes($data, $leadingProfileUID, $obsoleteProfileUID);
 
-		tx_rnbase_util_Misc::callHook('cfc_league','mergeProfiles_hook', 
+		tx_rnbase_util_Misc::callHook('cfc_league', 'mergeProfiles_hook', 
 			array('data' => &$data, 'leadingUid' => $leadingProfileUID, 'obsoleteUid' => $obsoleteProfileUID), $this);
 
     $tce =& tx_cfcleague_db::getTCEmain($data);

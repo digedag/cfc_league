@@ -36,13 +36,13 @@ class tx_cfcleague_generator {
    * @param	array		Configuration array for the extension
    * @return	void
    */
-  function init(&$pObj,$conf)	{
+  function init(&$pObj, $conf)	{
   }
 
 	/**
 	 * Verwaltet die Erstellung von Spielplänen von Ligen
 	 */
-	function main(&$MCONF,$pid, $doc, &$formTool, &$current_league) {
+	function main(&$MCONF, $pid, $doc, &$formTool, &$current_league) {
 		global $LANG;
 		$this->MCONF = $MCONF;
 		$this->id = $pid;
@@ -60,7 +60,7 @@ class tx_cfcleague_generator {
 		$matchCnt = count($current_league->getGames());
 
 		if($matchCnt > 0){
-			$content.=$this->doc->section($LANG->getLL('warning').':',$LANG->getLL('msg_league_generation_hasmatches'),0,1,ICON_WARN);
+			$content.=$this->doc->section($LANG->getLL('warning').':', $LANG->getLL('msg_league_generation_hasmatches'), 0, 1, ICON_WARN);
 			$content.='<br/><br/>';
 		}
 
@@ -73,28 +73,28 @@ class tx_cfcleague_generator {
 
 		// Zunächst mal Anzeige der Daten
 		$gen = t3lib_div::makeInstance('tx_cfcleague_generator2');
-		$table = $gen->main($current_league->getTeamIds(),$current_league->getGenerationKey(), $options);
+		$table = $gen->main($current_league->getTeamIds(), $current_league->getGenerationKey(), $options);
 		$data = t3lib_div::_GP('data');
 		// Haben wir Daten im Request?
 		if (is_array($data['rounds']) && t3lib_div::_GP('update')) {
 //  t3lib_div::debug($data['rounds'], 'GP generator') ;
 			$content .= $this->doc->section($LANG->getLL('message').':',
-					$this->createGames($data['rounds'],$table, $current_league),
-					0,1,ICON_INFO);
+					$this->createGames($data['rounds'], $table, $current_league),
+					0, 1, ICON_INFO);
 		}
 		else {
 //      	t3lib_div::debug(, 'tx_cfcleague_generator'); // TODO: Remove me!
 			if(count($gen->errors)) {
 				// Da gibt es wohl ein Problem bei der Erzeugung der Spiele...
-				$content.=$this->doc->section($LANG->getLL('error').':','<ul><li>' . implode('<li>',$gen->errors) . '</ul>',0,1,ICON_FATAL);
+				$content.=$this->doc->section($LANG->getLL('error').':', '<ul><li>' . implode('<li>', $gen->errors) . '</ul>', 0, 1, ICON_FATAL);
 			}
 			if(count($gen->warnings)) {
 				// Da gibt es wohl ein Problem bei der Erzeugung der Spiele...
-				$content.=$this->doc->section($LANG->getLL('warning').':','<ul><li>' . implode('<li>',$gen->warnings) . '</ul>',0,1,ICON_WARN);
+				$content.=$this->doc->section($LANG->getLL('warning').':', '<ul><li>' . implode('<li>', $gen->warnings) . '</ul>', 0, 1, ICON_WARN);
 			}
 			if(count($table)) {
 				// Wir zeigen alle Spieltage und fragen nach dem Termin
-				$content .= $this->prepareGameTable($table, $current_league,$options['halfseries']);
+				$content .= $this->prepareGameTable($table, $current_league, $options['halfseries']);
 				// Den Update-Button einfügen
 				$content .= '<input type="submit" name="update" value="'.$LANG->getLL('btn_create').'" onclick="return confirm('.$GLOBALS['LANG']->JScharCode($GLOBALS['LANG']->getLL('msg_CreateGameTable')).')">';
 			}
@@ -153,31 +153,31 @@ class tx_cfcleague_generator {
 
 		$tableLayout = $this->doc->tableLayout;
 		$tableLayout['defRow'] = Array ( // Formate für alle Zeilen
-				'defCol' => Array('<td valign="top" style="padding:5px 5px 0 5px; border-bottom:solid 1px #A2AAB8;">','</td>') // Format für jede Spalte in jeder Zeile
+				'defCol' => Array('<td valign="top" style="padding:5px 5px 0 5px; border-bottom:solid 1px #A2AAB8;">', '</td>') // Format für jede Spalte in jeder Zeile
 			);
 		unset($tableLayout['defRowEven']);
 			
 		$tableLayout2 = $tableLayout;
 		$tableLayout2['defRow'] = Array ( // Formate für alle Zeilen
 			'tr'	   => Array('<tr class="db_list_normal">', '</tr>'),
-			'defCol' => Array('<td>','</td>') // Format für jede Spalte in jeder Zeile
+			'defCol' => Array('<td>', '</td>') // Format für jede Spalte in jeder Zeile
 		);
 		$tableLayout2['defRowEven'] = Array ( // Formate für alle Zeilen
 			'tr'	   => Array('<tr class="db_list_alt">', '</tr>'),
-			'defCol' => Array('<td>','</td>') // Format für jede Spalte in jeder Zeile
+			'defCol' => Array('<td>', '</td>') // Format für jede Spalte in jeder Zeile
 		);
 
-    $arr = Array(Array($LANG->getLL('label_round'),$LANG->getLL('label_roundname'),
-    		$LANG->getLL('label_rounddate'),$LANG->getLL('label_roundset')));
+    $arr = Array(Array($LANG->getLL('label_round'), $LANG->getLL('label_roundname'),
+    		$LANG->getLL('label_rounddate'), $LANG->getLL('label_roundset')));
     foreach($table As $round => $matchArr) {
       $row = array();
 
       // Die Formularfelder, die jetzt erstellt werden, wandern später direkt in die neuen Game-Records
       // Ein Hidden-Field für die Runde
-      $row[] = $round . $this->formTool->createHidden('data[rounds][round_'.$round.'][round]',$round);
+      $row[] = $round . $this->formTool->createHidden('data[rounds][round_'.$round.'][round]', $round);
       // Vorschlag für den Namen des Spieltags
-      $row[] = $this->formTool->createTxtInput('data[rounds][round_'.$round.'][round_name]',$round . $LANG->getLL('createGameTable_round'),10);
-      $row[] = $this->formTool->createDateInput('data[rounds][round_'.$round.'][date]',time());
+      $row[] = $this->formTool->createTxtInput('data[rounds][round_'.$round.'][round_name]', $round . $LANG->getLL('createGameTable_round'), 10);
+      $row[] = $this->formTool->createDateInput('data[rounds][round_'.$round.'][date]', time());
       // Anzeige der Paarungen
       $row[] = $this->doc->table($this->createMatchTableArray($matchArr, $league), $tableLayout2);
 
@@ -204,11 +204,11 @@ class tx_cfcleague_generator {
   function createMatchTableArray(&$games, &$league) {
 
     $teamNames = $league->getTeamNames();
-    $arr = Array(Array('Spiel-Nr.','Heim','Gast'));
+    $arr = Array(Array('Spiel-Nr.', 'Heim', 'Gast'));
     foreach($games As $match){
       $row = array();
 
-      $row[] = $match->noMatch ? '' : str_pad($match->nr2,3,'000',STR_PAD_LEFT);
+      $row[] = $match->noMatch ? '' : str_pad($match->nr2, 3, '000', STR_PAD_LEFT);
       $row[] = $teamNames[$match->home];
       $row[] = $teamNames[$match->guest];
 
@@ -269,7 +269,7 @@ class tx_cfcleague_generator2 {
   	$option_halfseries = isset($options['halfseries']) ? intval($options['halfseries']) : 0;
   	$option_nomatch = isset($options['nomatch']) ? intval($options['nomatch']) : 0;
   	// Alle Elemente einen Indexplatz hochschieben, damit die Team-Nr stimmt.
-    array_unshift($teams,0);
+    array_unshift($teams, 0);
     $matchCnt = 0; // ID des Spieldatensatzes. Wird für jedes angelegte Spiel gezählt
     // Spielnummer. Spielfreie Spiele werden nicht gezählt
     $matchCnt2 = isset($options['firstmatchnumber']) ? intval($options['firstmatchnumber']) : 0; 
@@ -280,7 +280,7 @@ class tx_cfcleague_generator2 {
     foreach($table as $day => $matches) {
       $dayArr = array(); // Hier kommen die Spiele rein
       foreach($matches as $k => $match) {
-        $teamIds = explode('-',$match);
+        $teamIds = explode('-', $match);
         // Ist es ein spielfreies Spiel
         $isNoMatch = $teams[$teamIds[0]] == $option_nomatch || $teams[$teamIds[1]] == $option_nomatch;
         $dayArr[] = new Match(++$matchCnt, $isNoMatch ? '': ++$matchCnt2, $teams[$teamIds[0]], $teams[$teamIds[1]], $isNoMatch);
@@ -292,7 +292,7 @@ class tx_cfcleague_generator2 {
       foreach($table as $day => $matches) {
         $dayArr = array(); // Hier kommen die Spiele rein
         foreach($matches as $k => $match) {
-          $teamIds = explode('-',$match);
+          $teamIds = explode('-', $match);
           $isNoMatch = $teams[$teamIds[0]] == $option_nomatch || $teams[$teamIds[1]] == $option_nomatch;
           $dayArr[] = new Match(++$matchCnt, $isNoMatch ? '': ++$matchCnt2, $teams[$teamIds[1]], $teams[$teamIds[0]], $isNoMatch);
 //          $dayArr[] = new Match(++$matchCnt, $teams[$teamIds[1]], $teams[$teamIds[0]]);
@@ -324,7 +324,7 @@ class tx_cfcleague_generator2 {
       }
       // Stimmen die Indizes?
       foreach($matches as $k => $match) {
-        $matchArr = explode('-',$match);
+        $matchArr = explode('-', $match);
         if(count($matchArr) != 2)
       		$warnings[] = sprintf($LANG->getLL('msg_wrongmatch_syntax'), $day, $match);
         if(intval($matchArr[0]) < 1 || intval($matchArr[0]) > $teamCnt)
@@ -345,9 +345,9 @@ class tx_cfcleague_generator2 {
   function splitTableString($table) {
     $ret = array();
     if(!strlen(trim($table))) return $ret; // Kein String gesetzt
-  	$days = explode('|',$table);
+  	$days = explode('|', $table);
     foreach($days as $key => $matches) {
-      $ret[$key+1] = explode(',',$matches);
+      $ret[$key+1] = explode(',', $matches);
     }
     return $ret;
   }
@@ -359,7 +359,7 @@ class tx_cfcleague_generator2 {
  */
 class Match {
   var $home, $guest, $nr, $nr2, $noMatch;
-  function Match($n,$n2,$h,$g, $noMatch){
+  function Match($n, $n2, $h, $g, $noMatch){
     $this->nr = $n; // ID
     $this->nr2 = $n2; // Spielnummer
     $this->home = $h;

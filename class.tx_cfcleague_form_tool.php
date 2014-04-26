@@ -48,8 +48,8 @@ class tx_cfcleague_form_tool {
    */
   function createEditLink($editTable, $editUid, $label = 'Edit') {
     $params = '&edit['.$editTable.']['.$editUid.']=edit';
-    return '<a href="#" onclick="'.htmlspecialchars(t3lib_BEfunc::editOnClick($params,$GLOBALS['BACK_PATH'])).'">'.
-     '<img'.t3lib_iconWorks::skinImg($GLOBALS['BACK_PATH'],'gfx/edit2.gif','width="11" height="12"').' title="Edit UID: '.$editUid.'" border="0" alt="" />'.
+    return '<a href="#" onclick="'.htmlspecialchars(t3lib_BEfunc::editOnClick($params, $GLOBALS['BACK_PATH'])).'">'.
+     '<img'.t3lib_iconWorks::skinImg($GLOBALS['BACK_PATH'], 'gfx/edit2.gif', 'width="11" height="12"').' title="Edit UID: '.$editUid.'" border="0" alt="" />'.
      $label .'</a>';
   }
 
@@ -62,7 +62,7 @@ class tx_cfcleague_form_tool {
   function createInfoLink($editTable, $editUid, $label = 'Info') {
 //    $params = '&edit['.$editTable.']['.$editUid.']=edit';
     return '<a href="#" onclick="top.launchView(' . "'" . $editTable . "', ' " . $editUid . "'); return false;" . '">'.
-     '<img'.t3lib_iconWorks::skinImg($GLOBALS['BACK_PATH'],'gfx/zoom2.gif','width="11" height="12"').' title="UID: '.$editUid.'" border="0" alt="" />'.
+     '<img'.t3lib_iconWorks::skinImg($GLOBALS['BACK_PATH'], 'gfx/zoom2.gif', 'width="11" height="12"').' title="UID: '.$editUid.'" border="0" alt="" />'.
      $label .'</a><br/>';
   }
 
@@ -76,7 +76,7 @@ class tx_cfcleague_form_tool {
   function createMoveLink($editTable, $recordUid, $currentPid, $label = 'Move') {
 
     return "<a href=\"#\" onclick=\"return jumpSelf('/typo3/db_list.php?id=". $currentPid ."&amp;CB[el][" . $editTable
-           . "%7C" . $recordUid . "]=1');\"><img " .t3lib_iconWorks::skinImg($GLOBALS['BACK_PATH'],'gfx/clip_cut.gif','width="16" height="16"'). ' title="UID: '. $recordUid . '" alt="" />' . $label .'</a>';
+           . "%7C" . $recordUid . "]=1');\"><img " .t3lib_iconWorks::skinImg($GLOBALS['BACK_PATH'], 'gfx/clip_cut.gif', 'width="16" height="16"'). ' title="UID: '. $recordUid . '" alt="" />' . $label .'</a>';
 
   }
 

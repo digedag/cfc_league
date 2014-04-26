@@ -42,7 +42,7 @@ class tx_cfcleague_team{
    */
   function tx_cfcleague_team($uid){
     $this->uid = $uid;
-//    $this->record = t3lib_BEfunc::getRecord(TABLE_TEAMS,$uid);
+//    $this->record = t3lib_BEfunc::getRecord(TABLE_TEAMS, $uid);
     $this->refresh();
   }
 
@@ -54,7 +54,7 @@ class tx_cfcleague_team{
    *
    */
   function refresh() {
-    $this->record = t3lib_BEfunc::getRecord(TABLE_TEAMS,$this->uid);
+    $this->record = t3lib_BEfunc::getRecord(TABLE_TEAMS, $this->uid);
     $this->playerNames = NULL;
     $this->coachNames = NULL;
     $this->supporterNames = NULL;
@@ -64,7 +64,7 @@ class tx_cfcleague_team{
    * @param $firstEmpty wenn != 0 wird ein leerer Datensatz am Anfang eingefügt
    * @param $merge wenn != 0 werden Name und Vorname zusammengefügt
    */
-  function getPlayerNames($firstEmpty=0,$merge=0) {
+  function getPlayerNames($firstEmpty=0, $merge=0) {
 
     if(!is_array($this->playerNames)){
 //t3lib_div::debug('getPlayernames ', 'team');
@@ -80,7 +80,7 @@ class tx_cfcleague_team{
    * @param $firstEmpty wenn != 0 wird ein leerer Datensatz am Anfang eingefügt
    * @param $merge wenn != 0 werden Name und Vorname zusammengefügt
    */
-  function getCoachNames($firstEmpty=0,$merge=0) {
+  function getCoachNames($firstEmpty=0, $merge=0) {
     if(!is_array($this->coachNames)){
       $this->coachNames = $this->retrievePlayers(
           $this->record['coaches'], 
@@ -95,7 +95,7 @@ class tx_cfcleague_team{
    * @param int $merge wenn != 0 werden Name und Vorname zusammengefügt
    * @return unknown
    */
-  function getSupporterNames($firstEmpty=0,$merge=0) {
+  function getSupporterNames($firstEmpty=0, $merge=0) {
     if(!is_array($this->supporterNames)){
       $this->supporterNames = $this->retrievePlayers(
           $this->record['supporters'], 
@@ -107,13 +107,13 @@ class tx_cfcleague_team{
    * Liefert die Anzahl der zugeordneten Spieler
    */
   function getPlayerSize() {
-      return $this->record['players'] ? count(t3lib_div::intExplode(',',$this->record['players'])) : 0;
+      return $this->record['players'] ? count(t3lib_div::intExplode(',', $this->record['players'])) : 0;
   }
   /**
    * Liefert die Anzahl der zugeordneten Trainer
    */
   function getCoachSize() {
-      return $this->record['coaches'] ? count(t3lib_div::intExplode(',',$this->record['coaches'])) : 0;
+      return $this->record['coaches'] ? count(t3lib_div::intExplode(',', $this->record['coaches'])) : 0;
   }
 
   /**
@@ -121,7 +121,7 @@ class tx_cfcleague_team{
    * @return int
    */
   function getSupporterSize() {
-      return $this->record['supporters'] ? count(t3lib_div::intExplode(',',$this->record['supporters'])) : 0;
+      return $this->record['supporters'] ? count(t3lib_div::intExplode(',', $this->record['supporters'])) : 0;
   }
   
   /**
@@ -139,8 +139,8 @@ class tx_cfcleague_team{
     if(strlen($pIds) == 0) return $ret;
 
     $rows = 
-       tx_cfcleague_db::queryDB('uid, first_name, last_name','uid IN (' . $pIds . ')',
-              'tx_cfcleague_profiles','last_name, first_name','',0);
+       tx_cfcleague_db::queryDB('uid, first_name, last_name', 'uid IN (' . $pIds . ')',
+              'tx_cfcleague_profiles', 'last_name, first_name', '', 0);
 //t3lib_div::debug('merge: ' . $pIds);
 
     foreach($rows As $row) {
@@ -172,7 +172,7 @@ class tx_cfcleague_team{
   	$where .= ' OR FIND_IN_SET(' . $profileUID . ', coaches) ';
   	$where .= ' OR FIND_IN_SET(' . $profileUID . ', supporters) ';
   	$rows = tx_cfcleague_db::queryDB('*', $where,
-              'tx_cfcleague_teams','','',0);
+              'tx_cfcleague_teams', '', '', 0);
   	return $rows;
   }
 

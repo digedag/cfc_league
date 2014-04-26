@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2007-2010 Rene Nitzsche (rene@system25.de)
+*  (c) 2007-2014 Rene Nitzsche (rene@system25.de)
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -60,7 +60,7 @@ class tx_cfcleague_models_Group extends tx_rnbase_model_base {
 		$options['where'] = (is_string($uids) && strlen($uids) > 0) ? 'uid IN (' . $uids .')' : '1';
 		$options['orderby'] = 'sorting asc';
 		$options['wrapperclass'] = 'tx_cfcleaguefe_models_group';
-		return  tx_rnbase_util_DB::doSelect('*','tx_cfcleague_group',$options);
+		return  tx_rnbase_util_DB::doSelect('*', 'tx_cfcleague_group', $options);
 	}
 }
 

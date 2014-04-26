@@ -45,8 +45,8 @@ class tx_cfcleague_sports_Football extends t3lib_svbase implements tx_cfcleague_
 	 */
 	public function getTCAPointSystems() {
 		return array(
-			Array(tx_rnbase_util_Misc::translateLLL('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition.point_system_2'),1),
-			Array(tx_rnbase_util_Misc::translateLLL('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition.point_system_3'),0)
+			Array(tx_rnbase_util_Misc::translateLLL('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition.point_system_2'), 1),
+			Array(tx_rnbase_util_Misc::translateLLL('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition.point_system_3'), 0)
 		);
 	}
 	public function getTCALabel() {

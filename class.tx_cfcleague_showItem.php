@@ -53,7 +53,7 @@ class tx_cfcleague_showItem {
 	 * @return	void
 	 */
 	function init($table = '', $uid = 0)	{
-		global $BE_USER,$LANG,$BACK_PATH,$TCA;
+		global $BE_USER, $LANG, $BACK_PATH, $TCA;
 
 		$this->content = '';
 			// Setting input variables.
@@ -72,15 +72,15 @@ class tx_cfcleague_showItem {
 			$this->uid = intval($this->uid);
 
 				// Check permissions and uid value:
-			if ($this->uid && $BE_USER->check('tables_select',$this->table))	{
+			if ($this->uid && $BE_USER->check('tables_select', $this->table))	{
 				if ((string)$this->table=='pages')	{
-					$this->pageinfo = t3lib_BEfunc::readPageAccess($this->uid,$this->perms_clause);
+					$this->pageinfo = t3lib_BEfunc::readPageAccess($this->uid, $this->perms_clause);
 					$this->access = is_array($this->pageinfo) ? 1 : 0;
 					$this->row = $this->pageinfo;
 				} else {
-					$this->row = t3lib_BEfunc::getRecord($this->table,$this->uid);
+					$this->row = t3lib_BEfunc::getRecord($this->table, $this->uid);
 					if ($this->row)	{
-						$this->pageinfo = t3lib_BEfunc::readPageAccess($this->row['pid'],$this->perms_clause);
+						$this->pageinfo = t3lib_BEfunc::readPageAccess($this->row['pid'], $this->perms_clause);
 						$this->access = is_array($this->pageinfo) ? 1 : 0;
 					}
 				}
@@ -91,8 +91,8 @@ class tx_cfcleague_showItem {
 			}
 		} else	{
 			// if the filereference $this->file is relative, we correct the path
-			if (substr($this->table,0,3)=='../')	{
-				$this->file = PATH_site.ereg_replace('^\.\./','',$this->table);
+			if (substr($this->table, 0, 3)=='../')	{
+				$this->file = PATH_site.ereg_replace('^\.\./', '', $this->table);
 			} else {
 				$this->file = $this->table;
 			}
@@ -154,9 +154,9 @@ class tx_cfcleague_showItem {
 
 				// If return Url is set, output link to go back:
 			if (t3lib_div::_GP('returnUrl'))	{
-				$this->content = $this->doc->section('',$returnLinkTag.'<strong>'.$LANG->sL('LLL:EXT:lang/locallang_core.xml:labels.goBack',1).'</strong></a><br /><br />').$this->content;
+				$this->content = $this->doc->section('', $returnLinkTag.'<strong>'.$LANG->sL('LLL:EXT:lang/locallang_core.xml:labels.goBack', 1).'</strong></a><br /><br />').$this->content;
 
-				$this->content .= $this->doc->section('','<br />'.$returnLinkTag.'<strong>'.$LANG->sL('LLL:EXT:lang/locallang_core.xml:labels.goBack',1).'</strong></a>');
+				$this->content .= $this->doc->section('', '<br />'.$returnLinkTag.'<strong>'.$LANG->sL('LLL:EXT:lang/locallang_core.xml:labels.goBack', 1).'</strong></a>');
 			}
 		}
 		return $this->content;
@@ -168,27 +168,27 @@ class tx_cfcleague_showItem {
 	 * @return	void
 	 */
 	function renderDBInfo()	{
-		global $LANG,$TCA;
+		global $LANG, $TCA;
 
 			// Print header, path etc:
-		$code = $this->doc->getHeader($this->table,$this->row,$this->pageinfo['_thePath'],1).'<br />';
-		$this->content.= $this->doc->section('',$code);
+		$code = $this->doc->getHeader($this->table, $this->row, $this->pageinfo['_thePath'], 1).'<br />';
+		$this->content.= $this->doc->section('', $code);
 
 			// Initialize variables:
 		$tableRows = Array();
 		$i = 0;
 
 			// Traverse the list of fields to display for the record:
-		$fieldList = t3lib_div::trimExplode(',',$TCA[$this->table]['interface']['showRecordFieldList'],1);
+		$fieldList = t3lib_div::trimExplode(',', $TCA[$this->table]['interface']['showRecordFieldList'], 1);
 		foreach($fieldList as $name)	{
 			$name = trim($name);
 			if ($TCA[$this->table]['columns'][$name])	{
-				if (!$TCA[$this->table]['columns'][$name]['exclude'] || $GLOBALS['BE_USER']->check('non_exclude_fields',$this->table.':'.$name))	{
+				if (!$TCA[$this->table]['columns'][$name]['exclude'] || $GLOBALS['BE_USER']->check('non_exclude_fields', $this->table.':'.$name))	{
 					$i++;
 					$tableRows[] = '
 						<tr>
-							<td class="bgColor5">'.$LANG->sL(t3lib_BEfunc::getItemLabel($this->table,$name),1).'</td>
-							<td class="bgColor4">'.htmlspecialchars(t3lib_BEfunc::getProcessedValue($this->table,$name,$this->row[$name])).'</td>
+							<td class="bgColor5">'.$LANG->sL(t3lib_BEfunc::getItemLabel($this->table, $name), 1).'</td>
+							<td class="bgColor4">'.htmlspecialchars(t3lib_BEfunc::getProcessedValue($this->table, $name, $this->row[$name])).'</td>
 						</tr>';
 				}
 			}
@@ -197,22 +197,22 @@ class tx_cfcleague_showItem {
 			// Create table from the information:
 		$tableCode = '
 					<table border="0" cellpadding="1" cellspacing="1" id="typo3-showitem">
-						'.implode('',$tableRows).'
+						'.implode('', $tableRows).'
 					</table>';
-		$this->content.=$this->doc->section('',$tableCode);
+		$this->content.=$this->doc->section('', $tableCode);
 		$this->content.=$this->doc->divider(2);
 
 			// Add path and table information in the bottom:
 		$code = '';
-		$code.= $LANG->sL('LLL:EXT:lang/locallang_core.php:labels.path').': '.t3lib_div::fixed_lgd_cs($this->pageinfo['_thePath'],-48).'<br />';
+		$code.= $LANG->sL('LLL:EXT:lang/locallang_core.php:labels.path').': '.t3lib_div::fixed_lgd_cs($this->pageinfo['_thePath'], -48).'<br />';
 		$code.= $LANG->sL('LLL:EXT:lang/locallang_core.php:labels.table').': '.$LANG->sL($TCA[$this->table]['ctrl']['title']).' ('.$this->table.') - UID: '.$this->uid.'<br />';
 		$this->content.= $this->doc->section('', $code);
 
 			// References:
-		$this->content.= $this->doc->section('References to this item:',$this->makeRef($this->table,$this->row['uid']));
+		$this->content.= $this->doc->section('References to this item:', $this->makeRef($this->table, $this->row['uid']));
 
 			// References:
-		$this->content.= $this->doc->section('References from this item:',$this->makeRefFrom($this->table,$this->row['uid']));
+		$this->content.= $this->doc->section('References from this item:', $this->makeRefFrom($this->table, $this->row['uid']));
 	}
 
 	/**
@@ -243,9 +243,9 @@ class tx_cfcleague_showItem {
 			// Setting header:
 		$icon = t3lib_BEfunc::getFileIcon($ext);
 		$url = 'gfx/fileicons/'.$icon;
-		$fileName = '<img src="'.$url.'" width="18" height="16" align="top" alt="" /><b>'.$LANG->sL('LLL:EXT:lang/locallang_core.php:show_item.php.file',1).':</b> '.$fI['file'];
-		if (t3lib_div::isFirstPartOfStr($this->file,PATH_site))	{
-			$code.= '<a href="../'.substr($this->file,strlen(PATH_site)).'" target="_blank">'.$fileName.'</a>';
+		$fileName = '<img src="'.$url.'" width="18" height="16" align="top" alt="" /><b>'.$LANG->sL('LLL:EXT:lang/locallang_core.php:show_item.php.file', 1).':</b> '.$fI['file'];
+		if (t3lib_div::isFirstPartOfStr($this->file, PATH_site))	{
+			$code.= '<a href="../'.substr($this->file, strlen(PATH_site)).'" target="_blank">'.$fileName.'</a>';
 		} else {
 			$code.= $fileName;
 		}
@@ -254,14 +254,14 @@ class tx_cfcleague_showItem {
 		if (is_array($imgInfo))	{
 			$code.= '<b>'.$LANG->sL('LLL:EXT:lang/locallang_core.php:show_item.php.dimensions').':</b> '.$imgInfo[0].'x'.$imgInfo[1].' pixels';
 		}
-		$this->content.=$this->doc->section('',$code);
+		$this->content.=$this->doc->section('', $code);
 		$this->content.=$this->doc->divider(2);
 
 			// If the file was an image...:
 		if (is_array($imgInfo))	{
 
-			$imgInfo = $imgObj->imageMagickConvert($this->file,'web','346','200m','','','',1);
-			$imgInfo[3] = '../'.substr($imgInfo[3],strlen(PATH_site));
+			$imgInfo = $imgObj->imageMagickConvert($this->file, 'web', '346', '200m', '', '', '', 1);
+			$imgInfo[3] = '../'.substr($imgInfo[3], strlen(PATH_site));
 			$code = '<br />
 				<div align="center">'.$returnLinkTag.$imgObj->imgTag($imgInfo).'</a></div>';
 			$this->content.= $this->doc->section('', $code);
@@ -280,8 +280,8 @@ class tx_cfcleague_showItem {
 						next($t);
 						next($t);
 						next($t);
-						while(list(,$val)=each($t))	{
-							$parts = explode(' ',trim($val),7);
+						while(list(, $val)=each($t))	{
+							$parts = explode(' ', trim($val), 7);
 							$code.= '
 								'.$parts[6].'<br />';
 						}
@@ -291,7 +291,7 @@ class tx_cfcleague_showItem {
 							<br /><br />';
 					}
 					$this->content.= $this->doc->section('', $code);
-				} elseif($ext=='tar' || $ext=='tgz' || substr($lowerFilename,-6)=='tar.gz' || substr($lowerFilename,-5)=='tar.z')	{
+				} elseif($ext=='tar' || $ext=='tgz' || substr($lowerFilename, -6)=='tar.gz' || substr($lowerFilename, -5)=='tar.z')	{
 					$code = '';
 					if ($ext=='tar')	{
 						$compr = '';
@@ -315,10 +315,10 @@ class tx_cfcleague_showItem {
 							</span>
 							<br /><br />';
 					}
-					$this->content.= $this->doc->section('',$code);
+					$this->content.= $this->doc->section('', $code);
 				}
 			} elseif ($GLOBALS['TYPO3_CONF_VARS']['BE']['disable_exec_function']) {
-				$this->content.= $this->doc->section('','Sorry, TYPO3_CONF_VARS[BE][disable_exec_function] was set, so cannot display content of archive file.');
+				$this->content.= $this->doc->section('', 'Sorry, TYPO3_CONF_VARS[BE][disable_exec_function] was set, so cannot display content of archive file.');
 			}
 
 				// Font files:
@@ -330,13 +330,13 @@ class tx_cfcleague_showItem {
 				$url = $thumbScript.'?&dummy='.$GLOBALS['EXEC_TIME'].$params;
 				$thumb = '<br />
 					<div align="center">'.$returnLinkTag.'<img src="'.htmlspecialchars($url).'" border="0" title="'.htmlspecialchars(trim($this->file)).'" alt="" /></a></div>';
-				$this->content.= $this->doc->section('',$thumb);
+				$this->content.= $this->doc->section('', $thumb);
 			}
 		}
 
 
 			// References:
-		$this->content.= $this->doc->section('References to this item:',$this->makeRef('_FILE',$this->file));
+		$this->content.= $this->doc->section('References to this item:', $this->makeRef('_FILE', $this->file));
 	}
 
 	/**
@@ -357,22 +357,22 @@ class tx_cfcleague_showItem {
 	 * @param	string		Filename or uid
 	 * @return	string		HTML
 	 */
-	function makeRef($table,$ref)	{
+	function makeRef($table, $ref)	{
 
 		if ($table==='_FILE')	{
 				// First, fit path to match what is stored in the refindex:
 			$fullIdent = $ref;
 
-			if (t3lib_div::isFirstPartOfStr($fullIdent,PATH_site))	{
-				$fullIdent = substr($fullIdent,strlen(PATH_site));
+			if (t3lib_div::isFirstPartOfStr($fullIdent, PATH_site))	{
+				$fullIdent = substr($fullIdent, strlen(PATH_site));
 			}
 
 				// Look up the path:
 			$rows = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows(
 				'*',
 				'sys_refindex',
-				'ref_table='.$GLOBALS['TYPO3_DB']->fullQuoteStr('_FILE','sys_refindex').
-					' AND ref_string='.$GLOBALS['TYPO3_DB']->fullQuoteStr($fullIdent,'sys_refindex').
+				'ref_table='.$GLOBALS['TYPO3_DB']->fullQuoteStr('_FILE', 'sys_refindex').
+					' AND ref_string='.$GLOBALS['TYPO3_DB']->fullQuoteStr($fullIdent, 'sys_refindex').
 					' AND deleted=0'
 			);
 		} else {
@@ -380,7 +380,7 @@ class tx_cfcleague_showItem {
 			$rows = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows(
 				'*',
 				'sys_refindex',
-				'ref_table='.$GLOBALS['TYPO3_DB']->fullQuoteStr($table,'sys_refindex').
+				'ref_table='.$GLOBALS['TYPO3_DB']->fullQuoteStr($table, 'sys_refindex').
 					' AND ref_uid='.intval($ref).
 					' AND deleted=0'
 			);
@@ -417,7 +417,7 @@ class tx_cfcleague_showItem {
 					'</tr>';
 		}
 
-		return count($infoData) ? '<table border="0" cellpadding="1" cellspacing="1">'.implode('',$infoData).'</table>' : '';
+		return count($infoData) ? '<table border="0" cellpadding="1" cellspacing="1">'.implode('', $infoData).'</table>' : '';
 	}
 
 	/**
@@ -427,13 +427,13 @@ class tx_cfcleague_showItem {
 	 * @param	string		Filename or uid
 	 * @return	string		HTML
 	 */
-	function makeRefFrom($table,$ref)	{
+	function makeRefFrom($table, $ref)	{
 
 			// Look up the path:
 		$rows = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows(
 			'*',
 			'sys_refindex',
-			'tablename='.$GLOBALS['TYPO3_DB']->fullQuoteStr($table,'sys_refindex').
+			'tablename='.$GLOBALS['TYPO3_DB']->fullQuoteStr($table, 'sys_refindex').
 				' AND recuid='.intval($ref)
 		);
 
@@ -462,7 +462,7 @@ class tx_cfcleague_showItem {
 					'</tr>';
 		}
 
-		return count($infoData) ? '<table border="0" cellpadding="1" cellspacing="1">'.implode('',$infoData).'</table>' : '<strong>-</strong>';
+		return count($infoData) ? '<table border="0" cellpadding="1" cellspacing="1">'.implode('', $infoData).'</table>' : '<strong>-</strong>';
 	}
 }
 

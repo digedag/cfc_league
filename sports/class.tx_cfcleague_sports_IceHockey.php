@@ -45,8 +45,8 @@ class tx_cfcleague_sports_IceHockey extends t3lib_svbase implements tx_cfcleague
 	 */
 	public function getTCAPointSystems() {
 		return array(
-			Array(tx_rnbase_util_Misc::translateLLL('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition.point_system_2_icehockey'),1),
-			Array(tx_rnbase_util_Misc::translateLLL('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition.point_system_3_icehockey'),0)
+			Array(tx_rnbase_util_Misc::translateLLL('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition.point_system_2_icehockey'), 1),
+			Array(tx_rnbase_util_Misc::translateLLL('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition.point_system_3_icehockey'), 0)
 		);
 	}
 	public function getTCALabel() {

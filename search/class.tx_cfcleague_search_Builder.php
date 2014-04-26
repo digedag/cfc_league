@@ -156,10 +156,10 @@ class tx_cfcleague_search_Builder {
 	 */
 	public static function buildTeamByScope(&$fields, $scope) {
 		$result = false;
-		$result = self::setField($fields,'COMPETITION.SAISON', OP_IN_INT, $scope['SAISON_UIDS']) || $result;
-		$result = self::setField($fields,'COMPETITION.AGEGROUP', OP_IN_INT, $scope['GROUP_UIDS']) || $result;
-		$result = self::setField($fields,'COMPETITION.UID', OP_IN_INT, $scope['COMP_UIDS']) || $result;
-		$result = self::setField($fields,'TEAM.CLUB', OP_IN_INT, $scope['CLUB_UIDS']) || $result;
+		$result = self::setField($fields, 'COMPETITION.SAISON', OP_IN_INT, $scope['SAISON_UIDS']) || $result;
+		$result = self::setField($fields, 'COMPETITION.AGEGROUP', OP_IN_INT, $scope['GROUP_UIDS']) || $result;
+		$result = self::setField($fields, 'COMPETITION.UID', OP_IN_INT, $scope['COMP_UIDS']) || $result;
+		$result = self::setField($fields, 'TEAM.CLUB', OP_IN_INT, $scope['CLUB_UIDS']) || $result;
 		$fields['TEAM.DUMMY'][OP_EQ_INT] = 0; // Ignore dummies
 		return true;
 	}
@@ -172,10 +172,10 @@ class tx_cfcleague_search_Builder {
 	 */
 	public static function buildStadiumByScope(&$fields, $scope) {
 		$result = false;
-		$result = self::setField($fields,'COMPETITION.SAISON', OP_IN_INT, $scope['SAISON_UIDS']) || $result;
-		$result = self::setField($fields,'COMPETITION.AGEGROUP', OP_IN_INT, $scope['GROUP_UIDS']) || $result;
-		$result = self::setField($fields,'MATCH.COMPETITION', OP_IN_INT, $scope['COMP_UIDS']) || $result;
-		$result = self::setField($fields,'TEAM.CLUB', OP_IN_INT, $scope['CLUB_UIDS']) || $result;
+		$result = self::setField($fields, 'COMPETITION.SAISON', OP_IN_INT, $scope['SAISON_UIDS']) || $result;
+		$result = self::setField($fields, 'COMPETITION.AGEGROUP', OP_IN_INT, $scope['GROUP_UIDS']) || $result;
+		$result = self::setField($fields, 'MATCH.COMPETITION', OP_IN_INT, $scope['COMP_UIDS']) || $result;
+		$result = self::setField($fields, 'TEAM.CLUB', OP_IN_INT, $scope['CLUB_UIDS']) || $result;
 		return true;
 	}
 }

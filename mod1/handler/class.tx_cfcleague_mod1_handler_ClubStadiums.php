@@ -64,7 +64,7 @@ class tx_cfcleague_mod1_handler_ClubStadiums {
 			
 		}
 		else {
-			$content .= $mod->getDoc()->section($LANG->getLL('label_msg_nostadiumsfound'),'',0,1,ICON_INFO);
+			$content .= $mod->getDoc()->section($LANG->getLL('label_msg_nostadiumsfound'), '', 0, 1, ICON_INFO);
 		}
 
 		$options['params'] = '&defVals[tx_cfcleague_stadiums][clubs]=tx_cfcleague_club_'.$club->getUid();

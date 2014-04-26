@@ -53,7 +53,7 @@ class tx_cfcleague_services_Profiles extends t3lib_svbase {
 		if(!empty($toLoad)) {
 			$fields['PROFILE.UID'][OP_IN_INT] = implode(',', $toLoad);
 			$options = array();
-			$rows = $this->search($fields,$options);
+			$rows = $this->search($fields, $options);
 			$toLoadFlip = array_flip($toLoad);
 			foreach($rows As $profile) {
 				$this->profiles[$profile->getUid()] = $profile;
@@ -120,7 +120,7 @@ class tx_cfcleague_services_Profiles extends t3lib_svbase {
 	 */
 	function getTeamsNotes4Profile($profileUID) {
 		$options['where'] = 'player = ' . $profileUID;
-		return tx_rnbase_util_DB::doSelect('*','tx_cfcleague_team_notes',$options);
+		return tx_rnbase_util_DB::doSelect('*', 'tx_cfcleague_team_notes', $options);
 	}
 
 	/**
@@ -163,7 +163,7 @@ class tx_cfcleague_services_Profiles extends t3lib_svbase {
 		foreach($uidArr AS $uid => $label) {
 			$items[] = $uid.'|'.tx_rnbase_util_Misc::translateLLL($label);
 		}
-		return implode(',',$items);
+		return implode(',', $items);
 	}
 
 	/**

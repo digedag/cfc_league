@@ -41,8 +41,8 @@ class tx_cfcleague_hooks_tceAfterDB {
 				// Die Types werden zusätzlich in einer MM-Tabelle gespeichert
 				$id = ($status == 'new') ? $tcemain->substNEWwithIDs[$id] : $id;
 				if($status != 'new')
-					tx_rnbase_util_DB::doDelete('tx_cfcleague_profiletypes_mm','uid_foreign='.$id,0);
-				$types = t3lib_div::intExplode(',',$fieldArray['types']);
+					tx_rnbase_util_DB::doDelete('tx_cfcleague_profiletypes_mm', 'uid_foreign='.$id, 0);
+				$types = t3lib_div::intExplode(',', $fieldArray['types']);
 				$i = 0;
 				foreach($types As $type) {
 					if(!intval($type)) continue;
@@ -50,7 +50,7 @@ class tx_cfcleague_hooks_tceAfterDB {
 					$values['uid_foreign'] = $id;
 					$values['tablenames'] = 'tx_cfcleague_profiles';
 					$values['sorting_foreign'] = $i++;
-					tx_rnbase_util_DB::doInsert('tx_cfcleague_profiletypes_mm',$values,0);
+					tx_rnbase_util_DB::doInsert('tx_cfcleague_profiletypes_mm', $values, 0);
 				}
 			}
 		}

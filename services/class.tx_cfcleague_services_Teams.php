@@ -159,7 +159,7 @@ class tx_cfcleague_services_Teams extends t3lib_svbase {
 	 */
 	public function getCompetitions4Team($team, $obligateOnly = false) {
 		$fields = array();
-		tx_cfcleague_search_Builder::buildCompetitionByTeam($fields, $team->getUid(),$obligateOnly);
+		tx_cfcleague_search_Builder::buildCompetitionByTeam($fields, $team->getUid(), $obligateOnly);
 		$srv = tx_cfcleague_util_ServiceRegistry::getCompetitionService();
 		return $srv->search($fields, $options);
 	}

@@ -61,7 +61,7 @@ class tx_cfcleague_mod1_searcher_Stadium {
 
 
 		if(!isset($options['nopersist']))
-			$this->SEARCH_SETTINGS = t3lib_BEfunc::getModuleData(array ('searchterm' => ''),$this->data,$mod->getName() );
+			$this->SEARCH_SETTINGS = t3lib_BEfunc::getModuleData(array ('searchterm' => ''), $this->data, $mod->getName() );
 		else
 			$this->SEARCH_SETTINGS = $this->data;
 		
@@ -145,7 +145,6 @@ class tx_cfcleague_mod1_searcher_Stadium {
 	  	$out = '<p><strong>###LABEL_MSG_NOSTADIUMSFOUND###</strong></p><br/>';
 		}
 		$content .= $out;
-//		$content .= $this->getMod()->getDoc()->section($headline.':',$out,0,1,ICON_INFO);
 	}
 
 	/**

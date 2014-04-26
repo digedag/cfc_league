@@ -23,7 +23,7 @@
 ***************************************************************/
 
 require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
-$BE_USER->modAccess($MCONF,1);
+$BE_USER->modAccess($MCONF, 1);
 
 tx_rnbase::load('tx_rnbase_util_TYPO3');
 tx_rnbase::load('tx_rnbase_mod_BaseModFunc');
@@ -63,9 +63,9 @@ class tx_cfcleague_profile_search extends tx_rnbase_mod_BaseModFunc {
 		t3lib_div::loadTCA('tx_cfcleague_teams');
 
 		$data = t3lib_div::_GP('data');
-		$this->SEARCH_SETTINGS = t3lib_BEfunc::getModuleData(array ('searchterm' => ''),$data,$this->getModule()->getName() );
+		$this->SEARCH_SETTINGS = t3lib_BEfunc::getModuleData(array ('searchterm' => ''), $data, $this->getModule()->getName() );
 
-		$content .= $this->doc->section($LANG->getLL('msg_search_person'),$this->createSearchForm($data), 0, 1);
+		$content .= $this->doc->section($LANG->getLL('msg_search_person'), $this->createSearchForm($data), 0, 1);
 		$content.=$this->doc->spacer(5);
 
 		// Haben wir Daten im Request?
@@ -78,10 +78,10 @@ class tx_cfcleague_profile_search extends tx_rnbase_mod_BaseModFunc {
 		if(!$this->hideResults) {
 			$searchterm = trim($this->SEARCH_SETTINGS['searchterm']);
 			if(strlen($searchterm) && strlen($searchterm) < 3)
-				$content .= $this->doc->section($LANG->getLL('message').':', $LANG->getLL('msg_string_too_short'), 0, 1,ICON_INFO);
+				$content .= $this->doc->section($LANG->getLL('message').':', $LANG->getLL('msg_string_too_short'), 0, 1, ICON_INFO);
 			elseif(strlen($searchterm) >= 3) {
 				$profiles = $this->searchProfiles($searchterm);
-				$content .= $this->doc->section($LANG->getLL('msg_found_person'),$this->buildProfileTable($profiles ), 0, 1);
+				$content .= $this->doc->section($LANG->getLL('msg_found_person'), $this->buildProfileTable($profiles ), 0, 1);
 			}
 		}
 		return $content;
@@ -115,7 +115,7 @@ class tx_cfcleague_profile_search extends tx_rnbase_mod_BaseModFunc {
 			$out .= $this->doc->icons(ICON_OK) . $LANG->getLL('msg_merge_done');
 		}
 		if($out)
-			$out = $this->doc->section($LANG->getLL('label_mergehead'),$out, 0, 1);
+			$out = $this->doc->section($LANG->getLL('label_mergehead'), $out, 0, 1);
 		return $out;
 	}
 
@@ -134,10 +134,10 @@ class tx_cfcleague_profile_search extends tx_rnbase_mod_BaseModFunc {
 		$out = '<table width="100%" cellspacing="0" cellpadding="0" border="0">';
 		$out .= '<tr><td style="vertical-align:top;" width="49%">';
 		$info->init('tx_cfcleague_profiles', $uid1);
-		$out .= $this->doc->section($LANG->getLL('label_profile1').':',$info->main());
+		$out .= $this->doc->section($LANG->getLL('label_profile1').':', $info->main());
 		$out .= '</td><td style="vertical-align:top;">';
 		$info->init('tx_cfcleague_profiles', $uid2);
-		$out .= $this->doc->section($LANG->getLL('label_profile2').':',$info->main());
+		$out .= $this->doc->section($LANG->getLL('label_profile2').':', $info->main());
 		$out .= '</td></tr>';
 		$out .= '<tr><td class="bgColor5">' .
 						$this->formTool->createHidden('data[merge1]', $uid1) .
@@ -162,12 +162,12 @@ class tx_cfcleague_profile_search extends tx_rnbase_mod_BaseModFunc {
 			$this->hideResults = true;
 			$uids = array_keys($data['edit_profile']);
 
-			$profiles = $this->searchProfiles($data,$uids[0]);
-			$out .= $this->doc->section($LANG->getLL('msg_edit_person'),$this->showProfileForm($profiles), 0, 1);
+			$profiles = $this->searchProfiles($data, $uids[0]);
+			$out .= $this->doc->section($LANG->getLL('msg_edit_person'), $this->showProfileForm($profiles), 0, 1);
 		}
 		elseif($data['update_profile_do']) { // Wurde der Speichern-Button gedrückt?
 			// Das Datum prüfen
-			$out .= $this->doc->section($LANG->getLL('msg_person_saved'),$this->updateProfiles($data['update_profile']), 0, 1);
+			$out .= $this->doc->section($LANG->getLL('msg_person_saved'), $this->updateProfiles($data['update_profile']), 0, 1);
 		}
 		return $out;
 	}
@@ -186,8 +186,8 @@ class tx_cfcleague_profile_search extends tx_rnbase_mod_BaseModFunc {
 				$out = $this->doc->icons(ICON_FATAL) . ' Invalid date -' . $date . '- für UID: ' . $uid;
 			}
 			else {
-				$profile['birthday'] = mktime(0,0,0,$month,$day,$year);
-				tx_cfcleague_db::updateDB('tx_cfcleague_profiles',$uid,$profile);
+				$profile['birthday'] = mktime(0, 0, 0, $month, $day, $year);
+				tx_cfcleague_db::updateDB('tx_cfcleague_profiles', $uid, $profile);
 				$out = $this->doc->icons(ICON_OK) . ' '.$LANG->getLL('msg_date_saved').': ' . $date;
 			}
 		}
@@ -211,7 +211,7 @@ class tx_cfcleague_profile_search extends tx_rnbase_mod_BaseModFunc {
 			if($profile['first_name'])
 				$out .= ', ' . $profile['first_name'];
 			$out .= ' [UID: ' . $profile['uid'] . '] ';
-			$out .= $this->formTool->createTxtInput('data[update_profile][' . $profile['uid'] . '][birthday]', date('j.n.Y',$profile['birthday']), 10);
+			$out .= $this->formTool->createTxtInput('data[update_profile][' . $profile['uid'] . '][birthday]', date('j.n.Y', $profile['birthday']), 10);
 			$out .= ' <input type="submit" name="data[update_profile_do]" value="'.$LANG->getLL('btn_save').'"';
 		}
 
@@ -243,8 +243,8 @@ class tx_cfcleague_profile_search extends tx_rnbase_mod_BaseModFunc {
     }
     $orderBy = 'last_name, first_name, tx_cfcleague_profiles.uid';
 
-    $rows = tx_cfcleague_db::queryDB($what, $where, $from,'',$orderBy, 0);
-//t3lib_div::debug($rows,'search');
+    $rows = tx_cfcleague_db::queryDB($what, $where, $from, '', $orderBy, 0);
+//t3lib_div::debug($rows, 'search');
     $cnt = count($rows);
     if(!$cnt) return $rows; // Keine Daten gefunden
 
@@ -281,38 +281,40 @@ class tx_cfcleague_profile_search extends tx_rnbase_mod_BaseModFunc {
 			$out = $this->doc->icons(ICON_WARN). ' ' . $LANG->getLL('msg_no_person_found');
 		}
 		else {
-			$arr = Array(Array($LANG->getLL('label_merge'),'UID',
+			$arr = Array(Array($LANG->getLL('label_merge'), 'UID',
 													$LANG->getLL('label_lastname'),
 													$LANG->getLL('label_firstname'),
 													$LANG->getLL('label_birthday'),
 													$LANG->getLL('label_information'),
-													'&nbsp;','&nbsp;','&nbsp;','&nbsp;'));
+													'&nbsp;', '&nbsp;', '&nbsp;', '&nbsp;'));
 			foreach($profiles As $profile) {
 				$row = array();
 				$row[] = $this->formTool->createRadio('data[merge1]', $profile['uid']) . $this->formTool->createRadio('data[merge2]', $profile['uid']);
 				$row[] = $profile['uid'];
 				$row[] = $profile['last_name'];
 				$row[] = $profile['first_name'] ? $profile['first_name'] : '&nbsp;';
-				$row[] = date('j.n.Y',$profile['birthday']) . ' <input type="submit" name="data[edit_profile][' . $profile['uid'] . ']" value="'.$LANG->getLL('btn_edit').'"';
+				$row[] = date('j.n.Y', $profile['birthday']) . ' <input type="submit" name="data[edit_profile][' . $profile['uid'] . ']" value="'.$LANG->getLL('btn_edit').'"';
 				// Die Zusatzinfos zusammenstellen
-				$infos = $LANG->getLL('label_page'). ': ' . t3lib_BEfunc::getRecordPath($profile['pid'],'',0) . '<br />';
+				$infos = $LANG->getLL('label_page'). ': ' . t3lib_BEfunc::getRecordPath($profile['pid'], '', 0) . '<br />';
 				if(is_array($profile['teams']))
 					foreach($profile['teams'] as $team) {
 						$infos .= '&nbsp;Team: ' . $team['team_name'];
-						$infos .= $this->formTool->createEditLink('tx_cfcleague_teams', $team['team_uid'],'') . '<br />';
+						$infos .= $this->formTool->createEditLink('tx_cfcleague_teams', $team['team_uid'], '') . '<br />';
 					}
 
 				$row[] = $infos;
-				$row[] = $this->formTool->createEditLink('tx_cfcleague_profiles', $profile['uid'],'');
-				$row[] = $this->formTool->createInfoLink('tx_cfcleague_profiles', $profile['uid'],'');
+				$row[] = $this->formTool->createEditLink('tx_cfcleague_profiles', $profile['uid'], '');
+				$row[] = $this->formTool->createInfoLink('tx_cfcleague_profiles', $profile['uid'], '');
 				$row[] = $this->formTool->createHistoryLink('tx_cfcleague_profiles', $profile['uid']);
 				$row[] = $this->formTool->createMoveLink('tx_cfcleague_profiles', $profile['uid'], $profile['pid']);
 				$arr[] = $row;
 			}
 
 			$tableLayout = $this->doc->tableLayout;
-			$tableLayout['defRow']['defCol'] = Array('<td style="vertical-align:top;padding:5px 0;">','</td>');
-			$tableLayout['defRowEven']['defCol'] = Array((tx_rnbase_util_TYPO3::isTYPO42OrHigher() ?'<td style="vertical-align:top;padding:5px 0;">' : '<td style="vertical-align:top; padding:5px 0;" class="db_list_alt">'),'</td>');
+			$tableLayout['defRow']['defCol'] = Array('<td style="vertical-align:top;padding:5px 0;">', '</td>');
+			$tableLayout['defRowEven']['defCol'] = Array((tx_rnbase_util_TYPO3::isTYPO42OrHigher() ?
+										'<td style="vertical-align:top;padding:5px 0;">' : 
+										'<td style="vertical-align:top; padding:5px 0;" class="db_list_alt">'), '</td>');
 
 			$out .= $this->doc->table($arr, $tableLayout);
 			if(count($arr)) {
@@ -329,7 +331,7 @@ class tx_cfcleague_profile_search extends tx_rnbase_mod_BaseModFunc {
     $out .= $LANG->getLL('label_searchterm').': ';
     $out .= $this->formTool->createTxtInput('data[searchterm]', $this->SEARCH_SETTINGS['searchterm'], 20);
     // Den Update-Button einfügen
-    $out .= $this->formTool->createSubmit('search',$LANG->getLL('btn_search'));
+    $out .= $this->formTool->createSubmit('search', $LANG->getLL('btn_search'));
     // Jetzt noch zusätzlichen JavaScriptcode für Buttons auf der Seite
     $out .= $this->formTool->getJSCode($this->getModule()->getPid());
 

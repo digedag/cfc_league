@@ -76,7 +76,7 @@ $TCA['tx_cfcleague_competition'] = Array (
 	)
 );
 
-t3lib_extMgm::addLLrefForTCAdescr('tx_cfcleague_competition','EXT:cfc_league/locallang_csh_competition.php');
+t3lib_extMgm::addLLrefForTCAdescr('tx_cfcleague_competition', 'EXT:cfc_league/locallang_csh_competition.php');
 
 $TCA['tx_cfcleague_competition_penalty'] = Array (
 	'ctrl' => Array (
@@ -124,7 +124,7 @@ $TCA['tx_cfcleague_profiles'] = Array (
 		'fe_admin_fieldList' => 'hidden, first_name, last_name, image, birthday, nationality, height, weight, position, duration_of_contract, start_of_contract, email, stations, nickname, family, hobbies, prosperities, summary, description',
 	)
 );
-t3lib_extMgm::addLLrefForTCAdescr('tx_cfcleague_profiles','EXT:cfc_league/locallang_csh_profiles.php');
+t3lib_extMgm::addLLrefForTCAdescr('tx_cfcleague_profiles', 'EXT:cfc_league/locallang_csh_profiles.php');
 
 $clubOrdering = intval(tx_rnbase_configurations::getExtensionCfgValue('cfc_league', 'clubOrdering')) > 0;
 $labelClub = $clubOrdering ? 'city' : 'name';
@@ -152,7 +152,7 @@ $TCA['tx_cfcleague_club'] = Array (
 		'fe_admin_fieldList' => 'hidden, name, short_name, dam_logo',
 	)
 );
-t3lib_extMgm::addLLrefForTCAdescr('tx_cfcleague_club','EXT:cfc_league/locallang_csh_club.php');
+t3lib_extMgm::addLLrefForTCAdescr('tx_cfcleague_club', 'EXT:cfc_league/locallang_csh_club.php');
 
 $TCA['tx_cfcleague_teams'] = Array (
 	'ctrl' => Array (
@@ -200,7 +200,7 @@ $TCA['tx_cfcleague_games'] = Array (
 		'fe_admin_fieldList' => 'hidden, home, guest, competition, round, round_name, status, coach_home, coach_guest, players_home, players_guest, substitutes_home, substitutes_guest, goals_home_1, goals_guest_1, goals_home_2, goals_guest_2, goals_home_3, goals_guest_3, goals_home_4, goals_guest_4, date, link_report, link_ticker, game_report, visitors, goals_home_et, goals_guest_et, goals_home_ap, goals_guest_ap',
 	)
 );
-t3lib_extMgm::addLLrefForTCAdescr('tx_cfcleague_games','EXT:cfc_league/locallang_csh_games.php');
+t3lib_extMgm::addLLrefForTCAdescr('tx_cfcleague_games', 'EXT:cfc_league/locallang_csh_games.php');
 
 $TCA['tx_cfcleague_match_notes'] = Array (
 	'ctrl' => Array (
@@ -297,30 +297,30 @@ $TCA['tx_cfcleague_stadiums'] = Array (
 
 
 if(t3lib_extMgm::isLoaded('rgmediaimages')) {
-	t3lib_extMgm::addStaticFile($_EXTKEY,'Configurations/TypoScript/video', 'Ext: cfcleague video support');
+	t3lib_extMgm::addStaticFile($_EXTKEY, 'Configurations/TypoScript/video', 'Ext: cfcleague video support');
 }
 
 if (TYPO3_MODE=='BE')	{
 
-  t3lib_extMgm::addModule('web','txcfcleagueM1','',t3lib_extMgm::extPath($_EXTKEY).'mod1/');
+  t3lib_extMgm::addModule('web', 'txcfcleagueM1', '', t3lib_extMgm::extPath($_EXTKEY).'mod1/');
 
-  t3lib_extMgm::insertModuleFunction('web_txcfcleagueM1','tx_cfcleague_mod1_modCompetitions',
+  t3lib_extMgm::insertModuleFunction('web_txcfcleagueM1', 'tx_cfcleague_mod1_modCompetitions',
 		t3lib_extMgm::extPath($_EXTKEY).'mod1/class.tx_cfcleague_mod1_modCompetitions.php',
 		'LLL:EXT:cfc_league/mod1/locallang.xml:mod_competition'
 	);
-  t3lib_extMgm::insertModuleFunction('web_txcfcleagueM1','tx_cfcleague_match_ticker',
+  t3lib_extMgm::insertModuleFunction('web_txcfcleagueM1', 'tx_cfcleague_match_ticker',
 		t3lib_extMgm::extPath($_EXTKEY).'mod1/class.tx_cfcleague_match_ticker.php',
 		'LLL:EXT:cfc_league/mod1/locallang.xml:match_ticker'
 	);
-  t3lib_extMgm::insertModuleFunction('web_txcfcleagueM1','tx_cfcleague_mod1_modTeams',
+  t3lib_extMgm::insertModuleFunction('web_txcfcleagueM1', 'tx_cfcleague_mod1_modTeams',
 		t3lib_extMgm::extPath($_EXTKEY).'mod1/class.tx_cfcleague_mod1_modTeams.php',
 		'LLL:EXT:cfc_league/mod1/locallang.xml:mod_team'
 	);
-  t3lib_extMgm::insertModuleFunction('web_txcfcleagueM1','tx_cfcleague_mod1_modClubs',
+  t3lib_extMgm::insertModuleFunction('web_txcfcleagueM1', 'tx_cfcleague_mod1_modClubs',
 		t3lib_extMgm::extPath($_EXTKEY).'mod1/class.tx_cfcleague_mod1_modClubs.php',
 		'LLL:EXT:cfc_league/mod1/locallang.xml:mod_club'
 	);
-	t3lib_extMgm::insertModuleFunction('web_txcfcleagueM1','tx_cfcleague_profile_search',
+	t3lib_extMgm::insertModuleFunction('web_txcfcleagueM1', 'tx_cfcleague_profile_search',
 		t3lib_extMgm::extPath($_EXTKEY).'mod1/class.tx_cfcleague_profile_search.php',
 		'LLL:EXT:cfc_league/mod1/locallang.xml:search_profiles'
 	);

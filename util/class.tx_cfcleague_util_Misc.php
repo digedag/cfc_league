@@ -31,7 +31,7 @@ class tx_cfcleague_util_Misc {
    * Zwei Arrays zusammenführen. Sollte eines der Array leer sein, dann wird es ignoriert.
    * Somit werden unnötige 0-Werte vermieden.
    */
-  public static function mergeArrays($arr1,$arr2){
+  public static function mergeArrays($arr1, $arr2){
     $ret = $arr1[0] ? $arr1 : 0;
     if($ret && $arr2) {
       $ret = array_merge($ret, $arr2);
@@ -85,8 +85,8 @@ class tx_cfcleague_util_Misc {
 	
 		$content.='
 				<tr class="bgColor4">
-					<td valign="top"><img'.t3lib_iconWorks::skinImg('','gfx/icon_fatalerror.gif','width="18" height="16"').' alt="" /></td>
-					<td>'.$GLOBALS['LANG']->sL($error,0).'</td>
+					<td valign="top"><img'.t3lib_iconWorks::skinImg('', 'gfx/icon_fatalerror.gif', 'width="18" height="16"').' alt="" /></td>
+					<td>'.$GLOBALS['LANG']->sL($error, 0).'</td>
 				</tr>';
 		if($addinfo)
 			$content.='

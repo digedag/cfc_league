@@ -57,10 +57,10 @@ class tx_cfcleague_match_edit  {
 			return $content;
 		}
 
-		$currentTeam = $this->makeTeamSelector($content,$pid,$current_league);
+		$currentTeam = $this->makeTeamSelector($content, $pid, $current_league);
 		// Jetzt den Spieltag wählen lassen
 		if($currentTeam == null)
-			$current_round = $this->getSelector()->showRoundSelector($content,$pid,$current_league);
+			$current_round = $this->getSelector()->showRoundSelector($content, $pid, $current_league);
 
 		$content.='<div class="cleardiv"/>';
 		$data = t3lib_div::_GP('data');
@@ -75,7 +75,7 @@ class tx_cfcleague_match_edit  {
 		$content .= $module->getDoc()->table($arr[0]);
 
 		// Den Update-Button einfügen
-		$content .= $formTool->createSubmit('update',$LANG->getLL('btn_update'), $GLOBALS['LANG']->getLL('btn_update_msgEditGames'));
+		$content .= $formTool->createSubmit('update', $LANG->getLL('btn_update'), $GLOBALS['LANG']->getLL('btn_update_msgEditGames'));
 //		$content .= '<input type="submit" name="update" value="'.$LANG->getLL('btn_update').'" onclick="return confirm('.$GLOBALS['LANG']->JScharCode($GLOBALS['LANG']->getLL('btn_update_msgEditGames')).')">';
 		if($arr[1]) { // Hat ein Team spielfrei?
 			$content .= '<h3 style="margin-top:10px">'.$LANG->getLL('msg_free_of_play') . '</h3><ul>';
@@ -118,14 +118,14 @@ class tx_cfcleague_match_edit  {
 		
 		return $matches;
 	}
-	private function makeTeamSelector(&$content,$pid,$current_league) {
+	private function makeTeamSelector(&$content, $pid, $current_league) {
     global $LANG;
 		$teamOptions = array();
 		$teamOptions['selectorId'] = 'teamMatchEdit';
 		$teamOptions['noLinks'] = true;
 		$teamOptions['firstItem']['id'] = -1;
 		$teamOptions['firstItem']['label'] = $LANG->getLL('label_roundmode');
-		return $this->getSelector()->showTeamSelector($content,$pid,$current_league, $teamOptions);
+		return $this->getSelector()->showTeamSelector($content, $pid, $current_league, $teamOptions);
 	}
 	/**
 	 * @return tx_cfcleague_selector
@@ -152,7 +152,7 @@ class tx_cfcleague_match_edit  {
 		if($current_round)
 			$params['params'] .= '&round='.($current_round);
 		$params['title'] = $GLOBALS['LANG']->getLL('label_create_match');
-		$content = $formTool->createNewLink('tx_cfcleague_games', $pid,$GLOBALS['LANG']->getLL('label_create_match'),$params);
+		$content = $formTool->createNewLink('tx_cfcleague_games', $pid, $GLOBALS['LANG']->getLL('label_create_match'), $params);
 		return $content;
 	}
   /**
@@ -214,28 +214,28 @@ class tx_cfcleague_match_edit  {
 
 			$table = 'tx_cfcleague_games';
 			if(!$isNoMatch) {
-				$row[] = $game->getUid().$this->formTool->createEditLink('tx_cfcleague_games',$game->getUid(),'');
+				$row[] = $game->getUid().$this->formTool->createEditLink('tx_cfcleague_games', $game->getUid(), '');
 				$dataArr = $this->formTool->getTCEFormArray($table, $game->getUid());
-				$row[] = $this->formTool->form->getSoloField($table,$dataArr[$table.'_'.$game->getUid()],'date');
+				$row[] = $this->formTool->form->getSoloField($table, $dataArr[$table.'_'.$game->getUid()], 'date');
 
-				$row[] = $this->formTool->form->getSoloField($table,$dataArr[$table.'_'.$game->getUid()],'status');
-				$row[] = $this->formTool->createEditLink('tx_cfcleague_teams',$game->record['home'],$game->getHome()->getNameShort());
-				$row[] = $this->formTool->createEditLink('tx_cfcleague_teams',$game->record['guest'],$game->getGuest()->getNameShort());
+				$row[] = $this->formTool->form->getSoloField($table, $dataArr[$table.'_'.$game->getUid()], 'status');
+				$row[] = $this->formTool->createEditLink('tx_cfcleague_teams', $game->record['home'], $game->getHome()->getNameShort());
+				$row[] = $this->formTool->createEditLink('tx_cfcleague_teams', $game->record['guest'], $game->getGuest()->getNameShort());
 
 				if($competition->isAddPartResults() && $parts != 1) {
 					$row[] = $game->getResult();
 				}
 				// Jetzt die Spielabschitte einbauen, wobei mit dem letzten begonnen wird
 				for($i=$parts; $i > 0; $i--) {
-					$row[] = $this->formTool->createIntInput('data[tx_cfcleague_games]['.$game->getUid().'][goals_home_'.$i.']',$game->record['goals_home_'.$i],2) . ' : ' . $this->formTool->createIntInput('data[tx_cfcleague_games]['.$game->getUid().'][goals_guest_'.$i.']',$game->record['goals_guest_'.$i],2);
+					$row[] = $this->formTool->createIntInput('data[tx_cfcleague_games]['.$game->getUid().'][goals_home_'.$i.']', $game->record['goals_home_'.$i], 2) . ' : ' . $this->formTool->createIntInput('data[tx_cfcleague_games]['.$game->getUid().'][goals_guest_'.$i.']', $game->record['goals_guest_'.$i], 2);
 				}
 
 				$sports = $competition->getSportsService();
 				if($sports->isSetBased()) {
-        	$row[] = $this->formTool->createTxtInput('data[tx_cfcleague_games]['.$game->getUid().'][sets]',$game->record['sets'],12);
+        	$row[] = $this->formTool->createTxtInput('data[tx_cfcleague_games]['.$game->getUid().'][sets]', $game->record['sets'], 12);
 				}
 
-        $row[] = $this->formTool->createIntInput('data[tx_cfcleague_games]['.$game->getUid().'][visitors]',$game->record['visitors'],6);
+        $row[] = $this->formTool->createIntInput('data[tx_cfcleague_games]['.$game->getUid().'][visitors]', $game->record['visitors'], 6);
         $arr[0][] = $row;
       }
       else {
@@ -245,7 +245,7 @@ class tx_cfcleague_match_edit  {
         $row['team_edit'] = $this->formTool->createEditLink('tx_cfcleague_teams', 
                                      ($isHomeDummy ? $game->record['guest'] : $game->record['home']), 
                                      ($isHomeDummy ? $game->getGuest()->getNameShort() : $game->getHome()->getNameShort()));
-        $row['match_edit'] = $this->formTool->createEditLink('tx_cfcleague_games',$game->getUid());
+        $row['match_edit'] = $this->formTool->createEditLink('tx_cfcleague_games', $game->getUid());
         $arr[1][] = $row;
       }
     }

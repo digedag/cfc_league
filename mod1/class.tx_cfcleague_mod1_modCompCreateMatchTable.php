@@ -66,7 +66,7 @@ class tx_cfcleague_mod1_modCompCreateMatchTable {
   	$data = t3lib_div::_GP('data');
 		if (is_array($data['rounds']) && t3lib_div::_GP('update')) {
 			$result = $this->createMatches($data['rounds'], $comp);
-			$content .= $this->doc->section($LANG->getLL('message').':', $result, 0,1,ICON_INFO);
+			$content .= $this->doc->section($LANG->getLL('message').':', $result, 0, 1, ICON_INFO);
 			return $content; 
 		}
 	}
@@ -80,7 +80,7 @@ class tx_cfcleague_mod1_modCompCreateMatchTable {
 
 		$matchCnt = $comp->getNumberOfMatches(false);
 		if($matchCnt > 0){
-			$content.=$this->doc->section($LANG->getLL('warning').':',$LANG->getLL('msg_league_generation_hasmatches'),0,1,ICON_WARN);
+			$content.=$this->doc->section($LANG->getLL('warning').':', $LANG->getLL('msg_league_generation_hasmatches'), 0, 1, ICON_WARN);
 			$content.='<br/><br/>';
 		}
 
@@ -88,7 +88,7 @@ class tx_cfcleague_mod1_modCompCreateMatchTable {
 		$menu = $this->getFormTool()->showMenu(
 				$this->getModule()->getPid(), 't3s_mcmode', 
 				$this->getModule()->getName(), 
-				array(0=>'Auto','1'=>'Manual'), 'index.php');
+				array(0=>'Auto', '1'=>'Manual'), 'index.php');
 		$content .= $menu['menu'];
 		$mode = $menu['value'];
 		$content .= '<br>';
@@ -115,19 +115,19 @@ class tx_cfcleague_mod1_modCompCreateMatchTable {
 		$options['firstmatchnumber'] = $comp->getLastMatchNumber();
 		// Zunächst mal Anzeige der Daten
 		$gen = tx_rnbase::makeInstance('tx_cfcleague_util_Generator');
-		$table = $gen->main($comp->getTeamIds(),$comp->getGenerationKey(), $options);
+		$table = $gen->main($comp->getTeamIds(), $comp->getGenerationKey(), $options);
 
 		if(count($gen->errors)) {
 			// Da gibt es wohl ein Problem bei der Erzeugung der Spiele...
-			$content.=$this->doc->section($LANG->getLL('error').':','<ul><li>' . implode('<li>',$gen->errors) . '</ul>',0,1,ICON_FATAL);
+			$content.=$this->doc->section($LANG->getLL('error').':', '<ul><li>' . implode('<li>', $gen->errors) . '</ul>', 0, 1, ICON_FATAL);
 		}
 		if(count($gen->warnings)) {
 			// Da gibt es wohl ein Problem bei der Erzeugung der Spiele...
-			$content.=$this->doc->section($LANG->getLL('warning').':','<ul><li>' . implode('<li>',$gen->warnings) . '</ul>',0,1,ICON_WARN);
+			$content.=$this->doc->section($LANG->getLL('warning').':', '<ul><li>' . implode('<li>', $gen->warnings) . '</ul>', 0, 1, ICON_WARN);
 		}
 		if(count($table)) {
 			// Wir zeigen alle Spieltage und fragen nach dem Termin
-			$content .= $this->prepareGameTable($table, $comp,$options['halfseries']);
+			$content .= $this->prepareGameTable($table, $comp, $options['halfseries']);
 			// Den Update-Button einfügen
 			$content .= '<input type="submit" name="update" value="'.$LANG->getLL('btn_create').'" onclick="return confirm('.$GLOBALS['LANG']->JScharCode($GLOBALS['LANG']->getLL('msg_CreateGameTable')).')">';
 		}
@@ -148,32 +148,32 @@ class tx_cfcleague_mod1_modCompCreateMatchTable {
 
 		$tableLayout = $this->doc->tableLayout;
 		$tableLayout['defRow'] = Array ( // Formate für alle Zeilen
-				'defCol' => Array('<td valign="top" style="padding:5px 5px 0 5px; border-bottom:solid 1px #A2AAB8;">','</td>') // Format für jede Spalte in jeder Zeile
+				'defCol' => Array('<td valign="top" style="padding:5px 5px 0 5px; border-bottom:solid 1px #A2AAB8;">', '</td>') // Format für jede Spalte in jeder Zeile
 			);
 		unset($tableLayout['defRowEven']);
 			
 		$tableLayout2 = $tableLayout;
 		$tableLayout2['defRow'] = Array ( // Formate für alle Zeilen
 			'tr'	   => Array('<tr class="db_list_normal">', '</tr>'),
-			'defCol' => Array('<td>','</td>') // Format für jede Spalte in jeder Zeile
+			'defCol' => Array('<td>', '</td>') // Format für jede Spalte in jeder Zeile
 		);
 		$tableLayout2['defRowEven'] = Array ( // Formate für alle Zeilen
 			'tr'	   => Array('<tr class="db_list_alt">', '</tr>'),
-			'defCol' => Array('<td>','</td>') // Format für jede Spalte in jeder Zeile
+			'defCol' => Array('<td>', '</td>') // Format für jede Spalte in jeder Zeile
 		);
 //t3lib_div::debug($table[1][0], 'class.tx_cfcleague_mod1_modCompCreateMatchTable.php'); // TODO: remove me
 
 		$arr = Array(Array($LANG->getLL('label_roundset')));
-//		$arr = Array(Array($LANG->getLL('label_round'),$LANG->getLL('label_roundname').' / '.
-//			$LANG->getLL('label_rounddate'),$LANG->getLL('label_roundset')));
+//		$arr = Array(Array($LANG->getLL('label_round'), $LANG->getLL('label_roundname').' / '.
+//			$LANG->getLL('label_rounddate'), $LANG->getLL('label_roundset')));
 		foreach($table As $round => $matchArr) {
 			$row = array();
 
 			// Die Formularfelder, die jetzt erstellt werden, wandern später direkt in die neuen Game-Records
 			// Ein Hidden-Field für die Runde
-			$row[] = '<div>' . $this->formTool->createHidden('data[rounds][round_'.$round.'][round]',$round) . 
-							$this->formTool->createTxtInput('data[rounds][round_'.$round.'][round_name]',$round . $LANG->getLL('createGameTable_round'),10) . 
-							$this->formTool->createDateInput('data[rounds][round_'.$round.'][date]',time()) .'</div>'.
+			$row[] = '<div>' . $this->formTool->createHidden('data[rounds][round_'.$round.'][round]', $round) . 
+							$this->formTool->createTxtInput('data[rounds][round_'.$round.'][round_name]', $round . $LANG->getLL('createGameTable_round'), 10) . 
+							$this->formTool->createDateInput('data[rounds][round_'.$round.'][date]', time()) .'</div>'.
 							// Anzeige der Paarungen
 			 				$this->doc->table($this->createMatchTableArray($matchArr, $league, 'data[rounds][round_'.$round.']'), $tableLayout2);
 
@@ -189,13 +189,13 @@ class tx_cfcleague_mod1_modCompCreateMatchTable {
 	private function createMatchTableArray(&$matches, &$league, $namePrefix) {
 		global $LANG;
 		$teamNames = $league->getTeamNames();
-		$arr = Array(Array($LANG->getLL('label_match_no'),$LANG->getLL('label_home'),$LANG->getLL('label_guest')));
+		$arr = Array(Array($LANG->getLL('label_match_no'), $LANG->getLL('label_home'), $LANG->getLL('label_guest')));
 		foreach($matches As $match){
 			$row = array();
-			$row[] = $match->noMatch ? '' : str_pad($match->nr2,3,'000',STR_PAD_LEFT);
-			$row[] = $this->createSelectBox($teamNames,$match->home, $namePrefix.'[matches]['.$match->nr.'][home]');
-			$row[] = $this->createSelectBox($teamNames,$match->guest,$namePrefix.'[matches]['.$match->nr.'][guest]') .
-								$this->formTool->createHidden($namePrefix.'[matches]['.$match->nr.'][nr2]',$match->nr2);
+			$row[] = $match->noMatch ? '' : str_pad($match->nr2, 3, '000', STR_PAD_LEFT);
+			$row[] = $this->createSelectBox($teamNames, $match->home, $namePrefix.'[matches]['.$match->nr.'][home]');
+			$row[] = $this->createSelectBox($teamNames, $match->guest, $namePrefix.'[matches]['.$match->nr.'][guest]') .
+								$this->formTool->createHidden($namePrefix.'[matches]['.$match->nr.'][nr2]', $match->nr2);
 //			$row[] = $teamNames[$match->home];
 //			$row[] = $teamNames[$match->guest];
 			$arr[] = $row;
@@ -267,13 +267,13 @@ class tx_cfcleague_mod1_modCompCreateMatchTable {
 		return Array (
 			'table' => Array('<table class="typo3-dblist" cellspacing="0" cellpadding="0" border="0">', '</table><br/>'),
 			'0' => Array( // Format für 1. Zeile
-					'defCol' => Array('<td valign="top" class="c-headLineTable" style="font-weight:bold;padding:2px 5px;">','</td>') // Format f�r jede Spalte in der 1. Zeile
+					'defCol' => Array('<td valign="top" class="c-headLineTable" style="font-weight:bold;padding:2px 5px;">', '</td>') // Format für jede Spalte in der 1. Zeile
 				),
 			'defRow' => Array ( // Formate für alle Zeilen
-					'defCol' => Array('<td valign="middle" style="padding:0px 1px;">','</td>') // Format für jede Spalte in jeder Zeile
+					'defCol' => Array('<td valign="middle" style="padding:0px 1px;">', '</td>') // Format für jede Spalte in jeder Zeile
 			),
 			'defRowEven' => Array ( // Formate für alle Zeilen
-				'defCol' => Array('<td valign="middle" class="db_list_alt" style="padding:0px 1px;">','</td>') // Format für jede Spalte in jeder Zeile
+				'defCol' => Array('<td valign="middle" class="db_list_alt" style="padding:0px 1px;">', '</td>') // Format für jede Spalte in jeder Zeile
 			)
 		);
 	}

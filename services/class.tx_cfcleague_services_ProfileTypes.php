@@ -33,10 +33,10 @@ tx_rnbase::load('tx_rnbase_util_DB');
  */
 class tx_cfcleague_services_ProfileTypes extends t3lib_svbase {
 	static $types = array(
-		1 => array('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles_type_player',1),
-		2 => array('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles_type_coach',2),
-		3 => array('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles_type_referee',3),
-		4 => array('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles_type_supporter',4),
+		1 => array('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles_type_player', 1),
+		2 => array('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles_type_coach', 2),
+		3 => array('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles_type_referee', 3),
+		4 => array('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles_type_supporter', 4),
 	);
 
 	function getProfileTypes() {

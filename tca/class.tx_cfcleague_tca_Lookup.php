@@ -88,8 +88,8 @@ class tx_cfcleague_tca_Lookup {
 		}
 
 //		$config['items'] = array(
-//					Array(tx_rnbase_util_Misc::translateLLL('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition.point_system_2'),1),
-//					Array(tx_rnbase_util_Misc::translateLLL('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition.point_system_3'),0)
+//					Array(tx_rnbase_util_Misc::translateLLL('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition.point_system_2'), 1),
+//					Array(tx_rnbase_util_Misc::translateLLL('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition.point_system_3'), 0)
 //		);
 	}
 	/**
@@ -157,7 +157,7 @@ class tx_cfcleague_tca_Lookup {
 		}
 		else {
 			require_once(t3lib_extMgm::extPath('dam').'tca_media_field.php');
-			$ret = txdam_getMediaTCA('image_field','logo');
+			$ret = txdam_getMediaTCA('image_field', 'logo');
 			unset($ret['config']['MM']);
 			unset($ret['config']['MM_foreign_select']);
 			unset($ret['config']['MM_match_fields']);
@@ -172,7 +172,7 @@ class tx_cfcleague_tca_Lookup {
 		$ret['config']['itemsProcFunc'] = 'tx_cfcleague_tca_Lookup->getLogo4Team';
 		$ret['config']['maxitems'] = '1';
 		$ret['config']['size'] = '1';
-		$ret['config']['items'] = Array(Array('','0'));
+		$ret['config']['items'] = Array(Array('', '0'));
 		
 		return $ret;
 	}
@@ -193,7 +193,7 @@ class tx_cfcleague_tca_Lookup {
 			return $tceforms->sL('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_tca_noclubselected');
 		$config = $PA['fieldConf']['config'];
 
-		$item = $tceforms->getSingleField_typeSelect($table,$field,$row,$PA);
+		$item = $tceforms->getSingleField_typeSelect($table, $field, $row, $PA);
 		if($row['logo']) {
 			if(tx_rnbase_util_TYPO3::isTYPO60OrHigher()) {
 				$fileReference = tx_rnbase_util_TSFAL::getFileReferenceById($row['logo']);
@@ -204,7 +204,7 @@ class tx_cfcleague_tca_Lookup {
 			}
 			else {
 				// Logo anzeigen
-				$currPic = t3lib_BEfunc::getRecord('tx_dam',$row['logo']);
+				$currPic = t3lib_BEfunc::getRecord('tx_dam', $row['logo']);
 				require_once(t3lib_extMgm::extPath('dam').'lib/class.tx_dam_tcefunc.php');
 				$tcefunc = t3lib_div::makeInstance('tx_dam_tcefunc');
 				if(!method_exists($tcefunc, 'renderFileList')) return $item;

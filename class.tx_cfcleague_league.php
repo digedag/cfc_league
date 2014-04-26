@@ -39,11 +39,11 @@ class tx_cfcleague_league{
    */
   function tx_cfcleague_league($uid){
     $this->uid = $uid;
-    $this->record = t3lib_BEfunc::getRecord(TABLE_LEAGUES,$uid);
+    $this->record = t3lib_BEfunc::getRecord(TABLE_LEAGUES, $uid);
   }
 
 	function refresh() {
-		$this->record = t3lib_BEfunc::getRecord(TABLE_LEAGUES,$this->uid);
+		$this->record = t3lib_BEfunc::getRecord(TABLE_LEAGUES, $this->uid);
 		$this->teamNames = null;
   }
   
@@ -51,7 +51,7 @@ class tx_cfcleague_league{
    * Liefert die IDs der zugeordneten Teams als Array
    */
   function getTeamIds(){
-    return t3lib_div::intExplode(',',$this->record['teams']);
+    return t3lib_div::intExplode(',', $this->record['teams']);
   }
   /**
    * Liefert den Generation-String für die Liga
@@ -87,7 +87,7 @@ class tx_cfcleague_league{
 			// Ohne zugeordnete Team, muss nicht gefragt werden
 			if($this->record['teams']) {
 	      $rows = 
-	         tx_cfcleague_db::queryDB('uid,name,short_name,dummy,club','uid IN (' . $this->record['teams'] . ')',
+	         tx_cfcleague_db::queryDB('uid,name,short_name,dummy,club', 'uid IN (' . $this->record['teams'] . ')',
 	              'tx_cfcleague_teams');
 	      $this->teamNames[$asArray]= array();
 	      foreach($rows As $row) {
@@ -125,8 +125,8 @@ class tx_cfcleague_league{
     $groupby = 'round,round_name';
     $orderby = 'round asc';
     
-    return tx_cfcleague_db::queryDB($what,$where,
-              TABLE_GAMES, $groupby,$orderby,0);
+    return tx_cfcleague_db::queryDB($what, $where,
+              TABLE_GAMES, $groupby, $orderby, 0);
   }
   /**
    * Liefert die Anzahl der angesetzten Spielrunden
@@ -139,8 +139,8 @@ class tx_cfcleague_league{
   function getLastMatchNumber() {
     $what = 'max(match_no) AS max_no';
     $where = 'competition="'.$this->uid.'"';
-    $arr = tx_cfcleague_db::queryDB($what,$where,
-              TABLE_GAMES, '','',0);
+    $arr = tx_cfcleague_db::queryDB($what, $where,
+              TABLE_GAMES, '', '', 0);
     return count($arr) ? $arr[0]['max_no'] : 0;
   }
 
@@ -160,7 +160,7 @@ class tx_cfcleague_league{
     if($round)
       $where .= ' AND round='.$round;
 
-    return tx_cfcleague_db::queryDB($what,$where,
+    return tx_cfcleague_db::queryDB($what, $where,
               TABLE_GAMES);
   }
 
@@ -187,8 +187,8 @@ class tx_cfcleague_league{
       $where .= ' AND t1.dummy = 0 AND t2.dummy = 0 ';
     }
 
-    return tx_cfcleague_db::queryDB($what,$where,
-              $from,'','',0);
+    return tx_cfcleague_db::queryDB($what, $where,
+              $from, '', '', 0);
 
 /*
 SELECT tx_cfcleague_games.uid, t1.name, t2.name, goals_home_1,goals_guest_1 

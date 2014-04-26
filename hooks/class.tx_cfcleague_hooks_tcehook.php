@@ -30,7 +30,7 @@ class tx_cfcleague_hooks_tcehook {
 	 * Dieser Hook wird vor der Darstellung eines TCE-Formulars aufgerufen.
 	 * Werte aus der Datenbank können vor deren Darstellung manipuliert werden.
 	 */
-	function getMainFields_preProcess($table,&$row, $tceform) {
+	function getMainFields_preProcess($table, &$row, $tceform) {
 		if($table == 'tx_cfcleague_team_notes') {
 			$teamUid = intval(t3lib_div::_GP('team'));
 			if($teamUid) $row['team'] = $teamUid;
@@ -48,7 +48,7 @@ class tx_cfcleague_hooks_tcehook {
 				// Den Namen aus der DB holen
 				$options['where'] = 'round='.$round .' AND competition='.$compUid;
 				$options['limit'] = 1;
-				$rows = tx_rnbase_util_DB::doSelect('round_name','tx_cfcleague_games', $options);
+				$rows = tx_rnbase_util_DB::doSelect('round_name', 'tx_cfcleague_games', $options);
 				if(count($rows))
 					$row['round_name'] = $rows[0]['round_name'];
 			}
@@ -59,7 +59,7 @@ class tx_cfcleague_hooks_tcehook {
 			$options['orderby'] = 'sorting_foreign asc';
 			$options['enablefieldsoff'] = 1;
 			$types = array();
-			$rows = tx_rnbase_util_DB::doSelect('uid_local', 'tx_cfcleague_profiletypes_mm',$options);
+			$rows = tx_rnbase_util_DB::doSelect('uid_local', 'tx_cfcleague_profiletypes_mm', $options);
 			foreach($rows As $type) {
 				$types[] = $type['uid_local'];
 			}
@@ -77,12 +77,12 @@ class tx_cfcleague_hooks_tcehook {
 	public function processDatamap_preProcessFieldArray(&$incomingFieldArray, $table, $id, &$tcemain)  {
 
 		if($table == 'tx_cfcleague_teams') {
-			$this->checkProfiles($incomingFieldArray,'players', $tcemain);
-			$this->checkProfiles($incomingFieldArray,'coaches', $tcemain);
-			$this->checkProfiles($incomingFieldArray,'supporters', $tcemain);
+			$this->checkProfiles($incomingFieldArray, 'players', $tcemain);
+			$this->checkProfiles($incomingFieldArray, 'coaches', $tcemain);
+			$this->checkProfiles($incomingFieldArray, 'supporters', $tcemain);
 		}
 		if($table == 'tx_cfcleague_competition') {
-			$this->checkProfiles($incomingFieldArray,'teams', $tcemain);
+			$this->checkProfiles($incomingFieldArray, 'teams', $tcemain);
 		}
 		if($table == 'tx_cfcleague_games') {
 			if($incomingFieldArray['arena'] > 0 && !$incomingFieldArray['stadium']) {
@@ -123,7 +123,7 @@ class tx_cfcleague_hooks_tcehook {
    * und setzt die neuen UIDs.
    *
    * @param array $incomingFieldArray
-   * @param string $profileType Spaltenname im Teamdatensatz (players,coaches,supporters)
+   * @param string $profileType Spaltenname im Teamdatensatz (players, coaches, supporters)
    */
   function checkProfiles(&$incomingFieldArray, $profileType, &$tcemain) {
     if(strstr($incomingFieldArray[$profileType], 'NEW')) {

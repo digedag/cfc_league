@@ -86,7 +86,7 @@ class tx_cfcleague_models_TeamNoteType extends tx_rnbase_model_base {
 			return;
 
 		$options['wrapperclass'] = 'tx_cfcleague_models_TeamNoteType';
-		$result = tx_rnbase_util_DB::doSelect('*','tx_cfcleague_note_types',$options, 0);
+		$result = tx_rnbase_util_DB::doSelect('*', 'tx_cfcleague_note_types', $options, 0);
   	
 		foreach($result As $type) {
 			self::$instances[$type->uid] = $type;

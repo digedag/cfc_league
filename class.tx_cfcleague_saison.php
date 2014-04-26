@@ -39,7 +39,7 @@ class tx_cfcleague_saison{
    */
   function tx_cfcleague_saison($uid){
     $this->uid = $uid;
-    $this->record = t3lib_BEfunc::getRecord('tx_cfcleague_saison',$uid);
+    $this->record = t3lib_BEfunc::getRecord('tx_cfcleague_saison', $uid);
   }
 
   /**
@@ -48,7 +48,7 @@ class tx_cfcleague_saison{
   function getCompetitionNames() {
 
     if(!is_array($this->competitionNames)){
-      $rows = tx_cfcleague_db::queryDB('uid, name','1', 'tx_cfcleague_competition','','sorting',0);
+      $rows = tx_cfcleague_db::queryDB('uid, name', '1', 'tx_cfcleague_competition', '', 'sorting', 0);
       $this->competitionNames= array();
       foreach($rows As $row) {
         $this->competitionNames[$row['uid']] = $row['name'];
@@ -64,7 +64,7 @@ class tx_cfcleague_saison{
   function getCompetitions() {
 
     if(!is_array($this->competitions)){
-      $this->competitions = tx_cfcleague_db::queryDB('*','saison=' . $this->uid , 'tx_cfcleague_competition','','sorting',0);
+      $this->competitions = tx_cfcleague_db::queryDB('*', 'saison=' . $this->uid , 'tx_cfcleague_competition', '', 'sorting', 0);
     }
     return $this->competitions;
 

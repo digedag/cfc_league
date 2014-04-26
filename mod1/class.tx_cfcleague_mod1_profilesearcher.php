@@ -54,7 +54,7 @@ class tx_cfcleague_mod1_profilesearcher {
 		$this->data = t3lib_div::_GP('data');
 
 		if(!isset($options['nopersist']))
-			$this->SEARCH_SETTINGS = t3lib_BEfunc::getModuleData(array ('searchterm' => ''),$this->data, $mod->getName() );
+			$this->SEARCH_SETTINGS = t3lib_BEfunc::getModuleData(array ('searchterm' => ''), $this->data, $mod->getName() );
 		else
 			$this->SEARCH_SETTINGS = $this->data;
 	}
@@ -78,7 +78,7 @@ class tx_cfcleague_mod1_profilesearcher {
 		$content = '';
 		$searchTerm = tx_rnbase_util_Misc::validateSearchString($this->SEARCH_SETTINGS['searchterm']);
 		if(!$searchTerm) {
-		  return $this->doc->section($GLOBALS['LANG']->getLL('message').':',$GLOBALS['LANG']->getLL('msg_searchhelp'), 0, 1,ICON_INFO);
+		  return $this->doc->section($GLOBALS['LANG']->getLL('message').':', $GLOBALS['LANG']->getLL('msg_searchhelp'), 0, 1, ICON_INFO);
 		}
 
 		$profiles = $this->searchProfiles($searchTerm);
@@ -131,7 +131,7 @@ class tx_cfcleague_mod1_profilesearcher {
 		else {
 	  	$out = '<p><strong>'.$GLOBALS['LANG']->getLL('msg_no_matches_in_betset').'</strong></p><br/>';
 		}
-		return $this->doc->section($headline.':',$out,0,1,ICON_INFO);
+		return $this->doc->section($headline.':', $out, 0, 1, ICON_INFO);
 	}
 
 	/**

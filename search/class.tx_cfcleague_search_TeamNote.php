@@ -39,7 +39,7 @@ class tx_cfcleague_search_TeamNote extends tx_rnbase_util_SearchBase {
 		$tableMapping['NOTETYPE'] = 'tx_cfcleague_note_types';
 		$tableMapping['TEAM'] = 'tx_cfcleague_teams';
 		// Hook to append other tables
-		tx_rnbase_util_Misc::callHook('cfc_league','search_TeamNote_getTableMapping_hook',
+		tx_rnbase_util_Misc::callHook('cfc_league', 'search_TeamNote_getTableMapping_hook',
 			array('tableMapping' => &$tableMapping), $this);
 		return $tableMapping;
 	}
@@ -61,7 +61,7 @@ class tx_cfcleague_search_TeamNote extends tx_rnbase_util_SearchBase {
 		}
 		
 		// Hook to append other tables
-		tx_rnbase_util_Misc::callHook('cfc_league','search_TeamNote_getJoins_hook',
+		tx_rnbase_util_Misc::callHook('cfc_league', 'search_TeamNote_getJoins_hook',
 			array('join' => &$join, 'tableAliases' => $tableAliases), $this);
 		return $join;
 	}

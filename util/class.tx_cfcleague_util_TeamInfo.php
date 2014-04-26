@@ -76,8 +76,8 @@ class tx_cfcleague_util_TeamInfo {
 		$tableLayout = Array (
 			'table' => Array('<table class="typo3-dblist" width="100%" cellspacing="0" cellpadding="0" border="0">', '</table><br/>'),
 			'defRow' => Array( // Format für 1. Zeile
-				'tr'		=> Array('<tr class="t3-row-header">',"</tr>\n"),
-				'defCol' => Array(tx_rnbase_util_TYPO3::isTYPO42OrHigher() ? '<td>': '<td class="c-headLineTable" style="font-weight:bold;color:white;padding:0 5px;">','</td>') // Format für jede Spalte in der 1. Zeile
+				'tr'		=> Array('<tr class="t3-row-header">', "</tr>\n"),
+				'defCol' => Array(tx_rnbase_util_TYPO3::isTYPO42OrHigher() ? '<td>': '<td class="c-headLineTable" style="font-weight:bold;color:white;padding:0 5px;">', '</td>') // Format für jede Spalte in der 1. Zeile
 			)
 		);
 
@@ -94,7 +94,7 @@ class tx_cfcleague_util_TeamInfo {
 	 */
 	public function getTeamTable(&$doc) {
 		global $LANG;
-		$arr = Array(Array('&nbsp;',$LANG->getLL('label_firstname'),$LANG->getLL('label_lastname'),'&nbsp;','&nbsp;'));
+		$arr = Array(Array('&nbsp;', $LANG->getLL('label_firstname'), $LANG->getLL('label_lastname'), '&nbsp;', '&nbsp;'));
 
 		$this->addProfiles($arr, $this->getTeam()->getCoachNames(), $LANG->getLL('label_profile_coach'), 'coach');
 		$this->addProfiles($arr, $this->getTeam()->getPlayerNames(), $LANG->getLL('label_profile_player'), 'player');
@@ -126,7 +126,7 @@ class tx_cfcleague_util_TeamInfo {
     $tce =& tx_rnbase_util_DB::getTCEmain($tceData);
     $tce->process_datamap();
     
-    return $this->getFormTool()->getDoc()->section('Info:', $LANG->getLL('msg_removedProfileFromTeam'),0,1,ICON_INFO);
+    return $this->getFormTool()->getDoc()->section('Info:', $LANG->getLL('msg_removedProfileFromTeam'), 0, 1, ICON_INFO);
 	}
 	/**
 	 * Add profiles to profile list
@@ -140,14 +140,14 @@ class tx_cfcleague_util_TeamInfo {
 		$i = 1;
 		if($profileNames) foreach($profileNames As $uid => $prof) {
 			if($i == 1)
-				$arr[] = array('','&nbsp;',''); // Leere Zeile als Trenner;
+				$arr[] = array('', '&nbsp;', ''); // Leere Zeile als Trenner;
 			$row = array();
 			$row[] = $i++ == 1 ? $label : '';
 			$row[] = $prof[first_name];
 			$row[] = $prof[last_name];
 			$row[] = $this->getFormTool()->createEditLink('tx_cfcleague_profiles', $uid);
 			$row[] = $this->getFormTool()->createSubmit('remFromTeam['.$type.']', $uid, $LANG->getLL('msg_remove_team_'.$type), array('icon' => 'i/be_users__h.gif', 'infomsg' => 'Remove from Team'));
-			//$row[] = $this->getFormTool()->createLink('&'. 'remProfileUid['.$uid.']',0,'Remove from team',array('icon' => 'delete_record.gif'));
+			//$row[] = $this->getFormTool()->createLink('&'. 'remProfileUid['.$uid.']', 0, 'Remove from team', array('icon' => 'delete_record.gif'));
 			$arr[] = $row;
 		}
 	}

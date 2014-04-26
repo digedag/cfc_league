@@ -40,7 +40,7 @@ if(!tx_rnbase_util_TYPO3::isTYPO62OrHigher())
 	require_once(PATH_typo3.'template.php');
 
 $LANG->includeLLFile('EXT:cfc_league/mod1/locallang.xml');
-$BE_USER->modAccess($MCONF,1);	// This checks permissions and exits if the users has no permission for entry.
+$BE_USER->modAccess($MCONF, 1);	// This checks permissions and exits if the users has no permission for entry.
 	// DEFAULT initialization of a module [END]
 
 require_once(t3lib_extMgm::extPath('cfc_league').'mod1/class.tx_cfcleague_selector.php');
@@ -57,7 +57,7 @@ tx_rnbase::load('tx_rnbase_mod_BaseModule');
  */
 class  tx_cfcleague_module1 extends tx_rnbase_mod_BaseModule {
 	var $pageinfo;
-    var $tabs;
+	var $tabs;
 
     /**
      * Method to get the extension key

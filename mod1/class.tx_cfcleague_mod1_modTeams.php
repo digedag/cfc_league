@@ -22,7 +22,7 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-$GLOBALS['BE_USER']->modAccess($MCONF,1);
+$GLOBALS['BE_USER']->modAccess($MCONF, 1);
 
 tx_rnbase::load('tx_rnbase_util_TYPO3');
 tx_rnbase::load('tx_rnbase_mod_BaseModFunc');
@@ -61,7 +61,7 @@ class tx_cfcleague_mod1_modTeams extends tx_rnbase_mod_BaseModFunc {
 
 		// Anzeige der vorhandenen Ligen
 		$selector = '';
-		$saison = $this->selector->showSaisonSelector($selector,$this->getModule()->getPid());
+		$saison = $this->selector->showSaisonSelector($selector, $this->getModule()->getPid());
 		$content = '';
 
 		if(!($saison && count($saison->getCompetitions()))) {
@@ -69,13 +69,13 @@ class tx_cfcleague_mod1_modTeams extends tx_rnbase_mod_BaseModFunc {
 				$this->pObj->subselector = $selector;
 			else
 				$content .= '<div class="cfcleague_selector">'.$selector.'</div><div class="cleardiv"/>';
-			$content.=$this->doc->section('Info:', $saison ? $LANG->getLL('msg_NoCompetitonsFound') : $LANG->getLL('msg_NoSaisonFound'),0,1,ICON_WARN);
+			$content.=$this->doc->section('Info:', $saison ? $LANG->getLL('msg_NoCompetitonsFound') : $LANG->getLL('msg_NoSaisonFound'), 0, 1, ICON_WARN);
 			return $content;
 		}
 
 		// Anzeige der vorhandenen Ligen
-		$league = $this->selector->showLeagueSelector($selector,$this->getModule()->getPid(),$saison->getCompetitions());
-		$team = $this->selector->showTeamSelector($selector,$this->getModule()->getPid(),$league);
+		$league = $this->selector->showLeagueSelector($selector, $this->getModule()->getPid(), $saison->getCompetitions());
+		$team = $this->selector->showTeamSelector($selector, $this->getModule()->getPid(), $league);
 		if(tx_rnbase_util_TYPO3::isTYPO42OrHigher())
 			$this->pObj->subselector = $selector;
 		else 
@@ -83,7 +83,7 @@ class tx_cfcleague_mod1_modTeams extends tx_rnbase_mod_BaseModFunc {
 
 		$data = t3lib_div::_GP('data');
 		if(!$team){ // Kein Team gefunden
-			$content.=$this->doc->section('Info:', $LANG->getLL('msg_no_team_found'),0,1,ICON_WARN);
+			$content.=$this->doc->section('Info:', $LANG->getLL('msg_no_team_found'), 0, 1, ICON_WARN);
 			return $content;
 		}
 		// Wenn ein Team gefunden ist, dann können wir das Modul schreiben

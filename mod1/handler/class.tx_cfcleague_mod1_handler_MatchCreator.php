@@ -42,7 +42,7 @@ class tx_cfcleague_mod1_handler_MatchCreator {
 		tx_rnbase::load('tx_rnbase_util_DB');
 		$tce =& tx_rnbase_util_DB::getTCEmain($tcaData);
 		$tce->process_datamap();
-		$content .= $mod->getDoc()->section('Message:',$GLOBALS['LANG']->getLL('msg_matches_created'),0,1, ICON_INFO);
+		$content .= $mod->getDoc()->section('Message:', $GLOBALS['LANG']->getLL('msg_matches_created'), 0, 1, ICON_INFO);
 		return $content;
 	}
 	/**
@@ -82,22 +82,22 @@ class tx_cfcleague_mod1_handler_MatchCreator {
 		for($i=0; $i < $maxMatches; $i++){
 			$row = array();
 			$dataArr['uid'] = 'NEW_'.$i;
-			$row[] = $mod->getFormTool()->getTCEForm()->getSoloField($table,$dataArr,'round') . 
-							$mod->getFormTool()->getTCEForm()->getSoloField($table,$dataArr,'round_name');
-			$row[] = $mod->getFormTool()->getTCEForm()->getSoloField($table,$dataArr,'date');
-			$row[] = $mod->getFormTool()->getTCEForm()->getSoloField($table,$dataArr,'status') . 
+			$row[] = $mod->getFormTool()->getTCEForm()->getSoloField($table, $dataArr, 'round') . 
+							$mod->getFormTool()->getTCEForm()->getSoloField($table, $dataArr, 'round_name');
+			$row[] = $mod->getFormTool()->getTCEForm()->getSoloField($table, $dataArr, 'date');
+			$row[] = $mod->getFormTool()->getTCEForm()->getSoloField($table, $dataArr, 'status') . 
 						$mod->getFormTool()->createHidden('data[tx_cfcleague_games][NEW_'.$i.'][pid]', $mod->getPid()).
 						$mod->getFormTool()->createHidden('data[tx_cfcleague_games][NEW_'.$i.'][competition]', $competition->getUid());
 
 
-			$row[] = $mod->getFormTool()->getTCEForm()->getSoloField($table,$dataArr,'home');
-			$row[] = $mod->getFormTool()->getTCEForm()->getSoloField($table,$dataArr,'guest');
+			$row[] = $mod->getFormTool()->getTCEForm()->getSoloField($table, $dataArr, 'home');
+			$row[] = $mod->getFormTool()->getTCEForm()->getSoloField($table, $dataArr, 'guest');
 
 			//$row[] = $mod->getFormTool()->create('data[tx_cfcleague_teams][NEW'.$i.'][pid]', $mod->getPid());
 			$arr[] = $row;
 		}
 		$content .= $mod->getDoc()->table($arr);
-		$content .= $mod->getFormTool()->createSubmit('doCreateMatches',$LANG->getLL('btn_create'), $GLOBALS['LANG']->getLL('msg_create_teams'));
+		$content .= $mod->getFormTool()->createSubmit('doCreateMatches', $LANG->getLL('btn_create'), $GLOBALS['LANG']->getLL('msg_create_teams'));
 		return $content;
 	}
 	

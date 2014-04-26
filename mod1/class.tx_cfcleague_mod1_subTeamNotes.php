@@ -52,7 +52,7 @@ class tx_cfcleague_mod1_subTeamNotes {
 		$srv = tx_cfcleague_util_ServiceRegistry::getTeamService();
 		$types = $srv->getNoteTypes();
 		if(!count($types)) {
-			$content.=$this->mod->doc->section($GLOBALS['LANG']->getLL('message').':',$GLOBALS['LANG']->getLL('msg_create_notetypes'),0,1,ICON_INFO);
+			$content.=$this->mod->doc->section($GLOBALS['LANG']->getLL('message').':', $GLOBALS['LANG']->getLL('msg_create_notetypes'), 0, 1, ICON_INFO);
 			return $content;
 		}
 		// Für jeden Typ einen Block anzeigen
@@ -99,7 +99,7 @@ class tx_cfcleague_mod1_subTeamNotes {
 			'value' => array('decorator' => $decor, 'title' => 'label_value'),
 			'mediatype' => array('decorator' => $decor, 'title' => 'tx_cfcleague_team_notes.mediatype'),
 		);
-		$rows = tx_cfcleague_mod1_decorator::prepareTable($notes,$columns,$this->getFormTool(),$options);
+		$rows = tx_cfcleague_mod1_decorator::prepareTable($notes, $columns, $this->getFormTool(), $options);
 		$out .= $this->mod->getDoc()->table($rows[0]);
 		
 		// We use the mediatype from first entry
@@ -109,7 +109,7 @@ class tx_cfcleague_mod1_subTeamNotes {
 		$options['params'] .= '&team='.$currTeam->getUid();
 		$options['title'] = $GLOBALS['LANG']->getLL('label_create_new') .': ' . $type->getLabel();
 		// Zielseite muss immer die Seite des Teams sein
-		$out .= $this->getFormTool()->createNewButton('tx_cfcleague_team_notes', $currTeam->record['pid'],$options);
+		$out .= $this->getFormTool()->createNewButton('tx_cfcleague_team_notes', $currTeam->record['pid'], $options);
 		return $out.'<br /><br />';
 	}
 	/**
@@ -133,7 +133,7 @@ class tx_cfcleague_mod1_subTeamNotes {
 				}
 				else {
 					// Die Spieler hinzufügen
-					$playerUids = implode(',',tx_cfcleague_profile_create::mergeArrays(t3lib_div::intExplode(',',$currTeam->record['players']), $entryUids));
+					$playerUids = implode(',', tx_cfcleague_profile_create::mergeArrays(t3lib_div::intExplode(',', $currTeam->record['players']), $entryUids));
 					$data['tx_cfcleague_teams'][$currTeam->record['uid']]['players'] = $playerUids;
 							
 					reset($data);
@@ -144,7 +144,7 @@ class tx_cfcleague_mod1_subTeamNotes {
 				}
 			}
 		}
-		return (strlen($out)) ? $this->mod->getDoc()->section($GLOBALS['LANG']->getLL('message').':',$out, 0, 1,ICON_INFO) : '';
+		return (strlen($out)) ? $this->mod->getDoc()->section($GLOBALS['LANG']->getLL('message').':', $out, 0, 1, ICON_INFO) : '';
 	}
 	
 	/**

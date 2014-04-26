@@ -41,7 +41,7 @@ class tx_cfcleague_handleDataInput{
     else
       $PA[items] = array(); 
 
-//    tx_rnbase_util_Debug::debug($PA,'cfcleague');
+//    tx_rnbase_util_Debug::debug($PA, 'cfcleague');
 
   }
 
@@ -87,7 +87,7 @@ class tx_cfcleague_handleDataInput{
 			if($tcaFieldConf['type'] == 'db') {
 				$dbAnalysis = t3lib_div::makeInstance('t3lib_loadDBGroup');
 				$dbAnalysis->registerNonTableValues=0;
-				$dbAnalysis->start($team,$tcaFieldConf['allowed'], '', 0, $tablename, $tcaFieldConf);
+				$dbAnalysis->start($team, $tcaFieldConf['allowed'], '', 0, $tablename, $tcaFieldConf);
 				$valueArray = $dbAnalysis->getValueArray(false);
 				// Abfrage aus Spieldatensatz
 				// Es werden alle Spieler des Teams benötigt
@@ -131,7 +131,7 @@ class tx_cfcleague_handleDataInput{
       }
       $PA[items] = $playerArr;
       // Abschließend noch den Spieler "Unbekannt" hinzufügen! Dieser ist nur in Matchnotes verfügbar
-      $PA[items][] = Array($LANG->getLL('tx_cfcleague.unknown'),'-1');
+      $PA[items][] = Array($LANG->getLL('tx_cfcleague.unknown'), '-1');
     }
     else
       $PA[items] = array();
@@ -160,7 +160,7 @@ class tx_cfcleague_handleDataInput{
       }
       $PA[items] = $playerArr;
       // Abschließend noch den Spieler "Unbekannt" hinzufügen!
-      $PA[items][] = Array($LANG->getLL('tx_cfcleague.unknown'),'-1');
+      $PA[items][] = Array($LANG->getLL('tx_cfcleague.unknown'), '-1');
     }
     else // Ohne Daten müssen wir alle Spieler löschen
       $PA[items] = array();
@@ -170,7 +170,7 @@ class tx_cfcleague_handleDataInput{
    * Sucht die Teams eines Wettbewerbs
    * @param complete_row wenn false wird nur Name und UID für SELECT-Box geliefert
    */
-  function findTeams($competition,$complete_row = '0'){
+  function findTeams($competition, $complete_row = '0'){
     # build SQL for select
     $what = 'uid,name';
     $from = 'tx_cfcleague_teams';
@@ -194,7 +194,7 @@ class tx_cfcleague_handleDataInput{
 
     $rows = array();
     while($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)){
-      $rows[] = $complete_row ? $row : Array($row['name'],$row['uid'],);
+      $rows[] = $complete_row ? $row : Array($row['name'], $row['uid'], );
     }
     $GLOBALS['TYPO3_DB']->sql_free_result($res);
 
@@ -211,9 +211,9 @@ class tx_cfcleague_handleDataInput{
 
     require_once('class.tx_cfcleague_team.php');
     $team = new tx_cfcleague_team($teamId);
-    $coaches = $team->getCoachNames(1,1); // firstEmpty und merge
+    $coaches = $team->getCoachNames(1, 1); // firstEmpty und merge
     foreach($coaches As $uid => $name) {
-      $rows[] = Array($name ,$uid,);
+      $rows[] = Array($name, $uid, );
     }
 
     return $rows;
@@ -229,9 +229,9 @@ class tx_cfcleague_handleDataInput{
 
 		require_once('class.tx_cfcleague_team.php');
 		$team = new tx_cfcleague_team($teamId);
-		$players = $team->getPlayerNames(0,1);
+		$players = $team->getPlayerNames(0, 1);
 		foreach($players As $uid => $name) {
-			$rows[] = Array($name ,$uid,);
+			$rows[] = Array($name, $uid, );
 		}
 		return $rows;
 	}
@@ -243,9 +243,9 @@ class tx_cfcleague_handleDataInput{
     if(intval($teamId) == 0) return rows;
 		require_once('class.tx_cfcleague_team.php');
 		$team = new tx_cfcleague_team($teamId);
-		$players = $team->getSupporterNames(0,1);
+		$players = $team->getSupporterNames(0, 1);
 		foreach($players As $uid => $name) {
-			$rows[] = Array($name ,$uid,);
+			$rows[] = Array($name, $uid, );
 		}
 		return $rows;
 	}
@@ -255,8 +255,8 @@ class tx_cfcleague_handleDataInput{
    * tx_table_name_uid|valuestring
    */
   function getRowId($value) {
-    $ret = t3lib_div::trimExplode('|',$value);
-    $ret = t3lib_div::trimExplode('_',$ret[0]);
+    $ret = t3lib_div::trimExplode('|', $value);
+    $ret = t3lib_div::trimExplode('_', $ret[0]);
     return intval($ret[count($ret)-1]);
   }
 }

@@ -41,7 +41,7 @@ class tx_cfcleague_mod1_decorator {
 				if(!is_array($options['dontcheck']) || !array_key_exists($record['uid'], $options['dontcheck']))
 					$row[] = $formTool->createCheckbox($checkName.'[]', $record['uid']);
 				else
-					$row[] = '<img'.t3lib_iconWorks::skinImg($GLOBALS['BACK_PATH'],'gfx/zoom2.gif','width="11" height="12"').' title="Info: '. $options['dontcheck'][$record['uid']] .'" border="0" alt="" />';
+					$row[] = '<img'.t3lib_iconWorks::skinImg($GLOBALS['BACK_PATH'], 'gfx/zoom2.gif', 'width="11" height="12"').' title="Info: '. $options['dontcheck'][$record['uid']] .'" border="0" alt="" />';
 			}
 			reset($columns);
 			foreach($columns As $column => $data) {
@@ -55,7 +55,7 @@ class tx_cfcleague_mod1_decorator {
 				}
 				elseif(isset($data['decorator'])) {
 					$decor = $data['decorator'];
-					$row[] = $decor->format($record[$column],$column, $record, $entry);
+					$row[] = $decor->format($record[$column], $column, $record, $entry);
 				}
 				else {
 					$row[] = $record[$column];
@@ -81,13 +81,13 @@ class tx_cfcleague_mod1_decorator {
 				if(!is_array($options['dontcheck']) || !array_key_exists($matchRec['uid'], $options['dontcheck']))
 					$row[] = $formTool->createCheckbox('checkMatch[]', $matchRec['uid']);
 				else
-					$row[] = '<img'.t3lib_iconWorks::skinImg($GLOBALS['BACK_PATH'],'gfx/zoom2.gif','width="11" height="12"').' title="Info: '. $options['dontcheck'][$matchRec['uid']] .'" border="0" alt="" />';
+					$row[] = '<img'.t3lib_iconWorks::skinImg($GLOBALS['BACK_PATH'], 'gfx/zoom2.gif', 'width="11" height="12"').' title="Info: '. $options['dontcheck'][$matchRec['uid']] .'" border="0" alt="" />';
 			}
 			if(!$isNoMatch) {
 				reset($columns);
 				foreach($columns As $column => $data) {
 //					if(isset($data['decorator']))
-//						t3lib_div::debug($data['decorator']->format('',''), $column.' - tx_cfcleague_mod1_decorator'); // TODO: remove me
+//						t3lib_div::debug($data['decorator']->format('', ''), $column.' - tx_cfcleague_mod1_decorator'); // TODO: remove me
 					// Hier erfolgt die Ausgabe der Daten für die Tabelle. Wenn eine method angegeben
 					// wurde, dann muss das Spiel als Objekt vorliegen. Es wird dann die entsprechende
 					// Methode aufgerufen. Es kann auch ein Decorator-Objekt gesetzt werden. Dann wird
@@ -98,7 +98,7 @@ class tx_cfcleague_mod1_decorator {
 					}
 					elseif(isset($data['decorator'])) {
 						$decor = $data['decorator'];
-						$row[] = $decor->format($matchRec[$column],$column);
+						$row[] = $decor->format($matchRec[$column], $column);
 					}
 					else {
 						$row[] = $matchRec[$column];
