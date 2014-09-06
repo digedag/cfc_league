@@ -150,9 +150,10 @@ class tx_cfcleague_selector{
 		}
 
 		$TEAM_SETTINGS = t3lib_BEfunc::getModuleData($TEAM_MENU, t3lib_div::_GP('SET'), $this->modName);
-
+		
 		$menu = t3lib_BEfunc::getFuncMenu(
-			$pid, 'SET['.$selectorId.']', $TEAM_SETTINGS[$selectorId], $TEAM_MENU[$selectorId]
+			$pid, 'SET['.$selectorId.']', $TEAM_SETTINGS[$selectorId], 
+			$TEAM_MENU[$selectorId], 'index.php'
 		);
 		$teamObj = null;
 		if($TEAM_SETTINGS[$selectorId] > 0) {
@@ -231,9 +232,11 @@ class tx_cfcleague_selector{
 	}
 
 	/**
-	 * Darstellung der Select-Box mit allen Spielrunden des übergebenen Wettbewerbs. Es wird auf die aktuelle Runde eingestellt.
+	 * Darstellung der Select-Box mit allen Spielrunden des übergebenen Wettbewerbs. Es 
+	 * wird auf die aktuelle Runde eingestellt.
+	 * @return current value
 	 */
-	function showRoundSelector(&$content, $pid, $league){
+	public function showRoundSelector(&$content, $pid, $league){
 		$entries = Array ();
 
 		$objRounds = array();
