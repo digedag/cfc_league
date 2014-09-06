@@ -2,6 +2,9 @@
 Änderungen
 ----------
 
+v1.0.1 (06.09.2014)
+ * Team schedule view in BE for TYPO3 6.2 fixed
+
 v1.0.0 (26.04.2014)
  * Support for TYPO3 6.2
  * Team formations extensible by configuration
