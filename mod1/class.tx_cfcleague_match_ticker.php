@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2007 Rene Nitzsche (rene@system25.de)
+*  (c) 2007-2014 Rene Nitzsche (rene@system25.de)
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -53,7 +53,7 @@ class tx_cfcleague_match_ticker extends tx_rnbase_mod_BaseModFunc {
 		$this->doc = $this->getModule()->getDoc();
 
 		// Selector-Instanz bereitstellen
-		$this->selector = t3lib_div::makeInstance('tx_cfcleague_selector');
+		$this->selector = tx_rnbase::makeInstance('tx_cfcleague_selector');
 		$this->selector->init($this->getModule()->getDoc(), $this->getModule()->getName());
 
 		// Zuerst mal müssen wir die passende Liga auswählen lassen:

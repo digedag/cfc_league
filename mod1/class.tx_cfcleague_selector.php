@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2007 Rene Nitzsche (rene@system25.de)
+*  (c) 2007-2014 Rene Nitzsche (rene@system25.de)
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -77,9 +77,8 @@ class tx_cfcleague_selector{
 
 		$menu = (tx_rnbase_util_TYPO3::isTYPO62OrHigher() && is_array($LEAGUE_MENU['league']) && count($LEAGUE_MENU['league']) == 1) ?
 				$this->buildDummyMenu('SET[league]', $LEAGUE_MENU['league']) :
-				t3lib_BEfunc::getFuncMenu(
-			$pid, 'SET[league]', $this->LEAGUE_SETTINGS['league'], $LEAGUE_MENU['league'], 'index.php'
-		);
+				t3lib_BEfunc::getFuncMenu($pid, 'SET[league]', 
+						$this->LEAGUE_SETTINGS['league'], $LEAGUE_MENU['league'], 'index.php');
 		// In den Content einbauen
 		// Zusätzlich noch einen Edit-Link setzen
 		if($menu) {
@@ -208,7 +207,7 @@ class tx_cfcleague_selector{
 		$menuSettings = t3lib_BEfunc::getModuleData($menuData, t3lib_div::_GP('SET'), $this->modName);
 
 		$menu = t3lib_BEfunc::getFuncMenu(
-			$pid, 'SET['.$selectorId.']', $menuSettings[$selectorId], $menuData[$selectorId]
+			$pid, 'SET['.$selectorId.']', $menuSettings[$selectorId], $menuData[$selectorId], 'index.php'
 		);
 		$currItem = null;
 		if($menuSettings[$selectorId] > 0) {
@@ -283,7 +282,7 @@ class tx_cfcleague_selector{
 		);
 
 		$menu = t3lib_BEfunc::getFuncMenu(
-			$pid, 'SET[match]', $this->MATCH_SETTINGS['match'], $this->MATCH_MENU['match']
+			$pid, 'SET[match]', $this->MATCH_SETTINGS['match'], $this->MATCH_MENU['match'], 'index.php'
 		);
 		// In den Content einbauen
 		// Zusätzlich noch einen Edit-Link setzen
@@ -319,7 +318,7 @@ class tx_cfcleague_selector{
     );
 
     $menu = t3lib_BEfunc::getFuncMenu(
-      $pid, 'SET[group]', $this->GROUP_SETTINGS['group'], $this->GROUP_MENU['group']
+      $pid, 'SET[group]', $this->GROUP_SETTINGS['group'], $this->GROUP_MENU['group'], 'index.php'
     );
     // In den Content einbauen
     $content.=$this->doc->section('', $this->doc->funcMenu($headerSection, $menu));
@@ -347,7 +346,7 @@ class tx_cfcleague_selector{
     );
 
     $menu = t3lib_BEfunc::getFuncMenu(
-      $pid, 'SET[saison]', $this->SAISON_SETTINGS['saison'], $this->SAISON_MENU['saison']
+      $pid, 'SET[saison]', $this->SAISON_SETTINGS['saison'], $this->SAISON_MENU['saison'], 'index.php'
     );
     // In den Content einbauen
     // Wir verzichten hier auf den Link und halten nur den Abstand ein
@@ -414,7 +413,7 @@ class tx_cfcleague_selector{
 			$MENU, t3lib_div::_GP('SET'), $this->MCONF['name'] // Das ist der Name des Moduls
 		);
 		$ret['menu'] = t3lib_BEfunc::getFuncMenu(
-			$pid, 'SET['.$name.']', $SETTINGS[$name], $MENU[$name]
+			$pid, 'SET['.$name.']', $SETTINGS[$name], $MENU[$name], 'index.php'
 		);
 		$ret['value'] = $SETTINGS[$name];
 		return $ret;
