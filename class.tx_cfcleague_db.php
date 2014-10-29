@@ -110,36 +110,35 @@ class tx_cfcleague_db{
     return $tce;
   }
 
-  /**
-   * Backend method to determine if a page is below a page
-   */
-  function getPagePath($uid, $clause='')   {
-    $loopCheck = 100;
-    $output = array(); // We return an array of uids
-    $output[] = $uid;
-    while ($uid!=0 && $loopCheck>0) {
-      $loopCheck--;
-      $res = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
-                 'uid,pid,title,t3ver_oid,t3ver_wsid,t3ver_swapmode',
-                 'pages',
-                 'uid='.intval($uid).
-                         t3lib_BEfunc::deleteClause('pages').
-                         (strlen(trim($clause)) ? ' AND '.$clause : '')
-                      );
-      if ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
-        t3lib_BEfunc::workspaceOL('pages', $row);
-        t3lib_BEfunc::fixVersioningPid('pages', $row);
+	/**
+	 * Backend method to determine if a page is below a page
+	 */
+	public function getPagePath($uid, $clause='')   {
+		$loopCheck = 100;
+		$output = array(); // We return an array of uids
+		$output[] = $uid;
+		while ($uid!=0 && $loopCheck>0) {
+			$loopCheck--;
 
-        $uid = $row['pid'];
-        $output[] = $uid;
+			//'uid,pid,title,t3ver_oid,t3ver_wsid,t3ver_swapmode',
+			$rows = tx_rnbase_util_DB::doSelect('*', 'pages', array(
+				'where' => 'uid='.intval($uid).(strlen(trim($clause)) ? ' AND '.$clause : ''),
+			));
+			if(!empty($rows)) {
+				$row = reset($rows);
+				t3lib_BEfunc::workspaceOL('pages', $row);
+				t3lib_BEfunc::fixVersioningPid('pages', $row);
+
+				$uid = $row['pid'];
+				$output[] = $uid;
 //        $output = '/'.t3lib_div::fixed_lgd_cs(strip_tags($row['title']),$titleLimit).$output;
 //        if ($fullTitleLimit)    $fullOutput = '/'.t3lib_div::fixed_lgd_cs(strip_tags($row['title']),$fullTitleLimit).$fullOutput;
-      } else {
-        break;
-      }
-    }
-    return $output;
-  }
+			} else {
+				break;
+			}
+		}
+		return $output;
+	}
 
 }
 
