@@ -68,9 +68,9 @@ class tx_cfcleague_tca_Lookup {
 	/**
 	 * Liefert die möglichen Spielsysteme.
 	 * Das könnte man noch abhängig von der Sportart machen,
-	 * aber hier reicht es erstmal, wenn wir das über die 
+	 * aber hier reicht es erstmal, wenn wir das über die
 	 * TCA erweitern können!
-	 * 
+	 *
 	 * @param $config
 	 * @return array
 	 */
@@ -128,27 +128,30 @@ class tx_cfcleague_tca_Lookup {
 			// FIXME: Wenn Teams nicht global verwaltet werden, dann kommt der Verein nicht als UID
 			// tx_cfcleague_club_1|M%C3%BCnchen%2C%20FC%20Bayern%20M%C3%BCnchen
 			$items = $srv->getLogos($PA['row']['club']);
-			tx_rnbase::load('tx_rnbase_util_Debug');
 			if(count($items))
-				$PA['items'] = array(); 
+				$PA['items'] = array();
 			foreach ($items As $item) {
 				$currentAvailable = $currentAvailable ? $currentAvailable : ($current == $item->getUid() || $current == 0);
-				$PA['items'][] = array($item->record['title'], $item->getUid());
+				// Je nach Pflege der Daten sind unterschiedliche Felder gefüllt.
+				$label = ($item->record['title'] ? $item->record['title'] : (
+						$item->record['name'] ? $item->record['name'] : $item->record['file']) );
+				$PA['items'][] = array($label, $item->getUid());
 			}
 		}
 	}
 
   /**
-   * Build the TCA entry for logo select-field in team record. All 
+   * Build the TCA entry for logo select-field in team record. All
    * logos from connected club are selectable.
    * @return array
    */
 	public static function getTeamLogoField() {
 		if(tx_rnbase_util_TYPO3::isTYPO60OrHigher()) {
-			$ret = tx_rnbase_util_TSFAL::getMediaTCA('t3logo', array(
+			$ret = tx_rnbase_util_TSFAL::getMediaTCA('logo', array(
 				'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_teams.logo',
 				'config' => array('size' => 1, 'maxitems' => 1),
 			));
+			unset($ret['config']['filter']);
 			foreach($ret['config'] As $key => $field) {
 				if(strpos($key, 'foreign_') === 0) {
 					unset($ret['config'][$key]);
@@ -166,14 +169,13 @@ class tx_cfcleague_tca_Lookup {
 		$ret['label'] = 'Team Logo';
 		// Die Auswahlbox rendern
 		$ret['config']['userFunc'] = 'EXT:cfc_league/tca/class.tx_cfcleague_tca_Lookup.php:&tx_cfcleague_tca_Lookup->getSingleField_teamLogo';
-		
+
 		$ret['config']['type'] = tx_rnbase_util_TYPO3::isTYPO60OrHigher() ? 'user' : 'select';
 		// Die passenden Logos suchen
 		$ret['config']['itemsProcFunc'] = 'tx_cfcleague_tca_Lookup->getLogo4Team';
 		$ret['config']['maxitems'] = '1';
 		$ret['config']['size'] = '1';
 		$ret['config']['items'] = Array(Array('', '0'));
-		
 		return $ret;
 	}
 	/**
@@ -188,19 +190,27 @@ class tx_cfcleague_tca_Lookup {
 		$table = $PA['table'];
 		$field = $PA['field'];
 		$row = $PA['row'];
-		
-		if(!$row['club']) 
+
+		if(!$row['club'])
 			return $tceforms->sL('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_tca_noclubselected');
 		$config = $PA['fieldConf']['config'];
 
 		$item = $tceforms->getSingleField_typeSelect($table, $field, $row, $PA);
 		if($row['logo']) {
 			if(tx_rnbase_util_TYPO3::isTYPO60OrHigher()) {
-				$fileReference = tx_rnbase_util_TSFAL::getFileReferenceById($row['logo']);
-
+				// Im Logo wird die UID des Files gespeichert, NICHT die Referenz!
+				$fileObject = tx_rnbase_util_TSFAL::getFileObjectById($row['logo']);
 				tx_rnbase::load('tx_rnbase_util_TSFAL');
-				$thumbs = tx_rnbase_util_TSFAL::createThumbnails(array($fileReference));
-				$item .= ''.$thumbs[0];
+				$thumbs = tx_rnbase_util_TSFAL::createThumbnails4Files(array($fileObject));
+				$item = '<table cellspacing="0" cellpadding="0" border="0">
+								<tr><td style="padding-bottom:1em" colspan="2">'.$item.'</td></tr>
+								<tr><td>'.$thumbs[0].'</td>
+										<td style="padding-left:1em"><table cellspacing="0" cellpadding="0" border="0">
+										<tr><td style="padding-right:1em">Filename: </td><td>'.$fileObject->getProperty('identifier').'</td></tr>
+										<tr><td style="padding-right:1em">Size: </td><td>'. \TYPO3\CMS\Core\Utility\GeneralUtility::formatSize($fileObject->getProperty('size')).'</td></tr>
+										<tr><td style="padding-right:1em">Dimension: </td><td>'. $fileObject->getProperty('width') .'x'. $fileObject->getProperty('height').' px</td></tr>
+									</table></td></tr></table>';
+//				$item .= ''.$thumbs[0];
 			}
 			else {
 				// Logo anzeigen
