@@ -40,7 +40,7 @@ class tx_cfcleague_mod1_modCompetitions extends tx_rnbase_mod_BaseModFunc {
 
 	/**
 	 * Method getFuncId
-	 * 
+	 *
 	 * @return	string
 	 */
 	function getFuncId() {
@@ -61,7 +61,6 @@ class tx_cfcleague_mod1_modCompetitions extends tx_rnbase_mod_BaseModFunc {
 		// Zuerst mal müssen wir die passende Liga auswählen lassen:
 		// Entweder global über die Datenbank oder die Ligen der aktuellen Seite
 
-		
 		// Selector-Instanz bereitstellen
 		$this->selector = t3lib_div::makeInstance('tx_cfcleague_selector');
 		$this->selector->init($this->getModule()->getDoc(), $this->getModule()->getName());
@@ -73,7 +72,7 @@ class tx_cfcleague_mod1_modCompetitions extends tx_rnbase_mod_BaseModFunc {
 
 		if(tx_rnbase_util_TYPO3::isTYPO42OrHigher())
 			$this->pObj->subselector = $selector;
-		else 
+		else
 			$content .= '<div class="cfcleague_selector">'.$selector.'</div><div class="cleardiv"/>';
 
 		if(!$current_league) {
@@ -82,7 +81,7 @@ class tx_cfcleague_mod1_modCompetitions extends tx_rnbase_mod_BaseModFunc {
 			return $content;
 		}
 
-		$menu = $this->selector->showTabMenu($this->getModule()->getPid(), 'comptools', 
+		$menu = $this->selector->showTabMenu($this->getModule()->getPid(), 'comptools',
 			array('0' => $LANG->getLL('edit_games'),
 						'1' => $LANG->getLL('mod_compteams'),
 //						'2' => $LANG->getLL('create_games'),
@@ -126,7 +125,7 @@ class tx_cfcleague_mod1_modCompetitions extends tx_rnbase_mod_BaseModFunc {
 		$content = $subMod->main($module, $current_league);
 		return $content;
   }
-  
+
   private function showCreateMatchTable(&$current_league, $module) {
 		require_once(t3lib_extMgm::extPath('cfc_league') . 'mod1/class.tx_cfcleague_generator.php');
   	$subMod = t3lib_div::makeInstance('tx_cfcleague_generator');

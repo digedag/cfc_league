@@ -127,7 +127,11 @@ class tx_cfcleague_tca_Lookup {
 			$srv = tx_cfcleague_util_ServiceRegistry::getTeamService();
 			// FIXME: Wenn Teams nicht global verwaltet werden, dann kommt der Verein nicht als UID
 			// tx_cfcleague_club_1|M%C3%BCnchen%2C%20FC%20Bayern%20M%C3%BCnchen
+			// Hier werden bei FAL Referenzen geliefert.
 			$items = $srv->getLogos($PA['row']['club']);
+			// Bei FAL wird die UID der Referenz gespeichert. Damit können die zusätzlichen
+			// Daten der Referenz verwendet werden.
+
 			if(count($items))
 				$PA['items'] = array();
 			foreach ($items As $item) {
@@ -198,10 +202,11 @@ class tx_cfcleague_tca_Lookup {
 		$item = $tceforms->getSingleField_typeSelect($table, $field, $row, $PA);
 		if($row['logo']) {
 			if(tx_rnbase_util_TYPO3::isTYPO60OrHigher()) {
-				// Im Logo wird die UID des Files gespeichert, NICHT die Referenz!
-				$fileObject = tx_rnbase_util_TSFAL::getFileObjectById($row['logo']);
+				// Im Logo wird die UID der Referenz zwischen Verein und dem Logo gespeichert
+				// Damit können die zusätzlichen Metadaten der Referenz genutzt werden
+				$fileObject = tx_rnbase_util_TSFAL::getFileReferenceById($row['logo']);
 				tx_rnbase::load('tx_rnbase_util_TSFAL');
-				$thumbs = tx_rnbase_util_TSFAL::createThumbnails4Files(array($fileObject));
+				$thumbs = tx_rnbase_util_TSFAL::createThumbnails(array($fileObject));
 				$item = '<table cellspacing="0" cellpadding="0" border="0">
 								<tr><td style="padding-bottom:1em" colspan="2">'.$item.'</td></tr>
 								<tr><td>'.$thumbs[0].'</td>
