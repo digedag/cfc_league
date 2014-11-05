@@ -4,7 +4,7 @@ if (!defined ('TYPO3_MODE')) 	die ('Access denied.');
 $globalClubs = intval(tx_rnbase_configurations::getExtensionCfgValue('cfc_league', 'useGlobalClubs')) > 0;
 $clubOrdering = intval(tx_rnbase_configurations::getExtensionCfgValue('cfc_league', 'clubOrdering')) > 0;
 
-$clubArr = $globalClubs ? 
+$clubArr = $globalClubs ?
 		Array (
 				'type' => 'select',
 				'items' => Array (
@@ -62,6 +62,16 @@ $TCA['tx_cfcleague_teams'] = Array (
 				'size' => '30',
 				'max' => '100',
 				'eval' => 'required,trim',
+			)
+		),
+		'tlc' => Array (
+			'exclude' => 1,
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_teams_tlc',
+			'config' => Array (
+				'type' => 'input',
+				'size' => '5',
+				'max' => '3',
+				'eval' => 'trim',
 			)
 		),
 		'agegroup' => Array (
@@ -150,7 +160,7 @@ $TCA['tx_cfcleague_teams'] = Array (
 			)
 		),
 		'comment' => Array (
-			'exclude' => 1,		
+			'exclude' => 1,
 			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_teams.comment',
 			'config' => Array (
 				'type' => 'text',
@@ -177,10 +187,19 @@ $TCA['tx_cfcleague_teams'] = Array (
 				'default' => '0'
 			)
 		),
-
+		'extid' => Array (
+				'exclude' => 1,
+				'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_teams_extid',
+				'config' => Array (
+						'type' => 'input',
+						'size' => '10',
+						'max' => '255',
+						'eval' => 'trim',
+				)
+		),
 	),
 	'types' => Array (
-		'0' => Array('showitem' => 'hidden;;1;;1-1-1, club,logo, t3logo, name, short_name, agegroup, dam_images, t3images, dam_logo, link_report, dummy,
+		'0' => Array('showitem' => 'hidden;;1;;1-1-1, club,logo, t3logo, name, short_name, tlc, agegroup, dam_images, t3images, dam_logo, link_report, dummy, extid,
 		--div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_teams_tab_members,coaches, players, supporters, players_comment, coaches_comment, supporters_comment, comment;;;richtext[paste|bold|italic|underline|formatblock|class|left|center|right|orderedlist|unorderedlist|outdent|indent|link|image]:rte_transform[mode=ts]')
 	),
 	'palettes' => Array (

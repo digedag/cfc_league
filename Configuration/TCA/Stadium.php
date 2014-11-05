@@ -195,9 +195,19 @@ $TCA['tx_cfcleague_stadiums'] = Array (
 				'maxitems' => 1,
 			)
 		),
+		'extid' => Array (
+				'exclude' => 1,
+				'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_teams_extid',
+				'config' => Array (
+						'type' => 'input',
+						'size' => '5',
+						'max' => '3',
+						'eval' => 'trim',
+				)
+		),
 	),
 	'types' => Array (
-			'0' => Array('showitem' => 'name,altname,capacity,logo,t3logo,pictures,t3pictures,clubs,
+			'0' => Array('showitem' => 'name,altname,capacity,logo,t3logo,pictures,t3pictures,clubs,extid,
 						--div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_stadiums_tab_description,description;;4;richtext[paste|bold|italic|underline|formatblock|class|left|center|right|orderedlist|unorderedlist|outdent|indent|link|image]:rte_transform[mode=ts],description2;;4;richtext[paste|bold|italic|underline|formatblock|class|left|center|right|orderedlist|unorderedlist|outdent|indent|link|image]:rte_transform[mode=ts],
 						--div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_stadiums_tab_location,street,city,zip,country,countrycode,lng,lat,address')
 	),

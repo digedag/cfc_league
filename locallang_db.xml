@@ -94,6 +94,8 @@
 			<label index="tx_cfcleague_teams.logo">Alternative team logo</label>
 			<label index="tx_cfcleague_teams.link_report">Enable link to team page</label>
 			<label index="tx_cfcleague_teams.dummy">Free of play</label>
+			<label index="tx_cfcleague_teams_tlc">Three letter code</label>
+			<label index="tx_cfcleague_teams_extid">External ID</label>
 			<label index="tx_cfcleague_games">Match</label>
 			<label index="tx_cfcleague_games.tab_lineup">Line-up</label>
 			<label index="tx_cfcleague_games.tab_lineup_stat">Line-up (static)</label>
@@ -156,6 +158,7 @@
 			<label index="tx_cfcleague_games.goals_guest_ap">Goals Guest after Penalty</label>
 			<label index="tx_cfcleague_games_video">Video</label>
 			<label index="tx_cfcleague_games_videoimg">Preview image for video</label>
+			<label index="tx_cfcleague_games_extid">External ID</label>
 			<label index="tx_cfcleague_profiles">Profile</label>
 			<label index="tx_cfcleague_profiles_tab_description">Description</label>
 			<label index="tx_cfcleague_profiles.first_name">First name</label>
@@ -321,6 +324,8 @@
 			<label index="tx_cfcleague_teams.logo">Alternatives Team-Logo</label>
 			<label index="tx_cfcleague_teams.link_report">Link auf Team-Seite möglich</label>
 			<label index="tx_cfcleague_teams.dummy">Spielfrei</label>
+			<label index="tx_cfcleague_teams_tlc">3-Zeichen-Kürzel</label>
+			<label index="tx_cfcleague_teams_extid">Externe ID</label>
 			<label index="tx_cfcleague_games">Spiel</label>
 			<label index="tx_cfcleague_games.tab_lineup">Aufstellung</label>
 			<label index="tx_cfcleague_games.tab_lineup_stat">Aufstellung (statisch)</label>
@@ -379,6 +384,7 @@
 			<label index="tx_cfcleague_games.goals_guest_ap">Tore Gast n.E.</label>
 			<label index="tx_cfcleague_games_video">Video</label>
 			<label index="tx_cfcleague_games_videoimg">Vorschaubild für Video</label>
+			<label index="tx_cfcleague_games_extid">Externe ID</label>
 			<label index="tx_cfcleague_profiles">Person</label>
 			<label index="tx_cfcleague_profiles_tab_description">Beschreibung</label>
 			<label index="tx_cfcleague_profiles.stage_name">Künstlername</label>

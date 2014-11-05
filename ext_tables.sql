@@ -177,6 +177,7 @@ CREATE TABLE tx_cfcleague_teams (
 	club int(11) DEFAULT '0' NOT NULL,
 	name varchar(100) DEFAULT '' NOT NULL,
 	short_name varchar(100) DEFAULT '' NOT NULL,
+	tlc varchar(3) DEFAULT '' NOT NULL,
 	agegroup int(11) DEFAULT '0' NOT NULL,
 	coaches text,
 	players text,
@@ -192,6 +193,7 @@ CREATE TABLE tx_cfcleague_teams (
 	coaches_comment text,
 	supporters_comment text,
 	link_report tinyint(4) DEFAULT '0' NOT NULL,
+	extid varchar(255) DEFAULT '' NOT NULL,
 
 	PRIMARY KEY (uid),
 	KEY parent (pid)
@@ -272,6 +274,7 @@ CREATE TABLE tx_cfcleague_games (
 	is_penalty tinyint(3) DEFAULT '0' NOT NULL,
 	goals_home_ap int(11) DEFAULT '0' NOT NULL,
 	goals_guest_ap int(11) DEFAULT '0' NOT NULL,
+	extid varchar(255) DEFAULT '' NOT NULL,
 	
 	PRIMARY KEY (uid),
 	KEY parent (pid)
@@ -426,6 +429,7 @@ CREATE TABLE tx_cfcleague_stadiums (
 	t3pictures text NOT NULL,
 	clubs int(11) DEFAULT '0' NOT NULL,
 	address int(11) DEFAULT '0' NOT NULL,
+	extid varchar(255) DEFAULT '' NOT NULL,
 
 	PRIMARY KEY (uid),
 	KEY parent (pid)

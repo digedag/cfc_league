@@ -39,11 +39,11 @@ $TCA['tx_cfcleague_games'] = Array (
 		),
 		'home' => Array (
 			'exclude' => 0,
-			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.home',		
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.home',
 			'config' => Array (
-				'type' => 'select',	
-				'foreign_table' => 'tx_cfcleague_teams',	
-				'foreign_table_where' => 'AND tx_cfcleague_teams.pid=###CURRENT_PID### ORDER BY tx_cfcleague_teams.uid',	
+				'type' => 'select',
+				'foreign_table' => 'tx_cfcleague_teams',
+				'foreign_table_where' => 'AND tx_cfcleague_teams.pid=###CURRENT_PID### ORDER BY tx_cfcleague_teams.uid',
 				'itemsProcFunc' => 'tx_cfcleague_handleDataInput->getTeams4Competition',
 				'size' => 1,
 				'minitems' => 0,
@@ -52,7 +52,7 @@ $TCA['tx_cfcleague_games'] = Array (
 		),
 		'guest' => Array (
 			'exclude' => 0,
-			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.guest',		
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.guest',
 			'config' => Array (
 				'type' => 'select',
 				'foreign_table' => 'tx_cfcleague_teams',
@@ -175,7 +175,7 @@ $TCA['tx_cfcleague_games'] = Array (
 			)
 		),
 		'coach_guest' => Array (
-			'exclude' => 0,		
+			'exclude' => 0,
 			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.coach_guest',
 			'config' => Array (
 				'type' => 'select',
@@ -358,8 +358,8 @@ $TCA['tx_cfcleague_games'] = Array (
 				'default' => 0
 			)
 		),
-		'goals_home_2' => Array (		
-			'exclude' => 1,		
+		'goals_home_2' => Array (
+			'exclude' => 1,
 			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.goals_home_2',
 			'config' => Array (
 				'type' => 'input',
@@ -373,8 +373,8 @@ $TCA['tx_cfcleague_games'] = Array (
 				'default' => 0
 			)
 		),
-		'goals_guest_2' => Array (		
-			'exclude' => 1,		
+		'goals_guest_2' => Array (
+			'exclude' => 1,
 			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.goals_guest_2',
 			'config' => Array (
 				'type' => 'input',
@@ -448,7 +448,7 @@ $TCA['tx_cfcleague_games'] = Array (
 				'default' => 0
 			)
 		),
-		
+
 		'date' => Array (
 			'exclude' => 1,
 			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.date',
@@ -478,7 +478,7 @@ $TCA['tx_cfcleague_games'] = Array (
 			)
 		),
 		'game_report_author' => Array (
-			'exclude' => 1,		
+			'exclude' => 1,
 			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.game_report_author',
 			'config' => Array (
 				'type' => 'input',
@@ -488,7 +488,7 @@ $TCA['tx_cfcleague_games'] = Array (
 			)
 		),
 		'liveticker_author' => Array (
-			'exclude' => 1,		
+			'exclude' => 1,
 			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.liveticker_author',
 			'config' => Array (
 				'type' => 'input',
@@ -498,7 +498,7 @@ $TCA['tx_cfcleague_games'] = Array (
 			)
 		),
 		'game_report' => Array (
-			'exclude' => 1,		
+			'exclude' => 1,
 			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.game_report',
 			'config' => Array (
 				'type' => 'text',
@@ -517,9 +517,9 @@ $TCA['tx_cfcleague_games'] = Array (
 				),
 			)
 		),
-		'visitors' => Array (		
-			'exclude' => 1,		
-			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.visitors',		
+		'visitors' => Array (
+			'exclude' => 1,
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.visitors',
 			'config' => Array (
 				'type' => 'input',
 				'size' => '4',
@@ -542,9 +542,9 @@ $TCA['tx_cfcleague_games'] = Array (
 			)
 		),
 
-		'goals_home_et' => Array (		
-			'exclude' => 1,		
-			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.goals_home_et',		
+		'goals_home_et' => Array (
+			'exclude' => 1,
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.goals_home_et',
 			'config' => Array (
 				'type' => 'input',
 				'size' => '4',
@@ -558,9 +558,9 @@ $TCA['tx_cfcleague_games'] = Array (
 				'default' => 0
 			)
 		),
-		'goals_guest_et' => Array (		
-			'exclude' => 1,		
-			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.goals_guest_et',		
+		'goals_guest_et' => Array (
+			'exclude' => 1,
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.goals_guest_et',
 			'config' => Array (
 				'type' => 'input',
 				'size' => '4',
@@ -583,9 +583,9 @@ $TCA['tx_cfcleague_games'] = Array (
 			)
 		),
 
-		'goals_home_ap' => Array (		
-			'exclude' => 1,		
-			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.goals_home_ap',		
+		'goals_home_ap' => Array (
+			'exclude' => 1,
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.goals_home_ap',
 			'config' => Array (
 				'type' => 'input',
 				'size' => '4',
@@ -599,9 +599,9 @@ $TCA['tx_cfcleague_games'] = Array (
 				'default' => 0
 			)
 		),
-		'goals_guest_ap' => Array (		
-			'exclude' => 1,		
-			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.goals_guest_ap',		
+		'goals_guest_ap' => Array (
+			'exclude' => 1,
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.goals_guest_ap',
 			'config' => Array (
 				'type' => 'input',
 				'size' => '4',
@@ -613,13 +613,23 @@ $TCA['tx_cfcleague_games'] = Array (
 					'lower' => '0'
 				),
 				'default' => 0
+			)
+		),
+		'extid' => Array (
+			'exclude' => 1,
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games_extid',
+			'config' => Array (
+				'type' => 'input',
+				'size' => '30',
+				'max' => '255',
+				'eval' => 'trim',
 			)
 		),
 	),
 	'types' => Array (
-	// goals_home_1, goals_guest_1, goals_home_2, goals_guest_2, 
-		'0' => Array('showitem' => 
-			'hidden;;1;;1-1-1,match_no,competition,home,guest,round,round_name,date,addinfo,status;;6,sets,arena,stadium,visitors, 
+	// goals_home_1, goals_guest_1, goals_home_2, goals_guest_2,
+		'0' => Array('showitem' =>
+			'hidden;;1;;1-1-1,match_no,competition,home,guest,round,round_name,date,addinfo,status;;6,sets,arena,stadium,visitors,extid,
 			--div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.tab_lineup,coach_home, players_home, substitutes_home, system_home, system_guest, coach_guest, players_guest, substitutes_guest, referee, assists,
 			--div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.tab_lineup_stat,players_home_stat, substitutes_home_stat, players_guest_stat, substitutes_guest_stat, scorer_home_stat, scorer_guest_stat,
 			--div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.tab_score, is_extratime;;2, is_penalty;;3;;1-1-1,
@@ -655,7 +665,7 @@ if(t3lib_extMgm::isLoaded('rgmediaimages')) {
 		'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games_videoimg',
 		'config' => Array (
 			'type' => 'text',
-			'cols' => '30',	
+			'cols' => '30',
 			'rows' => '5',
 			'wizards' => Array(
 				'_PADDING' => 2,
@@ -666,7 +676,7 @@ if(t3lib_extMgm::isLoaded('rgmediaimages')) {
 						'icon' => t3lib_extMgm::extRelPath('rgmediaimages').'wizard/icon.png',
 						'script' => t3lib_extMgm::extRelPath('rgmediaimages').'wizard/index.php?table=tx_cfcleague_games&config=videoimg&internal=video',
 						'JSopenParams' => 'height=750,width=900,status=0,menubar=0,scrollbars=0',
-						'notNewRecords' => 1, 
+						'notNewRecords' => 1,
 				),
         ),
 		)
