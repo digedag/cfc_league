@@ -27,7 +27,7 @@ require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
 
 /**
  * Service for accessing stadiums
- * 
+ *
  * @author Rene Nitzsche
  */
 class tx_cfcleague_services_Competition extends t3lib_svbase {
@@ -69,7 +69,7 @@ class tx_cfcleague_services_Competition extends t3lib_svbase {
 			$ret = intval($rows[0]['matches']);
 		return $ret;
 	}
-	
+
 	/**
 	 * Search database for competitions
 	 *
@@ -89,7 +89,7 @@ class tx_cfcleague_services_Competition extends t3lib_svbase {
 	/**
 	 * Returns all available table types for a TCA select item
 	 *
-	 * @return array 
+	 * @return array
 	 */
 	public function getSports4TCA() {
 		$types = array();
@@ -106,6 +106,20 @@ class tx_cfcleague_services_Competition extends t3lib_svbase {
 			$items[] = array(tx_rnbase_util_Misc::translateLLL($typedef[0]), $typedef[1]);
 		}
 		return $items;
+	}
+	/**
+	 *
+	 * @param tx_cfcleague_models_Competition $competition
+	 */
+	public function checkReferences($competition) {
+		$ret = array();
+		$fields = array();
+		$fields['MATCH.COMPETITION'][OP_EQ_INT] = $competition->getUid();
+		$options['count'] = 1;
+		$result = tx_cfcleague_util_ServiceRegistry::getMatchService()->search($fields, $options);
+		if($result > 0)
+			$ret['tx_cfcleague_games'] = $result;
+		return $ret;
 	}
 }
 

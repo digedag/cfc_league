@@ -53,6 +53,20 @@ class tx_cfcleague_hooks_cmhooks {
 				tx_cfcleague_util_Misc::tceError('LLL:EXT:cfc_league/locallang_db.xml:label_msg_refError', $addInfo);
 			}
 		}
+		elseif($command == 'delete' && $table == 'tx_cfcleague_competition') {
+			$competition = tx_rnbase::makeInstance('tx_cfcleague_models_Competition', $id);
+			$refArr = tx_cfcleague_util_ServiceRegistry::getCompetitionService()->checkReferences($competition);
+			if(count($refArr) > 0) {
+				// Abbruch
+				$addInfo = '<p>';
+				foreach($refArr As $table => $data) {
+					$addInfo .= '<b>'.$table . ':</b> ' . $data . '<br />';
+				}
+				$addInfo .= '</p>';
+				tx_rnbase::load('tx_cfcleague_util_Misc');
+				tx_cfcleague_util_Misc::tceError('LLL:EXT:cfc_league/locallang_db.xml:label_msg_refError', $addInfo);
+			}
+		}
 	}
 
 
@@ -70,11 +84,11 @@ class tx_cfcleague_hooks_cmhooks {
 
 
 	/**
-	 * 
+	 *
 	 * Prints out the error
 	 * @param 	String 	$error
 	 */
-	
+
 	function error($error)	{
 		$error_doc = t3lib_div::makeInstance('template');
 		$error_doc->backPath = '';
@@ -83,22 +97,22 @@ class tx_cfcleague_hooks_cmhooks {
 		$content.= '
 			<br/><br/>
 			<table border="0" cellpadding="1" cellspacing="1" width="300" align="center">';
-	
+
 		$content.='	<tr class="bgColor5">
 					<td colspan="2" align="center"><strong>'.$GLOBALS['LANG']->sL('LLL:EXT:commerce/locallang_be_errors.php:error', 1).'</strong></td>
 				</tr>';
-	
+
 		$content.='
 				<tr class="bgColor4">
 					<td valign="top"><img'.t3lib_iconWorks::skinImg('', 'gfx/icon_fatalerror.gif', 'width="18" height="16"').' alt="" /></td>
 					<td>'.$GLOBALS['LANG']->sL($error, 0).'</td>
 				</tr>';
-		
+
 
 		$content.='
 				<tr>
 					<td colspan="2" align="center"><br />'.
-				
+
 					'<form action="'.htmlspecialchars($_SERVER["HTTP_REFERER"]).'"><input type="submit" value="'.$GLOBALS['LANG']->sL('LLL:EXT:commerce/locallang_be_errors.php:continue', 1).'" onclick="document.location='.htmlspecialchars($_SERVER["HTTP_REFERER"]).'return false;" /></form>'.
 					'</td>
 				</tr>';
@@ -107,7 +121,7 @@ class tx_cfcleague_hooks_cmhooks {
 
 		$content.= $error_doc->endPage();
 		echo $content;
-		exit;	
+		exit;
 	}
 }
 

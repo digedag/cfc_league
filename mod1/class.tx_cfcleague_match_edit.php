@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2007-2013 Rene Nitzsche (rene@system25.de)
+*  (c) 2007-2014 Rene Nitzsche (rene@system25.de)
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -45,7 +45,7 @@ class tx_cfcleague_match_edit  {
 		$formTool = $module->getFormTool();
 		$this->formTool = $formTool;
 		$LANG->includeLLFile('EXT:cfc_league/locallang_db.xml');
-    
+
 		// Zuerst mal müssen wir die passende Liga auswählen lassen:
 		$content = '';
 		$content.=$module->getDoc()->spacer(5);
@@ -90,7 +90,7 @@ class tx_cfcleague_match_edit  {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param tx_cfcleague_models_Team $currentTeam
 	 * @param int $current_round
 	 * @param tx_cfcleague_league $current_league
@@ -115,7 +115,7 @@ class tx_cfcleague_match_edit  {
 		$options['orderby']['MATCH.DATE'] = 'ASC';
 		$matchTable->getFields($fields, $options);
 		$matches = $service->search($fields, $options);
-		
+
 		return $matches;
 	}
 	private function makeTeamSelector(&$content, $pid, $current_league) {
@@ -146,7 +146,7 @@ class tx_cfcleague_match_edit  {
 	private function setModule($module) {
 		$this->module = $module;
 	}
-	
+
 	function getFooter($current_league, $current_round, $pid, $formTool) {
 		$params['params'] = '&competition='.$current_league->uid;
 		if($current_round)
@@ -242,8 +242,8 @@ class tx_cfcleague_match_edit  {
         $row = array();
         $isHomeDummy = $game->getHome()->isDummy();
         $row['team'] = $isHomeDummy ? $game->getGuest()->getName() : $game->getHome()->getName();
-        $row['team_edit'] = $this->formTool->createEditLink('tx_cfcleague_teams', 
-                                     ($isHomeDummy ? $game->record['guest'] : $game->record['home']), 
+        $row['team_edit'] = $this->formTool->createEditLink('tx_cfcleague_teams',
+                                     ($isHomeDummy ? $game->record['guest'] : $game->record['home']),
                                      ($isHomeDummy ? $game->getGuest()->getNameShort() : $game->getHome()->getNameShort()));
         $row['match_edit'] = $this->formTool->createEditLink('tx_cfcleague_games', $game->getUid());
         $arr[1][] = $row;
