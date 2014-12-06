@@ -345,16 +345,16 @@ class tx_cfcleague_match_ticker extends tx_rnbase_mod_BaseModFunc {
     // TS-Config der aktuellen Seite laden, um die Anzahl der Felder zu ermitteln
 		$pageTSconfig = t3lib_BEfunc::getPagesTSconfig($this->getModule()->getPid());
 		$inputFields = (is_array($pageTSconfig) && is_array($pageTSconfig['tx_cfcleague.']['matchTickerCfg.'])) ?
-			intval($pageTSconfig['tx_cfcleague.']['matchTickerCfg.']['numberOfInputFields']) : 3;
+			intval($pageTSconfig['tx_cfcleague.']['matchTickerCfg.']['numberOfInputFields']) : 4;
 		$cols = (is_array($pageTSconfig) && is_array($pageTSconfig['tx_cfcleague.']['matchTickerCfg.'])) ?
-			intval($pageTSconfig['tx_cfcleague.']['matchTickerCfg.']['commentFieldCols']) : 30;
+			intval($pageTSconfig['tx_cfcleague.']['matchTickerCfg.']['commentFieldCols']) : 35;
 		$rows = (is_array($pageTSconfig) && is_array($pageTSconfig['tx_cfcleague.']['matchTickerCfg.'])) ?
 			intval($pageTSconfig['tx_cfcleague.']['matchTickerCfg.']['commentFieldRows']) : 3;
 
 		$types = $this->getTickerTypes();
 
-		// Wenn kein sinnvoller Wert vorhanden ist, bleibt der Standard bei 3
-		$inputFields = $inputFields ? $inputFields : 3;
+		// Wenn kein sinnvoller Wert vorhanden ist, bleibt der Standard bei 4
+		$inputFields = $inputFields ? $inputFields : 4;
     for($i=0; $i < $inputFields; $i++){
       $row = array();
 
