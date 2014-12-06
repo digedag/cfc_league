@@ -77,14 +77,14 @@ class tx_cfcleague_selector{
 
 		$menu = (tx_rnbase_util_TYPO3::isTYPO62OrHigher() && is_array($LEAGUE_MENU['league']) && count($LEAGUE_MENU['league']) == 1) ?
 				$this->buildDummyMenu('SET[league]', $LEAGUE_MENU['league']) :
-				t3lib_BEfunc::getFuncMenu($pid, 'SET[league]', 
+				t3lib_BEfunc::getFuncMenu($pid, 'SET[league]',
 						$this->LEAGUE_SETTINGS['league'], $LEAGUE_MENU['league'], 'index.php');
 		// In den Content einbauen
 		// Zusätzlich noch einen Edit-Link setzen
 		if($menu) {
 			$links = $this->getFormTool()->createEditLink('tx_cfcleague_competition', $this->LEAGUE_SETTINGS['league'], '');
 			// Jetzt noch den Cache-Link
-			$links .= ' ' . $this->getFormTool()->createLink('&clearCache=1', $pid, '<img'.t3lib_iconWorks::skinImg($GLOBALS['BACK_PATH'], 'gfx/clear_all_cache.gif', 'width="11" height="12"').' title="Statistik-Cache leeren" border="0" alt="" />');
+			$links .= ' ' . $this->getFormTool()->createLink('&clearCache=1', $pid, '<img'.t3lib_iconWorks::skinImg($GLOBALS['BACK_PATH'], 'gfx/clear_all_cache.gif', 'width="11" height="12"').' title="###LABEL_CLEAR_STATS_CACHE###" border="0" alt="" />');
 			$links .= $this->getFormTool()->createNewLink('tx_cfcleague_competition', $pid, '');
 			$menu = '<div class="cfcselector"><div class="selector">' . $menu . '</div><div class="links">' . $links . '</div></div>';
 		}
@@ -94,7 +94,7 @@ class tx_cfcleague_selector{
 
 		if(t3lib_div::_GP('clearCache') && $this->LEAGUE_SETTINGS['league']) {
 			// Hook aufrufen
-			tx_rnbase_util_Misc::callHook('cfc_league', 'clearStatistics_hook', 
+			tx_rnbase_util_Misc::callHook('cfc_league', 'clearStatistics_hook',
 				array('compUid' => $this->LEAGUE_SETTINGS['league']), $this);
 
 //			if (is_object($serviceObj = t3lib_div::makeInstanceService('memento'))) {
@@ -115,7 +115,7 @@ class tx_cfcleague_selector{
 		// Also sieht man nicht, wo man sich befindet. Somit wird eine Dummy-Box
 		// benötigt.
 		$options = array();
-		
+
 		foreach ($menuItems as $value => $label) {
 			$options[] = '<option value="' . htmlspecialchars($value) . '" selected="selected">' . htmlspecialchars($label, ENT_COMPAT, 'UTF-8', FALSE) . '</option>';
 		}
@@ -149,9 +149,9 @@ class tx_cfcleague_selector{
 		}
 
 		$TEAM_SETTINGS = t3lib_BEfunc::getModuleData($TEAM_MENU, t3lib_div::_GP('SET'), $this->modName);
-		
+
 		$menu = t3lib_BEfunc::getFuncMenu(
-			$pid, 'SET['.$selectorId.']', $TEAM_SETTINGS[$selectorId], 
+			$pid, 'SET['.$selectorId.']', $TEAM_SETTINGS[$selectorId],
 			$TEAM_MENU[$selectorId], 'index.php'
 		);
 		$teamObj = null;
@@ -231,7 +231,7 @@ class tx_cfcleague_selector{
 	}
 
 	/**
-	 * Darstellung der Select-Box mit allen Spielrunden des übergebenen Wettbewerbs. Es 
+	 * Darstellung der Select-Box mit allen Spielrunden des übergebenen Wettbewerbs. Es
 	 * wird auf die aktuelle Runde eingestellt.
 	 * @return current value
 	 */
@@ -312,7 +312,7 @@ class tx_cfcleague_selector{
     );
     foreach($groups as $idx=>$group){
       $this->GROUP_MENU['group'][$group['uid']] = $group['name'];
-    } 
+    }
     $this->GROUP_SETTINGS = t3lib_BEfunc::getModuleData(
       $this->GROUP_MENU, t3lib_div::_GP('SET'), $this->MCONF['name'] // Das ist der Name des Moduls
     );
@@ -340,7 +340,7 @@ class tx_cfcleague_selector{
     );
     foreach($saisons as $idx=>$saison){
       $this->SAISON_MENU['saison'][$saison['uid']] = $saison['name'];
-    } 
+    }
     $this->SAISON_SETTINGS = t3lib_BEfunc::getModuleData(
       $this->SAISON_MENU, t3lib_div::_GP('SET'), $this->MCONF['name'] // Das ist der Name des Moduls
     );
@@ -398,7 +398,7 @@ class tx_cfcleague_selector{
 		$ret['menu'] = $out;
 		$ret['value'] = $SETTINGS[$name];
 		return $ret;
-		
+
 		// jumpToUrl('index.php?&amp;id=5&amp;SET[teamtools]='+this.options[this.selectedIndex].value, this);
 	}
 	/**
