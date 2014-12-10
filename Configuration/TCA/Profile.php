@@ -13,7 +13,7 @@ $TCA['tx_cfcleague_profiles'] = Array (
 	),
 	'feInterface' => $TCA['tx_cfcleague_profiles']['feInterface'],
 	'columns' => Array (
-		'hidden' => Array (		
+		'hidden' => Array (
 			'exclude' => 1,
 			'label' => 'LLL:EXT:lang/locallang_general.xml:LGL.hidden',
 			'config' => Array (
@@ -21,23 +21,23 @@ $TCA['tx_cfcleague_profiles'] = Array (
 				'default' => '0'
 			)
 		),
-		'first_name' => Array (		
-			'exclude' => 1,		
-			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles.first_name',		
+		'first_name' => Array (
+			'exclude' => 1,
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles.first_name',
 			'config' => Array (
-				'type' => 'input',	
-				'size' => '30',	
-				'max' => '50',	
+				'type' => 'input',
+				'size' => '30',
+				'max' => '50',
 				'eval' => 'trim',
 			)
 		),
-		'last_name' => Array (		
-			'exclude' => 1,		
-			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles.last_name',		
+		'last_name' => Array (
+			'exclude' => 1,
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles.last_name',
 			'config' => Array (
-				'type' => 'input',	
-				'size' => '30',	
-				'max' => '70',	
+				'type' => 'input',
+				'size' => '30',
+				'max' => '70',
 				'eval' => 'required,trim',
 			)
 		),
@@ -45,8 +45,8 @@ $TCA['tx_cfcleague_profiles'] = Array (
 			'exclude' => 1,
 			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles.stage_name',
 			'config' => Array (
-				'type' => 'input',	
-				'size' => '30',	
+				'type' => 'input',
+				'size' => '30',
 				'max' => '70',
 				'eval' => 'trim',
 			)
@@ -89,18 +89,18 @@ $TCA['tx_cfcleague_profiles'] = Array (
 				'eval' => 'trim',
 			)
 		),
-		'nationality' => Array (		
-			'exclude' => 1,		
-			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles.nationality',		
+		'nationality' => Array (
+			'exclude' => 1,
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles.nationality',
 			'config' => Array (
-				'type' => 'input',	
-				'size' => '30',	
+				'type' => 'input',
+				'size' => '30',
 				'eval' => 'trim',
 			)
 		),
-		'height' => Array (		
-			'exclude' => 1,		
-			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles.height',		
+		'height' => Array (
+			'exclude' => 1,
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles.height',
 			'config' => Array (
 				'type' => 'input',
 				'size' => '4',
@@ -114,9 +114,9 @@ $TCA['tx_cfcleague_profiles'] = Array (
 				'default' => 0
 			)
 		),
-		'weight' => Array (		
-			'exclude' => 1,		
-			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles.weight',		
+		'weight' => Array (
+			'exclude' => 1,
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles.weight',
 			'config' => Array (
 				'type' => 'input',
 				'size' => '4',
@@ -130,18 +130,18 @@ $TCA['tx_cfcleague_profiles'] = Array (
 				'default' => 0
 			)
 		),
-		'position' => Array (		
-			'exclude' => 1,		
-			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles.position',		
+		'position' => Array (
+			'exclude' => 1,
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles.position',
 			'config' => Array (
-				'type' => 'input',	
-				'size' => '30',	
+				'type' => 'input',
+				'size' => '30',
 				'eval' => 'trim',
 			)
 		),
-		'duration_of_contract' => Array (		
-			'exclude' => 1,		
-			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles.duration_of_contract',		
+		'duration_of_contract' => Array (
+			'exclude' => 1,
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles.duration_of_contract',
 			'config' => Array (
 				'type' => 'input',
 				'size' => '8',
@@ -153,7 +153,7 @@ $TCA['tx_cfcleague_profiles'] = Array (
 		),
 		'start_of_contract' => Array (
 			'exclude' => 1,
-			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles.start_of_contract',		
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles.start_of_contract',
 			'config' => Array (
 				'type' => 'input',
 				'size' => '30',
@@ -230,9 +230,19 @@ $TCA['tx_cfcleague_profiles'] = Array (
 				),
 			)
 		),
+		'extid' => Array (
+				'exclude' => 1,
+				'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles_extid',
+				'config' => Array (
+						'type' => 'input',
+						'size' => '10',
+						'max' => '255',
+						'eval' => 'trim',
+				)
+		),
 	),
 	'types' => Array (
-		'0' => Array('showitem' => 'hidden;;1;;1-1-1, first_name, last_name, stage_name, home_town, birthday, native_town, nationality, height, weight, position, duration_of_contract, start_of_contract, email, nickname,
+		'0' => Array('showitem' => 'hidden;;1;;1-1-1, first_name, last_name, stage_name, home_town, birthday, native_town, nationality, height, weight, position, duration_of_contract, start_of_contract, email, nickname, extid,
 		--div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles.description,link_report,dam_images,t3images,types, summary;;;richtext[cut|copy|paste|formatblock|textcolor|bold|italic|underline|left|center|right|orderedlist|unorderedlist|outdent|indent|link|table|image|line|chMode]:rte_transform[mode=ts_css|imgpath=uploads/tx_cfcleague/rte/], description;;;richtext[cut|copy|paste|formatblock|textcolor|bold|italic|underline|left|center|right|orderedlist|unorderedlist|outdent|indent|link|table|image|line|chMode]:rte_transform[mode=ts_css|imgpath=uploads/tx_cfcleague/rte/]')
 	),
 	'palettes' => Array (

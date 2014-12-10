@@ -312,6 +312,7 @@ CREATE TABLE tx_cfcleague_profiles (
 	summary text NOT NULL,
 	description text NOT NULL,
 	types varchar(150) DEFAULT '' NOT NULL,
+	extid varchar(255) DEFAULT '' NOT NULL,
 	
 	PRIMARY KEY (uid),
 	KEY parent (pid)

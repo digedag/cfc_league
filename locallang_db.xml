@@ -179,6 +179,7 @@
 			<label index="tx_cfcleague_profiles.nickname">Nickname</label>
 			<label index="tx_cfcleague_profiles.summary">Summary</label>
 			<label index="tx_cfcleague_profiles.description">Description</label>
+			<label index="tx_cfcleague_profiles_extid">External ID</label>
 			<label index="tx_cfcleague_profiles.type">Type of profile</label>
 			<label index="tx_cfcleague_profiles_type_player">Player</label>
 			<label index="tx_cfcleague_profiles_type_coach">Coach</label>
