@@ -68,6 +68,15 @@ class tx_cfcleague_models_Team extends tx_rnbase_model_base {
 	public function getGroupUid() {
 		return $this->record['agegroup'];
 	}
+	/**
+	 * Liefert den Verein des Teams als Objekt
+	 * @return tx_cfcleague_models_Club Verein als Objekt oder null
+	 */
+	public function getClub() {
+		if(!$this->record['club']) return null;
+		return tx_rnbase::makeInstance('tx_cfcleague_models_Club', $this->record['club']);
+	}
+
 	public function getClubUid() {
 		return $this->record['club'];
 	}
@@ -94,6 +103,66 @@ class tx_cfcleague_models_Team extends tx_rnbase_model_base {
 	public function isDummy(){
 		return intval($this->record['dummy']) != 0;
 	}
+
+	/**
+	 * Liefert die Spieler des Teams in der vorgegebenen Reihenfolge als Profile. Der
+	 * Key ist die laufende Nummer und nicht die UID!
+	 * @return array[tx_cfcleague_models_Profile]
+	 */
+	public function getPlayers() {
+		return $this->getTeamMember('players');
+	}
+	/**
+	 * Liefert die Trainer des Teams in der vorgegebenen Reihenfolge als Profile. Der
+	 * Key ist die laufende Nummer und nicht die UID!
+	 * @return array[tx_cfcleague_models_Profile]
+	 */
+	public function getCoaches() {
+		return $this->getTeamMember('coaches');
+	}
+
+	/**
+	 * Liefert Mitglieder des Teams als Array. Teammitglieder sind Spieler, Trainer und Betreuer.
+	 * Die gefundenen Profile werden sortiert in der Reihenfolge im Team geliefert.
+	 * @column Name der DB-Spalte mit den gesuchten Team-Mitgliedern
+	 * @return array[tx_cfcleague_models_Profile]
+	 */
+	private function getTeamMember($column) {
+		if(strlen(trim($this->record[$column])) > 0 ) {
+			$what = '*';
+			$from = 'tx_cfcleague_profiles';
+			$options['where'] = 'uid IN (' .$this->record[$column] . ')';
+			$options['wrapperclass'] = 'tx_cfcleague_models_Profile';
+
+			$rows = tx_rnbase_util_DB::doSelect($what,$from,$options,0);
+			return $this->sortPlayer($rows, $column);
+		}
+		return array();
+	}
+
+	/**
+	 * Sortiert die Personen (Spieler/Trainer) entsprechend der Reihenfolge im Team
+	 * @param $profiles array[tx_cfcleague_models_Profile]
+	 */
+	private function sortProfiles($profiles, $recordKey = 'players') {
+		$ret = array();
+		if(strlen(trim($this->record[$recordKey])) > 0 ) {
+			if(count($profiles)) {
+				// Jetzt die Spieler in die richtige Reihenfolge bringen
+				$uids = t3lib_div::intExplode(',', $this->record[$recordKey]);
+				$uids = array_flip($uids);
+				foreach($profiles as $player) {
+					$ret[$uids[$player->uid]] = $player;
+				}
+			}
+		}
+		else {
+			// Wenn keine Spieler im Team geladen sind, dann wird das Array unverändert zurückgegeben
+			return $profiles;
+		}
+		return $ret;
+	}
+
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/models/class.tx_cfcleague_models_Team.php']) {

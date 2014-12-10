@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2007-2009 Rene Nitzsche (rene@system25.de)
+*  (c) 2007-2014 Rene Nitzsche (rene@system25.de)
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -41,6 +41,14 @@ class tx_cfcleague_models_Club extends tx_rnbase_model_base {
 	}
 	public function getCountryCode() {
 		return $this->record['countrycode'];
+	}
+	/**
+	 * Whether or not this is a favorite club
+	 *
+	 * @return boolean
+	 */
+	public function isFavorite() {
+		return intval($this->record['favorite']) > 0;
 	}
 
 	/**
