@@ -94,9 +94,9 @@ $TCA['tx_cfcleague_teams'] = Array (
 				'type' => 'group',
 				'internal_type' => 'db',
 				'allowed' => 'tx_cfcleague_profiles',
-				'size' => 3,
+				'size' => 4,
 				'minitems' => 0,
-				'maxitems' => 5,
+				'maxitems' => 10,
 			)
 		),
 		'players' => Array (
@@ -108,7 +108,7 @@ $TCA['tx_cfcleague_teams'] = Array (
 				'allowed' => 'tx_cfcleague_profiles',
 				'size' => 20,
 				'minitems' => 0,
-				'maxitems' => 40,
+				'maxitems' => 60,
 			)
 		),
 		'supporters' => Array (
@@ -118,9 +118,9 @@ $TCA['tx_cfcleague_teams'] = Array (
 				'type' => 'group',
 				'internal_type' => 'db',
 				'allowed' => 'tx_cfcleague_profiles',
-				'size' => 3,
+				'size' => 4,
 				'minitems' => 0,
-				'maxitems' => 5,
+				'maxitems' => 10,
 			)
 		),
 
