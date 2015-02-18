@@ -225,7 +225,7 @@ elseif(t3lib_extMgm::isLoaded('dam')) {
 }
 else {
 	$TCA['tx_cfcleague_competition']['columns']['t3logo'] = Array (
-		'exclude' => 0,
+		'exclude' => 1,
 		'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_club.logo',		
 		'config' => Array (
 			'type' => 'group',

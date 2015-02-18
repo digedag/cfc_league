@@ -49,7 +49,7 @@ $TCA['tx_cfcleague_club'] = Array (
 			)
 		),
 		'address' => Array (
-			'exclude' => 0,
+			'exclude' => 1,
 			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_club.address',
 			'config' => Array (
 				'type' => 'group',
@@ -309,7 +309,7 @@ elseif(t3lib_extMgm::isLoaded('dam')) {
 }
 else {
 	$TCA['tx_cfcleague_club']['columns']['logo'] = Array (
-		'exclude' => 0,
+		'exclude' => 1,
 		'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_club.logo',		
 		'config' => Array (
 			'type' => 'group',

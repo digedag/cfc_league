@@ -66,7 +66,7 @@ $TCA['tx_cfcleague_stadiums'] = Array (
 			)
 		),
 		'capacity' => Array (
-			'exclude' => 0,
+			'exclude' => 1,
 			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_stadiums_capacity',
 			'config' => Array (
 				'type' => 'input',
@@ -182,7 +182,7 @@ $TCA['tx_cfcleague_stadiums'] = Array (
 			'config' => $stadiumClubArr,
 		),
 		'address' => Array (
-			'exclude' => 0,
+			'exclude' => 1,
 			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_club.address',
 			'config' => Array (
         'type' => 'inline',
@@ -238,7 +238,7 @@ elseif(t3lib_extMgm::isLoaded('dam')) {
 }
 else {
 	$TCA['tx_cfcleague_stadiums']['columns']['t3logo'] = Array (
-		'exclude' => 0,
+		'exclude' => 1,
 		'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_stadiums_logo',
 		'config' => Array (
 			'type' => 'group',
@@ -253,7 +253,7 @@ else {
 		)
 	);
 	$TCA['tx_cfcleague_stadiums']['columns']['t3pictures'] = Array (
-		'exclude' => 0,
+		'exclude' => 1,
 		'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_stadiums_pictures',
 		'config' => Array (
 			'type' => 'group',

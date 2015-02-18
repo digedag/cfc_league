@@ -262,7 +262,7 @@ elseif(t3lib_extMgm::isLoaded('dam')) {
 }
 else {
 	$TCA['tx_cfcleague_profiles']['columns']['t3images'] = Array (
-		'exclude' => 0,
+		'exclude' => 1,
 		'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.pictures',
 		'config' => Array (
 			'type' => 'group',

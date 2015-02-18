@@ -74,7 +74,7 @@ $TCA['tx_cfcleague_games'] = Array (
 			)
 		),
 		'competition' => Array (
-			'exclude' => 0,
+			'exclude' => 1,
 			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.competition',
 			'config' => Array (
 				'type' => 'select',
@@ -162,7 +162,7 @@ $TCA['tx_cfcleague_games'] = Array (
 			)
 		),
 		'coach_home' => Array (
-			'exclude' => 0,
+			'exclude' => 1,
 			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.coach_home',
 			'config' => Array (
 				'type' => 'select',
@@ -175,7 +175,7 @@ $TCA['tx_cfcleague_games'] = Array (
 			)
 		),
 		'coach_guest' => Array (
-			'exclude' => 0,
+			'exclude' => 1,
 			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.coach_guest',
 			'config' => Array (
 				'type' => 'select',
@@ -188,7 +188,7 @@ $TCA['tx_cfcleague_games'] = Array (
 			)
 		),
 		'players_home' => Array (
-			'exclude' => 0,
+			'exclude' => 1,
 			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.players_home',
 			'config' => Array (
 				'type' => 'select',
@@ -199,7 +199,7 @@ $TCA['tx_cfcleague_games'] = Array (
 			)
 		),
 		'players_guest' => Array (
-			'exclude' => 0,
+			'exclude' => 1,
 			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.players_guest',
 			'config' => Array (
 				'type' => 'select',
@@ -210,7 +210,7 @@ $TCA['tx_cfcleague_games'] = Array (
 			)
 		),
 		'substitutes_home' => Array (
-			'exclude' => 0,
+			'exclude' => 1,
 			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.substitutes_home',
 			'config' => Array (
 				'type' => 'select',
@@ -221,7 +221,7 @@ $TCA['tx_cfcleague_games'] = Array (
 			)
 		),
 		'substitutes_guest' => Array (
-			'exclude' => 0,
+			'exclude' => 1,
 			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.substitutes_guest',
 			'config' => Array (
 				'type' => 'select',
@@ -705,7 +705,7 @@ elseif(t3lib_extMgm::isLoaded('dam')) {
 }
 else {
 	$TCA['tx_cfcleague_games']['columns']['t3images'] = Array (
-		'exclude' => 0,
+		'exclude' => 1,
 		'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.pictures',
 		'config' => Array (
 			'type' => 'group',
