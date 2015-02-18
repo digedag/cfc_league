@@ -188,6 +188,7 @@
 			<label index="tx_cfcleague_match_notes">Match note</label>
 			<label index="tx_cfcleague_match_notes.match">Match</label>
 			<label index="tx_cfcleague_match_notes.minute">Minute</label>
+			<label index="tx_cfcleague_match_notes.second">Second</label>
 			<label index="tx_cfcleague_match_notes.extra_time">Extratime</label>
 			<label index="tx_cfcleague_match_notes.type">Type</label>
 			<label index="tx_cfcleague_match_notes.type.goal">Goal</label>
@@ -414,6 +415,7 @@
 			<label index="tx_cfcleague_match_notes">Spielnotiz</label>
 			<label index="tx_cfcleague_match_notes.match">Spiel</label>
 			<label index="tx_cfcleague_match_notes.minute">Minute</label>
+			<label index="tx_cfcleague_match_notes.second">Second</label>
 			<label index="tx_cfcleague_match_notes.extra_time">Nachspielminute</label>
 			<label index="tx_cfcleague_match_notes.type.goal">Tor</label>
 			<label index="tx_cfcleague_match_notes.type.goal.header">Kopfballtor</label>

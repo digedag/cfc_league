@@ -345,6 +345,7 @@ CREATE TABLE tx_cfcleague_match_notes (
 	deleted tinyint(4) DEFAULT '0' NOT NULL,
 	hidden tinyint(4) DEFAULT '0' NOT NULL,
 
+	second tinyint(4) DEFAULT '0' NOT NULL,
 	minute int(11) DEFAULT '0' NOT NULL,
 	extra_time tinyint(4) DEFAULT '0' NOT NULL,
 	game int(11) DEFAULT '0' NOT NULL,

@@ -217,7 +217,8 @@ $TCA['tx_cfcleague_match_notes'] = Array (
 		'enablecolumns' => Array (
 			'disabled' => 'hidden',
 		),
-		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY).'tca.php',
+		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY).'Configuration/TCA/MatchNote.php',
+		//'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY).'tca.php',
 		'iconfile' => t3lib_extMgm::extRelPath($_EXTKEY).'icon_table.gif',
 	),
 	'feInterface' => Array (
