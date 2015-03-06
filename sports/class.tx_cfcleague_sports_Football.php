@@ -2,7 +2,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2008-2014 Rene Nitzsche (rene@system25.de)
+ *  (c) 2008-2015 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -54,6 +54,22 @@ class tx_cfcleague_sports_Football extends t3lib_svbase implements tx_cfcleague_
 	}
 	public function isSetBased() {
 		return false;
+	}
+	private $matchInfo = NULL;
+	/* (non-PHPdoc)
+	 * @see tx_cfcleague_sports_ISports::getMatchInfo()
+	 */
+	public function getMatchInfo() {
+		if($this->matchInfo == NULL) {
+			tx_rnbase::load('tx_cfcleague_sports_MatchInfo');
+			$this->matchInfo = tx_rnbase::makeInstance('tx_cfcleague_sports_MatchInfo', array(
+					tx_cfcleague_sports_MatchInfo::MATCH_TIME => 90,
+					tx_cfcleague_sports_MatchInfo::MATCH_PARTS => 2,
+					tx_cfcleague_sports_MatchInfo::MATCH_EXTRA_TIME => 30,
+			));
+		}
+
+		return $this->matchInfo;
 	}
 }
 

@@ -2,7 +2,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2012-2014 Rene Nitzsche (rene@system25.de)
+ *  (c) 2012-2015 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -54,6 +54,20 @@ class tx_cfcleague_sports_Volleyball extends t3lib_svbase implements tx_cfcleagu
 	}
 	public function isSetBased() {
 		return true;
+	}
+
+	private $matchInfo = NULL;
+	/* (non-PHPdoc)
+	 * @see tx_cfcleague_sports_ISports::getMatchInfo()
+	 */
+	public function getMatchInfo() {
+		if($this->matchInfo == NULL) {
+			// Bei Volleyball gibt es keine festen Zeiten
+			$this->matchInfo = tx_rnbase::makeInstance('tx_cfcleague_sports_MatchInfo', array(
+			));
+		}
+
+		return $this->matchInfo;
 	}
 }
 

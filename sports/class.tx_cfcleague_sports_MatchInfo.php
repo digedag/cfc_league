@@ -2,7 +2,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2011-2013 Rene Nitzsche (rene@system25.de)
+ *  (c) 2011-2015 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -24,32 +24,27 @@
 
 
 /**
- * Implementors provide configurations for different kind of sports.
+ * Additional information about matches.
  */
-interface tx_cfcleague_sports_ISports {
+class tx_cfcleague_sports_MatchInfo {
+	const MATCH_TIME = 'MATCH_TIME';
+	const MATCH_EXTRA_TIME = 'MATCH_EXTRA_TIME';
+	const MATCH_PARTS = 'MATCH_PARTS';
+	
+	private $info = array();
+
+	public function __construct($info) {
+		$this->info = $info;
+	}
 	/**
-	 * Get match provider
-	 * @return tx_cfcleaguefe_table_ITableType or null if none available
+	 * 
+	 * @param string $key
 	 */
-	public function getLeagueTable();
-	/**
-	 * Set configuration
-	 * @return array
-	 */
-	public function getTCAPointSystems();
-	public function getTCALabel();
-	/**
-	 * @return boolean
-	 */
-	public function isSetBased();
-	/**
-	 * @return tx_cfcleague_sports_MatchInfo
-	 */
-	public function getMatchInfo();
+	public function getInfo($key) {
+		return isset($this->info[$key]) ? $this->info[$key] : NULL;
+	}
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/sports/sports/class.tx_cfcleague_sports_ISports.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/sports/class.tx_cfcleague_sports_ISports.php']);
+if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/sports/sports/class.tx_cfcleague_sports_MatchInfo.php']) {
+	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/sports/class.tx_cfcleague_sports_MatchInfo.php']);
 }
-
-?>

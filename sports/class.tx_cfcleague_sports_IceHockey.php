@@ -54,7 +54,24 @@ class tx_cfcleague_sports_IceHockey extends t3lib_svbase implements tx_cfcleague
 	}
 	public function isSetBased() {
 		return false;
+	}
+	private $matchInfo = NULL;
+	/* (non-PHPdoc)
+	 * @see tx_cfcleague_sports_ISports::getMatchInfo()
+	 */
+	public function getMatchInfo() {
+		if($this->matchInfo == NULL) {
+			// TODO: Beim Eishockey ist die Overtime variabel
+			$this->matchInfo = tx_rnbase::makeInstance('tx_cfcleague_sports_MatchInfo', array(
+					tx_cfcleague_sports_MatchInfo::MATCH_TIME => 60,
+					tx_cfcleague_sports_MatchInfo::MATCH_PARTS => 3,
+					tx_cfcleague_sports_MatchInfo::MATCH_EXTRA_TIME => 20,
+			));
+		}
+
+		return $this->matchInfo;
 	}
+
 }
 
 
