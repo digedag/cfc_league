@@ -29,7 +29,7 @@ $TCA['tx_cfcleague_competition'] = Array (
 			)
 		),
 		'name' => Array (
-			'exclude' => 1,		
+			'exclude' => 1,
 			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition.name',
 			'config' => Array (
 				'type' => 'input',
@@ -38,7 +38,7 @@ $TCA['tx_cfcleague_competition'] = Array (
 			)
 		),
 		'internal_name' => Array (
-			'exclude' => 1,		
+			'exclude' => 1,
 			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition.internal_name',
 			'config' => Array (
 				'type' => 'input',
@@ -47,7 +47,7 @@ $TCA['tx_cfcleague_competition'] = Array (
 			)
 		),
 		'short_name' => Array (
-			'exclude' => 1,		
+			'exclude' => 1,
 			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition.short_name',
 			'config' => Array (
 				'type' => 'input',
@@ -181,6 +181,19 @@ $TCA['tx_cfcleague_competition'] = Array (
 				'size' => 20,
 				'minitems' => 0,
 				'maxitems' => 100,
+				'wizards' => array(
+						'add' => array(
+								'type' => 'script',
+								'title' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition_create_team',
+								'icon' => 'EXT:cfc_league/icon_tx_cfcleague_teams.gif',
+								'script' => 'wizard_add.php',
+								'params' => array(
+									'table'=>'tx_cfcleague_teams',
+									'pid' => '###CURRENT_PID###',
+									'setValue' => 'append'
+						),
+					)
+				)
 			)
 		),
 /* used for combined competitions later...
@@ -226,7 +239,7 @@ elseif(t3lib_extMgm::isLoaded('dam')) {
 else {
 	$TCA['tx_cfcleague_competition']['columns']['t3logo'] = Array (
 		'exclude' => 1,
-		'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_club.logo',		
+		'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_club.logo',
 		'config' => Array (
 			'type' => 'group',
 			'internal_type' => 'file',
