@@ -34,6 +34,11 @@ class tx_cfcleague_mod1_handler_MatchCreator {
 	public static function getInstance() {
 		return tx_rnbase::makeInstance(get_class());
 	}
+	/**
+	 * Neuanlage von Spielen über die TCE
+	 * @param tx_rnbase_mod_IModule $mod
+	 * @return string
+	 */
 	public function handleRequest(tx_rnbase_mod_IModule $mod) {
   	$submitted = t3lib_div::_GP('doCreateMatches');
   	if(!$submitted) return '';
@@ -42,11 +47,11 @@ class tx_cfcleague_mod1_handler_MatchCreator {
 		tx_rnbase::load('tx_rnbase_util_DB');
 		$tce =& tx_rnbase_util_DB::getTCEmain($tcaData);
 		$tce->process_datamap();
-		$content .= $mod->getDoc()->section('Message:', $GLOBALS['LANG']->getLL('msg_matches_created'), 0, 1, ICON_INFO);
+		$content = $mod->getDoc()->section('Message:', $GLOBALS['LANG']->getLL('msg_matches_created'), 0, 1, ICON_INFO);
 		return $content;
 	}
 	/**
-	 * 
+	 *
 	 * @param tx_cfcleague_models_Competition $competition
 	 * @param tx_rnbase_mod_IModule $mod
 	 */
@@ -71,21 +76,21 @@ class tx_cfcleague_mod1_handler_MatchCreator {
 			$LANG->getLL('tx_cfcleague_games.guest'))
 		);
 
-		$dataArr = array('pid' => $mod->getPid(), 
+		$dataArr = array('pid' => $mod->getPid(),
 			'competition' => $competition->getUid(),
 			'date' => time(),
 			'round' => $competition->getNumberOfRounds(),
 			'round_name' => $competition->getNumberOfRounds().$LANG->getLL('createGameTable_round'),
 		);
 
-	
+
 		for($i=0; $i < $maxMatches; $i++){
 			$row = array();
 			$dataArr['uid'] = 'NEW_'.$i;
-			$row[] = $mod->getFormTool()->getTCEForm()->getSoloField($table, $dataArr, 'round') . 
+			$row[] = $mod->getFormTool()->getTCEForm()->getSoloField($table, $dataArr, 'round') .
 							$mod->getFormTool()->getTCEForm()->getSoloField($table, $dataArr, 'round_name');
 			$row[] = $mod->getFormTool()->getTCEForm()->getSoloField($table, $dataArr, 'date');
-			$row[] = $mod->getFormTool()->getTCEForm()->getSoloField($table, $dataArr, 'status') . 
+			$row[] = $mod->getFormTool()->getTCEForm()->getSoloField($table, $dataArr, 'status') .
 						$mod->getFormTool()->createHidden('data[tx_cfcleague_games][NEW_'.$i.'][pid]', $mod->getPid()).
 						$mod->getFormTool()->createHidden('data[tx_cfcleague_games][NEW_'.$i.'][competition]', $competition->getUid());
 
@@ -100,9 +105,9 @@ class tx_cfcleague_mod1_handler_MatchCreator {
 		$content .= $mod->getFormTool()->createSubmit('doCreateMatches', $LANG->getLL('btn_create'), $GLOBALS['LANG']->getLL('msg_create_teams'));
 		return $content;
 	}
-	
+
 	public function makeLink(tx_rnbase_mod_IModule $mod) {
-		
+
 	}
 }
 

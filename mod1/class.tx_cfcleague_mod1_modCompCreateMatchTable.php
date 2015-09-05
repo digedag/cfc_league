@@ -36,30 +36,35 @@ class tx_cfcleague_mod1_modCompCreateMatchTable {
 	/**
 	 * Verwaltet die Erstellung von Spielplänen von Ligen
    * @param tx_rnbase_mod_IModule $module
-	 * @param tx_cfcleague_league $competition
+	 * @param tx_cfcleague_models_Competition $competition
 	 */
 	public function main($module, $competition) {
-		global $LANG;
-
 		$this->module = $module;
-		$pid = $module->getPid();
 		$this->doc = $module->getDoc();
 
-		$formTool = $module->getFormTool();
-		$this->formTool = $formTool;
+		$this->formTool = $module->getFormTool();
 		$comp = tx_cfcleague_models_Competition::getInstance($competition->uid);
 //		$start = microtime(true);
 
 		tx_rnbase::load('tx_cfcleague_mod1_handler_MatchCreator');
+		// Die Neuanlage der manuellen Spiele erledigt der MatchCreator
 		$content .= tx_cfcleague_mod1_handler_MatchCreator::getInstance()->handleRequest($this->getModule());
+		// Die Neuanlage der "automatischen" Spiele übernimmt diese Klasse
 		$content .= $this->handleCreateMatchTable($comp);
-		if(!$content)
+		if(!$content) {
+			// Ohne Submit zeigen wir das Formular
 			$content .= $this->showMatchTable($comp);
+		}
 //		t3lib_div::debug((microtime(true)-$start), 'class.tx_cfcleague_mod1_modCompCreateMatchTable.php'); // TODO: remove me
 
 		return $content;
 	}
 
+	/**
+	 *
+	 * @param tx_cfcleague_models_Competition $comp
+	 * @return string
+	 */
 	private function handleCreateMatchTable($comp) {
   	global $LANG;
 		// Haben wir Daten im Request?
@@ -93,14 +98,13 @@ class tx_cfcleague_mod1_modCompCreateMatchTable {
 		$mode = $menu['value'];
 		$content .= '<br>';
 
-		if($mode == 0)
+		if($mode == 0) // Automatischer Spielplan
 			$content .= $this->showMatchTableAuto($comp);
-		else {
+		else { // Manuell Spiele anlegen
 			tx_rnbase::load('tx_cfcleague_mod1_handler_MatchCreator');
 			$content .= tx_cfcleague_mod1_handler_MatchCreator::getInstance()->showScreen($comp, $this->getModule());
 		}
 
-		//t3lib_div::debug($table, 'tx_cfcleague_mod1_modCompCreateMatchTable :: showCreateMatchTable'); // TODO: remove me
 		return $content;
 	}
 
@@ -235,11 +239,11 @@ class tx_cfcleague_mod1_modCompCreateMatchTable {
 	/**
 	 * Erstellt die Spiele der Liga. Diese werden aus den Daten gebildet, die im Request liegen.
 	 */
-	function createMatches($rounds, &$league) {
+	function createMatches($rounds, $league) {
 		global $LANG;
 
 		// Aus den Spielen der $table die TCA-Datensätze erzeugen
-		$data['tx_cfcleague_games'] = array();
+		$data = array('tx_cfcleague_games' => array());
 
 		// Wir erstellen die Spiel je Spieltag
 		foreach($rounds As $roundId => $roundData){
