@@ -22,7 +22,6 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
 
 tx_rnbase::load('tx_rnbase_mod_BaseModFunc');
 
@@ -84,8 +83,7 @@ class tx_cfcleague_mod1_modCompetitions extends tx_rnbase_mod_BaseModFunc {
 		$menu = $this->selector->showTabMenu($this->getModule()->getPid(), 'comptools',
 			array('0' => $LANG->getLL('edit_games'),
 						'1' => $LANG->getLL('mod_compteams'),
-//						'2' => $LANG->getLL('create_games'),
-						'3' => $LANG->getLL('create_games')));
+						'2' => $LANG->getLL('create_games')));
 
 		$tabs .= $menu['menu'];
 		$tabs .= '<div style="display: block; border: 1px solid #a2aab8;" ></div>';
@@ -104,9 +102,6 @@ class tx_cfcleague_mod1_modCompetitions extends tx_rnbase_mod_BaseModFunc {
 				$modContent = $mod->main($this->getModule(), $current_league);
 				break;
 			case 2:
-				$modContent = $this->showCreateMatchTable($current_league, $this->getModule());
-				break;
-			case 3:
 				$mod = tx_rnbase::makeInstance('tx_cfcleague_mod1_modCompCreateMatchTable');
 				$modContent = $mod->main($this->getModule(), $current_league);
 				break;
@@ -121,20 +116,13 @@ class tx_cfcleague_mod1_modCompetitions extends tx_rnbase_mod_BaseModFunc {
 
 	private function showEditMatches($current_league, $module) {
 		require_once(t3lib_extMgm::extPath('cfc_league') . 'mod1/class.tx_cfcleague_match_edit.php');
-		$subMod = t3lib_div::makeInstance('tx_cfcleague_match_edit');
+		$subMod = tx_rnbase::makeInstance('tx_cfcleague_match_edit');
 		$content = $subMod->main($module, $current_league);
 		return $content;
   }
 
-  private function showCreateMatchTable(&$current_league, $module) {
-		require_once(t3lib_extMgm::extPath('cfc_league') . 'mod1/class.tx_cfcleague_generator.php');
-  	$subMod = t3lib_div::makeInstance('tx_cfcleague_generator');
-  	$content = $subMod->main($module, $current_league);
-		return $content;
-	}
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/mod1/class.tx_cfcleague_mod1_modCompetitions.php'])	{
   include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/mod1/class.tx_cfcleague_mod1_modCompetitions.php']);
 }
-?>

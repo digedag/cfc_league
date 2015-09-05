@@ -60,14 +60,14 @@ class tx_cfcleague_mod1_modCompCreateMatchTable {
 		return $content;
 	}
 
-	function handleCreateMatchTable($comp) {
+	private function handleCreateMatchTable($comp) {
   	global $LANG;
 		// Haben wir Daten im Request?
   	$data = t3lib_div::_GP('data');
 		if (is_array($data['rounds']) && t3lib_div::_GP('update')) {
 			$result = $this->createMatches($data['rounds'], $comp);
 			$content .= $this->doc->section($LANG->getLL('message').':', $result, 0, 1, ICON_INFO);
-			return $content; 
+			return $content;
 		}
 	}
 	/**
@@ -86,8 +86,8 @@ class tx_cfcleague_mod1_modCompCreateMatchTable {
 
 		// Hier zwischen Automatisch und Manuell unterscheiden
 		$menu = $this->getFormTool()->showMenu(
-				$this->getModule()->getPid(), 't3s_mcmode', 
-				$this->getModule()->getName(), 
+				$this->getModule()->getPid(), 't3s_mcmode',
+				$this->getModule()->getName(),
 				array(0=>'Auto', '1'=>'Manual'), 'index.php');
 		$content .= $menu['menu'];
 		$mode = $menu['value'];
@@ -104,16 +104,23 @@ class tx_cfcleague_mod1_modCompCreateMatchTable {
 		return $content;
 	}
 
+	/**
+	 * Automatische Erzeugung eines Spielplans.
+	 * @param tx_cfcleague_models_Competition $comp
+	 * @return string
+	 */
 	private function showMatchTableAuto($comp) {
   	global $LANG;
 		$content = '';
 		// Wir holen die Mannschaften und den GameString aus der Liga
 		// Beides jagen wir durch den Generator
+		$options = array();
 		$options['halfseries'] = intval(t3lib_div::_GP('option_halfseries'));
 		$options['nomatch'] = $comp->getDummyTeamIds();
 		$options['firstmatchday'] = $comp->getNumberOfRounds();
 		$options['firstmatchnumber'] = $comp->getLastMatchNumber();
 		// Zunächst mal Anzeige der Daten
+		/* @var $gen tx_cfcleague_util_Generator */
 		$gen = tx_rnbase::makeInstance('tx_cfcleague_util_Generator');
 		$table = $gen->main($comp->getTeamIds(), $comp->getGenerationKey(), $options);
 
@@ -127,7 +134,7 @@ class tx_cfcleague_mod1_modCompCreateMatchTable {
 		}
 		if(count($table)) {
 			// Wir zeigen alle Spieltage und fragen nach dem Termin
-			$content .= $this->prepareGameTable($table, $comp, $options['halfseries']);
+			$content .= $this->prepareMatchTable($table, $comp, $options['halfseries']);
 			// Den Update-Button einfügen
 			$content .= '<input type="submit" name="update" value="'.$LANG->getLL('btn_create').'" onclick="return confirm('.$GLOBALS['LANG']->JScharCode($GLOBALS['LANG']->getLL('msg_CreateGameTable')).')">';
 		}
@@ -136,7 +143,7 @@ class tx_cfcleague_mod1_modCompCreateMatchTable {
 	/**
 	 * Erstellt das Vorabformular, daß für jeden Spieltag notwendige Daten abfragt.
 	 */
-	function prepareGameTable($table, &$league, $option_halfseries) {
+	private function prepareMatchTable($table, &$league, $option_halfseries) {
 		global $LANG;
 
 		$content = '';
@@ -151,7 +158,7 @@ class tx_cfcleague_mod1_modCompCreateMatchTable {
 				'defCol' => Array('<td valign="top" style="padding:5px 5px 0 5px; border-bottom:solid 1px #A2AAB8;">', '</td>') // Format für jede Spalte in jeder Zeile
 			);
 		unset($tableLayout['defRowEven']);
-			
+
 		$tableLayout2 = $tableLayout;
 		$tableLayout2['defRow'] = Array ( // Formate für alle Zeilen
 			'tr'	   => Array('<tr class="db_list_normal">', '</tr>'),
@@ -171,8 +178,8 @@ class tx_cfcleague_mod1_modCompCreateMatchTable {
 
 			// Die Formularfelder, die jetzt erstellt werden, wandern später direkt in die neuen Game-Records
 			// Ein Hidden-Field für die Runde
-			$row[] = '<div>' . $this->formTool->createHidden('data[rounds][round_'.$round.'][round]', $round) . 
-							$this->formTool->createTxtInput('data[rounds][round_'.$round.'][round_name]', $round . $LANG->getLL('createGameTable_round'), 10) . 
+			$row[] = '<div>' . $this->formTool->createHidden('data[rounds][round_'.$round.'][round]', $round) .
+							$this->formTool->createTxtInput('data[rounds][round_'.$round.'][round_name]', $round . $LANG->getLL('createGameTable_round'), 10) .
 							$this->formTool->createDateInput('data[rounds][round_'.$round.'][date]', time()) .'</div>'.
 							// Anzeige der Paarungen
 			 				$this->doc->table($this->createMatchTableArray($matchArr, $league, 'data[rounds][round_'.$round.']'), $tableLayout2);
@@ -254,7 +261,7 @@ class tx_cfcleague_mod1_modCompCreateMatchTable {
 				$data['tx_cfcleague_games']['NEW'.$matchId] = $new_match;
 			}
 		}
-		
+
 		// Die neuen Notes werden jetzt gespeichert
 		reset($data);
 		$tce =& tx_cfcleague_db::getTCEmain($data);
