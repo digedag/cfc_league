@@ -35,7 +35,7 @@ class tx_cfcleague_mod1_modTeams extends tx_rnbase_mod_BaseModFunc {
 
 	/**
 	 * Method getFuncId
-	 * 
+	 *
 	 * @return	string
 	 */
 	function getFuncId() {
@@ -43,6 +43,17 @@ class tx_cfcleague_mod1_modTeams extends tx_rnbase_mod_BaseModFunc {
 	}
 
 
+	/**
+	 *
+	 * @return tx_cfcleague_selector
+	 */
+	private function getSelector() {
+		if(!$this->selector) {
+			$this->selector = tx_rnbase::makeInstance('tx_cfcleague_selector');
+			$this->selector->init($this->doc, $this->getModule()->getName());
+		}
+		return $this->selector;
+	}
 	/**
 	 * Verwaltet die Erstellung von Spielplänen von Ligen
 	 */
@@ -56,15 +67,17 @@ class tx_cfcleague_mod1_modTeams extends tx_rnbase_mod_BaseModFunc {
 		$this->formTool = $formTool;
 
 		// Selector-Instanz bereitstellen
-		$this->selector = t3lib_div::makeInstance('tx_cfcleague_selector');
-		$this->selector->init($this->doc, $this->getModule()->getName());
 
 		// Anzeige der vorhandenen Ligen
 		$selector = '';
-		$saison = $this->selector->showSaisonSelector($selector, $this->getModule()->getPid());
+		$saison = $this->getSelector()->showSaisonSelector($selector, $this->getModule()->getPid());
+		$competitions = array();
+		if($saison)
+			$competitions = tx_cfcleague_util_ServiceRegistry::getCompetitionService()->getCompetitionsBySaison($saison);
+
 		$content = '';
 
-		if(!($saison && count($saison->getCompetitions()))) {
+		if(!($saison && count($competitions))) {
 			if(tx_rnbase_util_TYPO3::isTYPO42OrHigher())
 				$this->pObj->subselector = $selector;
 			else
@@ -74,25 +87,24 @@ class tx_cfcleague_mod1_modTeams extends tx_rnbase_mod_BaseModFunc {
 		}
 
 		// Anzeige der vorhandenen Ligen
-		$league = $this->selector->showLeagueSelector($selector, $this->getModule()->getPid(), $saison->getCompetitions());
-		$team = $this->selector->showTeamSelector($selector, $this->getModule()->getPid(), $league);
+		$league = $this->getSelector()->showLeagueSelector($selector, $this->getModule()->getPid(), $competitions);
+		$team = $this->getSelector()->showTeamSelector($selector, $this->getModule()->getPid(), $league);
 		if(tx_rnbase_util_TYPO3::isTYPO42OrHigher())
 			$this->pObj->subselector = $selector;
-		else 
+		else
 			$content .= '<div class="cfcleague_selector">'.$selector.'</div><div class="cleardiv"/>';
 
-		$data = t3lib_div::_GP('data');
 		if(!$team){ // Kein Team gefunden
 			$content.=$this->doc->section('Info:', $LANG->getLL('msg_no_team_found'), 0, 1, ICON_WARN);
 			return $content;
 		}
 		// Wenn ein Team gefunden ist, dann können wir das Modul schreiben
-		$menu = $this->selector->showTabMenu($this->getModule()->getPid(), 'teamtools', 
-						array('0' => $LANG->getLL('create_players'), 
+		$menu = $this->selector->showTabMenu($this->getModule()->getPid(), 'teamtools',
+						array('0' => $LANG->getLL('create_players'),
 									'1' => $LANG->getLL('add_players'),
 									'2' => $LANG->getLL('manage_teamnotes'),
 						));
-		
+
 		$tabs .= $menu['menu'];
 		$tabs .= '<div style="display: block; border: 1px solid #a2aab8;" ></div>';
 
@@ -120,7 +132,6 @@ class tx_cfcleague_mod1_modTeams extends tx_rnbase_mod_BaseModFunc {
 				break;
 		}
 		$content .= $this->formTool->form->printNeededJSFunctions_top();
-		$content .= $modContent;
 		// Den JS-Code für Validierung einbinden
 		$content .= $this->formTool->form->printNeededJSFunctions();
 //		$content  .= $this->formTool->form->JSbottom('editform');

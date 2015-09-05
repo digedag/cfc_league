@@ -1,6 +1,6 @@
 <?php
 if (!defined ('TYPO3_MODE')) 	die ('Access denied.');
-require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
+
 tx_rnbase::load('tx_cfcleague_util_ServiceRegistry');
 
 
@@ -12,6 +12,16 @@ t3lib_extMgm::addService($_EXTKEY,  't3sports_srv' /* sv type */,  'tx_cfcleague
     'classFile' => t3lib_extMgm::extPath($_EXTKEY).'services/class.tx_cfcleague_services_Stadiums.php',
     'className' => 'tx_cfcleague_services_Stadiums',
   )
+);
+
+t3lib_extMgm::addService($_EXTKEY,  't3sports_srv' /* sv type */,  'tx_cfcleague_services_Saison' /* sv key */,
+	array(
+		'title' => 'T3sports saison service', 'description' => 'Operations for saisons', 'subtype' => 'saison',
+		'available' => TRUE, 'priority' => 50, 'quality' => 50,
+		'os' => '', 'exec' => '',
+		'classFile' => t3lib_extMgm::extPath($_EXTKEY).'services/class.tx_cfcleague_services_Saison.php',
+		'className' => 'tx_cfcleague_services_Saison',
+	)
 );
 
 t3lib_extMgm::addService($_EXTKEY,  't3sports_srv' /* sv type */,  'tx_cfcleague_services_Competition' /* sv key */,

@@ -327,40 +327,44 @@ class tx_cfcleague_selector{
     return $this->GROUP_SETTINGS['group'];
   }
 
-  /**
-   * Darstellung der Select-Box mit allen Saisons in der Datenbank.
-   * @return die aktuelle Saison als Objekt oder 0
-   */
-  function showSaisonSelector(&$content, $pid){
-    // Zuerst die Gruppen ermitteln
-    $saisons = tx_cfcleague_db::queryDB('uid,name', 'uid > 0', 'tx_cfcleague_saison', '', 'sorting');
+	/**
+	 * Darstellung der Select-Box mit allen Saisons in der Datenbank.
+	 * @return tx_cfcleague_models_Saison
+	 */
+	public function showSaisonSelector(&$content, $pid){
+		// Zuerst die Saisons ermitteln
+		$saisons = tx_rnbase_util_DB::doSelect('uid,name', 'tx_cfcleague_saison', array(
+			'orderby' => 'sorting asc',
+			'wrapperclass' => 'tx_cfcleague_models_Saison',
+		));
 
-    $this->SAISON_MENU = Array (
-      'saison' => array()
-    );
-    foreach($saisons as $idx=>$saison){
-      $this->SAISON_MENU['saison'][$saison['uid']] = $saison['name'];
-    }
-    $this->SAISON_SETTINGS = t3lib_BEfunc::getModuleData(
-      $this->SAISON_MENU, t3lib_div::_GP('SET'), $this->MCONF['name'] // Das ist der Name des Moduls
-    );
+		$SAISON_MENU = Array (
+			'saison' => array()
+		);
+		foreach($saisons as $saison){
+			$SAISON_MENU['saison'][$saison->getUid()] = $saison->getName();
+		}
+		$this->SAISON_SETTINGS = t3lib_BEfunc::getModuleData(
+			$SAISON_MENU, t3lib_div::_GP('SET'), $this->MCONF['name'] // Das ist der Name des Moduls
+		);
 
-    $menu = t3lib_BEfunc::getFuncMenu(
-      $pid, 'SET[saison]', $this->SAISON_SETTINGS['saison'], $this->SAISON_MENU['saison'], 'index.php'
-    );
-    // In den Content einbauen
-    // Wir verzichten hier auf den Link und halten nur den Abstand ein
-    if($menu) {
+		$menu = t3lib_BEfunc::getFuncMenu(
+			$pid, 'SET[saison]', $this->SAISON_SETTINGS['saison'], $SAISON_MENU['saison'], 'index.php'
+		);
+		// In den Content einbauen
+		// Wir verzichten hier auf den Link und halten nur den Abstand ein
+		if($menu) {
 			$menu = '<div class="cfcselector"><div class="selector">' . $menu . '</div></div>';
-//      $menu .= '</td><td style="width:90px; padding-left:10px;">';
-    }
-    $content.= $menu;
-//    $content.=$this->doc->section('', $this->doc->funcMenu($headerSection, $menu));
+		}
+		elseif(count($SAISON_MENU['saison']) == 1) {
+			$comp = reset($SAISON_MENU['saison']);
+			$menu = '<div class="cfcselector"><div class="selector">' . $comp . '</div></div>';
+		}
+		$content.= $menu;
 
-    // Aktuellen Wert als Saison-Objekt zurückgeben
-    tx_rnbase::load('tx_cfcleague_saison');
-    return $this->SAISON_SETTINGS['saison'] ? new tx_cfcleague_saison($this->SAISON_SETTINGS['saison']) : 0;
-  }
+		// Aktuellen Wert als Saison-Objekt zurückgeben
+		return $this->SAISON_SETTINGS['saison'] ? tx_rnbase::makeInstance('tx_cfcleague_models_Saison', $this->SAISON_SETTINGS['saison']) : NULL;
+	}
 
   /**
    * Zeigt ein TabMenu

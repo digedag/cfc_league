@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2009 Rene Nitzsche (rene@system25.de)
+*  (c) 2009-2015 Rene Nitzsche (rene@system25.de)
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -23,7 +23,6 @@
 ***************************************************************/
 
 
-require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
 tx_rnbase::load('tx_rnbase_util_Misc');
 
 /**
@@ -34,42 +33,49 @@ class tx_cfcleague_util_ServiceRegistry {
 	 * Liefert den Competition-Service
 	 * @return tx_cfcleague_services_Competition
 	 */
-	static function getCompetitionService() {
+	public static function getCompetitionService() {
 		return tx_rnbase_util_Misc::getService('t3sports_srv', 'competition');
 	}
 	/**
 	 * Liefert den Match-Service
 	 * @return tx_cfcleague_services_Match
 	 */
-	static function getMatchService() {
+	public static function getMatchService() {
 		return tx_rnbase_util_Misc::getService('t3sports_srv', 'match');
 	}
 	/**
 	 * Liefert den Stadium-Service
 	 * @return tx_cfcleague_services_Stadiums
 	 */
-	static function getStadiumService() {
+	public static function getStadiumService() {
 		return tx_rnbase_util_Misc::getService('t3sports_srv', 'stadiums');
+	}
+	/**
+	 * Liefert den Stadium-Service
+	 * @return tx_cfcleague_services_Stadiums
+	 */
+	public static function getSaisonService() {
+		return tx_rnbase_util_Misc::getService('t3sports_srv', 'saison');
 	}
 	/**
 	 * Liefert den Profile-Service
 	 * @return tx_cfcleague_services_Profiles
 	 */
-	static function getProfileService() {
+	public static function getProfileService() {
 		return tx_rnbase_util_Misc::getService('t3sports_srv', 'profiles');
 	}
 	/**
 	 * Return den Team-Service
 	 * @return tx_cfcleague_services_Teams
 	 */
-	static function getTeamService() {
+	public static function getTeamService() {
 		return tx_rnbase_util_Misc::getService('t3sports_srv', 'teams');
 	}
 	/**
 	 * Returns Group-Service
 	 * @return tx_cfcleague_services_Group
 	 */
-	static function getGroupService() {
+	public static function getGroupService() {
 		return tx_rnbase_util_Misc::getService('t3sports_srv', 'group');
 	}
 }

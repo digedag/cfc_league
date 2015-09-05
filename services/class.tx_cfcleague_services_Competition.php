@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2009-2014 Rene Nitzsche (rene@system25.de)
+*  (c) 2009-2015 Rene Nitzsche (rene@system25.de)
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -21,8 +21,6 @@
 *
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
-
-require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
 
 
 /**
@@ -57,6 +55,7 @@ class tx_cfcleague_services_Competition extends t3lib_svbase {
 	public function getNumberOfMatches($comp, $teamIds='', $status = '0,1,2'){
 		$what = 'count(uid) As matches';
 		$from = 'tx_cfcleague_games';
+		$options = array();
 		$options['where'] = 'status IN(' . $status . ') AND ';
 		if($teamIds) {
 			$options['where'] .= '( home IN(' . $teamIds . ') OR ';
@@ -92,7 +91,7 @@ class tx_cfcleague_services_Competition extends t3lib_svbase {
 	 * @return array
 	 */
 	public function getSports4TCA() {
-		$types = array();
+		$items = $types = array();
 
 		// Jetzt schauen, ob noch weitere Sportarten per Service geliefert werden
 		$baseType = 't3sports_sports';
@@ -115,17 +114,26 @@ class tx_cfcleague_services_Competition extends t3lib_svbase {
 		$ret = array();
 		$fields = array();
 		$fields['MATCH.COMPETITION'][OP_EQ_INT] = $competition->getUid();
-		$options['count'] = 1;
-		$result = tx_cfcleague_util_ServiceRegistry::getMatchService()->search($fields, $options);
+		$result = tx_cfcleague_util_ServiceRegistry::getMatchService()->search($fields, array('count'=>1));
 		if($result > 0)
 			$ret['tx_cfcleague_games'] = $result;
 		return $ret;
 	}
+
+	/**
+	 *
+	 * @param tx_cfcleague_models_Saison $saison
+	 * @return array[tx_cfcleague_models_Competition]
+	 */
+	public function getCompetitionsBySaison(tx_cfcleague_models_Saison $saison) {
+		$fields = array();
+		$fields['COMPETITION.SAISON'][OP_EQ_INT] = $saison->getUid();
+		return $this->search($fields, array(
+				'orderby' => array('COMPETITION.NAME' => 'asc')
+		));
+	}
 }
 
-
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/services/class.tx_cfcleague_services_Competition.php']) {
-  include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/services/class.tx_cfcleague_services_Competition.php']);
+if (defined('TYPO3_MODE') && $GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/cfc_league/services/class.tx_cfcleague_services_Competition.php']) {
+	include_once($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/cfc_league/services/class.tx_cfcleague_services_Competition.php']);
 }
-
-?>
