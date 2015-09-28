@@ -33,6 +33,7 @@
 			<label index="label_matches">Matches</label>
 			<label index="label_match_no">Match-No.</label>
 			<label index="label_roundmode">Round mode</label>
+			<label index="label_leading_zero">Add leeding Zero on matchday</label>
 			<label index="msg_create_teams">Create all teams on current page?</label>
 			<label index="msg_teams_created">Teams created on current page</label>
 			<label index="label_add_teams_from_page">Add teams from current page</label>
@@ -179,6 +180,7 @@
 			<label index="label_match">Spiel</label>
 			<label index="label_matches">Spiele</label>
 			<label index="label_match_no">Spiel-Nr.</label>
+			<label index="label_leading_zero">Führende 0 für Spieltag</label>
 			<label index="label_roundmode">Spieltagsmodus</label>
 			<label index="label_msg_noclubonpage">Auf der aktuellen Seite wurde kein Verein gefunden.</label>
 			<label index="label_msg_createnewclubnow">Sie können jetzt einen neuen Verein auf dieser Seite anlegen.</label>

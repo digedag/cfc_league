@@ -29,10 +29,17 @@ tx_rnbase::load('tx_cfcleague_models_Competition');
  * Die Klasse verwaltet die Erstellung von Spielplänen für Wettbewerbe
  */
 class tx_cfcleague_mod1_modCompCreateMatchTable {
-	var $doc;
+	/* @var $doc \TYPO3\CMS\Backend\Template\BigDocumentTemplate */
+	private $doc;
 	private $module;
 
 
+	/**
+	 * @return \TYPO3\CMS\Core\Page\PageRenderer
+	 */
+	private function getPageRenderer() {
+		return $this->doc->getPageRenderer();
+	}
 	/**
 	 * Verwaltet die Erstellung von Spielplänen von Ligen
    * @param tx_rnbase_mod_IModule $module
@@ -41,6 +48,8 @@ class tx_cfcleague_mod1_modCompCreateMatchTable {
 	public function main($module, $competition) {
 		$this->module = $module;
 		$this->doc = $module->getDoc();
+		$this->getPageRenderer()->addJsFile('js/matchcreate.js', 'text/javascript', FALSE, FALSE, '', TRUE);
+
 
 		$this->formTool = $module->getFormTool();
 		$comp = tx_cfcleague_models_Competition::getInstance($competition->uid);
@@ -154,7 +163,11 @@ class tx_cfcleague_mod1_modCompCreateMatchTable {
 		// Wir benötigen eine Select-Box mit der man die Rückrunden-Option einstellen kann
 		// Bei Änderung soll die Seite neu geladen werden, damit nur die Halbserie angezeigt wird.
 		$content .= $this->formTool->createSelectSingleByArray('option_halfseries', $option_halfseries, Array('0' => '###LABEL_CREATE_SAISON###', '1' => '###LABEL_CREATE_FIRSTHALF###', '2' => '###LABEL_CREATE_SECONDHALF###'), array('reload'=>1));
+		$content .= '<br />';
 
+		// Führende 0 für Spieltag im einstelligen Bereich
+		$content .= $this->formTool->createCheckbox('option_leadingZero', '1', FALSE, 't3sMatchCreator.prependZero(this);');
+		$content .= '###LABEL_LEADING_ZERO###';
 		$content .= '<br />';
 
 		$tableLayout = $this->doc->tableLayout;
@@ -183,7 +196,7 @@ class tx_cfcleague_mod1_modCompCreateMatchTable {
 			// Die Formularfelder, die jetzt erstellt werden, wandern später direkt in die neuen Game-Records
 			// Ein Hidden-Field für die Runde
 			$row[] = '<div>' . $this->formTool->createHidden('data[rounds][round_'.$round.'][round]', $round) .
-							$this->formTool->createTxtInput('data[rounds][round_'.$round.'][round_name]', $round . $LANG->getLL('createGameTable_round'), 10) .
+							$this->formTool->createTxtInput('data[rounds][round_'.$round.'][round_name]', $round . $LANG->getLL('createGameTable_round'), 10, array('class'=>'roundname')) .
 							$this->formTool->createDateInput('data[rounds][round_'.$round.'][date]', time()) .'</div>'.
 							// Anzeige der Paarungen
 			 				$this->doc->table($this->createMatchTableArray($matchArr, $league, 'data[rounds][round_'.$round.']'), $tableLayout2);
@@ -246,9 +259,8 @@ class tx_cfcleague_mod1_modCompCreateMatchTable {
 		$data = array('tx_cfcleague_games' => array());
 
 		// Wir erstellen die Spiel je Spieltag
-		foreach($rounds As $roundId => $roundData){
+		foreach($rounds As $roundData){
 			// Die ID des Spieltags ermitteln
-			$roundId = $roundData['round'];
 			$matches = $roundData['matches'];
 			// Die Paarungen holen
 			foreach($matches As $matchId => $match) {
@@ -290,7 +302,6 @@ class tx_cfcleague_mod1_modCompCreateMatchTable {
 	}
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/mod1/class.tx_cfcleague_mod1_modCompCreateMatchTable.php'])	{
-  include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/mod1/class.tx_cfcleague_mod1_modCompCreateMatchTable.php']);
+if (defined('TYPO3_MODE') && $GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/cfc_league/mod1/class.tx_cfcleague_mod1_modCompCreateMatchTable.php'])	{
+	include_once($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/cfc_league/mod1/class.tx_cfcleague_mod1_modCompCreateMatchTable.php']);
 }
-?>
