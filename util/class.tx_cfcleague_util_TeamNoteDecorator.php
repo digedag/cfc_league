@@ -82,15 +82,18 @@ class tx_cfcleague_util_TeamNoteDecorator {
 			$ret = $item->getProfile()->getName();
 			$ret .= $this->formTool->createEditLink('tx_cfcleague_profiles', $item->getProfile()->getUid());
 		}
-		
+
 		return $ret;
 	}
 
 	private function showMediaFAL($item) {
 		tx_rnbase::load('tx_rnbase_util_TSFAL');
 		$fileReference = tx_rnbase_util_TSFAL::getFirstReference('tx_cfcleague_team_notes', $item->getUid(), 'media');
-		$thumbs = tx_rnbase_util_TSFAL::createThumbnails(array($fileReference), array('width' => 50, 'height' => 50));
-		return ''.$thumbs[0];
+		if($fileReference) {
+			$thumbs = tx_rnbase_util_TSFAL::createThumbnails(array($fileReference), array('width' => 50, 'height' => 50));
+			return ''.$thumbs[0];
+		}
+		return '';
 	}
 	private function showMediaDAM($item) {
 		tx_rnbase::load('tx_cfcleague_util_DAM');
