@@ -22,14 +22,13 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
 tx_rnbase::load('tx_rnbase_model_base');
 
 /**
  * Model for age group
  */
 class tx_cfcleague_models_Group extends tx_rnbase_model_base {
-	
+
   function getTableName(){return 'tx_cfcleague_group';}
 
   /**
@@ -49,10 +48,10 @@ class tx_cfcleague_models_Group extends tx_rnbase_model_base {
   static public function getInstance($uid) {
   	return tx_cfcleague_util_ServiceRegistry::getGroupService()->getGroupByUid($uid);
   }
-  
+
 	/**
 	 * statische Methode, die ein Array mit Instanzen dieser Klasse liefert. Ist der übergebene
-	 * Parameter leer, dann werden alle Datensätze aus der Datenbank geliefert. Ansonsten 
+	 * Parameter leer, dann werden alle Datensätze aus der Datenbank geliefert. Ansonsten
 	 * wird ein String mit der uids der gesuchten Saisons erwartet ('2,4,10,...').
 	 */
 	static function findAll($uids) {

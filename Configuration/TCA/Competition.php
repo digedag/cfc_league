@@ -1,8 +1,8 @@
 <?php
 if (!defined ('TYPO3_MODE')) 	die ('Access denied.');
 
-if(t3lib_extMgm::isLoaded('dam')) {
-	require_once(t3lib_extMgm::extPath('dam').'tca_media_field.php');
+if(tx_rnbase_util_Extensions::isLoaded('dam')) {
+	require_once(tx_rnbase_util_Extensions::extPath('dam').'tca_media_field.php');
 }
 
 $TCA['tx_cfcleague_competition'] = Array (
@@ -230,7 +230,7 @@ if(tx_rnbase_util_TYPO3::isTYPO60OrHigher()) {
 		'config' => array('size' => 1, 'maxitems' => 1),
 	));
 }
-elseif(t3lib_extMgm::isLoaded('dam')) {
+elseif(tx_rnbase_util_Extensions::isLoaded('dam')) {
 	$TCA['tx_cfcleague_competition']['columns']['logo'] = txdam_getMediaTCA('image_field', 'logo');
 	$TCA['tx_cfcleague_competition']['columns']['logo']['label'] = 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_club.logo';
 	$TCA['tx_cfcleague_competition']['columns']['logo']['config']['size'] = 1;

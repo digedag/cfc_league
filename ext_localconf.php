@@ -1,24 +1,24 @@
 <?php
 if (!defined ('TYPO3_MODE')) 	die ('Access denied.');
-t3lib_extMgm::addUserTSConfig('
+tx_rnbase_util_Extensions::addUserTSConfig('
 	options.saveDocNew.tx_cfcleague_group=1
 ');
-t3lib_extMgm::addUserTSConfig('
+tx_rnbase_util_Extensions::addUserTSConfig('
 	options.saveDocNew.tx_cfcleague_saison=1
 ');
-t3lib_extMgm::addUserTSConfig('
+tx_rnbase_util_Extensions::addUserTSConfig('
 	options.saveDocNew.tx_cfcleague_competition=1
 ');
-t3lib_extMgm::addUserTSConfig('
+tx_rnbase_util_Extensions::addUserTSConfig('
 	options.saveDocNew.tx_cfcleague_club=1
 ');
-t3lib_extMgm::addUserTSConfig('
+tx_rnbase_util_Extensions::addUserTSConfig('
 	options.saveDocNew.tx_cfcleague_teams=1
 ');
-t3lib_extMgm::addUserTSConfig('
+tx_rnbase_util_Extensions::addUserTSConfig('
 	options.saveDocNew.tx_cfcleague_profiles=1
 ');
-t3lib_extMgm::addUserTSConfig('
+tx_rnbase_util_Extensions::addUserTSConfig('
 	options.saveDocNew.tx_cfcleague_team_notes=1
 ');
 
@@ -30,11 +30,9 @@ $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['proc
 
 $GLOBALS ['TYPO3_CONF_VARS']['BE']['AJAX']['T3sports::saveTickerMessage'] = 'EXT:' . $_EXTKEY . '/mod1/class.tx_cfcleague_mod1_AjaxTicker.php:tx_cfcleague_mod1_AjaxTicker->ajaxSaveTickerMessage';
 
-require_once(t3lib_extMgm::extPath('rn_base').'class.tx_rnbase.php');
-
 if (TYPO3_MODE == 'BE') {
 	// Einbindung einer PageTSConfig
-	t3lib_extMgm::addPageTSConfig('<INCLUDE_TYPOSCRIPT: source="FILE:EXT:cfc_league/mod1/pageTSconfig.txt">');
+	tx_rnbase_util_Extensions::addPageTSConfig('<INCLUDE_TYPOSCRIPT: source="FILE:EXT:cfc_league/mod1/pageTSconfig.txt">');
 }
 
 tx_rnbase::load('tx_cfcleague_util_Misc');
@@ -66,6 +64,6 @@ tx_cfcleague_util_Misc::registerFormation('5-4-1', '1-5-4-1');
 
 
 // Include services
-require_once(t3lib_extMgm::extPath('cfc_league').'services/ext_localconf.php');
-require_once(t3lib_extMgm::extPath('cfc_league').'sports/ext_localconf.php');
+require_once(tx_rnbase_util_Extensions::extPath('cfc_league').'services/ext_localconf.php');
+require_once(tx_rnbase_util_Extensions::extPath('cfc_league').'sports/ext_localconf.php');
 

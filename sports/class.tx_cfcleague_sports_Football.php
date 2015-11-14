@@ -22,8 +22,6 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
-
 tx_rnbase::load('tx_cfcleague_sports_ISports');
 
 /**
@@ -35,7 +33,7 @@ class tx_cfcleague_sports_Football extends t3lib_svbase implements tx_cfcleague_
 	 * @return tx_cfcleaguefe_table_ITableType
 	 */
 	public function getLeagueTable() {
-		if(t3lib_extMgm::isLoaded('cfc_league_fe')) {
+		if(tx_rnbase_util_Extensions::isLoaded('cfc_league_fe')) {
 			return tx_rnbase::makeInstance('tx_cfcleaguefe_table_football_Table');
 		}
 		return null;

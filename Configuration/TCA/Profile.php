@@ -1,8 +1,8 @@
 <?php
 if (!defined ('TYPO3_MODE')) 	die ('Access denied.');
 
-if(t3lib_extMgm::isLoaded('dam')) {
-	require_once(t3lib_extMgm::extPath('dam').'tca_media_field.php');
+if(tx_rnbase_util_Extensions::isLoaded('dam')) {
+	require_once(tx_rnbase_util_Extensions::extPath('dam').'tca_media_field.php');
 }
 tx_rnbase::load('tx_cfcleague_tca_Lookup');
 
@@ -257,7 +257,7 @@ if(tx_rnbase_util_TYPO3::isTYPO60OrHigher()) {
 		'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_stadiums_pictures',
 	));
 }
-elseif(t3lib_extMgm::isLoaded('dam')) {
+elseif(tx_rnbase_util_Extensions::isLoaded('dam')) {
 	$TCA['tx_cfcleague_profiles']['columns']['dam_images'] = txdam_getMediaTCA('image_field', 'dam_images');
 }
 else {

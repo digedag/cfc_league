@@ -21,15 +21,13 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  ***************************************************************/
 
-require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
-
 tx_rnbase::load('tx_rnbase_util_SearchBase');
 tx_rnbase::load('tx_rnbase_util_Misc');
 
 
 /**
  * Class to search match notes from database
- * 
+ *
  * @author Rene Nitzsche
  */
 class tx_cfcleague_search_MatchNote extends tx_rnbase_util_SearchBase {
@@ -55,7 +53,7 @@ class tx_cfcleague_search_MatchNote extends tx_rnbase_util_SearchBase {
 		if(isset($tableAliases['MATCH'])) {
 			$join .= ' JOIN tx_cfcleague_games ON tx_cfcleague_games.uid = tx_cfcleague_match_notes.game ';
 		}
-		
+
 		// Hook to append other tables
 		tx_rnbase_util_Misc::callHook('cfc_league', 'search_MatchNote_getJoins_hook',
 			array('join' => &$join, 'tableAliases' => $tableAliases), $this);

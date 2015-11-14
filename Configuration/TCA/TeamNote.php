@@ -36,7 +36,7 @@ $TCA['tx_cfcleague_team_notes'] = Array (
 				'maxitems' => 1,
 			)
 		),
-		'type' => Array (		
+		'type' => Array (
 			'exclude' => 1,
 			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_note_types',
 			'config' => Array (
@@ -64,7 +64,7 @@ $TCA['tx_cfcleague_team_notes'] = Array (
 		),
 		'player' => Array (
 			'exclude' => 1,
-			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles',        
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles',
 			'config' => Array (
 				'type' => 'select',
 				'foreign_table' => 'tx_cfcleague_profiles',
@@ -117,7 +117,7 @@ if(tx_rnbase_util_TYPO3::isTYPO60OrHigher()) {
 	));
 	$TCA['tx_cfcleague_team_notes']['columns']['media']['label'] = 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_team_notes.media';
 }
-elseif(t3lib_extMgm::isLoaded('dam')) {
+elseif(tx_rnbase_util_Extensions::isLoaded('dam')) {
 	// Type media is supported with DAM only!
 	$TCA['tx_cfcleague_team_notes']['columns']['mediatype']['config']['items'][] =
 					Array('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_team_notes.mediatype.media', '1');

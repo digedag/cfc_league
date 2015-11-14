@@ -34,7 +34,6 @@ unset($MCONF);
 require_once('conf.php');
 require_once($BACK_PATH.'init.php');
 
-require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
 tx_rnbase::load('tx_rnbase_util_TYPO3');
 if(!tx_rnbase_util_TYPO3::isTYPO62OrHigher())
 	require_once(PATH_typo3.'template.php');
@@ -43,14 +42,14 @@ $LANG->includeLLFile('EXT:cfc_league/mod1/locallang.xml');
 $BE_USER->modAccess($MCONF, 1);	// This checks permissions and exits if the users has no permission for entry.
 	// DEFAULT initialization of a module [END]
 
-require_once(t3lib_extMgm::extPath('cfc_league').'mod1/class.tx_cfcleague_selector.php');
+require_once(tx_rnbase_util_Extensions::extPath('cfc_league').'mod1/class.tx_cfcleague_selector.php');
 
 tx_rnbase::load('tx_rnbase_mod_BaseModule');
 
 
 
 /**
- * Module 'T3sports' 
+ * Module 'T3sports'
  *
  * @author	René Nitzsche rene@system25.de
  * @package	TYPO3
@@ -67,7 +66,7 @@ class  tx_cfcleague_module1 extends tx_rnbase_mod_BaseModule {
 	function getExtensionKey() {
 		return 'cfc_league';
 	}
-	
+
 	protected function getFormTag() {
 		return '<form action="index.php?id=' . $this->getPid() . '" method="POST" name="editform" id="editform">';
 	}

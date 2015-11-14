@@ -223,8 +223,8 @@ if(tx_rnbase_util_TYPO3::isTYPO60OrHigher()) {
 		'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_teams.pictures',
 	));
 }
-else if(t3lib_extMgm::isLoaded('dam')) {
-	require_once(t3lib_extMgm::extPath('dam').'tca_media_field.php');
+else if(tx_rnbase_util_Extensions::isLoaded('dam')) {
+	require_once(tx_rnbase_util_Extensions::extPath('dam').'tca_media_field.php');
 	$TCA['tx_cfcleague_teams']['columns']['logo'] = tx_cfcleague_tca_Lookup::getTeamLogoField();
 	$TCA['tx_cfcleague_teams']['columns']['dam_images'] = txdam_getMediaTCA('image_field', 'dam_images');
 	$TCA['tx_cfcleague_teams']['columns']['dam_logo'] = txdam_getMediaTCA('image_field');

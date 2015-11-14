@@ -118,7 +118,7 @@ class tx_cfcleague_models_Stadium extends tx_rnbase_model_base {
 	 * @return string
 	 */
 	public function getLogoPath() {
-		if(t3lib_extMgm::isLoaded('dam')) {
+		if(tx_rnbase_util_Extensions::isLoaded('dam')) {
 			if($this->record['logo']) {
 				$damPics = tx_dam_db::getReferencedFiles('tx_cfcleague_stadiums', $this->uid, 'logo');
 				if(list($uid, $filePath) = each($damPics['files'])) {

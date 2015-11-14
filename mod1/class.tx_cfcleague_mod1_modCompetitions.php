@@ -115,7 +115,7 @@ class tx_cfcleague_mod1_modCompetitions extends tx_rnbase_mod_BaseModFunc {
 	}
 
 	private function showEditMatches($current_league, $module) {
-		require_once(t3lib_extMgm::extPath('cfc_league') . 'mod1/class.tx_cfcleague_match_edit.php');
+		require_once(tx_rnbase_util_Extensions::extPath('cfc_league') . 'mod1/class.tx_cfcleague_match_edit.php');
 		$subMod = tx_rnbase::makeInstance('tx_cfcleague_match_edit');
 		$content = $subMod->main($module, $current_league);
 		return $content;

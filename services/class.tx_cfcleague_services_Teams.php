@@ -22,7 +22,6 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
 tx_rnbase::load('tx_rnbase_util_SearchBase');
 tx_rnbase::load('tx_rnbase_util_DB');
 tx_rnbase::load('tx_cfcleague_search_Builder');
@@ -30,7 +29,7 @@ tx_rnbase::load('tx_cfcleague_search_Builder');
 
 /**
  * Service for accessing teams
- * 
+ *
  * @author Rene Nitzsche
  */
 class tx_cfcleague_services_Teams extends t3lib_svbase {
@@ -108,7 +107,7 @@ class tx_cfcleague_services_Teams extends t3lib_svbase {
 	function getTeamNames($comp, $asArray = 0) {
 		$teamNames = array();
 		// Ohne zugeordnete Team, muss nicht gefragt werden
-		if(!$comp->record['teams']) 
+		if(!$comp->record['teams'])
 			return $teamNames;
 
 		$fields = array();
@@ -123,13 +122,13 @@ class tx_cfcleague_services_Teams extends t3lib_svbase {
   }
 
 	/**
-	 * Returns the teams age group. This value is retrieved from the teams competitions. So 
+	 * Returns the teams age group. This value is retrieved from the teams competitions. So
 	 * the first competition found, decides about the age group.
 	 * @return tx_cfcleague_models_group or null
 	 */
 	public function getAgeGroup($team) {
 		if(!is_object($team) || !$team->isValid()) return null;
-		
+
 		tx_rnbase::load('tx_cfcleague_models_Group');
 		tx_rnbase::load('tx_rnbase_cache_Manager');
 		$cache = tx_rnbase_cache_Manager::getCache('t3sports');

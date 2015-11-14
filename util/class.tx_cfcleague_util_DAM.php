@@ -22,8 +22,6 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
-
 
 /**
  */
@@ -33,7 +31,7 @@ class tx_cfcleague_util_DAM {
 		tx_rnbase::load('tx_rnbase_util_TSDAM');
 		return tx_rnbase_util_TSDAM::fetchFiles($tablename, $uid, $refField);
 	}
-	
+
 	static function createThumbnails($damFiles, $size, $addAttr) {
 		return tx_rnbase_util_TSDAM::createThumbnails($damFiles, $size, $addAttr);
 	}

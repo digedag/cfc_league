@@ -1,11 +1,10 @@
 <?php
 if (!defined ('TYPO3_MODE')) 	die ('Access denied.');
 
-require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
 tx_rnbase::load('tx_rnbase_configurations');
 // Zur Sicherheit einbinden, da die Funktion schon einmal nicht gefunden wurde...
-if(t3lib_extMgm::isLoaded('dam')) {
-	require_once(t3lib_extMgm::extPath('dam').'tca_media_field.php');
+if(tx_rnbase_util_Extensions::isLoaded('dam')) {
+	require_once(tx_rnbase_util_Extensions::extPath('dam').'tca_media_field.php');
 }
 
 $TCA['tx_cfcleague_match_notes'] = Array (

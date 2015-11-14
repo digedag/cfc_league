@@ -22,13 +22,12 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
 tx_rnbase::load('tx_rnbase_util_DB');
 
 
 /**
  * Service for accessing profile types
- * 
+ *
  * @author Rene Nitzsche
  */
 class tx_cfcleague_services_ProfileTypes extends t3lib_svbase {

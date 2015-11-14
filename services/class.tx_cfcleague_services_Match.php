@@ -22,7 +22,6 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
 tx_rnbase::load('tx_rnbase_util_SearchBase');
 
 interface tx_cfcleague_MatchService {
@@ -31,7 +30,7 @@ interface tx_cfcleague_MatchService {
 
 /**
  * Service for accessing match information
- * 
+ *
  * @author Rene Nitzsche
  */
 class tx_cfcleague_services_Match extends t3lib_svbase implements tx_cfcleague_MatchService  {
@@ -39,7 +38,7 @@ class tx_cfcleague_services_Match extends t3lib_svbase implements tx_cfcleague_M
 	/**
 	 * Returns all available profile types for a TCA select item
 	 *
-	 * @return array 
+	 * @return array
 	 */
 	public function getMatchNoteTypes4TCA() {
 		$types = array();
@@ -75,7 +74,7 @@ class tx_cfcleague_services_Match extends t3lib_svbase implements tx_cfcleague_M
 		$builder->setStatus($status);
 		$builder->setTeams($teamIds);
 		$builder->getFields($fields, $options);
-		
+
   	$matches = $this->search($fields, $options);
   	return $matches;
 	}

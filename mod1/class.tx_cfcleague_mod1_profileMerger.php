@@ -22,8 +22,7 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-require_once(t3lib_extMgm::extPath('cfc_league') . 'class.tx_cfcleague_db.php');
-require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
+require_once(tx_rnbase_util_Extensions::extPath('cfc_league') . 'class.tx_cfcleague_db.php');
 tx_rnbase::load('tx_cfcleague_util_ServiceRegistry');
 tx_rnbase::load('tx_cfcleague_team');
 tx_rnbase::load('tx_cfcleague_match');
@@ -55,7 +54,7 @@ class tx_cfcleague_mod1_profileMerger {
 		self::mergeMatchNotes($data, $leadingProfileUID, $obsoleteProfileUID);
 		self::mergeTeamNotes($data, $leadingProfileUID, $obsoleteProfileUID);
 
-		tx_rnbase_util_Misc::callHook('cfc_league', 'mergeProfiles_hook', 
+		tx_rnbase_util_Misc::callHook('cfc_league', 'mergeProfiles_hook',
 			array('data' => &$data, 'leadingUid' => $leadingProfileUID, 'obsoleteUid' => $obsoleteProfileUID), $this);
 
     $tce =& tx_cfcleague_db::getTCEmain($data);
@@ -64,7 +63,7 @@ class tx_cfcleague_mod1_profileMerger {
 	}
 
 	private function mergeTeamNotes(&$data, $leading, $obsolete) {
-		$srv = tx_cfcleague_util_ServiceRegistry::getProfileService();	
+		$srv = tx_cfcleague_util_ServiceRegistry::getProfileService();
 		$rows = $srv->getTeamsNotes4Profile($obsolete);
 		foreach($rows As $row) {
 			$data['tx_cfcleague_team_notes'][$row['uid']]['player'] = $leading;
@@ -78,7 +77,7 @@ class tx_cfcleague_mod1_profileMerger {
 			self::mergeField('player_guest', 'tx_cfcleague_match_notes', $data, $row, $leading, $obsolete);
 		}
 	}
-	
+
 	private function mergeMatches(&$data, $leading, $obsolete) {
 		$rows = tx_cfcleague_match::getMatches4Profile($obsolete);
 		foreach($rows As $row) {
@@ -92,7 +91,7 @@ class tx_cfcleague_mod1_profileMerger {
 			self::mergeField('assists', 'tx_cfcleague_games', $data, $row, $leading, $obsolete);
 		}
 	}
-	
+
 	private function mergeTeams(&$data, $leading, $obsolete) {
 		// Teams suchen, in denen obsolete spielt
 		$teamRows = tx_cfcleague_team::getTeams4Profile($obsolete);

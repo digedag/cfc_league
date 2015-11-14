@@ -22,7 +22,6 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
 tx_rnbase::load('tx_rnbase_mod_IModule');
 
 /**
@@ -37,7 +36,7 @@ class tx_cfcleague_mod1_searcher_Stadium {
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param 	tx_rnbase_mod_IModule $mod
 	 * @param 	unknown_type $options
 	 * @return 	unknown_type
@@ -64,7 +63,7 @@ class tx_cfcleague_mod1_searcher_Stadium {
 			$this->SEARCH_SETTINGS = t3lib_BEfunc::getModuleData(array ('searchterm' => ''), $this->data, $mod->getName() );
 		else
 			$this->SEARCH_SETTINGS = $this->data;
-		
+
 	}
 	/**
 	 * Returns the complete search form
@@ -82,27 +81,27 @@ class tx_cfcleague_mod1_searcher_Stadium {
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	public function getResultList() {
 		$pager = tx_rnbase::makeInstance('tx_rnbase_util_BEPager', 'stadiumPager', $this->getModule()->getName(), 0);
 		// Get stadium service
 		$srv = tx_cfcleague_util_ServiceRegistry::getStadiumService();
-		
+
 		// Set options
 		$options = array('count'=>1, 'distinct'=>1);
-		
-		$fields = array();		
-		// Filter companies according to filter selections		
+
+		$fields = array();
+		// Filter companies according to filter selections
 		if ($this->currentClub)
 			$fields['CLUB.UID'] = array(OP_EQ_INT => $this->currentClub);
-			
+
 		if (!$this->currentShowHidden) $options['enablefieldsfe'] = 1;
 		else $options['enablefieldsbe'] = 1;
 
 		// Set more options
 		$options['orderby']['STADIUM.NAME'] = 'ASC';
-		
+
 		// Get counted data
 		$cnt = $srv->search($fields, $options);
 		unset($options['count']);
@@ -154,8 +153,8 @@ class tx_cfcleague_mod1_searcher_Stadium {
 	 * @return 	int
 	 */
 	public function getSize() {
-		return $this->resultSize;		
-	}	
+		return $this->resultSize;
+	}
 
 	/**
 	 * Set club filter

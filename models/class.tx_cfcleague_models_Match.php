@@ -22,8 +22,6 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
-
 tx_rnbase::load('tx_rnbase_model_base');
 
 /**
@@ -33,7 +31,7 @@ class tx_cfcleague_models_Match extends tx_rnbase_model_base {
 
 	private $sets;
 	private $resultInited = false;
-	
+
 	function __construct($rowOrUid) {
 		parent::__construct($rowOrUid);
 	}
@@ -56,7 +54,7 @@ class tx_cfcleague_models_Match extends tx_rnbase_model_base {
 	}
 
 	/**
-	 * Liefert den TOTO-Wert des Spiels. Als 0 für ein Unentschieden, 1 für einen Heim- 
+	 * Liefert den TOTO-Wert des Spiels. Als 0 für ein Unentschieden, 1 für einen Heim-
 	 * und 2 für einen Auswärstsieg.
 	 * @param string $matchPart The matchpart is 1,2,3...,et,ap,last
 	 */
@@ -136,7 +134,7 @@ class tx_cfcleague_models_Match extends tx_rnbase_model_base {
 		$this->record['goals_guest'] = $goalsGuest;
 	}
 	/**
-	 * 
+	 *
 	 * @return string
 	 */
 	public function getResult() {
@@ -175,7 +173,7 @@ class tx_cfcleague_models_Match extends tx_rnbase_model_base {
 		return $ids;
 	}
 	/**
-	 * Liefert die Spieler des Gastteams der Startelf 
+	 * Liefert die Spieler des Gastteams der Startelf
 	 * @param $all wenn true werden auch die Ersatzspieler mit geliefert
 	 * @return string comma separated uids
 	 */

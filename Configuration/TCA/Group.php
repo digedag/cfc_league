@@ -1,8 +1,8 @@
 <?php
 if (!defined ('TYPO3_MODE')) 	die ('Access denied.');
 
-if(t3lib_extMgm::isLoaded('dam')) {
-	require_once(t3lib_extMgm::extPath('dam').'tca_media_field.php');
+if(tx_rnbase_util_Extensions::isLoaded('dam')) {
+	require_once(tx_rnbase_util_Extensions::extPath('dam').'tca_media_field.php');
 }
 
 $TCA['tx_cfcleague_group'] = Array (
@@ -20,7 +20,7 @@ $TCA['tx_cfcleague_group'] = Array (
 				'default' => '0'
 			)
 		),
-		'starttime' => Array (		
+		'starttime' => Array (
 			'exclude' => 1,
 			'label' => 'LLL:EXT:lang/locallang_general.xml:LGL.starttime',
 			'config' => Array (
@@ -32,7 +32,7 @@ $TCA['tx_cfcleague_group'] = Array (
 				'checkbox' => '0'
 			)
 		),
-		'fe_group' => Array (		
+		'fe_group' => Array (
 			'exclude' => 1,
 			'label' => 'LLL:EXT:lang/locallang_general.xml:LGL.fe_group',
 			'config' => Array (
@@ -82,7 +82,7 @@ if(tx_rnbase_util_TYPO3::isTYPO60OrHigher()) {
 		'maxitems' => 1
 	));
 }
-elseif(t3lib_extMgm::isLoaded('dam')) {
+elseif(tx_rnbase_util_Extensions::isLoaded('dam')) {
 	$TCA['tx_cfcleague_group']['columns']['logo'] = txdam_getMediaTCA('image_field', 'logo');
 	$TCA['tx_cfcleague_group']['columns']['logo']['label'] = 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_club.logo';
 	$TCA['tx_cfcleague_group']['columns']['logo']['config']['size'] = 1;
@@ -91,7 +91,7 @@ elseif(t3lib_extMgm::isLoaded('dam')) {
 else {
 	$TCA['tx_cfcleague_group']['columns']['t3logo'] = Array (
 		'exclude' => 1,
-		'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_club.logo',		
+		'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_club.logo',
 		'config' => Array (
 			'type' => 'group',
 			'internal_type' => 'file',

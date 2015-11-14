@@ -1,18 +1,17 @@
 <?php
 if (!defined ('TYPO3_MODE')) 	die ('Access denied.');
 
-require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
 tx_rnbase::load('tx_rnbase_configurations');
 tx_rnbase::load('tx_cfcleague_tca_Lookup');
 
-if(t3lib_extMgm::isLoaded('dam')) {
-	require_once(t3lib_extMgm::extPath('dam').'tca_media_field.php');
+if(tx_rnbase_util_Extensions::isLoaded('dam')) {
+	require_once(tx_rnbase_util_Extensions::extPath('dam').'tca_media_field.php');
 }
 
 $globalClubs = intval(tx_rnbase_configurations::getExtensionCfgValue('cfc_league', 'useGlobalClubs')) > 0;
 $clubOrdering = intval(tx_rnbase_configurations::getExtensionCfgValue('cfc_league', 'clubOrdering')) > 0;
 
-$stadiumClubArr = $globalClubs ? 
+$stadiumClubArr = $globalClubs ?
 		Array (
 				'type' => 'select',
 				'foreign_table' => 'tx_cfcleague_club',
@@ -215,7 +214,7 @@ $TCA['tx_cfcleague_stadiums'] = Array (
 			'1' => Array('showitem' => '')
 	)
 );
-if(t3lib_extMgm::isLoaded('static_info_tables')) {
+if(tx_rnbase_util_Extensions::isLoaded('static_info_tables')) {
 	$TCA['tx_cfcleague_stadiums']['columns']['country'] = tx_cfcleague_tca_Lookup::getCountryField();
 }
 tx_rnbase::load('tx_rnbase_util_TYPO3');
@@ -229,7 +228,7 @@ if(tx_rnbase_util_TYPO3::isTYPO60OrHigher()) {
 		'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_stadiums_pictures',
 	));
 }
-elseif(t3lib_extMgm::isLoaded('dam')) {
+elseif(tx_rnbase_util_Extensions::isLoaded('dam')) {
 	$TCA['tx_cfcleague_stadiums']['columns']['logo'] = txdam_getMediaTCA('image_field', 'logo');
 	$TCA['tx_cfcleague_stadiums']['columns']['logo']['label'] = 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_stadiums_logo';
 	$TCA['tx_cfcleague_stadiums']['columns']['logo']['config']['size'] = 1;

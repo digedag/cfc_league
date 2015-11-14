@@ -22,7 +22,7 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-require_once(t3lib_extMgm::extPath('cfc_league') . 'class.tx_cfcleague_db.php');
+require_once(tx_rnbase_util_Extensions::extPath('cfc_league') . 'class.tx_cfcleague_db.php');
 
 class tx_cfcleague_hooks_tcehook {
 
@@ -130,7 +130,7 @@ class tx_cfcleague_hooks_tcehook {
       $newProfileIds = t3lib_div::trimExplode(',', $incomingFieldArray[$profileType]);
       $profileUids = array();
       for($i=0; $i < count($newProfileIds); $i++) {
-        if(strstr($newProfileIds[$i], 'NEW')) 
+        if(strstr($newProfileIds[$i], 'NEW'))
           $profileUid = $tcemain->substNEWwithIDs[$newProfileIds[$i]];
         else
           $profileUid = $newProfileIds[$i];

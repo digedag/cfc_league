@@ -22,7 +22,6 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
 tx_rnbase::load('tx_rnbase_util_Misc');
 tx_rnbase::load('tx_cfcleague_mod1_profilesearcher');
 tx_rnbase::load('tx_cfcleague_mod1_modTeamsProfileCreate');
@@ -43,7 +42,7 @@ class tx_cfcleague_mod1_subAddProfiles {
 	 */
 	public function handleRequest($module, $currTeam, $teamInfo) {
 		$this->mod = $module;
-		
+
 		if($teamInfo->isTeamFull()) {
 			// Kann nix mehr angelegt werden
 			return $this->mod->doc->section('Message:', $GLOBALS['LANG']->getLL('msg_maxPlayers'), 0, 1, ICON_WARN);
@@ -75,7 +74,7 @@ class tx_cfcleague_mod1_subAddProfiles {
 	 * @return string
 	 */
 	function showAddProfiles($currTeam, $teamInfo) {
-		
+
 		$options['checkbox'] = 1;
 
 		// Todo: wir müssen wissen, welche Teil des Teams selectiert ist
@@ -214,7 +213,7 @@ class tx_cfcleague_mod1_subAddProfiles {
 		tx_rnbase::load('tx_cfcleague_util_Misc');
 		$playerUids = implode(',', tx_cfcleague_util_Misc::mergeArrays(t3lib_div::intExplode(',', $currTeam->record[$profileCol]), $entryUids));
 		$data['tx_cfcleague_teams'][$currTeam->record['uid']][$profileCol] = $playerUids;
-				
+
 		reset($data);
 		$tce =& tx_cfcleague_db::getTCEmain($data);
 		$tce->process_datamap();

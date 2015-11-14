@@ -22,7 +22,6 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
 $BE_USER->modAccess($MCONF, 1);
 
 tx_rnbase::load('tx_rnbase_util_TYPO3');
@@ -41,7 +40,7 @@ class tx_cfcleague_profile_search extends tx_rnbase_mod_BaseModFunc {
 
 	/**
 	 * Method getFuncId
-	 * 
+	 *
 	 * @return	string
 	 */
 	function getFuncId() {
@@ -54,7 +53,7 @@ class tx_cfcleague_profile_search extends tx_rnbase_mod_BaseModFunc {
 
 		$this->doc = $this->getModule()->getDoc();
 		$this->formTool = $this->getModule()->getFormTool();
-		
+
 		// Selector-Instanz bereitstellen
 		$this->selector = t3lib_div::makeInstance('tx_cfcleague_selector');
 		$this->selector->init($this->getModule()->getDoc(), $this->getModule()->getName());
@@ -120,7 +119,7 @@ class tx_cfcleague_profile_search extends tx_rnbase_mod_BaseModFunc {
 	}
 
 	/**
-	 * Erstellt das Form für den Abgleich zweier Personen. Der Nutzer muss das führende 
+	 * Erstellt das Form für den Abgleich zweier Personen. Der Nutzer muss das führende
 	 * Profil auswählen.
 	 *
 	 * @param int $uid1
@@ -219,7 +218,7 @@ class tx_cfcleague_profile_search extends tx_rnbase_mod_BaseModFunc {
 	}
 
   /**
-   * Sucht die Profile mit den übergebenen Parametern. Entweder wird über 
+   * Sucht die Profile mit den übergebenen Parametern. Entweder wird über
    * Vor- und Zuname gesucht, oder man übergibt direkt eine UID.
    */
   function searchProfiles($searchterm, $uid = 0) {
@@ -313,7 +312,7 @@ class tx_cfcleague_profile_search extends tx_rnbase_mod_BaseModFunc {
 			$tableLayout = $this->doc->tableLayout;
 			$tableLayout['defRow']['defCol'] = Array('<td style="vertical-align:top;padding:5px 0;">', '</td>');
 			$tableLayout['defRowEven']['defCol'] = Array((tx_rnbase_util_TYPO3::isTYPO42OrHigher() ?
-										'<td style="vertical-align:top;padding:5px 0;">' : 
+										'<td style="vertical-align:top;padding:5px 0;">' :
 										'<td style="vertical-align:top; padding:5px 0;" class="db_list_alt">'), '</td>');
 
 			$out .= $this->doc->table($arr, $tableLayout);

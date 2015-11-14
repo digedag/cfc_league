@@ -22,13 +22,12 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
 tx_rnbase::load('tx_rnbase_util_DB');
 
 
 /**
  * Service for accessing profiles
- * 
+ *
  * @author Rene Nitzsche
  */
 class tx_cfcleague_services_Profiles extends t3lib_svbase {
@@ -75,7 +74,7 @@ class tx_cfcleague_services_Profiles extends t3lib_svbase {
 
 		$fields = array();
 		$fields[SEARCH_FIELD_JOINED][0] = array(
-			'value' => $profile->getUid(), 
+			'value' => $profile->getUid(),
 			'cols' => array('TEAM.PLAYERS', 'TEAM.SUPPORTERS', 'TEAM.COACHES'),
 			'operator' => OP_INSET_INT
 		);
@@ -92,8 +91,8 @@ class tx_cfcleague_services_Profiles extends t3lib_svbase {
 
 		$fields = array();
 		$fields[SEARCH_FIELD_JOINED][0] = array(
-			'value' => $profile->getUid(), 
-			'cols' => array('MATCH.REFEREE', 'MATCH.ASSISTS', 'MATCH.PLAYERS_HOME', 'MATCH.PLAYERS_GUEST', 
+			'value' => $profile->getUid(),
+			'cols' => array('MATCH.REFEREE', 'MATCH.ASSISTS', 'MATCH.PLAYERS_HOME', 'MATCH.PLAYERS_GUEST',
 											'MATCH.SUBSTITUTES_HOME', 'MATCH.SUBSTITUTES_GUEST', 'MATCH.COACH_HOME', 'MATCH.COACH_GUEST'),
 			'operator' => OP_INSET_INT
 		);
@@ -103,7 +102,7 @@ class tx_cfcleague_services_Profiles extends t3lib_svbase {
 
 		$fields = array();
 		$fields[SEARCH_FIELD_JOINED][0] = array(
-			'value' => $profile->getUid(), 
+			'value' => $profile->getUid(),
 			'cols' => array('MATCHNOTE.PLAYER_HOME', 'MATCHNOTE.PLAYER_GUEST'),
 			'operator' => OP_EQ_INT
 		);
@@ -126,7 +125,7 @@ class tx_cfcleague_services_Profiles extends t3lib_svbase {
 	/**
 	 * Returns all available profile types for a TCA select item
 	 *
-	 * @return array 
+	 * @return array
 	 */
 	function getProfileTypes4TCA() {
 		$items = array();
@@ -152,7 +151,7 @@ class tx_cfcleague_services_Profiles extends t3lib_svbase {
 		foreach($uids As $uid) {
 			$uidArr[$uid] = '';
 		}
-		
+
 		$baseType = 't3sports_profiletype';
 		$services = tx_rnbase_util_Misc::lookupServices($baseType);
 		foreach ($services As $subtype => $info) {

@@ -22,7 +22,6 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
 tx_rnbase::load('tx_rnbase_util_Misc');
 tx_rnbase::load('tx_cfcleague_mod1_decorator');
 
@@ -87,11 +86,11 @@ class tx_cfcleague_mod1_subTeamNotes {
 		$out = '<h2>'.$type->getLabel().'</h2>';
 		if($type->getDescription())
 			$out .= '<p>'.$type->getDescription().'</p>';
-		
+
 		// Alle Notes dieses Teams laden
 		$srv = tx_cfcleague_util_ServiceRegistry::getTeamService();
 		$notes = $srv->getTeamNotes($currTeam, $type);
-		
+
 		$decor = tx_rnbase::makeInstance('tx_cfcleague_util_TeamNoteDecorator', $this->getFormTool());
 		$columns = array(
 			'uid' => array('decorator' => $decor),
@@ -101,7 +100,7 @@ class tx_cfcleague_mod1_subTeamNotes {
 		);
 		$rows = tx_cfcleague_mod1_decorator::prepareTable($notes, $columns, $this->getFormTool(), $options);
 		$out .= $this->mod->getDoc()->table($rows[0]);
-		
+
 		// We use the mediatype from first entry
 		if(count($notes))
 			$options['params'] = '&mediatype='.$notes[0]->getMediaType();
@@ -135,7 +134,7 @@ class tx_cfcleague_mod1_subTeamNotes {
 					// Die Spieler hinzufügen
 					$playerUids = implode(',', tx_cfcleague_profile_create::mergeArrays(t3lib_div::intExplode(',', $currTeam->record['players']), $entryUids));
 					$data['tx_cfcleague_teams'][$currTeam->record['uid']]['players'] = $playerUids;
-							
+
 					reset($data);
 					$tce =& tx_cfcleague_db::getTCEmain($data);
 					$tce->process_datamap();
@@ -146,7 +145,7 @@ class tx_cfcleague_mod1_subTeamNotes {
 		}
 		return (strlen($out)) ? $this->mod->getDoc()->section($GLOBALS['LANG']->getLL('message').':', $out, 0, 1, ICON_INFO) : '';
 	}
-	
+
 	/**
 	 * Get a profile searcher
 	 *

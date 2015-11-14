@@ -22,8 +22,6 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
-
 tx_rnbase::load('tx_rnbase_model_base');
 
 /**
@@ -99,7 +97,7 @@ class tx_cfcleague_models_Club extends tx_rnbase_model_base {
 	 * @return string
 	 */
 	public function getFirstLogo() {
-		if(t3lib_extMgm::isLoaded('dam')) {
+		if(tx_rnbase_util_Extensions::isLoaded('dam')) {
 			if($this->record['dam_logo']) {
 				$damPics = tx_dam_db::getReferencedFiles('tx_cfcleague_club', $this->uid, 'dam_images');
 				if(list($uid, $filePath) = each($damPics['files'])) {

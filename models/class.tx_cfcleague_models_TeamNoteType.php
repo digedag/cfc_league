@@ -22,7 +22,6 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
 tx_rnbase::load('tx_rnbase_model_base');
 
 /**
@@ -76,7 +75,7 @@ class tx_cfcleague_models_TeamNoteType extends tx_rnbase_model_base {
   	self::_init();
   	return array_values(self::$instances);
   }
-  
+
 	/**
 	 * Lädt alle Instanzen aus der DB und legt sie in das Array self::$instances.
 	 * Key ist die UID des Records.
@@ -87,7 +86,7 @@ class tx_cfcleague_models_TeamNoteType extends tx_rnbase_model_base {
 
 		$options['wrapperclass'] = 'tx_cfcleague_models_TeamNoteType';
 		$result = tx_rnbase_util_DB::doSelect('*', 'tx_cfcleague_note_types', $options, 0);
-  	
+
 		foreach($result As $type) {
 			self::$instances[$type->uid] = $type;
 		}

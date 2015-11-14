@@ -22,9 +22,6 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
-
-
 
 
 /**
@@ -38,7 +35,7 @@ class tx_cfcleague_util_ProfileSearcher {
 	public function __construct(&$mod, $options = array()) {
 		$this->init($mod, $options);
 	}
-	
+
 	private function init($mod, $options) {
 		$this->options = $options;
 		$this->mod = $mod;
@@ -94,13 +91,13 @@ class tx_cfcleague_util_ProfileSearcher {
 	 * @return int
 	 */
 	public function getSize() {
-		return $this->resultSize;		
+		return $this->resultSize;
 	}
 
   function searchProfiles($searchterm) {
   	// TODO
   }
-	
+
 
 }
 

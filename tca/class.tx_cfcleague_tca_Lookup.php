@@ -22,8 +22,6 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
-
 tx_rnbase::load('tx_rnbase_util_Misc');
 tx_rnbase::load('tx_rnbase_util_TYPO3');
 
@@ -163,7 +161,7 @@ class tx_cfcleague_tca_Lookup {
 			}
 		}
 		else {
-			require_once(t3lib_extMgm::extPath('dam').'tca_media_field.php');
+			require_once(tx_rnbase_util_Extensions::extPath('dam').'tca_media_field.php');
 			$ret = txdam_getMediaTCA('image_field', 'logo');
 			unset($ret['config']['MM']);
 			unset($ret['config']['MM_foreign_select']);
@@ -220,7 +218,7 @@ class tx_cfcleague_tca_Lookup {
 			else {
 				// Logo anzeigen
 				$currPic = t3lib_BEfunc::getRecord('tx_dam', $row['logo']);
-				require_once(t3lib_extMgm::extPath('dam').'lib/class.tx_dam_tcefunc.php');
+				require_once(tx_rnbase_util_Extensions::extPath('dam').'lib/class.tx_dam_tcefunc.php');
 				$tcefunc = t3lib_div::makeInstance('tx_dam_tcefunc');
 				if(!method_exists($tcefunc, 'renderFileList')) return $item;
 				$tcefunc->tceforms = &$tceforms;

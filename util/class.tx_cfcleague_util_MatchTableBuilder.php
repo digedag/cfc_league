@@ -22,7 +22,6 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
 tx_rnbase::load('tx_cfcleague_search_Builder');
 
 /**
@@ -54,7 +53,7 @@ class tx_cfcleague_util_MatchTableBuilder  {
 	var $_compTypes; // Wettbewerbstypen
 	var $_compObligation; // Pflichtwettbewerbe
 	var $_pidList;
-	
+
 	public function __construct() {
 	}
 	/**
@@ -303,28 +302,28 @@ class tx_cfcleague_util_MatchTableBuilder  {
 	}
 	/**
 	 * Limit the number of returned matches.
-	 * @param $limit 
+	 * @param $limit
 	 */
 	function setLimit($limit){
 		$this->_limit = $limit;
 	}
 	/**
 	 * Set the state of returned matches.
-	 * @param $status 
+	 * @param $status
 	 */
 	function setStatus($status){
 		$this->_status = $status;
 	}
 	/**
 	 * Matches with live ticker only.
-	 * @param $flag 
+	 * @param $flag
 	 */
 	function setLiveTicker($flag = true){
 		$this->_ticker = $flag;
 	}
 	/**
 	 * Matches with report only.
-	 * @param $flag 
+	 * @param $flag
 	 */
 	function setReport($flag = true){
 		$this->_report = $flag;

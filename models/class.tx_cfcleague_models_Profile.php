@@ -22,8 +22,6 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
-
 tx_rnbase::load('tx_rnbase_model_base');
 
 /**
@@ -47,7 +45,7 @@ class tx_cfcleague_models_Profile extends tx_rnbase_model_base {
 	 * @return string
 	 */
 	function getName($reverse=false) {
-		return $reverse ? $this->getLastName() . ', ' . $this->getFirstName() : 
+		return $reverse ? $this->getLastName() . ', ' . $this->getFirstName() :
 											$this->getFirstName() .' ' . $this->getLastName();
 	}
 	/**

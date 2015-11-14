@@ -22,18 +22,16 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
-
-require_once(t3lib_extMgm::extPath('rn_memento') . 'sv1/class.tx_rnmemento_sv1.php');
-require_once(t3lib_extMgm::extPath('rn_base') . 'util/class.tx_rnbase_util_Spyc.php');
+require_once(tx_rnbase_util_Extensions::extPath('rn_memento') . 'sv1/class.tx_rnmemento_sv1.php');
+require_once(tx_rnbase_util_Extensions::extPath('rn_base') . 'util/class.tx_rnbase_util_Spyc.php');
 
 /**
  * Basisklasse für die Verwendung des internen Caches.
  * Den Cache verwenden wir für die Sammlung von statistischen Daten über
- * einen Wettbewerb. Diese Statistiken können sehr unterschiedlich sein und 
+ * einen Wettbewerb. Diese Statistiken können sehr unterschiedlich sein und
  * und entsprechend über mehrere Mementos verfügen. Gemeinsam ist ihnen aber der
  * Wettbewerb. Daher wird auch der Wettbewerb als SuperKey verwendet. Im BE
- * wird es so möglich, bei Änderungen an einem Wettbewerb automatisch die Mementos 
+ * wird es so möglich, bei Änderungen an einem Wettbewerb automatisch die Mementos
  * zu löschen.
  */
 abstract class tx_cfcleaguefe_util_Memento implements IMemento {

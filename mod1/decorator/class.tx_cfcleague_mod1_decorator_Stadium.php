@@ -22,8 +22,6 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
-
 
 /**
  * Diese Klasse ist für die Darstellung von Stadien im Backend verantwortlich
@@ -41,7 +39,7 @@ class tx_cfcleague_mod1_decorator_Stadium {
 		return $this->mod;
 	}
 	/**
-	 * 
+	 *
 	 * @param string $value
 	 * @param string $colName
 	 * @param array $record

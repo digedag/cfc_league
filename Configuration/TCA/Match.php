@@ -1,11 +1,10 @@
 <?php
 if (!defined ('TYPO3_MODE')) 	die ('Access denied.');
 
-require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
 tx_rnbase::load('tx_rnbase_configurations');
 // Zur Sicherheit einbinden, da die Funktion schon einmal nicht gefunden wurde...
-if(t3lib_extMgm::isLoaded('dam')) {
-	require_once(t3lib_extMgm::extPath('dam').'tca_media_field.php');
+if(tx_rnbase_util_Extensions::isLoaded('dam')) {
+	require_once(tx_rnbase_util_Extensions::extPath('dam').'tca_media_field.php');
 }
 tx_rnbase::load('tx_cfcleague_tca_Lookup');
 
@@ -645,7 +644,7 @@ $TCA['tx_cfcleague_games'] = Array (
 	)
 );
 
-if(t3lib_extMgm::isLoaded('rgmediaimages')) {
+if(tx_rnbase_util_Extensions::isLoaded('rgmediaimages')) {
 	$TCA['tx_cfcleague_games']['columns']['video'] = Array (
 		'exclude' => 1,
 		'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games_video',
@@ -673,8 +672,8 @@ if(t3lib_extMgm::isLoaded('rgmediaimages')) {
 						'title' => 'rgmediaimages Wizard:',
 						'type' => 'script',
 						'notNewRecords' => 1,
-						'icon' => t3lib_extMgm::extRelPath('rgmediaimages').'wizard/icon.png',
-						'script' => t3lib_extMgm::extRelPath('rgmediaimages').'wizard/index.php?table=tx_cfcleague_games&config=videoimg&internal=video',
+						'icon' => tx_rnbase_util_Extensions::extRelPath('rgmediaimages').'wizard/icon.png',
+						'script' => tx_rnbase_util_Extensions::extRelPath('rgmediaimages').'wizard/index.php?table=tx_cfcleague_games&config=videoimg&internal=video',
 						'JSopenParams' => 'height=750,width=900,status=0,menubar=0,scrollbars=0',
 						'notNewRecords' => 1,
 				),
@@ -698,7 +697,7 @@ if(tx_rnbase_util_TYPO3::isTYPO60OrHigher()) {
 		'label' => 'LLL:EXT:cms/locallang_ttc.xml:media',
 	));
 }
-elseif(t3lib_extMgm::isLoaded('dam')) {
+elseif(tx_rnbase_util_Extensions::isLoaded('dam')) {
 	$TCA['tx_cfcleague_games']['columns']['dam_images'] = txdam_getMediaTCA('image_field', 'dam_images');
 	$TCA['tx_cfcleague_games']['columns']['dam_media'] = txdam_getMediaTCA('media_field', 'dam_media');
 	$TCA['tx_cfcleague_games']['columns']['dam_media2'] = txdam_getMediaTCA('media_field', 'dam_media2');
