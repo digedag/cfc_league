@@ -470,12 +470,12 @@ $res = $TYPO3_DB->exec_SELECTquery(
     if(!$str) return 0;
 
     $ret = array();
-    $arr = t3lib_div::trimExplode('|', $str);
+    $arr = tx_rnbase_util_Strings::trimExplode('|', $str);
     foreach($arr As $item) {
       // Jedes Item splitten
-      $mark = t3lib_div::trimExplode(';', $item);
+      $mark = tx_rnbase_util_Strings::trimExplode(';', $item);
       $positions = tx_rnbase_util_Strings::intExplode(',', $mark[0]);
-      $comments = t3lib_div::trimExplode(',', $mark[1]);
+      $comments = tx_rnbase_util_Strings::trimExplode(',', $mark[1]);
       // Jetzt das Ergebnisarray aufbauen
       foreach($positions As $position) {
         $ret[$position] = Array($comments[0], $comments[1]);

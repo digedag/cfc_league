@@ -22,6 +22,7 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
+tx_rnbase::load('tx_rnbase_util_Strings');
 
 /**
  * This class is a modified copy of SC_show_item
@@ -179,7 +180,7 @@ class tx_cfcleague_showItem {
 		$i = 0;
 
 			// Traverse the list of fields to display for the record:
-		$fieldList = t3lib_div::trimExplode(',', $TCA[$this->table]['interface']['showRecordFieldList'], 1);
+		$fieldList = tx_rnbase_util_Strings::trimExplode(',', $TCA[$this->table]['interface']['showRecordFieldList'], 1);
 		foreach($fieldList as $name)	{
 			$name = trim($name);
 			if ($TCA[$this->table]['columns'][$name])	{

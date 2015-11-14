@@ -23,6 +23,7 @@
 ***************************************************************/
 
 require_once(tx_rnbase_util_Extensions::extPath('cfc_league') . 'class.tx_cfcleague_db.php');
+tx_rnbase::load('tx_rnbase_util_Strings');
 
 class tx_cfcleague_hooks_tcehook {
 
@@ -127,7 +128,7 @@ class tx_cfcleague_hooks_tcehook {
    */
   function checkProfiles(&$incomingFieldArray, $profileType, &$tcemain) {
     if(strstr($incomingFieldArray[$profileType], 'NEW')) {
-      $newProfileIds = t3lib_div::trimExplode(',', $incomingFieldArray[$profileType]);
+      $newProfileIds = tx_rnbase_util_Strings::trimExplode(',', $incomingFieldArray[$profileType]);
       $profileUids = array();
       for($i=0; $i < count($newProfileIds); $i++) {
         if(strstr($newProfileIds[$i], 'NEW'))

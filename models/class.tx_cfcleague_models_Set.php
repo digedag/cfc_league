@@ -55,7 +55,7 @@ class tx_cfcleague_models_Set extends tx_rnbase_model_base {
 	public static function buildFromString($sets) {
 		if(!$sets) return false;
 		$sets = preg_split("/[\s]*[;,|][\s]*/", $sets);
-//		$sets = t3lib_div::trimExplode(';', $sets);
+//		$sets = tx_rnbase_util_Strings::trimExplode(';', $sets);
 		$ret = array();
 		foreach($sets As $idx => $setStr) {
 			list($p1, $p2) = tx_rnbase_util_Strings::intExplode(':', $setStr);

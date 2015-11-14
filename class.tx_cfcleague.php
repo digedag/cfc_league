@@ -23,11 +23,12 @@
 ***************************************************************/
 
 require_once('class.tx_cfcleague_db.php');
+tx_rnbase::load('tx_rnbase_util_Strings');
 
 class tx_cfcleague_handleDataInput{
 
   /**
-   * Liefert die Teams eines Wettbewerbs. Wird im Spiel-TCE-Dialog zur 
+   * Liefert die Teams eines Wettbewerbs. Wird im Spiel-TCE-Dialog zur
    * Auswahl der Teams verwendet.
    */
   function getTeams4Competition($PA, $fobj){
@@ -39,7 +40,7 @@ class tx_cfcleague_handleDataInput{
       $PA[items] = $teams;
     }
     else
-      $PA[items] = array(); 
+      $PA[items] = array();
 
 //    tx_rnbase_util_Debug::debug($PA, 'cfcleague');
 
@@ -82,7 +83,7 @@ class tx_cfcleague_handleDataInput{
 		{
 			$tablename = 'tx_cfcleague_team_notes';
 			$tcaFieldConf = $GLOBALS['TCA'][$tablename]['columns'][$column]['config'];
-			$team = t3lib_div::trimExplode('|', $PA['row'][$column]);
+			$team = tx_rnbase_util_Strings::trimExplode('|', $PA['row'][$column]);
 			$team = $team[0];
 			if($tcaFieldConf['type'] == 'db') {
 				$dbAnalysis = t3lib_div::makeInstance('t3lib_loadDBGroup');
@@ -174,17 +175,17 @@ class tx_cfcleague_handleDataInput{
     # build SQL for select
     $what = 'uid,name';
     $from = 'tx_cfcleague_teams';
-    
+
     # WHERE
     # Finde die Teams, deren UID im übergebenen Wettbewerb vorkommt
-    # Anm.: Wär das nicht auch mit einer einfach IN-Abfrage gegangen?? 
+    # Anm.: Wär das nicht auch mit einer einfach IN-Abfrage gegangen??
     # NEIN! Da der teams-String nicht richtig ausgewertet wird.
     $where = '
       FIND_IN_SET(tx_cfcleague_teams.uid,(
         SELECT tx_cfcleague_competition.teams FROM tx_cfcleague_competition
-        WHERE tx_cfcleague_competition.uid = 
+        WHERE tx_cfcleague_competition.uid =
       '.$competition . '))';
-  
+
     $res = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
       $what,
       $from,
@@ -198,7 +199,7 @@ class tx_cfcleague_handleDataInput{
     }
     $GLOBALS['TYPO3_DB']->sql_free_result($res);
 
-    
+
     return $rows;
   }
 
@@ -255,8 +256,8 @@ class tx_cfcleague_handleDataInput{
    * tx_table_name_uid|valuestring
    */
   function getRowId($value) {
-    $ret = t3lib_div::trimExplode('|', $value);
-    $ret = t3lib_div::trimExplode('_', $ret[0]);
+    $ret = tx_rnbase_util_Strings::trimExplode('|', $value);
+    $ret = tx_rnbase_util_Strings::trimExplode('_', $ret[0]);
     return intval($ret[count($ret)-1]);
   }
 }
