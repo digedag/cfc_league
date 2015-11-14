@@ -90,7 +90,7 @@ class tx_cfcleague_hooks_cmhooks {
 	 */
 
 	function error($error)	{
-		$error_doc = t3lib_div::makeInstance('template');
+		$error_doc = tx_rnbase::makeInstance('template');
 		$error_doc->backPath = '';
 
 		$content.= $error_doc->startPage('Error Output');

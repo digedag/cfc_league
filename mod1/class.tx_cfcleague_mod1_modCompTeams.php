@@ -23,6 +23,7 @@
 ***************************************************************/
 
 tx_rnbase::load('tx_cfcleague_mod1_decorator');
+tx_rnbase::load('tx_rnbase_util_Strings');
 
 /**
  * Die Klasse verwaltet die Erstellung Teams für Wettbewerbe
@@ -76,7 +77,7 @@ class tx_cfcleague_mod1_modCompTeams {
 		// Liegen Daten im Request
 		$teamIds = t3lib_div::_GP('checkEntry');
 		if(t3lib_div::_GP('addteams') && is_array($teamIds) && count($teamIds)) {
-			$tcaData['tx_cfcleague_competition'][$competition->record['uid']]['teams'] = implode(',', $this->mergeArrays(t3lib_div::intExplode(',', $competition->record['teams']), $teamIds));
+			$tcaData['tx_cfcleague_competition'][$competition->record['uid']]['teams'] = implode(',', $this->mergeArrays(tx_rnbase_util_Strings::intExplode(',', $competition->record['teams']), $teamIds));
 			tx_rnbase::load('tx_rnbase_util_DB');
 			$tce =& tx_rnbase_util_DB::getTCEmain($tcaData, array());
 			$tce->process_datamap();
@@ -158,7 +159,7 @@ class tx_cfcleague_mod1_modCompTeams {
 			}
 		}
     if(!count($uids)) return '';
-		$tcaData['tx_cfcleague_competition'][$competition->record['uid']]['teams'] = implode(',', $this->mergeArrays(t3lib_div::intExplode(',', $competition->record['teams']), $uids));
+		$tcaData['tx_cfcleague_competition'][$competition->record['uid']]['teams'] = implode(',', $this->mergeArrays(tx_rnbase_util_Strings::intExplode(',', $competition->record['teams']), $uids));
 		reset($tcaData);
 		$tce =& tx_cfcleague_db::getTCEmain($tcaData);
 		$tce->process_datamap();
@@ -167,7 +168,7 @@ class tx_cfcleague_mod1_modCompTeams {
 		return $content;
 
 //		t3lib_div::debug($tcaData, $uid.' - tx_cfcleague_mod1_modCompTeams'); // TODO: remove me
-		
+
 //		t3lib_div::debug($data, 'tx_cfcleague_mod1_modCompTeams'); // TODO: remove me
 	}
 	/**

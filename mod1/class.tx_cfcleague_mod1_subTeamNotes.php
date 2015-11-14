@@ -24,6 +24,7 @@
 
 tx_rnbase::load('tx_rnbase_util_Misc');
 tx_rnbase::load('tx_cfcleague_mod1_decorator');
+tx_rnbase::load('tx_rnbase_util_Strings');
 
 
 /**
@@ -132,7 +133,7 @@ class tx_cfcleague_mod1_subTeamNotes {
 				}
 				else {
 					// Die Spieler hinzufügen
-					$playerUids = implode(',', tx_cfcleague_profile_create::mergeArrays(t3lib_div::intExplode(',', $currTeam->record['players']), $entryUids));
+					$playerUids = implode(',', tx_cfcleague_profile_create::mergeArrays(tx_rnbase_util_Strings::intExplode(',', $currTeam->record['players']), $entryUids));
 					$data['tx_cfcleague_teams'][$currTeam->record['uid']]['players'] = $playerUids;
 
 					reset($data);

@@ -25,6 +25,7 @@
 tx_rnbase::load('tx_rnbase_util_Misc');
 tx_rnbase::load('tx_cfcleague_mod1_profilesearcher');
 tx_rnbase::load('tx_cfcleague_mod1_modTeamsProfileCreate');
+tx_rnbase::load('tx_rnbase_util_Strings');
 
 
 /**
@@ -211,7 +212,7 @@ class tx_cfcleague_mod1_subAddProfiles {
 	 */
 	private function addProfiles2Team(&$currTeam, $profileCol, $entryUids) {
 		tx_rnbase::load('tx_cfcleague_util_Misc');
-		$playerUids = implode(',', tx_cfcleague_util_Misc::mergeArrays(t3lib_div::intExplode(',', $currTeam->record[$profileCol]), $entryUids));
+		$playerUids = implode(',', tx_cfcleague_util_Misc::mergeArrays(tx_rnbase_util_Strings::intExplode(',', $currTeam->record[$profileCol]), $entryUids));
 		$data['tx_cfcleague_teams'][$currTeam->record['uid']][$profileCol] = $playerUids;
 
 		reset($data);

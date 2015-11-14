@@ -22,6 +22,7 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
+tx_rnbase::load('tx_rnbase_util_Strings');
 
 define("TABLE_GAMES", "tx_cfcleague_games");
 define("TABLE_LEAGUES", "tx_cfcleague_competition");
@@ -36,7 +37,7 @@ class tx_cfcleague_team{
   var $playerNames;
   var $coachNames;
   var $supporterNames;
-  
+
   /**
    * Konstruktor erwartet eine UID der Liga
    */
@@ -69,7 +70,7 @@ class tx_cfcleague_team{
     if(!is_array($this->playerNames)){
 //t3lib_div::debug('getPlayernames ', 'team');
       $this->playerNames = $this->retrievePlayers(
-          $this->record['players'], 
+          $this->record['players'],
           $firstEmpty, $merge);
     }
     return $this->playerNames;
@@ -83,7 +84,7 @@ class tx_cfcleague_team{
   function getCoachNames($firstEmpty=0, $merge=0) {
     if(!is_array($this->coachNames)){
       $this->coachNames = $this->retrievePlayers(
-          $this->record['coaches'], 
+          $this->record['coaches'],
           $firstEmpty, $merge);
     }
     return $this->coachNames;
@@ -98,7 +99,7 @@ class tx_cfcleague_team{
   function getSupporterNames($firstEmpty=0, $merge=0) {
     if(!is_array($this->supporterNames)){
       $this->supporterNames = $this->retrievePlayers(
-          $this->record['supporters'], 
+          $this->record['supporters'],
           $firstEmpty, $merge);
     }
     return $this->supporterNames;
@@ -107,13 +108,13 @@ class tx_cfcleague_team{
    * Liefert die Anzahl der zugeordneten Spieler
    */
   function getPlayerSize() {
-      return $this->record['players'] ? count(t3lib_div::intExplode(',', $this->record['players'])) : 0;
+      return $this->record['players'] ? count(tx_rnbase_util_Strings::intExplode(',', $this->record['players'])) : 0;
   }
   /**
    * Liefert die Anzahl der zugeordneten Trainer
    */
   function getCoachSize() {
-      return $this->record['coaches'] ? count(t3lib_div::intExplode(',', $this->record['coaches'])) : 0;
+      return $this->record['coaches'] ? count(tx_rnbase_util_Strings::intExplode(',', $this->record['coaches'])) : 0;
   }
 
   /**
@@ -121,9 +122,9 @@ class tx_cfcleague_team{
    * @return int
    */
   function getSupporterSize() {
-      return $this->record['supporters'] ? count(t3lib_div::intExplode(',', $this->record['supporters'])) : 0;
+      return $this->record['supporters'] ? count(tx_rnbase_util_Strings::intExplode(',', $this->record['supporters'])) : 0;
   }
-  
+
   /**
    * Lädt die Profile aus der Datenbank
    * @param $pIds String mit den IDs der Spieler
@@ -138,7 +139,7 @@ class tx_cfcleague_team{
 
     if(strlen($pIds) == 0) return $ret;
 
-    $rows = 
+    $rows =
        tx_cfcleague_db::queryDB('uid, first_name, last_name', 'uid IN (' . $pIds . ')',
               'tx_cfcleague_profiles', 'last_name, first_name', '', 0);
 //t3lib_div::debug('merge: ' . $pIds);

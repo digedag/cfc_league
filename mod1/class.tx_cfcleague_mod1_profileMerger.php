@@ -27,6 +27,7 @@ tx_rnbase::load('tx_cfcleague_util_ServiceRegistry');
 tx_rnbase::load('tx_cfcleague_team');
 tx_rnbase::load('tx_cfcleague_match');
 tx_rnbase::load('tx_rnbase_util_Misc');
+tx_rnbase::load('tx_rnbase_util_Strings');
 
 
 class tx_cfcleague_mod1_profileMerger {
@@ -112,7 +113,7 @@ class tx_cfcleague_mod1_profileMerger {
 	function replaceUid($fieldValue, $leading, $obsolete) {
 		$ret = '';
 		if(t3lib_div::inList($fieldValue, $obsolete)) {
-			$values = t3lib_div::intExplode(',', $fieldValue);
+			$values = tx_rnbase_util_Strings::intExplode(',', $fieldValue);
 			$idx = array_search($obsolete, $values);
 			if($idx !== FALSE) {
 				$values[$idx] = $leading;

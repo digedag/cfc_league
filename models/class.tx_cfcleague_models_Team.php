@@ -23,6 +23,7 @@
 ***************************************************************/
 
 tx_rnbase::load('tx_rnbase_model_base');
+tx_rnbase::load('tx_rnbase_util_Strings');
 
 /**
  * Model für ein Team.
@@ -147,7 +148,7 @@ class tx_cfcleague_models_Team extends tx_rnbase_model_base {
 		if(strlen(trim($this->record[$recordKey])) > 0 ) {
 			if(count($profiles)) {
 				// Jetzt die Spieler in die richtige Reihenfolge bringen
-				$uids = t3lib_div::intExplode(',', $this->record[$recordKey]);
+				$uids = tx_rnbase_util_Strings::intExplode(',', $this->record[$recordKey]);
 				$uids = array_flip($uids);
 				foreach($profiles as $player) {
 					$ret[$uids[$player->uid]] = $player;

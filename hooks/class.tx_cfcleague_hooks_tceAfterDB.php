@@ -23,6 +23,7 @@
 ***************************************************************/
 
 require_once(tx_rnbase_util_Extensions::extPath('cfc_league') . 'class.tx_cfcleague_db.php');
+tx_rnbase::load('tx_rnbase_util_Strings');
 
 class tx_cfcleague_hooks_tceAfterDB {
 
@@ -42,7 +43,7 @@ class tx_cfcleague_hooks_tceAfterDB {
 				$id = ($status == 'new') ? $tcemain->substNEWwithIDs[$id] : $id;
 				if($status != 'new')
 					tx_rnbase_util_DB::doDelete('tx_cfcleague_profiletypes_mm', 'uid_foreign='.$id, 0);
-				$types = t3lib_div::intExplode(',', $fieldArray['types']);
+				$types = tx_rnbase_util_Strings::intExplode(',', $fieldArray['types']);
 				$i = 0;
 				foreach($types As $type) {
 					if(!intval($type)) continue;

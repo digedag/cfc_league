@@ -23,6 +23,7 @@
 ***************************************************************/
 
 tx_rnbase::load('tx_cfcleague_mod1_decorator');
+tx_rnbase::load('tx_rnbase_util_Strings');
 
 /**
  * Die Klasse verwaltet die Erstellung von Spielern für Teams
@@ -49,7 +50,7 @@ class tx_cfcleague_mod1_modTeamsProfileCreate {
 		$this->doc = $doc;
 		$this->formTool = $formTool;
 		$data = t3lib_div::_GP('data');
-		
+
 		$content = '';
 		$content .= $this->showCreateProfiles($data, $team, $teamInfo);
 
@@ -104,7 +105,7 @@ class tx_cfcleague_mod1_modTeamsProfileCreate {
 	function prepareInputTable(&$team, $teamInfo) {
 		global $LANG;
 		tx_rnbase::load('tx_rnbase_util_TYPO3');
-		
+
 		// Es werden zwei Tabellen erstellt
 		$tableProfiles = $teamInfo->getTeamTable($this->doc);
 
@@ -168,7 +169,7 @@ class tx_cfcleague_mod1_modTeamsProfileCreate {
       // Zuerst Leerzeichen entfernen
       $profile['last_name'] = trim($profile['last_name']);
       $profile['first_name'] = trim($profile['first_name']);
-    
+
       if(strlen($profile['last_name']) > 0) // Nachname ist Pflichtfeld
       {
         $type = $profile['type'];
@@ -195,19 +196,19 @@ class tx_cfcleague_mod1_modTeamsProfileCreate {
             $supportIds[] = $uid;
           }
         }
-      }        
+      }
     }
 
 		tx_rnbase::load('tx_cfcleague_util_Misc');
     // Die IDs der Trainer, Spieler und Betreuer mergen
     if(count($coachIds)) {
-      $data['tx_cfcleague_teams'][$team->record['uid']]['coaches'] = implode(',', tx_cfcleague_util_Misc::mergeArrays(t3lib_div::intExplode(',', $team->record['coaches']), $coachIds));
+      $data['tx_cfcleague_teams'][$team->record['uid']]['coaches'] = implode(',', tx_cfcleague_util_Misc::mergeArrays(tx_rnbase_util_Strings::intExplode(',', $team->record['coaches']), $coachIds));
     }
     if(count($playerIds)) {
-      $data['tx_cfcleague_teams'][$team->record['uid']]['players'] = implode(',', tx_cfcleague_util_Misc::mergeArrays(t3lib_div::intExplode(',', $team->record['players']), $playerIds));
+      $data['tx_cfcleague_teams'][$team->record['uid']]['players'] = implode(',', tx_cfcleague_util_Misc::mergeArrays(tx_rnbase_util_Strings::intExplode(',', $team->record['players']), $playerIds));
     }
     if(count($supportIds)) {
-      $data['tx_cfcleague_teams'][$team->record['uid']]['supporters'] = implode(',', tx_cfcleague_util_Misc::mergeArrays(t3lib_div::intExplode(',', $team->record['supporters']), $supportIds));
+      $data['tx_cfcleague_teams'][$team->record['uid']]['supporters'] = implode(',', tx_cfcleague_util_Misc::mergeArrays(tx_rnbase_util_Strings::intExplode(',', $team->record['supporters']), $supportIds));
     }
 
 //    t3lib_div::debug($data, 'tx_cfcleague_profile_create');
@@ -242,14 +243,14 @@ class tx_cfcleague_mod1_modTeamsProfileCreate {
              '" AND cruser_id="'.$profile['cruser_id'].
              '" AND last_name="' . $profile['last_name'] . '"';
     if($profile['first_name']) $where .= ' AND first_name="' . $profile['first_name'] . '"';
-    
+
 //    t3lib_div::debug($where, 'WHERE');
 
     $rows = tx_cfcleague_db::queryDB($what, $where, $from, '', '', 0);
 
     return count($rows) > 1 ? 0 : $rows;
   }
-	
+
 	/**
 	 * Returns the formtool
 	 * @return tx_rnbase_util_FormTool

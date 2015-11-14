@@ -22,6 +22,7 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
+tx_rnbase::load('tx_rnbase_util_Strings');
 
 define("TABLE_GAMES", "tx_cfcleague_games");
 define("TABLE_LEAGUES", "tx_cfcleague_competition");
@@ -58,7 +59,7 @@ class tx_cfcleague_match {
    */
   function getMatchNotes($limit = 5, $orderBy = 'minute desc, extra_time desc, uid desc') {
     $what = '*';
-    
+
     # WHERE
     # Die UID der Liga setzen
     $where = 'game="'.$this->uid.'"';
@@ -77,7 +78,7 @@ class tx_cfcleague_match {
 
     if(!is_array($this->playerNamesHome)){
       $this->playerNamesHome = tx_cfcleague_team::retrievePlayers(
-          $this->mergeIdStrings($this->record['players_home'], $this->record['substitutes_home']), 
+          $this->mergeIdStrings($this->record['players_home'], $this->record['substitutes_home']),
           $firstEmpty, '1', $appendUnknown);
     }
     return $this->playerNamesHome;
@@ -93,7 +94,7 @@ class tx_cfcleague_match {
 
     if(!is_array($this->playerNamesGuest)){
       $this->playerNamesGuest = tx_cfcleague_team::retrievePlayers(
-          $this->mergeIdStrings($this->record['players_guest'], $this->record['substitutes_guest']), 
+          $this->mergeIdStrings($this->record['players_guest'], $this->record['substitutes_guest']),
           $firstEmpty, '1', $appendUnknown);
     }
     return $this->playerNamesGuest;
@@ -130,15 +131,15 @@ class tx_cfcleague_match {
               'tx_cfcleague_match_notes', '', '', 0);
   	return $rows;
   }
-  
+
   // ab jetzt Private
 
   /**
    * Merged zwei ID-Strings zu einem gemeinsamen ID-String
    */
   function mergeIdStrings($str1, $str2){
-    $arr = t3lib_div::intExplode(',', $str1);
-    $arr = array_merge($arr, t3lib_div::intExplode(',', $str2));
+    $arr = tx_rnbase_util_Strings::intExplode(',', $str1);
+    $arr = array_merge($arr, tx_rnbase_util_Strings::intExplode(',', $str2));
     return implode(',', $arr);
   }
 

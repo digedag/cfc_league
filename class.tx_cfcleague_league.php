@@ -23,6 +23,8 @@
 ***************************************************************/
 
 
+tx_rnbase::load('tx_rnbase_util_Strings');
+
 define("TABLE_GAMES", "tx_cfcleague_games");
 define("TABLE_LEAGUES", "tx_cfcleague_competition");
 define("TABLE_TEAMS", "tx_cfcleague_teams");
@@ -46,12 +48,12 @@ class tx_cfcleague_league{
 		$this->record = t3lib_BEfunc::getRecord(TABLE_LEAGUES, $this->uid);
 		$this->teamNames = null;
   }
-  
+
   /**
    * Liefert die IDs der zugeordneten Teams als Array
    */
   function getTeamIds(){
-    return t3lib_div::intExplode(',', $this->record['teams']);
+    return tx_rnbase_util_Strings::intExplode(',', $this->record['teams']);
   }
   /**
    * Liefert den Generation-String für die Liga
@@ -75,7 +77,7 @@ class tx_cfcleague_league{
   public function isAddedPartResults(){
     return intval($this->record['addparts']) > 0;
   }
-  
+
   /**
    * Liefert die Namen der zugeordneten Teams als Array. Key ist die ID des Teams
    * @param $asArray Wenn 1 wird pro Team ein Array mit Name, Kurzname und Flag spielfrei geliefert
@@ -86,7 +88,7 @@ class tx_cfcleague_league{
 // t3lib_div::debug('Erstelle neue Teams');
 			// Ohne zugeordnete Team, muss nicht gefragt werden
 			if($this->record['teams']) {
-	      $rows = 
+	      $rows =
 	         tx_cfcleague_db::queryDB('uid,name,short_name,dummy,club', 'uid IN (' . $this->record['teams'] . ')',
 	              'tx_cfcleague_teams');
 	      $this->teamNames[$asArray]= array();
@@ -118,13 +120,13 @@ class tx_cfcleague_league{
   function getRounds(){
     # build SQL for select
     $what = 'round,round_name, max(status) AS max_status';
-    
+
     # WHERE
     # Die UID der Liga setzen
     $where = 'competition="'.$this->uid.'"';
     $groupby = 'round,round_name';
     $orderby = 'round asc';
-    
+
     return tx_cfcleague_db::queryDB($what, $where,
               TABLE_GAMES, $groupby, $orderby, 0);
   }
@@ -153,7 +155,7 @@ class tx_cfcleague_league{
     # build SQL for select
     $what = '*';
 //    $from = TABLE_GAMES;
-    
+
     # WHERE
     # Die UID der Liga setzen
     $where = 'competition="'.$this->uid.'"';
@@ -176,11 +178,11 @@ class tx_cfcleague_league{
             'goals_home_3,goals_guest_3,goals_home_4,goals_guest_4, '.
     'goals_home_et,goals_guest_et,goals_home_ap,goals_guest_ap, visitors,date,status';
     $from = Array('tx_cfcleague_games ' .
-              'INNER JOIN tx_cfcleague_teams t1 ON (home= t1.uid) ' . 
-              'INNER JOIN tx_cfcleague_teams t2 ON (guest= t2.uid) ' 
+              'INNER JOIN tx_cfcleague_teams t1 ON (home= t1.uid) ' .
+              'INNER JOIN tx_cfcleague_teams t2 ON (guest= t2.uid) '
               , 'tx_cfcleague_games');
 
-              
+
     $where = 'competition="'.$this->uid.'"';
     $where .= ' AND round='.$round;
     if($ignoreFreeOfPlay) { // keine spielfreien Spiele laden
@@ -191,9 +193,9 @@ class tx_cfcleague_league{
               $from, '', '', 0);
 
 /*
-SELECT tx_cfcleague_games.uid, t1.name, t2.name, goals_home_1,goals_guest_1 
-FROM `tx_cfcleague_games` 
-INNER JOIN tx_cfcleague_teams AS t1 
+SELECT tx_cfcleague_games.uid, t1.name, t2.name, goals_home_1,goals_guest_1
+FROM `tx_cfcleague_games`
+INNER JOIN tx_cfcleague_teams AS t1
 INNER JOIN tx_cfcleague_teams AS t2
 ON home= t1.uid
 ON guest= t2.uid
