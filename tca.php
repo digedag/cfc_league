@@ -13,51 +13,6 @@ $clubOrdering = intval(tx_rnbase_configurations::getExtensionCfgValue('cfc_leagu
 
 
 
-$TCA['tx_cfcleague_saison'] = Array (
-	'ctrl' => $TCA['tx_cfcleague_saison']['ctrl'],
-	'interface' => Array (
-		'showRecordFieldList' => 'hidden,name'
-	),
-	'feInterface' => $TCA['tx_cfcleague_saison']['feInterface'],
-	'columns' => Array (
-		'hidden' => Array (
-			'exclude' => 1,
-			'label' => 'LLL:EXT:lang/locallang_general.xml:LGL.hidden',
-			'config' => Array (
-				'type' => 'check',
-				'default' => '0'
-			)
-		),
-		'name' => Array (
-			'exclude' => 1,
-			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_saison.name',
-			'config' => Array (
-				'type' => 'input',
-				'size' => '30',
-				'eval' => 'required,trim',
-			)
-		),
-		'halftime' => Array (
-			'exclude' => 1,
-			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_saison.halftime',
-			'config' => Array (
-				'type' => 'input',
-				'size' => '8',
-				'max' => '20',
-				'eval' => 'date',
-				'checkbox' => '0',
-				'default' => '0'
-			)
-		),
-	),
-	'types' => Array (
-		'0' => Array('showitem' => 'hidden;;1;;1-1-1, name, halftime')
-	),
-	'palettes' => Array (
-		'1' => Array('showitem' => '')
-	)
-);
-
 
 
 $TCA['tx_cfcleague_competition_penalty'] = Array (

@@ -5,12 +5,29 @@ if(tx_rnbase_util_Extensions::isLoaded('dam')) {
 	require_once(tx_rnbase_util_Extensions::extPath('dam').'tca_media_field.php');
 }
 
-$TCA['tx_cfcleague_group'] = Array (
-	'ctrl' => $TCA['tx_cfcleague_group']['ctrl'],
+
+$tx_cfcleague_group = Array (
+	'ctrl' => Array (
+		'title' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_group',
+		'label' => 'name',
+		'tstamp' => 'tstamp',
+		'crdate' => 'crdate',
+		'cruser_id' => 'cruser_id',
+		'sortby' => 'sorting',
+		'delete' => 'deleted',
+		'enablecolumns' => Array (
+			'disabled' => 'hidden',
+			'starttime' => 'starttime',
+			'fe_group' => 'fe_group',
+		),
+		'iconfile' => tx_rnbase_util_Extensions::extRelPath('cfc_league').'icon_tx_cfcleague_group.gif',
+	),
 	'interface' => Array (
 		'showRecordFieldList' => 'hidden,starttime,fe_group,name'
 	),
-	'feInterface' => $TCA['tx_cfcleague_group']['feInterface'],
+	'feInterface' => Array (
+		'fe_admin_fieldList' => 'hidden, starttime, fe_group, name',
+	),
 	'columns' => Array (
 		'hidden' => Array (
 			'exclude' => 1,
@@ -76,20 +93,20 @@ $TCA['tx_cfcleague_group'] = Array (
 
 if(tx_rnbase_util_TYPO3::isTYPO60OrHigher()) {
 	tx_rnbase::load('tx_rnbase_util_TSFAL');
-	$TCA['tx_cfcleague_group']['columns']['logo'] = tx_rnbase_util_TSFAL::getMediaTCA('logo', array(
+	$tx_cfcleague_group['columns']['logo'] = tx_rnbase_util_TSFAL::getMediaTCA('logo', array(
 		'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_club.logo',
 		'size' => 1,
 		'maxitems' => 1
 	));
 }
 elseif(tx_rnbase_util_Extensions::isLoaded('dam')) {
-	$TCA['tx_cfcleague_group']['columns']['logo'] = txdam_getMediaTCA('image_field', 'logo');
-	$TCA['tx_cfcleague_group']['columns']['logo']['label'] = 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_club.logo';
-	$TCA['tx_cfcleague_group']['columns']['logo']['config']['size'] = 1;
-	$TCA['tx_cfcleague_group']['columns']['logo']['config']['maxitems'] = 1;
+	$tx_cfcleague_group['columns']['logo'] = txdam_getMediaTCA('image_field', 'logo');
+	$tx_cfcleague_group['columns']['logo']['label'] = 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_club.logo';
+	$tx_cfcleague_group['columns']['logo']['config']['size'] = 1;
+	$tx_cfcleague_group['columns']['logo']['config']['maxitems'] = 1;
 }
 else {
-	$TCA['tx_cfcleague_group']['columns']['t3logo'] = Array (
+	$tx_cfcleague_group['columns']['t3logo'] = Array (
 		'exclude' => 1,
 		'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_club.logo',
 		'config' => Array (
@@ -105,3 +122,5 @@ else {
 		)
 	);
 }
+
+return $tx_cfcleague_group;

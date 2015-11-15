@@ -7,73 +7,12 @@ if (TYPO3_MODE == 'BE') {
        include_once(tx_rnbase_util_Extensions::extPath($_EXTKEY).'class.tx_cfcleague_league.php');
 }
 
-
-
-$TCA['tx_cfcleague_group'] = Array (
-	'ctrl' => Array (
-		'title' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_group',
-		'label' => 'name',
-		'tstamp' => 'tstamp',
-		'crdate' => 'crdate',
-		'cruser_id' => 'cruser_id',
-		'sortby' => 'sorting',
-		'delete' => 'deleted',
-		'enablecolumns' => Array (
-			'disabled' => 'hidden',
-			'starttime' => 'starttime',
-			'fe_group' => 'fe_group',
-		),
-		'dynamicConfigFile' => tx_rnbase_util_Extensions::extPath($_EXTKEY).'Configuration/TCA/Group.php',
-		'iconfile' => tx_rnbase_util_Extensions::extRelPath($_EXTKEY).'icon_tx_cfcleague_group.gif',
-	),
-	'feInterface' => Array (
-		'fe_admin_fieldList' => 'hidden, starttime, fe_group, name',
-	)
-);
-
-$TCA['tx_cfcleague_saison'] = Array (
-	'ctrl' => Array (
-		'title' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_saison',
-		'label' => 'name',
-		'tstamp' => 'tstamp',
-		'crdate' => 'crdate',
-		'cruser_id' => 'cruser_id',
-		'sortby' => 'sorting',
-		'delete' => 'deleted',
-		'enablecolumns' => Array (
-			'disabled' => 'hidden',
-		),
-		'dynamicConfigFile' => tx_rnbase_util_Extensions::extPath($_EXTKEY).'tca.php',
-		'iconfile' => tx_rnbase_util_Extensions::extRelPath($_EXTKEY).'icon_tx_cfcleague_saison.gif',
-	),
-	'feInterface' => Array (
-		'fe_admin_fieldList' => 'hidden, name',
-	)
-);
-
-$TCA['tx_cfcleague_competition'] = Array (
-	'ctrl' => Array (
-		'title' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition',
-		'label' => 'name',
-		'label_alt' => 'internal_name',
-		'label_alt_force' => 1,
-		'tstamp' => 'tstamp',
-		'requestUpdate' => 'sports',
-		'type' => 'tournament',
-		'crdate' => 'crdate',
-		'cruser_id' => 'cruser_id',
-		'sortby' => 'sorting',
-		'delete' => 'deleted',
-		'enablecolumns' => Array (
-			'disabled' => 'hidden',
-		),
-		'dynamicConfigFile' => tx_rnbase_util_Extensions::extPath($_EXTKEY).'Configuration/TCA/Competition.php',
-		'iconfile' => tx_rnbase_util_Extensions::extRelPath($_EXTKEY).'icon_tx_cfcleague_competition.gif',
-	),
-	'feInterface' => Array (
-		'fe_admin_fieldList' => 'hidden, name, short_name, internal_name, agegroup, saison, type, teams, match_keys, table_marks',
-	)
-);
+if(!tx_rnbase_util_TYPO3::isTYPO62OrHigher()) {
+	// TCA registration for 4.5
+	$TCA['tx_cfcleague_group'] = require tx_rnbase_util_Extensions::extPath($_EXTKEY).'Configuration/TCA/tx_cfcleague_group.php';
+	$TCA['tx_cfcleague_saison'] = require tx_rnbase_util_Extensions::extPath($_EXTKEY).'Configuration/TCA/tx_cfcleague_saison.php';
+	$TCA['tx_cfcleague_competition'] = require tx_rnbase_util_Extensions::extPath($_EXTKEY).'Configuration/TCA/tx_cfcleague_competition.php';
+}
 
 tx_rnbase_util_Extensions::addLLrefForTCAdescr('tx_cfcleague_competition', 'EXT:cfc_league/locallang_csh_competition.php');
 
