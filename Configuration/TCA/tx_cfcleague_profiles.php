@@ -6,12 +6,35 @@ if(tx_rnbase_util_Extensions::isLoaded('dam')) {
 }
 tx_rnbase::load('tx_cfcleague_tca_Lookup');
 
-$TCA['tx_cfcleague_profiles'] = Array (
-	'ctrl' => $TCA['tx_cfcleague_profiles']['ctrl'],
-	'interface' => Array (
-		'showRecordFieldList' => 'hidden,first_name,last_name,dam_images,birthday,nationality,height,weight,position,duration_of_contract,start_of_contract,email,nickname,summary,description'
+$tx_cfcleague_profiles = Array (
+	'ctrl' => Array (
+		'title' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles',
+		'label' => 'last_name',
+		'label_alt' => 'first_name',
+		'label_alt_force' => 1,
+		'searchFields' => 'uid,first_name,last_name,stage_name,email,nickname',
+		'dividers2tabs' => TRUE,
+		'tstamp' => 'tstamp',
+		'crdate' => 'crdate',
+		'cruser_id' => 'cruser_id',
+//		'sortby' => 'sorting',
+		'default_sortby' => 'ORDER BY last_name, first_name',
+		'delete' => 'deleted',
+		'enablecolumns' => Array (
+			'disabled' => 'hidden',
+		),
+		'dynamicConfigFile' => tx_rnbase_util_Extensions::extPath('cfc_league').'Configuration/TCA/Profile.php',
+		'iconfile' => tx_rnbase_util_Extensions::extRelPath('cfc_league').'icon_tx_cfcleague_profiles.gif',
 	),
-	'feInterface' => $TCA['tx_cfcleague_profiles']['feInterface'],
+	'interface' => Array (
+		'showRecordFieldList' => 'hidden,first_name,last_name,dam_images,birthday,nationality,height,
+			weight,position,duration_of_contract,start_of_contract,email,nickname,summary,description'
+	),
+	'feInterface' => Array (
+		'fe_admin_fieldList' => 'hidden, first_name, last_name, image, birthday, nationality, height,
+			weight, position, duration_of_contract, start_of_contract, email,
+			stations, nickname, family, hobbies, prosperities, summary, description',
+	),
 	'columns' => Array (
 		'hidden' => Array (
 			'exclude' => 1,
@@ -253,15 +276,15 @@ $TCA['tx_cfcleague_profiles'] = Array (
 tx_rnbase::load('tx_rnbase_util_TYPO3');
 if(tx_rnbase_util_TYPO3::isTYPO60OrHigher()) {
 	tx_rnbase::load('tx_rnbase_util_TSFAL');
-	$TCA['tx_cfcleague_profiles']['columns']['t3images'] = tx_rnbase_util_TSFAL::getMediaTCA('t3images', array(
+	$tx_cfcleague_profiles['columns']['t3images'] = tx_rnbase_util_TSFAL::getMediaTCA('t3images', array(
 		'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_stadiums_pictures',
 	));
 }
 elseif(tx_rnbase_util_Extensions::isLoaded('dam')) {
-	$TCA['tx_cfcleague_profiles']['columns']['dam_images'] = txdam_getMediaTCA('image_field', 'dam_images');
+	$tx_cfcleague_profiles['columns']['dam_images'] = txdam_getMediaTCA('image_field', 'dam_images');
 }
 else {
-	$TCA['tx_cfcleague_profiles']['columns']['t3images'] = Array (
+	$tx_cfcleague_profiles['columns']['t3images'] = Array (
 		'exclude' => 1,
 		'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.pictures',
 		'config' => Array (
@@ -277,3 +300,5 @@ else {
 		)
 	);
 }
+
+return $tx_cfcleague_profiles;
