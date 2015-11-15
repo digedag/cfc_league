@@ -14,7 +14,9 @@ if(!tx_rnbase_util_TYPO3::isTYPO62OrHigher()) {
 	$TCA['tx_cfcleague_competition'] = require tx_rnbase_util_Extensions::extPath($_EXTKEY).'Configuration/TCA/tx_cfcleague_competition.php';
 	$TCA['tx_cfcleague_competition_penalty'] = require tx_rnbase_util_Extensions::extPath($_EXTKEY).'Configuration/TCA/tx_cfcleague_competition_penalty.php';
 	$TCA['tx_cfcleague_profiles'] = require tx_rnbase_util_Extensions::extPath($_EXTKEY).'Configuration/TCA/tx_cfcleague_profiles.php';
+	$TCA['tx_cfcleague_note_types'] = require tx_rnbase_util_Extensions::extPath($_EXTKEY).'Configuration/TCA/tx_cfcleague_note_types.php';
 }
+
 
 tx_rnbase_util_Extensions::addLLrefForTCAdescr('tx_cfcleague_competition', 'EXT:cfc_league/locallang_csh_competition.php');
 tx_rnbase_util_Extensions::addLLrefForTCAdescr('tx_cfcleague_profiles', 'EXT:cfc_league/locallang_csh_profiles.php');
@@ -148,23 +150,6 @@ $TCA['tx_cfcleague_team_notes'] = Array (
 	)
 );
 
-$TCA['tx_cfcleague_note_types'] = Array (
-	'ctrl' => Array (
-		'title' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_note_types',
-		'label' => 'label',
-		'tstamp' => 'tstamp',
-		'crdate' => 'crdate',
-		'cruser_id' => 'cruser_id',
-		'delete' => 'deleted',
-		'enablecolumns' => Array (
-		),
-		'dynamicConfigFile' => tx_rnbase_util_Extensions::extPath($_EXTKEY).'tca.php',
-		'iconfile' => tx_rnbase_util_Extensions::extRelPath($_EXTKEY).'icon_table.gif',
-	),
-	'feInterface' => Array (
-		'fe_admin_fieldList' => 'label, marker, description',
-	)
-);
 
 $wecmap = array();
 $wecmap['wec_map']['isMappable'] = 1;
