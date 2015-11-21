@@ -15,117 +15,18 @@ if(!tx_rnbase_util_TYPO3::isTYPO62OrHigher()) {
 	$TCA['tx_cfcleague_competition_penalty'] = require tx_rnbase_util_Extensions::extPath($_EXTKEY).'Configuration/TCA/tx_cfcleague_competition_penalty.php';
 	$TCA['tx_cfcleague_profiles'] = require tx_rnbase_util_Extensions::extPath($_EXTKEY).'Configuration/TCA/tx_cfcleague_profiles.php';
 	$TCA['tx_cfcleague_note_types'] = require tx_rnbase_util_Extensions::extPath($_EXTKEY).'Configuration/TCA/tx_cfcleague_note_types.php';
+	$TCA['tx_cfcleague_club'] = require tx_rnbase_util_Extensions::extPath($_EXTKEY).'Configuration/TCA/tx_cfcleague_club.php';
+	$TCA['tx_cfcleague_teams'] = require tx_rnbase_util_Extensions::extPath($_EXTKEY).'Configuration/TCA/tx_cfcleague_teams.php';
+	$TCA['tx_cfcleague_games'] = require tx_rnbase_util_Extensions::extPath($_EXTKEY).'Configuration/TCA/tx_cfcleague_games.php';
+	$TCA['tx_cfcleague_match_notes'] = require tx_rnbase_util_Extensions::extPath($_EXTKEY).'Configuration/TCA/tx_cfcleague_match_notes.php';
 }
 
 
 tx_rnbase_util_Extensions::addLLrefForTCAdescr('tx_cfcleague_competition', 'EXT:cfc_league/locallang_csh_competition.php');
 tx_rnbase_util_Extensions::addLLrefForTCAdescr('tx_cfcleague_profiles', 'EXT:cfc_league/locallang_csh_profiles.php');
-
-$clubOrdering = intval(tx_rnbase_configurations::getExtensionCfgValue('cfc_league', 'clubOrdering')) > 0;
-$labelClub = $clubOrdering ? 'city' : 'name';
-$altLabelClub = $clubOrdering ? 'name' : 'city';
-
-$TCA['tx_cfcleague_club'] = Array (
-	'ctrl' => Array (
-		'title' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_club',
-		'label' => $labelClub,
-		'label_alt' => $altLabelClub,
-		'label_alt_force' => 1,
-		'searchFields' => 'uid,name,short_name',
-		'tstamp' => 'tstamp',
-		'crdate' => 'crdate',
-		'cruser_id' => 'cruser_id',
-		'sortby' => 'sorting',
-		'dividers2tabs' => TRUE,
-		'delete' => 'deleted',
-		'enablecolumns' => Array (
-			'disabled' => 'hidden',
-		),
-		'dynamicConfigFile' => tx_rnbase_util_Extensions::extPath($_EXTKEY).'Configuration/TCA/Club.php',
-		'iconfile' => tx_rnbase_util_Extensions::extRelPath($_EXTKEY).'icon_tx_cfcleague_clubs.gif',
-	),
-	'feInterface' => Array (
-		'fe_admin_fieldList' => 'hidden, name, short_name, dam_logo',
-	)
-);
 tx_rnbase_util_Extensions::addLLrefForTCAdescr('tx_cfcleague_club', 'EXT:cfc_league/locallang_csh_club.php');
-
-$TCA['tx_cfcleague_teams'] = Array (
-	'ctrl' => Array (
-		'title' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_teams',
-		'label' => 'name',
-		'searchFields' => 'uid,name,short_name,tlc',
-		'tstamp' => 'tstamp',
-		'crdate' => 'crdate',
-		'cruser_id' => 'cruser_id',
-		'dividers2tabs' => TRUE,
-		'sortby' => 'sorting',
-		'delete' => 'deleted',
-		'enablecolumns' => Array (
-			'disabled' => 'hidden',
-		),
-		'dynamicConfigFile' => tx_rnbase_util_Extensions::extPath($_EXTKEY).'Configuration/TCA/Team.php',
-		//'dynamicConfigFile' => tx_rnbase_util_Extensions::extPath($_EXTKEY).'tca.php',
-		'iconfile' => tx_rnbase_util_Extensions::extRelPath($_EXTKEY).'icon_tx_cfcleague_teams.gif',
-	),
-	'feInterface' => Array (
-		'fe_admin_fieldList' => 'hidden, name, short_name',
-	)
-);
-
-$TCA['tx_cfcleague_games'] = Array (
-	'ctrl' => Array (
-		'title' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games',
-		'label' => 'round_name',
-		'label_alt' => 'competition,home,guest',
-		'label_alt_force' => 1,
-		'requestUpdate' => 'competition',
-		'dividers2tabs' => TRUE,
-		'tstamp' => 'tstamp',
-		'crdate' => 'crdate',
-		'cruser_id' => 'cruser_id',
-		'sortby' => 'sorting',
-		'delete' => 'deleted',
-		'enablecolumns' => Array (
-			'disabled' => 'hidden',
-		),
-		'dynamicConfigFile' => tx_rnbase_util_Extensions::extPath($_EXTKEY).'Configuration/TCA/Match.php',
-//		'dynamicConfigFile' => tx_rnbase_util_Extensions::extPath($_EXTKEY).'tca.php',
-		'iconfile' => tx_rnbase_util_Extensions::extRelPath($_EXTKEY).'icon_table.gif',
-	),
-	'feInterface' => Array (
-		'fe_admin_fieldList' => 'hidden, home, guest, competition, round, round_name, status, coach_home,
-			coach_guest, players_home, players_guest, substitutes_home, substitutes_guest, goals_home_1,
-			goals_guest_1, goals_home_2, goals_guest_2, goals_home_3, goals_guest_3, goals_home_4, goals_guest_4,
-			date, link_report, link_ticker, game_report, visitors, goals_home_et, goals_guest_et, goals_home_ap,
-			goals_guest_ap',
-	)
-);
 tx_rnbase_util_Extensions::addLLrefForTCAdescr('tx_cfcleague_games', 'EXT:cfc_league/locallang_csh_games.php');
 
-$TCA['tx_cfcleague_match_notes'] = Array (
-	'ctrl' => Array (
-		'title' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_match_notes',
-		'label' => 'uid',
-		'label_alt' => 'minute,comment',
-		'label_alt_force' => 1,
-
-		'tstamp' => 'tstamp',
-		'crdate' => 'crdate',
-		'cruser_id' => 'cruser_id',
-		'default_sortby' => 'ORDER BY crdate',
-		'delete' => 'deleted',
-		'enablecolumns' => Array (
-			'disabled' => 'hidden',
-		),
-		'dynamicConfigFile' => tx_rnbase_util_Extensions::extPath($_EXTKEY).'Configuration/TCA/MatchNote.php',
-		//'dynamicConfigFile' => tx_rnbase_util_Extensions::extPath($_EXTKEY).'tca.php',
-		'iconfile' => tx_rnbase_util_Extensions::extRelPath($_EXTKEY).'icon_table.gif',
-	),
-	'feInterface' => Array (
-		'fe_admin_fieldList' => 'hidden, game, minute, extra_time, type, player_home, player_guest, comment',
-	)
-);
 
 $TCA['tx_cfcleague_team_notes'] = Array (
 	'ctrl' => Array (

@@ -8,16 +8,38 @@ if(tx_rnbase_util_Extensions::isLoaded('dam')) {
 }
 tx_rnbase::load('tx_cfcleague_tca_Lookup');
 
+
 $globalClubs = intval(tx_rnbase_configurations::getExtensionCfgValue('cfc_league', 'useGlobalClubs')) > 0;
 $clubOrdering = intval(tx_rnbase_configurations::getExtensionCfgValue('cfc_league', 'clubOrdering')) > 0;
 
+$labelClub = $clubOrdering ? 'city' : 'name';
+$altLabelClub = $clubOrdering ? 'name' : 'city';
 
-$TCA['tx_cfcleague_club'] = Array (
-	'ctrl' => $TCA['tx_cfcleague_club']['ctrl'],
+
+$tx_cfcleague_club = Array (
+	'ctrl' => Array (
+		'title' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_club',
+		'label' => $labelClub,
+		'label_alt' => $altLabelClub,
+		'label_alt_force' => 1,
+		'searchFields' => 'uid,name,short_name',
+		'tstamp' => 'tstamp',
+		'crdate' => 'crdate',
+		'cruser_id' => 'cruser_id',
+		'sortby' => 'sorting',
+		'dividers2tabs' => TRUE,
+		'delete' => 'deleted',
+		'enablecolumns' => Array (
+			'disabled' => 'hidden',
+		),
+		'iconfile' => tx_rnbase_util_Extensions::extRelPath('cfc_league').'icon_tx_cfcleague_clubs.gif',
+	),
 	'interface' => Array (
 		'showRecordFieldList' => 'hidden,name,short_name,dam_logo'
 	),
-	'feInterface' => $TCA['tx_cfcleague_club']['feInterface'],
+	'feInterface' => Array (
+		'fe_admin_fieldList' => 'hidden, name, short_name, dam_logo',
+	),
 	'columns' => Array (
 		'hidden' => Array (
 			'exclude' => 1,
@@ -294,20 +316,20 @@ $TCA['tx_cfcleague_club'] = Array (
 );
 
 if(tx_rnbase_util_Extensions::isLoaded('static_info_tables')) {
-	$TCA['tx_cfcleague_club']['columns']['country'] = tx_cfcleague_tca_Lookup::getCountryField();
+	$tx_cfcleague_club['columns']['country'] = tx_cfcleague_tca_Lookup::getCountryField();
 }
 if(tx_rnbase_util_TYPO3::isTYPO60OrHigher()) {
 	tx_rnbase::load('tx_rnbase_util_TSFAL');
-	$TCA['tx_cfcleague_club']['columns']['logo'] = tx_rnbase_util_TSFAL::getMediaTCA('logo', array(
+	$tx_cfcleague_club['columns']['logo'] = tx_rnbase_util_TSFAL::getMediaTCA('logo', array(
 		'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_club.logo',
 	));
 }
 elseif(tx_rnbase_util_Extensions::isLoaded('dam')) {
-	$TCA['tx_cfcleague_club']['columns']['dam_logo'] = txdam_getMediaTCA('image_field', 'dam_images');
-	$TCA['tx_cfcleague_club']['columns']['dam_logo']['label'] = 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_club.logo';
+	$tx_cfcleague_club['columns']['dam_logo'] = txdam_getMediaTCA('image_field', 'dam_images');
+	$tx_cfcleague_club['columns']['dam_logo']['label'] = 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_club.logo';
 }
 else {
-	$TCA['tx_cfcleague_club']['columns']['logo'] = Array (
+	$tx_cfcleague_club['columns']['logo'] = Array (
 		'exclude' => 1,
 		'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_club.logo',
 		'config' => Array (
@@ -324,3 +346,4 @@ else {
 	);
 }
 
+return $tx_cfcleague_club;
