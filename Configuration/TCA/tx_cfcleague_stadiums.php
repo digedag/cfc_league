@@ -8,6 +8,15 @@ if(tx_rnbase_util_Extensions::isLoaded('dam')) {
 	require_once(tx_rnbase_util_Extensions::extPath('dam').'tca_media_field.php');
 }
 
+$wecmap = array();
+$wecmap['wec_map']['isMappable'] = 1;
+$wecmap['wec_map']['addressFields'] = array(
+		'street' => 'street',
+		'city' => 'city',
+		'zip' => 'zip',
+);
+
+
 $globalClubs = intval(tx_rnbase_configurations::getExtensionCfgValue('cfc_league', 'useGlobalClubs')) > 0;
 $clubOrdering = intval(tx_rnbase_configurations::getExtensionCfgValue('cfc_league', 'clubOrdering')) > 0;
 
@@ -37,12 +46,29 @@ $stadiumClubArr = $globalClubs ?
 					'tablenames' => 'tx_cfcleague_club',
 				),
 			);
-$TCA['tx_cfcleague_stadiums'] = Array (
-	'ctrl' => $TCA['tx_cfcleague_stadiums']['ctrl'],
+
+
+$tx_cfcleague_stadiums = Array (
+	'ctrl' => Array (
+		'title' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_stadiums',
+		'label' => 'name',
+		'tstamp' => 'tstamp',
+		'crdate' => 'crdate',
+		'cruser_id' => 'cruser_id',
+		'dividers2tabs' => TRUE,
+		'default_sortby' => 'ORDER BY name',
+		'EXT' => $wecmap,
+		'delete' => 'deleted',
+		'enablecolumns' => Array (
+		),
+		'iconfile' => tx_rnbase_util_Extensions::extRelPath('cfc_league').'icon_table.gif',
+	),
 	'interface' => Array (
 		'showRecordFieldList' => 'name'
 	),
-	'feInterface' => $TCA['tx_cfcleague_stadiums']['feInterface'],
+	'feInterface' => Array (
+		'fe_admin_fieldList' => 'hidden, starttime, fe_group, name',
+	),
 	'columns' => Array (
 		'name' => Array (
 			'exclude' => 1,
@@ -215,28 +241,28 @@ $TCA['tx_cfcleague_stadiums'] = Array (
 	)
 );
 if(tx_rnbase_util_Extensions::isLoaded('static_info_tables')) {
-	$TCA['tx_cfcleague_stadiums']['columns']['country'] = tx_cfcleague_tca_Lookup::getCountryField();
+	$tx_cfcleague_stadiums['columns']['country'] = tx_cfcleague_tca_Lookup::getCountryField();
 }
 tx_rnbase::load('tx_rnbase_util_TYPO3');
 if(tx_rnbase_util_TYPO3::isTYPO60OrHigher()) {
 	tx_rnbase::load('tx_rnbase_util_TSFAL');
-	$TCA['tx_cfcleague_stadiums']['columns']['logo'] = tx_rnbase_util_TSFAL::getMediaTCA('logo', array(
+	$tx_cfcleague_stadiums['columns']['logo'] = tx_rnbase_util_TSFAL::getMediaTCA('logo', array(
 		'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_stadiums_logo',
 		'config' => array('size' => 1, 'maxitems' => 1),
 	));
-	$TCA['tx_cfcleague_stadiums']['columns']['pictures'] = tx_rnbase_util_TSFAL::getMediaTCA('pictures', array(
+	$tx_cfcleague_stadiums['columns']['pictures'] = tx_rnbase_util_TSFAL::getMediaTCA('pictures', array(
 		'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_stadiums_pictures',
 	));
 }
 elseif(tx_rnbase_util_Extensions::isLoaded('dam')) {
-	$TCA['tx_cfcleague_stadiums']['columns']['logo'] = txdam_getMediaTCA('image_field', 'logo');
-	$TCA['tx_cfcleague_stadiums']['columns']['logo']['label'] = 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_stadiums_logo';
-	$TCA['tx_cfcleague_stadiums']['columns']['logo']['config']['size'] = 1;
-	$TCA['tx_cfcleague_stadiums']['columns']['logo']['config']['maxitems'] = 1;
-	$TCA['tx_cfcleague_stadiums']['columns']['pictures'] = txdam_getMediaTCA('image_field', 'pictures');
+	$tx_cfcleague_stadiums['columns']['logo'] = txdam_getMediaTCA('image_field', 'logo');
+	$tx_cfcleague_stadiums['columns']['logo']['label'] = 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_stadiums_logo';
+	$tx_cfcleague_stadiums['columns']['logo']['config']['size'] = 1;
+	$tx_cfcleague_stadiums['columns']['logo']['config']['maxitems'] = 1;
+	$tx_cfcleague_stadiums['columns']['pictures'] = txdam_getMediaTCA('image_field', 'pictures');
 }
 else {
-	$TCA['tx_cfcleague_stadiums']['columns']['t3logo'] = Array (
+	$tx_cfcleague_stadiums['columns']['t3logo'] = Array (
 		'exclude' => 1,
 		'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_stadiums_logo',
 		'config' => Array (
@@ -251,7 +277,7 @@ else {
 			'maxitems' => 1,
 		)
 	);
-	$TCA['tx_cfcleague_stadiums']['columns']['t3pictures'] = Array (
+	$tx_cfcleague_stadiums['columns']['t3pictures'] = Array (
 		'exclude' => 1,
 		'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_stadiums_pictures',
 		'config' => Array (
@@ -267,3 +293,5 @@ else {
 		)
 	);
 }
+
+return $tx_cfcleague_stadiums;

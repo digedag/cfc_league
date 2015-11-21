@@ -13,7 +13,6 @@ $tx_cfcleague_match_notes = Array (
 		'label' => 'uid',
 		'label_alt' => 'minute,comment',
 		'label_alt_force' => 1,
-
 		'tstamp' => 'tstamp',
 		'crdate' => 'crdate',
 		'cruser_id' => 'cruser_id',

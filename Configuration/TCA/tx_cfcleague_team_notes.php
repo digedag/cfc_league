@@ -1,13 +1,30 @@
 <?php
 if (!defined ('TYPO3_MODE')) 	die ('Access denied.');
 
-$TCA['tx_cfcleague_team_notes'] = Array (
-	'ctrl' => $TCA['tx_cfcleague_team_notes']['ctrl'],
+$tx_cfcleague_team_notes = Array (
+	'ctrl' => Array (
+		'title' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_team_notes',
+		'label' => 'uid',
+		'label_alt' => 'type,player,team',
+		'label_alt_force' => 1,
+		'requestUpdate' => 'team',
+		'tstamp' => 'tstamp',
+		'type' => 'mediatype',
+		'crdate' => 'crdate',
+		'cruser_id' => 'cruser_id',
+		'delete' => 'deleted',
+		'enablecolumns' => Array (
+			'disabled' => 'hidden',
+		),
+		'iconfile' => tx_rnbase_util_Extensions::extRelPath('cfc_league').'icon_tx_cfcleague_teams.gif',
+	),
 	'interface' => Array (
 		'showRecordFieldList' => '',
 		'maxDBListItems' => '5'
 	),
-	'feInterface' => $TCA['tx_cfcleague_team_notes']['feInterface'],
+	'feInterface' => Array (
+		'fe_admin_fieldList' => 'hidden, team, player, type, comment',
+	),
 	'columns' => Array (
 		'hidden' => Array (
 			'exclude' => 1,
@@ -109,20 +126,22 @@ $TCA['tx_cfcleague_team_notes'] = Array (
 
 if(tx_rnbase_util_TYPO3::isTYPO60OrHigher()) {
 	tx_rnbase::load('tx_rnbase_util_TSFAL');
-	$TCA['tx_cfcleague_team_notes']['columns']['mediatype']['config']['items'][] =
+	$tx_cfcleague_team_notes['columns']['mediatype']['config']['items'][] =
 					Array('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_team_notes.mediatype.media', '1');
-	$TCA['tx_cfcleague_team_notes']['columns']['media'] = tx_rnbase_util_TSFAL::getMediaTCA('media', array(
+	$tx_cfcleague_team_notes['columns']['media'] = tx_rnbase_util_TSFAL::getMediaTCA('media', array(
 		'label' => 'LLL:EXT:lang/locallang_general.xml:LGL.images',
 		'config' => array('size' => 1, 'maxitems' => 1),
 	));
-	$TCA['tx_cfcleague_team_notes']['columns']['media']['label'] = 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_team_notes.media';
+	$tx_cfcleague_team_notes['columns']['media']['label'] = 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_team_notes.media';
 }
 elseif(tx_rnbase_util_Extensions::isLoaded('dam')) {
 	// Type media is supported with DAM only!
-	$TCA['tx_cfcleague_team_notes']['columns']['mediatype']['config']['items'][] =
-					Array('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_team_notes.mediatype.media', '1');
-	$TCA['tx_cfcleague_team_notes']['columns']['media'] = txdam_getMediaTCA('image_field', 'media');
-	$TCA['tx_cfcleague_team_notes']['columns']['media']['label'] = 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_team_notes.media';
-	$TCA['tx_cfcleague_team_notes']['columns']['media']['config']['size'] = 1;
-	$TCA['tx_cfcleague_team_notes']['columns']['media']['config']['maxitems'] = 1;
+	$tx_cfcleague_team_notes['columns']['mediatype']['config']['items'][] =
+		Array('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_team_notes.mediatype.media', '1');
+	$tx_cfcleague_team_notes['columns']['media'] = txdam_getMediaTCA('image_field', 'media');
+	$tx_cfcleague_team_notes['columns']['media']['label'] = 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_team_notes.media';
+	$tx_cfcleague_team_notes['columns']['media']['config']['size'] = 1;
+	$tx_cfcleague_team_notes['columns']['media']['config']['maxitems'] = 1;
 }
+
+return $tx_cfcleague_team_notes;
