@@ -315,7 +315,7 @@ $tx_cfcleague_club = Array (
 	)
 );
 
-$tca = tx_rnbase::makeInstance('Tx_Rnbase_Util_TCA');
+$tca = tx_rnbase::makeInstance('Tx_Rnbase_Util_TCATool');
 $tca->addWizard($tx_cfcleague_club, 'stadiums', 'edit', 'wizard_edit', array());
 $tca->addWizard($tx_cfcleague_club, 'stadiums', 'add', 'wizard_add', array());
 $tca->addWizard($tx_cfcleague_club, 'info', 'RTE', 'wizard_rte', array());
