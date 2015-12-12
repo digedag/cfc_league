@@ -193,7 +193,7 @@ $tx_cfcleague_club = Array (
 						'type' => 'script',
 						'title' => 'Full screen Rich Text Editing|Formatteret redigering i hele vinduet',
 						'icon' => 'wizard_rte2.gif',
-						'script' => 'wizard_rte.php',
+//						'script' => 'wizard_rte.php',
 					),
 				),
 			)
@@ -213,7 +213,7 @@ $tx_cfcleague_club = Array (
 						'type' => 'script',
 						'title' => 'Full screen Rich Text Editing|Formatteret redigering i hele vinduet',
 						'icon' => 'wizard_rte2.gif',
-						'script' => 'wizard_rte.php',
+//						'script' => 'wizard_rte.php',
 					),
 				),
 			)
@@ -285,7 +285,7 @@ $tx_cfcleague_club = Array (
 					'edit' => array(
 						'type' => 'popup',
 						'title' => 'Edit',
-						'script' => 'wizard_edit.php',
+//						'script' => 'wizard_edit.php',
 						'popup_onlyOpenIfSelected' => 1,
 						'icon' => 'edit2.gif',
 						'JSopenParams' => 'height=350,width=580,status=0,menubar=0,scrollbars=1',
@@ -299,7 +299,7 @@ $tx_cfcleague_club = Array (
 							'pid' => '###CURRENT_PID###',
 							'setValue' => 'prepend'
 						),
-						'script' => 'wizard_add.php',
+//						'script' => 'wizard_add.php',
 					),
 				),
 			)
@@ -314,6 +314,14 @@ $tx_cfcleague_club = Array (
 		'1' => Array('showitem' => '')
 	)
 );
+
+$tca = tx_rnbase::makeInstance('Tx_Rnbase_Util_TCA');
+$tca->addWizard($tx_cfcleague_club, 'stadiums', 'edit', 'wizard_edit', array());
+$tca->addWizard($tx_cfcleague_club, 'stadiums', 'add', 'wizard_add', array());
+$tca->addWizard($tx_cfcleague_club, 'info', 'RTE', 'wizard_rte', array());
+$tca->addWizard($tx_cfcleague_club, 'info2', 'RTE', 'wizard_rte', array());
+
+
 
 if(tx_rnbase_util_Extensions::isLoaded('static_info_tables')) {
 	$tx_cfcleague_club['columns']['country'] = tx_cfcleague_tca_Lookup::getCountryField();

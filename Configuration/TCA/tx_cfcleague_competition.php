@@ -1,9 +1,12 @@
 <?php
+
+
 if (!defined ('TYPO3_MODE')) 	die ('Access denied.');
 
 if(tx_rnbase_util_Extensions::isLoaded('dam')) {
 	require_once(tx_rnbase_util_Extensions::extPath('dam').'tca_media_field.php');
 }
+
 
 $tx_cfcleague_competition = Array (
 	'ctrl' => Array (
@@ -204,7 +207,7 @@ $tx_cfcleague_competition = Array (
 								'type' => 'script',
 								'title' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition_create_team',
 								'icon' => 'EXT:cfc_league/icon_tx_cfcleague_teams.gif',
-								'script' => 'wizard_add.php',
+//								'script' => 'wizard_add.php',
 								'params' => array(
 									'table'=>'tx_cfcleague_teams',
 									'pid' => '###CURRENT_PID###',
@@ -239,6 +242,11 @@ $tx_cfcleague_competition = Array (
 		'2' => Array('showitem' => 'obligation')
 	)
 );
+
+tx_rnbase::load('Tx_Rnbase_Util_TCA');
+$tca = new Tx_Rnbase_Util_TCA();
+$tca->addWizard($tx_cfcleague_competition, 'teams', 'add', 'wizard_add', array());
+
 
 tx_rnbase::load('tx_rnbase_util_TYPO3');
 if(tx_rnbase_util_TYPO3::isTYPO60OrHigher()) {
