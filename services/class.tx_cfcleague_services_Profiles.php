@@ -24,6 +24,9 @@
 
 tx_rnbase::load('tx_rnbase_util_DB');
 tx_rnbase::load('tx_rnbase_util_Strings');
+tx_rnbase::load('Tx_Rnbase_Service_Base');
+
+
 
 
 /**
@@ -31,7 +34,7 @@ tx_rnbase::load('tx_rnbase_util_Strings');
  *
  * @author Rene Nitzsche
  */
-class tx_cfcleague_services_Profiles extends t3lib_svbase {
+class tx_cfcleague_services_Profiles extends Tx_Rnbase_Service_Base {
 	private $profiles = array();
 
 	/**
@@ -51,6 +54,7 @@ class tx_cfcleague_services_Profiles extends t3lib_svbase {
 		}
 
 		if(!empty($toLoad)) {
+			$fields = array();
 			$fields['PROFILE.UID'][OP_IN_INT] = implode(',', $toLoad);
 			$options = array();
 			$rows = $this->search($fields, $options);
@@ -71,6 +75,7 @@ class tx_cfcleague_services_Profiles extends t3lib_svbase {
 	public function checkReferences($profile) {
 		$ret = array();
 		// Zuerst die Teams
+		$options = array();
 		$options['what'] = 'uid';
 
 		$fields = array();

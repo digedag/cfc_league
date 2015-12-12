@@ -22,13 +22,15 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
+tx_rnbase::load('Tx_Rnbase_Service_Base');
+
 
 /**
  * Service for accessing saisons
  *
  * @author Rene Nitzsche
  */
-class tx_cfcleague_services_Saison extends t3lib_svbase {
+class tx_cfcleague_services_Saison extends Tx_Rnbase_Service_Base {
 
 	/**
 	 * Search database for trades

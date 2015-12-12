@@ -25,6 +25,7 @@
 tx_rnbase::load('tx_rnbase_util_SearchBase');
 tx_rnbase::load('tx_rnbase_util_DB');
 tx_rnbase::load('tx_cfcleague_search_Builder');
+tx_rnbase::load('Tx_Rnbase_Service_Base');
 
 
 /**
@@ -32,7 +33,7 @@ tx_rnbase::load('tx_cfcleague_search_Builder');
  *
  * @author Rene Nitzsche
  */
-class tx_cfcleague_services_Teams extends t3lib_svbase {
+class tx_cfcleague_services_Teams extends Tx_Rnbase_Service_Base {
 
 	/**
 	 * Returns all stadiums for a team.
@@ -42,6 +43,7 @@ class tx_cfcleague_services_Teams extends t3lib_svbase {
 	 * @return array[tx_cfcleague_models_stadium]
 	 */
 	public function getStadiums($teamUid) {
+		$fields = $options = array();
 		$fields['TEAM.UID'][OP_EQ_INT] = $teamUid;
 		$options['orderby']['STADIUM.NAME'] = 'asc';
 		$srv = tx_cfcleague_util_ServiceRegistry::getStadiumService();
@@ -69,6 +71,7 @@ class tx_cfcleague_services_Teams extends t3lib_svbase {
 			tx_rnbase::load('tx_rnbase_util_TSFAL');
 			return tx_rnbase_util_TSFAL::fetchFiles('tx_cfcleague_club', $clubUid, 'logo');
 		}
+		$fields = $options = array();
 		$fields['MEDIAREFMM.UID_FOREIGN'][OP_EQ_INT] = $clubUid;
 		$fields['MEDIAREFMM.TABLENAMES'][OP_EQ] = 'tx_cfcleague_club';
 		$fields['MEDIAREFMM.IDENT'][OP_EQ] = 'dam_images';
@@ -91,6 +94,7 @@ class tx_cfcleague_services_Teams extends t3lib_svbase {
 	 * @param tx_cfcleague_models_TeamNoteType $type
 	 */
 	public function getTeamNotes($team, $type=false) {
+		$fields = $options = array();
 		$fields['TEAMNOTE.TEAM'][OP_EQ_INT] = $team->getUid();
 		if(is_object($type))
 			$fields['TEAMNOTE.TYPE'][OP_EQ_INT] = $type->getUid();
@@ -157,7 +161,7 @@ class tx_cfcleague_services_Teams extends t3lib_svbase {
 	 * @return array of tx_cfcleaguefe_models_competition
 	 */
 	public function getCompetitions4Team($team, $obligateOnly = false) {
-		$fields = array();
+		$fields = $options = array();
 		tx_cfcleague_search_Builder::buildCompetitionByTeam($fields, $team->getUid(), $obligateOnly);
 		$srv = tx_cfcleague_util_ServiceRegistry::getCompetitionService();
 		return $srv->search($fields, $options);

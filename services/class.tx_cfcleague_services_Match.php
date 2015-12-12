@@ -23,6 +23,8 @@
  ***************************************************************/
 
 tx_rnbase::load('tx_rnbase_util_SearchBase');
+tx_rnbase::load('Tx_Rnbase_Service_Base');
+
 
 interface tx_cfcleague_MatchService {
   function search($fields, $options);
@@ -33,7 +35,7 @@ interface tx_cfcleague_MatchService {
  *
  * @author Rene Nitzsche
  */
-class tx_cfcleague_services_Match extends t3lib_svbase implements tx_cfcleague_MatchService  {
+class tx_cfcleague_services_Match extends Tx_Rnbase_Service_Base implements tx_cfcleague_MatchService  {
 
 	/**
 	 * Returns all available profile types for a TCA select item
@@ -52,6 +54,7 @@ class tx_cfcleague_services_Match extends t3lib_svbase implements tx_cfcleague_M
 			$srv = tx_rnbase_util_Misc::getService($baseType, $subtype);
 			$types = array_merge($types, $srv->getMatchNoteTypes());
 		}
+		$items = array();
 		foreach($types AS $typedef) {
 			$items[] = array(tx_rnbase_util_Misc::translateLLL($typedef[0]), $typedef[1]);
 		}
@@ -132,6 +135,7 @@ class tx_cfcleague_services_Match extends t3lib_svbase implements tx_cfcleague_M
 	 * @return array[tx_cfcleague_models_MatchNote]
 	 */
 	public function retrieveMatchNotes($match, $excludeTicker=true) {
+		$options = array();
 		$options['where'] = 'game = ' .$match->getUid();
 		if($excludeTicker) {
 			$options['where'] .= ' AND type != 100';

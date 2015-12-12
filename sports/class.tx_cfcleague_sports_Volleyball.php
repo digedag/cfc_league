@@ -23,10 +23,11 @@
  ***************************************************************/
 
 tx_rnbase::load('tx_cfcleague_sports_ISports');
+tx_rnbase::load('Tx_Rnbase_Service_Base');
 
 /**
  */
-class tx_cfcleague_sports_Volleyball extends t3lib_svbase implements tx_cfcleague_sports_ISports {
+class tx_cfcleague_sports_Volleyball extends Tx_Rnbase_Service_Base implements tx_cfcleague_sports_ISports {
 
 	/**
 	 * Get match provider
@@ -73,5 +74,3 @@ class tx_cfcleague_sports_Volleyball extends t3lib_svbase implements tx_cfcleagu
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/sports/class.tx_cfcleague_sports_Volleyball.php']) {
 	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/sports/class.tx_cfcleague_sports_Volleyball.php']);
 }
-
-?>

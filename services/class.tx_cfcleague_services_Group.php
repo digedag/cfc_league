@@ -23,12 +23,14 @@
 ***************************************************************/
 
 tx_rnbase::load('tx_rnbase_cache_Manager');
+tx_rnbase::load('Tx_Rnbase_Service_Base');
+
 /**
  * Service for accessing age groups
  *
  * @author Rene Nitzsche
  */
-class tx_cfcleague_services_Group extends t3lib_svbase {
+class tx_cfcleague_services_Group extends Tx_Rnbase_Service_Base {
 	/**
 	 * Returns a group instance by its uid.
 	 * @param int $uid

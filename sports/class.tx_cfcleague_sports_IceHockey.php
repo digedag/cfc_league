@@ -23,10 +23,11 @@
  ***************************************************************/
 
 tx_rnbase::load('tx_cfcleague_sports_ISports');
+tx_rnbase::load('Tx_Rnbase_Service_Base');
 
 /**
  */
-class tx_cfcleague_sports_IceHockey extends t3lib_svbase implements tx_cfcleague_sports_ISports {
+class tx_cfcleague_sports_IceHockey extends Tx_Rnbase_Service_Base implements tx_cfcleague_sports_ISports {
 
 	/**
 	 * Get match provider
