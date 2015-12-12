@@ -23,6 +23,7 @@
 ***************************************************************/
 
 tx_rnbase::load('tx_rnbase_util_DB');
+tx_rnbase::load('Tx_Rnbase_Service_Base');
 
 
 /**
@@ -30,7 +31,7 @@ tx_rnbase::load('tx_rnbase_util_DB');
  *
  * @author Rene Nitzsche
  */
-class tx_cfcleague_services_ProfileTypes extends t3lib_svbase {
+class tx_cfcleague_services_ProfileTypes extends Tx_Rnbase_Service_Base {
 	static $types = array(
 		1 => array('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles_type_player', 1),
 		2 => array('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles_type_coach', 2),

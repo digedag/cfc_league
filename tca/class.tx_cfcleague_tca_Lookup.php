@@ -1,8 +1,9 @@
 <?php
+use TYPO3\CMS\Backend\Form\Element\SelectSingleElement;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2007-2014 Rene Nitzsche (rene@system25.de)
+ *  (c) 2007-2015 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -170,9 +171,15 @@ class tx_cfcleague_tca_Lookup {
 		}
 		$ret['label'] = 'Team Logo';
 		// Die Auswahlbox rendern
-		$ret['config']['userFunc'] = 'EXT:cfc_league/tca/class.tx_cfcleague_tca_Lookup.php:&tx_cfcleague_tca_Lookup->getSingleField_teamLogo';
-
-		$ret['config']['type'] = tx_rnbase_util_TYPO3::isTYPO60OrHigher() ? 'user' : 'select';
+		// In der 7.6 einen eigenen Node-Type anmelden
+		// $GLOBALS['TYPO3_CONF_VARS']['SYS']['formEngine']['nodeRegistry']
+		if(tx_rnbase_util_TYPO3::isTYPO70OrHigher()) {
+			$ret['config']['type'] = 't3s_teamlogo';
+		}
+		else {
+			$ret['config']['userFunc'] = 'EXT:cfc_league/tca/class.tx_cfcleague_tca_Lookup.php:&tx_cfcleague_tca_Lookup->getSingleField_teamLogo';
+			$ret['config']['type'] = tx_rnbase_util_TYPO3::isTYPO60OrHigher() ? 'user' : 'select';
+		}
 		// Die passenden Logos suchen
 		$ret['config']['itemsProcFunc'] = 'tx_cfcleague_tca_Lookup->getLogo4Team';
 		$ret['config']['maxitems'] = '1';
@@ -183,11 +190,12 @@ class tx_cfcleague_tca_Lookup {
 	/**
 	 * Build a select box and an image preview of selected logo
 	 * @param array $PA
-	 * @param unknown_type $fObj
+	 * @param TYPO3\CMS\Backend\Form\Element\UserElement $fObj
 	 */
-	public function getSingleField_teamLogo($PA, &$fObj)	{
+	public function getSingleField_teamLogo($PA, $fObj)	{
 		global $TYPO3_CONF_VARS;
 
+		// In der 7.6 geht das nicht mehr...
 		$tceforms = &$PA['pObj'];
 		$table = $PA['table'];
 		$field = $PA['field'];
@@ -219,7 +227,7 @@ class tx_cfcleague_tca_Lookup {
 				// Logo anzeigen
 				$currPic = t3lib_BEfunc::getRecord('tx_dam', $row['logo']);
 				require_once(tx_rnbase_util_Extensions::extPath('dam').'lib/class.tx_dam_tcefunc.php');
-				$tcefunc = t3lib_div::makeInstance('tx_dam_tcefunc');
+				$tcefunc = tx_rnbase::makeInstance('tx_dam_tcefunc');
 				if(!method_exists($tcefunc, 'renderFileList')) return $item;
 				$tcefunc->tceforms = &$tceforms;
 				$item .= $tcefunc->renderFileList(array('rows' => array($currPic)));

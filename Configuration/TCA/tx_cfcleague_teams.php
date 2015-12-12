@@ -190,7 +190,6 @@ $tx_cfcleague_teams = Array (
 						'type' => 'script',
 						'title' => 'Full screen Rich Text Editing|Formatteret redigering i hele vinduet',
 						'icon' => 'wizard_rte2.gif',
-						'script' => 'wizard_rte.php',
 					),
 				),
 			)
@@ -223,6 +222,8 @@ $tx_cfcleague_teams = Array (
 	)
 );
 
+$tca = tx_rnbase::makeInstance('Tx_Rnbase_Util_TCATool');
+$tca->addWizard($tx_cfcleague_teams, 'comment', 'RTE', 'wizard_rte', array());
 
 tx_rnbase::load('tx_cfcleague_tca_Lookup');
 tx_rnbase::load('tx_rnbase_util_TYPO3');

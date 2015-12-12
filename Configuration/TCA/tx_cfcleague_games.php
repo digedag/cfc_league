@@ -535,7 +535,6 @@ $tx_cfcleague_games = Array (
 						'type' => 'script',
 						'title' => 'Full screen Rich Text Editing|Formatteret redigering i hele vinduet',
 						'icon' => 'wizard_rte2.gif',
-						'script' => 'wizard_rte.php',
 					),
 				),
 			)
@@ -668,7 +667,10 @@ $tx_cfcleague_games = Array (
 	)
 );
 
-if(tx_rnbase_util_Extensions::isLoaded('rgmediaimages')) {
+$tca = tx_rnbase::makeInstance('Tx_Rnbase_Util_TCATool');
+$tca->addWizard($tx_cfcleague_games, 'game_report', 'RTE', 'wizard_rte', array());
+
+if(tx_rnbase_util_Extensions::isLoaded('rgmediaimages') && !tx_rnbase_util_TYPO3::isTYPO70OrHigher()) {
 	$tx_cfcleague_games['columns']['video'] = Array (
 		'exclude' => 1,
 		'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games_video',
@@ -704,7 +706,11 @@ if(tx_rnbase_util_Extensions::isLoaded('rgmediaimages')) {
         ),
 		)
 	);
+	// TODO: Fix for 7.6
+// 	$tca->addWizard($tx_cfcleague_games, 'videoimg', 'RTE', 'wizard_rte',
+// 			array('table'=>'tx_cfcleague_games','config'=>'videoimg', 'internal'=>'video'));
 }
+
 
 
 if(tx_rnbase_util_TYPO3::isTYPO60OrHigher()) {

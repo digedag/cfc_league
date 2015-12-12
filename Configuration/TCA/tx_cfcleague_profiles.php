@@ -216,7 +216,6 @@ $tx_cfcleague_profiles = Array (
 						'type' => 'script',
 						'title' => 'Full screen Rich Text Editing|Formatteret redigering i hele vinduet',
 						'icon' => 'wizard_rte2.gif',
-						'script' => 'wizard_rte.php',
 					),
 				),
 			)
@@ -248,7 +247,6 @@ $tx_cfcleague_profiles = Array (
 						'type' => 'script',
 						'title' => 'Full screen Rich Text Editing|Formatteret redigering i hele vinduet',
 						'icon' => 'wizard_rte2.gif',
-						'script' => 'wizard_rte.php',
 					),
 				),
 			)
@@ -272,6 +270,11 @@ $tx_cfcleague_profiles = Array (
 		'1' => Array('showitem' => '')
 	)
 );
+
+$tca = tx_rnbase::makeInstance('Tx_Rnbase_Util_TCATool');
+$tca->addWizard($tx_cfcleague_profiles, 'description', 'RTE', 'wizard_rte', array());
+$tca->addWizard($tx_cfcleague_profiles, 'summary', 'RTE', 'wizard_rte', array());
+
 
 tx_rnbase::load('tx_rnbase_util_TYPO3');
 if(tx_rnbase_util_TYPO3::isTYPO60OrHigher()) {

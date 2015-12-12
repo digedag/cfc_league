@@ -116,7 +116,6 @@ $tx_cfcleague_stadiums = Array (
 						'type' => 'script',
 						'title' => 'Full screen Rich Text Editing|Formatteret redigering i hele vinduet',
 						'icon' => 'wizard_rte2.gif',
-						'script' => 'wizard_rte.php',
 					),
 				),
 			)
@@ -136,7 +135,6 @@ $tx_cfcleague_stadiums = Array (
 						'type' => 'script',
 						'title' => 'Full screen Rich Text Editing|Formatteret redigering i hele vinduet',
 						'icon' => 'wizard_rte2.gif',
-						'script' => 'wizard_rte.php',
 					),
 				),
 			)
@@ -240,6 +238,11 @@ $tx_cfcleague_stadiums = Array (
 			'1' => Array('showitem' => '')
 	)
 );
+
+$tca = tx_rnbase::makeInstance('Tx_Rnbase_Util_TCATool');
+$tca->addWizard($tx_cfcleague_stadiums, 'description', 'RTE', 'wizard_rte', array());
+$tca->addWizard($tx_cfcleague_stadiums, 'description2', 'RTE', 'wizard_rte', array());
+
 if(tx_rnbase_util_Extensions::isLoaded('static_info_tables')) {
 	$tx_cfcleague_stadiums['columns']['country'] = tx_cfcleague_tca_Lookup::getCountryField();
 }
