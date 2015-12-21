@@ -22,6 +22,8 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
+tx_rnbase::load('tx_rnbase_parameters');
+
 /**
  * Die Klasse wird im BE verwendet und liefert Informationen über ein Team
  */
@@ -52,7 +54,7 @@ class tx_cfcleague_util_TeamInfo {
 		return $this->baseInfo[$item];
 	}
 	/**
-	 * 
+	 *
 	 * @return tx_rnbase_util_FormTool
 	 */
 	public function getFormTool() {
@@ -108,11 +110,12 @@ class tx_cfcleague_util_TeamInfo {
 	 */
 	public function handleRequest() {
 		global $LANG;
-		$data = t3lib_div::_GP('remFromTeam');
+		$data = tx_rnbase_parameters::getPostOrGetParameter('remFromTeam');
 		if(!is_array($data)) return '';
 
 		$fields = array('player' => 'players', 'coach'=>'coaches', 'supporter'=>'supporters');
 		$team = $this->getTeam();
+		$tceData = array();
 		foreach($data As $type => $uid) {
 			$profileUids = $team->record[$fields[$type]];
 			if(!$profileUids) continue;
@@ -123,9 +126,10 @@ class tx_cfcleague_util_TeamInfo {
 				$team->record[$fields[$type]] = $profileUids;
 			}
 		}
-    $tce =& tx_rnbase_util_DB::getTCEmain($tceData);
+
+		$tce =& tx_rnbase_util_DB::getTCEmain($tceData);
     $tce->process_datamap();
-    
+
     return $this->getFormTool()->getDoc()->section('Info:', $LANG->getLL('msg_removedProfileFromTeam'), 0, 1, ICON_INFO);
 	}
 	/**

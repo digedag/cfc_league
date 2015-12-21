@@ -34,7 +34,7 @@ class tx_cfcleague_mod1_modClubs extends tx_rnbase_mod_BaseModFunc {
 
 	/**
 	 * Method getFuncId
-	 * 
+	 *
 	 * @return	string
 	 */
 	function getFuncId() {
@@ -52,12 +52,12 @@ class tx_cfcleague_mod1_modClubs extends tx_rnbase_mod_BaseModFunc {
 		global $LANG;
 
 		$selector = t3lib_div::makeInstance('tx_cfcleague_selector');
-		$selector->init($this->doc, $this->getModule()->getName());
+		$selector->init($this->doc, $this->getModule());
 
 		// Zuerst holen wir alle Tabs, erstellen die MenuItems und werten den Request aus
 		$tabItems = array();
 		$tabItems[] = tx_rnbase::makeInstance('tx_cfcleague_mod1_handler_ClubStadiums');
-		tx_rnbase_util_Misc::callHook('cfc_league', 'modClub_tabItems', 
+		tx_rnbase_util_Misc::callHook('cfc_league', 'modClub_tabItems',
 			array('tabItems' => &$tabItems), $this);
 
 		$menuItems = array();
@@ -70,7 +70,7 @@ class tx_cfcleague_mod1_modClubs extends tx_rnbase_mod_BaseModFunc {
 		$club = $selector->showClubSelector($selectorStr, $this->getModule()->getPid());
 		if(tx_rnbase_util_TYPO3::isTYPO42OrHigher())
 			$this->pObj->subselector = $selectorStr;
-		else 
+		else
 			$content .= '<div class="cfcleague_selector">'.$selectorStr.'</div><div class="cleardiv"/>';
 
 		if(!$club) {
@@ -86,7 +86,7 @@ class tx_cfcleague_mod1_modClubs extends tx_rnbase_mod_BaseModFunc {
 		// Wenn ein Team gefunden ist, dann können wir das Modul schreiben
 		$menu = $formTool->showTabMenu($this->getModule()->getPid(), 'clubtools', $this->getModule()->getName(),
 						$menuItems);
-		
+
 		$tabs .= $menu['menu'];
 		$tabs .= '<div style="display: block; border: 1px solid #a2aab8;" ></div>';
 

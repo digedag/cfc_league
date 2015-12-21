@@ -24,6 +24,8 @@
 
 tx_rnbase::load('tx_rnbase_util_Misc');
 tx_rnbase::load('tx_rnbase_util_DB');
+tx_rnbase::load('tx_rnbase_parameters');
+
 
 /**
  * Search matches from competitions
@@ -50,7 +52,7 @@ class tx_cfcleague_mod1_profilesearcher {
 		$this->options['pid'] = $mod->getPid();
 		$this->formTool = $mod->getFormTool();
 		$this->resultSize = 0;
-		$this->data = t3lib_div::_GP('data');
+		$this->data = tx_rnbase_parameters::getPostOrGetParameter('data');
 
 		if(!isset($options['nopersist']))
 			$this->SEARCH_SETTINGS = t3lib_BEfunc::getModuleData(array ('searchterm' => ''), $this->data, $mod->getName() );

@@ -61,8 +61,8 @@ class tx_cfcleague_mod1_modCompetitions extends tx_rnbase_mod_BaseModFunc {
 		// Entweder global über die Datenbank oder die Ligen der aktuellen Seite
 
 		// Selector-Instanz bereitstellen
-		$this->selector = t3lib_div::makeInstance('tx_cfcleague_selector');
-		$this->selector->init($this->getModule()->getDoc(), $this->getModule()->getName());
+		$this->selector = tx_rnbase::makeInstance('tx_cfcleague_selector');
+		$this->selector->init($this->getModule()->getDoc(), $this->getModule());
 
 		// Anzeige der vorhandenen Ligen
 		$selector = '';

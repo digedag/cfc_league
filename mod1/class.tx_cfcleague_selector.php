@@ -23,29 +23,35 @@
 ***************************************************************/
 
 tx_rnbase::load('tx_cfcleague_models_Competition');
+tx_rnbase::load('Tx_Rnbase_Backend_Utility');
+tx_rnbase::load('tx_rnbase_mod_IModule');
+
 
 /**
  * Die Klasse stellt Auswahlmenus zur Verfügung
  */
 class tx_cfcleague_selector{
 	var $doc, $MCONF;
+	private $modName;
+	private $module;
 
 	/**
 	 * Initialisiert das Objekt mit dem Template und der Modul-Config.
 	 */
-	function init($doc, $modName){
+	public function init($doc, tx_rnbase_mod_IModule $module){
 		$this->doc = $doc;
-		$this->MCONF['name'] = $modName; // deprecated
-		$this->modName = $modName;
+		$this->MCONF['name'] = $module->getName(); // deprecated
+		$this->modName = $module->getName();
+		$this->module = $module;
 	}
 	/**
 	 * Returns the form tool
-	 * @return tx_rnbase_util_FormTool
+	 * @return Tx_Rnbase_Backend_Util_FormTool
 	 */
-	function getFormTool() {
+	protected function getFormTool() {
 		if(!$this->formTool) {
-			$this->formTool = tx_rnbase::makeInstance('tx_rnbase_util_FormTool');
-			$this->formTool->init($this->doc);
+			$this->formTool = tx_rnbase::makeInstance('Tx_Rnbase_Backend_Util_FormTool');
+			$this->formTool->init($this->doc, $this->module);
 		}
 		return $this->formTool;
 	}
@@ -77,8 +83,8 @@ class tx_cfcleague_selector{
 
 		$menu = (tx_rnbase_util_TYPO3::isTYPO62OrHigher() && is_array($LEAGUE_MENU['league']) && count($LEAGUE_MENU['league']) == 1) ?
 				$this->buildDummyMenu('SET[league]', $LEAGUE_MENU['league']) :
-				t3lib_BEfunc::getFuncMenu($pid, 'SET[league]',
-						$this->LEAGUE_SETTINGS['league'], $LEAGUE_MENU['league'], 'index.php');
+				Tx_Rnbase_Backend_Utility::getFuncMenu($pid, 'SET[league]',
+						$this->LEAGUE_SETTINGS['league'], $LEAGUE_MENU['league']);
 		// In den Content einbauen
 		// Zusätzlich noch einen Edit-Link setzen
 		if($menu) {
@@ -152,7 +158,7 @@ class tx_cfcleague_selector{
 
 		$menu = t3lib_BEfunc::getFuncMenu(
 			$pid, 'SET['.$selectorId.']', $TEAM_SETTINGS[$selectorId],
-			$TEAM_MENU[$selectorId], 'index.php'
+			$TEAM_MENU[$selectorId], $this->getScriptURI()
 		);
 		$teamObj = null;
 		if($TEAM_SETTINGS[$selectorId] > 0) {
@@ -207,7 +213,7 @@ class tx_cfcleague_selector{
 		$menuSettings = t3lib_BEfunc::getModuleData($menuData, t3lib_div::_GP('SET'), $this->modName);
 
 		$menu = t3lib_BEfunc::getFuncMenu(
-			$pid, 'SET['.$selectorId.']', $menuSettings[$selectorId], $menuData[$selectorId], 'index.php'
+			$pid, 'SET['.$selectorId.']', $menuSettings[$selectorId], $menuData[$selectorId], $this->getScriptURI()
 		);
 		$currItem = null;
 		if($menuSettings[$selectorId] > 0) {
@@ -248,7 +254,7 @@ class tx_cfcleague_selector{
 				$entries[$round['round']] = $round['round_name'] . ( intval($round['max_status']) ? ' *' : '' );
 		}
 
-		$data = $this->getFormTool()->showMenu($pid, 'round', $this->MCONF['name'], $entries, 'index.php');
+		$data = $this->getFormTool()->showMenu($pid, 'round', $this->MCONF['name'], $entries, $this->getScriptURI());
 		// In den Content einbauen
 		// Spielrunden sind keine Objekt, die bearbeitet werden können
 		if($data['menu']) {
@@ -282,7 +288,7 @@ class tx_cfcleague_selector{
 		);
 
 		$menu = t3lib_BEfunc::getFuncMenu(
-			$pid, 'SET[match]', $this->MATCH_SETTINGS['match'], $this->MATCH_MENU['match'], 'index.php'
+			$pid, 'SET[match]', $this->MATCH_SETTINGS['match'], $this->MATCH_MENU['match'], $this->getScriptURI()
 		);
 		// In den Content einbauen
 		// Zusätzlich noch einen Edit-Link setzen
@@ -318,7 +324,7 @@ class tx_cfcleague_selector{
     );
 
     $menu = t3lib_BEfunc::getFuncMenu(
-      $pid, 'SET[group]', $this->GROUP_SETTINGS['group'], $this->GROUP_MENU['group'], 'index.php'
+      $pid, 'SET[group]', $this->GROUP_SETTINGS['group'], $this->GROUP_MENU['group'], $this->getScriptURI()
     );
     // In den Content einbauen
     $content.=$this->doc->section('', $this->doc->funcMenu($headerSection, $menu));
@@ -349,7 +355,7 @@ class tx_cfcleague_selector{
 		);
 
 		$menu = t3lib_BEfunc::getFuncMenu(
-			$pid, 'SET[saison]', $this->SAISON_SETTINGS['saison'], $SAISON_MENU['saison'], 'index.php'
+			$pid, 'SET[saison]', $this->SAISON_SETTINGS['saison'], $SAISON_MENU['saison'], $this->getScriptURI()
 		);
 		// In den Content einbauen
 		// Wir verzichten hier auf den Link und halten nur den Abstand ein
@@ -375,35 +381,7 @@ class tx_cfcleague_selector{
    * @return array with keys 'menu' and 'value'
    */
 	public function showTabMenu($pid, $name, $entries) {
-		$MENU = Array (
-			$name => $entries
-		);
-		$SETTINGS = t3lib_BEfunc::getModuleData(
-			$MENU, t3lib_div::_GP('SET'), $this->MCONF['name'] // Das ist der Name des Moduls
-		);
-
-		$out = '
-		<div class="typo3-dyntabmenu-tabs">
-			<table class="typo3-dyntabmenu" border="0" cellpadding="0" cellspacing="0">
-			<tbody><tr>';
-
-		foreach($entries As $key => $value) {
-			//$out .= '<td class="tab" onmouseover="DTM_mouseOver(this);" onmouseout="DTM_mouseOut(this);" nowrap="nowrap">';
-			$out .= '
-				<td class="tab'.($SETTINGS[$name] == $key ? 'Act' : '').'" nowrap="nowrap">';
-			//$out .= '<a href="#" onclick="jumpToUrl(\'index.php?&amp;id='.$pid.'&amp;SET['.$name.']='. $key .', this);\'>'.$value.'<img name="DTM-307fab8d03-1-REQ" src="clear.gif" alt="" height="10" hspace="4" width="10"></a></td>';
-			$out .= '<a href="#" onclick="jumpToUrl(\'index.php?&amp;id='.$pid.'&amp;SET['.$name.']='. $key .'\', this);">'.$value.'</a></td>';
-
-		}
-		$out .= '
-				</tr>
-			</tbody></table></div>
-		';
-		$ret['menu'] = $out;
-		$ret['value'] = $SETTINGS[$name];
-		return $ret;
-
-		// jumpToUrl('index.php?&amp;id=5&amp;SET[teamtools]='+this.options[this.selectedIndex].value, this);
+		return $this->getFormTool()->showTabMenu($pid, $name, $this->MCONF['name'], $entries);
 	}
 	/**
 	 * Zeigt eine Art Tab-Menu
@@ -416,19 +394,31 @@ class tx_cfcleague_selector{
 		$SETTINGS = t3lib_BEfunc::getModuleData(
 			$MENU, t3lib_div::_GP('SET'), $this->MCONF['name'] // Das ist der Name des Moduls
 		);
+		$ret = array();
 		$ret['menu'] = t3lib_BEfunc::getFuncMenu(
-			$pid, 'SET['.$name.']', $SETTINGS[$name], $MENU[$name], 'index.php'
+			$pid, 'SET['.$name.']', $SETTINGS[$name], $MENU[$name], $this->getScriptURI()
 		);
 		$ret['value'] = $SETTINGS[$name];
 		return $ret;
   }
 
   /**
+   *
+   * @return string
+   */
+  private function getScriptURI() {
+  	return '';
+  }
+  /**
    * Liefert die Ligen der aktuellen Seite.
    * @return ein Array mit Rows
    */
   private function findLeagues($pid){
-    return tx_cfcleague_db::queryDB('*', 'pid="'.$pid.'"', 'tx_cfcleague_competition', '', 'sorting');
+  	tx_rnbase::load('tx_rnbase_util_DB');
+  	return tx_rnbase_util_DB::doSelect('*', 'tx_cfcleague_competition', array(
+  		'where' => 'pid="'.$pid.'"',
+  		'orderby' => 'sorting asc',
+  	));
   }
 }
 

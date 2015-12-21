@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2007-2014 Rene Nitzsche (rene@system25.de)
+*  (c) 2007-2015 Rene Nitzsche (rene@system25.de)
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -132,8 +132,8 @@ class tx_cfcleague_match_edit  {
 	 */
 	private function getSelector() {
 		if(!is_object($this->selector)) {
-			$this->selector = t3lib_div::makeInstance('tx_cfcleague_selector');
-			$this->selector->init($this->getModule()->getDoc(), $this->getModule()->getName());
+			$this->selector = tx_rnbase::makeInstance('tx_cfcleague_selector');
+			$this->selector->init($this->getModule()->getDoc(), $this->getModule());
 		}
 		return $this->selector;
 	}
@@ -257,16 +257,14 @@ class tx_cfcleague_match_edit  {
   /**
    * Aktualisiert die Spiele mit den Daten aus dem Request
    */
-  function updateMatches($data) {
-    require_once('../class.tx_cfcleague.php');
+  private function updateMatches($tcaData) {
+		tx_rnbase::load('tx_rnbase_util_DB');
+		$tce =& tx_rnbase_util_DB::getTCEmain($tcaData);
+		$tce->process_datamap();
 
-    $tce =& tx_cfcleague_db::getTCEmain($data);
-    $tce->process_datamap();
-//t3lib_div::debug($data, 'medit');
   }
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/mod1/class.tx_cfcleague_match_edit.php'])	{
   include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/mod1/class.tx_cfcleague_match_edit.php']);
 }
-?>

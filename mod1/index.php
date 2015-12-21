@@ -28,15 +28,15 @@
  * Hint: use extdeveval to insert/update function index above.
  */
 
-unset($MCONF);
+// unset($MCONF);
 
 
-require_once('conf.php');
-require_once($BACK_PATH.'init.php');
+// require_once('conf.php');
+// require_once($BACK_PATH.'init.php');
 
-tx_rnbase::load('tx_rnbase_util_TYPO3');
-if(!tx_rnbase_util_TYPO3::isTYPO62OrHigher())
-	require_once(PATH_typo3.'template.php');
+// tx_rnbase::load('tx_rnbase_util_TYPO3');
+// if(!tx_rnbase_util_TYPO3::isTYPO62OrHigher())
+// 	require_once(PATH_typo3.'template.php');
 
 $LANG->includeLLFile('EXT:cfc_league/mod1/locallang.xml');
 $BE_USER->modAccess($MCONF, 1);	// This checks permissions and exits if the users has no permission for entry.
@@ -45,7 +45,7 @@ $BE_USER->modAccess($MCONF, 1);	// This checks permissions and exits if the user
 require_once(tx_rnbase_util_Extensions::extPath('cfc_league').'mod1/class.tx_cfcleague_selector.php');
 
 tx_rnbase::load('tx_rnbase_mod_BaseModule');
-
+tx_rnbase::load('Tx_Rnbase_Backend_Utility');
 
 
 /**
@@ -68,10 +68,8 @@ class  tx_cfcleague_module1 extends tx_rnbase_mod_BaseModule {
 	}
 
 	protected function getFormTag() {
-		return '<form action="index.php?id=' . $this->getPid() . '" method="POST" name="editform" id="editform">';
-	}
-	protected function getModuleScript() {
-		return 'index.php';
+		$modUrl = Tx_Rnbase_Backend_Utility::getModuleUrl('web_txcfcleagueM1', array('id'=>$this->getPid()), '');
+		return '<form action="' . $modUrl . '" method="POST" name="editform" id="editform">';
 	}
 }
 
@@ -80,7 +78,7 @@ if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_lea
 }
 
 // Make instance:
-$SOBE = t3lib_div::makeInstance('tx_cfcleague_module1');
+$SOBE = tx_rnbase::makeInstance('tx_cfcleague_module1');
 $SOBE->init();
 
 // Include files?

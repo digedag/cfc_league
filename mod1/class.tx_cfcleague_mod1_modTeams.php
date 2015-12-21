@@ -50,7 +50,7 @@ class tx_cfcleague_mod1_modTeams extends tx_rnbase_mod_BaseModFunc {
 	private function getSelector() {
 		if(!$this->selector) {
 			$this->selector = tx_rnbase::makeInstance('tx_cfcleague_selector');
-			$this->selector->init($this->doc, $this->getModule()->getName());
+			$this->selector->init($this->doc, $this->getModule());
 		}
 		return $this->selector;
 	}

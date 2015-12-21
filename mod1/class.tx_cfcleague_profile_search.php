@@ -55,8 +55,8 @@ class tx_cfcleague_profile_search extends tx_rnbase_mod_BaseModFunc {
 		$this->formTool = $this->getModule()->getFormTool();
 
 		// Selector-Instanz bereitstellen
-		$this->selector = t3lib_div::makeInstance('tx_cfcleague_selector');
-		$this->selector->init($this->getModule()->getDoc(), $this->getModule()->getName());
+		$this->selector = tx_rnbase::makeInstance('tx_cfcleague_selector');
+		$this->selector->init($this->getModule()->getDoc(), $this->getModule());
 
 		// Wir benötigen die $TCA, um die maximalen Spieler pro Team prüfen zu können
 		t3lib_div::loadTCA('tx_cfcleague_teams');

@@ -54,7 +54,7 @@ class tx_cfcleague_match_ticker extends tx_rnbase_mod_BaseModFunc {
 
 		// Selector-Instanz bereitstellen
 		$this->selector = tx_rnbase::makeInstance('tx_cfcleague_selector');
-		$this->selector->init($this->getModule()->getDoc(), $this->getModule()->getName());
+		$this->selector->init($this->getModule()->getDoc(), $this->getModule());
 
 		// Zuerst mal müssen wir die passende Liga auswählen lassen:
 		$content = '';
@@ -141,7 +141,7 @@ class tx_cfcleague_match_ticker extends tx_rnbase_mod_BaseModFunc {
 		}
 		$ret = '';
 		$ret = $this->doc->backPath;
-		$ret = '<script type="text/javascript" src="js/ticker.js"></script>';
+		$ret = '<script type="text/javascript" src="'.tx_rnbase_util_Extensions::extRelPath('cfc_league').'mod1/js/ticker.js"></script>';
 		$ret .= '<p id="instant" style="background:yellow; margin-bottom:10px; padding:3px">'.$GLOBALS['LANG']->getLL('msg_sendInstant').'</p>';
 		return '<div id="t3sportsTicker">'.$ret.'</div>';
 	}
