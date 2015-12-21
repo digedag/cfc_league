@@ -46,11 +46,11 @@ class tx_cfcleague_selector{
 	}
 	/**
 	 * Returns the form tool
-	 * @return Tx_Rnbase_Backend_Util_FormTool
+	 * @return Tx_Rnbase_Backend_Utility_FormTool
 	 */
 	protected function getFormTool() {
 		if(!$this->formTool) {
-			$this->formTool = tx_rnbase::makeInstance('Tx_Rnbase_Backend_Util_FormTool');
+			$this->formTool = tx_rnbase::makeInstance('Tx_Rnbase_Backend_Utility_FormTool');
 			$this->formTool->init($this->doc, $this->module);
 		}
 		return $this->formTool;
