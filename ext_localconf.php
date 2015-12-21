@@ -33,7 +33,18 @@ $GLOBALS ['TYPO3_CONF_VARS']['BE']['AJAX']['T3sports::saveTickerMessage'] = 'EXT
 if (TYPO3_MODE == 'BE') {
 	// Einbindung einer PageTSConfig
 	tx_rnbase_util_Extensions::addPageTSConfig('<INCLUDE_TYPOSCRIPT: source="FILE:EXT:cfc_league/mod1/pageTSconfig.txt">');
+
+	// Register form element for logofield in team record
+	if(tx_rnbase_util_TYPO3::isTYPO76OrHigher()) {
+		tx_rnbase::load('Tx_Cfcleague_Form_SelectTeamLogo');
+		$GLOBALS['TYPO3_CONF_VARS']['SYS']['formEngine']['nodeRegistry'][7493905268] = array(
+				'nodeName' => 't3s_teamlogo',
+				'priority' => 40,
+				'class' => \Tx_Cfcleague_Form_SelectTeamLogo::class,
+		);
+	}
 }
+
 
 tx_rnbase::load('tx_cfcleague_util_Misc');
 

@@ -122,19 +122,20 @@ class tx_cfcleague_tca_Lookup {
 	 * @param t3lib_TCEforms $fobj
 	 */
 	public function getLogo4Team($PA, $fobj){
-		if($PA['row']['club']) {
+		$clubId = is_array($PA['row']['club']) ? reset($PA['row']['club']) : $PA['row']['club'];
+		if($clubId) {
 			$srv = tx_cfcleague_util_ServiceRegistry::getTeamService();
 			// FIXME: Wenn Teams nicht global verwaltet werden, dann kommt der Verein nicht als UID
 			// tx_cfcleague_club_1|M%C3%BCnchen%2C%20FC%20Bayern%20M%C3%BCnchen
 			// Hier werden bei FAL Referenzen geliefert.
-			$items = $srv->getLogos($PA['row']['club']);
+			// In der 7.6 wird bei Relationen nun wohl immer ein Array geliefert.
+			$items = $srv->getLogos($clubId);
 			// Bei FAL wird die UID der Referenz gespeichert. Damit können die zusätzlichen
 			// Daten der Referenz verwendet werden.
-
 			if(count($items))
 				$PA['items'] = array();
 			foreach ($items As $item) {
-				$currentAvailable = $currentAvailable ? $currentAvailable : ($current == $item->getUid() || $current == 0);
+				//$currentAvailable = $currentAvailable ? $currentAvailable : ($current == $item->getUid() || $current == 0);
 				// Je nach Pflege der Daten sind unterschiedliche Felder gefüllt.
 				$label = ($item->record['title'] ? $item->record['title'] : (
 						$item->record['name'] ? $item->record['name'] : $item->record['file']) );
@@ -174,12 +175,13 @@ class tx_cfcleague_tca_Lookup {
 		// In der 7.6 einen eigenen Node-Type anmelden
 		// $GLOBALS['TYPO3_CONF_VARS']['SYS']['formEngine']['nodeRegistry']
 		if(tx_rnbase_util_TYPO3::isTYPO70OrHigher()) {
-			$ret['config']['type'] = 't3s_teamlogo';
+			$ret['config']['type'] = 'select'; // 't3s_teamlogo';
 		}
 		else {
 			$ret['config']['userFunc'] = 'EXT:cfc_league/tca/class.tx_cfcleague_tca_Lookup.php:&tx_cfcleague_tca_Lookup->getSingleField_teamLogo';
 			$ret['config']['type'] = tx_rnbase_util_TYPO3::isTYPO60OrHigher() ? 'user' : 'select';
 		}
+		$ret['config']['renderType'] = 'selectSingle';
 		// Die passenden Logos suchen
 		$ret['config']['itemsProcFunc'] = 'tx_cfcleague_tca_Lookup->getLogo4Team';
 		$ret['config']['maxitems'] = '1';

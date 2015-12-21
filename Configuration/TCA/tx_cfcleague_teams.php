@@ -7,6 +7,7 @@ $clubOrdering = intval(tx_rnbase_configurations::getExtensionCfgValue('cfc_leagu
 $clubArr = $globalClubs ?
 		Array (
 				'type' => 'select',
+				'renderType' => 'selectSingle',
 				'items' => Array (
 					Array(' ', '0'),
 				),
@@ -17,6 +18,7 @@ $clubArr = $globalClubs ?
 				'maxitems' => 1,
 			) : Array (
 				'type' => 'group',
+				'renderType' => 'selectSingle',
 				'internal_type' => 'db',
 				'allowed' => 'tx_cfcleague_club',
 				'size' => 1,
@@ -95,6 +97,7 @@ $tx_cfcleague_teams = Array (
 			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_group',
 			'config' => Array (
 				'type' => 'select',
+				'renderType' => 'selectSingle',
 				'items' => Array (Array('', ''),),
 				'foreign_table' => 'tx_cfcleague_group',
 				'foreign_table_where' => 'ORDER BY tx_cfcleague_group.sorting',
