@@ -81,6 +81,8 @@ class tx_cfcleague_tca_Lookup {
 
 	public function getPointSystems(&$config) {
 		$sports = $config['row']['sports'];
+		// In der 7.6 ist immer ein Array im Wert
+		$sports = is_array($sports) ? ( count($sports) ? reset($sports) : FALSE ) : $sports;
 		if($sports) {
 			$srv = tx_cfcleague_util_ServiceRegistry::getCompetitionService();
 			$config['items'] = $srv->getPointSystems($sports);
