@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2007-2014 Rene Nitzsche (rene@system25.de)
+*  (c) 2007-2015 Rene Nitzsche (rene@system25.de)
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -25,6 +25,8 @@
 tx_rnbase::load('tx_cfcleague_models_Competition');
 tx_rnbase::load('Tx_Rnbase_Backend_Utility');
 tx_rnbase::load('tx_rnbase_mod_IModule');
+tx_rnbase::load('Tx_Rnbase_Backend_Utility_Icons');
+tx_rnbase::load('tx_rnbase_parameters');
 
 
 /**
@@ -55,6 +57,7 @@ class tx_cfcleague_selector{
 		}
 		return $this->formTool;
 	}
+
 	/**
 	 * Darstellung der Select-Box mit allen Ligen der übergebenen Seite. Es wird auf die aktuelle Liga eingestellt.
 	 * @return den aktuellen Wettbewerb als Objekt oder 0
@@ -62,43 +65,35 @@ class tx_cfcleague_selector{
 	public function showLeagueSelector(&$content, $pid, $leagues=0){
 		// Wenn vorhanden, nehmen wir die übergebenen Wettbewerbe, sonst schauen wir auf der aktuellen Seite nach
 		$leagues = $leagues ? $leagues : $this->findLeagues($pid);
-		$LEAGUE_MENU = Array (
-			'league' => array()
-		);
-		$objLeagues = array();
-		foreach($leagues as $idx=>$league){
+
+		$objLeagues = $entries = array();
+		foreach($leagues as $league){
 			if(is_object($league)) {
 				$objLeagues[$league->uid] = $league; // Objekt merken
-				$LEAGUE_MENU['league'][$league->uid] = $league->record['internal_name'] ? $league->record['internal_name'] : $league->record['name'];
+				$entries[$league->uid] = $league->record['internal_name'] ? $league->record['internal_name'] : $league->record['name'];
 			}
-			else
-				$LEAGUE_MENU['league'][$league['uid']] = $league['internal_name'] ? $league['internal_name'] : $league['name'];
+			else {
+				$entries[$league['uid']] = $league['internal_name'] ? $league['internal_name'] : $league['name'];
+			}
 		}
-		// Ohne Liga-Array ist eine weitere Verarbeitung sinnlosl
-		if(!count($LEAGUE_MENU['league'])) return 0;
-		// TODO: auf rn_base umstellen
-		$this->LEAGUE_SETTINGS = t3lib_BEfunc::getModuleData(
-			$LEAGUE_MENU, t3lib_div::_GP('SET'), $this->MCONF['name'] // Das ist der Name des Moduls
-		);
+		// Ohne Liga-Array ist eine weitere Verarbeitung sinnlos
+		if(!count($entries)) return 0;
 
-		$menu = (tx_rnbase_util_TYPO3::isTYPO62OrHigher() && is_array($LEAGUE_MENU['league']) && count($LEAGUE_MENU['league']) == 1) ?
-				$this->buildDummyMenu('SET[league]', $LEAGUE_MENU['league']) :
-				Tx_Rnbase_Backend_Utility::getFuncMenu($pid, 'SET[league]',
-						$this->LEAGUE_SETTINGS['league'], $LEAGUE_MENU['league']);
+		$menuData = $this->getFormTool()->showMenu($pid, 'league', $this->modName, $entries);
+
 		// In den Content einbauen
 		// Zusätzlich noch einen Edit-Link setzen
+		$menu = $menuData['menu'];
 		if($menu) {
 			$links = $this->getFormTool()->createEditLink('tx_cfcleague_competition', $this->LEAGUE_SETTINGS['league'], '');
 			// Jetzt noch den Cache-Link
-			$links .= ' ' . $this->getFormTool()->createLink('&clearCache=1', $pid, '<img'.t3lib_iconWorks::skinImg($GLOBALS['BACK_PATH'], 'gfx/clear_all_cache.gif', 'width="11" height="12"').' title="###LABEL_CLEAR_STATS_CACHE###" border="0" alt="" />');
+			$links .= ' ' . $this->getFormTool()->createLink('&clearCache=1', $pid, '<img'.Tx_Rnbase_Backend_Utility_Icons::skinImg($GLOBALS['BACK_PATH'], 'gfx/clear_all_cache.gif', 'width="11" height="12"').' title="###LABEL_CLEAR_STATS_CACHE###" border="0" alt="" />');
 			$links .= $this->getFormTool()->createNewLink('tx_cfcleague_competition', $pid, '');
 			$menu = '<div class="cfcselector"><div class="selector">' . $menu . '</div><div class="links">' . $links . '</div></div>';
 		}
 		$content.= $menu;
 
-//		$content.=$this->doc->section('', $this->doc->funcMenu($headerSection, $menu));
-
-		if(t3lib_div::_GP('clearCache') && $this->LEAGUE_SETTINGS['league']) {
+		if(tx_rnbase_parameters::getPostOrGetParameter('clearCache') && $menuData['value']) {
 			// Hook aufrufen
 			tx_rnbase_util_Misc::callHook('cfc_league', 'clearStatistics_hook',
 				array('compUid' => $this->LEAGUE_SETTINGS['league']), $this);
@@ -111,9 +106,9 @@ class tx_cfcleague_selector{
 
 		// Aktuellen Wert als Liga-Objekt zurückgeben
 		if(count($objLeagues))
-			return $this->LEAGUE_SETTINGS['league'] ? $objLeagues[$this->LEAGUE_SETTINGS['league']] :0;
+			return $menuData['value'] ? $objLeagues[$menuData['value']] :0;
 //		return $this->LEAGUE_SETTINGS['league'] ? new tx_cfcleague_league($this->LEAGUE_SETTINGS['league']) :0;
-		return $this->LEAGUE_SETTINGS['league'] ? new tx_cfcleague_models_Competition($this->LEAGUE_SETTINGS['league']) :0;
+		return $menuData['value'] ? new tx_cfcleague_models_Competition($menuData['value']) :0;
 	}
 
 	private function buildDummyMenu($elementName, $menuItems) {
