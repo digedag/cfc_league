@@ -24,6 +24,7 @@
 
 tx_rnbase::load('tx_cfcleague_mod1_decorator');
 tx_rnbase::load('tx_rnbase_util_Strings');
+tx_rnbase::load('tx_rnbase_parameters');
 
 /**
  * Die Klasse verwaltet die Erstellung Teams für Wettbewerbe
@@ -75,8 +76,8 @@ class tx_cfcleague_mod1_modCompTeams {
 	function showTeamsFromPage($pid, $competition) {
 		global $LANG;
 		// Liegen Daten im Request
-		$teamIds = t3lib_div::_GP('checkEntry');
-		if(t3lib_div::_GP('addteams') && is_array($teamIds) && count($teamIds)) {
+		$teamIds = tx_rnbase_parameters::getPostOrGetParameter('checkEntry');
+		if(tx_rnbase_parameters::getPostOrGetParameter('addteams') && is_array($teamIds) && count($teamIds)) {
 			$tcaData['tx_cfcleague_competition'][$competition->record['uid']]['teams'] = implode(',', $this->mergeArrays(tx_rnbase_util_Strings::intExplode(',', $competition->record['teams']), $teamIds));
 			tx_rnbase::load('tx_rnbase_util_DB');
 			$tce =& tx_rnbase_util_DB::getTCEmain($tcaData, array());
@@ -117,14 +118,14 @@ class tx_cfcleague_mod1_modCompTeams {
 	 */
 	function showNewTeamForm($pid, &$competition) {
 		global $LANG;
-		$show = intval(t3lib_div::_GP('check_newcompteam'));
+		$show = intval(tx_rnbase_parameters::getPostOrGetParameter('check_newcompteam'));
 		$content = '<h2>
 		<input type="checkbox" name="check_newcompteam" value="1" ' . ($show ? 'checked="checked"' : '') . ' onClick="this.form.submit()">
 		'.$LANG->getLL('label_create_teams').'</h2>
 		';
 
 		if(!$show) return $content;
-		$content .= $this->createTeams(t3lib_div::_GP('data'), $competition);
+		$content .= $this->createTeams(tx_rnbase_parameters::getPostOrGetParameter('data'), $competition);
 
 		// Jetzt 6 Boxen mit Name und Kurzname
 		$arr = Array(Array('&nbsp;', $LANG->getLL('label_teamname'), $LANG->getLL('label_teamshortname')));
