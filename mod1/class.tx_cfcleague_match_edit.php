@@ -22,7 +22,7 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-
+tx_rnbase::load('tx_rnbase_parameters');
 
 /**
  * Die Klasse verwaltet die Bearbeitung der Spieltage
@@ -63,7 +63,7 @@ class tx_cfcleague_match_edit  {
 			$current_round = $this->getSelector()->showRoundSelector($content, $pid, $current_league);
 
 		$content.='<div class="cleardiv"/>';
-		$data = t3lib_div::_GP('data');
+		$data = tx_rnbase_parameters::getPostOrGetParameter('data');
 		// Haben wir Daten im Request?
 		if (is_array($data['tx_cfcleague_games'])) {
 			$this->updateMatches($data);
@@ -201,7 +201,6 @@ class tx_cfcleague_match_edit  {
    *         enthält, falls vorhanden den Namen des spielfreien Teams
    */
 	private function createTableArray($matches, $competition) {
-		global $LANG;
 
 		$parts = $competition->getNumberOfMatchParts();
 		$arr = Array( 0 => Array( $this->getHeadline($parts, $competition) ));
@@ -215,10 +214,15 @@ class tx_cfcleague_match_edit  {
 			$table = 'tx_cfcleague_games';
 			if(!$isNoMatch) {
 				$row[] = $game->getUid().$this->formTool->createEditLink('tx_cfcleague_games', $game->getUid(), '');
-				$dataArr = $this->formTool->getTCEFormArray($table, $game->getUid());
-				$row[] = $this->formTool->form->getSoloField($table, $dataArr[$table.'_'.$game->getUid()], 'date');
-
-				$row[] = $this->formTool->form->getSoloField($table, $dataArr[$table.'_'.$game->getUid()], 'status');
+				if(tx_rnbase_util_TYPO3::isTYPO70OrHigher()) {
+					$row[] = $this->formTool->getTCEForm()->getSoloField($table, $game->record, 'date');
+					$row[] = $this->formTool->getTCEForm()->getSoloField($table, $game->record, 'status');
+				}
+				else {
+					$dataArr = $this->formTool->getTCEFormArray($table, $game->getUid());
+					$row[] = $this->formTool->getTCEForm()->getSoloField($table, $dataArr[$table.'_'.$game->getUid()], 'date');
+					$row[] = $this->formTool->getTCEForm()->getSoloField($table, $dataArr[$table.'_'.$game->getUid()], 'status');
+				}
 				$row[] = $this->formTool->createEditLink('tx_cfcleague_teams', $game->record['home'], $game->getHome()->getNameShort());
 				$row[] = $this->formTool->createEditLink('tx_cfcleague_teams', $game->record['guest'], $game->getGuest()->getNameShort());
 
@@ -249,7 +253,6 @@ class tx_cfcleague_match_edit  {
         $arr[1][] = $row;
       }
     }
-//    t3lib_div::debug($this->formTool->form->extJSCODE);
 
     return $arr;
   }

@@ -29,7 +29,9 @@ define("TABLE_LEAGUES", "tx_cfcleague_competition");
 define("TABLE_TEAMS", "tx_cfcleague_teams");
 
 /**
- * Datenobjekt für eine Spiel in der Datenbank
+ * Datenobjekt für ein Spiel in der Datenbank
+ * @deprecated use tx_cfcleague_models_Team
+ * TODO: remove class
  */
 class tx_cfcleague_team{
   var $uid;

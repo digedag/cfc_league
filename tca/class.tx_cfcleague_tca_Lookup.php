@@ -99,12 +99,13 @@ class tx_cfcleague_tca_Lookup {
 	 * @param array $PA
 	 * @param t3lib_TCEforms $fobj
 	 */
-  function getStadium4Match($PA, $fobj){
- 		$current = intval($PA['row']['arena']);
- 		$currentAvailable = false;
-    if($PA['row']['home']) {
+	public function getStadium4Match($PA, $fobj){
+		$current = intval($PA['row']['arena']);
+		$currentAvailable = false;
+		$teamId = is_array($PA['row']['home']) ? reset($PA['row']['home']) : $PA['row']['home'];
+		if($teamId) {
     	$srv = tx_cfcleague_util_ServiceRegistry::getTeamService();
-    	$stadiums = $srv->getStadiums($PA['row']['home']);
+    	$stadiums = $srv->getStadiums($teamId);
     	foreach ($stadiums As $stadium) {
     		$currentAvailable = $currentAvailable ? $currentAvailable : ($current == $stadium->getUid() || $current == 0);
     		$PA['items'][] = array($stadium->getName(), $stadium->getUid());

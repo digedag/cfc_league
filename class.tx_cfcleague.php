@@ -203,51 +203,72 @@ class tx_cfcleague_handleDataInput{
     return $rows;
   }
 
-  /**
-   * Liefert die Trainer (uid und name) einer Mannschaft.
-   */
-  function findCoaches($teamId) {
-    $rows = array();
-    if(intval($teamId) == 0) return rows;
+	/**
+	 * Liefert die Trainer (uid und name) einer Mannschaft.
+	 */
+	private function findCoaches($teamId) {
+		$rows = array();
+		if(intval($teamId) == 0) return rows;
 
-    require_once('class.tx_cfcleague_team.php');
-    $team = new tx_cfcleague_team($teamId);
-    $coaches = $team->getCoachNames(1, 1); // firstEmpty und merge
-    foreach($coaches As $uid => $name) {
-      $rows[] = Array($name, $uid, );
-    }
+		$team = tx_rnbase::makeInstance('tx_cfcleague_models_Team', $teamId);
+		/* @var $profile tx_cfcleague_models_Profile */
+		$profiles = $team->getCoaches();
+		$rows[] = array(0, ''); // Leeres erstes Element
+		foreach($profiles As $profile) {
+      $rows[] = Array($profile->getName(), $profile->getUid(), );
+		}
 
-    return $rows;
+//     $coaches = $team->getCoachNames(1, 1); // firstEmpty und merge
+//     foreach($coaches As $uid => $name) {
+//       $rows[] = Array($name, $uid, );
+//     }
 
-  }
+		return $rows;
+	}
 
 	/**
 	 * Liefert die Spieler (uid und name) einer Mannschaft.
 	 */
-	function findPlayers($teamId) {
+	private function findPlayers($teamId) {
 		$rows = array();
 		if(intval($teamId) == 0) return rows;
 
-		require_once('class.tx_cfcleague_team.php');
-		$team = new tx_cfcleague_team($teamId);
-		$players = $team->getPlayerNames(0, 1);
-		foreach($players As $uid => $name) {
-			$rows[] = Array($name, $uid, );
+		$team = tx_rnbase::makeInstance('tx_cfcleague_models_Team', $teamId);
+		/* @var $profile tx_cfcleague_models_Profile */
+		$profiles = $team->getPlayers();
+		foreach($profiles As $profile) {
+			$rows[] = Array($profile->getName(), $profile->getUid(), );
 		}
+
+// 		require_once('class.tx_cfcleague_team.php');
+// 		$team = new tx_cfcleague_team($teamId);
+// 		$players = $team->getPlayerNames(0, 1);
+// 		foreach($players As $uid => $name) {
+// 			$rows[] = Array($name, $uid, );
+// 		}
 		return $rows;
 	}
 	/**
 	 * Liefert die Betreuer (uid und name) einer Mannschaft.
 	 */
 	private function findSupporters($teamId) {
-    $rows = array();
-    if(intval($teamId) == 0) return rows;
-		require_once('class.tx_cfcleague_team.php');
-		$team = new tx_cfcleague_team($teamId);
-		$players = $team->getSupporterNames(0, 1);
-		foreach($players As $uid => $name) {
-			$rows[] = Array($name, $uid, );
+		$rows = array();
+		if(intval($teamId) == 0) return rows;
+
+		$team = tx_rnbase::makeInstance('tx_cfcleague_models_Team', $teamId);
+		/* @var $profile tx_cfcleague_models_Profile */
+		$profiles = $team->getSupporters();
+		foreach($profiles As $profile) {
+			$rows[] = Array($profile->getName(), $profile->getUid(), );
 		}
+
+
+//     require_once('class.tx_cfcleague_team.php');
+// 		$team = new tx_cfcleague_team($teamId);
+// 		$players = $team->getSupporterNames(0, 1);
+// 		foreach($players As $uid => $name) {
+// 			$rows[] = Array($name, $uid, );
+// 		}
 		return $rows;
 	}
 
