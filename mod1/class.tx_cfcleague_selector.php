@@ -85,9 +85,9 @@ class tx_cfcleague_selector{
 		// Zusätzlich noch einen Edit-Link setzen
 		$menu = $menuData['menu'];
 		if($menu) {
-			$links = $this->getFormTool()->createEditLink('tx_cfcleague_competition', $this->LEAGUE_SETTINGS['league'], '');
+			$links = $this->getFormTool()->createEditLink('tx_cfcleague_competition', $menuData['value'], '');
 			// Jetzt noch den Cache-Link
-			$links .= ' ' . $this->getFormTool()->createLink('&clearCache=1', $pid, '<img'.Tx_Rnbase_Backend_Utility_Icons::skinImg($GLOBALS['BACK_PATH'], 'gfx/clear_all_cache.gif', 'width="11" height="12"').' title="###LABEL_CLEAR_STATS_CACHE###" border="0" alt="" />');
+			$links .= ' ' . $this->getFormTool()->createLink('&clearCache=1', $pid, '<img'.Tx_Rnbase_Backend_Utility_Icons::skinImg($GLOBALS['BACK_PATH'], 'gfx/clear_all_cache.gif', 'width="11" height="12"').' title="###LABEL_CLEAR_STATS_CACHE###" border="0" alt="Clear Cache" />');
 			$links .= $this->getFormTool()->createNewLink('tx_cfcleague_competition', $pid, '');
 			$menu = '<div class="cfcselector"><div class="selector">' . $menu . '</div><div class="links">' . $links . '</div></div>';
 		}
@@ -96,7 +96,7 @@ class tx_cfcleague_selector{
 		if(tx_rnbase_parameters::getPostOrGetParameter('clearCache') && $menuData['value']) {
 			// Hook aufrufen
 			tx_rnbase_util_Misc::callHook('cfc_league', 'clearStatistics_hook',
-				array('compUid' => $this->LEAGUE_SETTINGS['league']), $this);
+				array('compUid' => $menuData['value']), $this);
 
 //			if (is_object($serviceObj = t3lib_div::makeInstanceService('memento'))) {
 //				// Cache löschen

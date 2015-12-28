@@ -39,7 +39,6 @@ class tx_cfcleague_mod1_modCompTeams {
 	 * @param tx_cfcleague_league $competition
 	 */
 	public function main($module, $competition) {
-		global $LANG;
 		// Zuerst mal müssen wir die passende Liga auswählen lassen:
 		// Entweder global über die Datenbank oder die Ligen der aktuellen Seite
 		$pid = $module->getPid();
@@ -48,8 +47,8 @@ class tx_cfcleague_mod1_modCompTeams {
 		$formTool = $module->getFormTool();
 		$this->formTool = $formTool;
 
-
 		$content = '';
+//$content = $formTool->getTCEForm()->getSoloField('tx_cfcleague_competition', $competition->record, 'hidden');
 		// Zuerst auf neue Teams prüfen, damit sie direkt in der Teamliste angezeigt werden
 		$newTeams = $this->showNewTeamForm($pid, $competition);
 		$addTeams = $this->showTeamsFromPage($pid, $competition);
@@ -64,7 +63,7 @@ class tx_cfcleague_mod1_modCompTeams {
 	 * Returns the formtool
 	 * @return tx_rnbase_util_FormTool
 	 */
-	function getFormTool() {
+	protected function getFormTool() {
 		return $this->formTool;
 	}
 	/**
@@ -73,7 +72,7 @@ class tx_cfcleague_mod1_modCompTeams {
 	 * @param tx_cfcleague_league $competition
 	 * @return string
 	 */
-	function showTeamsFromPage($pid, $competition) {
+	protected function showTeamsFromPage($pid, $competition) {
 		global $LANG;
 		// Liegen Daten im Request
 		$teamIds = tx_rnbase_parameters::getPostOrGetParameter('checkEntry');
@@ -116,7 +115,7 @@ class tx_cfcleague_mod1_modCompTeams {
 	 *
 	 * @param tx_cfcleague_league $competition
 	 */
-	function showNewTeamForm($pid, &$competition) {
+	protected function showNewTeamForm($pid, &$competition) {
 		global $LANG;
 		$show = intval(tx_rnbase_parameters::getPostOrGetParameter('check_newcompteam'));
 		$content = '<h2>
@@ -148,7 +147,7 @@ class tx_cfcleague_mod1_modCompTeams {
 	 * @param tx_cfcleague_league $competition
 	 * @return string
 	 */
-	function createTeams($data, &$competition) {
+	protected function createTeams($data, &$competition) {
 		global $LANG;
 		if (!is_array($data['tx_cfcleague_teams'])) return '';
 		$tcaData = array();
@@ -162,15 +161,11 @@ class tx_cfcleague_mod1_modCompTeams {
     if(!count($uids)) return '';
 		$tcaData['tx_cfcleague_competition'][$competition->record['uid']]['teams'] = implode(',', $this->mergeArrays(tx_rnbase_util_Strings::intExplode(',', $competition->record['teams']), $uids));
 		reset($tcaData);
-		$tce =& tx_cfcleague_db::getTCEmain($tcaData);
+		$tce = tx_rnbase_util_DB::getTCEmain($tcaData);
 		$tce->process_datamap();
 		$competition->refresh();
 		$content .= $this->doc->section('Message:', $LANG->getLL('msg_teams_created'), 0, 1, ICON_INFO);
 		return $content;
-
-//		t3lib_div::debug($tcaData, $uid.' - tx_cfcleague_mod1_modCompTeams'); // TODO: remove me
-
-//		t3lib_div::debug($data, 'tx_cfcleague_mod1_modCompTeams'); // TODO: remove me
 	}
 	/**
 	 * Darstellung einer Tabelle mit den aktuellen Teams
