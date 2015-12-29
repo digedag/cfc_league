@@ -89,7 +89,7 @@ class tx_cfcleague_selector{
 			// Jetzt noch den Cache-Link
 			$links .= ' ' . $this->getFormTool()->createLink('&clearCache=1', $pid, '<img'.Tx_Rnbase_Backend_Utility_Icons::skinImg($GLOBALS['BACK_PATH'], 'gfx/clear_all_cache.gif', 'width="11" height="12"').' title="###LABEL_CLEAR_STATS_CACHE###" border="0" alt="Clear Cache" />');
 			$links .= $this->getFormTool()->createNewLink('tx_cfcleague_competition', $pid, '');
-			$menu = '<div class="cfcselector"><div class="selector">' . $menu . '</div><div class="links">' . $links . '</div></div>';
+			$menu = $menu . '<span class="links">' . $links . '</span>';
 		}
 		$content.= $menu;
 

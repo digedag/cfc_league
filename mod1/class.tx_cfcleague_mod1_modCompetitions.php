@@ -68,11 +68,7 @@ class tx_cfcleague_mod1_modCompetitions extends tx_rnbase_mod_BaseModFunc {
 		$selector = '';
 		$current_league = $this->selector->showLeagueSelector($selector, $this->getModule()->getPid());
 		$content = '';
-
-		if(tx_rnbase_util_TYPO3::isTYPO42OrHigher())
-			$this->pObj->subselector = $selector;
-		else
-			$content .= '<div class="cfcleague_selector">'.$selector.'</div><div class="cleardiv"/>';
+		$this->getModule()->selector = $selector;
 
 		if(!$current_league) {
 			$content.=$this->getModule()->getDoc()->section('Info:', $LANG->getLL('no_league_in_page'), 0, 1, ICON_WARN);

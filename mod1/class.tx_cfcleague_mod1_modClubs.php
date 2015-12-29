@@ -68,10 +68,7 @@ class tx_cfcleague_mod1_modClubs extends tx_rnbase_mod_BaseModFunc {
 
 		$selectorStr = '';
 		$club = $selector->showClubSelector($selectorStr, $this->getModule()->getPid());
-		if(tx_rnbase_util_TYPO3::isTYPO42OrHigher())
-			$this->pObj->subselector = $selectorStr;
-		else
-			$content .= '<div class="cfcleague_selector">'.$selectorStr.'</div><div class="cleardiv"/>';
+		$this->getModule()->selector = $selectorStr;
 
 		if(!$club) {
 			$addInfo = '###LABEL_MSG_CREATENEWCLUBNOW###';
