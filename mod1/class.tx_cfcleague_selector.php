@@ -36,6 +36,8 @@ class tx_cfcleague_selector{
 	var $doc, $MCONF;
 	private $modName;
 	private $module;
+	/** @var \TYPO3\CMS\Core\Imaging\IconFactory */
+	protected $iconFactory;
 
 	/**
 	 * Initialisiert das Objekt mit dem Template und der Modul-Config.
@@ -45,6 +47,7 @@ class tx_cfcleague_selector{
 		$this->MCONF['name'] = $module->getName(); // deprecated
 		$this->modName = $module->getName();
 		$this->module = $module;
+		$this->iconFactory = tx_rnbase::makeInstance(TYPO3\CMS\Core\Imaging\IconFactory::class);
 	}
 	/**
 	 * Returns the form tool
@@ -87,7 +90,11 @@ class tx_cfcleague_selector{
 		if($menu) {
 			$links = $this->getFormTool()->createEditLink('tx_cfcleague_competition', $menuData['value'], '');
 			// Jetzt noch den Cache-Link
-			$links .= ' ' . $this->getFormTool()->createLink('&clearCache=1', $pid, '<img'.Tx_Rnbase_Backend_Utility_Icons::skinImg($GLOBALS['BACK_PATH'], 'gfx/clear_all_cache.gif', 'width="11" height="12"').' title="###LABEL_CLEAR_STATS_CACHE###" border="0" alt="Clear Cache" />');
+			$cacheIcon = tx_rnbase_util_TYPO3::isTYPO70OrHigher() ?
+				$this->iconFactory->getIcon('actions-system-cache-clear', TYPO3\CMS\Core\Imaging\Icon::SIZE_SMALL)->render() :
+				'<img'.Tx_Rnbase_Backend_Utility_Icons::skinImg($GLOBALS['BACK_PATH'], 'gfx/clear_all_cache.gif', 'width="11" height="12"').' title="###LABEL_CLEAR_STATS_CACHE###" border="0" alt="Clear Cache" />';
+			$links .= ' ' . $this->getFormTool()->createLink('&clearCache=1', $pid, $cacheIcon);
+
 			$links .= $this->getFormTool()->createNewLink('tx_cfcleague_competition', $pid, '');
 			$menu = '<div class="cfcselector"><div class="selector">' . $menu . '</div><div class="links">' . $links . '</div></div>';
 		}
