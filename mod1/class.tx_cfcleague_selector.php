@@ -96,7 +96,7 @@ class tx_cfcleague_selector{
 			$links .= ' ' . $this->getFormTool()->createLink('&clearCache=1', $pid, $cacheIcon);
 
 			$links .= $this->getFormTool()->createNewLink('tx_cfcleague_competition', $pid, '');
-			$menu = '<div class="cfcselector"><div class="selector">' . $menu . '</div><div class="links">' . $links . '</div></div>';
+			$menu = $menu . '<span class="links">' . $links . '</span>';
 		}
 		$content.= $menu;
 

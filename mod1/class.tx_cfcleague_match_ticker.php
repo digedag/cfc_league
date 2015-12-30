@@ -66,10 +66,7 @@ class tx_cfcleague_match_ticker extends tx_rnbase_mod_BaseModFunc {
 			return $this->doc->section('Info:', $LANG->getLL('no_league_in_page'), 0, 1, ICON_WARN);
 
 		if(!count($current_league->getRounds())){
-			if(tx_rnbase_util_TYPO3::isTYPO42OrHigher())
-				$this->pObj->subselector = $selector; // FIXME!!
-			else
-				$content .= '<div class="cfcleague_selector">'.$selector.'</div><div style="clear:both"/>';
+			$this->getModule()->selector = $selector;
 			$content .= $LANG->getLL('no_round_in_league');
 			return $content;
 		}
@@ -78,10 +75,7 @@ class tx_cfcleague_match_ticker extends tx_rnbase_mod_BaseModFunc {
 
 		// Und nun das Spiel wählen
 		$match = $this->getSelector()->showMatchSelector($selector, $this->getModule()->getPid(), $current_league->getGamesByRound($current_round, true));
-		if(tx_rnbase_util_TYPO3::isTYPO42OrHigher())
-			$this->pObj->subselector = $selector;
-		else
-			$content .= '<div class="cfcleague_selector">'.$selector.'</div><div style="clear:both"/>';
+		$this->getModule()->selector = $selector;
 
 		$update = t3lib_div::_GP('update');
 		$data = t3lib_div::_GP('data');

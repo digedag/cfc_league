@@ -134,7 +134,7 @@ class tx_cfcleague_models_Team extends tx_rnbase_model_base {
 			$options['wrapperclass'] = 'tx_cfcleague_models_Profile';
 
 			$rows = tx_rnbase_util_DB::doSelect($what,$from,$options,0);
-			return $this->sortPlayer($rows, $column);
+			return $this->sortProfiles($rows, $column);
 		}
 		return array();
 	}

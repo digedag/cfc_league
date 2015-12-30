@@ -71,6 +71,10 @@ class  tx_cfcleague_module1 extends tx_rnbase_mod_BaseModule {
 		$modUrl = Tx_Rnbase_Backend_Utility::getModuleUrl('web_txcfcleagueM1', array('id'=>$this->getPid()), '');
 		return '<form action="' . $modUrl . '" method="POST" name="editform" id="editform">';
 	}
+
+	protected function getModuleTemplate() {
+		return 'EXT:cfc_league/Resources/Private/Templates/module.html';
+	}
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/mod1/index.php'])	{
