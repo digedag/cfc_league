@@ -36,7 +36,19 @@ if(tx_rnbase_util_Extensions::isLoaded('rgmediaimages')) {
 
 if (TYPO3_MODE=='BE')	{
 
-  tx_rnbase_util_Extensions::addModule('web', 'txcfcleagueM1', '', tx_rnbase_util_Extensions::extPath($_EXTKEY).'mod1/');
+  tx_rnbase_util_Extensions::addModule(
+  	'web',
+  	'txcfcleagueM1',
+  	'',
+  	tx_rnbase_util_Extensions::extPath($_EXTKEY).'mod1/',
+  	array(
+  		'labels' => array(
+	  		'tabs_images' => array(
+	  				'tab' => 'EXT:cfc_league/Resources/Public/Icons/module-t3sports.svg',
+	  		),
+  		),
+  	)
+  );
 
   tx_rnbase_util_Extensions::insertModuleFunction('web_txcfcleagueM1', 'tx_cfcleague_mod1_modCompetitions',
 		tx_rnbase_util_Extensions::extPath($_EXTKEY).'mod1/class.tx_cfcleague_mod1_modCompetitions.php',
