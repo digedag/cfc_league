@@ -47,7 +47,8 @@ class tx_cfcleague_selector{
 		$this->MCONF['name'] = $module->getName(); // deprecated
 		$this->modName = $module->getName();
 		$this->module = $module;
-		$this->iconFactory = tx_rnbase::makeInstance(TYPO3\CMS\Core\Imaging\IconFactory::class);
+		if(tx_rnbase_util_TYPO3::isTYPO76OrHigher())
+			$this->iconFactory = tx_rnbase::makeInstance(TYPO3\CMS\Core\Imaging\IconFactory::class);
 	}
 	/**
 	 * Returns the form tool
