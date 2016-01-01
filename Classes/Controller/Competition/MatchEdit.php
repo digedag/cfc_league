@@ -27,7 +27,7 @@ tx_rnbase::load('tx_rnbase_parameters');
 /**
  * Die Klasse verwaltet die Bearbeitung der Spieltage
  */
-class tx_cfcleague_match_edit  {
+class Tx_Cfcleague_Controller_Competition_MatchEdit {
 
 
   /**
@@ -268,6 +268,3 @@ class tx_cfcleague_match_edit  {
   }
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/mod1/class.tx_cfcleague_match_edit.php'])	{
-  include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/mod1/class.tx_cfcleague_match_edit.php']);
-}

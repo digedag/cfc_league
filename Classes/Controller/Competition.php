@@ -34,7 +34,7 @@ tx_rnbase::load('tx_rnbase_util_TYPO3');
 /**
  * Die Klasse ist die Einstiegsklasse für das Modul "Wettbewerbe verwalten"
  */
-class tx_cfcleague_mod1_modCompetitions extends tx_rnbase_mod_BaseModFunc {
+class Tx_Cfcleague_Controller_Competition extends tx_rnbase_mod_BaseModFunc {
 	var $doc, $MCONF;
 
 	/**
@@ -94,11 +94,11 @@ class tx_cfcleague_mod1_modCompetitions extends tx_rnbase_mod_BaseModFunc {
 				$modContent = $this->showEditMatches($current_league, $this->getModule());
 				break;
 			case 1:
-				$mod = tx_rnbase::makeInstance('tx_cfcleague_mod1_modCompTeams');
+				$mod = tx_rnbase::makeInstance('Tx_Cfcleague_Controller_Competition_Teams');
 				$modContent = $mod->main($this->getModule(), $current_league);
 				break;
 			case 2:
-				$mod = tx_rnbase::makeInstance('tx_cfcleague_mod1_modCompCreateMatchTable');
+				$mod = tx_rnbase::makeInstance('Tx_Cfcleague_Controller_Competition_MatchTable');
 				$modContent = $mod->main($this->getModule(), $current_league);
 				break;
 		}
@@ -111,14 +111,10 @@ class tx_cfcleague_mod1_modCompetitions extends tx_rnbase_mod_BaseModFunc {
 	}
 
 	private function showEditMatches($current_league, $module) {
-		require_once(tx_rnbase_util_Extensions::extPath('cfc_league') . 'mod1/class.tx_cfcleague_match_edit.php');
-		$subMod = tx_rnbase::makeInstance('tx_cfcleague_match_edit');
+		$subMod = tx_rnbase::makeInstance('Tx_Cfcleague_Controller_Competition_MatchEdit');
 		$content = $subMod->main($module, $current_league);
 		return $content;
   }
 
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/mod1/class.tx_cfcleague_mod1_modCompetitions.php'])	{
-  include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/mod1/class.tx_cfcleague_mod1_modCompetitions.php']);
-}

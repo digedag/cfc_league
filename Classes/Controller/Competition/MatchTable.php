@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2009 Rene Nitzsche (rene@system25.de)
+*  (c) 2009-2016 Rene Nitzsche (rene@system25.de)
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -28,7 +28,7 @@ tx_rnbase::load('tx_cfcleague_models_Competition');
 /**
  * Die Klasse verwaltet die Erstellung von Spielplänen für Wettbewerbe
  */
-class tx_cfcleague_mod1_modCompCreateMatchTable {
+class Tx_Cfcleague_Controller_Competition_MatchTable {
 	/* @var $doc \TYPO3\CMS\Backend\Template\BigDocumentTemplate */
 	private $doc;
 	private $module;
@@ -64,7 +64,6 @@ class tx_cfcleague_mod1_modCompCreateMatchTable {
 			// Ohne Submit zeigen wir das Formular
 			$content .= $this->showMatchTable($comp);
 		}
-//		t3lib_div::debug((microtime(true)-$start), 'class.tx_cfcleague_mod1_modCompCreateMatchTable.php'); // TODO: remove me
 
 		return $content;
 	}
@@ -185,7 +184,6 @@ class tx_cfcleague_mod1_modCompCreateMatchTable {
 			'tr'	   => Array('<tr class="db_list_alt">', '</tr>'),
 			'defCol' => Array('<td>', '</td>') // Format für jede Spalte in jeder Zeile
 		);
-//t3lib_div::debug($table[1][0], 'class.tx_cfcleague_mod1_modCompCreateMatchTable.php'); // TODO: remove me
 
 		$arr = Array(Array($LANG->getLL('label_roundset')));
 //		$arr = Array(Array($LANG->getLL('label_round'), $LANG->getLL('label_roundname').' / '.
@@ -300,8 +298,4 @@ class tx_cfcleague_mod1_modCompCreateMatchTable {
 			)
 		);
 	}
-}
-
-if (defined('TYPO3_MODE') && $GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/cfc_league/mod1/class.tx_cfcleague_mod1_modCompCreateMatchTable.php'])	{
-	include_once($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/cfc_league/mod1/class.tx_cfcleague_mod1_modCompCreateMatchTable.php']);
 }

@@ -50,8 +50,8 @@ if (TYPO3_MODE=='BE')	{
   	)
   );
 
-  tx_rnbase_util_Extensions::insertModuleFunction('web_txcfcleagueM1', 'tx_cfcleague_mod1_modCompetitions',
-		tx_rnbase_util_Extensions::extPath($_EXTKEY).'mod1/class.tx_cfcleague_mod1_modCompetitions.php',
+  tx_rnbase_util_Extensions::insertModuleFunction('web_txcfcleagueM1', 'Tx_Cfcleague_Controller_Competition',
+		tx_rnbase_util_Extensions::extPath($_EXTKEY).'Classes/Controller/Competition.php',
 		'LLL:EXT:cfc_league/mod1/locallang.xml:mod_competition'
 	);
   tx_rnbase_util_Extensions::insertModuleFunction('web_txcfcleagueM1', 'tx_cfcleague_match_ticker',

@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2008 Rene Nitzsche (rene@system25.de)
+*  (c) 2008-2016 Rene Nitzsche (rene@system25.de)
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -29,7 +29,7 @@ tx_rnbase::load('tx_rnbase_parameters');
 /**
  * Die Klasse verwaltet die Erstellung Teams für Wettbewerbe
  */
-class tx_cfcleague_mod1_modCompTeams {
+class Tx_Cfcleague_Controller_Competition_Teams {
   var $doc;
 
 
@@ -136,7 +136,6 @@ class tx_cfcleague_mod1_modCompTeams {
 			$row[] = $this->getFormTool()->createTxtInput('data[tx_cfcleague_teams][NEW'.$i.'][short_name]', '', 10);
 			$arr[] = $row;
 		}
-//t3lib_div::debug($teams, 'tx_cfcleague_mod1_modCompTeams'); // TODO: remove me
 		$content .= $this->doc->table($arr, $this->getTableLayout());
 		$content .= $this->getFormTool()->createSubmit('update', $LANG->getLL('btn_create'), $GLOBALS['LANG']->getLL('msg_create_teams'));
 		return $content;
@@ -193,7 +192,6 @@ class tx_cfcleague_mod1_modCompTeams {
 		}
 		$content .= $this->doc->table($arr); //, $this->getTableLayout()
 		return $content;
-//t3lib_div::debug($arr, 'tx_cfcleague_mod1_modCompTeams'); // TODO: remove me
 	}
 
 	function getTableLayout() {
@@ -224,8 +222,3 @@ class tx_cfcleague_mod1_modCompTeams {
 		return $ret;
 	}
 }
-
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/mod1/class.tx_cfcleague_mod1_modCompTeams.php'])	{
-  include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/mod1/class.tx_cfcleague_mod1_modCompTeams.php']);
-}
-?>
