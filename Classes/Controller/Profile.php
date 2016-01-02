@@ -33,7 +33,7 @@ tx_rnbase::load('tx_rnbase_mod_BaseModFunc');
  * wurde relativ schnell runterprogrammiert und ist daher nicht auf Erweiterbarkeit
  * ausgelegt.
  */
-class tx_cfcleague_profile_search extends tx_rnbase_mod_BaseModFunc {
+class Tx_Cfcleague_Controller_Profile extends tx_rnbase_mod_BaseModFunc {
 	var $doc, $MCONF;
 	/** Verstecken der Suchergebnisse */
 	var $hideResults = false;
@@ -339,7 +339,3 @@ class tx_cfcleague_profile_search extends tx_rnbase_mod_BaseModFunc {
 
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/mod1/class.tx_cfcleague_profile_search.php'])	{
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/mod1/class.tx_cfcleague_profile_search.php']);
-}
-?>
