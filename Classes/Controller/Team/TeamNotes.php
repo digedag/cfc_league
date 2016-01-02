@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2008 Rene Nitzsche (rene@system25.de)
+*  (c) 2008-2016 Rene Nitzsche (rene@system25.de)
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -30,7 +30,7 @@ tx_rnbase::load('tx_rnbase_util_Strings');
 /**
  * Submodul: Bearbeiten von TeamNotes
  */
-class tx_cfcleague_mod1_subTeamNotes {
+class Tx_Cfcleague_Controller_Team_TeamNotes {
 	var $mod;
 
 	/**
@@ -159,10 +159,3 @@ class tx_cfcleague_mod1_subTeamNotes {
 	}
 
 }
-
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/mod1/class.tx_cfcleague_mod1_subTeamNotes.php'])	{
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/mod1/class.tx_cfcleague_mod1_subTeamNotes.php']);
-}
-
-
-?>

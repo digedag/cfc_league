@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2008 Rene Nitzsche (rene@system25.de)
+*  (c) 2008-2016 Rene Nitzsche (rene@system25.de)
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -24,14 +24,14 @@
 
 tx_rnbase::load('tx_rnbase_util_Misc');
 tx_rnbase::load('tx_cfcleague_mod1_profilesearcher');
-tx_rnbase::load('tx_cfcleague_mod1_modTeamsProfileCreate');
+tx_rnbase::load('Tx_Cfcleague_Controller_Team_ProfileCreate');
 tx_rnbase::load('tx_rnbase_util_Strings');
 
 
 /**
  * Submodul: Hinzufügen von vorhandenen Spielern zu einem Team
  */
-class tx_cfcleague_mod1_subAddProfiles {
+class Tx_Cfcleague_Controller_Team_ProfileAdd {
 	var $mod;
 	/**
 	 * Ausführung des Requests. Das Team muss bekannt sein
@@ -89,8 +89,7 @@ class tx_cfcleague_mod1_subAddProfiles {
 		$tableForm .= $this->mod->getDoc()->spacer(15);
 		$tableForm.= $searcher->getResultList();
 		if($searcher->getSize()) {
-			tx_rnbase::load('tx_cfcleague_mod1_modTeamsProfileCreate');
-			$tableForm .= $this->getFormTool()->createSelectSingleByArray('profileType', '', tx_cfcleague_mod1_modTeamsProfileCreate::getProfileTypeArray());
+			$tableForm .= $this->getFormTool()->createSelectSingleByArray('profileType', '', Tx_Cfcleague_Controller_Team_ProfileCreate::getProfileTypeArray());
 			// Button für Zuordnung
 			$tableForm .= $this->getFormTool()->createSubmit('profile2team', $GLOBALS['LANG']->getLL('label_join_profiles'));
 		}
@@ -117,7 +116,7 @@ class tx_cfcleague_mod1_subAddProfiles {
 	private function getCreateForm() {
 		global $LANG;
 
-		if(!tx_cfcleague_mod1_modTeamsProfileCreate::isProfilePage($this->mod->getPid())) {
+		if(!Tx_Cfcleague_Controller_Team_ProfileCreate::isProfilePage($this->mod->getPid())) {
 			$content = $this->mod->getDoc()->section('Message:', $LANG->getLL('msg_pageNotAllowed'), 0, 1, ICON_WARN);
 			return $content;
 		}
@@ -126,7 +125,7 @@ class tx_cfcleague_mod1_subAddProfiles {
 		$i = 1;
 		$row[] = $this->getFormTool()->createTxtInput('data[tx_cfcleague_profiles][NEW'.$i.'][first_name]', '', 10);
 		$row[] = $this->getFormTool()->createTxtInput('data[tx_cfcleague_profiles][NEW'.$i.'][last_name]', '', 10);
-		$row[] = $this->getFormTool()->createSelectSingleByArray('data[tx_cfcleague_profiles][NEW'.$i.'][type]', '', tx_cfcleague_mod1_modTeamsProfileCreate::getProfileTypeArray());
+		$row[] = $this->getFormTool()->createSelectSingleByArray('data[tx_cfcleague_profiles][NEW'.$i.'][type]', '', Tx_Cfcleague_Controller_Team_ProfileCreate::getProfileTypeArray());
 		$row[] = $this->getFormTool()->createSubmit('newprofile2team', $GLOBALS['LANG']->getLL('btn_create'), $GLOBALS['LANG']->getLL('msg_CreateProfiles')).
 			$this->getFormTool()->createHidden('data[tx_cfcleague_profiles][NEW'.$i.'][pid]', $this->mod->getPid());
 		$arr[] = $row;
@@ -150,7 +149,7 @@ class tx_cfcleague_mod1_subAddProfiles {
 		$request = t3lib_div::_GP('data');
 		$profiles['tx_cfcleague_profiles'] = $request['tx_cfcleague_profiles'];
 
-		$out = tx_cfcleague_mod1_modTeamsProfileCreate::createProfiles($profiles, $currTeam, $teamInfo);
+		$out = Tx_Cfcleague_Controller_Team_ProfileCreate::createProfiles($profiles, $currTeam, $teamInfo);
 		return $out;
 	}
 	/**
@@ -233,8 +232,3 @@ class tx_cfcleague_mod1_subAddProfiles {
 
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/mod1/class.tx_cfcleague_mod1_subAddProfiles.php'])	{
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/mod1/class.tx_cfcleague_mod1_subAddProfiles.php']);
-}
-
-?>

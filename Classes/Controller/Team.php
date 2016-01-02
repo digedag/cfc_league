@@ -30,7 +30,7 @@ tx_rnbase::load('tx_rnbase_mod_BaseModFunc');
 /**
  * Die Klasse verwaltet die automatische Erstellung von Spielplänen
  */
-class tx_cfcleague_mod1_modTeams extends tx_rnbase_mod_BaseModFunc {
+class Tx_Cfcleague_Controller_Team extends tx_rnbase_mod_BaseModFunc {
 	var $doc, $MCONF;
 
 	/**
@@ -113,15 +113,15 @@ class tx_cfcleague_mod1_modTeams extends tx_rnbase_mod_BaseModFunc {
 
 		switch($menu['value']) {
 			case 0:
-				$mod = tx_rnbase::makeInstance('tx_cfcleague_mod1_modTeamsProfileCreate');
+				$mod = tx_rnbase::makeInstance('Tx_Cfcleague_Controller_Team_ProfileCreate');
 				$content .= $mod->handleRequest($this->getModule(), $team, $teamInfo);
 				break;
 			case 1:
-				$mod = tx_rnbase::makeInstance('tx_cfcleague_mod1_subAddProfiles');
+				$mod = tx_rnbase::makeInstance('Tx_Cfcleague_Controller_Team_ProfileAdd');
 				$content .= $mod->handleRequest($this->getModule(), $team, $teamInfo);
 				break;
 			case 2:
-				$mod = tx_rnbase::makeInstance('tx_cfcleague_mod1_subTeamNotes');
+				$mod = tx_rnbase::makeInstance('Tx_Cfcleague_Controller_Team_TeamNotes');
 				$content .= $mod->handleRequest($this->getModule(), $team, $teamInfo);
 				break;
 		}
@@ -133,7 +133,3 @@ class tx_cfcleague_mod1_modTeams extends tx_rnbase_mod_BaseModFunc {
 	}
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/mod1/class.tx_cfcleague_mod1_modTeams.php'])	{
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/mod1/class.tx_cfcleague_mod1_modTeams.php']);
-}
-?>
