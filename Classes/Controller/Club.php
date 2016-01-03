@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2010 Rene Nitzsche (rene@system25.de)
+*  (c) 2010-2016 Rene Nitzsche (rene@system25.de)
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -30,7 +30,7 @@ tx_rnbase::load('tx_rnbase_mod_BaseModFunc');
 /**
  * BaseModule to manage clubs, stadiums etc.
  */
-class tx_cfcleague_mod1_modClubs extends tx_rnbase_mod_BaseModFunc {
+class Tx_Cfcleague_Controller_Club extends tx_rnbase_mod_BaseModFunc {
 
 	/**
 	 * Method getFuncId
@@ -49,9 +49,8 @@ class tx_cfcleague_mod1_modClubs extends tx_rnbase_mod_BaseModFunc {
 	 * @param tx_rnbase_util_FormTool $formTool
 	 */
 	protected function getContent($template, &$configurations, &$formatter, $formTool) {
-		global $LANG;
 
-		$selector = t3lib_div::makeInstance('tx_cfcleague_selector');
+		$selector = tx_rnbase::makeInstance('tx_cfcleague_selector');
 		$selector->init($this->doc, $this->getModule());
 
 		// Zuerst holen wir alle Tabs, erstellen die MenuItems und werten den Request aus
@@ -103,8 +102,3 @@ class tx_cfcleague_mod1_modClubs extends tx_rnbase_mod_BaseModFunc {
 		return $content;
 	}
 }
-
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/mod1/class.tx_cfcleague_mod1_modClubs.php'])	{
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/mod1/class.tx_cfcleague_mod1_modClubs.php']);
-}
-?>

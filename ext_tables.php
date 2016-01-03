@@ -62,8 +62,8 @@ if (TYPO3_MODE=='BE')	{
 		tx_rnbase_util_Extensions::extPath($_EXTKEY).'Classes/Controller/Team.php',
 		'LLL:EXT:cfc_league/mod1/locallang.xml:mod_team'
 	);
-  tx_rnbase_util_Extensions::insertModuleFunction('web_txcfcleagueM1', 'tx_cfcleague_mod1_modClubs',
-		tx_rnbase_util_Extensions::extPath($_EXTKEY).'mod1/class.tx_cfcleague_mod1_modClubs.php',
+  tx_rnbase_util_Extensions::insertModuleFunction('web_txcfcleagueM1', 'Tx_Cfcleague_Controller_Club',
+		tx_rnbase_util_Extensions::extPath($_EXTKEY).'Classes/Controller/Club.php',
 		'LLL:EXT:cfc_league/mod1/locallang.xml:mod_club'
 	);
 	tx_rnbase_util_Extensions::insertModuleFunction('web_txcfcleagueM1', 'Tx_Cfcleague_Controller_Profile',
