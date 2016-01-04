@@ -55,9 +55,9 @@ class Tx_Cfcleague_Controller_Competition_MatchTable {
 		$comp = tx_cfcleague_models_Competition::getInstance($competition->uid);
 //		$start = microtime(true);
 
-		tx_rnbase::load('tx_cfcleague_mod1_handler_MatchCreator');
+		tx_rnbase::load('Tx_Cfcleague_Handler_MatchCreator');
 		// Die Neuanlage der manuellen Spiele erledigt der MatchCreator
-		$content .= tx_cfcleague_mod1_handler_MatchCreator::getInstance()->handleRequest($this->getModule());
+		$content .= Tx_Cfcleague_Handler_MatchCreator::getInstance()->handleRequest($this->getModule());
 		// Die Neuanlage der "automatischen" Spiele übernimmt diese Klasse
 		$content .= $this->handleCreateMatchTable($comp);
 		if(!$content) {
@@ -109,8 +109,8 @@ class Tx_Cfcleague_Controller_Competition_MatchTable {
 		if($mode == 0) // Automatischer Spielplan
 			$content .= $this->showMatchTableAuto($comp);
 		else { // Manuell Spiele anlegen
-			tx_rnbase::load('tx_cfcleague_mod1_handler_MatchCreator');
-			$content .= tx_cfcleague_mod1_handler_MatchCreator::getInstance()->showScreen($comp, $this->getModule());
+			tx_rnbase::load('Tx_Cfcleague_Handler_MatchCreator');
+			$content .= Tx_Cfcleague_Handler_MatchCreator::getInstance()->showScreen($comp, $this->getModule());
 		}
 
 		return $content;

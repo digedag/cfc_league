@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2010 Rene Nitzsche (rene@system25.de)
+*  (c) 2010-2016 Rene Nitzsche (rene@system25.de)
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -22,14 +22,15 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
+tx_rnbase::load('tx_rnbase_parameters');
 
 /**
  * Die Klasse ermöglicht die manuelle Erstellung von Spielplänen
  */
-class tx_cfcleague_mod1_handler_MatchCreator {
+class Tx_Cfcleague_Handler_MatchCreator {
 	/**
 	 * Returns an instance
-	 * @return tx_cfcleague_mod1_handler_MatchCreator
+	 * @return Tx_Cfcleague_Handler_MatchCreator
 	 */
 	public static function getInstance() {
 		return tx_rnbase::makeInstance(get_class());
@@ -40,9 +41,9 @@ class tx_cfcleague_mod1_handler_MatchCreator {
 	 * @return string
 	 */
 	public function handleRequest(tx_rnbase_mod_IModule $mod) {
-  	$submitted = t3lib_div::_GP('doCreateMatches');
+  	$submitted = tx_rnbase_parameters::getPostOrGetParameter('doCreateMatches');
   	if(!$submitted) return '';
-		$tcaData = t3lib_div::_GP('data');
+		$tcaData = tx_rnbase_parameters::getPostOrGetParameter('data');
 
 		tx_rnbase::load('tx_rnbase_util_DB');
 		$tce =& tx_rnbase_util_DB::getTCEmain($tcaData);
@@ -111,7 +112,3 @@ class tx_cfcleague_mod1_handler_MatchCreator {
 	}
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/mod1/handler/class.tx_cfcleague_mod1_handler_MatchCreator.php'])	{
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/mod1/handler/class.tx_cfcleague_mod1_handler_MatchCreator.php']);
-}
-?>
