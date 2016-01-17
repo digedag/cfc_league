@@ -77,7 +77,7 @@ class Tx_Cfcleague_Controller_Competition_MatchEdit {
 		$matches = $this->findMatches($currentTeam, $current_round, $current_league);
 		$arr = $this->createTableArray($matches, $current_league);
 
-		$content .= tx_rnbase_mod_Tables::buildTable($arr[0], $module->getTableLayout());
+		$content .= tx_rnbase_mod_Tables::buildTable($arr[0]);
 
 		// Den Update-Button einfügen
 		$content .= $formTool->createSubmit('update', $LANG->getLL('btn_update'), $GLOBALS['LANG']->getLL('btn_update_msgEditGames'));
