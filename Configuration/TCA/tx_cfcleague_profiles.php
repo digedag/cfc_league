@@ -271,7 +271,7 @@ $tx_cfcleague_profiles = Array (
 	)
 );
 
-$tca = tx_rnbase::makeInstance('Tx_Rnbase_Util_TCATool');
+$tca = tx_rnbase::makeInstance('Tx_Rnbase_Utility_TcaTool');
 $tca->addWizard($tx_cfcleague_profiles, 'description', 'RTE', 'wizard_rte', array());
 $tca->addWizard($tx_cfcleague_profiles, 'summary', 'RTE', 'wizard_rte', array());
 

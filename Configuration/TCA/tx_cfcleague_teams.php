@@ -225,7 +225,7 @@ $tx_cfcleague_teams = Array (
 	)
 );
 
-$tca = tx_rnbase::makeInstance('Tx_Rnbase_Util_TCATool');
+$tca = tx_rnbase::makeInstance('Tx_Rnbase_Utility_TcaTool');
 $tca->addWizard($tx_cfcleague_teams, 'comment', 'RTE', 'wizard_rte', array());
 
 tx_rnbase::load('tx_cfcleague_tca_Lookup');

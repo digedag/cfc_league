@@ -243,7 +243,7 @@ $tx_cfcleague_competition = Array (
 	)
 );
 
-$tca = tx_rnbase::makeInstance('Tx_Rnbase_Util_TCATool');
+$tca = tx_rnbase::makeInstance('Tx_Rnbase_Utility_TcaTool');
 $tca->addWizard($tx_cfcleague_competition, 'teams', 'add', 'wizard_add', array());
 
 

@@ -247,7 +247,7 @@ $tx_cfcleague_competition_penalty = Array (
 			'1' => Array('showitem' => '')
 	)
 );
-$tca = tx_rnbase::makeInstance('Tx_Rnbase_Util_TCATool');
+$tca = tx_rnbase::makeInstance('Tx_Rnbase_Utility_TcaTool');
 $tca->addWizard($tx_cfcleague_competition_penalty, 'comment', 'RTE', 'wizard_rte', array());
 
 return $tx_cfcleague_competition_penalty;
