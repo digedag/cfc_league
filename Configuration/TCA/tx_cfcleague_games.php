@@ -667,7 +667,7 @@ $tx_cfcleague_games = Array (
 	)
 );
 
-$tca = tx_rnbase::makeInstance('Tx_Rnbase_Util_TCATool');
+$tca = tx_rnbase::makeInstance('Tx_Rnbase_Utility_TcaTool');
 $tca->addWizard($tx_cfcleague_games, 'game_report', 'RTE', 'wizard_rte', array());
 
 if(tx_rnbase_util_Extensions::isLoaded('rgmediaimages') && !tx_rnbase_util_TYPO3::isTYPO70OrHigher()) {

@@ -239,7 +239,7 @@ $tx_cfcleague_stadiums = Array (
 	)
 );
 
-$tca = tx_rnbase::makeInstance('Tx_Rnbase_Util_TCATool');
+$tca = tx_rnbase::makeInstance('Tx_Rnbase_Utility_TcaTool');
 $tca->addWizard($tx_cfcleague_stadiums, 'description', 'RTE', 'wizard_rte', array());
 $tca->addWizard($tx_cfcleague_stadiums, 'description2', 'RTE', 'wizard_rte', array());
 
