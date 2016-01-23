@@ -23,6 +23,8 @@
 ***************************************************************/
 
 tx_rnbase::load('tx_rnbase_parameters');
+tx_rnbase::load('tx_rnbase_mod_Tables');
+
 
 /**
  * Die Klasse verwaltet die Bearbeitung der Spieltage
@@ -79,7 +81,7 @@ class Tx_Cfcleague_Controller_Competition_MatchEdit {
 		$matches = $this->findMatches($currentTeam, $current_round, $current_league);
 		$arr = $this->createTableArray($matches, $current_league);
 
-		$content .= $module->getDoc()->table($arr[0]);
+		$content .= tx_rnbase_mod_Tables::buildTable($arr[0]);
 
 		// Den Update-Button einfügen
 		$content .= $formTool->createSubmit('update', $LANG->getLL('btn_update'), $GLOBALS['LANG']->getLL('btn_update_msgEditGames'));
