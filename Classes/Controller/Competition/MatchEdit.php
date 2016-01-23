@@ -23,6 +23,8 @@
 ***************************************************************/
 
 tx_rnbase::load('tx_rnbase_parameters');
+tx_rnbase::load('tx_rnbase_mod_Tables');
+
 
 /**
  * Die Klasse verwaltet die Bearbeitung der Spieltage
