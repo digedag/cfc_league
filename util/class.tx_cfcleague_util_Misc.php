@@ -63,26 +63,26 @@ class tx_cfcleague_util_Misc {
 			$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['formations'] = array();
 		$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['formations'][] = array($label, $formationString);
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * Prints out the error
 	 * @param 	String 	$error
 	 */
-	
+
 	public static function tceError($error, $addinfo='')	{
-		$error_doc = t3lib_div::makeInstance('template');
+		$error_doc = tx_rnbase::makeInstance('template');
 		$error_doc->backPath = '';
 
 		$content.= $error_doc->startPage('T3sports error Output');
 		$content.= '
 			<br/><br/>
 			<table border="0" cellpadding="1" cellspacing="1" width="300" align="center">';
-	
+
 		$content.='	<tr class="bgColor5">
 					<td colspan="2" align="center"><strong>Fehler</strong></td>
 				</tr>';
-	
+
 		$content.='
 				<tr class="bgColor4">
 					<td valign="top"><img'.t3lib_iconWorks::skinImg('', 'gfx/icon_fatalerror.gif', 'width="18" height="16"').' alt="" /></td>
@@ -99,7 +99,7 @@ class tx_cfcleague_util_Misc {
 		$content.='
 				<tr>
 					<td colspan="2" align="center"><br />'.
-				
+
 					'<form action="'.htmlspecialchars($_SERVER["HTTP_REFERER"]).'"><input type="submit" value="Weiter" onclick="document.location='.htmlspecialchars($_SERVER["HTTP_REFERER"]).'return false;" /></form>'.
 					'</td>
 				</tr>';
@@ -108,7 +108,7 @@ class tx_cfcleague_util_Misc {
 
 		$content.= $error_doc->endPage();
 		echo $content;
-		exit();	
+		exit();
 	}
 }
 

@@ -103,7 +103,6 @@ class tx_cfcleague_util_TeamNoteDecorator {
 			$ret = $thumbs[0];
 			list($key, $file) = each($data);
 			$ret .= ' ' . $file['file_name'];
-//					t3lib_div::debug($file, 'tx_cfcleague_util_TeamNoteDecorator'); // TODO: remove me
 			$ret .= $this->formTool->createEditLink('tx_dam', $file['uid']);
 		}
 		return $ret;

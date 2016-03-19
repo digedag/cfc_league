@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2007-2014 Rene Nitzsche (rene@system25.de)
+*  (c) 2007-2016 Rene Nitzsche (rene@system25.de)
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -22,7 +22,9 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-tx_rnbase::load('tx_rnbase_util_Strings');
+tx_rnbase::load('Tx_Rnbase_Utility_Strings');
+tx_rnbase::load('Tx_Rnbase_Utility_T3General');
+
 
 /**
  * This class is a modified copy of SC_show_item
@@ -58,8 +60,8 @@ class tx_cfcleague_showItem {
 
 		$this->content = '';
 			// Setting input variables.
-		$this->table = $table ? $table : t3lib_div::_GET('table');
-		$this->uid = $uid ? $uid : t3lib_div::_GET('uid');
+		$this->table = $table ? $table : Tx_Rnbase_Utility_T3General::_GET('table');
+		$this->uid = $uid ? $uid : Tx_Rnbase_Utility_T3General::_GET('uid');
 
 			// Initialize:
 		$this->perms_clause = $BE_USER->getPagePermsClause(1);
@@ -68,7 +70,7 @@ class tx_cfcleague_showItem {
 
 			// Checking if the $table value is really a table and if the user has access to it.
 		if (isset($TCA[$this->table]))	{
-			t3lib_div::loadTCA($this->table);
+			Tx_Rnbase_Utility_T3General::loadTCA($this->table);
 			$this->type = 'db';
 			$this->uid = intval($this->uid);
 
@@ -86,7 +88,7 @@ class tx_cfcleague_showItem {
 					}
 				}
 
-				$treatData = t3lib_div::makeInstance('t3lib_transferData');
+				$treatData = Tx_Rnbase_Utility_T3General::makeInstance('t3lib_transferData');
 				$treatData->renderRecord($this->table, $this->uid, 0, $this->row);
 				$cRow = $treatData->theRecord;
 			}
@@ -97,14 +99,14 @@ class tx_cfcleague_showItem {
 			} else {
 				$this->file = $this->table;
 			}
-			if (@is_file($this->file) && t3lib_div::isAllowedAbsPath($this->file))	{
+			if (@is_file($this->file) && Tx_Rnbase_Utility_T3General::isAllowedAbsPath($this->file))	{
 				$this->type = 'file';
 				$this->access = 1;
 			}
 		}
 
 			// Initialize document template object:
-		$this->doc = t3lib_div::makeInstance('smallDoc');
+		$this->doc = tx_rnbase::makeInstance('smallDoc');
 		$this->doc->backPath = $BACK_PATH;
 		$this->doc->docType = 'xhtml_trans';
 
@@ -123,13 +125,13 @@ class tx_cfcleague_showItem {
 		global $LANG;
 
 		if ($this->access)	{
-			$returnLinkTag = t3lib_div::_GP('returnUrl') ? '<a href="'.t3lib_div::_GP('returnUrl').'" class="typo3-goBack">' : '<a href="#" onclick="window.close();">';
+			$returnLinkTag = Tx_Rnbase_Utility_T3General::_GP('returnUrl') ? '<a href="'.Tx_Rnbase_Utility_T3General::_GP('returnUrl').'" class="typo3-goBack">' : '<a href="#" onclick="window.close();">';
 
 				// render type by user func
 			$typeRendered = false;
 			if (is_array ($GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['typo3/show_item.php']['typeRendering'])) {
 				foreach ($GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['typo3/show_item.php']['typeRendering'] as $classRef) {
-					$typeRenderObj = t3lib_div::getUserObj($classRef);
+					$typeRenderObj = Tx_Rnbase_Utility_T3General::getUserObj($classRef);
 					if(is_object($typeRenderObj) && method_exists($typeRenderObj, 'isValid') && method_exists($typeRenderObj, 'render'))	{
 						if ($typeRenderObj->isValid($this->type, $this)) {
 							$this->content .=  $typeRenderObj->render($this->type, $this);
@@ -154,7 +156,7 @@ class tx_cfcleague_showItem {
 			}
 
 				// If return Url is set, output link to go back:
-			if (t3lib_div::_GP('returnUrl'))	{
+			if (Tx_Rnbase_Utility_T3General::_GP('returnUrl'))	{
 				$this->content = $this->doc->section('', $returnLinkTag.'<strong>'.$LANG->sL('LLL:EXT:lang/locallang_core.xml:labels.goBack', 1).'</strong></a><br /><br />').$this->content;
 
 				$this->content .= $this->doc->section('', '<br />'.$returnLinkTag.'<strong>'.$LANG->sL('LLL:EXT:lang/locallang_core.xml:labels.goBack', 1).'</strong></a>');
@@ -180,7 +182,7 @@ class tx_cfcleague_showItem {
 		$i = 0;
 
 			// Traverse the list of fields to display for the record:
-		$fieldList = tx_rnbase_util_Strings::trimExplode(',', $TCA[$this->table]['interface']['showRecordFieldList'], 1);
+		$fieldList = Tx_Rnbase_Utility_Strings::trimExplode(',', $TCA[$this->table]['interface']['showRecordFieldList'], 1);
 		foreach($fieldList as $name)	{
 			$name = trim($name);
 			if ($TCA[$this->table]['columns'][$name])	{
@@ -205,7 +207,7 @@ class tx_cfcleague_showItem {
 
 			// Add path and table information in the bottom:
 		$code = '';
-		$code.= $LANG->sL('LLL:EXT:lang/locallang_core.php:labels.path').': '.t3lib_div::fixed_lgd_cs($this->pageinfo['_thePath'], -48).'<br />';
+		$code.= $LANG->sL('LLL:EXT:lang/locallang_core.php:labels.path').': '.Tx_Rnbase_Utility_T3General::fixed_lgd_cs($this->pageinfo['_thePath'], -48).'<br />';
 		$code.= $LANG->sL('LLL:EXT:lang/locallang_core.php:labels.table').': '.$LANG->sL($TCA[$this->table]['ctrl']['title']).' ('.$this->table.') - UID: '.$this->uid.'<br />';
 		$this->content.= $this->doc->section('', $code);
 
@@ -226,7 +228,7 @@ class tx_cfcleague_showItem {
 		global $LANG;
 
 			// Initialize object to work on the image:
-		$imgObj = t3lib_div::makeInstance('t3lib_stdGraphic');
+		$imgObj = tx_rnbase::makeInstance('t3lib_stdGraphic');
 		$imgObj->init();
 		$imgObj->mayScaleUp = 0;
 		$imgObj->absPrefix = PATH_site;
@@ -236,7 +238,7 @@ class tx_cfcleague_showItem {
 		$imgInfo = $imgObj->getImageDimensions($this->file);
 
 			// File information
-		$fI = t3lib_div::split_fileref($this->file);
+		$fI = Tx_Rnbase_Utility_T3General::split_fileref($this->file);
 		$ext = $fI['fileext'];
 
 		$code = '';
@@ -245,12 +247,12 @@ class tx_cfcleague_showItem {
 		$icon = t3lib_BEfunc::getFileIcon($ext);
 		$url = 'gfx/fileicons/'.$icon;
 		$fileName = '<img src="'.$url.'" width="18" height="16" align="top" alt="" /><b>'.$LANG->sL('LLL:EXT:lang/locallang_core.php:show_item.php.file', 1).':</b> '.$fI['file'];
-		if (t3lib_div::isFirstPartOfStr($this->file, PATH_site))	{
+		if (Tx_Rnbase_Utility_Strings::isFirstPartOfStr($this->file, PATH_site))	{
 			$code.= '<a href="../'.substr($this->file, strlen(PATH_site)).'" target="_blank">'.$fileName.'</a>';
 		} else {
 			$code.= $fileName;
 		}
-		$code.=' &nbsp;&nbsp;<b>'.$LANG->sL('LLL:EXT:lang/locallang_core.php:show_item.php.filesize').':</b> '.t3lib_div::formatSize(@filesize($this->file)).'<br />
+		$code.=' &nbsp;&nbsp;<b>'.$LANG->sL('LLL:EXT:lang/locallang_core.php:show_item.php.filesize').':</b> '.Tx_Rnbase_Utility_T3General::formatSize(@filesize($this->file)).'<br />
 			';
 		if (is_array($imgInfo))	{
 			$code.= '<b>'.$LANG->sL('LLL:EXT:lang/locallang_core.php:show_item.php.dimensions').':</b> '.$imgInfo[0].'x'.$imgInfo[1].' pixels';
@@ -327,7 +329,7 @@ class tx_cfcleague_showItem {
 				$thumbScript = 'thumbs.php';
 				$check = basename($this->file).':'.filemtime($this->file).':'.$GLOBALS['TYPO3_CONF_VARS']['SYS']['encryptionKey'];
 				$params = '&file='.rawurlencode($this->file);
-				$params.= '&md5sum='.t3lib_div::shortMD5($check);
+				$params.= '&md5sum='.Tx_Rnbase_Utility_T3General::shortMD5($check);
 				$url = $thumbScript.'?&dummy='.$GLOBALS['EXEC_TIME'].$params;
 				$thumb = '<br />
 					<div align="center">'.$returnLinkTag.'<img src="'.htmlspecialchars($url).'" border="0" title="'.htmlspecialchars(trim($this->file)).'" alt="" /></a></div>';
@@ -364,7 +366,7 @@ class tx_cfcleague_showItem {
 				// First, fit path to match what is stored in the refindex:
 			$fullIdent = $ref;
 
-			if (t3lib_div::isFirstPartOfStr($fullIdent, PATH_site))	{
+			if (Tx_Rnbase_Utility_Strings::isFirstPartOfStr($fullIdent, PATH_site))	{
 				$fullIdent = substr($fullIdent, strlen(PATH_site));
 			}
 

@@ -23,6 +23,9 @@
  ***************************************************************/
 
 tx_rnbase::load('tx_rnbase_mod_IModule');
+tx_rnbase::load('Tx_Rnbase_Utility_T3General');
+
+
 
 /**
  * Search stadiums
@@ -56,7 +59,7 @@ class tx_cfcleague_mod1_searcher_Stadium {
 		$this->mod = $mod;
 		$this->formTool = $mod->getFormTool();
 		$this->resultSize = 0;
-		$this->data = t3lib_div::_GP('searchdata');
+		$this->data = Tx_Rnbase_Utility_T3General::_GP('searchdata');
 
 
 		if(!isset($options['nopersist']))

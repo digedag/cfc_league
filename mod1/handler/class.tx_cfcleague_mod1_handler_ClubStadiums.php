@@ -35,9 +35,9 @@ class tx_cfcleague_mod1_handler_ClubStadiums {
 		return '###LABEL_TAB_STADIUMS###';
 	}
 	public function handleRequest(tx_rnbase_mod_IModule $mod) {
-//  	$submitted = t3lib_div::_GP('doCreateMatches');
+//  	$submitted = Tx_Rnbase_Utility_T3General::_GP('doCreateMatches');
 //  	if(!$submitted) return '';
-//		$tcaData = t3lib_div::_GP('data');
+//		$tcaData = Tx_Rnbase_Utility_T3General::_GP('data');
 //
 //		tx_rnbase::load('tx_rnbase_util_DB');
 //		$tce =& tx_rnbase_util_DB::getTCEmain($tcaData);
@@ -46,7 +46,7 @@ class tx_cfcleague_mod1_handler_ClubStadiums {
 //		return $content;
 	}
 	/**
-	 * 
+	 *
 	 * @param tx_cfcleague_models_Club $club
 	 * @param tx_rnbase_mod_IModule $mod
 	 */
@@ -61,7 +61,7 @@ class tx_cfcleague_mod1_handler_ClubStadiums {
 			$content .= $result['pager'];
 			$content .= $result['table'];
 			$content .= $result['pager'];
-			
+
 		}
 		else {
 			$content .= $mod->getDoc()->section($LANG->getLL('label_msg_nostadiumsfound'), '', 0, 1, ICON_INFO);
@@ -71,9 +71,9 @@ class tx_cfcleague_mod1_handler_ClubStadiums {
 		$content .= $mod->getFormTool()->createNewLink('tx_cfcleague_stadiums', $club->record['pid'],  $GLOBALS['LANG']->getLL('label_btn_addstadium'), $options);
 		return $content;
 	}
-	
+
 	public function makeLink(tx_rnbase_mod_IModule $mod) {
-		
+
 	}
 }
 

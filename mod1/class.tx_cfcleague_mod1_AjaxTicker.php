@@ -23,6 +23,8 @@
 ***************************************************************/
 
 tx_rnbase::load('tx_rnbase_util_DB');
+tx_rnbase::load('Tx_Rnbase_Utility_T3General');
+
 
 class tx_cfcleague_mod1_AjaxTicker {
   /**
@@ -32,9 +34,9 @@ class tx_cfcleague_mod1_AjaxTicker {
    * @param TYPO3AJAX $ajaxObj
    */
   public function ajaxSaveTickerMessage($params, &$ajaxObj) {
-		$tickerMessage = trim(strip_tags(t3lib_div::_POST('value')));
-		$t3Time = intval(t3lib_div::_POST('t3time'));
-		$t3match = intval(t3lib_div::_POST('t3match'));
+		$tickerMessage = trim(strip_tags(Tx_Rnbase_Utility_T3General::_POST('value')));
+		$t3Time = intval(Tx_Rnbase_Utility_T3General::_POST('t3time'));
+		$t3match = intval(Tx_Rnbase_Utility_T3General::_POST('t3match'));
 
 		if(!is_object($GLOBALS['BE_USER'])) {
   		$ajaxObj->addContent('message', 'No BE user found!');

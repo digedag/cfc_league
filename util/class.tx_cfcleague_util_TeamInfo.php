@@ -23,6 +23,8 @@
 ***************************************************************/
 
 tx_rnbase::load('tx_rnbase_parameters');
+tx_rnbase::load('Tx_Rnbase_Utility_T3General');
+
 
 /**
  * Die Klasse wird im BE verwendet und liefert Informationen über ein Team
@@ -37,7 +39,7 @@ class tx_cfcleague_util_TeamInfo {
 	private function init($team) {
 		global $TCA;
 		$this->team = $team;
-		t3lib_div::loadTCA('tx_cfcleague_teams');
+		Tx_Rnbase_Utility_T3General::loadTCA('tx_cfcleague_teams');
 		$this->baseInfo['maxCoaches'] = intval($TCA['tx_cfcleague_teams']['columns']['coaches']['config']['maxitems']);
 		$this->baseInfo['maxPlayers'] = intval($TCA['tx_cfcleague_teams']['columns']['players']['config']['maxitems']);
 		$this->baseInfo['maxSupporters'] = intval($TCA['tx_cfcleague_teams']['columns']['supporters']['config']['maxitems']);
@@ -120,8 +122,8 @@ class tx_cfcleague_util_TeamInfo {
 			$profileUids = $team->record[$fields[$type]];
 			if(!$profileUids) continue;
 
-			if(t3lib_div::inList($profileUids, $uid)) {
-				$profileUids = t3lib_div::rmFromList($uid, $profileUids);
+			if(Tx_Rnbase_Utility_T3General::inList($profileUids, $uid)) {
+				$profileUids = Tx_Rnbase_Utility_T3General::rmFromList($uid, $profileUids);
 				$tceData['tx_cfcleague_teams'][$team->getUid()][$fields[$type]] = $profileUids;
 				$team->record[$fields[$type]] = $profileUids;
 			}

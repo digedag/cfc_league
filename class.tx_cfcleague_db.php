@@ -30,7 +30,7 @@ class tx_cfcleague_db{
    * Stellt eine Anfrage an die DB und liefert die ermittelten Zeilen zurück
    * @param $what requested columns
    * @param $where
-   * @param $from either the name of a table or an array with index 0 the from clause 
+   * @param $from either the name of a table or an array with index 0 the from clause
    *              and index 1 the requested tablename
    */
   function queryDB($what, $where, $from=TABLE_GAMES, $groupBy = '', $orderBy = '', $debug=0, $limit = ''){
@@ -94,7 +94,7 @@ class tx_cfcleague_db{
 
     if(!$tce || $data) {
       // Die TCEmain laden
-      $tce = t3lib_div::makeInstance('t3lib_tcemain');
+      $tce = tx_rnbase::makeInstance('t3lib_tcemain');
       $tce->stripslashes_values = 0;
       // Wenn wir ein data-Array bekommen verwenden wir das
       $tce->start($data ? $data : Array(), Array());
@@ -104,8 +104,6 @@ class tx_cfcleague_db{
       if (is_array($TCAdefaultOverride)) {
         $tce->setDefaultsFromUserTS($TCAdefaultOverride);
       }
-
-//      t3lib_div::debug('NEW TCEmain instance created', 'cfcleague_db');
     }
     return $tce;
   }
@@ -131,8 +129,6 @@ class tx_cfcleague_db{
 
 				$uid = $row['pid'];
 				$output[] = $uid;
-//        $output = '/'.t3lib_div::fixed_lgd_cs(strip_tags($row['title']),$titleLimit).$output;
-//        if ($fullTitleLimit)    $fullOutput = '/'.t3lib_div::fixed_lgd_cs(strip_tags($row['title']),$fullTitleLimit).$fullOutput;
 			} else {
 				break;
 			}
@@ -145,5 +141,3 @@ class tx_cfcleague_db{
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/class.tx_cfcleague_db.php'])	{
   include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/class.tx_cfcleague_db.php']);
 }
-
-?>

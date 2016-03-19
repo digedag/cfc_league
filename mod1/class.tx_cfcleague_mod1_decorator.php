@@ -84,8 +84,6 @@ class tx_cfcleague_mod1_decorator {
 			if(!$isNoMatch) {
 				reset($columns);
 				foreach($columns As $column => $data) {
-//					if(isset($data['decorator']))
-//						t3lib_div::debug($data['decorator']->format('', ''), $column.' - tx_cfcleague_mod1_decorator'); // TODO: remove me
 					// Hier erfolgt die Ausgabe der Daten für die Tabelle. Wenn eine method angegeben
 					// wurde, dann muss das Spiel als Objekt vorliegen. Es wird dann die entsprechende
 					// Methode aufgerufen. Es kann auch ein Decorator-Objekt gesetzt werden. Dann wird

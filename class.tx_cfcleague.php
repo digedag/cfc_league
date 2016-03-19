@@ -86,7 +86,7 @@ class tx_cfcleague_handleDataInput{
 			$team = tx_rnbase_util_Strings::trimExplode('|', $PA['row'][$column]);
 			$team = $team[0];
 			if($tcaFieldConf['type'] == 'db') {
-				$dbAnalysis = t3lib_div::makeInstance('t3lib_loadDBGroup');
+				$dbAnalysis = tx_rnbase::makeInstance('t3lib_loadDBGroup');
 				$dbAnalysis->registerNonTableValues=0;
 				$dbAnalysis->start($team, $tcaFieldConf['allowed'], '', 0, $tablename, $tcaFieldConf);
 				$valueArray = $dbAnalysis->getValueArray(false);

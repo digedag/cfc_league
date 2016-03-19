@@ -27,6 +27,7 @@ tx_rnbase::load('Tx_Rnbase_Backend_Utility');
 tx_rnbase::load('tx_rnbase_mod_IModule');
 tx_rnbase::load('Tx_Rnbase_Backend_Utility_Icons');
 tx_rnbase::load('tx_rnbase_parameters');
+tx_rnbase::load('Tx_Rnbase_Utility_T3General');
 
 
 /**
@@ -106,11 +107,6 @@ class tx_cfcleague_selector{
 			// Hook aufrufen
 			tx_rnbase_util_Misc::callHook('cfc_league', 'clearStatistics_hook',
 				array('compUid' => $menuData['value']), $this);
-
-//			if (is_object($serviceObj = t3lib_div::makeInstanceService('memento'))) {
-//				// Cache löschen
-//				$serviceObj->clear('', $this->LEAGUE_SETTINGS['league']);
-//			}
 		}
 
 		// Aktuellen Wert als Liga-Objekt zurückgeben
@@ -163,12 +159,6 @@ class tx_cfcleague_selector{
 
 		$menuData = $this->getFormTool()->showMenu($pid, $selectorId, $this->modName, $entries);
 
-// 		$TEAM_SETTINGS = t3lib_BEfunc::getModuleData($TEAM_MENU, t3lib_div::_GP('SET'), $this->modName);
-
-// 		$menu = t3lib_BEfunc::getFuncMenu(
-// 			$pid, 'SET['.$selectorId.']', $TEAM_SETTINGS[$selectorId],
-// 			$TEAM_MENU[$selectorId], $this->getScriptURI()
-// 		);
 		$teamObj = null;
 		if($menuData['value'] > 0) {
 	    tx_rnbase::load('tx_cfcleague_team');
@@ -220,7 +210,7 @@ class tx_cfcleague_selector{
 			$menuData[$selectorId][$club->getUid()] = $label;
 		}
 
-		$menuSettings = t3lib_BEfunc::getModuleData($menuData, t3lib_div::_GP('SET'), $this->modName);
+		$menuSettings = t3lib_BEfunc::getModuleData($menuData, Tx_Rnbase_Utility_T3General::_GP('SET'), $this->modName);
 
 		$menu = t3lib_BEfunc::getFuncMenu(
 			$pid, 'SET['.$selectorId.']', $menuSettings[$selectorId], $menuData[$selectorId], $this->getScriptURI()
@@ -294,7 +284,7 @@ class tx_cfcleague_selector{
 			$this->MATCH_MENU['match'][$match['uid']] = $match['short_name_home'] . ' - ' . $match['short_name_guest'];
 		}
 		$this->MATCH_SETTINGS = t3lib_BEfunc::getModuleData(
-			$this->MATCH_MENU, t3lib_div::_GP('SET'), $this->MCONF['name'] // Das ist der Name des Moduls
+			$this->MATCH_MENU, Tx_Rnbase_Utility_T3General::_GP('SET'), $this->MCONF['name'] // Das ist der Name des Moduls
 		);
 
 		$menu = t3lib_BEfunc::getFuncMenu(
@@ -330,7 +320,7 @@ class tx_cfcleague_selector{
       $this->GROUP_MENU['group'][$group['uid']] = $group['name'];
     }
     $this->GROUP_SETTINGS = t3lib_BEfunc::getModuleData(
-      $this->GROUP_MENU, t3lib_div::_GP('SET'), $this->MCONF['name'] // Das ist der Name des Moduls
+      $this->GROUP_MENU, Tx_Rnbase_Utility_T3General::_GP('SET'), $this->MCONF['name'] // Das ist der Name des Moduls
     );
 
     $menu = t3lib_BEfunc::getFuncMenu(
@@ -361,7 +351,7 @@ class tx_cfcleague_selector{
 			$SAISON_MENU['saison'][$saison->getUid()] = $saison->getName();
 		}
 		$this->SAISON_SETTINGS = t3lib_BEfunc::getModuleData(
-			$SAISON_MENU, t3lib_div::_GP('SET'), $this->MCONF['name'] // Das ist der Name des Moduls
+			$SAISON_MENU, Tx_Rnbase_Utility_T3General::_GP('SET'), $this->MCONF['name'] // Das ist der Name des Moduls
 		);
 
 		$menu = t3lib_BEfunc::getFuncMenu(
@@ -402,7 +392,7 @@ class tx_cfcleague_selector{
 			$name => $entries
 		);
 		$SETTINGS = t3lib_BEfunc::getModuleData(
-			$MENU, t3lib_div::_GP('SET'), $this->MCONF['name'] // Das ist der Name des Moduls
+			$MENU, Tx_Rnbase_Utility_T3General::_GP('SET'), $this->MCONF['name'] // Das ist der Name des Moduls
 		);
 		$ret = array();
 		$ret['menu'] = t3lib_BEfunc::getFuncMenu(

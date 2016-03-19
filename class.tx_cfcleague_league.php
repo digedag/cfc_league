@@ -85,7 +85,6 @@ class tx_cfcleague_league{
   function getTeamNames($asArray = 0) {
 
     if(!is_array($this->teamNames[$asArray])){
-// t3lib_div::debug('Erstelle neue Teams');
 			// Ohne zugeordnete Team, muss nicht gefragt werden
 			if($this->record['teams']) {
 	      $rows =

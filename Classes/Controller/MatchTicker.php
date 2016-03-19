@@ -26,6 +26,7 @@ $BE_USER->modAccess($MCONF, 1);
 
 tx_rnbase::load('tx_rnbase_util_TYPO3');
 tx_rnbase::load('tx_rnbase_mod_BaseModFunc');
+tx_rnbase::load('Tx_Rnbase_Utility_T3General');
 
 
 /**
@@ -77,8 +78,8 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc {
 		$match = $this->getSelector()->showMatchSelector($selector, $this->getModule()->getPid(), $current_league->getGamesByRound($current_round, true));
 		$this->getModule()->selector = $selector;
 
-		$update = t3lib_div::_GP('update');
-		$data = t3lib_div::_GP('data');
+		$update = Tx_Rnbase_Utility_T3General::_GP('update');
+		$data = Tx_Rnbase_Utility_T3General::_GP('data');
 		// Haben wir Daten im Request?
 		if ($update && is_array($data['tx_cfcleague_match_notes'])) {
 			$this->insertNotes($data);
@@ -106,7 +107,7 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc {
 		$content.=$this->doc->spacer(5);
 		$content.=$this->doc->divider(5);
 		$content.=$this->doc->spacer(5);
-		$arr = $this->createTickerArray($match, t3lib_div::_GP('showAll'));
+		$arr = $this->createTickerArray($match, Tx_Rnbase_Utility_T3General::_GP('showAll'));
 		if($arr) {
 			$tickerContent = $formTool->createLink('&showAll=1', $this->getModule()->getPid(), $LANG->getLL('label_showAllTickers'));
 			$tickerContent .= $this->doc->table($arr);
@@ -140,14 +141,14 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc {
 		return '<div id="t3sportsTicker">'.$ret.'</div>';
 	}
   private function getFormHeadline() {
-    $stop = t3lib_div::_GP('btn_watch_stop');
-  	$start = t3lib_div::_GP('btn_watch_start');
+    $stop = Tx_Rnbase_Utility_T3General::_GP('btn_watch_stop');
+  	$start = Tx_Rnbase_Utility_T3General::_GP('btn_watch_start');
   		// Daten: Startuhrzeit auf dem Client und gewünschtes offset
-		$startTime = array('watch_starttime' => $stop ? 0 : t3lib_div::_GP('watch_localtime'));
+		$startTime = array('watch_starttime' => $stop ? 0 : Tx_Rnbase_Utility_T3General::_GP('watch_localtime'));
 		$modValues = t3lib_BEfunc::getModuleData(array ('watch_starttime' => ''), $start || $stop ? $startTime : array(), $this->getModule()->getName());
 		$startTime = isset($modValues['watch_starttime']) ? $modValues['watch_starttime'] : '0';
 		// Der übergebene Offset wird immer gespeichert
-		$offset = array('watch_offset' => intval(t3lib_div::_GP('watch_offset')));
+		$offset = array('watch_offset' => intval(Tx_Rnbase_Utility_T3General::_GP('watch_offset')));
 		$modValues = t3lib_BEfunc::getModuleData(array ('watch_offset' => ''), $offset, $this->getModule()->getName() );
 		$offset = isset($modValues['watch_offset']) ? $modValues['watch_offset'] : '0';
 
@@ -372,9 +373,6 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc {
       $arr[] = $row;
 
     }
-
-//    $arr[] = Array();
-//    t3lib_div::debug($this->getFormTool()->form->extJSCODE);
 
     return $arr;
   }

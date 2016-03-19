@@ -24,6 +24,8 @@
 
 tx_rnbase::load('tx_cfcleague_mod1_decorator');
 tx_rnbase::load('tx_cfcleague_models_Competition');
+tx_rnbase::load('Tx_Rnbase_Utility_T3General');
+
 
 /**
  * Die Klasse verwaltet die Erstellung von Spielplänen für Wettbewerbe
@@ -76,8 +78,8 @@ class Tx_Cfcleague_Controller_Competition_MatchTable {
 	private function handleCreateMatchTable($comp) {
   	global $LANG;
 		// Haben wir Daten im Request?
-  	$data = t3lib_div::_GP('data');
-		if (is_array($data['rounds']) && t3lib_div::_GP('update')) {
+  	$data = Tx_Rnbase_Utility_T3General::_GP('data');
+		if (is_array($data['rounds']) && Tx_Rnbase_Utility_T3General::_GP('update')) {
 			$result = $this->createMatches($data['rounds'], $comp);
 			$content .= $this->doc->section($LANG->getLL('message').':', $result, 0, 1, ICON_INFO);
 			return $content;
@@ -127,7 +129,7 @@ class Tx_Cfcleague_Controller_Competition_MatchTable {
 		// Wir holen die Mannschaften und den GameString aus der Liga
 		// Beides jagen wir durch den Generator
 		$options = array();
-		$options['halfseries'] = intval(t3lib_div::_GP('option_halfseries'));
+		$options['halfseries'] = intval(Tx_Rnbase_Utility_T3General::_GP('option_halfseries'));
 		$options['nomatch'] = $comp->getDummyTeamIds();
 		$options['firstmatchday'] = $comp->getNumberOfRounds();
 		$options['firstmatchnumber'] = $comp->getLastMatchNumber();

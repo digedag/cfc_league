@@ -26,6 +26,7 @@ $BE_USER->modAccess($MCONF, 1);
 
 tx_rnbase::load('tx_rnbase_util_TYPO3');
 tx_rnbase::load('tx_rnbase_mod_BaseModFunc');
+tx_rnbase::load('Tx_Rnbase_Utility_T3General');
 
 
 /**
@@ -59,9 +60,9 @@ class Tx_Cfcleague_Controller_Profile extends tx_rnbase_mod_BaseModFunc {
 		$this->selector->init($this->getModule()->getDoc(), $this->getModule());
 
 		// Wir benötigen die $TCA, um die maximalen Spieler pro Team prüfen zu können
-		t3lib_div::loadTCA('tx_cfcleague_teams');
+		Tx_Rnbase_Utility_T3General::loadTCA('tx_cfcleague_teams');
 
-		$data = t3lib_div::_GP('data');
+		$data = Tx_Rnbase_Utility_T3General::_GP('data');
 		$this->SEARCH_SETTINGS = t3lib_BEfunc::getModuleData(array ('searchterm' => ''), $data, $this->getModule()->getName() );
 
 		$content .= $this->doc->section($LANG->getLL('msg_search_person'), $this->createSearchForm($data), 0, 1);
@@ -128,7 +129,7 @@ class Tx_Cfcleague_Controller_Profile extends tx_rnbase_mod_BaseModFunc {
 	function createProfileMergeForm($uid1, $uid2) {
 		global $LANG;
 		tx_rnbase::load('tx_cfcleague_showItem');
-		$info = t3lib_div::makeInstance('tx_cfcleague_showItem');
+		$info = tx_rnbase::makeInstance('tx_cfcleague_showItem');
 
 		$out = '<table width="100%" cellspacing="0" cellpadding="0" border="0">';
 		$out .= '<tr><td style="vertical-align:top;" width="49%">';
@@ -243,7 +244,6 @@ class Tx_Cfcleague_Controller_Profile extends tx_rnbase_mod_BaseModFunc {
     $orderBy = 'last_name, first_name, tx_cfcleague_profiles.uid';
 
     $rows = tx_cfcleague_db::queryDB($what, $where, $from, '', $orderBy, 0);
-//t3lib_div::debug($rows, 'search');
     $cnt = count($rows);
     if(!$cnt) return $rows; // Keine Daten gefunden
 
@@ -253,7 +253,6 @@ class Tx_Cfcleague_Controller_Profile extends tx_rnbase_mod_BaseModFunc {
     $ret = array();
     for($i=0; $i < $cnt; $i++) {
       if(intval($lastRow['uid']) != intval($rows[$i]['uid'])) {
-//t3lib_div::debug($lastRow, 'last search');
         // Ein neuer Spieler, also den alten ins Ergebnisarray legen
         $ret[] = $lastRow;
         $lastRow = $rows[$i];

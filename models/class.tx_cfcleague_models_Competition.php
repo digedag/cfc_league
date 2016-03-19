@@ -215,7 +215,6 @@ class tx_cfcleague_models_Competition extends tx_rnbase_model_base {
 //	  $options['debug'] = 1;
 		$service = tx_cfcleague_util_ServiceRegistry::getMatchService();
   	$matches = $service->search($fields, $options);
-//t3lib_div::debug($roundId, 'tx_cfcleaguefe_models_competition'); // TODO: Remove me!
   	return $matches;
   }
 	/**

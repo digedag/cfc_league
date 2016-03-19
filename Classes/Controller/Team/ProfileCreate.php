@@ -49,7 +49,7 @@ class Tx_Cfcleague_Controller_Team_ProfileCreate {
 		$this->pid = $pid;
 		$this->doc = $doc;
 		$this->formTool = $formTool;
-		$data = t3lib_div::_GP('data');
+		$data = Tx_Rnbase_Utility_T3General::_GP('data');
 
 		$content = '';
 		$content .= $this->showCreateProfiles($data, $team, $teamInfo);
@@ -211,7 +211,6 @@ class Tx_Cfcleague_Controller_Team_ProfileCreate {
       $data['tx_cfcleague_teams'][$team->record['uid']]['supporters'] = implode(',', tx_cfcleague_util_Misc::mergeArrays(tx_rnbase_util_Strings::intExplode(',', $team->record['supporters']), $supportIds));
     }
 
-//    t3lib_div::debug($data, 'tx_cfcleague_profile_create');
     if(count($data)) {
       reset($data);
       $tce =& tx_cfcleague_db::getTCEmain($data);
@@ -243,8 +242,6 @@ class Tx_Cfcleague_Controller_Team_ProfileCreate {
              '" AND cruser_id="'.$profile['cruser_id'].
              '" AND last_name="' . $profile['last_name'] . '"';
     if($profile['first_name']) $where .= ' AND first_name="' . $profile['first_name'] . '"';
-
-//    t3lib_div::debug($where, 'WHERE');
 
     $rows = tx_cfcleague_db::queryDB($what, $where, $from, '', '', 0);
 

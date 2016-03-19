@@ -120,9 +120,9 @@ class Tx_Cfcleague_Controller_Team_TeamNotes {
 	 */
 	private function handleAddProfiles(&$currTeam, $baseInfo) {
 		$out = '';
-		$profile2team = strlen(t3lib_div::_GP('profile2team')) > 0; // Wurde der Submit-Button gedrückt?
+		$profile2team = strlen(Tx_Rnbase_Utility_T3General::_GP('profile2team')) > 0; // Wurde der Submit-Button gedrückt?
 		if($profile2team) {
-			$entryUids = t3lib_div::_GP('checkEntry');
+			$entryUids = Tx_Rnbase_Utility_T3General::_GP('checkEntry');
 			if(!is_array($entryUids) || ! count($entryUids)) {
 				$out = $GLOBALS['LANG']->getLL('msg_no_profile_selected').'<br/><br/>';
 			}

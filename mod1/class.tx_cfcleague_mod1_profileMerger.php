@@ -27,7 +27,8 @@ tx_rnbase::load('tx_cfcleague_util_ServiceRegistry');
 tx_rnbase::load('tx_cfcleague_team');
 tx_rnbase::load('tx_cfcleague_match');
 tx_rnbase::load('tx_rnbase_util_Misc');
-tx_rnbase::load('tx_rnbase_util_Strings');
+tx_rnbase::load('Tx_Rnbase_Utility_Strings');
+tx_rnbase::load('Tx_Rnbase_Utility_T3General');
 
 
 class tx_cfcleague_mod1_profileMerger {
@@ -69,7 +70,6 @@ class tx_cfcleague_mod1_profileMerger {
 		foreach($rows As $row) {
 			$data['tx_cfcleague_team_notes'][$row['uid']]['player'] = $leading;
 		}
-//		t3lib_div::debug($rows, 'tx_cfcleague_mod1_profileMerger'); // TODO: remove me
 	}
 	private function mergeMatchNotes(&$data, $leading, $obsolete) {
 		$rows = tx_cfcleague_match::getMatchNotes4Profile($obsolete);
@@ -112,8 +112,8 @@ class tx_cfcleague_mod1_profileMerger {
 	}
 	function replaceUid($fieldValue, $leading, $obsolete) {
 		$ret = '';
-		if(t3lib_div::inList($fieldValue, $obsolete)) {
-			$values = tx_rnbase_util_Strings::intExplode(',', $fieldValue);
+		if(Tx_Rnbase_Utility_T3General::inList($fieldValue, $obsolete)) {
+			$values = Tx_Rnbase_Utility_Strings::intExplode(',', $fieldValue);
 			$idx = array_search($obsolete, $values);
 			if($idx !== FALSE) {
 				$values[$idx] = $leading;
@@ -127,5 +127,3 @@ class tx_cfcleague_mod1_profileMerger {
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/mod1/class.tx_cfcleague_mod1_profileMerger.php'])	{
 	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/mod1/class.tx_cfcleague_mod1_profileMerger.php']);
 }
-
-?>

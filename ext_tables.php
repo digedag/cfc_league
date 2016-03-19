@@ -85,7 +85,6 @@ if (TYPO3_MODE=='BE')	{
 	}
 
   $TCA['pages']['columns']['module']['config']['items'][] = array('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_folder', 'cfcleague');
-//  t3lib_div::debug($TCA['pages']['columns']['module']['config'], 'ext_tables');
 /*
   $PAGES_TYPES['cfcleague'] = Array(
       'type' => 'sys',
