@@ -85,10 +85,6 @@ if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_lea
 $SOBE = tx_rnbase::makeInstance('tx_cfcleague_module1');
 $SOBE->init();
 
-// Include files?
-foreach($SOBE->include_once as $INC_FILE)	include_once($INC_FILE);
-
 $SOBE->main();
 $SOBE->printContent();
 
-?>
