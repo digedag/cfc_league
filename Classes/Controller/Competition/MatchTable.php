@@ -34,6 +34,8 @@ class Tx_Cfcleague_Controller_Competition_MatchTable {
 	/* @var $doc \TYPO3\CMS\Backend\Template\BigDocumentTemplate */
 	private $doc;
 	private $module;
+	/* @var $formTool Tx_Rnbase_Backend_Form_ToolBox */
+	private $formTool;
 
 
 	/**
@@ -150,7 +152,7 @@ class Tx_Cfcleague_Controller_Competition_MatchTable {
 			// Wir zeigen alle Spieltage und fragen nach dem Termin
 			$content .= $this->prepareMatchTable($table, $comp, $options['halfseries']);
 			// Den Update-Button einfügen
-			$content .= '<input type="submit" name="update" value="'.$LANG->getLL('btn_create').'" onclick="return confirm('.$GLOBALS['LANG']->JScharCode($GLOBALS['LANG']->getLL('msg_CreateGameTable')).')">';
+			$content .= $this->formTool->createSubmit('update', $LANG->getLL('btn_create'), $GLOBALS['LANG']->getLL('msg_CreateGameTable'));
 		}
 		return $content;
 	}
@@ -280,7 +282,8 @@ class Tx_Cfcleague_Controller_Competition_MatchTable {
 
 		// Die neuen Notes werden jetzt gespeichert
 		reset($data);
-		$tce =& tx_cfcleague_db::getTCEmain($data);
+		tx_rnbase::load('tx_rnbase_util_DB');
+		$tce = tx_rnbase_util_DB::getTCEmain($data);
 		$tce->process_datamap();
 
 		return $LANG->getLL('msg_matches_created');
