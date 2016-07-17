@@ -22,7 +22,6 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-$BE_USER->modAccess($MCONF, 1);
 
 tx_rnbase::load('tx_rnbase_util_TYPO3');
 tx_rnbase::load('tx_rnbase_mod_BaseModFunc');
@@ -49,8 +48,11 @@ class Tx_Cfcleague_Controller_Profile extends tx_rnbase_mod_BaseModFunc {
 	}
 
 	protected function getContent($template, &$configurations, &$formatter, $formTool) {
-		global $LANG, $TCA;
+		global $LANG;
 		$content = '';
+
+		if(tx_rnbase_util_TYPO3::isTYPO76OrHigher())
+			return 'Not yet implemented in TYPO3 7.x';
 
 		$this->doc = $this->getModule()->getDoc();
 		$this->formTool = $this->getModule()->getFormTool();

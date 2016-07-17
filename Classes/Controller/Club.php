@@ -22,7 +22,6 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-$GLOBALS['BE_USER']->modAccess($MCONF, 1);
 
 tx_rnbase::load('tx_rnbase_util_TYPO3');
 tx_rnbase::load('tx_rnbase_mod_BaseModFunc');
@@ -49,6 +48,8 @@ class Tx_Cfcleague_Controller_Club extends tx_rnbase_mod_BaseModFunc {
 	 * @param tx_rnbase_util_FormTool $formTool
 	 */
 	protected function getContent($template, &$configurations, &$formatter, $formTool) {
+		if(tx_rnbase_util_TYPO3::isTYPO76OrHigher())
+			return 'Not yet implemented in TYPO3 7.x';
 
 		$selector = tx_rnbase::makeInstance('tx_cfcleague_selector');
 		$selector->init($this->doc, $this->getModule());
