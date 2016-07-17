@@ -169,6 +169,7 @@ class tx_cfcleague_league{
    * Diese Funktion ermittelt die Spiele eines Spieltags. Die Namen der Teams werden aufgelöst.
    * @param int $round
    * @param boolean $ignoreFreeOfPlay
+   * @deprecated
    */
   function getGamesByRound($round, $ignoreFreeOfPlay = false){
     $what = 'tx_cfcleague_games.uid,home,guest, t1.name AS name_home, t2.name AS name_guest, '.

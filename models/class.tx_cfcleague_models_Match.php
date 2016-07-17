@@ -298,8 +298,10 @@ class tx_cfcleague_models_Match extends tx_rnbase_model_base {
    * Alle MatchNotes haben eine Referenz auf das zugehörige Spiel
    * @return array[tx_cfcleague_models_MatchNotes]
    */
-  public function getMatchNotes() {
+  public function getMatchNotes($orderBy = 'asc', $limit = FALSE) {
     $notes = $this->resolveMatchNotes();
+    if($limit)
+    	return array_slice($notes, 0, (int)$limit);
     return $notes;
   }
 
@@ -312,6 +314,7 @@ class tx_cfcleague_models_Match extends tx_rnbase_model_base {
 		if(!isset($this->matchNotes)) {
 			$what = '*';
 			$from = 'tx_cfcleague_match_notes';
+			$options = array();
 			$options['where'] = 'game = ' .$this->uid;
 			$options['wrapperclass'] = 'tx_cfcleague_models_MatchNote';
 			// HINT: Die Sortierung nach dem Typ ist für die Auswechslungen wichtig.

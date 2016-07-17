@@ -126,6 +126,34 @@ class tx_cfcleague_services_Match extends Tx_Rnbase_Service_Base implements tx_c
 		return $searcher->search($fields, $options);
 	}
 
+	/**
+	 * Diese Funktion ermittelt die Spiele eines Spieltags. Die Namen der Teams werden aufgelöst.
+	 * @param tx_cfcleague_models_Competition $competition
+	 * @param int $round
+	 * @param boolean $ignoreFreeOfPlay
+	 * @return array plain
+	 */
+	public function searchMatchesByRound($competition, $round, $ignoreFreeOfPlay = false){
+		$what = 'tx_cfcleague_games.uid,home,guest, t1.name AS name_home, t2.name AS name_guest, '.
+				't1.short_name AS short_name_home, t1.dummy AS no_match_home, t2.short_name AS short_name_guest, t2.dummy AS no_match_guest, '.
+				'goals_home_1,goals_guest_1,goals_home_2,goals_guest_2, '.
+				'goals_home_3,goals_guest_3,goals_home_4,goals_guest_4, '.
+				'goals_home_et,goals_guest_et,goals_home_ap,goals_guest_ap, visitors,date,status';
+		$from = Array('tx_cfcleague_games ' .
+				'INNER JOIN tx_cfcleague_teams t1 ON (home= t1.uid) ' .
+				'INNER JOIN tx_cfcleague_teams t2 ON (guest= t2.uid) '
+				, 'tx_cfcleague_games');
+
+
+		$where = 'competition="'.$competition->getUid().'"';
+		$where .= ' AND round='.intval($round);
+		if($ignoreFreeOfPlay) { // keine spielfreien Spiele laden
+			$where .= ' AND t1.dummy = 0 AND t2.dummy = 0 ';
+		}
+
+		return Tx_Rnbase_Database_Connection::getInstance()->doSelect($what, $from, ['where' => $where]);
+	}
+
 
 	/**
 	 * Ermittelt für das übergebene Spiel die MatchNotes. Wenn $types = 1 dann

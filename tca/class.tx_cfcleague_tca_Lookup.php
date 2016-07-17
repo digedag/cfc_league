@@ -259,10 +259,87 @@ class tx_cfcleague_tca_Lookup {
 			)
 		);
 	}
+
+
+	/**
+	 * Die Spieler des Heimteams ermitteln
+	 * Used: Edit-Maske eines Spiels für Teamaufstellung und Match-Note
+	 */
+	public function getPlayersHome4Match($PA, $fobj){
+		global $LANG;
+		$LANG->includeLLFile('EXT:cfc_league/locallang_db.xml');
+
+		// tx_rnbase_util_Debug::debug(count($PA[items]), 'items cfcleague');
+
+		if($PA['row']['home'])
+		{
+			// Abfrage aus Spieldatensatz
+			// Es werden alle Spieler des Teams benötigt
+			$players = $this->findPlayers($PA['row']['home']);
+			$PA[items] = $players;
+		}
+		elseif($PA['row']['game']) {
+			// Abfrage aus MatchNote-Datensatz
+			// Wenn wir die Match ID haben, können wir die Spieler auch so ermitteln
+			// Es werden alle aufgestellten Spieler des Matches benötigt
+			$match = tx_rnbase::makeInstance('tx_cfcleague_models_Match', $this->getRowId($PA['row']['game']));
+
+			$players = tx_cfcleague_util_ServiceRegistry::getProfileService()->loadProfiles($match->getPlayersHome(true));
+//			$players = $match->getPlayerNamesHome();
+			$playerArr = array();
+			foreach($players As $player) {
+				$playerArr[] = Array($player->getName(), $player->getUid());
+			}
+			$PA[items] = $playerArr;
+			// Abschließend noch den Spieler "Unbekannt" hinzufügen! Dieser ist nur in Matchnotes verfügbar
+			$PA[items][] = Array($LANG->getLL('tx_cfcleague.unknown'), '-1');
+		}
+		else
+			$PA[items] = array();
+	}
+	/**
+	 * Die Spieler des Gastteams ermitteln
+	 * Used: Edit-Maske eines Spiels für Teamaufstellung
+	 */
+	public function getPlayersGuest4Match($PA, $fobj){
+		global $LANG;
+		$LANG->includeLLFile('EXT:cfc_league/locallang_db.xml');
+
+		if($PA['row']['guest'])
+		{
+			$players = $this->findPlayers($PA['row']['guest']);
+			$PA[items] = $players;
+		}
+		elseif($PA['row']['game']) {
+			// Wenn wir die Match ID haben könne wir die Spieler auch so ermitteln
+			$match = tx_rnbase::makeInstance('tx_cfcleague_models_Match', $this->getRowId($PA['row']['game']));
+//			$players = $match->getPlayerNamesGuest();
+			$players = tx_cfcleague_util_ServiceRegistry::getProfileService()->loadProfiles($match->getPlayersHome(true));
+			$playerArr = array();
+			foreach($players As $player) {
+				$playerArr[] = Array($player->getName(), $player->getUid());
+			}
+			$PA[items] = $playerArr;
+			// Abschließend noch den Spieler "Unbekannt" hinzufügen!
+			$PA[items][] = Array($LANG->getLL('tx_cfcleague.unknown'), '-1');
+		}
+		else // Ohne Daten müssen wir alle Spieler löschen
+			$PA[items] = array();
+	}
+
+	/**
+	 * Liefert die verschachtelte UID eines Strings der Form
+	 * tx_table_name_uid|valuestring
+	 */
+	private function getRowId($value) {
+		$ret = tx_rnbase_util_Strings::trimExplode('|', $value);
+		$ret = tx_rnbase_util_Strings::trimExplode('_', $ret[0]);
+		return intval($ret[count($ret)-1]);
+	}
+
+
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/tca/class.tx_cfcleague_tca_Lookup.php']) {
 	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/tca/class.tx_cfcleague_tca_Lookup.php']);
 }
-
-?>

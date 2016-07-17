@@ -24,6 +24,7 @@
 
 /**
  * Klasse für Datenbankabfragen
+ * @deprecated
  */
 class tx_cfcleague_db{
   /**
@@ -42,7 +43,7 @@ class tx_cfcleague_db{
       $tableName = $from[1];
       $fromClause = $from[0];
     }
-
+throw new Exception("deprecated\n<br/>". tx_rnbase_util_Debug::getDebugTrail());
     // Zur Where-Clause noch die gültigen Felder hinzufügen
     $where .= t3lib_BEfunc::deleteClause($tableName);
 

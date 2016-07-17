@@ -140,6 +140,7 @@ class tx_cfcleague_handleDataInput{
   /**
    * Die Spieler des Gastteams ermitteln
    * Used: Edit-Maske eines Spiels für Teamaufstellung
+   * @deprecated use tca_Lookup
    */
   function getPlayersGuest4Match($PA, $fobj){
     global $LANG;

@@ -276,33 +276,38 @@ class tx_cfcleague_selector{
 	 * Darstellung der Select-Box mit allen übergebenen Spielen. Es wird auf das aktuelle Spiel eingestellt.
 	 * @return tx_cfcleague_match current match
 	 */
-	function showMatchSelector(&$content, $pid, $matches){
-		$this->MATCH_MENU = Array (
-			'match' => array()
-		);
-		foreach($matches as $idx=>$match){
-			$this->MATCH_MENU['match'][$match['uid']] = $match['short_name_home'] . ' - ' . $match['short_name_guest'];
+	public function showMatchSelector(&$content, $pid, $matches){
+		$entries = array();
+// 		$this->MATCH_MENU = Array (
+// 			'match' => array()
+// 		);
+		foreach($matches as $match){
+//			$this->MATCH_MENU['match'][$match['uid']] = $match['short_name_home'] . ' - ' . $match['short_name_guest'];
+			$entries[$match['uid']] = $match['short_name_home'] . ' - ' . $match['short_name_guest'];
 		}
-		$this->MATCH_SETTINGS = t3lib_BEfunc::getModuleData(
-			$this->MATCH_MENU, Tx_Rnbase_Utility_T3General::_GP('SET'), $this->MCONF['name'] // Das ist der Name des Moduls
-		);
 
-		$menu = t3lib_BEfunc::getFuncMenu(
-			$pid, 'SET[match]', $this->MATCH_SETTINGS['match'], $this->MATCH_MENU['match'], $this->getScriptURI()
-		);
+		$data = $this->getFormTool()->showMenu($pid, 'match', $this->MCONF['name'], $entries, $this->getScriptURI());
+// 		$this->MATCH_SETTINGS = t3lib_BEfunc::getModuleData(
+// 			$this->MATCH_MENU, Tx_Rnbase_Utility_T3General::_GP('SET'), $this->MCONF['name'] // Das ist der Name des Moduls
+// 		);
+
+// 		$menu = t3lib_BEfunc::getFuncMenu(
+// 			$pid, 'SET[match]', $this->MATCH_SETTINGS['match'], $this->MATCH_MENU['match'], $this->getScriptURI()
+// 		);
 		// In den Content einbauen
 		// Zusätzlich noch einen Edit-Link setzen
-		$links = $this->getFormTool()->createEditLink('tx_cfcleague_games', $this->MATCH_SETTINGS['match']);
-		if($menu) {
+		$links = $this->getFormTool()->createEditLink('tx_cfcleague_games', $data['value']);
+		if($data['menu']) {
+//		if($menu) {
 			//$menu .= '</td><td style="width:90px; padding-left:10px;">' . $link;
-			$menu = '<div class="cfcselector"><div class="selector">' . $menu . '</div><div class="links">' . $links . '</div></div>';
+			$menu = '<div class="cfcselector"><div class="selector">' . $data['menu'] . '</div><div class="links">' . $links . '</div></div>';
 		}
 		$content .= $menu;
 //		$content.=$this->doc->section('', $this->doc->funcMenu($headerSection, $menu));
 
 		// Aktuellen Wert als Match-Objekt zurückgeben
 		tx_rnbase::load('tx_cfcleague_match');
-		return new tx_cfcleague_match($this->MATCH_SETTINGS['match']);
+		return tx_rnbase::makeInstance('tx_cfcleague_models_Match', $data['value']);
 	}
 
   /**

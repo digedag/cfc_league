@@ -34,6 +34,7 @@ require_once('class.tx_cfcleague_db.php');
 
 /**
  * Datenobjekt für eine Spiel in der Datenbank
+ * @deprecated
  */
 class tx_cfcleague_match {
   var $uid;
@@ -46,6 +47,9 @@ class tx_cfcleague_match {
    */
   function tx_cfcleague_match($uid){
     $this->uid = $uid;
+    tx_rnbase::load('tx_rnbase_util_TYPO3');
+    if(tx_rnbase_util_TYPO3::isTYPO76OrHigher())
+	    throw new Exception('deprecated: ' . tx_rnbase_util_Debug::getDebugTrail() );
     $this->reset();
   }
 
@@ -149,4 +153,4 @@ class tx_cfcleague_match {
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/class.tx_cfcleague_match.php'])	{
   include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/class.tx_cfcleague_match.php']);
 }
-?>
+
