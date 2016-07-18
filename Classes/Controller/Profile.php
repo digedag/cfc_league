@@ -51,8 +51,8 @@ class Tx_Cfcleague_Controller_Profile extends tx_rnbase_mod_BaseModFunc {
 		global $LANG;
 		$content = '';
 
-		if(tx_rnbase_util_TYPO3::isTYPO76OrHigher())
-			return 'Not yet implemented in TYPO3 7.x';
+// 		if(tx_rnbase_util_TYPO3::isTYPO76OrHigher())
+// 			return 'Not yet implemented in TYPO3 7.x';
 
 		$this->doc = $this->getModule()->getDoc();
 		$this->formTool = $this->getModule()->getFormTool();
@@ -65,7 +65,7 @@ class Tx_Cfcleague_Controller_Profile extends tx_rnbase_mod_BaseModFunc {
 		Tx_Rnbase_Utility_T3General::loadTCA('tx_cfcleague_teams');
 
 		$data = Tx_Rnbase_Utility_T3General::_GP('data');
-		$this->SEARCH_SETTINGS = t3lib_BEfunc::getModuleData(array ('searchterm' => ''), $data, $this->getModule()->getName() );
+		$this->SEARCH_SETTINGS = Tx_Rnbase_Backend_Utility::getModuleData(array ('searchterm' => ''), $data, $this->getModule()->getName() );
 
 		$content .= $this->doc->section($LANG->getLL('msg_search_person'), $this->createSearchForm($data), 0, 1);
 		$content.=$this->doc->spacer(5);
@@ -245,7 +245,7 @@ class Tx_Cfcleague_Controller_Profile extends tx_rnbase_mod_BaseModFunc {
     }
     $orderBy = 'last_name, first_name, tx_cfcleague_profiles.uid';
 
-    $rows = tx_cfcleague_db::queryDB($what, $where, $from, '', $orderBy, 0);
+    $rows = Tx_Rnbase_Database_Connection::getInstance()->doSelect($what, $from, ['where'=> $where, 'orderby' => $orderBy]);
     $cnt = count($rows);
     if(!$cnt) return $rows; // Keine Daten gefunden
 
@@ -295,7 +295,7 @@ class Tx_Cfcleague_Controller_Profile extends tx_rnbase_mod_BaseModFunc {
 				$row[] = $profile['first_name'] ? $profile['first_name'] : '&nbsp;';
 				$row[] = date('j.n.Y', $profile['birthday']) . ' <input type="submit" name="data[edit_profile][' . $profile['uid'] . ']" value="'.$LANG->getLL('btn_edit').'"';
 				// Die Zusatzinfos zusammenstellen
-				$infos = $LANG->getLL('label_page'). ': ' . t3lib_BEfunc::getRecordPath($profile['pid'], '', 0) . '<br />';
+				$infos = $LANG->getLL('label_page'). ': ' . Tx_Rnbase_Backend_Utility::getRecordPath($profile['pid'], '', 0) . '<br />';
 				if(is_array($profile['teams']))
 					foreach($profile['teams'] as $team) {
 						$infos .= '&nbsp;Team: ' . $team['team_name'];

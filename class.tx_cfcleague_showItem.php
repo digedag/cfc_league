@@ -77,17 +77,18 @@ class tx_cfcleague_showItem {
 				// Check permissions and uid value:
 			if ($this->uid && $BE_USER->check('tables_select', $this->table))	{
 				if ((string)$this->table=='pages')	{
-					$this->pageinfo = t3lib_BEfunc::readPageAccess($this->uid, $this->perms_clause);
+					$this->pageinfo = Tx_Rnbase_Backend_Utility::readPageAccess($this->uid, $this->perms_clause);
 					$this->access = is_array($this->pageinfo) ? 1 : 0;
 					$this->row = $this->pageinfo;
 				} else {
-					$this->row = t3lib_BEfunc::getRecord($this->table, $this->uid);
+					$this->row = Tx_Rnbase_Backend_Utility::getRecord($this->table, $this->uid);
 					if ($this->row)	{
-						$this->pageinfo = t3lib_BEfunc::readPageAccess($this->row['pid'], $this->perms_clause);
+						$this->pageinfo = Tx_Rnbase_Backend_Utility::readPageAccess($this->row['pid'], $this->perms_clause);
 						$this->access = is_array($this->pageinfo) ? 1 : 0;
 					}
 				}
 
+				// FIXME: Implement in 7.6
 				$treatData = Tx_Rnbase_Utility_T3General::makeInstance('t3lib_transferData');
 				$treatData->renderRecord($this->table, $this->uid, 0, $this->row);
 				$cRow = $treatData->theRecord;
@@ -190,8 +191,8 @@ class tx_cfcleague_showItem {
 					$i++;
 					$tableRows[] = '
 						<tr>
-							<td class="bgColor5">'.$LANG->sL(t3lib_BEfunc::getItemLabel($this->table, $name), 1).'</td>
-							<td class="bgColor4">'.htmlspecialchars(t3lib_BEfunc::getProcessedValue($this->table, $name, $this->row[$name])).'</td>
+							<td class="bgColor5">'.$LANG->sL(Tx_Rnbase_Backend_Utility::getItemLabel($this->table, $name), 1).'</td>
+							<td class="bgColor4">'.htmlspecialchars(Tx_Rnbase_Backend_Utility::getProcessedValue($this->table, $name, $this->row[$name])).'</td>
 						</tr>';
 				}
 			}
@@ -244,7 +245,7 @@ class tx_cfcleague_showItem {
 		$code = '';
 
 			// Setting header:
-		$icon = t3lib_BEfunc::getFileIcon($ext);
+		$icon = Tx_Rnbase_Backend_Utility::getFileIcon($ext);
 		$url = 'gfx/fileicons/'.$icon;
 		$fileName = '<img src="'.$url.'" width="18" height="16" align="top" alt="" /><b>'.$LANG->sL('LLL:EXT:lang/locallang_core.php:show_item.php.file', 1).':</b> '.$fI['file'];
 		if (Tx_Rnbase_Utility_Strings::isFirstPartOfStr($this->file, PATH_site))	{
