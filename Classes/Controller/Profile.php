@@ -130,8 +130,7 @@ class Tx_Cfcleague_Controller_Profile extends tx_rnbase_mod_BaseModFunc {
 	 */
 	function createProfileMergeForm($uid1, $uid2) {
 		global $LANG;
-		tx_rnbase::load('tx_cfcleague_showItem');
-		$info = tx_rnbase::makeInstance('tx_cfcleague_showItem');
+		$info = tx_rnbase::makeInstance('Tx_Cfcleague_Controller_MatchTicker_ShowItem45');
 
 		$out = '<table width="100%" cellspacing="0" cellpadding="0" border="0">';
 		$out .= '<tr><td style="vertical-align:top;" width="49%">';

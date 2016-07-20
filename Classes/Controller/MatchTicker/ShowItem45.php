@@ -27,10 +27,10 @@ tx_rnbase::load('Tx_Rnbase_Utility_T3General');
 
 
 /**
- * This class is a modified copy of SC_show_item
+ * This class is a modified copy of SC_show_item. It works until 6.2
  *
  */
-class tx_cfcleague_showItem {
+class Tx_Cfcleague_Controller_MatchTicker_ShowItem45 {
 		// GET vars:
 	var $table;			// Record table (or filename)
 	var $uid;			// Record uid  (or '' when filename)
