@@ -22,7 +22,6 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-require_once(tx_rnbase_util_Extensions::extPath('cfc_league') . 'class.tx_cfcleague_db.php');
 tx_rnbase::load('tx_cfcleague_util_ServiceRegistry');
 tx_rnbase::load('tx_cfcleague_team');
 tx_rnbase::load('tx_cfcleague_match');
@@ -31,7 +30,7 @@ tx_rnbase::load('Tx_Rnbase_Utility_Strings');
 tx_rnbase::load('Tx_Rnbase_Utility_T3General');
 
 
-class tx_cfcleague_mod1_profileMerger {
+class Tx_Cfcleague_Controller_Profile_ProfileMerger {
 
 	/**
 	 * Start merging profile. The leading profile will overtake all references
@@ -51,10 +50,10 @@ class tx_cfcleague_mod1_profileMerger {
 
 		// Wir machen alles über die TCA, also das Array aufbauen
 		$data = array();
-		self::mergeTeams($data, $leadingProfileUID, $obsoleteProfileUID);
-		self::mergeMatches($data, $leadingProfileUID, $obsoleteProfileUID);
-		self::mergeMatchNotes($data, $leadingProfileUID, $obsoleteProfileUID);
-		self::mergeTeamNotes($data, $leadingProfileUID, $obsoleteProfileUID);
+		$this->mergeTeams($data, $leadingProfileUID, $obsoleteProfileUID);
+		$this->mergeMatches($data, $leadingProfileUID, $obsoleteProfileUID);
+		$this->mergeMatchNotes($data, $leadingProfileUID, $obsoleteProfileUID);
+		$this->mergeTeamNotes($data, $leadingProfileUID, $obsoleteProfileUID);
 
 		tx_rnbase_util_Misc::callHook('cfc_league', 'mergeProfiles_hook',
 			array('data' => &$data, 'leadingUid' => $leadingProfileUID, 'obsoleteUid' => $obsoleteProfileUID), $this);
@@ -74,22 +73,22 @@ class tx_cfcleague_mod1_profileMerger {
 	private function mergeMatchNotes(&$data, $leading, $obsolete) {
 		$rows = tx_cfcleague_util_ServiceRegistry::getMatchService()->searchMatchNotesByProfile($obsolete);
 		foreach($rows As $matchNote) {
-			self::mergeField('player_home', 'tx_cfcleague_match_notes', $data, $matchNote->getRecord(), $leading, $obsolete);
-			self::mergeField('player_guest', 'tx_cfcleague_match_notes', $data, $matchNote->getRecord(), $leading, $obsolete);
+			$this->mergeField('player_home', 'tx_cfcleague_match_notes', $data, $matchNote->getRecord(), $leading, $obsolete);
+			$this->mergeField('player_guest', 'tx_cfcleague_match_notes', $data, $matchNote->getRecord(), $leading, $obsolete);
 		}
 	}
 
 	private function mergeMatches(&$data, $leading, $obsolete) {
 		$rows = tx_cfcleague_util_ServiceRegistry::getMatchService()->searchMatchesByProfile($obsolete);
 		foreach($rows As $match) {
-			self::mergeField('players_home', 'tx_cfcleague_games', $data, $match->getRecord(), $leading, $obsolete);
-			self::mergeField('players_guest', 'tx_cfcleague_games', $data, $match->getRecord(), $leading, $obsolete);
-			self::mergeField('substitutes_home', 'tx_cfcleague_games', $data, $match->getRecord(), $leading, $obsolete);
-			self::mergeField('substitutes_guest', 'tx_cfcleague_games', $data, $match->getRecord(), $leading, $obsolete);
-			self::mergeField('coach_home', 'tx_cfcleague_games', $data, $match->getRecord(), $leading, $obsolete);
-			self::mergeField('coach_guest', 'tx_cfcleague_games', $data, $match->getRecord(), $leading, $obsolete);
-			self::mergeField('referee', 'tx_cfcleague_games', $data, $match->getRecord(), $leading, $obsolete);
-			self::mergeField('assists', 'tx_cfcleague_games', $data, $match->getRecord(), $leading, $obsolete);
+			$this->mergeField('players_home', 'tx_cfcleague_games', $data, $match->getRecord(), $leading, $obsolete);
+			$this->mergeField('players_guest', 'tx_cfcleague_games', $data, $match->getRecord(), $leading, $obsolete);
+			$this->mergeField('substitutes_home', 'tx_cfcleague_games', $data, $match->getRecord(), $leading, $obsolete);
+			$this->mergeField('substitutes_guest', 'tx_cfcleague_games', $data, $match->getRecord(), $leading, $obsolete);
+			$this->mergeField('coach_home', 'tx_cfcleague_games', $data, $match->getRecord(), $leading, $obsolete);
+			$this->mergeField('coach_guest', 'tx_cfcleague_games', $data, $match->getRecord(), $leading, $obsolete);
+			$this->mergeField('referee', 'tx_cfcleague_games', $data, $match->getRecord(), $leading, $obsolete);
+			$this->mergeField('assists', 'tx_cfcleague_games', $data, $match->getRecord(), $leading, $obsolete);
 		}
 	}
 
@@ -99,14 +98,14 @@ class tx_cfcleague_mod1_profileMerger {
 		foreach($teamRows As $team) {
 			// Drei Felder können das Profile enthalten:
 			// players
-			self::mergeField('players', 'tx_cfcleague_teams', $data, $team->getRecord(), $leading, $obsolete);
-			self::mergeField('coaches', 'tx_cfcleague_teams', $data, $team->getRecord(), $leading, $obsolete);
-			self::mergeField('supporters', 'tx_cfcleague_teams', $data, $team->getRecord(), $leading, $obsolete);
+			$this->mergeField('players', 'tx_cfcleague_teams', $data, $team->getRecord(), $leading, $obsolete);
+			$this->mergeField('coaches', 'tx_cfcleague_teams', $data, $team->getRecord(), $leading, $obsolete);
+			$this->mergeField('supporters', 'tx_cfcleague_teams', $data, $team->getRecord(), $leading, $obsolete);
 		}
 	}
 
 	private function mergeField($fieldName, $tableName, &$data, $row, $leading, $obsolete) {
-		$val = self::replaceUid($row[$fieldName], $leading, $obsolete);
+		$val = $this->replaceUid($row[$fieldName], $leading, $obsolete);
 		if(strlen($val))
 			$data[$tableName][$row['uid']][$fieldName] = $val;
 	}
