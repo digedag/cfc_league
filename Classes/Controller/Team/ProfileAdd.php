@@ -80,9 +80,9 @@ class Tx_Cfcleague_Controller_Team_ProfileAdd {
 		$options['checkbox'] = 1;
 
 		// Todo: wir müssen wissen, welche Teil des Teams selectiert ist
-		$profiles = $currTeam->getPlayerNames();
+		$profiles = $currTeam->getPlayers();
 		foreach($profiles As $profile) {
-			$options['dontcheck'][$profile['uid']] = $GLOBALS['LANG']->getLL('msg_profile_already_joined');
+			$options['dontcheck'][$profile->getUid()] = $GLOBALS['LANG']->getLL('msg_profile_already_joined');
 		}
 
 		$searcher = $this->getProfileSearcher($options);
@@ -90,7 +90,7 @@ class Tx_Cfcleague_Controller_Team_ProfileAdd {
 		$tableForm .= $this->mod->getDoc()->spacer(15);
 		$tableForm.= $searcher->getResultList();
 		if($searcher->getSize()) {
-			$tableForm .= $this->getFormTool()->createSelectSingleByArray('profileType', '', Tx_Cfcleague_Controller_Team_ProfileCreate::getProfileTypeArray());
+			$tableForm .= $this->getFormTool()->createSelectByArray('profileType', '', Tx_Cfcleague_Controller_Team_ProfileCreate::getProfileTypeArray());
 			// Button für Zuordnung
 			$tableForm .= $this->getFormTool()->createSubmit('profile2team', $GLOBALS['LANG']->getLL('label_join_profiles'));
 		}

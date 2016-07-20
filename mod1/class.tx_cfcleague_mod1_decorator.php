@@ -39,7 +39,7 @@ class tx_cfcleague_mod1_decorator {
 				if(!is_array($options['dontcheck']) || !array_key_exists($record['uid'], $options['dontcheck']))
 					$row[] = $formTool->createCheckbox($checkName.'[]', $record['uid']);
 				else
-					$row[] = '<img'.t3lib_iconWorks::skinImg($GLOBALS['BACK_PATH'], 'gfx/zoom2.gif', 'width="11" height="12"').' title="Info: '. $options['dontcheck'][$record['uid']] .'" border="0" alt="" />';
+					$row[] = '<img'.Tx_Rnbase_Backend_Utility_Icons::skinImg($GLOBALS['BACK_PATH'], 'gfx/zoom2.gif', 'width="11" height="12"').' title="Info: '. $options['dontcheck'][$record['uid']] .'" border="0" alt="" />';
 			}
 			reset($columns);
 			foreach($columns As $column => $data) {

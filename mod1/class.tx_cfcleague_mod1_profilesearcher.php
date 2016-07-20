@@ -130,7 +130,7 @@ class tx_cfcleague_mod1_profilesearcher {
 			$out .= $this->doc->table($arr[0]);
 		}
 		else {
-	  	$out = '<p><strong>'.$GLOBALS['LANG']->getLL('msg_no_matches_in_betset').'</strong></p><br/>';
+			$out = '<p><strong>'.$GLOBALS['LANG']->getLL('msg_no_matches_in_betset').'</strong></p><br/>';
 		}
 		return $this->doc->section($headline.':', $out, 0, 1, ICON_INFO);
 	}
