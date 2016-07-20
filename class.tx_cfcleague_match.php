@@ -123,18 +123,6 @@ class tx_cfcleague_match {
               'tx_cfcleague_games', '', '', 0);
   	return $rows;
   }
-  /**
-   * Returns all match notes where given profile is joined
-   *
-   * @param int $profileUID
-   */
-  function getMatchNotes4Profile($profileUID) {
-  	$where = 'FIND_IN_SET(' . $profileUID . ', player_home) ';
-  	$where .= ' OR FIND_IN_SET(' . $profileUID . ', player_guest) ';
-  	$rows = tx_cfcleague_db::queryDB('*', $where,
-              'tx_cfcleague_match_notes', '', '', 0);
-  	return $rows;
-  }
 
   // ab jetzt Private
 

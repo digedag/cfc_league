@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2007-2009 Rene Nitzsche <rene@system25.de>
+*  (c) 2007-2016 Rene Nitzsche <rene@system25.de>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -41,7 +41,7 @@ class tx_cfcleague_mod1_profileMerger {
 	 * @param int $leadingProfileUID UID of leading profile
 	 * @param int $obsoleteProfileUID UID of obsolute profile
 	 */
-	function merge($leadingProfileUID, $obsoleteProfileUID) {
+	public function merge($leadingProfileUID, $obsoleteProfileUID) {
 		// Alle Referenzen sollen auf das erste Profil übergehen
 		// Tabellen:
 		// tx_cfcleague_teams
@@ -59,9 +59,9 @@ class tx_cfcleague_mod1_profileMerger {
 		tx_rnbase_util_Misc::callHook('cfc_league', 'mergeProfiles_hook',
 			array('data' => &$data, 'leadingUid' => $leadingProfileUID, 'obsoleteUid' => $obsoleteProfileUID), $this);
 
-    $tce =& tx_cfcleague_db::getTCEmain($data);
-    $tce->process_datamap();
-
+		tx_rnbase::load('tx_rnbase_util_DB');
+		$tce = tx_rnbase_util_DB::getTCEmain($data);
+		$tce->process_datamap();
 	}
 
 	private function mergeTeamNotes(&$data, $leading, $obsolete) {
@@ -72,45 +72,45 @@ class tx_cfcleague_mod1_profileMerger {
 		}
 	}
 	private function mergeMatchNotes(&$data, $leading, $obsolete) {
-		$rows = tx_cfcleague_match::getMatchNotes4Profile($obsolete);
-		foreach($rows As $row) {
-			self::mergeField('player_home', 'tx_cfcleague_match_notes', $data, $row, $leading, $obsolete);
-			self::mergeField('player_guest', 'tx_cfcleague_match_notes', $data, $row, $leading, $obsolete);
+		$rows = tx_cfcleague_util_ServiceRegistry::getMatchService()->searchMatchNotesByProfile($obsolete);
+		foreach($rows As $matchNote) {
+			self::mergeField('player_home', 'tx_cfcleague_match_notes', $data, $matchNote->getRecord(), $leading, $obsolete);
+			self::mergeField('player_guest', 'tx_cfcleague_match_notes', $data, $matchNote->getRecord(), $leading, $obsolete);
 		}
 	}
 
 	private function mergeMatches(&$data, $leading, $obsolete) {
-		$rows = tx_cfcleague_match::getMatches4Profile($obsolete);
-		foreach($rows As $row) {
-			self::mergeField('players_home', 'tx_cfcleague_games', $data, $row, $leading, $obsolete);
-			self::mergeField('players_guest', 'tx_cfcleague_games', $data, $row, $leading, $obsolete);
-			self::mergeField('substitutes_home', 'tx_cfcleague_games', $data, $row, $leading, $obsolete);
-			self::mergeField('substitutes_guest', 'tx_cfcleague_games', $data, $row, $leading, $obsolete);
-			self::mergeField('coach_home', 'tx_cfcleague_games', $data, $row, $leading, $obsolete);
-			self::mergeField('coach_guest', 'tx_cfcleague_games', $data, $row, $leading, $obsolete);
-			self::mergeField('referee', 'tx_cfcleague_games', $data, $row, $leading, $obsolete);
-			self::mergeField('assists', 'tx_cfcleague_games', $data, $row, $leading, $obsolete);
+		$rows = tx_cfcleague_util_ServiceRegistry::getMatchService()->searchMatchesByProfile($obsolete);
+		foreach($rows As $match) {
+			self::mergeField('players_home', 'tx_cfcleague_games', $data, $match->getRecord(), $leading, $obsolete);
+			self::mergeField('players_guest', 'tx_cfcleague_games', $data, $match->getRecord(), $leading, $obsolete);
+			self::mergeField('substitutes_home', 'tx_cfcleague_games', $data, $match->getRecord(), $leading, $obsolete);
+			self::mergeField('substitutes_guest', 'tx_cfcleague_games', $data, $match->getRecord(), $leading, $obsolete);
+			self::mergeField('coach_home', 'tx_cfcleague_games', $data, $match->getRecord(), $leading, $obsolete);
+			self::mergeField('coach_guest', 'tx_cfcleague_games', $data, $match->getRecord(), $leading, $obsolete);
+			self::mergeField('referee', 'tx_cfcleague_games', $data, $match->getRecord(), $leading, $obsolete);
+			self::mergeField('assists', 'tx_cfcleague_games', $data, $match->getRecord(), $leading, $obsolete);
 		}
 	}
 
 	private function mergeTeams(&$data, $leading, $obsolete) {
 		// Teams suchen, in denen obsolete spielt
-		$teamRows = tx_cfcleague_team::getTeams4Profile($obsolete);
-		foreach($teamRows As $row) {
+		$teamRows = tx_cfcleague_util_ServiceRegistry::getTeamService()->searchTeamsByProfile($obsolete);
+		foreach($teamRows As $team) {
 			// Drei Felder können das Profile enthalten:
 			// players
-			self::mergeField('players', 'tx_cfcleague_teams', $data, $row, $leading, $obsolete);
-			self::mergeField('coaches', 'tx_cfcleague_teams', $data, $row, $leading, $obsolete);
-			self::mergeField('supporters', 'tx_cfcleague_teams', $data, $row, $leading, $obsolete);
+			self::mergeField('players', 'tx_cfcleague_teams', $data, $team->getRecord(), $leading, $obsolete);
+			self::mergeField('coaches', 'tx_cfcleague_teams', $data, $team->getRecord(), $leading, $obsolete);
+			self::mergeField('supporters', 'tx_cfcleague_teams', $data, $team->getRecord(), $leading, $obsolete);
 		}
 	}
 
-	function mergeField($fieldName, $tableName, &$data, &$row, $leading, $obsolete) {
+	private function mergeField($fieldName, $tableName, &$data, $row, $leading, $obsolete) {
 		$val = self::replaceUid($row[$fieldName], $leading, $obsolete);
 		if(strlen($val))
 			$data[$tableName][$row['uid']][$fieldName] = $val;
 	}
-	function replaceUid($fieldValue, $leading, $obsolete) {
+	private function replaceUid($fieldValue, $leading, $obsolete) {
 		$ret = '';
 		if(Tx_Rnbase_Utility_T3General::inList($fieldValue, $obsolete)) {
 			$values = Tx_Rnbase_Utility_Strings::intExplode(',', $fieldValue);
@@ -124,6 +124,6 @@ class tx_cfcleague_mod1_profileMerger {
 	}
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/mod1/class.tx_cfcleague_mod1_profileMerger.php'])	{
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/mod1/class.tx_cfcleague_mod1_profileMerger.php']);
+if (defined('TYPO3_MODE') && $GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/cfc_league/mod1/class.tx_cfcleague_mod1_profileMerger.php'])	{
+	include_once($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/cfc_league/mod1/class.tx_cfcleague_mod1_profileMerger.php']);
 }

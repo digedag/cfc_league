@@ -166,6 +166,7 @@ class tx_cfcleague_team{
 	 * Returns all Teams where given profile is joined
 	 *
 	 * @param int $profileUID
+	 * @deprecated use tx_cfcleague_services_Team::searchTeamsByProfile()
 	 */
 	function getTeams4Profile($profileUID) {
 		$where = 'FIND_IN_SET(' . $profileUID . ', players) ';

@@ -186,7 +186,7 @@ class tx_cfcleague_services_Teams extends Tx_Rnbase_Service_Base {
 	 * @param array $options
 	 * @return array[tx_cfcleague_models_Team]
 	 */
-	function searchTeams($fields, $options) {
+	public function searchTeams($fields, $options) {
 		$searcher = tx_rnbase_util_SearchBase::getInstance('tx_cfcleague_search_Team');
 		return $searcher->search($fields, $options);
 	}
@@ -198,21 +198,34 @@ class tx_cfcleague_services_Teams extends Tx_Rnbase_Service_Base {
 	 * @param array $options
 	 * @return array[tx_cfcleague_models_Club]
 	 */
-	function searchClubs($fields, $options) {
+	public function searchClubs($fields, $options) {
 		$searcher = tx_rnbase_util_SearchBase::getInstance('tx_cfcleague_search_Club');
 		return $searcher->search($fields, $options);
 	}
 
-	function searchMedia($fields, $options) {
+	public function searchMedia($fields, $options) {
 		tx_rnbase::load('tx_rnbase_util_SearchBase');
 		$searcher = tx_rnbase_util_SearchBase::getInstance('tx_cfcleague_search_Media');
 		return $searcher->search($fields, $options);
 	}
+
+	/**
+	 * Query database for all teams with this profile as player, coach or supporter
+	 * @param int $profileUid
+	 * @return [tx_cfcleague_models_Team]
+	 */
+	public function searchTeamsByProfile($profileUid) {
+		$fields = $options = array();
+		// FIXME: Umstellen https://github.com/digedag/rn_base/issues/47
+		$fields[SEARCH_FIELD_CUSTOM] = '( FIND_IN_SET(' . $profileUid . ', players)
+				 OR FIND_IN_SET(' . $profileUid . ', coaches)
+				 OR FIND_IN_SET(' . $profileUid . ', supporters) )';
+		return $this->searchTeams($fields, $options);
+	}
+
 }
 
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/services/class.tx_cfcleague_services_Teams.php']) {
 	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/services/class.tx_cfcleague_services_Teams.php']);
 }
-
-?>

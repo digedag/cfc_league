@@ -114,6 +114,36 @@ class tx_cfcleague_services_Match extends Tx_Rnbase_Service_Base implements tx_c
 	}
 
 	/**
+	 * Query database for all match notes of a profile
+	 * @param int $profileUid
+	 * @return [tx_cfcleague_models_MatchNote]
+	 */
+	public function searchMatchNotesByProfile($profileUid) {
+		$fields = $options = array();
+		// FIXME: Umstellen https://github.com/digedag/rn_base/issues/47
+		$fields[SEARCH_FIELD_CUSTOM] = '( FIND_IN_SET(' . $profileUid . ', player_home)
+				 OR FIND_IN_SET(' . $profileUid . ', player_guest) )';
+		return $this->searchMatchNotes($fields, $options);
+	}
+
+	public function searchMatchesByProfile($profileUid) {
+		$where = 'FIND_IN_SET(' . $profileUid . ', referee) ';
+		$where .= ' OR FIND_IN_SET(' . $profileUid . ', assists) ';
+		$where .= ' OR FIND_IN_SET(' . $profileUid . ', coach_home) ';
+		$where .= ' OR FIND_IN_SET(' . $profileUid . ', coach_guest) ';
+		$where .= ' OR FIND_IN_SET(' . $profileUid . ', players_home) ';
+		$where .= ' OR FIND_IN_SET(' . $profileUid . ', players_guest) ';
+		$where .= ' OR FIND_IN_SET(' . $profileUid . ', substitutes_home) ';
+		$where .= ' OR FIND_IN_SET(' . $profileUid . ', substitutes_guest) ';
+
+		$fields = $options = array();
+		// FIXME: Umstellen https://github.com/digedag/rn_base/issues/47
+		$fields[SEARCH_FIELD_CUSTOM] = '( ' . $where . ' )';
+		return $this->search($fields, $options);
+
+	}
+
+	/**
 	 * Search database for matches
 	 *
 	 * @param array $fields

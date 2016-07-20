@@ -94,7 +94,7 @@ class Tx_Cfcleague_Controller_Profile extends tx_rnbase_mod_BaseModFunc {
 	 *
 	 * @param array $data
 	 */
-	function handleProfileMerge(&$data) {
+	protected function handleProfileMerge(&$data) {
 		global $LANG;
 		$profile1 = intval($data['merge1']);
 		$profile2 = intval($data['merge2']);
@@ -106,11 +106,16 @@ class Tx_Cfcleague_Controller_Profile extends tx_rnbase_mod_BaseModFunc {
 			// Beide Profile nochmal anzeigen
 			// Das führende Profile muss ausgewählt werden
 			$out .= $this->doc->icons(ICON_INFO) . $LANG->getLL('msg_merge_selectprofile');
-			$out .= $this->createProfileMergeForm($profile1, $profile2);
+			if(tx_rnbase_util_TYPO3::isTYPO70OrHigher()) {
+				$out .= $this->createProfileMergeForm($profile1, $profile2);
+			}
+			else
+				$out .= $this->createProfileMergeForm45($profile1, $profile2);
 		}
 		elseif ($data['merge_profiles_do']) { // Step 2
 			//Welches ist das führende Profil?
 			$leading = intval($data['merge']);
+
 			tx_rnbase::load('tx_cfcleague_mod1_profileMerger');
 			$errors = tx_cfcleague_mod1_profileMerger::merge($leading, $leading == $profile1 ? $profile2 : $profile1);
 
@@ -120,7 +125,6 @@ class Tx_Cfcleague_Controller_Profile extends tx_rnbase_mod_BaseModFunc {
 			$out = $this->doc->section($LANG->getLL('label_mergehead'), $out, 0, 1);
 		return $out;
 	}
-
 	/**
 	 * Erstellt das Form für den Abgleich zweier Personen. Der Nutzer muss das führende
 	 * Profil auswählen.
@@ -128,7 +132,42 @@ class Tx_Cfcleague_Controller_Profile extends tx_rnbase_mod_BaseModFunc {
 	 * @param int $uid1
 	 * @param int $uid2
 	 */
-	function createProfileMergeForm($uid1, $uid2) {
+	protected function createProfileMergeForm($uid1, $uid2) {
+		global $LANG;
+		$out .= '<div class="media" style="overflow-x:auto">';
+
+		/* @var $info Tx_Cfcleague_Controller_MatchTicker_ShowItem */
+		$info = tx_rnbase::makeInstance('Tx_Cfcleague_Controller_MatchTicker_ShowItem');
+
+		$out .= '<div class="media-left">';
+		$out .= $info->getInfoScreen('tx_cfcleague_profiles', $uid1);
+		$out .= $this->formTool->createHidden('data[merge1]', $uid1) .
+						$this->formTool->createRadio('data[merge]', $uid1, true);
+
+		$out .= '</div>';
+
+
+		$out .= '<div class="media-right">';
+		$out .= $info->getInfoScreen('tx_cfcleague_profiles', $uid2);
+		$out .= $this->formTool->createHidden('data[merge2]', $uid2) .
+						$this->formTool->createRadio('data[merge]', $uid2);
+		$out .= '</div>';
+
+		$out .= '</div>';
+		$out .= $this->formTool->createSubmit('data[merge_profiles_do]', $LANG->getLL('label_merge'), $LANG->getLL('msg_merge_confirm'));
+
+		return $out;
+	}
+
+	/**
+	 * Erstellt das Form für den Abgleich zweier Personen. Der Nutzer muss das führende
+	 * Profil auswählen.
+	 * Variante für TYPO3 bis Version 6.2
+	 *
+	 * @param int $uid1
+	 * @param int $uid2
+	 */
+	protected function createProfileMergeForm45($uid1, $uid2) {
 		global $LANG;
 		$info = tx_rnbase::makeInstance('Tx_Cfcleague_Controller_MatchTicker_ShowItem45');
 
@@ -155,7 +194,7 @@ class Tx_Cfcleague_Controller_Profile extends tx_rnbase_mod_BaseModFunc {
 	 * Bearbeitet das interne Eingabeformular zu einer Person. Derzeit kann das Geburtsdatum
 	 * gesetzt werden.
 	 */
-	function handleProfileUpdate(&$data) {
+	protected function handleProfileUpdate(&$data) {
 		global $LANG;
 		$out = '';
 		// Soll das Edit-Formular gezeigt werden?
