@@ -316,7 +316,8 @@ class tx_cfcleague_selector{
    */
   function showGroupSelector(&$content, $pid){
     // Zuerst die Gruppen ermitteln
-    $groups = tx_cfcleague_db::queryDB('uid,name', 'uid > 0', 'tx_cfcleague_group', '', 'sorting');
+    $groups = Tx_Rnbase_Database_Connection::getInstance()->doSelect('uid,name', 'tx_cfcleague_group',
+    		array('where'=>'uid > 0', 'orderby' => 'sorting'));
 
     $this->GROUP_MENU = Array (
       'group' => array()

@@ -22,8 +22,7 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-require_once(tx_rnbase_util_Extensions::extPath('cfc_league') . 'class.tx_cfcleague_db.php');
-tx_rnbase::load('tx_rnbase_util_Strings');
+tx_rnbase::load('Tx_Rnbase_Utility_Strings');
 
 class tx_cfcleague_hooks_tceAfterDB {
 
@@ -39,11 +38,12 @@ class tx_cfcleague_hooks_tceAfterDB {
 	function processDatamap_afterDatabaseOperations($status, $table, $id, $fieldArray, &$tcemain) {
 		if($table == 'tx_cfcleague_profiles') {
 			if(array_key_exists('types', $fieldArray)){
+				$db = Tx_Rnbase_Database_Connection::getInstance();
 				// Die Types werden zusätzlich in einer MM-Tabelle gespeichert
 				$id = ($status == 'new') ? $tcemain->substNEWwithIDs[$id] : $id;
 				if($status != 'new')
-					tx_rnbase_util_DB::doDelete('tx_cfcleague_profiletypes_mm', 'uid_foreign='.$id, 0);
-				$types = tx_rnbase_util_Strings::intExplode(',', $fieldArray['types']);
+					$db->doDelete('tx_cfcleague_profiletypes_mm', 'uid_foreign='.$id, 0);
+				$types = Tx_Rnbase_Utility_Strings::intExplode(',', $fieldArray['types']);
 				$i = 0;
 				foreach($types As $type) {
 					if(!intval($type)) continue;
@@ -51,7 +51,7 @@ class tx_cfcleague_hooks_tceAfterDB {
 					$values['uid_foreign'] = $id;
 					$values['tablenames'] = 'tx_cfcleague_profiles';
 					$values['sorting_foreign'] = $i++;
-					tx_rnbase_util_DB::doInsert('tx_cfcleague_profiletypes_mm', $values, 0);
+					$db->doInsert('tx_cfcleague_profiletypes_mm', $values, 0);
 				}
 			}
 		}
@@ -61,5 +61,3 @@ class tx_cfcleague_hooks_tceAfterDB {
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/hooks/class.tx_cfcleague_hooks_tceAfterDB.php'])	{
 	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/hooks/class.tx_cfcleague_hooks_tceAfterDB.php']);
 }
-
-?>

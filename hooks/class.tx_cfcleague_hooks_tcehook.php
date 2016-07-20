@@ -22,10 +22,9 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-require_once(tx_rnbase_util_Extensions::extPath('cfc_league') . 'class.tx_cfcleague_db.php');
 tx_rnbase::load('Tx_Rnbase_Utility_Strings');
 tx_rnbase::load('Tx_Rnbase_Utility_T3General');
-
+tx_rnbase::load('Tx_Rnbase_Database_Connection');
 
 class tx_cfcleague_hooks_tcehook {
 
@@ -51,7 +50,7 @@ class tx_cfcleague_hooks_tcehook {
 				// Den Namen aus der DB holen
 				$options['where'] = 'round='.$round .' AND competition='.$compUid;
 				$options['limit'] = 1;
-				$rows = tx_rnbase_util_DB::doSelect('round_name', 'tx_cfcleague_games', $options);
+				$rows = Tx_Rnbase_Database_Connection::getInstance()->doSelect('round_name', 'tx_cfcleague_games', $options);
 				if(count($rows))
 					$row['round_name'] = $rows[0]['round_name'];
 			}
@@ -62,7 +61,7 @@ class tx_cfcleague_hooks_tcehook {
 			$options['orderby'] = 'sorting_foreign asc';
 			$options['enablefieldsoff'] = 1;
 			$types = array();
-			$rows = tx_rnbase_util_DB::doSelect('uid_local', 'tx_cfcleague_profiletypes_mm', $options);
+			$rows = Tx_Rnbase_Database_Connection::getInstance()->doSelect('uid_local', 'tx_cfcleague_profiletypes_mm', $options);
 			foreach($rows As $type) {
 				$types[] = $type['uid_local'];
 			}
