@@ -68,7 +68,7 @@ class Tx_Cfcleague_Controller_Profile extends tx_rnbase_mod_BaseModFunc {
 		$this->SEARCH_SETTINGS = Tx_Rnbase_Backend_Utility::getModuleData(array ('searchterm' => ''), $data, $this->getModule()->getName() );
 
 		$content .= $this->doc->section($LANG->getLL('msg_search_person'), $this->createSearchForm($data), 0, 1);
-		$content.=$this->doc->spacer(5);
+		$content .= $this->doc->spacer(5);
 
 		// Haben wir Daten im Request?
 		if (is_array($data)) {
@@ -215,7 +215,7 @@ class Tx_Cfcleague_Controller_Profile extends tx_rnbase_mod_BaseModFunc {
 	/**
 	 * Aktualisiert die übergebenen Profile. Derzeit wird nur das Geburtsdatum gespeichert.
 	 */
-	function updateProfiles($profiles) {
+	protected function updateProfiles($profiles) {
 		global $LANG;
 		$out = '';
 		foreach($profiles As $uid => $profile) {
@@ -226,8 +226,9 @@ class Tx_Cfcleague_Controller_Profile extends tx_rnbase_mod_BaseModFunc {
 				$out = $this->doc->icons(ICON_FATAL) . ' Invalid date -' . $date . '- für UID: ' . $uid;
 			}
 			else {
-				$profile['birthday'] = mktime(0, 0, 0, $month, $day, $year);
-				tx_cfcleague_db::updateDB('tx_cfcleague_profiles', $uid, $profile);
+				// Das ist eher problematisch. Das Datum sollte in GMT gespeichert werden
+				$values = array('birthday' => mktime(0, 0, 0, $month, $day, $year));
+				Tx_Rnbase_Database_Connection::getInstance()->doUpdate('tx_cfcleague_profiles', 'uid='.intval($uid), $values);
 				$out = $this->doc->icons(ICON_OK) . ' '.$LANG->getLL('msg_date_saved').': ' . $date;
 			}
 		}
@@ -238,7 +239,7 @@ class Tx_Cfcleague_Controller_Profile extends tx_rnbase_mod_BaseModFunc {
 	 * Anzeige der Bearbeitungsmaske für ein Profil. Hier kann das Geburtsdatum der Person
 	 * geändert werden. Es sind auch Werte vor 1970 möglich.
 	 */
-	function showProfileForm(&$profiles) {
+	protected function showProfileForm(&$profiles) {
 		global $LANG;
 		$out = '';
 		if(count($profiles) == 0) {
@@ -258,60 +259,60 @@ class Tx_Cfcleague_Controller_Profile extends tx_rnbase_mod_BaseModFunc {
 		return $out;
 	}
 
-  /**
-   * Sucht die Profile mit den übergebenen Parametern. Entweder wird über
-   * Vor- und Zuname gesucht, oder man übergibt direkt eine UID.
-   */
-  function searchProfiles($searchterm, $uid = 0) {
-  	$what = 'tx_cfcleague_profiles.uid,tx_cfcleague_profiles.pid,'.
-            'last_name, first_name,birthday, '.
-            "t1.short_name as 'team_name', t1.uid as 'team_uid'";
+	/**
+	 * Sucht die Profile mit den übergebenen Parametern. Entweder wird über
+	 * Vor- und Zuname gesucht, oder man übergibt direkt eine UID.
+	 */
+	protected function searchProfiles($searchterm, $uid = 0) {
+		$what = 'tx_cfcleague_profiles.uid,tx_cfcleague_profiles.pid,'.
+		        'last_name, first_name,birthday, '.
+		        "t1.short_name as 'team_name', t1.uid as 'team_uid'";
 
-    $from = Array('tx_cfcleague_profiles ' .
-              'LEFT JOIN tx_cfcleague_teams AS t1 ON FIND_IN_SET(tx_cfcleague_profiles.uid, t1.players) '
-              , 'tx_cfcleague_profiles');
+		$from = Array('tx_cfcleague_profiles ' .
+		          'LEFT JOIN tx_cfcleague_teams AS t1 ON FIND_IN_SET(tx_cfcleague_profiles.uid, t1.players) '
+		          , 'tx_cfcleague_profiles');
 
-    $where = '';
-    if($uid) {
-      $where .= 'tx_cfcleague_profiles.uid = ' . intval($uid) . ' ';
-    }
-    else {
-      if(strlen($searchterm)) {
-        $where .= "(last_name like '%" . $searchterm . "%' ";
-        $where .= "OR first_name like '%" . $searchterm . "%') ";
-      }
-    }
-    $orderBy = 'last_name, first_name, tx_cfcleague_profiles.uid';
+		$where = '';
+		if($uid) {
+			$where .= 'tx_cfcleague_profiles.uid = ' . intval($uid) . ' ';
+		}
+		else {
+			if(strlen($searchterm)) {
+				$where .= "(last_name like '%" . $searchterm . "%' ";
+				$where .= "OR first_name like '%" . $searchterm . "%') ";
+			}
+		}
+		$orderBy = 'last_name, first_name, tx_cfcleague_profiles.uid';
 
-    $rows = Tx_Rnbase_Database_Connection::getInstance()->doSelect($what, $from, ['where'=> $where, 'orderby' => $orderBy]);
-    $cnt = count($rows);
-    if(!$cnt) return $rows; // Keine Daten gefunden
+		$rows = Tx_Rnbase_Database_Connection::getInstance()->doSelect($what, $from, ['where'=> $where, 'orderby' => $orderBy]);
+		$cnt = count($rows);
+		if(!$cnt) return $rows; // Keine Daten gefunden
 
-    // Für jedes Team in dem die Person zugeordnet ist, erhalten wir eine Zeile
-    // Diese müssen wir jetzt wieder zusammenfügen
-    $lastRow = $rows[0];
-    $ret = array();
-    for($i=0; $i < $cnt; $i++) {
-      if(intval($lastRow['uid']) != intval($rows[$i]['uid'])) {
-        // Ein neuer Spieler, also den alten ins Ergebnisarray legen
-        $ret[] = $lastRow;
-        $lastRow = $rows[$i];
-      }
-      // Den Verein der aktuellen Row in die Liste der lastRow legen
-      if($rows[$i]['team_uid']) {
-        $lastRow['teams'][] = array('team_uid' => $rows[$i]['team_uid'], 'team_name' => $rows[$i]['team_name']);
-      }
-    }
-    // Das letzte Profil noch ins Ergebnisarray legen
-    $ret[] = $lastRow;
+		// Für jedes Team in dem die Person zugeordnet ist, erhalten wir eine Zeile
+		// Diese müssen wir jetzt wieder zusammenfügen
+		$lastRow = $rows[0];
+		$ret = array();
+		for($i=0; $i < $cnt; $i++) {
+			if(intval($lastRow['uid']) != intval($rows[$i]['uid'])) {
+				// Ein neuer Spieler, also den alten ins Ergebnisarray legen
+				$ret[] = $lastRow;
+				$lastRow = $rows[$i];
+			}
+			// Den Verein der aktuellen Row in die Liste der lastRow legen
+			if($rows[$i]['team_uid']) {
+				$lastRow['teams'][] = array('team_uid' => $rows[$i]['team_uid'], 'team_name' => $rows[$i]['team_name']);
+			}
+		}
+		// Das letzte Profil noch ins Ergebnisarray legen
+		$ret[] = $lastRow;
 
-    return $ret;
-  }
+		return $ret;
+	}
 
 	/**
 	 * Erstellt eine Tabelle mit den gefundenen Personen
 	 */
-	function buildProfileTable(&$profiles) {
+	protected function buildProfileTable(&$profiles) {
 		global $LANG;
 
 		$out = '';
@@ -364,17 +365,17 @@ class Tx_Cfcleague_Controller_Profile extends tx_rnbase_mod_BaseModFunc {
 	}
 
 	function createSearchForm(&$data) {
-    global $LANG;
-    $out = '';
-    $out .= $LANG->getLL('label_searchterm').': ';
-    $out .= $this->formTool->createTxtInput('data[searchterm]', $this->SEARCH_SETTINGS['searchterm'], 20);
-    // Den Update-Button einfügen
-    $out .= $this->formTool->createSubmit('search', $LANG->getLL('btn_search'));
-    // Jetzt noch zusätzlichen JavaScriptcode für Buttons auf der Seite
-    $out .= $this->formTool->getJSCode($this->getModule()->getPid());
+		global $LANG;
+		$out = '';
+		$out .= $LANG->getLL('label_searchterm').': ';
+		$out .= $this->formTool->createTxtInput('data[searchterm]', $this->SEARCH_SETTINGS['searchterm'], 20);
+		// Den Update-Button einfügen
+		$out .= $this->formTool->createSubmit('search', $LANG->getLL('btn_search'));
+		// Jetzt noch zusätzlichen JavaScriptcode für Buttons auf der Seite
+		$out .= $this->formTool->getJSCode($this->getModule()->getPid());
 
-    return $out;
-  }
+		return $out;
+	}
 
 }
 
