@@ -57,6 +57,9 @@ class tx_cfcleague_team{
    *
    */
   function refresh() {
+	if(tx_rnbase_util_TYPO3::isTYPO76OrHigher())
+		throw new Exception("deprecated\n<br/>". tx_rnbase_util_Debug::getDebugTrail());
+
     $this->record = t3lib_BEfunc::getRecord(TABLE_TEAMS, $this->uid);
     $this->playerNames = NULL;
     $this->coachNames = NULL;
@@ -104,26 +107,6 @@ class tx_cfcleague_team{
           $firstEmpty, $merge);
     }
     return $this->supporterNames;
-  }
-  /**
-   * Liefert die Anzahl der zugeordneten Spieler
-   */
-  function getPlayerSize() {
-      return $this->record['players'] ? count(Tx_Rnbase_Utility_Strings::intExplode(',', $this->record['players'])) : 0;
-  }
-  /**
-   * Liefert die Anzahl der zugeordneten Trainer
-   */
-  function getCoachSize() {
-      return $this->record['coaches'] ? count(Tx_Rnbase_Utility_Strings::intExplode(',', $this->record['coaches'])) : 0;
-  }
-
-  /**
-   * Liefert die Anzahl der zugeordneten Betreuer
-   * @return int
-   */
-  function getSupporterSize() {
-      return $this->record['supporters'] ? count(Tx_Rnbase_Utility_Strings::intExplode(',', $this->record['supporters'])) : 0;
   }
 
 	/**

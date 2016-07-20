@@ -121,6 +121,15 @@ class tx_cfcleague_models_Team extends tx_rnbase_model_base {
 	}
 
 	/**
+	 * Liefert die Betreuer des Teams in der vorgegebenen Reihenfolge als Profile. Der
+	 * Key ist die laufende Nummer und nicht die UID!
+	 * @return array[tx_cfcleague_models_Profile]
+	 */
+	public function getSupporters() {
+		return $this->getTeamMember('supporters');
+	}
+
+	/**
 	 * Liefert Mitglieder des Teams als Array. Teammitglieder sind Spieler, Trainer und Betreuer.
 	 * Die gefundenen Profile werden sortiert in der Reihenfolge im Team geliefert.
 	 * @column Name der DB-Spalte mit den gesuchten Team-Mitgliedern

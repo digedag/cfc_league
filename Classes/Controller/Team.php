@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2009 Rene Nitzsche (rene@system25.de)
+*  (c) 2009-2016 Rene Nitzsche (rene@system25.de)
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -36,7 +36,7 @@ class Tx_Cfcleague_Controller_Team extends tx_rnbase_mod_BaseModFunc {
 	 *
 	 * @return	string
 	 */
-	function getFuncId() {
+	public function getFuncId() {
 		return 'functeams';
 	}
 
@@ -54,6 +54,8 @@ class Tx_Cfcleague_Controller_Team extends tx_rnbase_mod_BaseModFunc {
 	}
 	/**
 	 * Verwaltet die Erstellung von Spielplänen von Ligen
+	 * {@inheritDoc}
+	 * @see tx_rnbase_mod_BaseModFunc::getContent()
 	 */
 	protected function getContent($template, &$configurations, &$formatter, $formTool) {
 		global $LANG;
@@ -64,8 +66,6 @@ class Tx_Cfcleague_Controller_Team extends tx_rnbase_mod_BaseModFunc {
 
 		$this->formTool = $formTool;
 
-		if(tx_rnbase_util_TYPO3::isTYPO76OrHigher())
-			return 'Not yet implemented in TYPO3 7.x';
 		// Selector-Instanz bereitstellen
 
 		// Anzeige der vorhandenen Ligen

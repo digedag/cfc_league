@@ -1,8 +1,8 @@
 <?php
-/***************************************************************
+/* **************************************************************
 *  Copyright notice
 *
-*  (c) 2008-2010 Rene Nitzsche (rene@system25.de)
+*  (c) 2008-2016 Rene Nitzsche (rene@system25.de)
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -36,7 +36,7 @@ class tx_cfcleague_mod1_profilesearcher {
 	private $data;
 	private $SEARCH_SETTINGS;
 
-	public function tx_cfcleague_mod1_profilesearcher(&$mod, $options = array()) {
+	public function __construct($mod, $options = array()) {
 		$this->init($mod, $options);
 	}
 
@@ -55,7 +55,7 @@ class tx_cfcleague_mod1_profilesearcher {
 		$this->data = tx_rnbase_parameters::getPostOrGetParameter('data');
 
 		if(!isset($options['nopersist']))
-			$this->SEARCH_SETTINGS = t3lib_BEfunc::getModuleData(array ('searchterm' => ''), $this->data, $mod->getName() );
+			$this->SEARCH_SETTINGS = Tx_Rnbase_Backend_Utility::getModuleData(array ('searchterm' => ''), $this->data, $mod->getName() );
 		else
 			$this->SEARCH_SETTINGS = $this->data;
 	}

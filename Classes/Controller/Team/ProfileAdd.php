@@ -38,7 +38,7 @@ class Tx_Cfcleague_Controller_Team_ProfileAdd {
 	 * Ausführung des Requests. Das Team muss bekannt sein
 	 *
    * @param tx_rnbase_mod_IModule $module
-	 * @param tx_cfcleague_team $currTeam
+	 * @param tx_cfcleague_models_Team $currTeam
 	 * @param tx_cfcleague_util_TeamInfo $teamInfo
 	 * @return string
 	 */
@@ -53,7 +53,7 @@ class Tx_Cfcleague_Controller_Team_ProfileAdd {
 		// ggf. Daten im Request verarbeiten
 		$out .= $this->handleAddProfiles($currTeam, $teamInfo);
 		$out .= $this->handleNewProfiles($currTeam, $teamInfo);
-		$currTeam->refresh();
+		$currTeam->reset();
 		$teamInfo->refresh();
 		$out .= $teamInfo->getInfoTable($this->mod->doc);
 		$out .= $this->showAddProfiles($currTeam, $teamInfo);
@@ -75,7 +75,7 @@ class Tx_Cfcleague_Controller_Team_ProfileAdd {
 	 * @param tx_cfcleague_util_TeamInfo $teamInfo
 	 * @return string
 	 */
-	function showAddProfiles($currTeam, $teamInfo) {
+	protected function showAddProfiles($currTeam, $teamInfo) {
 
 		$options['checkbox'] = 1;
 
@@ -126,7 +126,7 @@ class Tx_Cfcleague_Controller_Team_ProfileAdd {
 		$i = 1;
 		$row[] = $this->getFormTool()->createTxtInput('data[tx_cfcleague_profiles][NEW'.$i.'][first_name]', '', 10);
 		$row[] = $this->getFormTool()->createTxtInput('data[tx_cfcleague_profiles][NEW'.$i.'][last_name]', '', 10);
-		$row[] = $this->getFormTool()->createSelectSingleByArray('data[tx_cfcleague_profiles][NEW'.$i.'][type]', '', Tx_Cfcleague_Controller_Team_ProfileCreate::getProfileTypeArray());
+		$row[] = $this->getFormTool()->createSelectByArray('data[tx_cfcleague_profiles][NEW'.$i.'][type]', '', Tx_Cfcleague_Controller_Team_ProfileCreate::getProfileTypeArray());
 		$row[] = $this->getFormTool()->createSubmit('newprofile2team', $GLOBALS['LANG']->getLL('btn_create'), $GLOBALS['LANG']->getLL('msg_CreateProfiles')).
 			$this->getFormTool()->createHidden('data[tx_cfcleague_profiles][NEW'.$i.'][pid]', $this->mod->getPid());
 		$arr[] = $row;

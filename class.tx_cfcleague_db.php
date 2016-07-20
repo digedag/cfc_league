@@ -43,7 +43,8 @@ class tx_cfcleague_db{
       $tableName = $from[1];
       $fromClause = $from[0];
     }
-throw new Exception("deprecated\n<br/>". tx_rnbase_util_Debug::getDebugTrail());
+	if(tx_rnbase_util_TYPO3::isTYPO76OrHigher())
+	    throw new Exception("deprecated\n<br/>". tx_rnbase_util_Debug::getDebugTrail());
     // Zur Where-Clause noch die gültigen Felder hinzufügen
     $where .= t3lib_BEfunc::deleteClause($tableName);
 
@@ -92,6 +93,8 @@ throw new Exception("deprecated\n<br/>". tx_rnbase_util_Debug::getDebugTrail());
    */
   function &getTCEmain($data = 0) {
     static $tce;
+    if(tx_rnbase_util_TYPO3::isTYPO76OrHigher())
+    	throw new Exception("deprecated\n<br/>". tx_rnbase_util_Debug::getDebugTrail());
 
     if(!$tce || $data) {
       // Die TCEmain laden
@@ -109,33 +112,6 @@ throw new Exception("deprecated\n<br/>". tx_rnbase_util_Debug::getDebugTrail());
     return $tce;
   }
 
-	/**
-	 * Backend method to determine if a page is below a page
-	 */
-	public function getPagePath($uid, $clause='')   {
-		$loopCheck = 100;
-		$output = array(); // We return an array of uids
-		$output[] = $uid;
-		while ($uid!=0 && $loopCheck>0) {
-			$loopCheck--;
-
-			//'uid,pid,title,t3ver_oid,t3ver_wsid,t3ver_swapmode',
-			$rows = tx_rnbase_util_DB::doSelect('*', 'pages', array(
-				'where' => 'uid='.intval($uid).(strlen(trim($clause)) ? ' AND '.$clause : ''),
-			));
-			if(!empty($rows)) {
-				$row = reset($rows);
-				t3lib_BEfunc::workspaceOL('pages', $row);
-				t3lib_BEfunc::fixVersioningPid('pages', $row);
-
-				$uid = $row['pid'];
-				$output[] = $uid;
-			} else {
-				break;
-			}
-		}
-		return $output;
-	}
 
 }
 
