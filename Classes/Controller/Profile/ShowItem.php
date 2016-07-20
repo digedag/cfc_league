@@ -24,7 +24,7 @@ use TYPO3\CMS\Core\Imaging\IconFactory;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-class Tx_Cfcleague_Controller_MatchTicker_ShowItem extends ElementInformationController {
+class Tx_Cfcleague_Controller_Profile_ShowItem extends ElementInformationController {
 	/**
 	 * Constructor
 	 */

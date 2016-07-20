@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2007 Rene Nitzsche (rene@system25.de)
+*  (c) 2007-2016 Rene Nitzsche (rene@system25.de)
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -134,10 +134,10 @@ class Tx_Cfcleague_Controller_Profile extends tx_rnbase_mod_BaseModFunc {
 	 */
 	protected function createProfileMergeForm($uid1, $uid2) {
 		global $LANG;
-		$out .= '<div class="media" style="overflow-x:auto">';
+		$out .= '<div class="media" style="overflow:auto">';
 
 		/* @var $info Tx_Cfcleague_Controller_MatchTicker_ShowItem */
-		$info = tx_rnbase::makeInstance('Tx_Cfcleague_Controller_MatchTicker_ShowItem');
+		$info = tx_rnbase::makeInstance('Tx_Cfcleague_Controller_Profile_ShowItem');
 
 		$out .= '<div class="media-left">';
 		$out .= $info->getInfoScreen('tx_cfcleague_profiles', $uid1);
@@ -169,7 +169,7 @@ class Tx_Cfcleague_Controller_Profile extends tx_rnbase_mod_BaseModFunc {
 	 */
 	protected function createProfileMergeForm45($uid1, $uid2) {
 		global $LANG;
-		$info = tx_rnbase::makeInstance('Tx_Cfcleague_Controller_MatchTicker_ShowItem45');
+		$info = tx_rnbase::makeInstance('Tx_Cfcleague_Controller_Profile_ShowItem45');
 
 		$out = '<table width="100%" cellspacing="0" cellpadding="0" border="0">';
 		$out .= '<tr><td style="vertical-align:top;" width="49%">';
