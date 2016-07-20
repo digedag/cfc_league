@@ -116,8 +116,8 @@ class Tx_Cfcleague_Controller_Profile extends tx_rnbase_mod_BaseModFunc {
 			//Welches ist das führende Profil?
 			$leading = intval($data['merge']);
 
-			tx_rnbase::load('Tx_Cfcleague_Controller_Profile_ProfileMerger');
-			$errors = Tx_Cfcleague_Controller_Profile_ProfileMerger::merge($leading, $leading == $profile1 ? $profile2 : $profile1);
+			$merger = tx_rnbase::makeInstance('Tx_Cfcleague_Controller_Profile_ProfileMerger');
+			$merger->merge($leading, $leading == $profile1 ? $profile2 : $profile1);
 
 			$out .= $this->doc->icons(ICON_OK) . $LANG->getLL('msg_merge_done');
 		}
