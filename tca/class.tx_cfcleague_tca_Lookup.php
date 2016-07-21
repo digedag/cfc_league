@@ -1,5 +1,5 @@
 <?php
-use TYPO3\CMS\Backend\Form\Element\SelectSingleElement;
+
 /***************************************************************
  *  Copyright notice
  *
@@ -25,6 +25,7 @@ use TYPO3\CMS\Backend\Form\Element\SelectSingleElement;
 
 tx_rnbase::load('tx_rnbase_util_Misc');
 tx_rnbase::load('tx_rnbase_util_TYPO3');
+tx_rnbase::load('Tx_Rnbase_Utility_Strings');
 
 /**
  */
@@ -104,20 +105,20 @@ class tx_cfcleague_tca_Lookup {
 		$currentAvailable = false;
 		$teamId = is_array($PA['row']['home']) ? reset($PA['row']['home']) : $PA['row']['home'];
 		if($teamId) {
-    	$srv = tx_cfcleague_util_ServiceRegistry::getTeamService();
-    	$stadiums = $srv->getStadiums($teamId);
-    	foreach ($stadiums As $stadium) {
-    		$currentAvailable = $currentAvailable ? $currentAvailable : ($current == $stadium->getUid() || $current == 0);
-    		$PA['items'][] = array($stadium->getName(), $stadium->getUid());
-    	}
-    }
-    if(!$currentAvailable) {
-    	// Das aktuelle Stadium ist nicht mehr im Verein gefunden worden. Es wird daher nachgeladen
-    	$stadium = tx_rnbase::makeInstance('tx_cfcleague_models_Stadium', $current);
-    	if($stadium->isValid())
-    		$PA['items'][] = array($stadium->getName(), $stadium->getUid());
-    }
-  }
+			$srv = tx_cfcleague_util_ServiceRegistry::getTeamService();
+			$stadiums = $srv->getStadiums($teamId);
+			foreach ($stadiums As $stadium) {
+				$currentAvailable = $currentAvailable ? $currentAvailable : ($current == $stadium->getUid() || $current == 0);
+				$PA['items'][] = array($stadium->getName(), $stadium->getUid());
+			}
+		}
+		if(!$currentAvailable) {
+			// Das aktuelle Stadium ist nicht mehr im Verein gefunden worden. Es wird daher nachgeladen
+			$stadium = tx_rnbase::makeInstance('tx_cfcleague_models_Stadium', $current);
+			if($stadium->isValid())
+				$PA['items'][] = array($stadium->getName(), $stadium->getUid());
+		}
+	}
 	/**
 	 * Set possible logos for a team. The logos are selected from club.
 	 *
@@ -147,11 +148,11 @@ class tx_cfcleague_tca_Lookup {
 		}
 	}
 
-  /**
-   * Build the TCA entry for logo select-field in team record. All
-   * logos from connected club are selectable.
-   * @return array
-   */
+	/**
+	 * Build the TCA entry for logo select-field in team record. All
+	 * logos from connected club are selectable.
+	 * @return array
+	 */
 	public static function getTeamLogoField() {
 		if(tx_rnbase_util_TYPO3::isTYPO60OrHigher()) {
 			$ret = tx_rnbase_util_TSFAL::getMediaTCA('logo', array(
@@ -332,11 +333,64 @@ class tx_cfcleague_tca_Lookup {
 	 * tx_table_name_uid|valuestring
 	 */
 	private function getRowId($value) {
-		$ret = tx_rnbase_util_Strings::trimExplode('|', $value);
-		$ret = tx_rnbase_util_Strings::trimExplode('_', $ret[0]);
+		$ret = Tx_Rnbase_Utility_Strings::trimExplode('|', $value);
+		$ret = Tx_Rnbase_Utility_Strings::trimExplode('_', $ret[0]);
 		return intval($ret[count($ret)-1]);
 	}
 
+	/**
+	 * Find player of team
+	 * Used: Edit mask for team notes
+	 *
+	 * @param array $PA
+	 * @param TYPO3\CMS\Backend\Form\Element\UserElement $fobj
+	 */
+	public function getPlayers4Team(&$PA, $fobj){
+		global $LANG;
+		$LANG->includeLLFile('EXT:cfc_league/locallang_db.xml');
+		$column = 'team';
+		if($PA['row'][$column]) {
+			$tablename = 'tx_cfcleague_team_notes';
+			$tcaFieldConf = $GLOBALS['TCA'][$tablename]['columns'][$column]['config'];
+			$fieldValue = $PA['row'][$column];
+			$team = is_array($fieldValue) ? $fieldValue : Tx_Rnbase_Utility_Strings::trimExplode('|', $fieldValue);
+			$team = $team[0];
+			if($tcaFieldConf['type'] == 'db') {
+				// FIXME: funktioniert nicht in 7.6!
+				if(tx_rnbase_util_TYPO3::isTYPO76OrHigher())
+					throw new Exception("not implemented in 7.6\n". tx_rnbase_util_Debug::getDebugTrail());
+					$dbAnalysis = tx_rnbase::makeInstance('t3lib_loadDBGroup');
+					$dbAnalysis->registerNonTableValues=0;
+					$dbAnalysis->start($team, $tcaFieldConf['allowed'], '', 0, $tablename, $tcaFieldConf);
+					$valueArray = $dbAnalysis->getValueArray(false);
+					// Abfrage aus Spieldatensatz
+					// Es werden alle Spieler des Teams benötigt
+					$team = $valueArray[0];
+			}
+			$players = $this->findProfiles($team, 'getPlayers');
+			$players = array_merge($players, $this->findProfiles($team, 'getCoaches'));
+			$players = array_merge($players, $this->findProfiles($team, 'getSupporters'));
+			$PA[items] = $players;
+		}
+		else
+			$PA[items] = array();
+	}
+	/**
+	 * Liefert die Spieler (uid und name) einer Mannschaft.
+	 */
+	private function findProfiles($teamId, $getter) {
+		$rows = array();
+		if(intval($teamId) == 0) return $rows;
+
+		$team = tx_rnbase::makeInstance('tx_cfcleague_models_Team', $teamId);
+		/* @var $profile tx_cfcleague_models_Profile */
+		$profiles = $team->$getter();
+		foreach($profiles As $profile) {
+			$rows[] = Array($profile->getName(), $profile->getUid(), );
+		}
+
+		return $rows;
+	}
 
 }
 

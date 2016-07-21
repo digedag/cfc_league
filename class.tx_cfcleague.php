@@ -69,40 +69,6 @@ class tx_cfcleague_handleDataInput{
   }
 
   /**
-   * Find player of team
-   * Used: Edit mask for team notes
-   *
-   * @param array $PA
-   * @param t3lib_TCEforms $fobj
-   */
-	function getPlayers4Team(&$PA, &$fobj){
-		global $LANG;
-		$LANG->includeLLFile('EXT:cfc_league/locallang_db.xml');
-		$column = 'team';
-		if($PA['row'][$column])
-		{
-			$tablename = 'tx_cfcleague_team_notes';
-			$tcaFieldConf = $GLOBALS['TCA'][$tablename]['columns'][$column]['config'];
-			$team = tx_rnbase_util_Strings::trimExplode('|', $PA['row'][$column]);
-			$team = $team[0];
-			if($tcaFieldConf['type'] == 'db') {
-				$dbAnalysis = tx_rnbase::makeInstance('t3lib_loadDBGroup');
-				$dbAnalysis->registerNonTableValues=0;
-				$dbAnalysis->start($team, $tcaFieldConf['allowed'], '', 0, $tablename, $tcaFieldConf);
-				$valueArray = $dbAnalysis->getValueArray(false);
-				// Abfrage aus Spieldatensatz
-				// Es werden alle Spieler des Teams benötigt
-				$team = $valueArray[0];
-			}
-			$players = $this->findPlayers($team);
-			$players = array_merge($players, $this->findCoaches($team));
-			$players = array_merge($players, $this->findSupporters($team));
-			$PA[items] = $players;
-		}
-		else
-			$PA[items] = array();
-	}
-  /**
    * Die Spieler des Heimteams ermitteln
    * Used: Edit-Maske eines Spiels für Teamaufstellung und Match-Note
    */
@@ -209,7 +175,7 @@ class tx_cfcleague_handleDataInput{
 	 */
 	private function findCoaches($teamId) {
 		$rows = array();
-		if(intval($teamId) == 0) return rows;
+		if(intval($teamId) == 0) return $rows;
 
 		$team = tx_rnbase::makeInstance('tx_cfcleague_models_Team', $teamId);
 		/* @var $profile tx_cfcleague_models_Profile */
@@ -232,7 +198,7 @@ class tx_cfcleague_handleDataInput{
 	 */
 	private function findPlayers($teamId) {
 		$rows = array();
-		if(intval($teamId) == 0) return rows;
+		if(intval($teamId) == 0) return $rows;
 
 		$team = tx_rnbase::makeInstance('tx_cfcleague_models_Team', $teamId);
 		/* @var $profile tx_cfcleague_models_Profile */
@@ -254,7 +220,7 @@ class tx_cfcleague_handleDataInput{
 	 */
 	private function findSupporters($teamId) {
 		$rows = array();
-		if(intval($teamId) == 0) return rows;
+		if(intval($teamId) == 0) return $rows;
 
 		$team = tx_rnbase::makeInstance('tx_cfcleague_models_Team', $teamId);
 		/* @var $profile tx_cfcleague_models_Profile */

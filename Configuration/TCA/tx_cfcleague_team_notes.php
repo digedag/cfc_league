@@ -86,7 +86,7 @@ $tx_cfcleague_team_notes = Array (
 				'type' => 'select',
 				'foreign_table' => 'tx_cfcleague_profiles',
 				'foreign_table_where' => 'AND tx_cfcleague_profiles.uid = 0',
-				'itemsProcFunc' => 'tx_cfcleague_handleDataInput->getPlayers4Team',
+				'itemsProcFunc' => 'tx_cfcleague_tca_Lookup->getPlayers4Team',
 				'eval' => 'required',
 				'size' => 1,
 				'minitems' => 0,
