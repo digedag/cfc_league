@@ -58,6 +58,17 @@ class tx_cfcleague_models_Club extends tx_rnbase_model_base {
 	}
 
 	/**
+	 * Returns address dataset or null
+	 * @return tx_cfcleague_models_Address or null
+	 */
+	public function getAddress() {
+		if(!$this->record['address'])
+			return null;
+			$address = tx_rnbase::makeInstance('tx_cfcleague_models_Address', $this->record['address']);
+			return $address->isValid() ? $address : null;
+	}
+
+	/**
 	 * Returns the zip
 	 * @return string
 	 */

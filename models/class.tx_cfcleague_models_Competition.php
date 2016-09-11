@@ -297,7 +297,7 @@ class tx_cfcleague_models_Competition extends tx_rnbase_model_base {
 	public function getGroup() {
 		tx_rnbase::load('tx_cfcleague_models_Group');
 		$groupIds = Tx_Rnbase_Utility_Strings::intExplode(',', $this->getProperty('agegroup'));
-		return count($groupIds) ? tx_cfcleague_models_Group::getInstance($groupIds[0]) : false;
+		return count($groupIds) ? tx_cfcleague_models_Group::getGroupInstance($groupIds[0]) : false;
 	}
 	/**
 	 * Returns the uid of first agegroup of this competition
@@ -319,7 +319,7 @@ class tx_cfcleague_models_Competition extends tx_rnbase_model_base {
 		$groupIds = Tx_Rnbase_Utility_Strings::intExplode(',', $this->getProperty('agegroup'));
 		$ret = array();
 		foreach($groupIds As $groupId) {
-			$ret[] = tx_cfcleaguefe_models_group::getInstance($groupId);
+			$ret[] = tx_cfcleaguefe_models_group::getGroupInstance($groupId);
 		}
 		return $ret;
 	}

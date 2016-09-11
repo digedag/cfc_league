@@ -139,7 +139,7 @@ class tx_cfcleague_services_Teams extends Tx_Rnbase_Service_Base {
 		$agegroup = $cache->get('team_'.$team->getUid());
 		if(!$agegroup) {
 			if(intval($team->record['agegroup']))
-				$agegroup = tx_cfcleague_models_Group::getInstance($this->record['agegroup']);
+				$agegroup = tx_cfcleague_models_Group::getGroupInstance($this->record['agegroup']);
 			if(!$agegroup) {
 				$comps = $this->getCompetitions4Team($team, true);
 				for($i=0, $cnt = count($comps); $i < $cnt; $i++) {
