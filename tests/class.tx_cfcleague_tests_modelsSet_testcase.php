@@ -23,9 +23,9 @@
 ***************************************************************/
 
 tx_rnbase::load('tx_cfcleague_models_Set');
+tx_rnbase::load('tx_rnbase_tests_BaseTestCase');
 
-
-class tx_cfcleague_tests_modelsSets_testcase extends tx_phpunit_testcase {
+class tx_cfcleague_tests_modelsSets_testcase extends tx_rnbase_tests_BaseTestCase {
 
 	public function testBuildFromStringEmpty() {
 		$sets = tx_cfcleague_models_Set::buildFromString('');

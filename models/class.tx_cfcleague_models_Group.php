@@ -45,7 +45,7 @@ class tx_cfcleague_models_Group extends tx_rnbase_model_base {
    * @param int $uid
    * @return tx_cfcleague_models_Group
    */
-  static public function getInstance($uid) {
+  static public function getGroupInstance($uid) {
   	return tx_cfcleague_util_ServiceRegistry::getGroupService()->getGroupByUid($uid);
   }
 

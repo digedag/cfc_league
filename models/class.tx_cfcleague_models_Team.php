@@ -22,28 +22,27 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-tx_rnbase::load('tx_rnbase_model_base');
+tx_rnbase::load('Tx_Rnbase_Domain_Model_Base');
 tx_rnbase::load('tx_rnbase_util_Strings');
+tx_rnbase::load('Tx_Rnbase_Utility_Strings');
+
 
 /**
  * Model für ein Team.
  */
-class tx_cfcleague_models_Team extends tx_rnbase_model_base {
+class tx_cfcleague_models_Team extends Tx_Rnbase_Domain_Model_Base {
 	private static $instances = array();
 
 	function getTableName(){return 'tx_cfcleague_teams';}
 
-	public function getName() {
-		return $this->record['name'];
-	}
 	public function getNameShort() {
-		return $this->record['short_name'];
+		return $this->getProperty('short_name');
 	}
 	/**
 	 * Liefert true, wenn für das Team eine Einzelansicht verlinkt werden kann.
 	 */
 	public function hasReport() {
-		return intval($this->record['link_report']);
+		return intval($this->getProperty('link_report'));
 	}
 	/**
 	 * Returns the url of the first stadium logo.
@@ -52,55 +51,55 @@ class tx_cfcleague_models_Team extends tx_rnbase_model_base {
 	 */
 	public function getLogoPath() {
 		if(tx_rnbase_util_Extensions::isLoaded('dam')) {
-			if($this->record['logo']) {
+			if($this->getProperty('logo')) {
 				// LogoFeld
-				$media = tx_rnbase::makeInstance('tx_rnbase_model_media', $this->record['logo']);
-				return $media->record['file'];
+				$media = tx_rnbase::makeInstance('tx_rnbase_model_media', $this->getProperty('logo'));
+				return $media->getProperty('file');
 			}
-			elseif($this->record['club']) {
-				$club = tx_rnbase::makeInstance('tx_cfcleague_models_Club', $this->record['club']);
+			elseif($this->getProperty('club')) {
+				$club = tx_rnbase::makeInstance('tx_cfcleague_models_Club', $this->getProperty('club'));
 				return $club->getFirstLogo();
 			}
 		}
 		return '';
 	}
 	public function getGroupUid() {
-		return $this->record['agegroup'];
+		return $this->getProperty('agegroup');
 	}
 	/**
 	 * Liefert den Verein des Teams als Objekt
 	 * @return tx_cfcleague_models_Club Verein als Objekt oder null
 	 */
 	public function getClub() {
-		if(!$this->record['club']) return null;
-		return tx_rnbase::makeInstance('tx_cfcleague_models_Club', $this->record['club']);
+		if(!$this->getProperty('club')) return null;
+		return tx_rnbase::makeInstance('tx_cfcleague_models_Club', $this->getProperty('club'));
 	}
 
 	public function getClubUid() {
-		return $this->record['club'];
+		return $this->getProperty('club');
 	}
-	/**
-	 * Returns an instance of tx_cfcleague_models_Team
-	 * @param int $uid
-	 * @return tx_cfcleague_models_Team or null
-	 */
-	public static function &getInstance($uid, $record = 0) {
-		$uid = intval($uid);
-		if(!array_key_exists($uid, self::$instances)) {
-			$item = new tx_cfcleague_models_Team(is_array($record) ? $record : $uid);
-			self::$instances[$uid] = $item->isValid() ? $item : null;
-		}
-		return self::$instances[$uid];
-	}
-	public static function addInstance($team) {
-		self::$instances[$team->uid] = $team;
-	}
+// 	/**
+// 	 * Returns an instance of tx_cfcleague_models_Team
+// 	 * @param int $uid
+// 	 * @return tx_cfcleague_models_Team or null
+// 	 */
+// 	public static function &getInstance($uid, $record = 0) {
+// 		$uid = intval($uid);
+// 		if(!array_key_exists($uid, self::$instances)) {
+// 			$item = new tx_cfcleague_models_Team(is_array($record) ? $record : $uid);
+// 			self::$instances[$uid] = $item->isValid() ? $item : null;
+// 		}
+// 		return self::$instances[$uid];
+// 	}
+// 	public static function addInstance($team) {
+// 		self::$instances[$team->uid] = $team;
+// 	}
 	/**
 	 * Check if team is a dummy for free_of_match.
 	 * @return boolean
 	 */
 	public function isDummy(){
-		return intval($this->record['dummy']) != 0;
+		return intval($this->getProperty('dummy')) != 0;
 	}
 
 	/**
@@ -136,10 +135,10 @@ class tx_cfcleague_models_Team extends tx_rnbase_model_base {
 	 * @return array[tx_cfcleague_models_Profile]
 	 */
 	private function getTeamMember($column) {
-		if(strlen(trim($this->record[$column])) > 0 ) {
+		if(strlen(trim($this->getProperty($column))) > 0 ) {
 			$what = '*';
 			$from = 'tx_cfcleague_profiles';
-			$options['where'] = 'uid IN (' .$this->record[$column] . ')';
+			$options['where'] = 'uid IN (' .$this->getProperty($column) . ')';
 			$options['wrapperclass'] = 'tx_cfcleague_models_Profile';
 
 			$rows = tx_rnbase_util_DB::doSelect($what,$from,$options,0);
@@ -154,10 +153,10 @@ class tx_cfcleague_models_Team extends tx_rnbase_model_base {
 	 */
 	private function sortProfiles($profiles, $recordKey = 'players') {
 		$ret = array();
-		if(strlen(trim($this->record[$recordKey])) > 0 ) {
+		if(strlen(trim($this->getProperty($recordKey))) > 0 ) {
 			if(count($profiles)) {
 				// Jetzt die Spieler in die richtige Reihenfolge bringen
-				$uids = tx_rnbase_util_Strings::intExplode(',', $this->record[$recordKey]);
+				$uids = Tx_Rnbase_Utility_Strings::intExplode(',', $this->getProperty($recordKey));
 				$uids = array_flip($uids);
 				foreach($profiles as $player) {
 					$ret[$uids[$player->uid]] = $player;

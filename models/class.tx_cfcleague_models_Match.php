@@ -242,8 +242,7 @@ class tx_cfcleague_models_Match extends tx_rnbase_model_base {
 	 */
 	private function getTeam($uid) {
 		if(!$uid) throw new Exception('Invalid match with uid ' . $this->getUid() . ': At least one team is not set.');
-		tx_rnbase::load('tx_cfcleague_models_Team');
-		$team = tx_cfcleague_models_Team::getInstance($uid);
+		$team = tx_cfcleague_util_ServiceRegistry::getTeamService()->getTeam($uid);
 		return $team;
 	}
 	public function getHomeNameShort() {
