@@ -129,7 +129,7 @@ class tx_cfcleague_selector{
 		return '
 
 				<!-- Function Menu of module -->
-				<select name="' . $elementName . '" >
+				<select class="form-control" name="' . $elementName . '" >
 					' . implode('
 					', $options) . '
 				</select>
@@ -167,7 +167,7 @@ class tx_cfcleague_selector{
 			$links = $this->getFormTool()->createEditLink('tx_cfcleague_teams', $menuData['value']);
 			if($teamObj->getProperty('club'))
 				$links .= $this->getFormTool()->createEditLink('tx_cfcleague_club', intval($teamObj->getProperty('club')), $GLOBALS['LANG']->getLL('label_club'));
-			$menu = '<div class="cfcselector"><div class="selector">' . $menu . '</div><div class="links">' . $links . '</div></div>';
+			$menu = '<div class="cfcselector"><div class="selector pull-left">' . $menu . '</div><div class="links">' . $links . '</div></div>';
 		}
 		$content .= $menu;
 
@@ -218,7 +218,7 @@ class tx_cfcleague_selector{
 		if(!$noLinks && $menu) {
 			$links = $this->getFormTool()->createEditLink('tx_cfcleague_club', $menuSettings[$selectorId]);
 			$links .= $this->createNewClubLink($pid);
-			$menu = '<div class="cfcselector"><div class="selector">' . $menu . '</div><div class="links">' . $links . '</div></div>';
+			$menu = '<div class="cfcselector"><div class="selector pull-left">' . $menu . '</div><div class="links">' . $links . '</div></div>';
 		}
 		$content .= $menu;
 
@@ -256,9 +256,9 @@ class tx_cfcleague_selector{
 			$keys = array_flip($keys);
 			$prevIdx = ($currIdx > 0) ? $currIdx-1 : count($entries)-1;
 			$nextIdx = ($currIdx < (count($entries)-1)) ? $currIdx+1 : 0;
-			$prev = $this->getFormTool()->createLink('&SET[round]='.($keys[$prevIdx]), $pid, '&lt;');
-			$next = $this->getFormTool()->createLink('&SET[round]='.($keys[$nextIdx]), $pid, '&gt;');
-			$menu = '<div class="cfcselector"><div class="selector">' . $prev.$data['menu'].$next . '</div></div>';
+			$prev = $this->getFormTool()->createLink('&SET[round]=' . ($keys[$prevIdx]), $pid, '&lt;');
+			$next = $this->getFormTool()->createLink('&SET[round]=' . ($keys[$nextIdx]), $pid, '&gt;');
+			$menu = '<div class="cfcselector"><div class="selector pull-left">' . $prev.$data['menu'].$next . '</div></div>';
 		}
 		$content.= $menu;
 
@@ -280,7 +280,7 @@ class tx_cfcleague_selector{
 		// Zusätzlich noch einen Edit-Link setzen
 		$links = $this->getFormTool()->createEditLink('tx_cfcleague_games', $data['value']);
 		if($data['menu']) {
-			$menu = '<div class="cfcselector"><div class="selector">' . $data['menu'] . '</div><div class="links">' . $links . '</div></div>';
+			$menu = '<div class="cfcselector"><div class="selector pull-left">' . $data['menu'] . '</div><div class="links">' . $links . '</div></div>';
 		}
 		$content .= $menu;
 
@@ -338,11 +338,11 @@ class tx_cfcleague_selector{
 		// In den Content einbauen
 		// Wir verzichten hier auf den Link und halten nur den Abstand ein
 		if($data['menu']) {
-			$menu = '<div class="cfcselector"><div class="selector">' . $data['menu'] . '</div><div class="links">' . $links . '</div></div>';
+			$menu = '<div class="cfcselector"><div class="selector pull-left">' . $data['menu'] . '</div><div class="links">' . $links . '</div></div>';
 		}
 		elseif(count($entries) == 1) {
 			$comp = reset($entries);
-			$menu = '<div class="cfcselector"><div class="selector">' . $comp . '</div></div>';
+			$menu = '<div class="cfcselector"><div class="selector pull-left">' . $comp . '</div></div>';
 		}
 		$content .= $menu;
 
@@ -384,7 +384,7 @@ class tx_cfcleague_selector{
 	 *
 	 * @return string
 	 */
-	private function getScriptURI() {
+	protected function getScriptURI() {
 		return '';
 	}
 	/**

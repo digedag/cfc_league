@@ -100,7 +100,7 @@ class Tx_Cfcleague_Controller_Team_ProfileAdd {
 		$teamTable = $teamInfo->getTeamTable($this->mod->getDoc());
 
 		$tableLayout = Array (
-			'table' => Array('<table class="typo3-dblist" width="100%" cellspacing="0" cellpadding="0" border="0">', '</table><br/>'),
+			'table' => Array('<table class="typo3-dblist table" width="100%" cellspacing="0" cellpadding="0" border="0">', '</table><br/>'),
 			'defRow' => Array ( // Formate für alle Zeilen
 				'defCol' => Array('<td valign="top" style="padding:0 5px;">', '</td>') // Format für jede Spalte in jeder Zeile
 			),

@@ -291,7 +291,7 @@ class Tx_Cfcleague_Controller_Competition_MatchTable {
 
 	private function getTableLayout() {
 		return Array (
-			'table' => Array('<table class="typo3-dblist" cellspacing="0" cellpadding="0" border="0">', '</table><br/>'),
+			'table' => Array('<table class="typo3-dblist table" cellspacing="0" cellpadding="0" border="0">', '</table><br/>'),
 			'0' => Array( // Format für 1. Zeile
 					'defCol' => Array('<td valign="top" class="c-headLineTable" style="font-weight:bold;padding:2px 5px;">', '</td>') // Format für jede Spalte in der 1. Zeile
 				),
