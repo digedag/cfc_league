@@ -47,7 +47,7 @@ class tx_cfcleague_mod1_AjaxTicker {
   		$ajaxObj->addContent('message', 'Invalid request!');
 			return;
 		}
-		$matchRecord = t3lib_BEfunc::getRecord('tx_cfcleague_games', $t3match);
+		$matchRecord = Tx_Rnbase_Backend_Utility::getRecord('tx_cfcleague_games', $t3match);
 
 		$record = array(
 			'comment' => $tickerMessage,
