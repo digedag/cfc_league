@@ -245,10 +245,10 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc {
 
 		$parts = $competition->getNumberOfMatchParts();
 		for($i=$parts; $i > 0; $i--) {
-			$label = $LANG->getLL('tx_cfcleague_games.parts_'.$parts.'_'.$i);
+			$label = $LANG->sL('LLL:typo3conf/ext/cfc_league/locallang_db.xml:tx_cfcleague_games.parts_'.$parts.'_'.$i);
 			if(!$label) {
 				// Prüfen ob ein default gesetzt ist
-				$label = $LANG->getLL('tx_cfcleague_games.parts_'.$parts.'_default');
+				$label = $LANG->sL('LLL:typo3conf/ext/cfc_league/locallang_db.xml:tx_cfcleague_games.parts_'.$parts.'_default');
 				if($label) $label = $i. '. ' . $label;
 			}
 			$out .= $label ? $label : $i.'. part';
@@ -270,7 +270,7 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc {
 	 */
 	function _getTableLayoutForm() {
 		$arr = Array (
-			'table' => Array('<table class="typo3-dblist" width="100%" cellspacing="0" cellpadding="0" border="0">', '</table><br/>'),
+			'table' => Array('<table class="typo3-dblist table" width="100%" cellspacing="0" cellpadding="0" border="0">', '</table><br/>'),
 			'0' => Array( // Format für 1. Zeile
 				'tr'		=> Array('<tr class="c-headLineTable">', '</tr>'),
 				'defCol' => Array('<td valign="top" class="t3-row-header c-headLineTable" style="font-weight:bold;padding:2px 5px;">', '</td>') // Format für jede Spalte in der 1. Zeile
@@ -291,18 +291,18 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc {
 	 * Wir listen die Tickermeldungen des Spiels auf
 	 * @param tx_cfcleague_models_Match $match
 	 */
-	private function createTickerArray($match, $showAll) {
+	protected function createTickerArray($match, $showAll) {
 		global $LANG;
 		$notes = $match->getMatchNotes('desc', $showAll ? FALSE : 5);
 		if(!count($notes))
 			return 0;
 
 		$arr = Array(Array(
-			$LANG->getLL('tx_cfcleague_match_notes.minute'),
-			$LANG->getLL('tx_cfcleague_match_notes.type'),
-			$LANG->getLL('tx_cfcleague_match_notes.player_home'),
-			$LANG->getLL('tx_cfcleague_match_notes.player_guest'),
-			$LANG->getLL('tx_cfcleague_match_notes.comment'),
+			$LANG->sL('LLL:typo3conf/ext/cfc_league/locallang_db.xml:tx_cfcleague_match_notes.minute'),
+			$LANG->sL('LLL:typo3conf/ext/cfc_league/locallang_db.xml:tx_cfcleague_match_notes.type'),
+			$LANG->sL('LLL:typo3conf/ext/cfc_league/locallang_db.xml:tx_cfcleague_match_notes.player_home'),
+			$LANG->sL('LLL:typo3conf/ext/cfc_league/locallang_db.xml:tx_cfcleague_match_notes.player_guest'),
+			$LANG->sL('LLL:typo3conf/ext/cfc_league/locallang_db.xml:tx_cfcleague_match_notes.comment'),
 			''));
 
 		// Die NotesTypen laden
@@ -348,10 +348,10 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc {
 		global $LANG;
 
 		$arr = Array(Array(
-			$LANG->getLL('tx_cfcleague_match_notes.minute'),
-			$LANG->getLL('tx_cfcleague_match_notes.type'),
-			$LANG->getLL('tx_cfcleague_match_notes.player_home'),
-			$LANG->getLL('tx_cfcleague_match_notes.player_guest'),
+			$LANG->sL('LLL:typo3conf/ext/cfc_league/locallang_db.xml:tx_cfcleague_match_notes.minute'),
+			$LANG->sL('LLL:typo3conf/ext/cfc_league/locallang_db.xml:tx_cfcleague_match_notes.type'),
+			$LANG->sL('LLL:typo3conf/ext/cfc_league/locallang_db.xml:tx_cfcleague_match_notes.player_home'),
+			$LANG->sL('LLL:typo3conf/ext/cfc_league/locallang_db.xml:tx_cfcleague_match_notes.player_guest'),
 //      $LANG->getLL('tx_cfcleague_match_notes.comment'),
 		));
 
