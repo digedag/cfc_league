@@ -136,10 +136,36 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc {
 	 * Liefert ein Textfeld für eine SofortMeldung per Ajax
 	 * @return string
 	 */
-	private function getInstantMessageField() {
+	protected function getInstantMessageField() {
 		if(tx_rnbase_util_TYPO3::isTYPO76OrHigher()) {
-			// TODO: implement
-			return '';
+            $ret = '';
+            $ret .= '<script type="text/javascript">
+                var jQuery = TYPO3.jQuery;
+            </script>';
+            $ret .= '<script type="text/javascript" src="../../../../typo3conf/ext/cfc_league/mod1/js/jeditable.min.js"></script>';
+            $ret .= '<p id="instant" style="background:yellow; margin-bottom:10px; padding:3px"></p>';
+            $ret .= '<script type="text/javascript">
+            var ajaxSaveTickerMessage = "' . \Tx_Rnbase_Backend_Utility::getAjaxUrl('T3sports::saveTickerMessage').'";
+            
+            TYPO3.jQuery(document).ready(function() {
+                jQuery(\'#instant\').editable(ajaxSaveTickerMessage, {
+                    placeholder: \'Klicken Sie hier, um eine Sofortmeldung abzusetzen.\',
+                    onblur: \'ignore\',
+                    cancel: \'cancel\',
+                    submit: \'ok\',
+                    event: \'click\',
+                    submitdata: function(){
+                        return {
+                            t3time: jQuery(\'#editform\').find(\'input[name=watch_minute]\').val(), 
+                            t3match: jQuery(\'#editform\').find(\'input[name=t3matchid]\').val()
+                        }
+                    },
+                    indicator: \'Speichern ....\'
+                });
+            });
+        </script>';
+
+			return $ret;
 		}
 		elseif(tx_rnbase_util_TYPO3::isTYPO3VersionOrHigher(4004000)) {
 			/* @var $pageRenderer \TYPO3\CMS\Core\Page\PageRenderer */
@@ -157,7 +183,8 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc {
 		$ret .= '<p id="instant" style="background:yellow; margin-bottom:10px; padding:3px">'.$GLOBALS['LANG']->getLL('msg_sendInstant').'</p>';
 		return '<div id="t3sportsTicker">'.$ret.'</div>';
 	}
-  private function getFormHeadline() {
+
+	protected function getFormHeadline() {
     $stop = Tx_Rnbase_Utility_T3General::_GP('btn_watch_stop');
   	$start = Tx_Rnbase_Utility_T3General::_GP('btn_watch_start');
   		// Daten: Startuhrzeit auf dem Client und gewünschtes offset
@@ -331,7 +358,7 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc {
 		return $arr;
 	}
 
-	private function getTickerTypes() {
+	protected function getTickerTypes() {
 		$srv = tx_cfcleague_util_ServiceRegistry::getMatchService();
 		$tcaTypes = $srv->getMatchNoteTypes4TCA();
 		$types = array();
