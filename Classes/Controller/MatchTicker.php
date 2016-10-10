@@ -371,7 +371,7 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc {
 	 * Erstellt das Formular für die Eingabe der Tickermeldungen
 	 * @param tx_cfcleague_models_Match $match
 	 */
-	private function createFormArray($match) {
+	protected function createFormArray($match) {
 		global $LANG;
 
 		$arr = Array(Array(
