@@ -272,10 +272,10 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc {
 
 		$parts = $competition->getNumberOfMatchParts();
 		for($i=$parts; $i > 0; $i--) {
-			$label = $LANG->sL('LLL:typo3conf/ext/cfc_league/locallang_db.xml:tx_cfcleague_games.parts_'.$parts.'_'.$i);
+			$label = $LANG->sL('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.parts_'.$parts.'_'.$i);
 			if(!$label) {
 				// Prüfen ob ein default gesetzt ist
-				$label = $LANG->sL('LLL:typo3conf/ext/cfc_league/locallang_db.xml:tx_cfcleague_games.parts_'.$parts.'_default');
+				$label = $LANG->sL('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.parts_'.$parts.'_default');
 				if($label) $label = $i. '. ' . $label;
 			}
 			$out .= $label ? $label : $i.'. part';
@@ -325,11 +325,11 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc {
 			return 0;
 
 		$arr = Array(Array(
-			$LANG->sL('LLL:typo3conf/ext/cfc_league/locallang_db.xml:tx_cfcleague_match_notes.minute'),
-			$LANG->sL('LLL:typo3conf/ext/cfc_league/locallang_db.xml:tx_cfcleague_match_notes.type'),
-			$LANG->sL('LLL:typo3conf/ext/cfc_league/locallang_db.xml:tx_cfcleague_match_notes.player_home'),
-			$LANG->sL('LLL:typo3conf/ext/cfc_league/locallang_db.xml:tx_cfcleague_match_notes.player_guest'),
-			$LANG->sL('LLL:typo3conf/ext/cfc_league/locallang_db.xml:tx_cfcleague_match_notes.comment'),
+			$LANG->sL('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_match_notes.minute'),
+			$LANG->sL('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_match_notes.type'),
+			$LANG->sL('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_match_notes.player_home'),
+			$LANG->sL('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_match_notes.player_guest'),
+			$LANG->sL('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_match_notes.comment'),
 			''));
 
 		// Die NotesTypen laden
@@ -375,10 +375,10 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc {
 		global $LANG;
 
 		$arr = Array(Array(
-			$LANG->sL('LLL:typo3conf/ext/cfc_league/locallang_db.xml:tx_cfcleague_match_notes.minute'),
-			$LANG->sL('LLL:typo3conf/ext/cfc_league/locallang_db.xml:tx_cfcleague_match_notes.type'),
-			$LANG->sL('LLL:typo3conf/ext/cfc_league/locallang_db.xml:tx_cfcleague_match_notes.player_home'),
-			$LANG->sL('LLL:typo3conf/ext/cfc_league/locallang_db.xml:tx_cfcleague_match_notes.player_guest'),
+			$LANG->sL('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_match_notes.minute'),
+			$LANG->sL('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_match_notes.type'),
+			$LANG->sL('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_match_notes.player_home'),
+			$LANG->sL('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_match_notes.player_guest'),
 //      $LANG->getLL('tx_cfcleague_match_notes.comment'),
 		));
 
