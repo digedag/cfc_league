@@ -61,8 +61,10 @@ class Tx_Cfcleague_Controller_Profile extends tx_rnbase_mod_BaseModFunc {
 		$this->selector = tx_rnbase::makeInstance('tx_cfcleague_selector');
 		$this->selector->init($this->getModule()->getDoc(), $this->getModule());
 
-		// Wir benötigen die $TCA, um die maximalen Spieler pro Team prüfen zu können
-		Tx_Rnbase_Utility_T3General::loadTCA('tx_cfcleague_teams');
+        if(!tx_rnbase_util_TYPO3::isTYPO76OrHigher()) {
+            // Wir benötigen die $TCA, um die maximalen Spieler pro Team prüfen zu können
+            Tx_Rnbase_Utility_T3General::loadTCA('tx_cfcleague_teams');
+        }
 
 		$data = Tx_Rnbase_Utility_T3General::_GP('data');
 		$this->SEARCH_SETTINGS = Tx_Rnbase_Backend_Utility::getModuleData(array ('searchterm' => ''), $data, $this->getModule()->getName() );

@@ -1,4 +1,5 @@
 <?php
+
 if (!defined ('TYPO3_MODE')) 	die ('Access denied.');
 tx_rnbase_util_Extensions::addUserTSConfig('
 	options.saveDocNew.tx_cfcleague_group=1
@@ -29,6 +30,7 @@ $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tceforms.php']['get
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processCmdmapClass'][] = 'EXT:' . $_EXTKEY . '/hooks/class.tx_cfcleague_hooks_cmhooks.php:tx_cfcleague_hooks_cmhooks';
 
 $GLOBALS ['TYPO3_CONF_VARS']['BE']['AJAX']['T3sports::saveTickerMessage'] = 'EXT:' . $_EXTKEY . '/mod1/class.tx_cfcleague_mod1_AjaxTicker.php:tx_cfcleague_mod1_AjaxTicker->ajaxSaveTickerMessage';
+tx_rnbase_util_Extensions::registerAjaxHandler('T3sports::saveTickerMessage', 'EXT:' . $_EXTKEY . '/mod1/class.tx_cfcleague_mod1_AjaxTicker.php:tx_cfcleague_mod1_AjaxTicker->ajaxSaveTickerMessage');
 
 if (TYPO3_MODE == 'BE') {
 	// Einbindung einer PageTSConfig

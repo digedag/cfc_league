@@ -70,7 +70,9 @@ class Tx_Cfcleague_Controller_Profile_ShowItem45 {
 
 			// Checking if the $table value is really a table and if the user has access to it.
 		if (isset($TCA[$this->table]))	{
-			Tx_Rnbase_Utility_T3General::loadTCA($this->table);
+            if(!tx_rnbase_util_TYPO3::isTYPO76OrHigher()) {
+                Tx_Rnbase_Utility_T3General::loadTCA($this->table);
+            }
 			$this->type = 'db';
 			$this->uid = intval($this->uid);
 

@@ -57,7 +57,7 @@ class tx_cfcleague_services_Teams extends Tx_Rnbase_Service_Base {
 	 */
 	public function getTeam($teamUid) {
 		if(!$teamUid) return false;
-		$team = tx_rnbase::makeInstance('tx_cfcleague_models_team', $teamUid);
+		$team = tx_rnbase::makeInstance('tx_cfcleague_models_Team', $teamUid);
 		return $team;
 	}
 	/**
