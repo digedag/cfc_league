@@ -192,20 +192,22 @@ class Tx_Cfcleague_Controller_Competition_MatchTable {
 		$arr = Array(Array($LANG->getLL('label_roundset')));
 //		$arr = Array(Array($LANG->getLL('label_round'), $LANG->getLL('label_roundname').' / '.
 //			$LANG->getLL('label_rounddate'), $LANG->getLL('label_roundset')));
+		$tables = tx_rnbase::makeInstance('Tx_Rnbase_Backend_Utility_Tables');
+
 		foreach($table As $round => $matchArr) {
 			$row = array();
 
 			// Die Formularfelder, die jetzt erstellt werden, wandern später direkt in die neuen Game-Records
 			// Ein Hidden-Field für die Runde
 			$row[] = '<div>' . $this->formTool->createHidden('data[rounds][round_'.$round.'][round]', $round) .
-							$this->formTool->createTxtInput('data[rounds][round_'.$round.'][round_name]', $round . $LANG->getLL('createGameTable_round'), 10, array('class'=>'roundname')) .
-							$this->formTool->createDateInput('data[rounds][round_'.$round.'][date]', time()) .'</div>'.
-							// Anzeige der Paarungen
-			 				$this->doc->table($this->createMatchTableArray($matchArr, $league, 'data[rounds][round_'.$round.']'), $tableLayout2);
+						$this->formTool->createTxtInput('data[rounds][round_'.$round.'][round_name]', $round . $LANG->getLL('createGameTable_round'), 10, array('class'=>'roundname')) .
+						$this->formTool->createDateInput('data[rounds][round_'.$round.'][date]', time()) .'</div>'.
+						// Anzeige der Paarungen
+						$tables->buildTable($this->createMatchTableArray($matchArr, $league, 'data[rounds][round_'.$round.']'));
 
 			$arr[] = $row;
 		}
-		$content .= $this->doc->table($arr, $tableLayout);
+		$content .= $tables->buildTable($arr);
 		return $content;
 	}
 	/**
@@ -241,7 +243,7 @@ class Tx_Cfcleague_Controller_Competition_MatchTable {
 	 * Returns the formtool
 	 * @return tx_rnbase_util_FormTool
 	 */
-	function getFormTool() {
+	protected function getFormTool() {
 		return $this->formTool;
 	}
 	/**
@@ -282,8 +284,9 @@ class Tx_Cfcleague_Controller_Competition_MatchTable {
 
 		// Die neuen Notes werden jetzt gespeichert
 		reset($data);
-		tx_rnbase::load('tx_rnbase_util_DB');
-		$tce = tx_rnbase_util_DB::getTCEmain($data);
+
+		tx_rnbase::load('Tx_Rnbase_Database_Connection');
+		$tce = Tx_Rnbase_Database_Connection::getInstance()->getTCEmain($data);
 		$tce->process_datamap();
 
 		return $LANG->getLL('msg_matches_created');

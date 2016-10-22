@@ -97,7 +97,10 @@ class tx_cfcleague_util_TeamInfo {
 		$arr[] = array($LANG->getLL('msg_number_of_players'), $this->baseInfo['freePlayers']);
 		$arr[] = array($LANG->getLL('msg_number_of_coaches'), $this->baseInfo['freeCoaches']);
 		$arr[] = array($LANG->getLL('msg_number_of_supporters'), $this->baseInfo['freeSupporters']);
-		return $doc->table($arr, $tableLayout);
+
+		$tables = tx_rnbase::makeInstance('Tx_Rnbase_Backend_Utility_Tables');
+
+		return $tables->buildTable($arr, $tableLayout);
 	}
 	/**
 	 * Liefert eine Tabelle mit den aktuellen Spielern, Trainern und Betreuern des Teams.
@@ -113,7 +116,8 @@ class tx_cfcleague_util_TeamInfo {
 		$this->addProfiles($arr, $this->getPlayerNames($this->getTeam()), $LANG->getLL('label_profile_player'), 'player');
 		$this->addProfiles($arr, $this->getSupporterNames($this->getTeam()), $LANG->getLL('label_profile_supporter'), 'supporter');
 
-		$tableProfiles = count($arr) > 1 ? $doc->table($arr, $tableLayout) : '';
+		$tables = tx_rnbase::makeInstance('Tx_Rnbase_Backend_Utility_Tables');
+		$tableProfiles = count($arr) > 1 ? $tables->buildTable($arr) : '';
 		return $tableProfiles;
 	}
 	/**
@@ -156,7 +160,7 @@ class tx_cfcleague_util_TeamInfo {
 		if($profileNames)
 			foreach($profileNames As $uid => $prof) {
 				if($i == 1)
-					$arr[] = array('', '&nbsp;', ''); // Leere Zeile als Trenner;
+					$arr[] = array('', '&nbsp;', '', '', ''); // Leere Zeile als Trenner;
 				$row = array();
 				$row[] = $i++ == 1 ? $label : '';
 				$row[] = $prof[first_name];
