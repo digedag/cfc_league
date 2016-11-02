@@ -56,12 +56,13 @@ class Tx_Cfcleague_Controller_Competition_MatchTable {
 
 
 		$this->formTool = $module->getFormTool();
-		$comp = tx_cfcleague_models_Competition::getInstance($competition->uid);
+		$comp = tx_cfcleague_models_Competition::getInstance($competition->getUid());
 //		$start = microtime(true);
 
 		tx_rnbase::load('Tx_Cfcleague_Handler_MatchCreator');
 		// Die Neuanlage der manuellen Spiele erledigt der MatchCreator
 		$content .= Tx_Cfcleague_Handler_MatchCreator::getInstance()->handleRequest($this->getModule());
+
 		// Die Neuanlage der "automatischen" Spiele übernimmt diese Klasse
 		$content .= $this->handleCreateMatchTable($comp);
 		if(!$content) {
@@ -93,7 +94,7 @@ class Tx_Cfcleague_Controller_Competition_MatchTable {
 	 * @return string
 	 */
 	private function showMatchTable($comp) {
-  	global $LANG;
+		global $LANG;
 
 		$matchCnt = $comp->getNumberOfMatches(false);
 		if($matchCnt > 0){
@@ -165,7 +166,7 @@ class Tx_Cfcleague_Controller_Competition_MatchTable {
 		$content = '';
 		// Wir benötigen eine Select-Box mit der man die Rückrunden-Option einstellen kann
 		// Bei Änderung soll die Seite neu geladen werden, damit nur die Halbserie angezeigt wird.
-		$content .= $this->formTool->createSelectSingleByArray('option_halfseries', $option_halfseries, Array('0' => '###LABEL_CREATE_SAISON###', '1' => '###LABEL_CREATE_FIRSTHALF###', '2' => '###LABEL_CREATE_SECONDHALF###'), array('reload'=>1));
+		$content .= $this->formTool->createSelectByArray('option_halfseries', $option_halfseries, Array('0' => '###LABEL_CREATE_SAISON###', '1' => '###LABEL_CREATE_FIRSTHALF###', '2' => '###LABEL_CREATE_SECONDHALF###'), array('reload'=>1));
 		$content .= '<br />';
 
 		// Führende 0 für Spieltag im einstelligen Bereich
@@ -290,20 +291,5 @@ class Tx_Cfcleague_Controller_Competition_MatchTable {
 		$tce->process_datamap();
 
 		return $LANG->getLL('msg_matches_created');
-	}
-
-	private function getTableLayout() {
-		return Array (
-			'table' => Array('<table class="typo3-dblist table" cellspacing="0" cellpadding="0" border="0">', '</table><br/>'),
-			'0' => Array( // Format für 1. Zeile
-					'defCol' => Array('<td valign="top" class="c-headLineTable" style="font-weight:bold;padding:2px 5px;">', '</td>') // Format für jede Spalte in der 1. Zeile
-				),
-			'defRow' => Array ( // Formate für alle Zeilen
-					'defCol' => Array('<td valign="middle" style="padding:0px 1px;">', '</td>') // Format für jede Spalte in jeder Zeile
-			),
-			'defRowEven' => Array ( // Formate für alle Zeilen
-				'defCol' => Array('<td valign="middle" class="db_list_alt" style="padding:0px 1px;">', '</td>') // Format für jede Spalte in jeder Zeile
-			)
-		);
 	}
 }
