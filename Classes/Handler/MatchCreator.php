@@ -98,6 +98,8 @@ class Tx_Cfcleague_Handler_MatchCreator {
 						$mod->getFormTool()->createHidden('data[tx_cfcleague_games][NEW'.$i.'][competition]', $competition->getUid());
 
 
+			// die Team können derzeit nicht per SoloField geholt werden, weil der
+			// gesetzte Wettbewerb verloren geht.
 			$row[] = $formBuilder->getSoloField($table, $dataArr, 'home');
 			$row[] = $formBuilder->getSoloField($table, $dataArr, 'guest');
 

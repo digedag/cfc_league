@@ -52,7 +52,17 @@ class Tx_Cfcleague_Controller_Competition_MatchTable {
 	public function main($module, $competition) {
 		$this->module = $module;
 		$this->doc = $module->getDoc();
-		$this->getPageRenderer()->addJsFile('js/matchcreate.js', 'text/javascript', FALSE, FALSE, '', TRUE);
+
+
+		if(tx_rnbase_util_TYPO3::isTYPO70OrHigher()) {
+			/* @var $moduleTemplate \TYPO3\CMS\Backend\Template\ModuleTemplate */
+			$moduleTemplate = tx_rnbase::makeInstance(TYPO3\CMS\Backend\Template\ModuleTemplate::class);
+			$moduleTemplate->getPageRenderer()->setBackPath('./'); // ??
+			$moduleTemplate->getPageRenderer()->loadJquery();
+			$moduleTemplate->getPageRenderer()->addJsFile('js/matchcreate.js', 'text/javascript', FALSE, FALSE, '', TRUE);
+		}
+		else
+			$this->getPageRenderer()->addJsFile('js/matchcreate.js', 'text/javascript', FALSE, FALSE, '', TRUE);
 
 
 		$this->formTool = $module->getFormTool();
@@ -79,9 +89,9 @@ class Tx_Cfcleague_Controller_Competition_MatchTable {
 	 * @return string
 	 */
 	private function handleCreateMatchTable($comp) {
-  	global $LANG;
+		global $LANG;
 		// Haben wir Daten im Request?
-  	$data = Tx_Rnbase_Utility_T3General::_GP('data');
+		$data = Tx_Rnbase_Utility_T3General::_GP('data');
 		if (is_array($data['rounds']) && Tx_Rnbase_Utility_T3General::_GP('update')) {
 			$result = $this->createMatches($data['rounds'], $comp);
 			$content .= $this->doc->section($LANG->getLL('message').':', $result, 0, 1, ICON_INFO);
@@ -224,7 +234,7 @@ class Tx_Cfcleague_Controller_Competition_MatchTable {
 			$row[] = $match->noMatch ? '' : str_pad($match->nr2, 3, '000', STR_PAD_LEFT);
 			$row[] = $this->createSelectBox($teamNames, $match->home, $namePrefix.'[matches]['.$match->nr.'][home]');
 			$row[] = $this->createSelectBox($teamNames, $match->guest, $namePrefix.'[matches]['.$match->nr.'][guest]') .
-								$this->formTool->createHidden($namePrefix.'[matches]['.$match->nr.'][nr2]', $match->nr2);
+					$this->formTool->createHidden($namePrefix.'[matches]['.$match->nr.'][nr2]', $match->nr2);
 //			$row[] = $teamNames[$match->home];
 //			$row[] = $teamNames[$match->guest];
 			$arr[] = $row;
