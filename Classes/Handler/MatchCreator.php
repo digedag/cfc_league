@@ -45,7 +45,6 @@ class Tx_Cfcleague_Handler_MatchCreator {
 		if(!$submitted) return '';
 			$tcaData = tx_rnbase_parameters::getPostOrGetParameter('data');
 
-
 		tx_rnbase::load('Tx_Rnbase_Database_Connection');
 		$tce = Tx_Rnbase_Database_Connection::getInstance()->getTCEmain($tcaData);
 		$tce->process_datamap();
@@ -107,7 +106,7 @@ class Tx_Cfcleague_Handler_MatchCreator {
 			$arr[] = $row;
 		}
 		$content .= $mod->getDoc()->table($arr);
-		$content .= $mod->getFormTool()->createSubmit('doCreateMatches', $LANG->getLL('btn_create'), $GLOBALS['LANG']->getLL('msg_create_teams'));
+		$content .= $mod->getFormTool()->createSubmit('doCreateMatches', $LANG->getLL('btn_create'), $GLOBALS['LANG']->getLL('msg_CreateGameTable'));
 		return $content;
 	}
 
