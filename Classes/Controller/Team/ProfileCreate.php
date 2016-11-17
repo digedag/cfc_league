@@ -120,11 +120,12 @@ class Tx_Cfcleague_Controller_Team_ProfileCreate {
 			$row[] = $i + 1;
 			$row[] = $this->formTool->createTxtInput('data[tx_cfcleague_profiles][NEW'.$i.'][first_name]', '', 10);
 			$row[] = $this->formTool->createTxtInput('data[tx_cfcleague_profiles][NEW'.$i.'][last_name]', '', 10);
-			$row[] = $this->formTool->createSelectSingleByArray('data[tx_cfcleague_profiles][NEW'.$i.'][type]', '', self::getProfileTypeArray()) .
+			$row[] = $this->formTool->createSelectByArray('data[tx_cfcleague_profiles][NEW'.$i.'][type]', '', self::getProfileTypeArray()) .
 			$this->formTool->createHidden('data[tx_cfcleague_profiles][NEW'.$i.'][pid]', $this->pid);
 			$arr[] = $row;
 		}
-		$tableForm = $this->doc->table($arr, $tableLayout);
+		$tables = tx_rnbase::makeInstance('Tx_Rnbase_Backend_Utility_Tables');
+		$tableForm = $tables->buildTable($arr);
 		$tableLayout = Array (
 			'table' => Array('<table class="typo3-dblist table" width="100%" cellspacing="0" cellpadding="0" border="0">', '</table><br/>'),
 			'defRow' => Array ( // Formate für alle Zeilen
@@ -132,7 +133,7 @@ class Tx_Cfcleague_Controller_Team_ProfileCreate {
 			),
 		);
 
-		$content .= $this->doc->table(Array(Array($tableForm, $tableProfiles)), $tableLayout);
+		$content .= $tables->buildTable(Array(Array($tableForm, $tableProfiles)));
 		return $content;
 	}
 

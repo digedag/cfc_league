@@ -16,6 +16,8 @@ $tx_cfcleague_games = Array (
 		'label_alt' => 'competition,home,guest',
 		'label_alt_force' => 1,
 		'requestUpdate' => 'competition',
+		// configure fields for NeighborRow initialization
+		'useColumnsForDefaultValues' => 'competition,date,round,round_name',
 		'dividers2tabs' => TRUE,
 		'tstamp' => 'tstamp',
 		'crdate' => 'crdate',

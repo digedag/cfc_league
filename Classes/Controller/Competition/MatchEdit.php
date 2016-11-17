@@ -32,16 +32,16 @@ tx_rnbase::load('tx_rnbase_mod_Tables');
 class Tx_Cfcleague_Controller_Competition_MatchEdit {
 
 
-  /**
-   * Bearbeitung von Spielen. Es werden die Paaren je Spieltag angezeigt
-   * @param tx_rnbase_mod_IModule $module
-   */
-  public function main($module, $current_league) {
-    global $LANG;
+	/**
+	 * Bearbeitung von Spielen. Es werden die Paaren je Spieltag angezeigt
+	 * @param tx_rnbase_mod_IModule $module
+	 */
+	public function main($module, $current_league) {
+		global $LANG;
 
-    $this->setModule($module);
+		$this->setModule($module);
 		$pid = $module->getPid();
-    $this->id = $module->getPid();
+		$this->id = $module->getPid();
 		$this->doc = $module->getDoc();
 
 		if(tx_rnbase_util_TYPO3::isTYPO70OrHigher()) {
@@ -81,7 +81,8 @@ class Tx_Cfcleague_Controller_Competition_MatchEdit {
 		$matches = $this->findMatches($currentTeam, $current_round, $current_league);
 		$arr = $this->createTableArray($matches, $current_league);
 
-		$content .= tx_rnbase_mod_Tables::buildTable($arr[0]);
+		$tables = tx_rnbase::makeInstance('Tx_Rnbase_Backend_Utility_Tables');
+		$content .= $tables->buildTable($arr[0]);
 
 		// Den Update-Button einfügen
 		$content .= $formTool->createSubmit('update', $LANG->getLL('btn_update'), $GLOBALS['LANG']->getLL('btn_update_msgEditGames'));
@@ -128,7 +129,7 @@ class Tx_Cfcleague_Controller_Competition_MatchEdit {
 		return $matches;
 	}
 	private function makeTeamSelector(&$content, $pid, $current_league) {
-    global $LANG;
+		global $LANG;
 		$teamOptions = array();
 		$teamOptions['selectorId'] = 'teamMatchEdit';
 		$teamOptions['noLinks'] = true;
@@ -165,20 +166,20 @@ class Tx_Cfcleague_Controller_Competition_MatchEdit {
 		$content = $formTool->createNewLink('tx_cfcleague_games', $pid, $GLOBALS['LANG']->getLL('label_create_match'), $params);
 		return $content;
 	}
-  /**
-   * Liefert die passenden Überschrift für die Tabelle
-   *
-   * @param int $parts
-   * @param tx_cfcleague_models_Competition $competition
-   * @return array
-   */
-  private function getHeadline($parts, $competition) {
-    global $LANG;
-    $arr = array( '',
-      $LANG->getLL('tx_cfcleague_games.date'),
-      $LANG->getLL('tx_cfcleague_games.status'),
-      $LANG->getLL('tx_cfcleague_games.home'),
-      $LANG->getLL('tx_cfcleague_games.guest'));
+	/**
+	 * Liefert die passenden Überschrift für die Tabelle
+	 *
+	 * @param int $parts
+	 * @param tx_cfcleague_models_Competition $competition
+	 * @return array
+	 */
+	private function getHeadline($parts, $competition) {
+		global $LANG;
+		$arr = array( '',
+		$LANG->getLL('tx_cfcleague_games.date'),
+		$LANG->getLL('tx_cfcleague_games.status'),
+		$LANG->getLL('tx_cfcleague_games.home'),
+		$LANG->getLL('tx_cfcleague_games.guest'));
 
 		if($competition->isAddPartResults() || $parts == 1)
 			$arr[] = $LANG->getLL('tx_cfcleague_games.endresult');
@@ -217,13 +218,14 @@ class Tx_Cfcleague_Controller_Competition_MatchEdit {
 			:
 			$this->formTool->getTCEForm()->getSoloField($table, $record[$table.'_'.$uid], $fieldName);
 	}
-  /**
-   * Erstellt das Datenarray zur Erstellung der HTML-Tabelle mit den Spielen des Spieltages
-   * @param array[tx_cfcleague_models_Match] $matches
-   * @param tx_cfcleague_models_Competition $competition
-   * @return array mit zwei Elementen: Idx 0 enthält Array für Darstellung als Tabelle, Idx 1
-   *         enthält, falls vorhanden den Namen des spielfreien Teams
-   */
+
+	/**
+	 * Erstellt das Datenarray zur Erstellung der HTML-Tabelle mit den Spielen des Spieltages
+	 * @param array[tx_cfcleague_models_Match] $matches
+	 * @param tx_cfcleague_models_Competition $competition
+	 * @return array mit zwei Elementen: Idx 0 enthält Array für Darstellung als Tabelle, Idx 1
+	 *         enthält, falls vorhanden den Namen des spielfreien Teams
+	 */
 	private function createTableArray($matches, $competition) {
 
 		$parts = $competition->getNumberOfMatchParts();
@@ -233,7 +235,6 @@ class Tx_Cfcleague_Controller_Competition_MatchEdit {
 			$row = array();
 
 			$isNoMatch = $match->isDummy();
-//      $isNoMatch = $match['no_match_home'] || $match['no_match_guest'];
 
 			$table = 'tx_cfcleague_games';
 			if(!$isNoMatch) {
@@ -255,36 +256,35 @@ class Tx_Cfcleague_Controller_Competition_MatchEdit {
 
 				$sports = $competition->getSportsService();
 				if($sports->isSetBased()) {
-        	$row[] = $this->formTool->createTxtInput('data[tx_cfcleague_games]['.$match->getUid().'][sets]', $match->record['sets'], 12);
+					$row[] = $this->formTool->createTxtInput('data[tx_cfcleague_games]['.$match->getUid().'][sets]', $match->record['sets'], 12);
 				}
 
-        $row[] = $this->formTool->createIntInput('data[tx_cfcleague_games]['.$match->getUid().'][visitors]', $match->record['visitors'], 6);
+				$row[] = $this->formTool->createIntInput('data[tx_cfcleague_games]['.$match->getUid().'][visitors]', $match->record['visitors'], 6);
 //				$row[] = $this->buildInputField($table, $dataArr, 'visitors', $match->getUid());
-        $arr[0][] = $row;
-      }
-      else {
-        $row = array();
-        $isHomeDummy = $match->getHome()->isDummy();
-        $row['team'] = $isHomeDummy ? $match->getGuest()->getName() : $match->getHome()->getName();
-        $row['team_edit'] = $this->formTool->createEditLink('tx_cfcleague_teams',
-                                     ($isHomeDummy ? $match->record['guest'] : $match->record['home']),
-                                     ($isHomeDummy ? $match->getGuest()->getNameShort() : $match->getHome()->getNameShort()));
-        $row['match_edit'] = $this->formTool->createEditLink('tx_cfcleague_games', $match->getUid());
-        $arr[1][] = $row;
-      }
-    }
+				$arr[0][] = $row;
+			}
+			else {
+				$row = array();
+				$isHomeDummy = $match->getHome()->isDummy();
+				$row['team'] = $isHomeDummy ? $match->getGuest()->getName() : $match->getHome()->getName();
+				$row['team_edit'] = $this->formTool->createEditLink('tx_cfcleague_teams',
+				                             ($isHomeDummy ? $match->record['guest'] : $match->record['home']),
+				                             ($isHomeDummy ? $match->getGuest()->getNameShort() : $match->getHome()->getNameShort()));
+				$row['match_edit'] = $this->formTool->createEditLink('tx_cfcleague_games', $match->getUid());
+				$arr[1][] = $row;
+			}
+		}
 
-    return $arr;
-  }
+		return $arr;
+	}
 
-  /**
-   * Aktualisiert die Spiele mit den Daten aus dem Request
-   */
-  private function updateMatches($tcaData) {
-		tx_rnbase::load('tx_rnbase_util_DB');
-		$tce =& tx_rnbase_util_DB::getTCEmain($tcaData);
+	/**
+	 * Aktualisiert die Spiele mit den Daten aus dem Request
+	 */
+	private function updateMatches($tcaData) {
+		tx_rnbase::load('Tx_Rnbase_Database_Connection');
+		$tce = Tx_Rnbase_Database_Connection::getInstance()->getTCEmain($tcaData);
 		$tce->process_datamap();
 
-  }
+	}
 }
-
