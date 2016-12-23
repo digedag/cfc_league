@@ -2,6 +2,11 @@
 Änderungen
 ==========
 
+## v1.1.0 (23.12.2015)
+ * Modifications for TYPO3 7.6
+ * #23 Ticker-Module updated by Mario Näther
+ * BE modules refactored
+
 ## v1.0.2 (03.02.2015)
  * Many bugfixes for TYPO3 6.2
  * Up to 60 players allowed as team member
