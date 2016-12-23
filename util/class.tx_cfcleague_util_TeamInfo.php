@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2009 Rene Nitzsche (rene@system25.de)
+*  (c) 2009-2016 Rene Nitzsche (rene@system25.de)
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -24,6 +24,7 @@
 
 tx_rnbase::load('tx_rnbase_parameters');
 tx_rnbase::load('Tx_Rnbase_Utility_T3General');
+tx_rnbase::load('Tx_Rnbase_Database_Connection');
 
 
 /**
@@ -132,17 +133,17 @@ class tx_cfcleague_util_TeamInfo {
 		$team = $this->getTeam();
 		$tceData = array();
 		foreach($data As $type => $uid) {
-			$profileUids = $team->record[$fields[$type]];
+			$profileUids = $team->getProperty($fields[$type]);
 			if(!$profileUids) continue;
 
 			if(Tx_Rnbase_Utility_T3General::inList($profileUids, $uid)) {
 				$profileUids = Tx_Rnbase_Utility_T3General::rmFromList($uid, $profileUids);
 				$tceData['tx_cfcleague_teams'][$team->getUid()][$fields[$type]] = $profileUids;
-				$team->record[$fields[$type]] = $profileUids;
+				$team->setProperty($fields[$type], $profileUids);
 			}
 		}
 
-		$tce =& tx_rnbase_util_DB::getTCEmain($tceData);
+		$tce = Tx_Rnbase_Database_Connection::getInstance()->getTCEmain($tceData);
 		$tce->process_datamap();
 
 		return $this->getFormTool()->getDoc()->section('Info:', $LANG->getLL('msg_removedProfileFromTeam'), 0, 1, ICON_INFO);
@@ -241,6 +242,3 @@ class tx_cfcleague_util_TeamInfo {
 	}
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/util/class.tx_cfcleague_util_TeamInfo.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/util/class.tx_cfcleague_util_TeamInfo.php']);
-}

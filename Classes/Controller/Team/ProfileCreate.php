@@ -23,7 +23,7 @@
 ***************************************************************/
 
 tx_rnbase::load('tx_cfcleague_mod1_decorator');
-tx_rnbase::load('tx_rnbase_util_Strings');
+tx_rnbase::load('Tx_Rnbase_Utility_Strings');
 
 /**
  * Die Klasse verwaltet die Erstellung von Spielern für Teams
@@ -70,7 +70,14 @@ class Tx_Cfcleague_Controller_Team_ProfileCreate {
 		return in_array($rootPage, $goodPages);
 	}
 
-	private function showCreateProfiles(&$data, &$team, $teamInfo) {
+	/**
+	 *
+	 * @param array $data
+	 * @param tx_cfcleague_models_Team $team
+	 * @param tx_cfcleague_util_TeamInfo $teamInfo
+	 * @return string
+	 */
+	private function showCreateProfiles(&$data, $team, $teamInfo) {
 		global $LANG;
 
 		if(!self::isProfilePage($this->pid)) {
@@ -103,7 +110,7 @@ class Tx_Cfcleague_Controller_Team_ProfileCreate {
 	 * Erstellt eine Tabelle mit den schon vorhandenen Personen und den noch möglichen neuen
 	 * Personen.
 	 * Wenn keine Personen da sind, gibt es 15 Eingabefelder, sonst nur 5
-	 * @param tx_cfcleague_team $team
+	 * @param tx_cfcleague_models_Team $team
 	 * @param tx_cfcleague_util_TeamInfo $teamInfo
 	 */
 	protected function prepareInputTable(&$team, $teamInfo) {
@@ -152,11 +159,11 @@ class Tx_Cfcleague_Controller_Team_ProfileCreate {
 	}
 	/**
 	 * Erstellt die angeforderten Profile
-	 * @param $profiles Array mit den Daten aus dem Request
-	 * @param $team das aktuelle Team, dem die Personen zugeordnet werden
+	 * @param array $profiles Array mit den Daten aus dem Request
+	 * @param tx_cfcleague_models_Team $team das aktuelle Team, dem die Personen zugeordnet werden
 	 * @param tx_cfcleague_util_TeamInfo $teamInfo
 	 */
-	public static function createProfiles(&$profiles, &$team, $teamInfo) {
+	public static function createProfiles(&$profiles, $team, $teamInfo) {
 		global $BE_USER, $LANG;
 
 		$maxCoaches = $teamInfo->get('maxCoaches');
@@ -205,13 +212,16 @@ class Tx_Cfcleague_Controller_Team_ProfileCreate {
 		tx_rnbase::load('tx_cfcleague_util_Misc');
 		// Die IDs der Trainer, Spieler und Betreuer mergen
 		if(count($coachIds)) {
-			$data['tx_cfcleague_teams'][$team->record['uid']]['coaches'] = implode(',', tx_cfcleague_util_Misc::mergeArrays(tx_rnbase_util_Strings::intExplode(',', $team->record['coaches']), $coachIds));
+			$data['tx_cfcleague_teams'][$team->getUid()]['coaches'] = implode(',',
+					tx_cfcleague_util_Misc::mergeArrays(Tx_Rnbase_Utility_Strings::intExplode(',', $team->getProperty('coaches')), $coachIds));
 		}
 		if(count($playerIds)) {
-			$data['tx_cfcleague_teams'][$team->record['uid']]['players'] = implode(',', tx_cfcleague_util_Misc::mergeArrays(tx_rnbase_util_Strings::intExplode(',', $team->record['players']), $playerIds));
+			$data['tx_cfcleague_teams'][$team->getUid()]['players'] = implode(',',
+					tx_cfcleague_util_Misc::mergeArrays(Tx_Rnbase_Utility_Strings::intExplode(',', $team->getProperty('players')), $playerIds));
 		}
 		if(count($supportIds)) {
-			$data['tx_cfcleague_teams'][$team->record['uid']]['supporters'] = implode(',', tx_cfcleague_util_Misc::mergeArrays(tx_rnbase_util_Strings::intExplode(',', $team->record['supporters']), $supportIds));
+			$data['tx_cfcleague_teams'][$team->getUid()]['supporters'] = implode(',',
+					tx_cfcleague_util_Misc::mergeArrays(Tx_Rnbase_Utility_Strings::intExplode(',', $team->getProperty('supporters')), $supportIds));
 		}
 
 		if(count($data)) {
