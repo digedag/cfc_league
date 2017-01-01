@@ -368,7 +368,7 @@ class tx_cfcleague_models_Competition extends tx_rnbase_model_base {
 	 * @param int $uid
 	 * @return tx_cfcleague_models_competition or null
 	 */
-	public static function &getInstance($uid, $record = 0) {
+	public static function &getCompetitionInstance($uid, $record = 0) {
 
 		$uid = intval($uid);
 		if(!array_key_exists($uid, self::$instances)) {
@@ -386,7 +386,7 @@ class tx_cfcleague_models_Competition extends tx_rnbase_model_base {
 	 * @param string $compTypes String kommaseparierte Liste von Wettkampftypen (1-Liga;2-Pokal;0-Sonstige)
 	 * @return Array der gefundenen Wettkämpfe
 	 */
-	function findAll($saisonUid = '', $groupUid = '', $uids = '', $compTypes='') {
+	public static function findAll($saisonUid = '', $groupUid = '', $uids = '', $compTypes='') {
 		if(is_string($uids) && strlen($uids) > 0) {
 			$where = 'uid IN (' . $uids .')';
 		}

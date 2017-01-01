@@ -194,7 +194,7 @@ class tx_cfcleague_models_Match extends tx_rnbase_model_base {
 	public function getCompetition() {
 		if(!$this->competition) {
 			tx_rnbase::load('tx_cfcleague_models_Competition');
-			$this->competition = tx_cfcleague_models_Competition::getInstance($this->record['competition']);
+			$this->competition = tx_cfcleague_models_Competition::getCompetitionInstance($this->getProperty('competition'));
 		}
 		return $this->competition;
 	}
@@ -208,7 +208,7 @@ class tx_cfcleague_models_Match extends tx_rnbase_model_base {
 	 */
 	public function getHome() {
 		if(!$this->_teamHome) {
-			$this->_teamHome = $this->getTeam($this->record['home']);
+			$this->_teamHome = $this->getTeam($this->getProperty('home'));
 		}
 		return $this->_teamHome;
 	}
@@ -226,7 +226,7 @@ class tx_cfcleague_models_Match extends tx_rnbase_model_base {
 	 */
 	public function getGuest() {
 		if(!$this->_teamGuest) {
-			$this->_teamGuest = $this->getTeam($this->record['guest']);
+			$this->_teamGuest = $this->getTeam($this->getProperty('guest'));
 		}
 		return $this->_teamGuest;
 	}
@@ -257,7 +257,7 @@ class tx_cfcleague_models_Match extends tx_rnbase_model_base {
 	 * @return boolean
 	 */
 	public function isFinished(){
-		return intval($this->record['status']) == 2;
+		return intval($this->getProperty('status')) == 2;
 	}
 	/**
 	 * Returns true if match is running
@@ -265,7 +265,7 @@ class tx_cfcleague_models_Match extends tx_rnbase_model_base {
 	 * @return boolean
 	 */
 	public function isRunning() {
-		return intval($this->record['status']) == 1;
+		return intval($this->getProperty('status')) == 1;
 	}
 	/**
 	 * Returns true if match has extra time
@@ -273,7 +273,7 @@ class tx_cfcleague_models_Match extends tx_rnbase_model_base {
 	 * @return boolean
 	 */
 	public function isExtraTime() {
-		return intval($this->record['is_extratime']) == 1;
+		return intval($this->getProperty('is_extratime')) == 1;
 	}
 	/**
 	 * Returns true if match has extra time
@@ -281,7 +281,7 @@ class tx_cfcleague_models_Match extends tx_rnbase_model_base {
 	 * @return boolean
 	 */
 	public function isPenalty() {
-		return intval($this->record['is_penalty']) == 1;
+		return intval($this->getProperty('is_penalty')) == 1;
 	}
 	/**
 	 * Returns true of match is a dummy (free of play).
