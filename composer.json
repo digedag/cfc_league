@@ -41,8 +41,7 @@
 			"sports/",
 			"tca/",
 			"tests/",
-			"util/",
-			"view/"
+			"util/"
 		],
 		"files" : [
 			"class.tx_cfcleague_db.php",

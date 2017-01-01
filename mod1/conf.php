@@ -5,7 +5,7 @@ $MCONF['name']='web_txcfcleagueM1';
 $MCONF['script']='_DISPATCH';
 $MCONF['access']='user,group';
 
-$MLANG['default']['tabs_images']['tab'] = '../icon_table.gif';
+$MLANG['default']['tabs_images']['tab'] = '../Resources/Public/Icons/icon_table.gif';
 $MLANG['default']['ll_ref']='LLL:EXT:cfc_league/mod1/locallang_mod.xml';
 
 

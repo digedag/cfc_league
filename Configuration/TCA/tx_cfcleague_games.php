@@ -27,7 +27,7 @@ $tx_cfcleague_games = Array (
 		'enablecolumns' => Array (
 			'disabled' => 'hidden',
 		),
-		'iconfile' => tx_rnbase_util_Extensions::extRelPath('cfc_league').'icon_table.gif',
+		'iconfile' => tx_rnbase_util_Extensions::extRelPath('cfc_league').'Resources/Public/Icons/icon_table.gif',
 	),
 	'interface' => Array (
 		'showRecordFieldList' => 'hidden,home,guest,competition,round,round_name,status, goals_home_1,goals_guest_1,

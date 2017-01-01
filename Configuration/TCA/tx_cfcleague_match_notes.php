@@ -21,7 +21,7 @@ $tx_cfcleague_match_notes = Array (
 		'enablecolumns' => Array (
 			'disabled' => 'hidden',
 		),
-		'iconfile' => tx_rnbase_util_Extensions::extRelPath('cfc_league').'icon_table.gif',
+		'iconfile' => tx_rnbase_util_Extensions::extRelPath('cfc_league').'Resources/Public/Icons/icon_table.gif',
 	),
 	'interface' => Array (
 		'showRecordFieldList' => 'hidden,game,minute,extra_time,type,player_home,player_guest,comment',

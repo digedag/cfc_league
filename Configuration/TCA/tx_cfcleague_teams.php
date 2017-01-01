@@ -40,7 +40,7 @@ $tx_cfcleague_teams = Array (
 		'enablecolumns' => Array (
 			'disabled' => 'hidden',
 		),
-		'iconfile' => tx_rnbase_util_Extensions::extRelPath('cfc_league').'icon_tx_cfcleague_teams.gif',
+		'iconfile' => tx_rnbase_util_Extensions::extRelPath('cfc_league').'Resources/Public/Icons/icon_tx_cfcleague_teams.gif',
 	),
 	'interface' => Array (
 		'showRecordFieldList' => 'hidden,club,name,short_name'

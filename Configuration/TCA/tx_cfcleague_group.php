@@ -20,7 +20,7 @@ $tx_cfcleague_group = Array (
 			'starttime' => 'starttime',
 			'fe_group' => 'fe_group',
 		),
-		'iconfile' => tx_rnbase_util_Extensions::extRelPath('cfc_league').'icon_tx_cfcleague_group.gif',
+		'iconfile' => tx_rnbase_util_Extensions::extRelPath('cfc_league').'Resources/Public/Icons/icon_tx_cfcleague_group.gif',
 	),
 	'interface' => Array (
 		'showRecordFieldList' => 'hidden,starttime,fe_group,name'
