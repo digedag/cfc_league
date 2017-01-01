@@ -24,7 +24,7 @@
 	},
 	"replace" : {
 		"cfc_league" : "self.version",
-		"typo3-ter/rn-base" : "self.version"
+		"typo3-ter/cfc-league" : "self.version"
 	},
 	"require" : {
 		"typo3/cms-core" : ">=4.5.0 <=7.6.99",
