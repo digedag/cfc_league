@@ -23,7 +23,7 @@
 ***************************************************************/
 
 require_once('class.tx_cfcleague_db.php');
-tx_rnbase::load('tx_rnbase_util_Strings');
+tx_rnbase::load('Tx_Rnbase_Utility_Strings');
 
 class tx_cfcleague_handleDataInput{
 
@@ -244,8 +244,8 @@ class tx_cfcleague_handleDataInput{
    * tx_table_name_uid|valuestring
    */
   function getRowId($value) {
-    $ret = tx_rnbase_util_Strings::trimExplode('|', $value);
-    $ret = tx_rnbase_util_Strings::trimExplode('_', $ret[0]);
+    $ret = Tx_Rnbase_Utility_Strings::trimExplode('|', $value);
+    $ret = Tx_Rnbase_Utility_Strings::trimExplode('_', $ret[0]);
     return intval($ret[count($ret)-1]);
   }
 }

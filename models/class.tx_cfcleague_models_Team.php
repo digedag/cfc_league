@@ -23,7 +23,6 @@
 ***************************************************************/
 
 tx_rnbase::load('Tx_Rnbase_Domain_Model_Base');
-tx_rnbase::load('tx_rnbase_util_Strings');
 tx_rnbase::load('Tx_Rnbase_Utility_Strings');
 
 

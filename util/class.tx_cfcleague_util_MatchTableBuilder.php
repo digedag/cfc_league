@@ -23,7 +23,7 @@
 ***************************************************************/
 
 tx_rnbase::load('tx_cfcleague_search_Builder');
-tx_rnbase::load('tx_rnbase_util_Strings');
+tx_rnbase::load('Tx_Rnbase_Utility_Strings');
 
 /**
  * This is a facade to build search queries for matches from database.
@@ -145,8 +145,8 @@ class tx_cfcleague_util_MatchTableBuilder  {
 	 * @param $fields
 	 */
 	private function handleClubInternals(&$fields) {
-		$homeClubs = tx_rnbase_util_Strings::intExplode(',', $this->_homeClubIds);
-		$clubs = array_merge($homeClubs, tx_rnbase_util_Strings::intExplode(',', $this->_guestClubIds));
+		$homeClubs = Tx_Rnbase_Utility_Strings::intExplode(',', $this->_homeClubIds);
+		$clubs = array_merge($homeClubs, Tx_Rnbase_Utility_Strings::intExplode(',', $this->_guestClubIds));
 		$clubs = array_unique($clubs);
 		if(count($clubs) > 1) {
 			// Interne Spiele der Vereine ausschließen
