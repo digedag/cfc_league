@@ -46,7 +46,7 @@ class Tx_Cfcleague_Controller_Competition_MatchTable {
 	}
 	/**
 	 * Verwaltet die Erstellung von Spielplänen von Ligen
-   * @param tx_rnbase_mod_IModule $module
+	 * @param tx_rnbase_mod_IModule $module
 	 * @param tx_cfcleague_models_Competition $competition
 	 */
 	public function main($module, $competition) {
@@ -66,7 +66,6 @@ class Tx_Cfcleague_Controller_Competition_MatchTable {
 
 
 		$this->formTool = $module->getFormTool();
-		$comp = tx_cfcleague_models_Competition::getInstance($competition->getUid());
 //		$start = microtime(true);
 
 		tx_rnbase::load('Tx_Cfcleague_Handler_MatchCreator');
@@ -74,10 +73,10 @@ class Tx_Cfcleague_Controller_Competition_MatchTable {
 		$content .= Tx_Cfcleague_Handler_MatchCreator::getInstance()->handleRequest($this->getModule());
 
 		// Die Neuanlage der "automatischen" Spiele übernimmt diese Klasse
-		$content .= $this->handleCreateMatchTable($comp);
+		$content .= $this->handleCreateMatchTable($competition);
 		if(!$content) {
 			// Ohne Submit zeigen wir das Formular
-			$content .= $this->showMatchTable($comp);
+			$content .= $this->showMatchTable($competition);
 		}
 
 		return $content;

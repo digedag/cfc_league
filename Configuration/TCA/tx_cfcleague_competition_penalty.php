@@ -17,7 +17,7 @@ $tx_cfcleague_competition_penalty = Array (
 			'enablecolumns' => Array (
 					'disabled' => 'hidden',
 			),
-			'iconfile' => tx_rnbase_util_Extensions::extRelPath('cfc_league').'icon_tx_cfcleague_competition.gif',
+			'iconfile' => tx_rnbase_util_Extensions::extRelPath('cfc_league').'Resources/Public/Icons/icon_tx_cfcleague_competition_penalty.gif',
 	),
 	'interface' => Array (
 		'showRecordFieldList' => 'hidden,competition,team,game,comment,points_pos,points_neg,goals_pos,goals_neg,static_position'
