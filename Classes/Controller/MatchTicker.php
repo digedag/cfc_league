@@ -136,10 +136,36 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc {
 	 * Liefert ein Textfeld für eine SofortMeldung per Ajax
 	 * @return string
 	 */
-	private function getInstantMessageField() {
+	protected function getInstantMessageField() {
 		if(tx_rnbase_util_TYPO3::isTYPO76OrHigher()) {
-			// TODO: implement
-			return '';
+            $ret = '';
+            $ret .= '<script type="text/javascript">
+                var jQuery = TYPO3.jQuery;
+            </script>';
+            $ret .= '<script type="text/javascript" src="../../../../typo3conf/ext/cfc_league/mod1/js/jeditable.min.js"></script>';
+            $ret .= '<p id="instant" style="background:yellow; margin-bottom:10px; padding:3px"></p>';
+            $ret .= '<script type="text/javascript">
+            var ajaxSaveTickerMessage = "' . \Tx_Rnbase_Backend_Utility::getAjaxUrl('T3sports::saveTickerMessage').'";
+            
+            TYPO3.jQuery(document).ready(function() {
+                jQuery(\'#instant\').editable(ajaxSaveTickerMessage, {
+                    placeholder: \'Klicken Sie hier, um eine Sofortmeldung abzusetzen.\',
+                    onblur: \'ignore\',
+                    cancel: \'cancel\',
+                    submit: \'ok\',
+                    event: \'click\',
+                    submitdata: function(){
+                        return {
+                            t3time: jQuery(\'#editform\').find(\'input[name=watch_minute]\').val(), 
+                            t3match: jQuery(\'#editform\').find(\'input[name=t3matchid]\').val()
+                        }
+                    },
+                    indicator: \'Speichern ....\'
+                });
+            });
+        </script>';
+
+			return $ret;
 		}
 		elseif(tx_rnbase_util_TYPO3::isTYPO3VersionOrHigher(4004000)) {
 			/* @var $pageRenderer \TYPO3\CMS\Core\Page\PageRenderer */
@@ -157,7 +183,8 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc {
 		$ret .= '<p id="instant" style="background:yellow; margin-bottom:10px; padding:3px">'.$GLOBALS['LANG']->getLL('msg_sendInstant').'</p>';
 		return '<div id="t3sportsTicker">'.$ret.'</div>';
 	}
-  private function getFormHeadline() {
+
+	protected function getFormHeadline() {
     $stop = Tx_Rnbase_Utility_T3General::_GP('btn_watch_stop');
   	$start = Tx_Rnbase_Utility_T3General::_GP('btn_watch_start');
   		// Daten: Startuhrzeit auf dem Client und gewünschtes offset
@@ -245,10 +272,10 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc {
 
 		$parts = $competition->getNumberOfMatchParts();
 		for($i=$parts; $i > 0; $i--) {
-			$label = $LANG->getLL('tx_cfcleague_games.parts_'.$parts.'_'.$i);
+			$label = $LANG->sL('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.parts_'.$parts.'_'.$i);
 			if(!$label) {
 				// Prüfen ob ein default gesetzt ist
-				$label = $LANG->getLL('tx_cfcleague_games.parts_'.$parts.'_default');
+				$label = $LANG->sL('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.parts_'.$parts.'_default');
 				if($label) $label = $i. '. ' . $label;
 			}
 			$out .= $label ? $label : $i.'. part';
@@ -270,7 +297,7 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc {
 	 */
 	function _getTableLayoutForm() {
 		$arr = Array (
-			'table' => Array('<table class="typo3-dblist" width="100%" cellspacing="0" cellpadding="0" border="0">', '</table><br/>'),
+			'table' => Array('<table class="typo3-dblist table" width="100%" cellspacing="0" cellpadding="0" border="0">', '</table><br/>'),
 			'0' => Array( // Format für 1. Zeile
 				'tr'		=> Array('<tr class="c-headLineTable">', '</tr>'),
 				'defCol' => Array('<td valign="top" class="t3-row-header c-headLineTable" style="font-weight:bold;padding:2px 5px;">', '</td>') // Format für jede Spalte in der 1. Zeile
@@ -291,18 +318,18 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc {
 	 * Wir listen die Tickermeldungen des Spiels auf
 	 * @param tx_cfcleague_models_Match $match
 	 */
-	private function createTickerArray($match, $showAll) {
+	protected function createTickerArray($match, $showAll) {
 		global $LANG;
 		$notes = $match->getMatchNotes('desc', $showAll ? FALSE : 5);
 		if(!count($notes))
 			return 0;
 
 		$arr = Array(Array(
-			$LANG->getLL('tx_cfcleague_match_notes.minute'),
-			$LANG->getLL('tx_cfcleague_match_notes.type'),
-			$LANG->getLL('tx_cfcleague_match_notes.player_home'),
-			$LANG->getLL('tx_cfcleague_match_notes.player_guest'),
-			$LANG->getLL('tx_cfcleague_match_notes.comment'),
+			$LANG->sL('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_match_notes.minute'),
+			$LANG->sL('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_match_notes.type'),
+			$LANG->sL('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_match_notes.player_home'),
+			$LANG->sL('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_match_notes.player_guest'),
+			$LANG->sL('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_match_notes.comment'),
 			''));
 
 		// Die NotesTypen laden
@@ -331,7 +358,7 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc {
 		return $arr;
 	}
 
-	private function getTickerTypes() {
+	protected function getTickerTypes() {
 		$srv = tx_cfcleague_util_ServiceRegistry::getMatchService();
 		$tcaTypes = $srv->getMatchNoteTypes4TCA();
 		$types = array();
@@ -344,14 +371,14 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc {
 	 * Erstellt das Formular für die Eingabe der Tickermeldungen
 	 * @param tx_cfcleague_models_Match $match
 	 */
-	private function createFormArray($match) {
+	protected function createFormArray($match) {
 		global $LANG;
 
 		$arr = Array(Array(
-			$LANG->getLL('tx_cfcleague_match_notes.minute'),
-			$LANG->getLL('tx_cfcleague_match_notes.type'),
-			$LANG->getLL('tx_cfcleague_match_notes.player_home'),
-			$LANG->getLL('tx_cfcleague_match_notes.player_guest'),
+			$LANG->sL('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_match_notes.minute'),
+			$LANG->sL('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_match_notes.type'),
+			$LANG->sL('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_match_notes.player_home'),
+			$LANG->sL('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_match_notes.player_guest'),
 //      $LANG->getLL('tx_cfcleague_match_notes.comment'),
 		));
 

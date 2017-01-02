@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2009 Rene Nitzsche (rene@system25.de)
+*  (c) 2009-2016 Rene Nitzsche (rene@system25.de)
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -24,6 +24,7 @@
 
 tx_rnbase::load('tx_rnbase_parameters');
 tx_rnbase::load('Tx_Rnbase_Utility_T3General');
+tx_rnbase::load('Tx_Rnbase_Database_Connection');
 
 
 /**
@@ -97,7 +98,10 @@ class tx_cfcleague_util_TeamInfo {
 		$arr[] = array($LANG->getLL('msg_number_of_players'), $this->baseInfo['freePlayers']);
 		$arr[] = array($LANG->getLL('msg_number_of_coaches'), $this->baseInfo['freeCoaches']);
 		$arr[] = array($LANG->getLL('msg_number_of_supporters'), $this->baseInfo['freeSupporters']);
-		return $doc->table($arr, $tableLayout);
+
+		$tables = tx_rnbase::makeInstance('Tx_Rnbase_Backend_Utility_Tables');
+
+		return $tables->buildTable($arr, $tableLayout);
 	}
 	/**
 	 * Liefert eine Tabelle mit den aktuellen Spielern, Trainern und Betreuern des Teams.
@@ -113,7 +117,8 @@ class tx_cfcleague_util_TeamInfo {
 		$this->addProfiles($arr, $this->getPlayerNames($this->getTeam()), $LANG->getLL('label_profile_player'), 'player');
 		$this->addProfiles($arr, $this->getSupporterNames($this->getTeam()), $LANG->getLL('label_profile_supporter'), 'supporter');
 
-		$tableProfiles = count($arr) > 1 ? $doc->table($arr, $tableLayout) : '';
+		$tables = tx_rnbase::makeInstance('Tx_Rnbase_Backend_Utility_Tables');
+		$tableProfiles = count($arr) > 1 ? $tables->buildTable($arr) : '';
 		return $tableProfiles;
 	}
 	/**
@@ -128,17 +133,17 @@ class tx_cfcleague_util_TeamInfo {
 		$team = $this->getTeam();
 		$tceData = array();
 		foreach($data As $type => $uid) {
-			$profileUids = $team->record[$fields[$type]];
+			$profileUids = $team->getProperty($fields[$type]);
 			if(!$profileUids) continue;
 
 			if(Tx_Rnbase_Utility_T3General::inList($profileUids, $uid)) {
 				$profileUids = Tx_Rnbase_Utility_T3General::rmFromList($uid, $profileUids);
 				$tceData['tx_cfcleague_teams'][$team->getUid()][$fields[$type]] = $profileUids;
-				$team->record[$fields[$type]] = $profileUids;
+				$team->setProperty($fields[$type], $profileUids);
 			}
 		}
 
-		$tce =& tx_rnbase_util_DB::getTCEmain($tceData);
+		$tce = Tx_Rnbase_Database_Connection::getInstance()->getTCEmain($tceData);
 		$tce->process_datamap();
 
 		return $this->getFormTool()->getDoc()->section('Info:', $LANG->getLL('msg_removedProfileFromTeam'), 0, 1, ICON_INFO);
@@ -156,7 +161,7 @@ class tx_cfcleague_util_TeamInfo {
 		if($profileNames)
 			foreach($profileNames As $uid => $prof) {
 				if($i == 1)
-					$arr[] = array('', '&nbsp;', ''); // Leere Zeile als Trenner;
+					$arr[] = array('', '&nbsp;', '', '', ''); // Leere Zeile als Trenner;
 				$row = array();
 				$row[] = $i++ == 1 ? $label : '';
 				$row[] = $prof[first_name];
@@ -237,6 +242,3 @@ class tx_cfcleague_util_TeamInfo {
 	}
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/util/class.tx_cfcleague_util_TeamInfo.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/util/class.tx_cfcleague_util_TeamInfo.php']);
-}

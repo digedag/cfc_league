@@ -31,7 +31,7 @@ class tx_cfcleague_handleDataInput{
    * Liefert die Teams eines Wettbewerbs. Wird im Spiel-TCE-Dialog zur
    * Auswahl der Teams verwendet.
    */
-  function getTeams4Competition($PA, $fobj){
+  public function getTeams4Competition($PA, $fobj){
     // Aktuellen Wettbewerb ermitteln, wenn 0 bleiben die Felder leer
 
     if($PA['row']['competition'])

@@ -128,7 +128,8 @@ class tx_cfcleague_services_Teams extends Tx_Rnbase_Service_Base {
 	/**
 	 * Returns the teams age group. This value is retrieved from the teams competitions. So
 	 * the first competition found, decides about the age group.
-	 * @return tx_cfcleague_models_group or null
+	 * @param tx_cfcleague_models_Team
+	 * @return tx_cfcleague_models_Group or null
 	 */
 	public function getAgeGroup($team) {
 		if(!is_object($team) || !$team->isValid()) return null;
@@ -138,8 +139,8 @@ class tx_cfcleague_services_Teams extends Tx_Rnbase_Service_Base {
 		$cache = tx_rnbase_cache_Manager::getCache('t3sports');
 		$agegroup = $cache->get('team_'.$team->getUid());
 		if(!$agegroup) {
-			if(intval($team->record['agegroup']))
-				$agegroup = tx_cfcleague_models_Group::getGroupInstance($this->record['agegroup']);
+			if(intval($team->getProperty('agegroup')))
+				$agegroup = tx_cfcleague_models_Group::getGroupInstance($team->getProperty('agegroup'));
 			if(!$agegroup) {
 				$comps = $this->getCompetitions4Team($team, true);
 				for($i=0, $cnt = count($comps); $i < $cnt; $i++) {
@@ -174,7 +175,7 @@ class tx_cfcleague_services_Teams extends Tx_Rnbase_Service_Base {
 	 * @param array $options
 	 * @return array[tx_cfcleague_models_TeamNote]
 	 */
-	function searchTeamNotes($fields, $options) {
+	public function searchTeamNotes($fields, $options) {
 		$searcher = tx_rnbase_util_SearchBase::getInstance('tx_cfcleague_search_TeamNote');
 		return $searcher->search($fields, $options);
 	}

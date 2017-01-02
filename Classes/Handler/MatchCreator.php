@@ -41,12 +41,12 @@ class Tx_Cfcleague_Handler_MatchCreator {
 	 * @return string
 	 */
 	public function handleRequest(tx_rnbase_mod_IModule $mod) {
-  	$submitted = tx_rnbase_parameters::getPostOrGetParameter('doCreateMatches');
-  	if(!$submitted) return '';
-		$tcaData = tx_rnbase_parameters::getPostOrGetParameter('data');
+		$submitted = tx_rnbase_parameters::getPostOrGetParameter('doCreateMatches');
+		if(!$submitted) return '';
+			$tcaData = tx_rnbase_parameters::getPostOrGetParameter('data');
 
-		tx_rnbase::load('tx_rnbase_util_DB');
-		$tce =& tx_rnbase_util_DB::getTCEmain($tcaData);
+		tx_rnbase::load('Tx_Rnbase_Database_Connection');
+		$tce = Tx_Rnbase_Database_Connection::getInstance()->getTCEmain($tcaData);
 		$tce->process_datamap();
 		$content = $mod->getDoc()->section('Message:', $GLOBALS['LANG']->getLL('msg_matches_created'), 0, 1, ICON_INFO);
 		return $content;
@@ -84,26 +84,29 @@ class Tx_Cfcleague_Handler_MatchCreator {
 			'round_name' => $competition->getNumberOfRounds().$LANG->getLL('createGameTable_round'),
 		);
 
-
+		/* @var $formBuilder Tx_Rnbase_Backend_Form_FormBuilder */
+		$formBuilder = $mod->getFormTool()->getTCEForm();
 		for($i=0; $i < $maxMatches; $i++){
 			$row = array();
-			$dataArr['uid'] = 'NEW_'.$i;
-			$row[] = $mod->getFormTool()->getTCEForm()->getSoloField($table, $dataArr, 'round') .
-							$mod->getFormTool()->getTCEForm()->getSoloField($table, $dataArr, 'round_name');
-			$row[] = $mod->getFormTool()->getTCEForm()->getSoloField($table, $dataArr, 'date');
-			$row[] = $mod->getFormTool()->getTCEForm()->getSoloField($table, $dataArr, 'status') .
-						$mod->getFormTool()->createHidden('data[tx_cfcleague_games][NEW_'.$i.'][pid]', $mod->getPid()).
-						$mod->getFormTool()->createHidden('data[tx_cfcleague_games][NEW_'.$i.'][competition]', $competition->getUid());
+			$dataArr['uid'] = 'NEW'.$i;
+			$row[] = $formBuilder->getSoloField($table, $dataArr, 'round') .
+						$formBuilder->getSoloField($table, $dataArr, 'round_name');
+			$row[] = $formBuilder->getSoloField($table, $dataArr, 'date');
+			$row[] = $formBuilder->getSoloField($table, $dataArr, 'status') .
+						$mod->getFormTool()->createHidden('data[tx_cfcleague_games][NEW'.$i.'][pid]', $mod->getPid()).
+						$mod->getFormTool()->createHidden('data[tx_cfcleague_games][NEW'.$i.'][competition]', $competition->getUid());
 
 
-			$row[] = $mod->getFormTool()->getTCEForm()->getSoloField($table, $dataArr, 'home');
-			$row[] = $mod->getFormTool()->getTCEForm()->getSoloField($table, $dataArr, 'guest');
+			// die Team können derzeit nicht per SoloField geholt werden, weil der
+			// gesetzte Wettbewerb verloren geht.
+			$row[] = $formBuilder->getSoloField($table, $dataArr, 'home');
+			$row[] = $formBuilder->getSoloField($table, $dataArr, 'guest');
 
 			//$row[] = $mod->getFormTool()->create('data[tx_cfcleague_teams][NEW'.$i.'][pid]', $mod->getPid());
 			$arr[] = $row;
 		}
 		$content .= $mod->getDoc()->table($arr);
-		$content .= $mod->getFormTool()->createSubmit('doCreateMatches', $LANG->getLL('btn_create'), $GLOBALS['LANG']->getLL('msg_create_teams'));
+		$content .= $mod->getFormTool()->createSubmit('doCreateMatches', $LANG->getLL('btn_create'), $GLOBALS['LANG']->getLL('msg_CreateGameTable'));
 		return $content;
 	}
 

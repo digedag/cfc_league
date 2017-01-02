@@ -24,7 +24,7 @@ $tx_cfcleague_profiles = Array (
 			'disabled' => 'hidden',
 		),
 		'dynamicConfigFile' => tx_rnbase_util_Extensions::extPath('cfc_league').'Configuration/TCA/Profile.php',
-		'iconfile' => tx_rnbase_util_Extensions::extRelPath('cfc_league').'icon_tx_cfcleague_profiles.gif',
+		'iconfile' => tx_rnbase_util_Extensions::extRelPath('cfc_league').'Resources/Public/Icons/icon_tx_cfcleague_profiles.gif',
 	),
 	'interface' => Array (
 		'showRecordFieldList' => 'hidden,first_name,last_name,dam_images,birthday,nationality,height,

@@ -55,7 +55,7 @@ class tx_cfcleague_models_Profile extends tx_rnbase_model_base {
 	 * @param int $uid
 	 * @return tx_netfewo_models_Objekt
 	 */
-	public static function getInstance($uid) {
+	public static function getProfileInstance($uid) {
 		$uid = intval($uid);
 		if(!$uid) throw new Exception('No uid for '.self::getTableName().' given!');
 		if(!is_object(self::$instances[$uid])) {

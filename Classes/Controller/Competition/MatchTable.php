@@ -46,27 +46,37 @@ class Tx_Cfcleague_Controller_Competition_MatchTable {
 	}
 	/**
 	 * Verwaltet die Erstellung von Spielplänen von Ligen
-   * @param tx_rnbase_mod_IModule $module
+	 * @param tx_rnbase_mod_IModule $module
 	 * @param tx_cfcleague_models_Competition $competition
 	 */
 	public function main($module, $competition) {
 		$this->module = $module;
 		$this->doc = $module->getDoc();
-		$this->getPageRenderer()->addJsFile('js/matchcreate.js', 'text/javascript', FALSE, FALSE, '', TRUE);
+
+
+		if(tx_rnbase_util_TYPO3::isTYPO70OrHigher()) {
+			/* @var $moduleTemplate \TYPO3\CMS\Backend\Template\ModuleTemplate */
+			$moduleTemplate = tx_rnbase::makeInstance(TYPO3\CMS\Backend\Template\ModuleTemplate::class);
+			$moduleTemplate->getPageRenderer()->setBackPath('./'); // ??
+			$moduleTemplate->getPageRenderer()->loadJquery();
+			$moduleTemplate->getPageRenderer()->addJsFile('js/matchcreate.js', 'text/javascript', FALSE, FALSE, '', TRUE);
+		}
+		else
+			$this->getPageRenderer()->addJsFile('js/matchcreate.js', 'text/javascript', FALSE, FALSE, '', TRUE);
 
 
 		$this->formTool = $module->getFormTool();
-		$comp = tx_cfcleague_models_Competition::getInstance($competition->uid);
 //		$start = microtime(true);
 
 		tx_rnbase::load('Tx_Cfcleague_Handler_MatchCreator');
 		// Die Neuanlage der manuellen Spiele erledigt der MatchCreator
 		$content .= Tx_Cfcleague_Handler_MatchCreator::getInstance()->handleRequest($this->getModule());
+
 		// Die Neuanlage der "automatischen" Spiele übernimmt diese Klasse
-		$content .= $this->handleCreateMatchTable($comp);
+		$content .= $this->handleCreateMatchTable($competition);
 		if(!$content) {
 			// Ohne Submit zeigen wir das Formular
-			$content .= $this->showMatchTable($comp);
+			$content .= $this->showMatchTable($competition);
 		}
 
 		return $content;
@@ -78,9 +88,9 @@ class Tx_Cfcleague_Controller_Competition_MatchTable {
 	 * @return string
 	 */
 	private function handleCreateMatchTable($comp) {
-  	global $LANG;
+		global $LANG;
 		// Haben wir Daten im Request?
-  	$data = Tx_Rnbase_Utility_T3General::_GP('data');
+		$data = Tx_Rnbase_Utility_T3General::_GP('data');
 		if (is_array($data['rounds']) && Tx_Rnbase_Utility_T3General::_GP('update')) {
 			$result = $this->createMatches($data['rounds'], $comp);
 			$content .= $this->doc->section($LANG->getLL('message').':', $result, 0, 1, ICON_INFO);
@@ -93,7 +103,7 @@ class Tx_Cfcleague_Controller_Competition_MatchTable {
 	 * @return string
 	 */
 	private function showMatchTable($comp) {
-  	global $LANG;
+		global $LANG;
 
 		$matchCnt = $comp->getNumberOfMatches(false);
 		if($matchCnt > 0){
@@ -165,7 +175,7 @@ class Tx_Cfcleague_Controller_Competition_MatchTable {
 		$content = '';
 		// Wir benötigen eine Select-Box mit der man die Rückrunden-Option einstellen kann
 		// Bei Änderung soll die Seite neu geladen werden, damit nur die Halbserie angezeigt wird.
-		$content .= $this->formTool->createSelectSingleByArray('option_halfseries', $option_halfseries, Array('0' => '###LABEL_CREATE_SAISON###', '1' => '###LABEL_CREATE_FIRSTHALF###', '2' => '###LABEL_CREATE_SECONDHALF###'), array('reload'=>1));
+		$content .= $this->formTool->createSelectByArray('option_halfseries', $option_halfseries, Array('0' => '###LABEL_CREATE_SAISON###', '1' => '###LABEL_CREATE_FIRSTHALF###', '2' => '###LABEL_CREATE_SECONDHALF###'), array('reload'=>1));
 		$content .= '<br />';
 
 		// Führende 0 für Spieltag im einstelligen Bereich
@@ -192,20 +202,22 @@ class Tx_Cfcleague_Controller_Competition_MatchTable {
 		$arr = Array(Array($LANG->getLL('label_roundset')));
 //		$arr = Array(Array($LANG->getLL('label_round'), $LANG->getLL('label_roundname').' / '.
 //			$LANG->getLL('label_rounddate'), $LANG->getLL('label_roundset')));
+		$tables = tx_rnbase::makeInstance('Tx_Rnbase_Backend_Utility_Tables');
+
 		foreach($table As $round => $matchArr) {
 			$row = array();
 
 			// Die Formularfelder, die jetzt erstellt werden, wandern später direkt in die neuen Game-Records
 			// Ein Hidden-Field für die Runde
 			$row[] = '<div>' . $this->formTool->createHidden('data[rounds][round_'.$round.'][round]', $round) .
-							$this->formTool->createTxtInput('data[rounds][round_'.$round.'][round_name]', $round . $LANG->getLL('createGameTable_round'), 10, array('class'=>'roundname')) .
-							$this->formTool->createDateInput('data[rounds][round_'.$round.'][date]', time()) .'</div>'.
-							// Anzeige der Paarungen
-			 				$this->doc->table($this->createMatchTableArray($matchArr, $league, 'data[rounds][round_'.$round.']'), $tableLayout2);
+						$this->formTool->createTxtInput('data[rounds][round_'.$round.'][round_name]', $round . $LANG->getLL('createGameTable_round'), 10, array('class'=>'roundname')) .
+						$this->formTool->createDateInput('data[rounds][round_'.$round.'][date]', time()) .'</div>'.
+						// Anzeige der Paarungen
+						$tables->buildTable($this->createMatchTableArray($matchArr, $league, 'data[rounds][round_'.$round.']'));
 
 			$arr[] = $row;
 		}
-		$content .= $this->doc->table($arr, $tableLayout);
+		$content .= $tables->buildTable($arr);
 		return $content;
 	}
 	/**
@@ -221,7 +233,7 @@ class Tx_Cfcleague_Controller_Competition_MatchTable {
 			$row[] = $match->noMatch ? '' : str_pad($match->nr2, 3, '000', STR_PAD_LEFT);
 			$row[] = $this->createSelectBox($teamNames, $match->home, $namePrefix.'[matches]['.$match->nr.'][home]');
 			$row[] = $this->createSelectBox($teamNames, $match->guest, $namePrefix.'[matches]['.$match->nr.'][guest]') .
-								$this->formTool->createHidden($namePrefix.'[matches]['.$match->nr.'][nr2]', $match->nr2);
+					$this->formTool->createHidden($namePrefix.'[matches]['.$match->nr.'][nr2]', $match->nr2);
 //			$row[] = $teamNames[$match->home];
 //			$row[] = $teamNames[$match->guest];
 			$arr[] = $row;
@@ -241,7 +253,7 @@ class Tx_Cfcleague_Controller_Competition_MatchTable {
 	 * Returns the formtool
 	 * @return tx_rnbase_util_FormTool
 	 */
-	function getFormTool() {
+	protected function getFormTool() {
 		return $this->formTool;
 	}
 	/**
@@ -282,25 +294,11 @@ class Tx_Cfcleague_Controller_Competition_MatchTable {
 
 		// Die neuen Notes werden jetzt gespeichert
 		reset($data);
-		tx_rnbase::load('tx_rnbase_util_DB');
-		$tce = tx_rnbase_util_DB::getTCEmain($data);
+
+		tx_rnbase::load('Tx_Rnbase_Database_Connection');
+		$tce = Tx_Rnbase_Database_Connection::getInstance()->getTCEmain($data);
 		$tce->process_datamap();
 
 		return $LANG->getLL('msg_matches_created');
-	}
-
-	private function getTableLayout() {
-		return Array (
-			'table' => Array('<table class="typo3-dblist table" cellspacing="0" cellpadding="0" border="0">', '</table><br/>'),
-			'0' => Array( // Format für 1. Zeile
-					'defCol' => Array('<td valign="top" class="c-headLineTable" style="font-weight:bold;padding:2px 5px;">', '</td>') // Format für jede Spalte in der 1. Zeile
-				),
-			'defRow' => Array ( // Formate für alle Zeilen
-					'defCol' => Array('<td valign="middle" style="padding:0px 1px;">', '</td>') // Format für jede Spalte in jeder Zeile
-			),
-			'defRowEven' => Array ( // Formate für alle Zeilen
-				'defCol' => Array('<td valign="middle" class="db_list_alt" style="padding:0px 1px;">', '</td>') // Format für jede Spalte in jeder Zeile
-			)
-		);
 	}
 }

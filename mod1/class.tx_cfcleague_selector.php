@@ -292,6 +292,7 @@ class tx_cfcleague_selector{
 	/**
 	 * Darstellung der Select-Box mit allen Altersgruppen in der Datenbank.
 	 * @return die ID der aktuellen Altersgruppe
+     * @deprecated
 	 */
 	function showGroupSelector(&$content, $pid){
 		// Zuerst die Gruppen ermitteln
@@ -363,7 +364,7 @@ class tx_cfcleague_selector{
 	}
 	/**
 	 * Zeigt eine Art Tab-Menu
-	 *
+	 * @deprecated
 	 */
 	public function showMenu($pid, $name, $entries) {
 		$MENU = Array (

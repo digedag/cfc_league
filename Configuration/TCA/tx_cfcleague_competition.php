@@ -24,7 +24,7 @@ $tx_cfcleague_competition = Array (
 		'enablecolumns' => Array (
 			'disabled' => 'hidden',
 		),
-		'iconfile' => tx_rnbase_util_Extensions::extRelPath('cfc_league').'icon_tx_cfcleague_competition.gif',
+		'iconfile' => tx_rnbase_util_Extensions::extRelPath('cfc_league').'Resources/Public/Icons/icon_tx_cfcleague_competition.gif',
 	),
 	'interface' => Array (
 		'showRecordFieldList' => 'hidden,name,agegroup,saison,type,teams'
@@ -206,7 +206,7 @@ $tx_cfcleague_competition = Array (
 						'add' => array(
 								'type' => 'script',
 								'title' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition_create_team',
-								'icon' => 'EXT:cfc_league/icon_tx_cfcleague_teams.gif',
+								'icon' => 'EXT:cfc_league/Resources/Public/Icons/icon_tx_cfcleague_teams.gif',
 //								'script' => 'wizard_add.php',
 								'params' => array(
 									'table'=>'tx_cfcleague_teams',

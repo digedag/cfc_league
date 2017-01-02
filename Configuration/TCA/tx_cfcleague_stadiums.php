@@ -61,7 +61,7 @@ $tx_cfcleague_stadiums = Array (
 		'delete' => 'deleted',
 		'enablecolumns' => Array (
 		),
-		'iconfile' => tx_rnbase_util_Extensions::extRelPath('cfc_league').'icon_table.gif',
+		'iconfile' => tx_rnbase_util_Extensions::extRelPath('cfc_league').'Resources/Public/Icons/icon_table.gif',
 	),
 	'interface' => Array (
 		'showRecordFieldList' => 'name'

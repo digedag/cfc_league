@@ -22,15 +22,16 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-tx_rnbase::load('tx_cfcleague_mod1_decorator');
-tx_rnbase::load('tx_rnbase_util_Strings');
 tx_rnbase::load('tx_rnbase_parameters');
+tx_rnbase::load('Tx_Rnbase_Database_Connection');
+tx_rnbase::load('Tx_Rnbase_Utility_Strings');
+tx_rnbase::load('tx_cfcleague_mod1_decorator');
 
 /**
  * Die Klasse verwaltet die Erstellung Teams für Wettbewerbe
  */
 class Tx_Cfcleague_Controller_Competition_Teams {
-  var $doc;
+	var $doc;
 
 
 	/**
@@ -44,11 +45,9 @@ class Tx_Cfcleague_Controller_Competition_Teams {
 		$pid = $module->getPid();
 		$this->doc = $module->getDoc();
 
-		$formTool = $module->getFormTool();
-		$this->formTool = $formTool;
+		$this->formTool = $module->getFormTool();
 
 		$content = '';
-//$content = $formTool->getTCEForm()->getSoloField('tx_cfcleague_competition', $competition->record, 'hidden');
 		// Zuerst auf neue Teams prüfen, damit sie direkt in der Teamliste angezeigt werden
 		$newTeams = $this->showNewTeamForm($pid, $competition);
 		$addTeams = $this->showTeamsFromPage($pid, $competition);
@@ -69,7 +68,7 @@ class Tx_Cfcleague_Controller_Competition_Teams {
 	/**
 	 * Show all teams from current page and not part of current competition
 	 * @param int $pid
-	 * @param tx_cfcleague_league $competition
+	 * @param tx_cfcleague_models_Competition $competition
 	 * @return string
 	 */
 	protected function showTeamsFromPage($pid, $competition) {
@@ -77,16 +76,19 @@ class Tx_Cfcleague_Controller_Competition_Teams {
 		// Liegen Daten im Request
 		$teamIds = tx_rnbase_parameters::getPostOrGetParameter('checkEntry');
 		if(tx_rnbase_parameters::getPostOrGetParameter('addteams') && is_array($teamIds) && count($teamIds)) {
-			$tcaData['tx_cfcleague_competition'][$competition->record['uid']]['teams'] = implode(',', $this->mergeArrays(tx_rnbase_util_Strings::intExplode(',', $competition->record['teams']), $teamIds));
-			tx_rnbase::load('tx_rnbase_util_DB');
-			$tce =& tx_rnbase_util_DB::getTCEmain($tcaData, array());
+			$tcaData['tx_cfcleague_competition'][$competition->getUid()]['teams'] =
+				implode(',', $this->mergeArrays(
+						Tx_Rnbase_Utility_Strings::intExplode(',', $competition->getProperty('teams')),
+						$teamIds));
+
+			$tce = Tx_Rnbase_Database_Connection::getInstance()->getTCEmain($tcaData, array());
 			$tce->process_datamap();
 			$competition->refresh();
 		}
 
 		$srv = tx_cfcleague_util_ServiceRegistry::getTeamService();
 		// Team-IDs im aktuellen Wettbewerb
-		$teamIds = $competition->record['teams'];
+		$teamIds = $competition->getProperty('teams');
 		// Teams der Seite laden
 		$fields = array();
 		$fields['TEAM.PID'][OP_EQ_INT] = $pid;
@@ -97,6 +99,7 @@ class Tx_Cfcleague_Controller_Competition_Teams {
 //		$options['debug']=1;
 		$teams = $srv->searchTeams($fields, $options);
 		if(!count($teams)) return '';
+
 		$options = array();
 		$options['checkbox'] = 1;
 		$columns = array(
@@ -106,7 +109,9 @@ class Tx_Cfcleague_Controller_Competition_Teams {
 		$arr = tx_cfcleague_mod1_decorator::prepareTable($teams, $columns, $this->getFormTool(), $options);
 
 		$content = '<h2>'.$LANG->getLL('label_add_teams_from_page').'</h2>';
-		$content .= $this->doc->table($arr[0]); //, $this->getTableLayout()
+
+		$tables = tx_rnbase::makeInstance('Tx_Rnbase_Backend_Utility_Tables');
+		$content .= $tables->buildTable($arr[0]);
 		$content .= $this->formTool->createSubmit('addteams', $LANG->getLL('label_add_teams'), $GLOBALS['LANG']->getLL('msg_add_teams'));
 		return $content;
 	}
@@ -143,7 +148,7 @@ class Tx_Cfcleague_Controller_Competition_Teams {
 	/**
 	 * Creates new teams and adds to current competition
 	 * @param array $data request data
-	 * @param tx_cfcleague_league $competition
+	 * @param tx_cfcleague_models_Competition $competition
 	 * @return string
 	 */
 	protected function createTeams($data, &$competition) {
@@ -157,21 +162,25 @@ class Tx_Cfcleague_Controller_Competition_Teams {
 				$uids[] = $uid;
 			}
 		}
-    if(!count($uids)) return '';
-		$tcaData['tx_cfcleague_competition'][$competition->record['uid']]['teams'] = implode(',', $this->mergeArrays(tx_rnbase_util_Strings::intExplode(',', $competition->record['teams']), $uids));
+		if(!count($uids))
+			return '';
+		$tcaData['tx_cfcleague_competition'][$competition->getUid()]['teams'] =
+			implode(',', $this->mergeArrays(Tx_Rnbase_Utility_Strings::intExplode(',', $competition->getProperty('teams')), $uids));
 		reset($tcaData);
-		$tce = tx_rnbase_util_DB::getTCEmain($tcaData);
+
+		$tce = Tx_Rnbase_Database_Connection::getInstance()->getTCEmain($tcaData);
 		$tce->process_datamap();
 		$competition->refresh();
 		$content .= $this->doc->section('Message:', $LANG->getLL('msg_teams_created'), 0, 1, ICON_INFO);
 		return $content;
 	}
+
 	/**
 	 * Darstellung einer Tabelle mit den aktuellen Teams
 	 *
-	 * @param tx_cfcleague_league $competition
+	 * @param tx_cfcleague_models_Competition $competition
 	 */
-	function showCurrentTeams(&$competition) {
+	protected function showCurrentTeams($competition) {
 		global $LANG;
 		$content = '<h2>'.$LANG->getLL('label_current_teams').'</h2>';
 		$arr[] = array('UID', 'Team', 'Info');
@@ -190,18 +199,19 @@ class Tx_Cfcleague_Controller_Competition_Teams {
 			$row[] = $buttons;
 			$arr[] = $row;
 		}
-		$content .= $this->doc->table($arr); //, $this->getTableLayout()
+		$tables = tx_rnbase::makeInstance('Tx_Rnbase_Backend_Utility_Tables');
+		$content .= $tables->buildTable($arr);
 		return $content;
 	}
 
-	function getTableLayout() {
+	protected function getTableLayout() {
 		return Array (
 			'table' => Array('<table class="typo3-dblist table" cellspacing="0" cellpadding="0" border="0">', '</table><br/>'),
 			'0' => Array( // Format für 1. Zeile
-					'defCol' => Array('<td valign="top" class="c-headLineTable" style="font-weight:bold;padding:2px 5px;">', '</td>') // Format für jede Spalte in der 1. Zeile
-				),
+				'defCol' => Array('<td valign="top" class="c-headLineTable" style="font-weight:bold;padding:2px 5px;">', '</td>') // Format für jede Spalte in der 1. Zeile
+			),
 			'defRow' => Array ( // Formate für alle Zeilen
-					'defCol' => Array('<td valign="middle" style="padding:0px 1px;">', '</td>') // Format für jede Spalte in jeder Zeile
+				'defCol' => Array('<td valign="middle" style="padding:0px 1px;">', '</td>') // Format für jede Spalte in jeder Zeile
 			),
 			'defRowEven' => Array ( // Formate für alle Zeilen
 				'defCol' => Array('<td valign="middle" class="db_list_alt" style="padding:0px 1px;">', '</td>') // Format für jede Spalte in jeder Zeile
@@ -212,7 +222,7 @@ class Tx_Cfcleague_Controller_Competition_Teams {
 	 * Zwei Arrays zusammenführen. Sollte eines der Array leer sein, dann wird es ignoriert.
 	 * Somit werden unnötige 0-Werte vermieden.
 	 */
-	function mergeArrays($arr1, $arr2){
+	protected function mergeArrays($arr1, $arr2){
 		$ret = $arr1[0] ? $arr1 : 0;
 		if($ret && $arr2) {
 			$ret = array_merge($ret, $arr2);
