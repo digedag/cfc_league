@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2007-2015 Rene Nitzsche (rene@system25.de)
+*  (c) 2007-2017 Rene Nitzsche (rene@system25.de)
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -175,45 +175,51 @@ class tx_cfcleague_selector{
 	}
 
 	/**
+	 * @param int $pid
+	 * @return tx_cfcleague_models_Club[]
+	 */
+	protected function lookupClubs($pid) {
+		$globalClubs = intval(tx_rnbase_configurations::getExtensionCfgValue('cfc_league', 'useGlobalClubs')) > 0;
+		$clubOrdering = intval(tx_rnbase_configurations::getExtensionCfgValue('cfc_league', 'clubOrdering')) > 0;
+		$fields = array();
+		if(!$globalClubs)
+			$fields['CLUB.PID'][OP_EQ_INT] = $pid;
+		$dbOptions = array();
+		if($clubOrdering) {
+			$dbOptions['orderby']['CLUB.CITY'] = 'asc';
+		}
+		$dbOptions['orderby']['CLUB.NAME'] = 'asc';
+		return tx_cfcleague_util_ServiceRegistry::getTeamService()->searchClubs($fields, $dbOptions);
+	}
+	/**
 	 * Darstellung der Select-Box mit allen Vereinen. Es wird auf den aktuellen Verein eingestellt.
 	 * @return tx_cfcleague_models_Club
 	 */
 	public function showClubSelector(&$content, $pid, $options=array()){
-		$globalClubs = intval(tx_rnbase_configurations::getExtensionCfgValue('cfc_league', 'useGlobalClubs')) > 0;
-		$clubOrdering = intval(tx_rnbase_configurations::getExtensionCfgValue('cfc_league', 'clubOrdering')) > 0;
 
-		$selectorId = $options['selectorId'] ? $options['selectorId'] : 'club';
-		$menuData = Array (
-			$selectorId => array()
-		);
+		$clubs = $this->lookupClubs($pid);
+
+		$objClubs = $entries = array();
 		if($options['firstItem']) {
-			$menuData[$selectorId][$options['firstItem']['id']] = $options['firstItem']['label'];
+			$entries[$options['firstItem']['id']] = $options['firstItem']['label'];
 		}
-		$fields = array();
-		if(!$globalClubs)
-			$fields['CLUB.PID'][OP_EQ_INT] = $pid;
-		$options = array();
-		if($clubOrdering)
-			$options['orderby']['CLUB.CITY'] = 'asc';
-		$options['orderby']['CLUB.NAME'] = 'asc';
-		$clubs = tx_cfcleague_util_ServiceRegistry::getTeamService()->searchClubs($fields, $options);
 
 		foreach($clubs as $club){
 			$label = ($clubOrdering ? $club->getCity().' - ' : '') . $club->getName();
-			$menuData[$selectorId][$club->getUid()] = $label;
+			$objClubs[$club->getUid()] = $club;
+			$entries[$club->getUid()] = $label;
 		}
 
-		$menuSettings = t3lib_BEfunc::getModuleData($menuData, Tx_Rnbase_Utility_T3General::_GP('SET'), $this->modName);
+		$selectorId = $options['selectorId'] ? $options['selectorId'] : 'club';
+		$menuData = $this->getFormTool()->showMenu($pid, $selectorId, $this->modName, $entries);
 
-		$menu = t3lib_BEfunc::getFuncMenu(
-			$pid, 'SET['.$selectorId.']', $menuSettings[$selectorId], $menuData[$selectorId], $this->getScriptURI()
-		);
-		$currItem = null;
-		if($menuSettings[$selectorId] > 0) {
-			$currItem = tx_rnbase::makeInstance('tx_cfcleague_models_Club', $menuSettings[$selectorId]);
+ 		$currItem = null;
+		if($menuData['value'] > 0) {
+			$$currItem = $objClubs[$menuData['value']];
 		}
 		// In den Content einbauen
 		// Zusätzlich noch einen Edit-Link setzen
+		$menu = $menuData['menu'];
 		$noLinks = $options['noLinks'] ? true : false;
 		if(!$noLinks && $menu) {
 			$links = $this->getFormTool()->createEditLink('tx_cfcleague_club', $menuSettings[$selectorId]);
@@ -222,7 +228,7 @@ class tx_cfcleague_selector{
 		}
 		$content .= $menu;
 
-    return $currItem;
+		return $currItem;
 	}
 	private function createNewClubLink($pid) {
 		$linker = tx_rnbase::makeInstance('tx_cfcleague_mod1_linker_NewClub');
@@ -399,9 +405,5 @@ class tx_cfcleague_selector{
 			'orderby' => 'sorting asc',
 		));
 	}
-}
-
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/mod1/class.tx_cfcleague_selector.php'])	{
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/mod1/class.tx_cfcleague_selector.php']);
 }
 
