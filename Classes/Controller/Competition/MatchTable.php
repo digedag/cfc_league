@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2009-2016 Rene Nitzsche (rene@system25.de)
+*  (c) 2009-2017 Rene Nitzsche (rene@system25.de)
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -286,8 +286,8 @@ class Tx_Cfcleague_Controller_Competition_MatchTable {
 				$new_match['home'] = $match['home'];
 				$new_match['guest'] = $match['guest'];
 				$new_match['match_no'] = $match['nr2'];
-				$new_match['competition'] = $league->uid;
-				$new_match['pid'] = $league->record['pid'];
+				$new_match['competition'] = $league->getUid();
+				$new_match['pid'] = $league->getPid();
 				$data['tx_cfcleague_games']['NEW'.$matchId] = $new_match;
 			}
 		}
