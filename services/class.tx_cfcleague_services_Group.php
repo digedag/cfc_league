@@ -43,13 +43,7 @@ class tx_cfcleague_services_Group extends Tx_Rnbase_Service_Base {
 			$group = tx_rnbase::makeInstance('tx_cfcleague_models_Group', $uid);
 			$cache->set('group_'.$uid, $group, 3600);
 		}
-  	return $group;
+		return $group;
 	}
 }
 
-
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/services/class.tx_cfcleague_services_Group.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/services/class.tx_cfcleague_services_Group.php']);
-}
-
-?>

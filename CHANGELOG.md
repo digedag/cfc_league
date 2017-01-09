@@ -2,6 +2,10 @@
 Änderungen
 ==========
 
+## v1.1.1 (04.01.2017)
+ * composer.json added
+ * Icons and language files moved to Resources folder
+
 ## v1.1.0 (23.12.2015)
  * Modifications for TYPO3 7.6
  * #23 Ticker-Module updated by Mario Näther

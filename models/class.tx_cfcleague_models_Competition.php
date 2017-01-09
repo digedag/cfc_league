@@ -107,10 +107,10 @@ class tx_cfcleague_models_Competition extends tx_rnbase_model_base {
 		}
 	}
 
-	function getName() {
+	public function getName() {
 		return $this->getProperty('name');
 	}
-	function getInternalName() {
+	public function getInternalName() {
 		$ret = $this->getProperty('internal_name');
 		$ret = strlen($ret) ? $ret : $this->getProperty('short_name');
 		$ret = strlen($ret) ? $ret : $this->getProperty('name');
@@ -123,7 +123,7 @@ class tx_cfcleague_models_Competition extends tx_rnbase_model_base {
 	 * @param int $status
 	 * @param int $scope
 	 */
-	function setMatches($matchesArr, $status, $scope = 0) {
+	public function setMatches($matchesArr, $status, $scope = 0) {
  		$this->matchesByState[intval($status) . '_' . intval($scope)] = is_array($matchesArr) ? $matchesArr : NULL;
 	}
 
@@ -131,21 +131,21 @@ class tx_cfcleague_models_Competition extends tx_rnbase_model_base {
 	 * Whether or not this competition is type league
 	 * @return boolean
 	 */
-	function isTypeLeague() {
+	public function isTypeLeague() {
 		return $this->getProperty('type') == 1;
 	}
 	/**
 	 * Whether or not this competition is type league
 	 * @return boolean
 	 */
-	function isTypeCup() {
+	public function isTypeCup() {
 		return $this->getProperty('type') == 2;
 	}
 	/**
 	 * Whether or not this competition is type league
 	 * @return boolean
 	 */
-	function isTypeOther() {
+	public function isTypeOther() {
 		return $this->getProperty('type') == 0;
 	}
 	/**
@@ -286,18 +286,28 @@ class tx_cfcleague_models_Competition extends tx_rnbase_model_base {
 	 * @return int
 	 */
 	function getNumberOfMatchParts(){
-		return intval($this->record['match_parts']) ? intval($this->getProperty('match_parts')) : 2;
+		return intval($this->getProperty('match_parts')) ? intval($this->getProperty('match_parts')) : 2;
 	}
 
 	/**
-	 * Returns the first agegroup of this competition
+	 * Returns the age croup of this competition.
+	 * Since version 0.6.0 there are multiple agegroups possible. For backward compatibility this
+	 * method returns the first competition per default.
 	 *
-	 * @return tx_cfcleaguefe_models_group
+	 * @return tx_cfcleague_models_Group
 	 */
-	public function getGroup() {
+	public function getGroup($all=false) {
 		tx_rnbase::load('tx_cfcleague_models_Group');
 		$groupIds = Tx_Rnbase_Utility_Strings::intExplode(',', $this->getProperty('agegroup'));
-		return count($groupIds) ? tx_cfcleague_models_Group::getGroupInstance($groupIds[0]) : false;
+		if(!count($groupIds))
+			return null;
+		if(!$all)
+			return tx_cfcleague_models_Group::getGroupInstance($groupIds[0]);
+		$ret = array();
+		foreach($groupIds As $groupId) {
+			$ret[] = tx_cfcleague_models_Group::getGroupInstance($groupId);
+		}
+		return $ret;
 	}
 	/**
 	 * Returns the uid of first agegroup of this competition
@@ -312,14 +322,14 @@ class tx_cfcleague_models_Competition extends tx_rnbase_model_base {
 	/**
 	 * Returns the agegroups of this competition
 	 *
-	 * @return array[tx_cfcleaguefe_models_group]
+	 * @return tx_cfcleague_models_Group[]
 	 */
 	public function getGroups() {
-		tx_rnbase::load('tx_cfcleaguefe_models_group');
+		tx_rnbase::load('tx_cfcleague_models_Group');
 		$groupIds = Tx_Rnbase_Utility_Strings::intExplode(',', $this->getProperty('agegroup'));
 		$ret = array();
 		foreach($groupIds As $groupId) {
-			$ret[] = tx_cfcleaguefe_models_group::getGroupInstance($groupId);
+			$ret[] = tx_cfcleague_models_Group::getGroupInstance($groupId);
 		}
 		return $ret;
 	}
@@ -329,7 +339,7 @@ class tx_cfcleague_models_Competition extends tx_rnbase_model_base {
 	 */
 	public function getTeams($ignoreDummies = true) {
 		if(!is_array($this->teams)) {
-			$uids = $this->record['teams'];
+			$uids = $this->getProperty('teams');
 			$options['where'] = 'uid IN (' . $uids .') ';
 			if($ignoreDummies)
 				$options['where'] .= ' AND dummy = 0  ';
