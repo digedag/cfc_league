@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2008-2016 Rene Nitzsche (rene@system25.de)
+*  (c) 2008-2017 Rene Nitzsche (rene@system25.de)
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -151,9 +151,10 @@ class Tx_Cfcleague_Controller_Competition_Teams {
 	 * @param tx_cfcleague_models_Competition $competition
 	 * @return string
 	 */
-	protected function createTeams($data, &$competition) {
+	protected function createTeams($data, $competition) {
 		global $LANG;
-		if (!is_array($data['tx_cfcleague_teams'])) return '';
+		if (!is_array($data['tx_cfcleague_teams']))
+			return '';
 		$tcaData = array();
 		$uids = array();
 		foreach($data['tx_cfcleague_teams'] As $uid => $arr) {

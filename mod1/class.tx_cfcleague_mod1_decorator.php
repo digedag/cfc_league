@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2008 Rene Nitzsche (rene@system25.de)
+*  (c) 2008-2017 Rene Nitzsche (rene@system25.de)
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -31,7 +31,7 @@ class tx_cfcleague_mod1_decorator {
 	static function prepareTable($entries, $columns, $formTool, $options) {
 		$arr = Array( 0 => Array( self::getHeadline($parts, $columns, $options) ));
 		foreach($entries As $entry){
-			$record = is_object($entry) ? $entry->record : $entry;
+			$record = is_object($entry) ? $entry->getProperty() : $entry;
 			$row = array();
 			if(isset($options['checkbox'])) {
 				$checkName = isset($options['checkboxname']) ? $options['checkboxname'] : 'checkEntry';
@@ -153,9 +153,3 @@ interface tx_cfcleague_mod1_Linker {
 	function makeLink($obj, $formTool, $currentPid, $options);
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/mod1/class.tx_cfcleague_mod1_decorator.php'])	{
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/mod1/class.tx_cfcleague_mod1_decorator.php']);
-}
-
-
-?>

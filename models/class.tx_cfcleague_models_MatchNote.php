@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2007-2010 Rene Nitzsche (rene@system25.de)
+*  (c) 2007-2017 Rene Nitzsche (rene@system25.de)
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -36,7 +36,7 @@ class tx_cfcleague_models_MatchNote extends tx_rnbase_model_base {
 	 * @return int
 	 */
 	public function getPlayerHome() {
-		return intval($this->record['player_home']);
+		return (int) $this->getProperty('player_home');
 	}
 
 	/**
@@ -44,7 +44,7 @@ class tx_cfcleague_models_MatchNote extends tx_rnbase_model_base {
 	 * @return int
 	 */
 	public function getPlayerGuest() {
-		return intval($this->record['player_guest']);
+		return (int) $this->getProperty('player_guest');
 	}
 
 	/**
@@ -64,21 +64,21 @@ class tx_cfcleague_models_MatchNote extends tx_rnbase_model_base {
 	 * @return int den Typ der Meldung
 	 */
 	public function getType() {
-		return intval($this->record['type']);
+		return (int) $this->getProperty('type');
 	}
 	/**
 	 * Liefert die Minute der Meldung
 	 * @return int
 	 */
 	public function getMinute() {
-		return $this->record['minute'];
+		return $this->getProperty('minute');
 	}
 	/**
 	 * Liefert true wenn die Aktion dem Heimteam zugeordnet ist
 	 * @return boolean
 	 */
 	public function isHome() {
-		return $this->record['player_home'] > 0 || $this->record['player_home'] == -1;
+		return $this->getProperty('player_home') > 0 || $this->getProperty('player_home') == -1;
 	}
 
 	/**
@@ -86,12 +86,7 @@ class tx_cfcleague_models_MatchNote extends tx_rnbase_model_base {
 	 * @return boolean
 	 */
 	public function isGuest() {
-		return $this->record['player_guest'] > 0 || $this->record['player_guest'] == -1;
+		return $this->getProperty('player_guest') > 0 || $this->getProperty('player_guest') == -1;
 	}
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/models/class.tx_cfcleague_models_MatchNote.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/models/class.tx_cfcleague_models_MatchNote.php']);
-}
-
-?>
