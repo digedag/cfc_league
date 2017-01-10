@@ -291,7 +291,7 @@ class tx_cfcleague_selector{
 		$content .= $menu;
 
 		// Aktuellen Wert als Match-Objekt zurückgeben
-		tx_rnbase::load('tx_cfcleague_match');
+		tx_rnbase::load('tx_cfcleague_models_Match');
 		return tx_rnbase::makeInstance('tx_cfcleague_models_Match', $data['value']);
 	}
 

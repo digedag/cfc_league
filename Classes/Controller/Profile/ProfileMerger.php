@@ -23,8 +23,6 @@
 ***************************************************************/
 
 tx_rnbase::load('tx_cfcleague_util_ServiceRegistry');
-tx_rnbase::load('tx_cfcleague_team');
-tx_rnbase::load('tx_cfcleague_match');
 tx_rnbase::load('tx_rnbase_util_Misc');
 tx_rnbase::load('Tx_Rnbase_Utility_Strings');
 tx_rnbase::load('Tx_Rnbase_Utility_T3General');

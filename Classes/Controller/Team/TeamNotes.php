@@ -137,7 +137,7 @@ class Tx_Cfcleague_Controller_Team_TeamNotes {
 					$data['tx_cfcleague_teams'][$currTeam->record['uid']]['players'] = $playerUids;
 
 					reset($data);
-					$tce =& tx_cfcleague_db::getTCEmain($data);
+					$tce =& Tx_Rnbase_Database_Connection::getInstance()->getTCEmain($data);
 					$tce->process_datamap();
 					$out .= $GLOBALS['LANG']->getLL('msg_profiles_joined').'<br/><br/>';
 					$currTeam->record['players'] = $playerUids;

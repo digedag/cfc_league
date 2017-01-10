@@ -216,7 +216,7 @@ class Tx_Cfcleague_Controller_Team_ProfileAdd {
 		$data['tx_cfcleague_teams'][$currTeam->record['uid']][$profileCol] = $playerUids;
 
 		reset($data);
-		$tce =& tx_cfcleague_db::getTCEmain($data);
+		$tce =& Tx_Rnbase_Database_Connection::getInstance()->getTCEmain($data);
 		$tce->process_datamap();
 		$currTeam->record[$profileCol] = $playerUids;
 	}
