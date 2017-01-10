@@ -215,14 +215,14 @@ class tx_cfcleague_selector{
 
  		$currItem = null;
 		if($menuData['value'] > 0) {
-			$$currItem = $objClubs[$menuData['value']];
+			$currItem = $objClubs[$menuData['value']];
 		}
 		// In den Content einbauen
 		// Zusätzlich noch einen Edit-Link setzen
 		$menu = $menuData['menu'];
 		$noLinks = $options['noLinks'] ? true : false;
 		if(!$noLinks && $menu) {
-			$links = $this->getFormTool()->createEditLink('tx_cfcleague_club', $menuSettings[$selectorId]);
+			$links = $this->getFormTool()->createEditLink('tx_cfcleague_club', $menuData['value']);
 			$links .= $this->createNewClubLink($pid);
 			$menu = '<div class="cfcselector"><div class="selector pull-left">' . $menu . '</div><div class="links">' . $links . '</div></div>';
 		}
