@@ -22,7 +22,7 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-tx_rnbase::load('tx_rnbase_util_Strings');
+tx_rnbase::load('Tx_Rnbase_Utility_Strings');
 
 define("TABLE_GAMES", "tx_cfcleague_games");
 define("TABLE_LEAGUES", "tx_cfcleague_competition");
@@ -130,8 +130,8 @@ class tx_cfcleague_match {
    * Merged zwei ID-Strings zu einem gemeinsamen ID-String
    */
   function mergeIdStrings($str1, $str2){
-    $arr = tx_rnbase_util_Strings::intExplode(',', $str1);
-    $arr = array_merge($arr, tx_rnbase_util_Strings::intExplode(',', $str2));
+    $arr = Tx_Rnbase_Utility_Strings::intExplode(',', $str1);
+    $arr = array_merge($arr, Tx_Rnbase_Utility_Strings::intExplode(',', $str2));
     return implode(',', $arr);
   }
 

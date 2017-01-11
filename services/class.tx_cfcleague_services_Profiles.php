@@ -23,7 +23,7 @@
 ***************************************************************/
 
 tx_rnbase::load('tx_rnbase_util_DB');
-tx_rnbase::load('tx_rnbase_util_Strings');
+tx_rnbase::load('Tx_Rnbase_Utility_Strings');
 tx_rnbase::load('Tx_Rnbase_Service_Base');
 
 
@@ -43,7 +43,7 @@ class tx_cfcleague_services_Profiles extends Tx_Rnbase_Service_Base {
 	 * @return array[tx_cfcleague_models_Profile]
 	 */
 	public function loadProfiles($uids) {
-		$uids = is_array($uids) ? $uids : tx_rnbase_util_Strings::intExplode(',', $uids);
+		$uids = is_array($uids) ? $uids : Tx_Rnbase_Utility_Strings::intExplode(',', $uids);
 		$ret = array();
 		$toLoad = array();
 		foreach($uids As $key => $uid) {

@@ -23,7 +23,7 @@
 ***************************************************************/
 
 
-tx_rnbase::load('tx_rnbase_util_Strings');
+tx_rnbase::load('Tx_Rnbase_Utility_Strings');
 
 define("TABLE_GAMES", "tx_cfcleague_games");
 define("TABLE_LEAGUES", "tx_cfcleague_competition");
@@ -53,7 +53,7 @@ class tx_cfcleague_league{
    * Liefert die IDs der zugeordneten Teams als Array
    */
   function getTeamIds(){
-    return tx_rnbase_util_Strings::intExplode(',', $this->record['teams']);
+    return Tx_Rnbase_Utility_Strings::intExplode(',', $this->record['teams']);
   }
   /**
    * Liefert den Generation-String für die Liga
