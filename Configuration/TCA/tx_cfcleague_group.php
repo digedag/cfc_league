@@ -10,6 +10,7 @@ $tx_cfcleague_group = Array (
 	'ctrl' => Array (
 		'title' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_group',
 		'label' => 'name',
+		'searchFields' => 'uid,name,shortname',
 		'tstamp' => 'tstamp',
 		'crdate' => 'crdate',
 		'cruser_id' => 'cruser_id',

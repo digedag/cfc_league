@@ -14,6 +14,7 @@ $tx_cfcleague_competition = Array (
 		'label' => 'name',
 		'label_alt' => 'internal_name',
 		'label_alt_force' => 1,
+		'searchFields' => 'uid,name',
 		'tstamp' => 'tstamp',
 		'requestUpdate' => 'sports',
 		'type' => 'tournament',
