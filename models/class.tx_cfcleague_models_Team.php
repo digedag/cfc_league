@@ -140,7 +140,7 @@ class tx_cfcleague_models_Team extends Tx_Rnbase_Domain_Model_Base {
 			$options['where'] = 'uid IN (' .$this->getProperty($column) . ')';
 			$options['wrapperclass'] = 'tx_cfcleague_models_Profile';
 
-			$rows = tx_rnbase_util_DB::doSelect($what,$from,$options,0);
+			$rows = Tx_Rnbase_Database_Connection::getInstance()->doSelect($what,$from,$options,0);
 			return $this->sortProfiles($rows, $column);
 		}
 		return array();

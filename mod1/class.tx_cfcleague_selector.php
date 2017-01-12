@@ -399,8 +399,8 @@ class tx_cfcleague_selector{
 	 * @return ein Array mit Rows
 	 */
 	private function findLeagues($pid){
-		tx_rnbase::load('tx_rnbase_util_DB');
-		return tx_rnbase_util_DB::doSelect('*', 'tx_cfcleague_competition', array(
+		tx_rnbase::load('Tx_Rnbase_Database_Connection');
+		return Tx_Rnbase_Database_Connection::getInstance()->doSelect('*', 'tx_cfcleague_competition', array(
 			'where' => 'pid="'.$pid.'"',
 			'orderby' => 'sorting asc',
 		));

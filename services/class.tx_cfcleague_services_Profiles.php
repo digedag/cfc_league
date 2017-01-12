@@ -22,7 +22,7 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-tx_rnbase::load('tx_rnbase_util_DB');
+tx_rnbase::load('Tx_Rnbase_Database_Connection');
 tx_rnbase::load('Tx_Rnbase_Utility_Strings');
 tx_rnbase::load('Tx_Rnbase_Service_Base');
 
@@ -125,7 +125,7 @@ class tx_cfcleague_services_Profiles extends Tx_Rnbase_Service_Base {
 	 */
 	function getTeamsNotes4Profile($profileUID) {
 		$options['where'] = 'player = ' . $profileUID;
-		return tx_rnbase_util_DB::doSelect('*', 'tx_cfcleague_team_notes', $options);
+		return Tx_Rnbase_Database_Connection::getInstance()->doSelect('*', 'tx_cfcleague_team_notes', $options);
 	}
 
 	/**
