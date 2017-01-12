@@ -321,7 +321,7 @@ class tx_cfcleague_models_Match extends tx_rnbase_model_base {
 			$options['wrapperclass'] = 'tx_cfcleague_models_MatchNote';
 			// HINT: Die Sortierung nach dem Typ ist für die Auswechslungen wichtig.
 			$options['orderby'] = 'minute asc, extra_time asc, uid asc';
-			$this->matchNotes = tx_rnbase_util_DB::doSelect($what, $from, $options, 0);
+			$this->matchNotes = Tx_Rnbase_Database_Connection::getInstance()->doSelect($what, $from, $options, 0);
 			// Das Match setzen (foreach geht hier nicht weil es nicht mit Referenzen arbeitet...)
 			$anz = count($this->matchNotes);
 			for($i=0; $i<$anz; $i++) {

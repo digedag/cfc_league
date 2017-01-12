@@ -64,7 +64,7 @@ class tx_cfcleague_services_Competition extends Tx_Rnbase_Service_Base {
 			$options['where'] .= 'guest IN(' . $teamIds . ')) AND ';
 		}
 		$options['where'] .= 'competition = ' . $comp->uid . ' ';
-		$rows = tx_rnbase_util_DB::doSelect($what, $from, $options, 0);
+		$rows = Tx_Rnbase_Database_Connection::getInstance()->doSelect($what, $from, $options, 0);
 		$ret = 0;
 		if(count($rows))
 			$ret = intval($rows[0]['matches']);

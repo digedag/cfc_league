@@ -22,7 +22,7 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-tx_rnbase::load('tx_rnbase_util_DB');
+tx_rnbase::load('Tx_Rnbase_Database_Connection');
 tx_rnbase::load('Tx_Rnbase_Utility_T3General');
 
 
@@ -57,7 +57,7 @@ class tx_cfcleague_mod1_AjaxTicker {
 			'pid' => $matchRecord['pid'],
 		);
 		$data = array('tx_cfcleague_match_notes' => array('NEW1' => $record));
-		$tce =& tx_rnbase_util_DB::getTCEmain($data);
+		$tce =& Tx_Rnbase_Database_Connection::getInstance()->getTCEmain($data);
 		$tce->process_datamap();
 
 		$GLOBALS['LANG']->includeLLFile('EXT:cfc_league/mod1/locallang.xml');

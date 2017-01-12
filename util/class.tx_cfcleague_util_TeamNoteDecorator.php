@@ -28,7 +28,7 @@
  */
 class tx_cfcleague_util_TeamNoteDecorator {
 	var $formTool;
-	public function tx_cfcleague_util_TeamNoteDecorator($formTool) {
+	public function __construct($formTool) {
 		$this->formTool = $formTool;
 	}
 

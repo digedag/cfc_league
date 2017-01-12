@@ -456,8 +456,8 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc {
 		}
 		// Die neuen Notes werden jetzt gespeichert
 		reset($data);
-		tx_rnbase::load('tx_rnbase_util_DB');
-		$tce = tx_rnbase_util_DB::getTCEmain($data);
+		tx_rnbase::load('Tx_Rnbase_Database_Connection');
+		$tce = Tx_Rnbase_Database_Connection::getInstance()->getTCEmain($data);
 		$tce->process_datamap();
 	}
 	/**

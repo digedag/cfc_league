@@ -23,7 +23,6 @@
 ***************************************************************/
 
 tx_rnbase::load('tx_rnbase_util_SearchBase');
-tx_rnbase::load('tx_rnbase_util_DB');
 tx_rnbase::load('tx_cfcleague_search_Builder');
 tx_rnbase::load('Tx_Rnbase_Service_Base');
 

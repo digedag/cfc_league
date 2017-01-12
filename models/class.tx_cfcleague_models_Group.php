@@ -60,7 +60,7 @@ class tx_cfcleague_models_Group extends tx_rnbase_model_base {
 		$options['where'] = (is_string($uids) && strlen($uids) > 0) ? 'uid IN (' . $uids .')' : '1';
 		$options['orderby'] = 'sorting asc';
 		$options['wrapperclass'] = 'tx_cfcleague_models_Group';
-		return  tx_rnbase_util_DB::doSelect('*', 'tx_cfcleague_group', $options);
+		return  Tx_Rnbase_Database_Connection::getInstance()->doSelect('*', 'tx_cfcleague_group', $options);
 	}
 }
 

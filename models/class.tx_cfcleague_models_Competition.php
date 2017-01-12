@@ -101,7 +101,7 @@ class tx_cfcleague_models_Competition extends tx_rnbase_model_base {
 				$options['wrapperclass'] = 'tx_cfcleaguefe_models_match';
 				// Issue 1880237: Return matches sorted by round
 				$options['orderby'] = 'round, date';
-				$this->matchesByState[$status . '_' . $scope] = tx_rnbase_util_DB::doSelect($what, 'tx_cfcleague_games', $options, 0);
+				$this->matchesByState[$status . '_' . $scope] = Tx_Rnbase_Database_Connection::getInstance()->doSelect($what, 'tx_cfcleague_games', $options, 0);
 			}
 			return $this->matchesByState[$status . '_' . $scope];
 		}
@@ -345,7 +345,7 @@ class tx_cfcleague_models_Competition extends tx_rnbase_model_base {
 				$options['where'] .= ' AND dummy = 0  ';
 			$options['wrapperclass'] = 'tx_cfcleaguefe_models_team';
 			$options['orderby'] = 'sorting';
-			$this->teams = tx_rnbase_util_DB::doSelect('*', 'tx_cfcleague_teams', $options, 0);
+			$this->teams = Tx_Rnbase_Database_Connection::getInstance()->doSelect('*', 'tx_cfcleague_teams', $options, 0);
 		}
 		return $this->teams;
 	}
@@ -419,7 +419,7 @@ class tx_cfcleague_models_Competition extends tx_rnbase_model_base {
 		SELECT * FROM tx_cfcleague_competition WHERE uid IN ($uid)
 		*/
 
-		return tx_rnbase_util_DB::doSelect('*', 'tx_cfcleague_competition',
+		return Tx_Rnbase_Database_Connection::getInstance()->doSelect('*', 'tx_cfcleague_competition',
 				array(
 						'where' => $where,
 						'orderby' => 'sorting',
@@ -459,7 +459,7 @@ class tx_cfcleague_models_Competition extends tx_rnbase_model_base {
 			$options['where'] = 'competition="'.$this->getUid().'" ';
 			$options['wrapperclass'] = 'tx_cfcleague_models_CompetitionPenalty';
 
-			$this->penalties = tx_rnbase_util_DB::doSelect('*', 'tx_cfcleague_competition_penalty', $options);
+			$this->penalties = Tx_Rnbase_Database_Connection::getInstance()->doSelect('*', 'tx_cfcleague_competition_penalty', $options);
 		}
 		return $this->penalties;
 	}
