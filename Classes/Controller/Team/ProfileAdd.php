@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2008-2016 Rene Nitzsche (rene@system25.de)
+*  (c) 2008-2017 Rene Nitzsche (rene@system25.de)
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -64,7 +64,7 @@ class Tx_Cfcleague_Controller_Team_ProfileAdd {
 	 *
 	 * @return tx_rnbase_util_FormTool
 	 */
-	private function getFormTool() {
+	protected function getFormTool() {
 		return $this->mod->getFormTool();
 	}
 
@@ -114,7 +114,7 @@ class Tx_Cfcleague_Controller_Team_ProfileAdd {
 	 * Blendet ein kleines Formular für die Neuanlage einer Person ein
 	 *
 	 */
-	private function getCreateForm() {
+	protected function getCreateForm() {
 		global $LANG;
 
 		if(!Tx_Cfcleague_Controller_Team_ProfileCreate::isProfilePage($this->mod->getPid())) {
@@ -143,10 +143,12 @@ class Tx_Cfcleague_Controller_Team_ProfileAdd {
 	 * @param tx_cfcleague_util_TeamInfo $teamInfo
 	 * @return string
 	 */
-	private function handleNewProfiles(&$currTeam, $teamInfo) {
+	protected function handleNewProfiles($currTeam, $teamInfo) {
 		$profile2team = strlen(Tx_Rnbase_Utility_T3General::_GP('newprofile2team')) > 0; // Wurde der Submit-Button gedrückt?
 		$out = '';
-		if(!$profile2team) return $out;
+		if(!$profile2team) {
+			return $out;
+		}
 		$request = Tx_Rnbase_Utility_T3General::_GP('data');
 		$profiles['tx_cfcleague_profiles'] = $request['tx_cfcleague_profiles'];
 
@@ -168,7 +170,7 @@ class Tx_Cfcleague_Controller_Team_ProfileAdd {
 	 * @param tx_cfcleague_util_TeamInfo $baseInfo
 	 * @return string
 	 */
-	private function handleAddProfiles(&$currTeam, $baseInfo) {
+	protected function handleAddProfiles(&$currTeam, $baseInfo) {
 		$out = '';
 		$profile2team = strlen(Tx_Rnbase_Utility_T3General::_GP('profile2team')) > 0; // Wurde der Submit-Button gedrückt?
 		if($profile2team) {
@@ -177,7 +179,7 @@ class Tx_Cfcleague_Controller_Team_ProfileAdd {
 				$out = $GLOBALS['LANG']->getLL('msg_no_profile_selected').'<br/><br/>';
 			}
 			else {
-				$type = intval(Tx_Rnbase_Utility_T3General::_GP('profileType'));
+				$type = (int) Tx_Rnbase_Utility_T3General::_GP('profileType');
 				if($type == 1) {
 					if($baseInfo->get('freePlayers') < count($entryUids)) {
 						// Team ist schon voll
@@ -210,15 +212,15 @@ class Tx_Cfcleague_Controller_Team_ProfileAdd {
 	 * @param string $profileCol
 	 * @param array $entryUids
 	 */
-	private function addProfiles2Team(&$currTeam, $profileCol, $entryUids) {
+	protected function addProfiles2Team(&$currTeam, $profileCol, $entryUids) {
 		tx_rnbase::load('tx_cfcleague_util_Misc');
-		$playerUids = implode(',', tx_cfcleague_util_Misc::mergeArrays(Tx_Rnbase_Utility_Strings::intExplode(',', $currTeam->record[$profileCol]), $entryUids));
-		$data['tx_cfcleague_teams'][$currTeam->record['uid']][$profileCol] = $playerUids;
+		$playerUids = implode(',', tx_cfcleague_util_Misc::mergeArrays(Tx_Rnbase_Utility_Strings::intExplode(',', $currTeam->getProperty($profileCol)), $entryUids));
+		$data['tx_cfcleague_teams'][$currTeam->getUid()][$profileCol] = $playerUids;
 
 		reset($data);
-		$tce =& Tx_Rnbase_Database_Connection::getInstance()->getTCEmain($data);
+		$tce = Tx_Rnbase_Database_Connection::getInstance()->getTCEmain($data);
 		$tce->process_datamap();
-		$currTeam->record[$profileCol] = $playerUids;
+		$currTeam->setProperty($profileCol, $playerUids);
 	}
 	/**
 	 * Get a match searcher
@@ -226,7 +228,7 @@ class Tx_Cfcleague_Controller_Team_ProfileAdd {
 	 * @param array $options
 	 * @return tx_cfcleague_mod1_profilesearcher
 	 */
-	private function getProfileSearcher(&$options) {
+	protected function getProfileSearcher(&$options) {
 		$searcher = tx_rnbase::makeInstance('tx_cfcleague_mod1_profilesearcher', $this->mod, $options);
 		return $searcher;
 	}

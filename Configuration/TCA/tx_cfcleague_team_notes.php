@@ -7,6 +7,7 @@ $tx_cfcleague_team_notes = Array (
 		'label' => 'uid',
 		'label_alt' => 'type,player,team',
 		'label_alt_force' => 1,
+		'searchFields' => 'uid,comment',
 		'requestUpdate' => 'team',
 		'tstamp' => 'tstamp',
 		'type' => 'mediatype',

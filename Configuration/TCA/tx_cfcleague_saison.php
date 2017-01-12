@@ -6,6 +6,7 @@ $tx_cfcleague_saison = Array (
 	'ctrl' => Array (
 		'title' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_saison',
 		'label' => 'name',
+		'searchFields' => 'uid,name',
 		'tstamp' => 'tstamp',
 		'crdate' => 'crdate',
 		'cruser_id' => 'cruser_id',

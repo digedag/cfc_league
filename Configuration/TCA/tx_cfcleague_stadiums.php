@@ -52,6 +52,7 @@ $tx_cfcleague_stadiums = Array (
 	'ctrl' => Array (
 		'title' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_stadiums',
 		'label' => 'name',
+		'searchFields' => 'uid,name,altname,description,city,street',
 		'tstamp' => 'tstamp',
 		'crdate' => 'crdate',
 		'cruser_id' => 'cruser_id',
@@ -208,25 +209,25 @@ $tx_cfcleague_stadiums = Array (
 			'exclude' => 1,
 			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_club.address',
 			'config' => Array (
-        'type' => 'inline',
-        'foreign_table' => 'tt_address',
-        'appearance' => Array(
-          'collapseAll' => 0,
-          'expandSingle' => 1,
-        ),
+				'type' => 'inline',
+				'foreign_table' => 'tt_address',
+				'appearance' => Array(
+				  'collapseAll' => 0,
+				  'expandSingle' => 1,
+				),
 				'minitems' => 0,
 				'maxitems' => 1,
 			)
 		),
 		'extid' => Array (
-				'exclude' => 1,
-				'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_teams_extid',
-				'config' => Array (
-						'type' => 'input',
-						'size' => '5',
-						'max' => '3',
-						'eval' => 'trim',
-				)
+			'exclude' => 1,
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_teams_extid',
+			'config' => Array (
+				'type' => 'input',
+				'size' => '5',
+				'max' => '3',
+				'eval' => 'trim',
+			)
 		),
 	),
 	'types' => Array (

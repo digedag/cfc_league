@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2008-2016 Rene Nitzsche (rene@system25.de)
+*  (c) 2008-2017 Rene Nitzsche (rene@system25.de)
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -72,7 +72,7 @@ class Tx_Cfcleague_Controller_Team_TeamNotes {
 	 *
 	 * @return tx_rnbase_util_FormTool
 	 */
-	private function getFormTool() {
+	protected function getFormTool() {
 		return $this->mod->getFormTool();
 	}
 
@@ -83,7 +83,7 @@ class Tx_Cfcleague_Controller_Team_TeamNotes {
 	 * @param tx_cfcleague_models_TeamNoteType $type
 	 * @return string
 	 */
-	function showTeamNotes($currTeam, $type) {
+	protected function showTeamNotes($currTeam, $type) {
 		$out = '<h2>'.$type->getLabel().'</h2>';
 		if($type->getDescription())
 			$out .= '<p>'.$type->getDescription().'</p>';
@@ -109,16 +109,15 @@ class Tx_Cfcleague_Controller_Team_TeamNotes {
 		$options['params'] .= '&team='.$currTeam->getUid();
 		$options['title'] = $GLOBALS['LANG']->getLL('label_create_new') .': ' . $type->getLabel();
 		// Zielseite muss immer die Seite des Teams sein
-		$out .= $this->getFormTool()->createNewButton('tx_cfcleague_team_notes', $currTeam->record['pid'], $options);
+		$out .= $this->getFormTool()->createNewButton('tx_cfcleague_team_notes', $currTeam->getProperty('pid'), $options);
 		return $out.'<br /><br />';
 	}
 	/**
-	 * Add matches to a betset
 	 *
-	 * @param tx_t3sportsbet_models_betset $currBetSet
+	 * @param tx_cfcleague_models_Team $currTeam
 	 * @return string
 	 */
-	private function handleAddProfiles(&$currTeam, $baseInfo) {
+	protected function handleAddProfiles($currTeam, $baseInfo) {
 		$out = '';
 		$profile2team = strlen(Tx_Rnbase_Utility_T3General::_GP('profile2team')) > 0; // Wurde der Submit-Button gedrückt?
 		if($profile2team) {
@@ -133,14 +132,15 @@ class Tx_Cfcleague_Controller_Team_TeamNotes {
 				}
 				else {
 					// Die Spieler hinzufügen
-					$playerUids = implode(',', tx_cfcleague_profile_create::mergeArrays(Tx_Rnbase_Utility_Strings::intExplode(',', $currTeam->record['players']), $entryUids));
-					$data['tx_cfcleague_teams'][$currTeam->record['uid']]['players'] = $playerUids;
+					$playerUids = implode(',', tx_cfcleague_profile_create::mergeArrays(Tx_Rnbase_Utility_Strings::intExplode(',', $currTeam->getProperty('players')), $entryUids));
+					$data['tx_cfcleague_teams'][$currTeam->getUid()]['players'] = $playerUids;
 
 					reset($data);
-					$tce =& Tx_Rnbase_Database_Connection::getInstance()->getTCEmain($data);
+
+					$tce = Tx_Rnbase_Database_Connection::getInstance()->getTCEmain($data);
 					$tce->process_datamap();
 					$out .= $GLOBALS['LANG']->getLL('msg_profiles_joined').'<br/><br/>';
-					$currTeam->record['players'] = $playerUids;
+					$currTeam->getProperty('players', $playerUids);
 				}
 			}
 		}
@@ -153,7 +153,7 @@ class Tx_Cfcleague_Controller_Team_TeamNotes {
 	 * @param array $options
 	 * @return tx_cfcleague_mod1_profilesearcher
 	 */
-	private function getProfileSearcher(&$options) {
+	protected function getProfileSearcher(&$options) {
 		$searcher = tx_rnbase::makeInstance('tx_cfcleague_mod1_profilesearcher', $this->mod, $options);
 		return $searcher;
 	}
