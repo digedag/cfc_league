@@ -139,8 +139,8 @@ class tx_cfcleague_mod1_searcher_Stadium {
 		);
 
 		if($items) {
-			tx_rnbase::load('tx_rnbase_mod_Tables');
-			$arr = tx_rnbase_mod_Tables::prepareTable($items, $columns, $this->getModule()->getFormTool(), $this->options);
+			tx_rnbase::load('Tx_Rnbase_Backend_Utility_Tables');
+			$arr = Tx_Rnbase_Backend_Utility_Tables::prepareTable($items, $columns, $this->getModule()->getFormTool(), $this->options);
 			$out = $this->getModule()->getDoc()->table($arr[0]);
 		}
 		else {
