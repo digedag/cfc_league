@@ -4,7 +4,6 @@ if (!defined ('TYPO3_MODE')) 	die ('Access denied.');
 
 if (TYPO3_MODE == 'BE') {
        include_once(tx_rnbase_util_Extensions::extPath($_EXTKEY).'class.tx_cfcleague.php');
-       include_once(tx_rnbase_util_Extensions::extPath($_EXTKEY).'class.tx_cfcleague_league.php');
 }
 
 if(!tx_rnbase_util_TYPO3::isTYPO62OrHigher()) {

@@ -43,14 +43,6 @@
 			"tca/",
 			"tests/",
 			"util/"
-		],
-		"files" : [
-			"class.tx_cfcleague_db.php",
-			"class.tx_cfcleague_league.php",
-			"class.tx_cfcleague_match.php",
-			"class.tx_cfcleague_profile.php",
-			"class.tx_cfcleague_team.php",
-			"class.tx_cfcleague.php"
 		]
 	}
 }

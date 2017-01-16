@@ -22,7 +22,6 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-require_once('class.tx_cfcleague_db.php');
 tx_rnbase::load('Tx_Rnbase_Utility_Strings');
 
 class tx_cfcleague_handleDataInput{

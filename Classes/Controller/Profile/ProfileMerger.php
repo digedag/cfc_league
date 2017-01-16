@@ -23,8 +23,6 @@
 ***************************************************************/
 
 tx_rnbase::load('tx_cfcleague_util_ServiceRegistry');
-tx_rnbase::load('tx_cfcleague_team');
-tx_rnbase::load('tx_cfcleague_match');
 tx_rnbase::load('tx_rnbase_util_Misc');
 tx_rnbase::load('Tx_Rnbase_Utility_Strings');
 tx_rnbase::load('Tx_Rnbase_Utility_T3General');
@@ -58,8 +56,8 @@ class Tx_Cfcleague_Controller_Profile_ProfileMerger {
 		tx_rnbase_util_Misc::callHook('cfc_league', 'mergeProfiles_hook',
 			array('data' => &$data, 'leadingUid' => $leadingProfileUID, 'obsoleteUid' => $obsoleteProfileUID), $this);
 
-		tx_rnbase::load('tx_rnbase_util_DB');
-		$tce = tx_rnbase_util_DB::getTCEmain($data);
+		tx_rnbase::load('Tx_Rnbase_Database_Connection');
+		$tce = Tx_Rnbase_Database_Connection::getInstance()->getTCEmain($data);
 		$tce->process_datamap();
 	}
 

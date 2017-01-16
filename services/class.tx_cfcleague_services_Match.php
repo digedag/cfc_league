@@ -201,7 +201,7 @@ class tx_cfcleague_services_Match extends Tx_Rnbase_Service_Base implements tx_c
 		$options['orderby'] = 'minute asc';
 		$options['wrapperclass'] = 'tx_cfcleague_models_MatchNote';
 
-		$matchNotes = tx_rnbase_util_DB::doSelect('*', 'tx_cfcleague_match_notes', $options);
+		$matchNotes = Tx_Rnbase_Database_Connection::getInstance()->doSelect('*', 'tx_cfcleague_match_notes', $options);
 		return $matchNotes;
 	}
 }
