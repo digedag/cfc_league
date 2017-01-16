@@ -15,6 +15,7 @@ $tx_cfcleague_games = Array (
 		'label' => 'round_name',
 		'label_alt' => 'competition,home,guest',
 		'label_alt_force' => 1,
+		'searchFields' => 'uid,round_name,addinfo,stadium,game_report',
 		'requestUpdate' => 'competition',
 		// configure fields for NeighborRow initialization
 		'useColumnsForDefaultValues' => 'competition,date,round,round_name',
