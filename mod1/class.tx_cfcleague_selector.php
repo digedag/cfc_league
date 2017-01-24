@@ -265,7 +265,7 @@ class tx_cfcleague_selector{
 			$nextIdx = ($currIdx < (count($entries)-1)) ? $currIdx+1 : 0;
 			$prev = $this->getFormTool()->createLink('&SET[round]=' . ($keys[$prevIdx]), $pid, '&lt;');
 			$next = $this->getFormTool()->createLink('&SET[round]=' . ($keys[$nextIdx]), $pid, '&gt;');
-			$menu = '<div class="cfcselector"><div class="selector col-md-2">' . $prev.$data['menu'].$next . '</div></div>';
+			$menu = '<div class="cfcselector"><div class="selector pull-left">' . $prev .'</div><div class="selector pull-left">'.$data['menu'].'</div><div class="selector pull-left">'.$next . '</div></div>';
 		}
 		$content.= $menu;
 
