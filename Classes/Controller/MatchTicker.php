@@ -32,6 +32,7 @@ tx_rnbase::load('Tx_Rnbase_Utility_T3General');
  */
 class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc {
 	var $doc, $MCONF;
+	var $playerNames = [];
 
 	/**
 	 * Method getFuncId
@@ -303,7 +304,7 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc {
 	/**
 	 * Für das Formular benötigen wir ein spezielles Layout
 	 */
-	function _getTableLayoutForm() {
+	protected function _getTableLayoutForm() {
 		$arr = Array (
 			'table' => Array('<table class="typo3-dblist table" width="100%" cellspacing="0" cellpadding="0" border="0">', '</table><br/>'),
 			'0' => Array( // Format für 1. Zeile
@@ -343,10 +344,9 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc {
 
 		// Die NotesTypen laden
 		$types = $this->getTickerTypes();
-
 		// FIXME: das wird noch nicht funktionieren
-		$playersHome = $match->getPlayerNamesHome();
-		$playersGuest = $match->getPlayerNamesGuest();
+		$playersHome = $this->getPlayerNames($match, 'home');
+		$playersGuest = $this->getPlayerNames($match, 'guest');
 
 		foreach($notes As $noteObj){
 			$note = $noteObj->getRecord();
@@ -375,6 +375,31 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc {
 			$types[$typeDef[1]] = $typeDef[0];
 		}
 		return $types;
+	}
+	/**
+	 *
+	 * @param tx_cfcleague_models_Match $match
+	 * @param string $team
+	 */
+	protected function getPlayerNames($match, $team) {
+		if(isset($this->playerNames[$team])) {
+			return $this->playerNames[$team];
+		}
+
+		$profileSrv = tx_cfcleague_util_ServiceRegistry::getProfileService();
+		if($team == 'home') {
+			$players = $profileSrv->loadProfiles($match->getPlayersHome());
+		}
+		else {
+			$players = $profileSrv->loadProfiles($match->getPlayersGuest());
+		}
+
+		$this->playerNames = [ $team => [] ];
+		foreach ($players As $player) {
+			$this->playerNames[$team][$player->getUid()] = $player->getName(true);
+		}
+
+		return $this->playerNames[$team];
 	}
 	/**
 	 * Erstellt das Formular für die Eingabe der Tickermeldungen
@@ -424,23 +449,20 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc {
 //			$row[] = $this->getFormTool()->createSelectSingle(
 //							'data[tx_cfcleague_match_notes][NEW'.$i.'][type]', '0', 'tx_cfcleague_match_notes', 'type', array('onchange' => 'setMatchMinute(this);'));
 			$row[] = $this->getModule()->getFormTool()->createSelectByArray(
-							'data[tx_cfcleague_match_notes][NEW'.$i.'][type]', '0', $types, array('onchange' => 'setMatchMinute(this);'));
+						'data[tx_cfcleague_match_notes][NEW'.$i.'][type]', '0', $types, array('onchange' => 'setMatchMinute(this);'));
 			$row[] = $this->getModule()->getFormTool()->createSelectByArray(
-							'data[tx_cfcleague_match_notes][NEW'.$i.'][player_home]', '0', $playersHome, array('onchange' => 'setMatchMinute(this);'));
-      $row[] = $this->getModule()->getFormTool()->createSelectByArray(
-                      'data[tx_cfcleague_match_notes][NEW'.$i.'][player_guest]', '0', $playersGuest, array('onchange' => 'setMatchMinute(this);'));
+						'data[tx_cfcleague_match_notes][NEW'.$i.'][player_home]', '0', $playersHome, array('onchange' => 'setMatchMinute(this);'));
+			$row[] = $this->getModule()->getFormTool()->createSelectByArray(
+						'data[tx_cfcleague_match_notes][NEW'.$i.'][player_guest]', '0', $playersGuest, array('onchange' => 'setMatchMinute(this);'));
+			$arr[] = $row;
 
-      $arr[] = $row;
-
-      // Das Bemerkungsfeld kommt in die nächste Zeile
-      $row = array();
-      $row[] = $this->getModule()->getFormTool()->createTextArea('data[tx_cfcleague_match_notes][NEW'.$i.'][comment]', '', $cols, $rows, array('onchange' => 'setMatchMinute(this);'));
-      $arr[] = $row;
-
-    }
-
-    return $arr;
-  }
+			// Das Bemerkungsfeld kommt in die nächste Zeile
+			$row = array();
+			$row[] = $this->getModule()->getFormTool()->createTextArea('data[tx_cfcleague_match_notes][NEW'.$i.'][comment]', '', $cols, $rows, array('onchange' => 'setMatchMinute(this);'));
+			$arr[] = $row;
+		}
+		return $arr;
+	}
 
 	/**
 	 * Erstellt eine neue Spielaktion mit den Daten aus dem Request
