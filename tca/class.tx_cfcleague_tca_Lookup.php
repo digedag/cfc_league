@@ -3,7 +3,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2007-2015 Rene Nitzsche (rene@system25.de)
+ *  (c) 2007-2017 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -287,7 +287,7 @@ class tx_cfcleague_tca_Lookup {
 
 			$players = tx_cfcleague_util_ServiceRegistry::getProfileService()->loadProfiles($match->getPlayersHome(true));
 //			$players = $match->getPlayerNamesHome();
-			$playerArr = array();
+			$playerArr = [0 => '']; // empty item
 			foreach($players As $player) {
 				$playerArr[] = Array($player->getName(), $player->getUid());
 			}
@@ -315,8 +315,8 @@ class tx_cfcleague_tca_Lookup {
 			// Wenn wir die Match ID haben könne wir die Spieler auch so ermitteln
 			$match = tx_rnbase::makeInstance('tx_cfcleague_models_Match', $this->getRowId($PA['row']['game']));
 //			$players = $match->getPlayerNamesGuest();
-			$players = tx_cfcleague_util_ServiceRegistry::getProfileService()->loadProfiles($match->getPlayersHome(true));
-			$playerArr = array();
+			$players = tx_cfcleague_util_ServiceRegistry::getProfileService()->loadProfiles($match->getPlayersGuest(true));
+			$playerArr = [0 => '']; // empty item
 			foreach($players As $player) {
 				$playerArr[] = Array($player->getName(), $player->getUid());
 			}
