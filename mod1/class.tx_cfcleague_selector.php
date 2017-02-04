@@ -238,16 +238,18 @@ class tx_cfcleague_selector{
 	/**
 	 * Darstellung der Select-Box mit allen Spielrunden des übergebenen Wettbewerbs. Es
 	 * wird auf die aktuelle Runde eingestellt.
+	 * @param string $content
+	 * @param int $pid
+	 * @param tx_cfcleague_models_Competition $league
 	 * @return current value
 	 */
 	public function showRoundSelector(&$content, $pid, $league){
 		$entries = Array ();
-
 		$objRounds = array();
 		foreach($league->getRounds() as $round){
 			if(is_object($round)) {
-				$objRounds[$round->uid] = $round;
-				$entries[$round->uid] = $round->record['name'] . ( intval($round->record['finished']) ? ' *' : '' );
+				$objRounds[$round->getUid()] = $round;
+				$entries[$round->getUid()] = $round->getProperty('name') . ( intval($round->getProperty('finished')) ? ' *' : '' );
 			}
 			else
 				$entries[$round['round']] = $round['round_name'] . ( intval($round['max_status']) ? ' *' : '' );

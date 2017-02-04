@@ -298,7 +298,9 @@ class tx_cfcleague_models_Match extends tx_rnbase_model_base {
 	 * Liefert alle MatchNotes des Spiels als Referenz auf ein Array.
 	 * Die Ticker werden in chronologischer Reihenfolge geliefert.
 	 * Alle MatchNotes haben eine Referenz auf das zugehörige Spiel
-	 * @return array[tx_cfcleague_models_MatchNotes]
+	 * @param string $orderBy 'asc' or 'desc'
+	 * @param int $limit maximum number of note to retrieve
+	 * @return array[tx_cfcleague_models_MatchNote]
 	 */
 	public function getMatchNotes($orderBy = 'asc', $limit = FALSE) {
 		$notes = $this->resolveMatchNotes($orderBy);
