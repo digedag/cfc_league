@@ -32,6 +32,7 @@ tx_rnbase::load('Tx_Rnbase_Utility_T3General');
  */
 class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc {
 	var $doc, $MCONF;
+	var $playerNames = [];
 
 	/**
 	 * Method getFuncId
@@ -46,7 +47,6 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc {
 	 * Bearbeitung von Spielen. Es werden die Paaren je Spieltag angezeigt
 	 */
 	protected function getContent($template, &$configurations, &$formatter, $formTool) {
-//	function main() {
 		global $LANG;
 
 		$this->doc = $this->getModule()->getDoc();
@@ -101,7 +101,9 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc {
 		$modContent .= $this->getInstantMessageField();
 		$modContent .= $this->getFormHeadline();
 		$arr = $this->createFormArray($match);
-		$modContent .= $this->doc->table($arr, $this->_getTableLayoutForm());
+
+		$tables = tx_rnbase::makeInstance('Tx_Rnbase_Backend_Utility_Tables');
+		$modContent .= $tables->buildTable($arr, $this->_getTableLayoutForm());
 		$modContent .= '<br />';
 
 		// Das Form für den aktuellen Spielstand
@@ -116,7 +118,7 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc {
 		$arr = $this->createTickerArray($match, Tx_Rnbase_Utility_T3General::_GP('showAll'));
 		if($arr) {
 			$tickerContent = $formTool->createLink('&showAll=1', $this->getModule()->getPid(), $LANG->getLL('label_showAllTickers'));
-			$tickerContent .= $this->doc->table($arr);
+			$tickerContent .= $tables->buildTable($arr);
 		}
 		else
 			$tickerContent .= $LANG->getLL('msg_NoTicker');
@@ -268,7 +270,6 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc {
 
 		$standingWidth = tx_rnbase_util_TYPO3::isTYPO70OrHigher() ? 3 : 2;
 		$out = '';
-//    $out .= $LANG->getLL('label_current_standings') .': ';
 
 		$parts = $competition->getNumberOfMatchParts();
 		for($i=$parts; $i > 0; $i--) {
@@ -303,7 +304,7 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc {
 	/**
 	 * Für das Formular benötigen wir ein spezielles Layout
 	 */
-	function _getTableLayoutForm() {
+	protected function _getTableLayoutForm() {
 		$arr = Array (
 			'table' => Array('<table class="typo3-dblist table" width="100%" cellspacing="0" cellpadding="0" border="0">', '</table><br/>'),
 			'0' => Array( // Format für 1. Zeile
@@ -343,13 +344,11 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc {
 
 		// Die NotesTypen laden
 		$types = $this->getTickerTypes();
-
-		// FIXME: das wird noch nicht funktionieren
-		$playersHome = $match->getPlayerNamesHome();
-		$playersGuest = $match->getPlayerNamesGuest();
+		$playersHome = $this->getPlayerNames($match, 'home');
+		$playersGuest = $this->getPlayerNames($match, 'guest');
 
 		foreach($notes As $noteObj){
-			$note = $noteObj->getRecord();
+			$note = $noteObj->getProperty();
 			$row = array();
 
 			$min = $note['minute'] . ($note['extra_time'] ? '+'. $note['extra_time'] : '' );
@@ -377,6 +376,31 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc {
 		return $types;
 	}
 	/**
+	 *
+	 * @param tx_cfcleague_models_Match $match
+	 * @param string $team
+	 */
+	protected function getPlayerNames($match, $team) {
+		if(isset($this->playerNames[$team])) {
+			return $this->playerNames[$team];
+		}
+
+		$profileSrv = tx_cfcleague_util_ServiceRegistry::getProfileService();
+		if($team == 'home') {
+			$players = $profileSrv->loadProfiles($match->getPlayersHome(true));
+		}
+		else {
+			$players = $profileSrv->loadProfiles($match->getPlayersGuest(true));
+		}
+
+		$this->playerNames = [ $team => [] ];
+		foreach ($players As $player) {
+			$this->playerNames[$team][$player->getUid()] = $player->getName(true);
+		}
+
+		return $this->playerNames[$team];
+	}
+	/**
 	 * Erstellt das Formular für die Eingabe der Tickermeldungen
 	 * @param tx_cfcleague_models_Match $match
 	 */
@@ -388,7 +412,6 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc {
 			$LANG->getLL('tx_cfcleague_match_notes.type'),
 			$LANG->getLL('tx_cfcleague_match_notes.player_home'),
 			$LANG->getLL('tx_cfcleague_match_notes.player_guest'),
-//      $LANG->getLL('tx_cfcleague_match_notes.comment'),
 		));
 
 		$minuteWidth = tx_rnbase_util_TYPO3::isTYPO70OrHigher() ? 3 : 2;
@@ -421,33 +444,28 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc {
 			$row[] = $this->getModule()->getFormTool()->createIntInput('data[tx_cfcleague_match_notes][NEW'.$i.'][minute]', '', $minuteWidth, 3) . '+' .
 						$this->getModule()->getFormTool()->createIntInput('data[tx_cfcleague_match_notes][NEW'.$i.'][extra_time]', '', $minuteWidth, 2) .
 						$this->getModule()->getFormTool()->createHidden('data[tx_cfcleague_match_notes][NEW'.$i.'][game]', $match->getUid());
-//			$row[] = $this->getFormTool()->createSelectSingle(
-//							'data[tx_cfcleague_match_notes][NEW'.$i.'][type]', '0', 'tx_cfcleague_match_notes', 'type', array('onchange' => 'setMatchMinute(this);'));
 			$row[] = $this->getModule()->getFormTool()->createSelectByArray(
-							'data[tx_cfcleague_match_notes][NEW'.$i.'][type]', '0', $types, array('onchange' => 'setMatchMinute(this);'));
+						'data[tx_cfcleague_match_notes][NEW'.$i.'][type]', '0', $types, array('onchange' => 'setMatchMinute(this);'));
 			$row[] = $this->getModule()->getFormTool()->createSelectByArray(
-							'data[tx_cfcleague_match_notes][NEW'.$i.'][player_home]', '0', $playersHome, array('onchange' => 'setMatchMinute(this);'));
-      $row[] = $this->getModule()->getFormTool()->createSelectByArray(
-                      'data[tx_cfcleague_match_notes][NEW'.$i.'][player_guest]', '0', $playersGuest, array('onchange' => 'setMatchMinute(this);'));
+						'data[tx_cfcleague_match_notes][NEW'.$i.'][player_home]', '0', $playersHome, array('onchange' => 'setMatchMinute(this);'));
+			$row[] = $this->getModule()->getFormTool()->createSelectByArray(
+						'data[tx_cfcleague_match_notes][NEW'.$i.'][player_guest]', '0', $playersGuest, array('onchange' => 'setMatchMinute(this);'));
+			$arr[] = $row;
 
-      $arr[] = $row;
-
-      // Das Bemerkungsfeld kommt in die nächste Zeile
-      $row = array();
-      $row[] = $this->getModule()->getFormTool()->createTextArea('data[tx_cfcleague_match_notes][NEW'.$i.'][comment]', '', $cols, $rows, array('onchange' => 'setMatchMinute(this);'));
-      $arr[] = $row;
-
-    }
-
-    return $arr;
-  }
+			// Das Bemerkungsfeld kommt in die nächste Zeile
+			$row = array();
+			$row[] = $this->getModule()->getFormTool()->createTextArea('data[tx_cfcleague_match_notes][NEW'.$i.'][comment]', '', $cols, $rows, array('onchange' => 'setMatchMinute(this);'));
+			$arr[] = $row;
+		}
+		return $arr;
+	}
 
 	/**
 	 * Erstellt eine neue Spielaktion mit den Daten aus dem Request
 	 */
 	private function insertNotes($data) {
 		$notes = $data['tx_cfcleague_match_notes'];
-		foreach($notes As $noteId => $note){
+		foreach($notes As $noteId => $note) {
 			$playerOk = !(intval($note['player_home']) != 0 && intval($note['player_guest']) != 0);
 
 			// Ohne Minute (Feld ist leer) wird nix gespeichert
@@ -459,7 +477,7 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc {
 			else {
 				unset($data['tx_cfcleague_match_notes'][$noteId]);
 			}
-    }
+		}
 		if (!count($data['tx_cfcleague_match_notes'])) {
 			unset($data['tx_cfcleague_match_notes']);
 		}
