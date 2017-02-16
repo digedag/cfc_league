@@ -204,10 +204,60 @@ class tx_cfcleague_services_Match extends Tx_Rnbase_Service_Base implements tx_c
 		$matchNotes = Tx_Rnbase_Database_Connection::getInstance()->doSelect('*', 'tx_cfcleague_match_notes', $options);
 		return $matchNotes;
 	}
+
+	/**
+	 * Create or update match
+	 * @param tx_cfcleague_models_Match $model
+	 */
+	public function persist($model) {
+		if($model->isPersisted()) {
+			$this->update($model);
+		}
+		else {
+			$this->create($model->getProperty());
+		}
+	}
+	/**
+	 *
+	 * @param tx_cfcleague_models_Match $model
+	 * @return tx_cfcleague_models_Match
+	 */
+	private function update($model) {
+
+		$model->setProperty('tstamp', time());
+		$data = $model->getProperty();
+		$table = $model->getTableName();
+		$uid = (int) $model->getUid();
+
+		$where = '1=1 AND `'.$table . '`.`uid`='.$uid;
+
+		// remove uid if exists
+		if(array_key_exists('uid', $data))
+			unset($data['uid']);
+
+		tx_rnbase::load('Tx_Rnbase_Database_Connection');
+		Tx_Rnbase_Database_Connection::getInstance()->doUpdate($table, $where, $data);
+
+		return $model;
+	}
+	/**
+	 * Create a new record
+	 * TODO: remove after migration to repository
+	 *
+	 * @param tx_cfcleague_models_Match $model
+	 * @param string	$table
+	 * @return int	UID of just created record
+	 */
+	private function create($model) {
+		$model->setProperty('crdate', time());
+		$model->setProperty('tstamp', time());
+		tx_rnbase::load('Tx_Rnbase_Database_Connection');
+		$newUid = Tx_Rnbase_Database_Connection::getInstance()->doInsert(
+				$model->getTableName(),
+				$data
+				);
+		return $newUid;
+	}
+
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/services/class.tx_cfcleague_services_Match.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/services/class.tx_cfcleague_services_Match.php']);
-}
-
-?>
