@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2010-2016 Rene Nitzsche (rene@system25.de)
+*  (c) 2010-2017 Rene Nitzsche (rene@system25.de)
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -44,7 +44,6 @@ class Tx_Cfcleague_Handler_MatchCreator {
 		$submitted = tx_rnbase_parameters::getPostOrGetParameter('doCreateMatches');
 		if(!$submitted) return '';
 			$tcaData = tx_rnbase_parameters::getPostOrGetParameter('data');
-
 		tx_rnbase::load('Tx_Rnbase_Database_Connection');
 		$tce = Tx_Rnbase_Database_Connection::getInstance()->getTCEmain($tcaData);
 		$tce->process_datamap();
@@ -63,7 +62,7 @@ class Tx_Cfcleague_Handler_MatchCreator {
 		$items = array();
 		for($i=1; $i<33; $i++)
 			$items[$i] = $i .($i==1 ? ' ###LABEL_MATCH###' : ' ###LABEL_MATCHES###' );
-		$menu = $mod->getFormTool()->showMenu($mod->getPid(), 'matchs3create', $mod->getName(), $items, 'index.php');
+		$menu = $mod->getFormTool()->showMenu($mod->getPid(), 'matchs3create', $mod->getName(), $items);
 		$content .= $menu['menu'];
 		$maxMatches = $menu['value'];
 
