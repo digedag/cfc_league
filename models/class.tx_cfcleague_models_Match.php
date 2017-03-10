@@ -43,16 +43,16 @@ class tx_cfcleague_models_Match extends tx_rnbase_model_base {
 
 	public function getGoalsHome($matchPart = '') {
 		$this->initResult();
-		$ret = $this->record['goals_home'];
+		$ret = $this->getProperty('goals_home');
 		if(strlen($matchPart))
-			$ret = $this->record['goals_home_'.(($matchPart == 'last') ? $this->record['matchparts'] : $matchPart) ];
+			$ret = $this->getProperty('goals_home_'.(($matchPart == 'last') ? $this->getProperty('matchparts') : $matchPart));
 		return $ret;
 	}
 	public function getGoalsGuest($matchPart = '') {
 		$this->initResult();
-		$ret = $this->record['goals_guest'];
+		$ret = $this->getProperty('goals_guest');
 		if(strlen($matchPart))
-			$ret = $this->record['goals_guest_'.(($matchPart == 'last') ? $this->record['matchparts'] : $matchPart) ];
+			$ret = $this->getProperty('goals_guest_'.(($matchPart == 'last') ? $this->getProperty('matchparts') : $matchPart) );
 		return $ret;
 	}
 
@@ -82,7 +82,7 @@ class tx_cfcleague_models_Match extends tx_rnbase_model_base {
 		// Um das Endergebnis zu ermitteln, muss bekannt sein, wieviele Spielabschnitte
 		// es gibt. Dies steht im Wettbewerb
 		$comp = $this->getCompetition();
-		$this->record['matchparts'] = $comp->getMatchParts();
+		$this->setProperty('matchparts', $comp->getMatchParts());
 		if($comp->isAddPartResults())
 			$this->initResultAdded($comp, $comp->getMatchParts());
 		else
@@ -95,19 +95,19 @@ class tx_cfcleague_models_Match extends tx_rnbase_model_base {
 	 * @param int $matchParts
 	 */
 	private function initResultSimple($comp, $matchParts) {
-		$goalsHome = $this->record['goals_home_'.$matchParts];
-		$goalsGuest = $this->record['goals_guest_'.$matchParts];
+		$goalsHome = $this->getProperty('goals_home_'.$matchParts);
+		$goalsGuest = $this->getProperty('goals_guest_'.$matchParts);
 		// Gab es Verländerung oder Elfmeterschiessen
 		if($this->isPenalty()) {
-			$goalsHome = $this->record['goals_home_ap'];
-			$goalsGuest = $this->record['goals_guest_ap'];
+			$goalsHome = $this->getProperty('goals_home_ap');
+			$goalsGuest = $this->getProperty('goals_guest_ap');
 		}
 		elseif($this->isExtraTime()) {
-			$goalsHome = $this->record['goals_home_et'];
-			$goalsGuest = $this->record['goals_guest_et'];
+			$goalsHome = $this->getProperty('goals_home_et');
+			$goalsGuest = $this->getProperty('goals_guest_et');
 		}
-		$this->record['goals_home'] = $goalsHome;
-		$this->record['goals_guest'] = $goalsGuest;
+		$this->setProperty('goals_home', $goalsHome);
+		$this->setProperty('goals_guest', $goalsGuest);
 	}
 	/**
 	 * Init result and add all matchpart results.
@@ -121,27 +121,27 @@ class tx_cfcleague_models_Match extends tx_rnbase_model_base {
 		// Teilergebnisse holen
 		$matchParts = $matchParts > 0 ? $matchParts : 1;
 		for($i=1; $i<=$matchParts; $i++) {
-			$goalsHome += $this->record['goals_home_'.$i];
-			$goalsGuest += $this->record['goals_guest_'.$i];
+			$goalsHome += $this->getProperty('goals_home_'.$i);
+			$goalsGuest += $this->getProperty('goals_guest_'.$i);
 		}
 		// Gab es Verländerung oder Elfmeterschiessen
 		if($this->isPenalty()) {
-			$goalsHome += $this->record['goals_home_ap'];
-			$goalsGuest += $this->record['goals_guest_ap'];
+			$goalsHome += $this->getProperty('goals_home_ap');
+			$goalsGuest += $this->getProperty('goals_guest_ap');
 		}
 		elseif($this->isExtraTime()) {
-			$goalsHome += $this->record['goals_home_et'];
-			$goalsGuest += $this->record['goals_guest_et'];
+			$goalsHome += $this->getProperty('goals_home_et');
+			$goalsGuest += $this->getProperty('goals_guest_et');
 		}
-		$this->record['goals_home'] = $goalsHome;
-		$this->record['goals_guest'] = $goalsGuest;
+		$this->setProperty('goals_home', $goalsHome);
+		$this->setProperty('goals_guest', $goalsGuest);
 	}
 	/**
 	 *
 	 * @return string
 	 */
 	public function getResult() {
-		return $this->record['status'] > 0 ? $this->getGoalsHome() .' : ' . $this->getGoalsGuest() : '- : -';
+		return $this->getProperty('status') > 0 ? $this->getGoalsHome() .' : ' . $this->getGoalsGuest() : '- : -';
 	}
 	/**
 	 * Return sets if available
@@ -150,7 +150,7 @@ class tx_cfcleague_models_Match extends tx_rnbase_model_base {
 	public function getSets() {
 		if(!is_array($this->sets)) {
 			tx_rnbase::load('tx_cfcleague_models_Set');
-			$this->sets = tx_cfcleague_models_Set::buildFromString($this->record['sets']);
+			$this->sets = tx_cfcleague_models_Set::buildFromString($this->getProperty('sets'));
 			$this->sets = $this->sets ? $this->sets : array();
 		}
 		return $this->sets;
@@ -167,11 +167,11 @@ class tx_cfcleague_models_Match extends tx_rnbase_model_base {
 	 * @return string comma separated uids
 	 */
 	public function getPlayersHome($all = false) {
-		$ids = $this->record['players_home'];
-		if($all &&  strlen($this->record['substitutes_home']) > 0){
+		$ids = $this->getProperty('players_home');
+		if($all &&  strlen($this->getProperty('substitutes_home')) > 0){
 			// Auch Ersatzspieler anhängen
 			if(strlen($ids) > 0)
-				$ids = $ids . ',' . $this->record['substitutes_home'];
+				$ids = $ids . ',' . $this->getProperty('substitutes_home');
 		}
 		return $ids;
 	}
@@ -181,11 +181,11 @@ class tx_cfcleague_models_Match extends tx_rnbase_model_base {
 	 * @return string comma separated uids
 	 */
 	public function getPlayersGuest($all = false) {
-		$ids = $this->record['players_guest'];
-		if($all &&  strlen($this->record['substitutes_guest']) > 0){
+		$ids = $this->getProperty('players_guest');
+		if($all &&  strlen($this->getProperty('substitutes_guest')) > 0){
 			// Auch Ersatzspieler anhängen
 			if(strlen($ids) > 0)
-				$ids = $ids . ',' . $this->record['substitutes_guest'];
+				$ids = $ids . ',' . $this->getProperty('substitutes_guest');
 		}
 		return $ids;
 	}
@@ -294,6 +294,14 @@ class tx_cfcleague_models_Match extends tx_rnbase_model_base {
 	public function isDummy() {
 		return $this->getHome()->isDummy() || $this->getGuest()->isDummy();
 	}
+
+	/**
+	 * @return true if live ticker is turn on
+	 */
+	public function isTicker() {
+		return $this->getProperty('link_ticker') > 0;
+	}
+
 	/**
 	 * Liefert alle MatchNotes des Spiels als Referenz auf ein Array.
 	 * Die Ticker werden in chronologischer Reihenfolge geliefert.
@@ -337,8 +345,3 @@ class tx_cfcleague_models_Match extends tx_rnbase_model_base {
 	}
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/models/class.tx_cfcleague_models_Match.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/models/class.tx_cfcleague_models_Match.php']);
-}
-
-?>

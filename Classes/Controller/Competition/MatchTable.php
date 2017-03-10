@@ -115,7 +115,7 @@ class Tx_Cfcleague_Controller_Competition_MatchTable {
 		$menu = $this->getFormTool()->showMenu(
 				$this->getModule()->getPid(), 't3s_mcmode',
 				$this->getModule()->getName(),
-				array(0=>'Auto', '1'=>'Manual'), 'index.php');
+				array(0=>'Auto', '1'=>'Manual'));
 		$content .= $menu['menu'];
 		$mode = $menu['value'];
 		$content .= '<br>';

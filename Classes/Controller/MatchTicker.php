@@ -425,7 +425,7 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc {
 		$rows = (is_array($pageTSconfig) && is_array($pageTSconfig['tx_cfcleague.']['matchTickerCfg.'])) ?
 			intval($pageTSconfig['tx_cfcleague.']['matchTickerCfg.']['commentFieldRows']) : 3;
 
-		$playersHome = $playersGuest = array(0 => '');
+		$playersHome = $playersGuest = array(0 => ''); // Erster Eintrag bleibt leer
 		$players = tx_cfcleague_util_ServiceRegistry::getProfileService()->loadProfiles($match->getPlayersHome(true));
 		foreach ($players As $player) {
 			$playersHome[$player->getUid()] = $player->getName(TRUE);
@@ -434,6 +434,8 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc {
 		foreach ($players As $player) {
 			$playersGuest[$player->getUid()] = $player->getName(TRUE);
 		}
+		// Jetzt noch den Dummy-Player anhängen
+		$playersHome[-1] = $playersGuest[-1] = $LANG->getLL('tx_cfcleague.unknown');
 
 		$types = $this->getTickerTypes();
 		// Wenn kein sinnvoller Wert vorhanden ist, bleibt der Standard bei 4
