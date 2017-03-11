@@ -84,21 +84,6 @@ class tx_cfcleague_handleDataInput{
       $players = $this->findPlayers($PA['row']['home']);
       $PA[items] = $players;
     }
-    elseif($PA['row']['game']) {
-      // Abfrage aus MatchNote-Datensatz
-      // Wenn wir die Match ID haben, können wir die Spieler auch so ermitteln
-      // Es werden alle aufgestellten Spieler des Matches benötigt
-      require_once('class.tx_cfcleague_match.php');
-      $match = new tx_cfcleague_match(tx_cfcleague_handleDataInput::getRowId($PA['row']['game']));
-      $players = $match->getPlayerNamesHome();
-      $playerArr = array();
-      foreach($players As $uid => $name) {
-        $playerArr[] = Array($name, $uid);
-      }
-      $PA[items] = $playerArr;
-      // Abschließend noch den Spieler "Unbekannt" hinzufügen! Dieser ist nur in Matchnotes verfügbar
-      $PA[items][] = Array($LANG->getLL('tx_cfcleague.unknown'), '-1');
-    }
     else
       $PA[items] = array();
   }
@@ -199,13 +184,13 @@ class tx_cfcleague_handleDataInput{
 		$rows = array();
 		if(intval($teamId) == 0) return $rows;
 
+		/* @var $team tx_cfcleague_models_Team */
 		$team = tx_rnbase::makeInstance('tx_cfcleague_models_Team', $teamId);
 		/* @var $profile tx_cfcleague_models_Profile */
 		$profiles = $team->getPlayers();
 		foreach($profiles As $profile) {
 			$rows[] = Array($profile->getName(), $profile->getUid(), );
 		}
-
 // 		require_once('class.tx_cfcleague_team.php');
 // 		$team = new tx_cfcleague_team($teamId);
 // 		$players = $team->getPlayerNames(0, 1);
