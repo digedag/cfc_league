@@ -276,21 +276,23 @@ class tx_cfcleague_tca_Lookup {
 		{
 			// Abfrage aus Spieldatensatz
 			// Es werden alle Spieler des Teams benötigt
-			$players = $this->findPlayers($PA['row']['home']);
+			$players = $this->findProfiles($PA['row']['home'], 'getPlayers');
 			$PA[items] = $players;
 		}
 		elseif($PA['row']['game']) {
 			// Abfrage aus MatchNote-Datensatz
 			// Wenn wir die Match ID haben, können wir die Spieler auch so ermitteln
 			// Es werden alle aufgestellten Spieler des Matches benötigt
+			/* @var $match tx_cfcleague_models_Match */
 			$match = tx_rnbase::makeInstance('tx_cfcleague_models_Match', $this->getRowId($PA['row']['game']));
 
 			$players = tx_cfcleague_util_ServiceRegistry::getProfileService()->loadProfiles($match->getPlayersHome(true));
 //			$players = $match->getPlayerNamesHome();
 			$playerArr = [0 => '']; // empty item
 			foreach($players As $player) {
-				$playerArr[] = Array($player->getName(), $player->getUid());
+				$playerArr[] = Array($player->getName(true), $player->getUid());
 			}
+			sort($playerArr);
 			$PA[items] = $playerArr;
 			// Abschließend noch den Spieler "Unbekannt" hinzufügen! Dieser ist nur in Matchnotes verfügbar
 			$PA[items][] = Array($LANG->getLL('tx_cfcleague.unknown'), '-1');
@@ -308,18 +310,20 @@ class tx_cfcleague_tca_Lookup {
 
 		if($PA['row']['guest'])
 		{
-			$players = $this->findPlayers($PA['row']['guest']);
+			$players = $this->findProfiles($PA['row']['guest'], 'getPlayers');
 			$PA[items] = $players;
 		}
 		elseif($PA['row']['game']) {
 			// Wenn wir die Match ID haben könne wir die Spieler auch so ermitteln
+			/* @var $match tx_cfcleague_models_Match */
 			$match = tx_rnbase::makeInstance('tx_cfcleague_models_Match', $this->getRowId($PA['row']['game']));
 //			$players = $match->getPlayerNamesGuest();
 			$players = tx_cfcleague_util_ServiceRegistry::getProfileService()->loadProfiles($match->getPlayersGuest(true));
 			$playerArr = [0 => '']; // empty item
 			foreach($players As $player) {
-				$playerArr[] = Array($player->getName(), $player->getUid());
+				$playerArr[] = Array($player->getName(true), $player->getUid());
 			}
+			sort($playerArr);
 			$PA[items] = $playerArr;
 			// Abschließend noch den Spieler "Unbekannt" hinzufügen!
 			$PA[items][] = Array($LANG->getLL('tx_cfcleague.unknown'), '-1');
@@ -377,6 +381,8 @@ class tx_cfcleague_tca_Lookup {
 	}
 	/**
 	 * Liefert die Spieler (uid und name) einer Mannschaft.
+	 * Die Spieler sind alphabetisch sortiert.
+	 * @return []
 	 */
 	private function findProfiles($teamId, $getter) {
 		$rows = array();
@@ -386,8 +392,9 @@ class tx_cfcleague_tca_Lookup {
 		/* @var $profile tx_cfcleague_models_Profile */
 		$profiles = $team->$getter();
 		foreach($profiles As $profile) {
-			$rows[] = Array($profile->getName(), $profile->getUid(), );
+			$rows[] = Array($profile->getName(true), $profile->getUid(), );
 		}
+		sort($rows);
 
 		return $rows;
 	}

@@ -68,57 +68,6 @@ class tx_cfcleague_handleDataInput{
   }
 
   /**
-   * Die Spieler des Heimteams ermitteln
-   * Used: Edit-Maske eines Spiels für Teamaufstellung und Match-Note
-   */
-  function getPlayersHome4Match($PA, $fobj){
-    global $LANG;
-    $LANG->includeLLFile('EXT:cfc_league/locallang_db.xml');
-
-// tx_rnbase_util_Debug::debug(count($PA[items]), 'items cfcleague');
-
-    if($PA['row']['home'])
-    {
-      // Abfrage aus Spieldatensatz
-      // Es werden alle Spieler des Teams benötigt
-      $players = $this->findPlayers($PA['row']['home']);
-      $PA[items] = $players;
-    }
-    else
-      $PA[items] = array();
-  }
-  /**
-   * Die Spieler des Gastteams ermitteln
-   * Used: Edit-Maske eines Spiels für Teamaufstellung
-   * @deprecated use tca_Lookup
-   */
-  function getPlayersGuest4Match($PA, $fobj){
-    global $LANG;
-    $LANG->includeLLFile('EXT:cfc_league/locallang_db.xml');
-
-    if($PA['row']['guest'])
-    {
-      $players = $this->findPlayers($PA['row']['guest']);
-      $PA[items] = $players;
-    }
-    elseif($PA['row']['game']) {
-      // Wenn wir die Match ID haben könne wir die Spieler auch so ermitteln
-      require_once('class.tx_cfcleague_match.php');
-      $match = new tx_cfcleague_match(tx_cfcleague_handleDataInput::getRowId($PA['row']['game']));
-      $players = $match->getPlayerNamesGuest();
-      $playerArr = array();
-      foreach($players As $uid => $name) {
-        $playerArr[] = Array($name, $uid);
-      }
-      $PA[items] = $playerArr;
-      // Abschließend noch den Spieler "Unbekannt" hinzufügen!
-      $PA[items][] = Array($LANG->getLL('tx_cfcleague.unknown'), '-1');
-    }
-    else // Ohne Daten müssen wir alle Spieler löschen
-      $PA[items] = array();
-  }
-
-  /**
    * Sucht die Teams eines Wettbewerbs
    * @param complete_row wenn false wird nur Name und UID für SELECT-Box geliefert
    */
@@ -177,28 +126,6 @@ class tx_cfcleague_handleDataInput{
 		return $rows;
 	}
 
-	/**
-	 * Liefert die Spieler (uid und name) einer Mannschaft.
-	 */
-	private function findPlayers($teamId) {
-		$rows = array();
-		if(intval($teamId) == 0) return $rows;
-
-		/* @var $team tx_cfcleague_models_Team */
-		$team = tx_rnbase::makeInstance('tx_cfcleague_models_Team', $teamId);
-		/* @var $profile tx_cfcleague_models_Profile */
-		$profiles = $team->getPlayers();
-		foreach($profiles As $profile) {
-			$rows[] = Array($profile->getName(), $profile->getUid(), );
-		}
-// 		require_once('class.tx_cfcleague_team.php');
-// 		$team = new tx_cfcleague_team($teamId);
-// 		$players = $team->getPlayerNames(0, 1);
-// 		foreach($players As $uid => $name) {
-// 			$rows[] = Array($name, $uid, );
-// 		}
-		return $rows;
-	}
 	/**
 	 * Liefert die Betreuer (uid und name) einer Mannschaft.
 	 */
