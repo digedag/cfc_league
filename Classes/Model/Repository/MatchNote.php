@@ -45,8 +45,8 @@ class Tx_Cfcleague_Model_Repository_MatchNote extends tx_rnbase_sv1_Base {
 	 */
 	public function createNewModel(
 			array $record = array()
-			) {
-				return $this->getDomainModel()->setProperty($record);
+	) {
+		return $this->getDomainModel()->setProperty($record);
 	}
 
 	/**
