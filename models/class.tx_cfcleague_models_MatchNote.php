@@ -88,5 +88,54 @@ class tx_cfcleague_models_MatchNote extends tx_rnbase_model_base {
 	public function isGuest() {
 		return $this->getProperty('player_guest') > 0 || $this->getProperty('player_guest') == -1;
 	}
+
+	/**
+	 * Liefert true wenn die Meldung ein Tor ist
+	 * @return boolean
+	 */
+	public function isGoal() {
+		$type = $this->getType();
+		return ($type >= 10 && $type < 20) || $type == 30; // 30 ist das Eigentor
+	}
+
+	/**
+	 * Liefert true wenn es ein Eigentor ist.
+	 * @return boolean
+	 */
+	public function isGoalOwn() {
+		return $this->getType() == 30;
+	}
+
+	/**
+	 * Liefert true wenn ein Tor für das Heimteam gefallen ist. Auch Eigentore werden
+	 * berücksichtigt.
+	 * @return boolean
+	 */
+	public function isGoalHome() {
+		if($this->isGoal()) {
+			return ($this->isHome() && !$this->isGoalOwn()) || ($this->isGuest() && $this->isGoalOwn() ) ;
+		}
+		return false;
+	}
+
+	/**
+	 * Liefert true wenn ein Tor für das Gastteam gefallen ist. Auch Eigentore werden
+	 * berücksichtigt.
+	 * @return boolean
+	 */
+	public function isGoalGuest() {
+		if($this->isGoal()) {
+			return ($this->isGuest() && !( $this->getType() == 30)) || ($this->isHome() && ( $this->getType() == 30)) ;
+		}
+		return false;
+	}
+
+	/**
+	 * Liefert true wenn die Aktion eine Ein- oder Auswechslung ist
+	 * @return boolean
+	 */
+	public function isChange() {
+		return $this->getType() == '80' || $this->getType() == '81';
+	}
 }
 

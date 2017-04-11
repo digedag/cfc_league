@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2007-2009 Rene Nitzsche (rene@system25.de)
+*  (c) 2007-2017 Rene Nitzsche (rene@system25.de)
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -77,22 +77,7 @@ class tx_cfcleague_models_Team extends Tx_Rnbase_Domain_Model_Base {
 	public function getClubUid() {
 		return $this->getProperty('club');
 	}
-// 	/**
-// 	 * Returns an instance of tx_cfcleague_models_Team
-// 	 * @param int $uid
-// 	 * @return tx_cfcleague_models_Team or null
-// 	 */
-// 	public static function &getInstance($uid, $record = 0) {
-// 		$uid = intval($uid);
-// 		if(!array_key_exists($uid, self::$instances)) {
-// 			$item = new tx_cfcleague_models_Team(is_array($record) ? $record : $uid);
-// 			self::$instances[$uid] = $item->isValid() ? $item : null;
-// 		}
-// 		return self::$instances[$uid];
-// 	}
-// 	public static function addInstance($team) {
-// 		self::$instances[$team->uid] = $team;
-// 	}
+
 	/**
 	 * Check if team is a dummy for free_of_match.
 	 * @return boolean
@@ -152,14 +137,16 @@ class tx_cfcleague_models_Team extends Tx_Rnbase_Domain_Model_Base {
 	 */
 	private function sortProfiles($profiles, $recordKey = 'players') {
 		$ret = array();
+
 		if(strlen(trim($this->getProperty($recordKey))) > 0 ) {
 			if(count($profiles)) {
 				// Jetzt die Spieler in die richtige Reihenfolge bringen
 				$uids = Tx_Rnbase_Utility_Strings::intExplode(',', $this->getProperty($recordKey));
 				$uids = array_flip($uids);
 				foreach($profiles as $player) {
-					$ret[$uids[$player->uid]] = $player;
+					$ret[(int)$uids[$player->getUid()]] = $player;
 				}
+				ksort($ret);
 			}
 		}
 		else {
@@ -170,9 +157,3 @@ class tx_cfcleague_models_Team extends Tx_Rnbase_Domain_Model_Base {
 	}
 
 }
-
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/models/class.tx_cfcleague_models_Team.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/models/class.tx_cfcleague_models_Team.php']);
-}
-
-?>

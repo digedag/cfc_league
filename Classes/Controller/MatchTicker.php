@@ -392,7 +392,6 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc {
 		else {
 			$players = $profileSrv->loadProfiles($match->getPlayersGuest(true));
 		}
-
 		$this->playerNames = [ $team => [] ];
 		foreach ($players As $player) {
 			$this->playerNames[$team][$player->getUid()] = $player->getName(true);
@@ -430,10 +429,12 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc {
 		foreach ($players As $player) {
 			$playersHome[$player->getUid()] = $player->getName(TRUE);
 		}
+		asort($playersHome);
 		$players = tx_cfcleague_util_ServiceRegistry::getProfileService()->loadProfiles($match->getPlayersGuest(true));
 		foreach ($players As $player) {
 			$playersGuest[$player->getUid()] = $player->getName(TRUE);
 		}
+		asort($playersGuest);
 		// Jetzt noch den Dummy-Player anhängen
 		$playersHome[-1] = $playersGuest[-1] = $LANG->getLL('tx_cfcleague.unknown');
 

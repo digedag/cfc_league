@@ -131,7 +131,7 @@ $tx_cfcleague_profiles = Array (
 				'checkbox' => '0',
 				'range' => Array (
 					'upper' => '1000',
-					'lower' => '10'
+					'lower' => '0'
 				),
 				'default' => 0
 			)
@@ -147,7 +147,7 @@ $tx_cfcleague_profiles = Array (
 				'checkbox' => '0',
 				'range' => Array (
 					'upper' => '1000',
-					'lower' => '10'
+					'lower' => '0'
 				),
 				'default' => 0
 			)
