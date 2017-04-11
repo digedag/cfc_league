@@ -368,14 +368,14 @@ class Tx_Cfcleague_Controller_Profile extends tx_rnbase_mod_BaseModFunc {
 
 	function createSearchForm(&$data) {
 		global $LANG;
-		$out = '';
+		$out = '<div class="form-inline">';
 		$out .= $LANG->getLL('label_searchterm').': ';
-		$out .= $this->formTool->createTxtInput('data[searchterm]', $this->SEARCH_SETTINGS['searchterm'], 20);
+		$out .= $this->formTool->createTxtInput('data[searchterm]', $this->SEARCH_SETTINGS['searchterm'], 20, array('class' => 'form-control input-sm'));
 		// Den Update-Button einfügen
 		$out .= $this->formTool->createSubmit('search', $LANG->getLL('btn_search'));
 		// Jetzt noch zusätzlichen JavaScriptcode für Buttons auf der Seite
 		$out .= $this->formTool->getJSCode($this->getModule()->getPid());
-
+        $out .= "</div>";
 		return $out;
 	}
 

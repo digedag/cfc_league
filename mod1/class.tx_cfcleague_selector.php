@@ -129,7 +129,7 @@ class tx_cfcleague_selector{
 		return '
                 <div class="cfcselector"><div class="selector col-md-2">
 				<!-- Function Menu of module -->
-                    <select class="form-control" name="' . $elementName . '" >
+                    <select class="form-control input-sm" name="' . $elementName . '" >
                         ' . implode('
                         ', $options) . '
                     </select>
