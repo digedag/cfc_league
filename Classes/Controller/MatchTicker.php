@@ -116,7 +116,9 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc {
 		$arr = $this->createTickerArray($match, Tx_Rnbase_Utility_T3General::_GP('showAll'));
 		if($arr) {
 			$tickerContent = $formTool->createLink('&showAll=1', $this->getModule()->getPid(), $LANG->getLL('label_showAllTickers'));
-			$tickerContent .= $this->doc->table($arr);
+            $tableLayout = $this->_getTableLayoutForm();
+            $tableLayout['defRowEven']['defCol'] = $tableLayout['defRowOdd']['defCol'];//Array('<td valign="top" style="padding:5px 5px;">', '</td>');
+			$tickerContent .= $this->doc->table($arr, $tableLayout);
 		}
 		else
 			$tickerContent .= $LANG->getLL('msg_NoTicker');
