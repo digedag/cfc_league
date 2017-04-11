@@ -50,8 +50,21 @@ class tx_cfcleague_util_Misc {
 		if(!is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['matchnotetypes']))
 			$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['matchnotetypes'] = array();
 		$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['matchnotetypes'][] = array($label, $typeId);
-//$GLOBALS ['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['matchnotetypes'] = array(
-//			Array('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_match_notes.type.ticker', '100'),
+	}
+	/**
+	 * De-Register a matchnote.
+	 * @param mixed $typeId
+	 */
+	public static function removeMatchNote($typeId) {
+		if(!is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['matchnotetypes']))
+			return;
+		foreach ($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['matchnotetypes'] As $idx => $note) {
+			list(, $type) = $note;
+			if($type === $typeId) {
+				unset($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['matchnotetypes'][$idx]);
+				break;
+			}
+		}
 	}
 	/**
 	 * Register a new match formation.

@@ -5,6 +5,7 @@ if (!defined ('TYPO3_MODE')) 	die ('Access denied.');
 if (TYPO3_MODE == 'BE') {
        include_once(tx_rnbase_util_Extensions::extPath($_EXTKEY).'class.tx_cfcleague.php');
 }
+tx_rnbase::load('tx_cfcleague_tca_Lookup');
 
 if(!tx_rnbase_util_TYPO3::isTYPO62OrHigher()) {
 	// TCA registration for 4.5

@@ -340,6 +340,7 @@ class tx_cfcleague_models_Competition extends tx_rnbase_model_base {
 	public function getTeams($ignoreDummies = true) {
 		if(!is_array($this->teams)) {
 			$uids = $this->getProperty('teams');
+			if(!$uids) return array();
 			$options['where'] = 'uid IN (' . $uids .') ';
 			if($ignoreDummies)
 				$options['where'] .= ' AND dummy = 0  ';
