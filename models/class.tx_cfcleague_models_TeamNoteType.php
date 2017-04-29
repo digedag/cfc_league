@@ -62,7 +62,7 @@ class tx_cfcleague_models_TeamNoteType extends tx_rnbase_model_base {
    * @param int $uid
    * @return tx_cfcleague_models_TeamNoteType
    */
-  static public function getInstance($uid) {
+  static public function getInstance($uid = NULL) {
   	self::_init();
   	return self::$instances[$uid];
   }
