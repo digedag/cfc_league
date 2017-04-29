@@ -104,7 +104,7 @@ class tx_cfcleague_models_Stadium extends tx_rnbase_model_base {
 	 * @param int $uid
 	 * @return tx_netfewo_models_Objekt
 	 */
-	static function getInstance($uid) {
+	static function getInstance($uid = NULL) {
 		$uid = intval($uid);
 		if(!$uid) throw new Exception('No uid for '.self::getTableName().' given!');
 		if(!is_object(self::$instances[$uid])) {

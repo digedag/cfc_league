@@ -260,8 +260,8 @@ CREATE TABLE tx_cfcleague_games (
 	visitors int(11) DEFAULT '0' NOT NULL,
 
 	dam_images int(11) DEFAULT '0' NOT NULL,
-	dam_media int(11) DEFAULT '0' NOT NULL
-	dam_media2 int(11) DEFAULT '0' NOT NULL
+	dam_media int(11) DEFAULT '0' NOT NULL,
+	dam_media2 int(11) DEFAULT '0' NOT NULL,
 	t3images text NOT NULL,
 
 	video text NOT NULL,
