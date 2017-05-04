@@ -15,6 +15,9 @@ $tx_cfcleague_saison = Array (
 		'enablecolumns' => Array (
 			'disabled' => 'hidden',
 		),
+        'typeicon_classes' => [
+            'default' => 'ext-cfcleague-saison-default'
+        ],
 		'iconfile' => tx_rnbase_util_Extensions::extRelPath('cfc_league').'Resources/Public/Icons/icon_tx_cfcleague_saison.gif',
 	),
 	'interface' => Array (

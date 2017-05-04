@@ -62,6 +62,9 @@ $tx_cfcleague_stadiums = Array (
 		'delete' => 'deleted',
 		'enablecolumns' => Array (
 		),
+        'typeicon_classes' => [
+            'default' => 'ext-cfcleague-statiums-default'
+        ],
 		'iconfile' => tx_rnbase_util_Extensions::extRelPath('cfc_league').'Resources/Public/Icons/icon_table.gif',
 	),
 	'interface' => Array (

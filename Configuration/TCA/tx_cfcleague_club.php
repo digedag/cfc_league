@@ -32,6 +32,9 @@ $tx_cfcleague_club = Array (
 		'enablecolumns' => Array (
 			'disabled' => 'hidden',
 		),
+        'typeicon_classes' => [
+            'default' => 'ext-cfcleague-clubs-default'
+        ],
 		'iconfile' => tx_rnbase_util_Extensions::extRelPath('cfc_league').'Resources/Public/Icons/icon_tx_cfcleague_clubs.gif',
 	),
 	'interface' => Array (

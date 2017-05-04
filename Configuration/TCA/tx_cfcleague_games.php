@@ -28,6 +28,9 @@ $tx_cfcleague_games = Array (
 		'enablecolumns' => Array (
 			'disabled' => 'hidden',
 		),
+        'typeicon_classes' => [
+            'default' => 'ext-cfcleague-games-default'
+        ],
 		'iconfile' => tx_rnbase_util_Extensions::extRelPath('cfc_league').'Resources/Public/Icons/icon_table.gif',
 	),
 	'interface' => Array (
