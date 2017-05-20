@@ -73,6 +73,9 @@ class tx_cfcleague_handleDataInput
      */
     public function findTeams($competition, $complete_row = '0')
     {
+        if (is_array($competition)) {
+            $competition = reset($competition);
+        }
         // build SQL for select
         $what = 'uid,name';
         $from = 'tx_cfcleague_teams';
