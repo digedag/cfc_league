@@ -43,12 +43,12 @@ class tx_cfcleague_models_Stadium extends tx_rnbase_model_base
      */
     public function getName()
     {
-        return $this->record['name'];
+        return $this->getProperty('name');
     }
 
     public function getCountryCode()
     {
-        return $this->record['countrycode'];
+        return $this->getProperty('countrycode');
     }
 
     /**
@@ -58,7 +58,7 @@ class tx_cfcleague_models_Stadium extends tx_rnbase_model_base
      */
     public function getCity()
     {
-        return $this->record['city'];
+        return $this->getProperty('city');
     }
 
     /**
@@ -68,7 +68,7 @@ class tx_cfcleague_models_Stadium extends tx_rnbase_model_base
      */
     public function getZip()
     {
-        return $this->record['zip'];
+        return $this->getProperty('zip');
     }
 
     /**
@@ -78,17 +78,17 @@ class tx_cfcleague_models_Stadium extends tx_rnbase_model_base
      */
     public function getStreet()
     {
-        return $this->record['street'];
+        return $this->getProperty('street');
     }
 
     public function getLongitute()
     {
-        return floatval($this->record['lng']);
+        return floatval($this->getProperty('lng'));
     }
 
     public function getLatitute()
     {
-        return floatval($this->record['lat']);
+        return floatval($this->getProperty('lat'));
     }
 
     /**
@@ -114,9 +114,9 @@ class tx_cfcleague_models_Stadium extends tx_rnbase_model_base
      */
     public function getAddress()
     {
-        if (! $this->record['address'])
+        if (! $this->getProperty('address'))
             return null;
-        $address = tx_rnbase::makeInstance('tx_cfcleague_models_Address', $this->record['address']);
+        $address = tx_rnbase::makeInstance('tx_cfcleague_models_Address', $this->getProperty('address'));
         return $address->isValid() ? $address : null;
     }
 
@@ -126,9 +126,9 @@ class tx_cfcleague_models_Stadium extends tx_rnbase_model_base
      * bei zwei Anfragen für die selbe UID nur ein DB Zugriff erfolgt.
      *
      * @param int $uid
-     * @return tx_netfewo_models_Objekt
+     * @return tx_cfcleague_models_Stadium
      */
-    static function getInstance($uid = NULL)
+    static function getStadiumInstance($uid = NULL)
     {
         $uid = intval($uid);
         if (! $uid)
@@ -143,12 +143,13 @@ class tx_cfcleague_models_Stadium extends tx_rnbase_model_base
      * Returns the url of the first stadium logo.
      *
      * @return string
+     * @deprecated use Typoscript
      */
     public function getLogoPath()
     {
         if (tx_rnbase_util_Extensions::isLoaded('dam')) {
-            if ($this->record['logo']) {
-                $damPics = tx_dam_db::getReferencedFiles('tx_cfcleague_stadiums', $this->uid, 'logo');
+            if ($this->getProperty('logo')) {
+                $damPics = tx_dam_db::getReferencedFiles('tx_cfcleague_stadiums', $this->getUid(), 'logo');
                 if (list ($uid, $filePath) = each($damPics['files'])) {
                     return $filePath;
                 }
