@@ -21,6 +21,9 @@ $tx_cfcleague_group = Array (
 			'starttime' => 'starttime',
 			'fe_group' => 'fe_group',
 		),
+        'typeicon_classes' => [
+            'default' => 'ext-cfcleague-group-default'
+        ],
 		'iconfile' => tx_rnbase_util_Extensions::extRelPath('cfc_league').'Resources/Public/Icons/icon_tx_cfcleague_group.gif',
 	),
 	'interface' => Array (

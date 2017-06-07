@@ -22,6 +22,9 @@ $tx_cfcleague_match_notes = Array (
 		'enablecolumns' => Array (
 			'disabled' => 'hidden',
 		),
+        'typeicon_classes' => [
+            'default' => 'ext-cfcleague-matchnotes-default'
+        ],
 		'iconfile' => tx_rnbase_util_Extensions::extRelPath('cfc_league').'Resources/Public/Icons/icon_table.gif',
 	),
 	'interface' => Array (
