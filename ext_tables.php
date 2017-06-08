@@ -25,6 +25,7 @@ if(!tx_rnbase_util_TYPO3::isTYPO62OrHigher()) {
 
 
 tx_rnbase_util_Extensions::addLLrefForTCAdescr('tx_cfcleague_competition', 'EXT:cfc_league/Resources/Private/Language/locallang_csh_competition.php');
+tx_rnbase_util_Extensions::addLLrefForTCAdescr('tx_cfcleague_competition_penalty', 'EXT:cfc_league/Resources/Private/Language/locallang_csh_competition_penalty.xml');
 tx_rnbase_util_Extensions::addLLrefForTCAdescr('tx_cfcleague_profiles', 'EXT:cfc_league/Resources/Private/Language/locallang_csh_profiles.php');
 tx_rnbase_util_Extensions::addLLrefForTCAdescr('tx_cfcleague_club', 'EXT:cfc_league/Resources/Private/Language/locallang_csh_club.php');
 tx_rnbase_util_Extensions::addLLrefForTCAdescr('tx_cfcleague_games', 'EXT:cfc_league/Resources/Private/Language/locallang_csh_games.php');
@@ -75,7 +76,28 @@ if (TYPO3_MODE=='BE')	{
 	tx_rnbase::load('tx_rnbase_util_TYPO3');
 	// add folder icon
 	if(tx_rnbase_util_TYPO3::isTYPO76OrHigher()) {
-		// TODO...
+        $iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
+        $icons = [
+            'ext-cfcleague-clubs-default' => 'icon_tx_cfcleague_clubs.gif',
+            'ext-cfcleague-competition-default' => 'icon_tx_cfcleague_competition.gif',
+            'ext-cfcleague-competition-penalty-default' => 'icon_tx_cfcleague_competition_penalty.gif',
+            'ext-cfcleague-games-default' => 'icon_table.gif',
+            'ext-cfcleague-group-default' => 'icon_tx_cfcleague_group.gif',
+            'ext-cfcleague-matchnotes-default' => 'icon_table.gif',
+            'ext-cfcleague-notetypes-default' => 'icon_table.gif',
+            'ext-cfcleague-profiles-default' => 'icon_tx_cfcleague_profiles.gif',
+            'ext-cfcleague-saison-default' => 'icon_tx_cfcleague_saison.gif',
+            'ext-cfcleague-statiums-default' => 'icon_table.gif',
+            'ext-cfcleague-teamnotes-default' => 'icon_tx_cfcleague_teams.gif',
+            'ext-cfcleague-teams-default' => 'icon_tx_cfcleague_teams.gif',
+         ];
+        foreach ($icons as $identifier => $path) {
+            $iconRegistry->registerIcon(
+                $identifier,
+                \TYPO3\CMS\Core\Imaging\IconProvider\BitmapIconProvider::class,
+                ['source' => 'EXT:cfc_league/Resources/Public/Icons/' . $path]
+            );
+        }
 	}
 	elseif(tx_rnbase_util_TYPO3::isTYPO3VersionOrHigher(4004000)) {
 		t3lib_SpriteManager::addTcaTypeIcon('pages', 'contains-cfcleague', '../typo3conf/ext/cfc_league/ext_icon_cfcleague_folder.gif');

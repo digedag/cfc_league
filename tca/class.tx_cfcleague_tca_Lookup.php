@@ -61,9 +61,9 @@ class tx_cfcleague_tca_Lookup {
 	 * @return array
 	 */
 	public function getSportsTypes(&$config) {
-		tx_rnbase::load('tx_cfcleague_util_ServiceRegistry');
-		$srv = tx_cfcleague_util_ServiceRegistry::getCompetitionService();
-		$config['items'] = $srv->getSports4TCA();
+	    tx_rnbase::load('tx_cfcleague_util_ServiceRegistry');
+	    $srv = tx_cfcleague_util_ServiceRegistry::getCompetitionService();
+	    $config['items'] = $srv->getSports4TCA();
 	}
 	/**
 	 * Liefert die möglichen Spielsysteme.

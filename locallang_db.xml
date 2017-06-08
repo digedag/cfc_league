@@ -291,7 +291,7 @@
 			<label index="tx_cfcleague_competition_penalty.goals_neg">Strafe Gegentore</label>
 			<label index="tx_cfcleague_competition_penalty.points_pos">Punktabzug</label>
 			<label index="tx_cfcleague_competition_penalty.points_neg">Punktabzug negativ</label>
-			<label index="tx_cfcleague_competition_penalty.static_position">Zwangsabstieg</label>
+			<label index="tx_cfcleague_competition_penalty.static_position">Feste Position</label>
 			<label index="tx_cfcleague_competition_penalty.correction">Tabellenkorrektur, keine Strafe</label>
 			<label index="tx_cfcleague_club">Verein</label>
 			<label index="tx_cfcleague_club.name">Name</label>

@@ -18,6 +18,9 @@ $tx_cfcleague_competition_penalty = Array (
 		'enablecolumns' => Array (
 				'disabled' => 'hidden',
 		),
+        'typeicon_classes' => [
+            'default' => 'ext-cfcleague-competition-penalty-default'
+        ],
 		'iconfile' => tx_rnbase_util_Extensions::extRelPath('cfc_league').'Resources/Public/Icons/icon_tx_cfcleague_competition_penalty.gif',
 	),
 	'interface' => Array (
@@ -228,8 +231,15 @@ $tx_cfcleague_competition_penalty = Array (
 			'exclude' => 0,
 			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition_penalty.static_position',
 			'config' => Array (
-				'type' => 'check',
-				'default' => 0
+				'type' => 'input',
+			    'size' => '4',
+			    'max' => '4',
+			    'eval' => 'int',
+			    'range' => Array (
+			        'upper' => '100',
+			        'lower' => '-1'
+			    ),
+			    'default' => 0
 			)
 		),
 		'correction' => Array (
