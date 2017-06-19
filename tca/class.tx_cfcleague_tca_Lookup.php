@@ -214,20 +214,24 @@ class tx_cfcleague_tca_Lookup {
 		$item = $tceforms->getSingleField_typeSelect($table, $field, $row, $PA);
 		if($row['logo']) {
 			if(tx_rnbase_util_TYPO3::isTYPO60OrHigher()) {
-				// Im Logo wird die UID der Referenz zwischen Verein und dem Logo gespeichert
-				// Damit können die zusätzlichen Metadaten der Referenz genutzt werden
-				$fileObject = tx_rnbase_util_TSFAL::getFileReferenceById($row['logo']);
-				tx_rnbase::load('tx_rnbase_util_TSFAL');
-				$thumbs = tx_rnbase_util_TSFAL::createThumbnails(array($fileObject));
 				$item = '<table cellspacing="0" cellpadding="0" border="0">
-								<tr><td style="padding-bottom:1em" colspan="2">'.$item.'</td></tr>
-								<tr><td>'.$thumbs[0].'</td>
+								<tr><td style="padding-bottom:1em" colspan="2">'.$item.'</td></tr>';
+				try {
+					// Im Logo wird die UID der Referenz zwischen Verein und dem Logo gespeichert
+					// Damit können die zusätzlichen Metadaten der Referenz genutzt werden
+					$fileObject = tx_rnbase_util_TSFAL::getFileReferenceById($row['logo']);
+					tx_rnbase::load('tx_rnbase_util_TSFAL');
+					$thumbs = tx_rnbase_util_TSFAL::createThumbnails(array($fileObject));
+					$item .= '<tr><td>'.$thumbs[0].'</td>
 										<td style="padding-left:1em"><table cellspacing="0" cellpadding="0" border="0">
 										<tr><td style="padding-right:1em">Filename: </td><td>'.$fileObject->getProperty('identifier').'</td></tr>
 										<tr><td style="padding-right:1em">Size: </td><td>'. \TYPO3\CMS\Core\Utility\GeneralUtility::formatSize($fileObject->getProperty('size')).'</td></tr>
 										<tr><td style="padding-right:1em">Dimension: </td><td>'. $fileObject->getProperty('width') .'x'. $fileObject->getProperty('height').' px</td></tr>
-									</table></td></tr></table>';
-//				$item .= ''.$thumbs[0];
+									</table></td></tr>';
+				} catch (Exception $e) {
+					$item .= sprintf('<tr><td>Error rendering file with uid "%d"</td></tr>', $row['logo']);
+				}
+				$item .= '</table>';
 			}
 			else {
 				// Logo anzeigen
