@@ -24,7 +24,7 @@
 
 tx_rnbase::load('Tx_Rnbase_Database_Connection');
 tx_rnbase::load('Tx_Rnbase_Utility_Strings');
-tx_rnbase::load('Tx_Rnbase_Service_Base');
+tx_rnbase::load('tx_cfcleague_services_Base');
 
 
 
@@ -34,7 +34,7 @@ tx_rnbase::load('Tx_Rnbase_Service_Base');
  *
  * @author Rene Nitzsche
  */
-class tx_cfcleague_services_Profiles extends Tx_Rnbase_Service_Base {
+class tx_cfcleague_services_Profiles extends tx_cfcleague_services_Base {
 	private $profiles = array();
 
 	/**

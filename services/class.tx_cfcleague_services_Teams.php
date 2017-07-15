@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2009-2014 Rene Nitzsche (rene@system25.de)
+*  (c) 2009-2017 Rene Nitzsche (rene@system25.de)
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -24,7 +24,7 @@
 
 tx_rnbase::load('tx_rnbase_util_SearchBase');
 tx_rnbase::load('tx_cfcleague_search_Builder');
-tx_rnbase::load('Tx_Rnbase_Service_Base');
+tx_rnbase::load('tx_cfcleague_services_Base');
 
 
 /**
@@ -32,7 +32,7 @@ tx_rnbase::load('Tx_Rnbase_Service_Base');
  *
  * @author Rene Nitzsche
  */
-class tx_cfcleague_services_Teams extends Tx_Rnbase_Service_Base {
+class tx_cfcleague_services_Teams extends tx_cfcleague_services_Base {
 
 	/**
 	 * Returns all stadiums for a team.
