@@ -37,37 +37,55 @@ if(tx_rnbase_util_Extensions::isLoaded('rgmediaimages')) {
 
 if (TYPO3_MODE=='BE')	{
 
-  tx_rnbase_util_Extensions::addModule(
-  	'web',
-  	'txcfcleagueM1',
-  	'',
-  	tx_rnbase_util_Extensions::extPath($_EXTKEY).'mod1/',
-  	array(
-  		'labels' => array(
-	  		'tabs_images' => array(
-	  				'tab' => 'EXT:cfc_league/Resources/Public/Icons/module-t3sports.svg',
-	  		),
-  		),
-  	)
-  );
-
-  tx_rnbase_util_Extensions::insertModuleFunction('web_txcfcleagueM1', 'Tx_Cfcleague_Controller_Competition',
+    $modName = 'web_txcfcleagueM1';
+    if (tx_rnbase_util_TYPO3::isTYPO60OrHigher()) {
+        $modName = 'web_CfcLeagueM1';
+        tx_rnbase::load('tx_cfcleague_mod1_Module');
+        tx_rnbase_util_Extensions::registerModule(
+            'cfc_league',
+            'web',
+            'M1',
+            'bottom',
+            array(),
+            array(
+                'access' => 'user,group',
+                'routeTarget' => 'tx_cfcleague_mod1_Module',
+                'icon' => 'EXT:cfc_league/mod1/moduleicon.gif',
+                'labels' => 'LLL:EXT:cfc_league/mod1/locallang_mod.xml',
+            )
+        );
+    } else {
+        tx_rnbase_util_Extensions::addModule(
+            'web',
+            'txcfcleagueM1',
+            '',
+            tx_rnbase_util_Extensions::extPath($_EXTKEY).'mod1/',
+            array(
+            	'labels' => array(
+              		'tabs_images' => array(
+              				'tab' => 'EXT:cfc_league/Resources/Public/Icons/module-t3sports.svg',
+              		),
+            	),
+            )
+        );
+    }
+  tx_rnbase_util_Extensions::insertModuleFunction($modName, 'Tx_Cfcleague_Controller_Competition',
 		tx_rnbase_util_Extensions::extPath($_EXTKEY).'Classes/Controller/Competition.php',
 		'LLL:EXT:cfc_league/mod1/locallang.xml:mod_competition'
 	);
-  tx_rnbase_util_Extensions::insertModuleFunction('web_txcfcleagueM1', 'Tx_Cfcleague_Controller_MatchTicker',
+  tx_rnbase_util_Extensions::insertModuleFunction($modName, 'Tx_Cfcleague_Controller_MatchTicker',
 		tx_rnbase_util_Extensions::extPath($_EXTKEY).'Classes/Controller/MatchTicker.php',
 		'LLL:EXT:cfc_league/mod1/locallang.xml:match_ticker'
 	);
-  tx_rnbase_util_Extensions::insertModuleFunction('web_txcfcleagueM1', 'Tx_Cfcleague_Controller_Team',
+  tx_rnbase_util_Extensions::insertModuleFunction($modName, 'Tx_Cfcleague_Controller_Team',
 		tx_rnbase_util_Extensions::extPath($_EXTKEY).'Classes/Controller/Team.php',
 		'LLL:EXT:cfc_league/mod1/locallang.xml:mod_team'
 	);
-  tx_rnbase_util_Extensions::insertModuleFunction('web_txcfcleagueM1', 'Tx_Cfcleague_Controller_Club',
+  tx_rnbase_util_Extensions::insertModuleFunction($modName, 'Tx_Cfcleague_Controller_Club',
 		tx_rnbase_util_Extensions::extPath($_EXTKEY).'Classes/Controller/Club.php',
 		'LLL:EXT:cfc_league/mod1/locallang.xml:mod_club'
 	);
-	tx_rnbase_util_Extensions::insertModuleFunction('web_txcfcleagueM1', 'Tx_Cfcleague_Controller_Profile',
+	tx_rnbase_util_Extensions::insertModuleFunction($modName, 'Tx_Cfcleague_Controller_Profile',
 		tx_rnbase_util_Extensions::extPath($_EXTKEY).'Classes/Controller/Profile.php',
 		'LLL:EXT:cfc_league/mod1/locallang.xml:search_profiles'
 	);
