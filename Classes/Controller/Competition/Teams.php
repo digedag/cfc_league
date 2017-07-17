@@ -141,7 +141,9 @@ class Tx_Cfcleague_Controller_Competition_Teams {
 			$row[] = $this->getFormTool()->createTxtInput('data[tx_cfcleague_teams][NEW'.$i.'][short_name]', '', 10);
 			$arr[] = $row;
 		}
-		$content .= $this->doc->table($arr, $this->getTableLayout());
+		/* @var $tables Tx_Rnbase_Backend_Utility_Tables */
+		$tables = tx_rnbase::makeInstance('Tx_Rnbase_Backend_Utility_Tables');
+		$content .= $tables->buildTable($arr, $this->getTableLayout());
 		$content .= $this->getFormTool()->createSubmit('update', $LANG->getLL('btn_create'), $GLOBALS['LANG']->getLL('msg_create_teams'));
 		return $content;
 	}

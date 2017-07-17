@@ -63,7 +63,7 @@
 
 			<label index="search_profiles">Search profiles</label>
 			<label index="match_ticker">Match ticker/Statistics</label>
-			<label index="no_league_in_page">No compatitions found on current page.</label>
+			<label index="no_league_in_page">No competitions found on current page.</label>
 			<label index="no_round_in_league">This Competition containes no matches.</label>
 			<label index="btn_update_msgEditGames">Save changes?</label>
 			<label index="btn_update">Update</label>

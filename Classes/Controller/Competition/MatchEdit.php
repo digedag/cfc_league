@@ -47,7 +47,7 @@ class Tx_Cfcleague_Controller_Competition_MatchEdit {
 		if(tx_rnbase_util_TYPO3::isTYPO70OrHigher()) {
 			/* @var $moduleTemplate \TYPO3\CMS\Backend\Template\ModuleTemplate */
 			$moduleTemplate = tx_rnbase::makeInstance(TYPO3\CMS\Backend\Template\ModuleTemplate::class);
-			$moduleTemplate->getPageRenderer()->setBackPath('./'); // ??
+//			$moduleTemplate->getPageRenderer()->setBackPath('./'); // ??
 			$moduleTemplate->getPageRenderer()->loadJquery();
 		}
 
@@ -57,7 +57,7 @@ class Tx_Cfcleague_Controller_Competition_MatchEdit {
 
 		// Zuerst mal müssen wir die passende Liga auswählen lassen:
 		$content = '';
-		$content .= $module->getDoc()->spacer(5);
+//		$content .= $module->getDoc()->spacer(5);
 
 		if(!count($current_league->getRounds())){
 			$content .= $LANG->getLL('no_round_in_league');
