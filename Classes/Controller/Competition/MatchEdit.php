@@ -57,7 +57,6 @@ class Tx_Cfcleague_Controller_Competition_MatchEdit {
 
 		// Zuerst mal müssen wir die passende Liga auswählen lassen:
 		$content = '';
-//		$content .= $module->getDoc()->spacer(5);
 
 		if(!count($current_league->getRounds())){
 			$content .= $LANG->getLL('no_round_in_league');

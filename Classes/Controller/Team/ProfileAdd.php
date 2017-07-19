@@ -77,7 +77,9 @@ class Tx_Cfcleague_Controller_Team_ProfileAdd {
 	 */
 	protected function showAddProfiles($currTeam, $teamInfo) {
 
-		$options['checkbox'] = 1;
+		$options = [
+		    'checkbox' => 1
+		];
 
 		// Todo: wir müssen wissen, welche Teil des Teams selectiert ist
 		$profiles = $currTeam->getPlayers();
@@ -87,7 +89,6 @@ class Tx_Cfcleague_Controller_Team_ProfileAdd {
 
 		$searcher = $this->getProfileSearcher($options);
 		$tableForm = '<div style="margin-top:10px">'.$searcher->getSearchForm().'</div>';
-		$tableForm .= $this->mod->getDoc()->spacer(15);
 		$tableForm.= $searcher->getResultList();
 		if($searcher->getSize()) {
 			$tableForm .= $this->getFormTool()->createSelectByArray('profileType', '', Tx_Cfcleague_Controller_Team_ProfileCreate::getProfileTypeArray());
@@ -106,7 +107,8 @@ class Tx_Cfcleague_Controller_Team_ProfileAdd {
 			),
 		);
 
-		$content = $this->mod->getDoc()->table(Array(Array($tableForm, $teamTable)), $tableLayout);
+ 		$tables = tx_rnbase::makeInstance('Tx_Rnbase_Backend_Utility_Tables');
+ 		$content = $tables->buildTable([[$tableForm, $teamTable]], $tableLayout);
 
 		return $content;
 	}
@@ -130,9 +132,9 @@ class Tx_Cfcleague_Controller_Team_ProfileAdd {
 		$row[] = $this->getFormTool()->createSubmit('newprofile2team', $GLOBALS['LANG']->getLL('btn_create'), $GLOBALS['LANG']->getLL('msg_CreateProfiles')).
 			$this->getFormTool()->createHidden('data[tx_cfcleague_profiles][NEW'.$i.'][pid]', $this->mod->getPid());
 		$arr[] = $row;
-		$formTable = $this->mod->getDoc()->table($arr);
+		$tables = tx_rnbase::makeInstance('Tx_Rnbase_Backend_Utility_Tables');
+		$formTable = $tables->buildTable($arr);
 
-		$out = $this->mod->getDoc()->spacer(10);
 		$out .= $this->mod->getDoc()->section($LANG->getLL('label_create_profile4team'), $formTable, 0, 1);
 		return $out;
 	}

@@ -70,7 +70,6 @@ class Tx_Cfcleague_Controller_Profile extends tx_rnbase_mod_BaseModFunc {
 		$this->SEARCH_SETTINGS = Tx_Rnbase_Backend_Utility::getModuleData(array ('searchterm' => ''), $data, $this->getModule()->getName() );
 
 		$content .= $this->doc->section($LANG->getLL('msg_search_person'), $this->createSearchForm($data), 0, 1);
-		$content .= $this->doc->spacer(5);
 
 		// Haben wir Daten im Request?
 		if (is_array($data)) {
@@ -351,22 +350,17 @@ class Tx_Cfcleague_Controller_Profile extends tx_rnbase_mod_BaseModFunc {
 				$arr[] = $row;
 			}
 
-			$tableLayout = $this->doc->tableLayout;
-			$tableLayout['defRow']['defCol'] = Array('<td style="vertical-align:top;padding:5px 0;">', '</td>');
-			$tableLayout['defRowEven']['defCol'] = Array((tx_rnbase_util_TYPO3::isTYPO42OrHigher() ?
-										'<td style="vertical-align:top;padding:5px 0;">' :
-										'<td style="vertical-align:top; padding:5px 0;" class="db_list_alt">'), '</td>');
-
-			$out .= $this->doc->table($arr, $tableLayout);
+			$tables = tx_rnbase::makeInstance('Tx_Rnbase_Backend_Utility_Tables');
+			$out .= $tables->buildTable($arr);
 			if(count($arr)) {
 				// Button für Merge einbauen
-				$out .= $this->formTool->createSubmit('data[merge_profiles]', $LANG->getLL('label_merge'));
+				$out .= $this->getModule()->getFormTool()->createSubmit('data[merge_profiles]', $LANG->getLL('label_merge'));
 			}
 		}
 		return $out;
 	}
 
-	function createSearchForm(&$data) {
+	protected function createSearchForm(&$data) {
 		global $LANG;
 		$out = '<div class="form-inline">';
 		$out .= $LANG->getLL('label_searchterm').': ';

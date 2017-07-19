@@ -100,7 +100,9 @@ class Tx_Cfcleague_Controller_Team_TeamNotes {
 			'mediatype' => array('decorator' => $decor, 'title' => 'tx_cfcleague_team_notes.mediatype'),
 		);
 		$rows = tx_cfcleague_mod1_decorator::prepareTable($notes, $columns, $this->getFormTool(), $options);
-		$out .= $this->mod->getDoc()->table($rows[0]);
+
+		$tables = tx_rnbase::makeInstance('Tx_Rnbase_Backend_Utility_Tables');
+		$out .= $tables->buildTable($rows[0]);
 
 		// We use the mediatype from first entry
 		if(count($notes))

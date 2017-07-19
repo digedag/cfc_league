@@ -174,9 +174,9 @@ class tx_cfcleague_mod1_searcher_Stadium
         if ($items) {
             $tables = tx_rnbase::makeInstance('Tx_Rnbase_Backend_Utility_Tables');
             $arr = $tables->prepareTable($items, $columns, $this->getModule()->getFormTool(), $this->options);
-            $out = $this->getModule()
-                ->getDoc()
-                ->table($arr[0]);
+
+            $tables = tx_rnbase::makeInstance('Tx_Rnbase_Backend_Utility_Tables');
+            $out = $tables->buildTable($arr[0]);
         } else {
             $out = '<p><strong>###LABEL_MSG_NOSTADIUMSFOUND###</strong></p><br/>';
         }
