@@ -143,7 +143,7 @@ class tx_cfcleague_services_Profiles extends tx_cfcleague_services_Base
      */
     function getTeamsNotes4Profile($profileUID)
     {
-        $options = [ 'player = ' . $profileUID ];
+        $options = ['where' => 'player = ' . $profileUID];
         return Tx_Rnbase_Database_Connection::getInstance()->doSelect('*', 'tx_cfcleague_team_notes', $options);
     }
 
@@ -210,4 +210,3 @@ class tx_cfcleague_services_Profiles extends tx_cfcleague_services_Base
         return $searcher->search($fields, $options);
     }
 }
-
