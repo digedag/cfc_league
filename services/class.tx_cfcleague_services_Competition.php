@@ -22,6 +22,7 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 tx_rnbase::load('Tx_Rnbase_Service_Base');
+tx_rnbase::load('tx_rnbase_util_SearchBase');
 
 /**
  * Service for accessing competitions
@@ -84,7 +85,6 @@ class tx_cfcleague_services_Competition extends Tx_Rnbase_Service_Base
      */
     public function search($fields, $options)
     {
-        tx_rnbase::load('tx_rnbase_util_SearchBase');
         $searcher = tx_rnbase_util_SearchBase::getInstance('tx_cfcleague_search_Competition');
         return $searcher->search($fields, $options);
     }
@@ -156,8 +156,4 @@ class tx_cfcleague_services_Competition extends Tx_Rnbase_Service_Base
             )
         ));
     }
-}
-
-if (defined('TYPO3_MODE') && $GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/cfc_league/services/class.tx_cfcleague_services_Competition.php']) {
-    include_once ($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/cfc_league/services/class.tx_cfcleague_services_Competition.php']);
 }
