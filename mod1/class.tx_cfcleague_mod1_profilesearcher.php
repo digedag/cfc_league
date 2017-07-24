@@ -113,7 +113,7 @@ class tx_cfcleague_mod1_profilesearcher {
 		return $this->resultSize;
 	}
 
-	private function showProfiles($headline, &$profiles) {
+	private function showProfiles($headline, $profiles) {
 		$this->options['tablename'] = 'tx_cfcleague_profiles';
 		tx_rnbase::load('tx_cfcleague_mod1_decorator');
 		$decor = tx_rnbase::makeInstance('tx_cfcleague_util_ProfileDecorator', $this->formTool);
@@ -124,9 +124,9 @@ class tx_cfcleague_mod1_profilesearcher {
 		);
 
 		if($profiles) {
-			$comp = null; // PHP ist ja sowas von erbärmlich...
 			$arr = tx_cfcleague_mod1_decorator::prepareTable($profiles, $columns, $this->formTool, $this->options);
-			$out .= $this->doc->table($arr[0]);
+			$tables = tx_rnbase::makeInstance('Tx_Rnbase_Backend_Utility_Tables');
+			$out .= $tables->buildTable($arr[0]);
 		}
 		else {
 			$out = '<p><strong>'.$GLOBALS['LANG']->getLL('msg_no_matches_in_betset').'</strong></p><br/>';

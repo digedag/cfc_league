@@ -104,7 +104,8 @@ class Tx_Cfcleague_Handler_MatchCreator {
 			//$row[] = $mod->getFormTool()->create('data[tx_cfcleague_teams][NEW'.$i.'][pid]', $mod->getPid());
 			$arr[] = $row;
 		}
-		$content .= $mod->getDoc()->table($arr);
+		$tables = tx_rnbase::makeInstance('Tx_Rnbase_Backend_Utility_Tables');
+		$content .= $tables->buildTable($arr);
 		$content .= $mod->getFormTool()->createSubmit('doCreateMatches', $LANG->getLL('btn_create'), $GLOBALS['LANG']->getLL('msg_CreateGameTable'));
 		return $content;
 	}

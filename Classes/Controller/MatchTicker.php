@@ -54,7 +54,7 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc {
 		if(tx_rnbase_util_TYPO3::isTYPO70OrHigher()) {
 			/* @var $moduleTemplate \TYPO3\CMS\Backend\Template\ModuleTemplate */
 			$moduleTemplate = tx_rnbase::makeInstance(TYPO3\CMS\Backend\Template\ModuleTemplate::class);
-			$moduleTemplate->getPageRenderer()->setBackPath('./'); // ??
+//			$moduleTemplate->getPageRenderer()->setBackPath('./'); // ??
 			$moduleTemplate->getPageRenderer()->loadJquery();
 		}
 
@@ -112,9 +112,7 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc {
 		// Den Update-Button einfügen
 		$modContent .= $this->getModule()->getFormTool()->createSubmit('update', $LANG->getLL('btn_save'));
 		// Jetzt listen wir noch die zum Spiel vorhandenen Tickermeldungen auf
-		$modContent.=$this->doc->spacer(5);
 		$modContent.=$this->doc->divider(5);
-		$modContent.=$this->doc->spacer(5);
 		$arr = $this->createTickerArray($match, Tx_Rnbase_Utility_T3General::_GP('showAll'));
 		if($arr) {
 			$tickerContent = $formTool->createLink('&showAll=1', $this->getModule()->getPid(), $LANG->getLL('label_showAllTickers'));
