@@ -54,7 +54,7 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc {
 		if(tx_rnbase_util_TYPO3::isTYPO70OrHigher()) {
 			/* @var $moduleTemplate \TYPO3\CMS\Backend\Template\ModuleTemplate */
 			$moduleTemplate = tx_rnbase::makeInstance(TYPO3\CMS\Backend\Template\ModuleTemplate::class);
-//			$moduleTemplate->getPageRenderer()->setBackPath('./'); // ??
+			$moduleTemplate->getPageRenderer()->setBackPath('./'); // needed for the right query path
 			$moduleTemplate->getPageRenderer()->loadJquery();
 		}
 

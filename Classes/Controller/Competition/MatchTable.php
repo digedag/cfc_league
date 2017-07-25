@@ -57,7 +57,7 @@ class Tx_Cfcleague_Controller_Competition_MatchTable {
 		if(tx_rnbase_util_TYPO3::isTYPO70OrHigher()) {
 			/* @var $moduleTemplate \TYPO3\CMS\Backend\Template\ModuleTemplate */
 			$moduleTemplate = tx_rnbase::makeInstance(TYPO3\CMS\Backend\Template\ModuleTemplate::class);
-//			$moduleTemplate->getPageRenderer()->setBackPath('./'); // ??
+			$moduleTemplate->getPageRenderer()->setBackPath('./');  // needed for the right query path
 			$moduleTemplate->getPageRenderer()->loadJquery();
 			$moduleTemplate->getPageRenderer()->addJsFile('js/matchcreate.js', 'text/javascript', FALSE, FALSE, '', TRUE);
 		}
