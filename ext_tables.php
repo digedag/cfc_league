@@ -50,7 +50,7 @@ if (TYPO3_MODE=='BE')	{
             array(
                 'access' => 'user,group',
                 'routeTarget' => 'tx_cfcleague_mod1_Module',
-                'icon' => 'EXT:cfc_league/mod1/moduleicon.gif',
+                'icon' => 'EXT:cfc_league/Resources/Public/Icons/module-t3sports.svg',
                 'labels' => 'LLL:EXT:cfc_league/mod1/locallang_mod.xml',
             )
         );
