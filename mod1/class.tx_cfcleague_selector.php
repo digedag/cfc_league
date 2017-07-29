@@ -314,11 +314,11 @@ class tx_cfcleague_selector{
 		foreach($groups as $idx=>$group){
 			$this->GROUP_MENU['group'][$group['uid']] = $group['name'];
 		}
-		$this->GROUP_SETTINGS = t3lib_BEfunc::getModuleData(
+		$this->GROUP_SETTINGS = Tx_Rnbase_Backend_Utility::getModuleData(
 			$this->GROUP_MENU, Tx_Rnbase_Utility_T3General::_GP('SET'), $this->MCONF['name'] // Das ist der Name des Moduls
 		);
 
-		$menu = t3lib_BEfunc::getFuncMenu(
+		$menu = Tx_Rnbase_Backend_Utility::getFuncMenu(
 			$pid, 'SET[group]', $this->GROUP_SETTINGS['group'], $this->GROUP_MENU['group'], $this->getScriptURI()
 		);
 		// In den Content einbauen
@@ -379,11 +379,11 @@ class tx_cfcleague_selector{
 		$MENU = Array (
 			$name => $entries
 		);
-		$SETTINGS = t3lib_BEfunc::getModuleData(
+		$SETTINGS = Tx_Rnbase_Backend_Utility::getModuleData(
 			$MENU, Tx_Rnbase_Utility_T3General::_GP('SET'), $this->MCONF['name'] // Das ist der Name des Moduls
 		);
 		$ret = array();
-		$ret['menu'] = t3lib_BEfunc::getFuncMenu(
+		$ret['menu'] = Tx_Rnbase_Backend_Utility::getFuncMenu(
 			$pid, 'SET['.$name.']', $SETTINGS[$name], $MENU[$name], $this->getScriptURI()
 		);
 		$ret['value'] = $SETTINGS[$name];

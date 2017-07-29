@@ -44,7 +44,7 @@ class tx_cfcleague_util_ProfileSearcher {
     $this->data = Tx_Rnbase_Utility_T3General::_GP('searchdata');
 
     if(!isset($options['nopersist']))
-			$this->SEARCH_SETTINGS = t3lib_BEfunc::getModuleData(array ('searchtermProfile' => ''), $this->data, $this->mod->MCONF['name'] );
+			$this->SEARCH_SETTINGS = Tx_Rnbase_Backend_Utility::getModuleData(array ('searchtermProfile' => ''), $this->data, $this->mod->MCONF['name'] );
 		else
 			$this->SEARCH_SETTINGS = $this->data;
 	}

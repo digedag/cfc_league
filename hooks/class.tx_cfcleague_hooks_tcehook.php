@@ -94,7 +94,7 @@ class tx_cfcleague_hooks_tcehook {
 		}
 		if($table == 'tx_cfcleague_stadiums' || $table == 'tx_cfcleague_club') {
 			if($incomingFieldArray['country'] > 0 && !$incomingFieldArray['countrycode']) {
-				$country = t3lib_BEfunc::getRecord('static_countries', intval($incomingFieldArray['country']));
+				$country = Tx_Rnbase_Backend_Utility::getRecord('static_countries', intval($incomingFieldArray['country']));
 				$incomingFieldArray['countrycode'] = $country['cn_iso_2'];
 			}
 		}
