@@ -98,7 +98,7 @@ class tx_cfcleague_util_Misc {
 
 		$content.='
 				<tr class="bgColor4">
-					<td valign="top"><img'.t3lib_iconWorks::skinImg('', 'gfx/icon_fatalerror.gif', 'width="18" height="16"').' alt="" /></td>
+					<td valign="top"><img'.Tx_Rnbase_Backend_Utility_Icons::skinImg('', 'gfx/icon_fatalerror.gif', 'width="18" height="16"').' alt="" /></td>
 					<td>'.$GLOBALS['LANG']->sL($error, 0).'</td>
 				</tr>';
 		if($addinfo)
