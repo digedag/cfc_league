@@ -466,7 +466,7 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc {
 	/**
 	 * Erstellt eine neue Spielaktion mit den Daten aus dem Request
 	 */
-	private function insertNotes($data) {
+	public function insertNotes($data) {
 		$notes = $data['tx_cfcleague_match_notes'];
 		foreach($notes As $noteId => $note) {
 			$playerOk = !(intval($note['player_home']) != 0 && intval($note['player_guest']) != 0);
