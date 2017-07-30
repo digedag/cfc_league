@@ -84,7 +84,7 @@ class tx_cfcleague_util_Misc {
 	 */
 
 	public static function tceError($error, $addinfo='')	{
-		$error_doc = tx_rnbase::makeInstance('template');
+		$error_doc = tx_rnbase::makeInstance(tx_rnbase_util_Typo3Classes::getDocumentTemplateClass());
 		$error_doc->backPath = '';
 
 		$content.= $error_doc->startPage('T3sports error Output');
