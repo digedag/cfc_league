@@ -284,7 +284,7 @@ class tx_cfcleague_tca_Lookup {
 
 		// tx_rnbase_util_Debug::debug(count($PA[items]), 'items cfcleague');
         $teamId = $this->convertToInteger($PA['row']['home']);
-        $gameId = $this->convertToInteger($PA['row']['game']);
+        $gameId = $PA['row']['game'];
 		if($teamId)
 		{
 			// Abfrage aus Spieldatensatz
@@ -322,7 +322,7 @@ class tx_cfcleague_tca_Lookup {
 		$LANG->includeLLFile('EXT:cfc_league/locallang_db.xml');
 
         $teamId = $this->convertToInteger($PA['row']['guest']);
-        $gameId = $this->convertToInteger($PA['row']['game']);
+        $gameId = $PA['row']['game'];
 
 		if($teamId)
 		{
