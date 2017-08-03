@@ -240,26 +240,60 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc {
 		return str ? str.replace(/\s+/,"") : "";
 	}
 	ticker();
-
-	function setMatchMinute(elem) {
-		min = form.watch_minute.value;
-		if(min == 0) return;
-		line = elem.name.match(/NEW(\d+)/)[1];
-		var elements = Form.getInputs(elem.form);
-		for (var i = 0; i < elements.length; i++) {
-			if(elements[i].name == "data[tx_cfcleague_match_notes][NEW"+line+"][minute]_hr") {
-				if(Field.getValue(elements[i]) == "") {
-					elements[i].value = min;
-					typo3FormFieldGet("data[tx_cfcleague_match_notes][NEW"+line+"][minute]", "int", "", 0,0);
-				}
-			}
-		}
-	}
 </script>
 ';
 
+		$out .= $this->getMatchMinuteJsCoce();
+
 		return $out;
 	}
+
+
+	protected function getMatchMinuteJsCoce() {
+
+	    //use jQuery for 7.6. or higher
+        if(tx_rnbase_util_TYPO3::isTYPO76OrHigher()) {
+            $jsCode = '<script>
+                    function setMatchMinute(elem) {
+                            
+                            min = form.watch_minute.value;
+                            if(min == 0) return;
+                            line = elem.name.match(/NEW(\d+)/)[1];
+                            var elements = jQuery(elem.form).find(":input");
+                            for (var i = 0; i < elements.length; i++) {
+                                
+                                if(elements[i].name == "data[tx_cfcleague_match_notes][NEW"+line+"][minute]") {
+                                    
+                                    if(jQuery(elements[i]).val() == "") {
+                                        jQuery(elements[i]).val(min);
+                                        jQuery(elem.form).find("[data-formengine-input-name=\'"+elements[i].name+"\']").val(min);
+                                    }
+                                }
+                            }
+                        }
+                        </script>
+                    ';
+        } else {
+            $jsCode = '<script>
+            function setMatchMinute(elem) {
+                min = form.watch_minute.value;
+                if(min == 0) return;
+                line = elem.name.match(/NEW(\d+)/)[1];
+                var elements = Form.getInputs(elem.form);
+                for (var i = 0; i < elements.length; i++) {
+                    if(elements[i].name == "data[tx_cfcleague_match_notes][NEW"+line+"][minute]_hr") {
+                        if(Field.getValue(elements[i]) == "") {
+                            elements[i].value = min;
+                            typo3FormFieldGet("data[tx_cfcleague_match_notes][NEW"+line+"][minute]", "int", "", 0,0);
+                        }
+                    }
+                }
+            }
+            </script>';
+        }
+        return $jsCode;
+    }
+
 	/**
 	 * Erstellt die Eingabemaske für den Spielstand
 	 * @param tx_cfcleague_models_Match $match
