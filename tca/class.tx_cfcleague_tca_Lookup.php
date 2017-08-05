@@ -265,6 +265,14 @@ class tx_cfcleague_tca_Lookup {
 		);
 	}
 
+	public function convertToInteger($value) {
+        if (tx_rnbase_util_TYPO3::isTYPO76OrHigher()) {
+            $ret = (int)$value[0];
+        } else {
+            $ret = (int)$value;
+        }
+        return $ret;
+    }
 
 	/**
 	 * Die Spieler des Heimteams ermitteln
@@ -275,20 +283,21 @@ class tx_cfcleague_tca_Lookup {
 		$LANG->includeLLFile('EXT:cfc_league/locallang_db.xml');
 
 		// tx_rnbase_util_Debug::debug(count($PA[items]), 'items cfcleague');
-
-		if($PA['row']['home'])
+        $teamId = $this->convertToInteger($PA['row']['home']);
+        $gameId = $PA['row']['game'];
+		if($teamId)
 		{
 			// Abfrage aus Spieldatensatz
 			// Es werden alle Spieler des Teams benötigt
-			$players = $this->findProfiles($PA['row']['home'], 'getPlayers');
+			$players = $this->findProfiles($teamId, 'getPlayers');
 			$PA[items] = $players;
 		}
-		elseif($PA['row']['game']) {
+		elseif($gameId) {
 			// Abfrage aus MatchNote-Datensatz
 			// Wenn wir die Match ID haben, können wir die Spieler auch so ermitteln
 			// Es werden alle aufgestellten Spieler des Matches benötigt
 			/* @var $match tx_cfcleague_models_Match */
-			$match = tx_rnbase::makeInstance('tx_cfcleague_models_Match', $this->getRowId($PA['row']['game']));
+			$match = tx_rnbase::makeInstance('tx_cfcleague_models_Match', $this->getRowId($gameId));
 
 			$players = tx_cfcleague_util_ServiceRegistry::getProfileService()->loadProfiles($match->getPlayersHome(true));
 //			$players = $match->getPlayerNamesHome();
@@ -312,15 +321,18 @@ class tx_cfcleague_tca_Lookup {
 		global $LANG;
 		$LANG->includeLLFile('EXT:cfc_league/locallang_db.xml');
 
-		if($PA['row']['guest'])
+        $teamId = $this->convertToInteger($PA['row']['guest']);
+        $gameId = $PA['row']['game'];
+
+		if($teamId)
 		{
-			$players = $this->findProfiles($PA['row']['guest'], 'getPlayers');
+			$players = $this->findProfiles($teamId, 'getPlayers');
 			$PA[items] = $players;
 		}
-		elseif($PA['row']['game']) {
+		elseif($gameId) {
 			// Wenn wir die Match ID haben könne wir die Spieler auch so ermitteln
 			/* @var $match tx_cfcleague_models_Match */
-			$match = tx_rnbase::makeInstance('tx_cfcleague_models_Match', $this->getRowId($PA['row']['game']));
+			$match = tx_rnbase::makeInstance('tx_cfcleague_models_Match', $this->getRowId($gameId));
 //			$players = $match->getPlayerNamesGuest();
 			$players = tx_cfcleague_util_ServiceRegistry::getProfileService()->loadProfiles($match->getPlayersGuest(true));
 			$playerArr = [0 => '']; // empty item

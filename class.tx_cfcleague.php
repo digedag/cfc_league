@@ -48,8 +48,14 @@ class tx_cfcleague_handleDataInput
      */
     public function getCoachesHome4Match($PA, $fobj)
     {
-        if ($PA['row']['home']) {
-            $coaches = $this->findCoaches($PA['row']['home']);
+        if (tx_rnbase_util_TYPO3::isTYPO76OrHigher()) {
+            $teamId = $PA['row']['home'][0];
+        } else {
+            $teamId = $PA['row']['home'];
+        }
+
+        if ($teamId) {
+            $coaches = $this->findCoaches($teamId);
             $PA[items] = $coaches;
         }
     }
@@ -59,8 +65,15 @@ class tx_cfcleague_handleDataInput
      */
     public function getCoachesGuest4Match($PA, $fobj)
     {
-        if ($PA['row']['guest']) {
-            $coaches = $this->findCoaches($PA['row']['guest']);
+        if (tx_rnbase_util_TYPO3::isTYPO76OrHigher()) {
+            $teamId = $PA['row']['guest'][0];
+        } else {
+            $teamId = $PA['row']['guest'];
+        }
+
+
+        if ($teamId) {
+            $coaches = $this->findCoaches($teamId);
             $PA[items] = $coaches;
         }
     }
