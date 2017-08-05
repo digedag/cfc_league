@@ -189,7 +189,7 @@ class tx_cfcleague_util_TeamInfo {
 	/**
 	 * Liefert die Anzahl der zugeordneten Trainer
 	 */
-	public function getCoachSize() {
+	public function getCoachSize($team) {
 		$value = $team->getProperty('coaches');
 		return $value ? count(Tx_Rnbase_Utility_Strings::intExplode(',', $value)) : 0;
 	}
@@ -198,7 +198,7 @@ class tx_cfcleague_util_TeamInfo {
 	 * Liefert die Anzahl der zugeordneten Betreuer
 	 * @return int
 	 */
-	public function getSupporterSize() {
+	public function getSupporterSize($team) {
 		$value = $team->getProperty('supporters');
 		return $value ? count(Tx_Rnbase_Utility_Strings::intExplode(',', $value)) : 0;
 	}
@@ -210,7 +210,7 @@ class tx_cfcleague_util_TeamInfo {
 	protected function getPlayerNames($team) {
 		$name = array();
 		foreach ($team->getPlayers() As $profile) {
-			$name[$profile->getUid()] = $profile->getRecord();
+			$name[$profile->getUid()] = $profile->getProperty();
 		}
 		return $name;
 	}
@@ -223,7 +223,7 @@ class tx_cfcleague_util_TeamInfo {
 	protected function getCoachNames($team) {
 		$name = array();
 		foreach ($team->getCoaches() As $profile) {
-			$name[$profile->getUid()] = $profile->getRecord();
+			$name[$profile->getUid()] = $profile->getProperty();
 		}
 		return $name;
 	}
@@ -236,7 +236,7 @@ class tx_cfcleague_util_TeamInfo {
 	protected function getSupporterNames($team) {
 		$name = array();
 		foreach ($team->getSupporters() As $profile) {
-			$name[$profile->getUid()] = $profile->getRecord();
+			$name[$profile->getUid()] = $profile->getProperty();
 		}
 		return $name;
 	}

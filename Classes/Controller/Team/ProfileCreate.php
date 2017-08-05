@@ -192,9 +192,9 @@ class Tx_Cfcleague_Controller_Team_ProfileCreate
      *            das aktuelle Team, dem die Personen zugeordnet werden
      * @param tx_cfcleague_util_TeamInfo $teamInfo
      */
-    public static function createProfiles(&$profiles, $team, $teamInfo)
+    public static function createProfiles($profiles, $team, $teamInfo)
     {
-        global $BE_USER, $LANG;
+        global $LANG;
 
         $maxCoaches = $teamInfo->get('maxCoaches');
         $maxPlayers = $teamInfo->get('maxPlayers');
@@ -212,10 +212,10 @@ class Tx_Cfcleague_Controller_Team_ProfileCreate
             $profile['last_name'] = trim($profile['last_name']);
             $profile['first_name'] = trim($profile['first_name']);
 
-            if (strlen($profile['last_name']) > 0) // Nachname ist Pflichtfeld
-{
+            if (strlen($profile['last_name']) > 0) { // Nachname ist Pflichtfeld
                 $type = $profile['type'];
                 unset($profile['type']);
+
                 // Darf dieses Profil noch angelegt werden?
                 if ($type == '1' && (($teamInfo->getPlayerSize($team) + count($playerIds)) >= $maxPlayers)) { // Spieler
                     $warnings[] = $profile['last_name'] . ', ' . $profile['first_name'];

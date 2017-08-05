@@ -177,7 +177,10 @@ class Tx_Cfcleague_Controller_Team_ProfileAdd
             return $out;
         }
         $request = Tx_Rnbase_Utility_T3General::_GP('data');
-        $profiles['tx_cfcleague_profiles'] = $request['tx_cfcleague_profiles'];
+
+        $profiles = [
+            'tx_cfcleague_profiles' => $request['tx_cfcleague_profiles'],
+        ];
 
         $out = Tx_Cfcleague_Controller_Team_ProfileCreate::createProfiles($profiles, $currTeam, $teamInfo);
         return $out;
