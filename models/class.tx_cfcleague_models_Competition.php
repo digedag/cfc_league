@@ -221,7 +221,7 @@ class tx_cfcleague_models_Competition extends tx_rnbase_model_base {
 	 * Returns the last match number
 	 * @return int
 	 */
-	function getLastMatchNumber() {
+	public function getLastMatchNumber() {
 		$fields = array();
 		$fields['MATCH.COMPETITION'][OP_EQ_INT] = $this->getUid();
 		$options = array();

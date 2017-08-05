@@ -59,7 +59,10 @@ class Tx_Cfcleague_Controller_Competition_MatchTable
         $this->module = $module;
         $this->doc = $module->getDoc();
 
-        $this->getPageRenderer()->addJsFile('js/matchcreate.js', 'text/javascript', FALSE, FALSE, '', TRUE);
+        if(!tx_rnbase_util_TYPO3::isTYPO70OrHigher()) {
+            // Das ist noch nicht auf jQuery umgestellt.
+            $this->getPageRenderer()->addJsFile('js/matchcreate.js', 'text/javascript', FALSE, FALSE, '', TRUE);
+        }
 
         $this->formTool = $module->getFormTool();
         // $start = microtime(true);
@@ -195,37 +198,6 @@ class Tx_Cfcleague_Controller_Competition_MatchTable
         $content .= '###LABEL_LEADING_ZERO###';
         $content .= '<br />';
 
-        $tableLayout = $this->doc->tableLayout;
-        $tableLayout['defRow'] = Array( // Formate für alle Zeilen
-            'defCol' => Array(
-                '<td valign="top" style="padding:5px 5px 0 5px; border-bottom:solid 1px #A2AAB8;">',
-                '</td>'
-            ) // Format für jede Spalte in jeder Zeile
-        );
-        unset($tableLayout['defRowEven']);
-
-        $tableLayout2 = $tableLayout;
-        $tableLayout2['defRow'] = Array( // Formate für alle Zeilen
-            'tr' => Array(
-                '<tr class="db_list_normal">',
-                '</tr>'
-            ),
-            'defCol' => Array(
-                '<td>',
-                '</td>'
-            ) // Format für jede Spalte in jeder Zeile
-        );
-        $tableLayout2['defRowEven'] = Array( // Formate für alle Zeilen
-            'tr' => Array(
-                '<tr class="db_list_alt">',
-                '</tr>'
-            ),
-            'defCol' => Array(
-                '<td>',
-                '</td>'
-            ) // Format für jede Spalte in jeder Zeile
-        );
-
         $arr = Array(
             Array(
                 $LANG->getLL('label_roundset')
@@ -331,7 +303,7 @@ class Tx_Cfcleague_Controller_Competition_MatchTable
             foreach ($matches as $matchId => $match) {
                 // Die Basis des Spieldatensatzes ist $roundData
                 $new_match = array();
-                $new_match['round'] = $roundData['round'];
+                $new_match['round'] = (int) $roundData['round'];
                 $new_match['round_name'] = $roundData['round_name'];
                 $new_match['date'] = $roundData['date'];
                 $new_match['home'] = $match['home'];
