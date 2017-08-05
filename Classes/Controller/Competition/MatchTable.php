@@ -59,14 +59,7 @@ class Tx_Cfcleague_Controller_Competition_MatchTable
         $this->module = $module;
         $this->doc = $module->getDoc();
 
-        if (tx_rnbase_util_TYPO3::isTYPO70OrHigher()) {
-            /* @var $moduleTemplate \TYPO3\CMS\Backend\Template\ModuleTemplate */
-            $moduleTemplate = tx_rnbase::makeInstance(TYPO3\CMS\Backend\Template\ModuleTemplate::class);
-            $moduleTemplate->getPageRenderer()->setBackPath('./'); // needed for the right query path
-            $moduleTemplate->getPageRenderer()->loadJquery();
-            $moduleTemplate->getPageRenderer()->addJsFile('js/matchcreate.js', 'text/javascript', FALSE, FALSE, '', TRUE);
-        } else
-            $this->getPageRenderer()->addJsFile('js/matchcreate.js', 'text/javascript', FALSE, FALSE, '', TRUE);
+        $this->getPageRenderer()->addJsFile('js/matchcreate.js', 'text/javascript', FALSE, FALSE, '', TRUE);
 
         $this->formTool = $module->getFormTool();
         // $start = microtime(true);

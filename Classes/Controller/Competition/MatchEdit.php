@@ -45,13 +45,6 @@ class Tx_Cfcleague_Controller_Competition_MatchEdit
         $this->id = $module->getPid();
         $this->doc = $module->getDoc();
 
-        if (tx_rnbase_util_TYPO3::isTYPO70OrHigher()) {
-            /* @var $moduleTemplate \TYPO3\CMS\Backend\Template\ModuleTemplate */
-            $moduleTemplate = tx_rnbase::makeInstance(TYPO3\CMS\Backend\Template\ModuleTemplate::class);
-            $moduleTemplate->getPageRenderer()->setBackPath('./'); // needed for the right query path
-            $moduleTemplate->getPageRenderer()->loadJquery();
-        }
-
         $formTool = $module->getFormTool();
         $this->formTool = $formTool;
         $LANG->includeLLFile('EXT:cfc_league/locallang_db.xml');
