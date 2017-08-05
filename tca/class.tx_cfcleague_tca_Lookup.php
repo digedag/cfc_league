@@ -479,6 +479,93 @@ class tx_cfcleague_tca_Lookup
         return $rows;
     }
 
+    /**
+     * Die Trainer des Heimteams ermitteln
+     */
+    public function getCoachesHome4Match($PA, $fobj)
+    {
+        $teamId = $this->getPAValue($PA['row']['home']);
+
+        if ($teamId) {
+            $coaches = $this->findCoaches($teamId);
+            $PA[items] = $coaches;
+        }
+    }
+
+    /**
+     * Die Trainer des Gastteams ermitteln
+     */
+    public function getCoachesGuest4Match($PA, $fobj)
+    {
+        $teamId = $this->getPAValue($PA['row']['guest']);
+
+        if ($teamId) {
+            $coaches = $this->findCoaches($teamId);
+            $PA[items] = $coaches;
+        }
+    }
+
+    /**
+     * Liefert die Trainer (uid und name) einer Mannschaft.
+     */
+    private function findCoaches($teamId)
+    {
+        $rows = array();
+        if (intval($teamId) == 0) {
+            return $rows;
+        }
+
+        /* @var $team tx_cfcleague_models_Team */
+        $team = tx_rnbase::makeInstance('tx_cfcleague_models_Team', $teamId);
+        /* @var $profile tx_cfcleague_models_Profile */
+        $profiles = $team->getCoaches();
+        $rows[] = [
+            '',
+            0
+        ]; // Leeres erstes Element
+        foreach ($profiles as $profile) {
+            $rows[] = Array(
+                $profile->getName(),
+                $profile->getUid()
+            );
+        }
+
+        return $rows;
+    }
+
+    /**
+     * Liefert die Teams eines Wettbewerbs.
+     * Wird im Spiel-TCE-Dialog zur
+     * Auswahl der Teams verwendet.
+     */
+    public function getTeams4Competition($PA, $fobj)
+    {
+        // Aktuellen Wettbewerb ermitteln, wenn 0 bleiben die Felder leer
+        $compId = (int) $this->getPAValue($PA['row']['competition']);
+        if ($compId) {
+            $PA[items] = $this->findTeams($compId);
+        } else {
+            $PA[items] = array();
+        }
+    }
+
+    /**
+     * Sucht die Teams eines Wettbewerbs
+     *
+     * @param int $competitionId
+     * @param int complete_row wenn false wird nur Name und UID für SELECT-Box geliefert
+     */
+    private function findTeams($competitionId, $complete_row = '0')
+    {
+        /* @var $competition tx_cfcleague_models_Competition */
+        $competition = tx_rnbase::makeInstance('tx_cfcleague_models_Competition', $competitionId);
+        $teamNames = $competition->getTeamNames();
+        $rows = [];
+        foreach ($teamNames As $uid => $name) {
+            $rows[] = [$name, $uid];
+        }
+        return $rows;
+    }
 
     /**
      * Read value from PA
@@ -488,8 +575,7 @@ class tx_cfcleague_tca_Lookup
      */
     private function getPAValue($value)
     {
-        return tx_rnbase_util_TYPO3::isTYPO76OrHigher() ? $value[0] : $value;
+        return is_array($value) ? reset($value) : $value;
     }
-
 }
 
