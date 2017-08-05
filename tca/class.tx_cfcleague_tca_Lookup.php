@@ -265,13 +265,13 @@ class tx_cfcleague_tca_Lookup {
 		);
 	}
 
-	public function convertToInteger($value) {
-        if (tx_rnbase_util_TYPO3::isTYPO76OrHigher()) {
-            $ret = (int)$value[0];
-        } else {
-            $ret = (int)$value;
-        }
-        return $ret;
+	/**
+	 * Read value from PA
+	 * @param mixed $value
+	 * @return mixed
+	 */
+	private function getPAValue($value) {
+	    return tx_rnbase_util_TYPO3::isTYPO76OrHigher() ? $value[0] : $value;
     }
 
 	/**
@@ -283,7 +283,7 @@ class tx_cfcleague_tca_Lookup {
 		$LANG->includeLLFile('EXT:cfc_league/locallang_db.xml');
 
 		// tx_rnbase_util_Debug::debug(count($PA[items]), 'items cfcleague');
-        $teamId = $this->convertToInteger($PA['row']['home']);
+		$teamId = (int) $this->getPAValue($PA['row']['home']);
         $gameId = $PA['row']['game'];
 		if($teamId)
 		{
@@ -321,7 +321,7 @@ class tx_cfcleague_tca_Lookup {
 		global $LANG;
 		$LANG->includeLLFile('EXT:cfc_league/locallang_db.xml');
 
-        $teamId = $this->convertToInteger($PA['row']['guest']);
+		$teamId = (int) $this->getPAValue($PA['row']['guest']);
         $gameId = $PA['row']['game'];
 
 		if($teamId)
@@ -417,6 +417,3 @@ class tx_cfcleague_tca_Lookup {
 
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/tca/class.tx_cfcleague_tca_Lookup.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/tca/class.tx_cfcleague_tca_Lookup.php']);
-}
