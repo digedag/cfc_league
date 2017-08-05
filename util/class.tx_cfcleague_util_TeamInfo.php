@@ -60,9 +60,9 @@ class tx_cfcleague_util_TeamInfo
         $this->baseInfo['maxPlayers'] = intval($TCA['tx_cfcleague_teams']['columns']['players']['config']['maxitems']);
         $this->baseInfo['maxSupporters'] = intval($TCA['tx_cfcleague_teams']['columns']['supporters']['config']['maxitems']);
 
-        $this->baseInfo['freePlayers'] = $this->baseInfo['maxPlayers'] - $this->getPlayerSize($team);
-        $this->baseInfo['freeCoaches'] = $this->baseInfo['maxCoaches'] - $this->getPlayerSize($team);
-        $this->baseInfo['freeSupporters'] = $this->baseInfo['maxSupporters'] - $this->getPlayerSize($team);
+        $this->baseInfo['freePlayers'] = $this->baseInfo['maxPlayers'] - $this->getPlayerSize();
+        $this->baseInfo['freeCoaches'] = $this->baseInfo['maxCoaches'] - $this->getPlayerSize();
+        $this->baseInfo['freeSupporters'] = $this->baseInfo['maxSupporters'] - $this->getPlayerSize();
     }
 
     public function refresh()
@@ -250,9 +250,9 @@ class tx_cfcleague_util_TeamInfo
     /**
      * Liefert die Anzahl der zugeordneten Spieler
      */
-    public function getPlayerSize($team)
+    public function getPlayerSize()
     {
-        $value = $team->getProperty('players');
+        $value = $this->team->getProperty('players');
         return $value ? count(Tx_Rnbase_Utility_Strings::intExplode(',', $value)) : 0;
     }
 
@@ -261,7 +261,7 @@ class tx_cfcleague_util_TeamInfo
      */
     public function getCoachSize()
     {
-        $value = $team->getProperty('coaches');
+        $value = $this->team->getProperty('coaches');
         return $value ? count(Tx_Rnbase_Utility_Strings::intExplode(',', $value)) : 0;
     }
 
@@ -270,9 +270,9 @@ class tx_cfcleague_util_TeamInfo
      *
      * @return int
      */
-    public function getSupporterSize($team)
+    public function getSupporterSize()
     {
-        $value = $team->getProperty('supporters');
+        $value = $this->team->getProperty('supporters');
         return $value ? count(Tx_Rnbase_Utility_Strings::intExplode(',', $value)) : 0;
     }
 

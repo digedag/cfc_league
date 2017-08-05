@@ -217,9 +217,9 @@ class Tx_Cfcleague_Controller_Team_ProfileCreate
                 unset($profile['type']);
 
                 // Darf dieses Profil noch angelegt werden?
-                if ($type == '1' && (($teamInfo->getPlayerSize($team) + count($playerIds)) >= $maxPlayers)) { // Spieler
+                if ($type == '1' && (($teamInfo->getPlayerSize() + count($playerIds)) >= $maxPlayers)) { // Spieler
                     $warnings[] = $profile['last_name'] . ', ' . $profile['first_name'];
-                } elseif ($type == '2' && (($teamInfo->getCoachSize($team) + count($coachIds)) >= $maxCoaches)) { // Trainer
+                } elseif ($type == '2' && (($teamInfo->getCoachSize() + count($coachIds)) >= $maxCoaches)) { // Trainer
                     $warnings[] = $profile['last_name'] . ', ' . $profile['first_name'];
                 } else {
                     // Jetzt das Array vorbereiten
@@ -238,13 +238,16 @@ class Tx_Cfcleague_Controller_Team_ProfileCreate
         tx_rnbase::load('tx_cfcleague_util_Misc');
         // Die IDs der Trainer, Spieler und Betreuer mergen
         if (count($coachIds)) {
-            $data['tx_cfcleague_teams'][$team->getUid()]['coaches'] = implode(',', tx_cfcleague_util_Misc::mergeArrays(Tx_Rnbase_Utility_Strings::intExplode(',', $team->getProperty('coaches')), $coachIds));
+            $data['tx_cfcleague_teams'][$team->getUid()]['coaches'] =
+                implode(',', tx_cfcleague_util_Misc::mergeArrays(Tx_Rnbase_Utility_Strings::intExplode(',', $team->getProperty('coaches')), $coachIds));
         }
         if (count($playerIds)) {
-            $data['tx_cfcleague_teams'][$team->getUid()]['players'] = implode(',', tx_cfcleague_util_Misc::mergeArrays(Tx_Rnbase_Utility_Strings::intExplode(',', $team->getProperty('players')), $playerIds));
+            $data['tx_cfcleague_teams'][$team->getUid()]['players'] =
+                implode(',', tx_cfcleague_util_Misc::mergeArrays(Tx_Rnbase_Utility_Strings::intExplode(',', $team->getProperty('players')), $playerIds));
         }
         if (count($supportIds)) {
-            $data['tx_cfcleague_teams'][$team->getUid()]['supporters'] = implode(',', tx_cfcleague_util_Misc::mergeArrays(Tx_Rnbase_Utility_Strings::intExplode(',', $team->getProperty('supporters')), $supportIds));
+            $data['tx_cfcleague_teams'][$team->getUid()]['supporters'] =
+                implode(',', tx_cfcleague_util_Misc::mergeArrays(Tx_Rnbase_Utility_Strings::intExplode(',', $team->getProperty('supporters')), $supportIds));
         }
 
         if (count($data)) {

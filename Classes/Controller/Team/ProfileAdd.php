@@ -202,10 +202,10 @@ class Tx_Cfcleague_Controller_Team_ProfileAdd
      * Add profiles to a team
      *
      * @param tx_cfcleague_models_Team $currTeam
-     * @param tx_cfcleague_util_TeamInfo $baseInfo
+     * @param tx_cfcleague_util_TeamInfo $teamInfo
      * @return string
      */
-    protected function handleAddProfiles(&$currTeam, $baseInfo)
+    protected function handleAddProfiles(&$currTeam, $teamInfo)
     {
         $out = '';
         $profile2team = strlen(Tx_Rnbase_Utility_T3General::_GP('profile2team')) > 0; // Wurde der Submit-Button gedrückt?
@@ -216,7 +216,7 @@ class Tx_Cfcleague_Controller_Team_ProfileAdd
             } else {
                 $type = (int) Tx_Rnbase_Utility_T3General::_GP('profileType');
                 if ($type == 1) {
-                    if ($baseInfo->get('freePlayers') < count($entryUids)) {
+                    if ($teamInfo->get('freePlayers') < count($entryUids)) {
                         // Team ist schon voll
                         $out = $GLOBALS['LANG']->getLL('msg_maxPlayers') . '<br/><br/>';
                     } else {
