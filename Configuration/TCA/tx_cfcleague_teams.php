@@ -18,7 +18,6 @@ $clubArr = $globalClubs ?
 				'maxitems' => 1,
 			) : Array (
 				'type' => 'group',
-				#'renderType' => 'selectSingle',
 				'internal_type' => 'db',
 				'allowed' => 'tx_cfcleague_club',
 				'size' => 1,

@@ -51,13 +51,6 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc {
 
 		$this->doc = $this->getModule()->getDoc();
 
-		if(tx_rnbase_util_TYPO3::isTYPO70OrHigher()) {
-			/* @var $moduleTemplate \TYPO3\CMS\Backend\Template\ModuleTemplate */
-			$moduleTemplate = tx_rnbase::makeInstance(TYPO3\CMS\Backend\Template\ModuleTemplate::class);
-			$moduleTemplate->getPageRenderer()->setBackPath('./'); // needed for the right query path
-			$moduleTemplate->getPageRenderer()->loadJquery();
-		}
-
 		// Selector-Instanz bereitstellen
 		$this->selector = tx_rnbase::makeInstance('tx_cfcleague_selector');
 		$this->selector->init($this->getModule()->getDoc(), $this->getModule());
@@ -255,15 +248,15 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc {
         if(tx_rnbase_util_TYPO3::isTYPO76OrHigher()) {
             $jsCode = '<script>
                     function setMatchMinute(elem) {
-                            
+
                             min = form.watch_minute.value;
                             if(min == 0) return;
                             line = elem.name.match(/NEW(\d+)/)[1];
                             var elements = jQuery(elem.form).find(":input");
                             for (var i = 0; i < elements.length; i++) {
-                                
+
                                 if(elements[i].name == "data[tx_cfcleague_match_notes][NEW"+line+"][minute]") {
-                                    
+
                                     if(jQuery(elements[i]).val() == "") {
                                         jQuery(elements[i]).val(min);
                                         jQuery(elem.form).find("[data-formengine-input-name=\'"+elements[i].name+"\']").val(min);
