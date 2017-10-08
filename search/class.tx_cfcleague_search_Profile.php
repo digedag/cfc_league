@@ -2,7 +2,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2006-2008 Rene Nitzsche
+ *  (c) 2006-2017 Rene Nitzsche
  *  Contact: rene@system25.de
  *  All rights reserved
  *
@@ -20,50 +20,52 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  ***************************************************************/
-
 tx_rnbase::load('tx_rnbase_util_SearchBase');
 tx_rnbase::load('tx_rnbase_util_Misc');
-
 
 /**
  * Class to search matches from database
  *
  * @author Rene Nitzsche
  */
-class tx_cfcleague_search_Profile extends tx_rnbase_util_SearchBase {
+class tx_cfcleague_search_Profile extends tx_rnbase_util_SearchBase
+{
 
-	protected function getTableMappings() {
-		$tableMapping['PROFILE'] = 'tx_cfcleague_profiles';
-		$tableMapping['TEAM'] = 'tx_cfcleague_teams';
-		// Hook to append other tables
-		tx_rnbase_util_Misc::callHook('cfc_league', 'search_Profile_getTableMapping_hook',
-			array('tableMapping' => &$tableMapping), $this);
-		return $tableMapping;
-	}
+    protected function getTableMappings()
+    {
+        $tableMapping = [
+            'PROFILE' => 'tx_cfcleague_profiles',
+            'TEAM' => 'tx_cfcleague_teams',
+        ];
+        // Hook to append other tables
+        tx_rnbase_util_Misc::callHook('cfc_league', 'search_Profile_getTableMapping_hook', array(
+            'tableMapping' => &$tableMapping
+        ), $this);
+        return $tableMapping;
+    }
 
-	protected function getBaseTable() {
-		return 'tx_cfcleague_profiles';
-	}
-	function getWrapperClass() {
-		return 'tx_cfcleague_models_Profile';
-	}
+    protected function getBaseTable()
+    {
+        return 'tx_cfcleague_profiles';
+    }
 
-	protected function getJoins($tableAliases) {
-		$join = '';
-		if(isset($tableAliases['TEAM'])) {
-			$join .= ' JOIN tx_cfcleague_teams ON FIND_IN_SET(tx_cfcleague_profiles.uid, tx_cfcleague_teams.players) ';
-		}
+    function getWrapperClass()
+    {
+        return 'tx_cfcleague_models_Profile';
+    }
 
-		// Hook to append other tables
-		tx_rnbase_util_Misc::callHook('cfc_league', 'search_Profile_getJoins_hook',
-			array('join' => &$join, 'tableAliases' => $tableAliases), $this);
-		return $join;
-	}
+    protected function getJoins($tableAliases)
+    {
+        $join = '';
+        if (isset($tableAliases['TEAM'])) {
+            $join .= ' JOIN tx_cfcleague_teams ON FIND_IN_SET(tx_cfcleague_profiles.uid, tx_cfcleague_teams.players) ';
+        }
+
+        // Hook to append other tables
+        tx_rnbase_util_Misc::callHook('cfc_league', 'search_Profile_getJoins_hook', array(
+            'join' => &$join,
+            'tableAliases' => $tableAliases
+        ), $this);
+        return $join;
+    }
 }
-
-
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/search/class.tx_cfcleague_search_Profile.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/search/class.tx_cfcleague_search_Profile.php']);
-}
-
-?>
