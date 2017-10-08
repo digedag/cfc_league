@@ -58,7 +58,10 @@ class tx_cfcleague_search_Profile extends tx_rnbase_util_SearchBase
     {
         $join = '';
         if (isset($tableAliases['TEAM'])) {
-            $join .= ' JOIN tx_cfcleague_teams ON FIND_IN_SET(tx_cfcleague_profiles.uid, tx_cfcleague_teams.players) ';
+            $join .= ' JOIN tx_cfcleague_teams AS TEAM ON FIND_IN_SET(PROFILE.uid, TEAM.players) ';
+        }
+        if (isset($tableAliases['TEAMNOTE'])) {
+            $join .= ' JOIN tx_cfcleague_team_notes AS TEAMNOTE ON PROFILE.uid = TEAMNOTE.player ';
         }
 
         // Hook to append other tables
@@ -67,5 +70,14 @@ class tx_cfcleague_search_Profile extends tx_rnbase_util_SearchBase
             'tableAliases' => $tableAliases
         ), $this);
         return $join;
+    }
+    protected function useAlias()
+    {
+        return true;
+    }
+
+    protected function getBaseTableAlias()
+    {
+        return 'PROFILE';
     }
 }
