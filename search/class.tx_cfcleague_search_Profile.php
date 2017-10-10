@@ -36,6 +36,7 @@ class tx_cfcleague_search_Profile extends tx_rnbase_util_SearchBase
         $tableMapping = [
             'PROFILE' => 'tx_cfcleague_profiles',
             'TEAM' => 'tx_cfcleague_teams',
+            'TEAMNOTE' => 'tx_cfcleague_team_notes',
         ];
         // Hook to append other tables
         tx_rnbase_util_Misc::callHook('cfc_league', 'search_Profile_getTableMapping_hook', array(
