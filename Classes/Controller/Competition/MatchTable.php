@@ -125,8 +125,9 @@ class Tx_Cfcleague_Controller_Competition_MatchTable
         $mode = $menu['value'];
         $content .= '<br>';
 
-        if ($mode == 0) // Automatischer Spielplan
+        if ($mode == 0) { // Automatischer Spielplan
             $content .= $this->showMatchTableAuto($comp);
+        }
         else { // Manuell Spiele anlegen
             tx_rnbase::load('Tx_Cfcleague_Handler_MatchCreator');
             $content .= Tx_Cfcleague_Handler_MatchCreator::getInstance()->showScreen($comp, $this->getModule());
