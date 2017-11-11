@@ -31,7 +31,7 @@ class tx_cfcleague_models_Stadium extends tx_rnbase_model_base
 
     private static $instances = array();
 
-    function getTableName()
+    public function getTableName()
     {
         return 'tx_cfcleague_stadiums';
     }

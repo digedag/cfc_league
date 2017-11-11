@@ -287,7 +287,7 @@ class Tx_Cfcleague_Controller_Competition_MatchTable
      * Erstellt die Spiele der Liga.
      * Diese werden aus den Daten gebildet, die im Request liegen.
      */
-    function createMatches($rounds, $league)
+    protected function createMatches($rounds, $league)
     {
         global $LANG;
 
