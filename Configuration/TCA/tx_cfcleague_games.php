@@ -342,6 +342,9 @@ $tx_cfcleague_games = Array (
 				'size' => 1,
 				'minitems' => 0,
 				'maxitems' => 1,
+			    'wizards' => Tx_Rnbase_Utility_TcaTool::getWizards('tx_cfcleague_profiles', [
+			        'suggest' => true,
+			    ])
 			)
 		),
 		'assists' => Array (
@@ -354,6 +357,9 @@ $tx_cfcleague_games = Array (
 				'size' => 3,
 				'minitems' => 0,
 				'maxitems' => 5,
+			    'wizards' => Tx_Rnbase_Utility_TcaTool::getWizards('tx_cfcleague_profiles', [
+			        'suggest' => true,
+			    ])
 			)
 		),
 
