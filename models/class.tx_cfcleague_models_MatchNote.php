@@ -28,6 +28,20 @@ tx_rnbase::load('tx_rnbase_model_base');
  */
 class tx_cfcleague_models_MatchNote extends tx_rnbase_model_base
 {
+    const TYPE_TICKER = 100;
+    const TYPE_GOAL = 10;
+    const TYPE_GOAL_HEADER = 11;
+    const TYPE_GOAL_PENALTY = 12;
+    const TYPE_GOAL_OWN = 30;
+    const TYPE_GOAL_ASSIST = 31;
+    const TYPE_PENALTY_FORGIVEN = 32;
+    const TYPE_CORNER = 33;
+    const TYPE_CARD_YELLOW = 70;
+    const TYPE_CARD_YELLOWRED = 71;
+    const TYPE_CARD_RED = 72;
+    const TYPE_CHANGEOUT = 80;
+    const TYPE_CHANGEIN = 81;
+    const TYPE_CAPTAIN = 200;
 
     public function getTableName()
     {
@@ -45,6 +59,16 @@ class tx_cfcleague_models_MatchNote extends tx_rnbase_model_base
     }
 
     /**
+     * Liefert bei Auswechslungen die UID des Profils, des eingewechselten Spielers der Heimmannschaft.
+     *
+     * @return int
+     */
+    protected function getPlayerHome2()
+    {
+        return (int) $this->getProperty('player_home_2');
+    }
+
+    /**
      * Liefert die UID des Profils, des an der Aktion beteiligten Spielers der Gastmannschaft
      *
      * @return int
@@ -55,16 +79,44 @@ class tx_cfcleague_models_MatchNote extends tx_rnbase_model_base
     }
 
     /**
+     * Liefert bei Auswechslungen die UID des Profils, des eingewechselten Spielers der Gastmannschaft.
+     *
+     * @return int
+     */
+    protected function getPlayerGuest2()
+    {
+        return (int) $this->getProperty('player_guest_2');
+    }
+
+    /**
      * Liefert die UID des Spielers, dem diese Meldung zugeordnet ist.
      *
      * @return int
      */
     public function getPlayer()
     {
-        if ($this->isHome())
+        if ($this->isHome()) {
             return $this->getPlayerHome();
-        if ($this->isGuest())
+        }
+        if ($this->isGuest()) {
             return $this->getPlayerGuest();
+        }
+        return 0;
+    }
+
+    /**
+     * Liefert die UID des Spielers, dem diese Meldung zugeordnet ist.
+     *
+     * @return int
+     */
+    public function getPlayer2()
+    {
+        if ($this->isHome()) {
+            return $this->getPlayerHome2();
+        }
+        if ($this->isGuest()) {
+            return $this->getPlayerGuest2();
+        }
         return 0;
     }
 

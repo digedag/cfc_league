@@ -186,8 +186,7 @@ class tx_cfcleague_models_Match extends tx_rnbase_model_base
      * $profiles = $profileSrv->loadProfiles($match->getPlayersHome());
      * </pre>
      *
-     * @param $all wenn
-     *            true werden auch die Ersatzspieler mit geliefert
+     * @param boolean $all wenn true werden auch die Ersatzspieler mit geliefert
      * @return string comma separated uids
      */
     public function getPlayersHome($all = false)
@@ -217,6 +216,26 @@ class tx_cfcleague_models_Match extends tx_rnbase_model_base
                 $ids = $ids . ',' . $this->getProperty('substitutes_guest');
         }
         return $ids;
+    }
+
+    /**
+     * Substitutes of home team
+     *
+     * @return string comma separated uids
+     */
+    public function getSubstitutesHome()
+    {
+        return $this->getProperty('substitutes_home');
+    }
+
+    /**
+     * Substitutes of guest team
+     *
+     * @return string comma separated uids
+     */
+    public function getSubstitutesGuest()
+    {
+        return $this->getProperty('substitutes_guest');
     }
 
     /**
@@ -414,7 +433,14 @@ class tx_cfcleague_models_Match extends tx_rnbase_model_base
         }
         return null;
     }
-
+    /**
+     *
+     * @return string comma separated uids
+     */
+    public function getAssists()
+    {
+        return $this->getProperty('assists');
+    }
     /**
      *
      * @return int

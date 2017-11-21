@@ -57,6 +57,11 @@ class tx_cfcleague_models_Profile extends tx_rnbase_model_base
         return $reverse ? $this->getLastName() . ', ' . $this->getFirstName() : $this->getFirstName() . ' ' . $this->getLastName();
     }
 
+    public function getHomeTown()
+    {
+        return $this->getProperty('home_town');
+    }
+
     /**
      * Liefert die Instance mit der übergebenen UID.
      * Die Daten werden gecached, so daß
@@ -69,7 +74,7 @@ class tx_cfcleague_models_Profile extends tx_rnbase_model_base
     {
         $uid = intval($uid);
         if (! $uid) {
-            throw new Exception('No uid for ' . self::getTableName() . ' given!');
+            throw new Exception('No uid for ' . self::class . ' given!');
         }
         if (! is_object(self::$instances[$uid])) {
             self::$instances[$uid] = new tx_cfcleague_models_Profile($uid);
@@ -81,6 +86,7 @@ class tx_cfcleague_models_Profile extends tx_rnbase_model_base
     {
         // TODO: Umstellen!
     }
+
 
     /**
      * Liefert true, wenn für den Spieler eine Einzelansicht verlinkt werden soll.
