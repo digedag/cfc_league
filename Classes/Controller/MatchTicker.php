@@ -95,6 +95,7 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc {
 		$modContent .= $this->getFormHeadline();
 		$arr = $this->createFormArray($match);
 
+		/* @var $tables Tx_Rnbase_Backend_Utility_Tables */
 		$tables = tx_rnbase::makeInstance('Tx_Rnbase_Backend_Utility_Tables');
 		$modContent .= $tables->buildTable($arr, $this->_getTableLayoutForm());
 		$modContent .= '<br />';
@@ -108,7 +109,11 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc {
 		$modContent.=$this->doc->divider(5);
 		$arr = $this->createTickerArray($match, Tx_Rnbase_Utility_T3General::_GP('showAll'));
 		if($arr) {
-			$tickerContent = $formTool->createLink('&showAll=1', $this->getModule()->getPid(), $LANG->getLL('label_showAllTickers'));
+			$tickerContent = $formTool->createLink(
+			    'showAll=1',
+			    $this->getModule()->getPid(),
+			    $LANG->getLL('label_showAllTickers'),
+			    ['params' => ['showAll' => 1]]);
             $tableLayout = $this->_getTableLayoutForm();
             $tableLayout['defRowEven']['defCol'] = $tableLayout['defRowOdd']['defCol'];//Array('<td valign="top" style="padding:5px 5px;">', '</td>');
 			$tickerContent .= $tables->buildTable($arr, $tableLayout);
@@ -388,6 +393,7 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc {
 
 			$row[] = $note['comment'];
 			$row[] = $this->getModule()->getFormTool()->createEditLink('tx_cfcleague_match_notes', $note['uid']);
+			$row[] = $this->getModule()->getFormTool()->createHideLink('tx_cfcleague_match_notes', $note['uid']);
 			$arr[] = $row;
 		}
 		return $arr;
