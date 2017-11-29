@@ -233,7 +233,6 @@ class tx_cfcleague_util_TeamInfo
                     'icon' => 'i/be_users__h.gif',
                     'infomsg' => 'Remove from Team'
                 ));
-                // $row[] = $this->getFormTool()->createLink('&'. 'remProfileUid['.$uid.']', 0, 'Remove from team', array('icon' => 'delete_record.gif'));
                 $arr[] = $row;
             }
     }

@@ -97,7 +97,7 @@ class tx_cfcleague_selector{
 			$cacheIcon = tx_rnbase_util_TYPO3::isTYPO70OrHigher() ?
 				$this->iconFactory->getIcon('actions-system-cache-clear', TYPO3\CMS\Core\Imaging\Icon::SIZE_SMALL)->render() :
 				'<img'.Tx_Rnbase_Backend_Utility_Icons::skinImg($GLOBALS['BACK_PATH'], 'gfx/clear_all_cache.gif', 'width="11" height="12"').' title="###LABEL_CLEAR_STATS_CACHE###" border="0" alt="Clear Cache" />';
-			$links .= ' ' . $this->getFormTool()->createLink('&clearCache=1', $pid, $cacheIcon, ['params' => ['clearCache'=>1]]);
+			$links .= ' ' . $this->getFormTool()->createModuleLink(['clearCache'=>1], $pid, $cacheIcon, ['params' => ['clearCache'=>1]]);
 
 			$links .= $this->getFormTool()->createNewLink('tx_cfcleague_competition', $pid, '');
 			$menu = $menu . '<span class="links col-md-2">' . $links . '</span>';
@@ -265,8 +265,8 @@ class tx_cfcleague_selector{
 			$keys = array_flip($keys);
 			$prevIdx = ($currIdx > 0) ? $currIdx-1 : count($entries)-1;
 			$nextIdx = ($currIdx < (count($entries)-1)) ? $currIdx+1 : 0;
-			$prev = $this->getFormTool()->createLink('&SET[round]=' . ($keys[$prevIdx]), $pid, '&lt;');
-			$next = $this->getFormTool()->createLink('&SET[round]=' . ($keys[$nextIdx]), $pid, '&gt;');
+			$prev = $this->getFormTool()->createModuleLink(['SET[round]' => ($keys[$prevIdx])], $pid, '&lt;');
+			$next = $this->getFormTool()->createModuleLink(['SET[round]' => ($keys[$nextIdx])], $pid, '&gt;');
 			$menu = '<div class="cfcselector"><div class="selector pull-left">' . $prev .''.$data['menu'].''.$next . '</div></div>';
 		}
 		$content.= $menu;
