@@ -42,11 +42,11 @@ class tx_cfcleague_models_Set extends tx_rnbase_model_base
         $this->set = $set;
         $this->p1 = $p1;
         $this->p2 = $p2;
-        $this->record = array(
+        $this->setProperty(array(
             'set' => $this->set,
             'pointshome' => $this->p1,
             'pointsguest' => $this->p2
-        );
+        ));
     }
 
     public function getSet()
@@ -80,6 +80,6 @@ class tx_cfcleague_models_Set extends tx_rnbase_model_base
 
     public function getColumnNames()
     {
-        return array_keys($this->record);
+        return array_keys($this->getProperty());
     }
 }

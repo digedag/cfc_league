@@ -67,8 +67,8 @@ class tx_cfcleague_mod1_handler_ClubStadiums {
 			$content .= $mod->getDoc()->section($LANG->getLL('label_msg_nostadiumsfound'), '', 0, 1, ICON_INFO);
 		}
 
-		$options['params'] = '&defVals[tx_cfcleague_stadiums][clubs]=tx_cfcleague_club_'.$club->getUid();
-		$content .= $mod->getFormTool()->createNewLink('tx_cfcleague_stadiums', $club->record['pid'],  $GLOBALS['LANG']->getLL('label_btn_addstadium'), $options);
+		$options = ['params' => '&defVals[tx_cfcleague_stadiums][clubs]=tx_cfcleague_club_'.$club->getUid()];
+		$content .= $mod->getFormTool()->createNewLink('tx_cfcleague_stadiums', $club->getProperty('pid'),  $GLOBALS['LANG']->getLL('label_btn_addstadium'), $options);
 		return $content;
 	}
 
@@ -76,8 +76,3 @@ class tx_cfcleague_mod1_handler_ClubStadiums {
 
 	}
 }
-
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/mod1/handler/class.tx_cfcleague_mod1_handler_ClubStadiums.php'])	{
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/mod1/handler/class.tx_cfcleague_mod1_handler_ClubStadiums.php']);
-}
-?>

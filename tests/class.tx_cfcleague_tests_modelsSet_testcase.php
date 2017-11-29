@@ -44,8 +44,8 @@ class tx_cfcleague_tests_modelsSets_testcase extends tx_rnbase_tests_BaseTestCas
 			$this->assertEquals($i+1, $set->getSet());
 			$this->assertEquals($expResult[0], $set->getPointsHome());
 			$this->assertEquals($expResult[1], $set->getPointsGuest());
-			$this->assertEquals($expResult[0], $set->record['pointshome']);
-			$this->assertEquals($expResult[1], $set->record['pointsguest']);
+			$this->assertEquals($expResult[0], $set->getProperty('pointshome'));
+			$this->assertEquals($expResult[1], $set->getProperty('pointsguest'));
 			$i++;
 		}
 	}

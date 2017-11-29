@@ -104,6 +104,6 @@ class tx_cfcleague_models_Profile extends tx_rnbase_model_base
     {
         return 'TODO';
         // $signs = Signs::getInstance();
-        // return intval($this->record['birthday']) != 0 ? $signs->getSign($this->record['birthday']) : '';
+        // return intval($this->getProperty('birthday')) != 0 ? $signs->getSign($this->getProperty('birthday')) : '';
     }
 }

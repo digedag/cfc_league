@@ -103,7 +103,7 @@ class Tx_Cfcleague_Controller_Competition_MatchEdit
         // Mit Matchtable nach Spielen suchen
         $service = tx_cfcleague_util_ServiceRegistry::getMatchService();
         $matchTable = $service->getMatchTableBuilder();
-        $matchTable->setCompetitions($current_league->uid);
+        $matchTable->setCompetitions($current_league->getUid());
 
         $matches = array();
         if ($currentTeam == null) {
@@ -164,9 +164,10 @@ class Tx_Cfcleague_Controller_Competition_MatchEdit
     function getFooter($current_league, $current_round, $pid, $formTool)
     {
         $params = array();
-        $params['params'] = '&competition=' . $current_league->uid;
-        if ($current_round)
+        $params['params'] = '&competition=' . $current_league->getUid();
+        if ($current_round) {
             $params['params'] .= '&round=' . ($current_round);
+        }
         $params['title'] = $GLOBALS['LANG']->getLL('label_create_match');
         $content = $formTool->createNewLink('tx_cfcleague_games', $pid, $GLOBALS['LANG']->getLL('label_create_match'), $params);
         return $content;

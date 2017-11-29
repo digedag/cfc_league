@@ -35,8 +35,7 @@ class tx_cfcleague_services_Competition extends Tx_Rnbase_Service_Base
     /**
      * Returns uids of dummy teams
      *
-     * @param
-     *            $comp
+     * @param tx_cfcleague_models_Competition $comp
      * @return array[int]
      */
     public function getDummyTeamIds($comp)
@@ -44,7 +43,7 @@ class tx_cfcleague_services_Competition extends Tx_Rnbase_Service_Base
         $srv = tx_cfcleague_util_ServiceRegistry::getTeamService();
         $fields = array();
         $fields['TEAM.DUMMY'][OP_EQ_INT] = 1;
-        $fields['TEAM.UID'][OP_IN_INT] = $comp->record['teams'];
+        $fields['TEAM.UID'][OP_IN_INT] = $comp->getProperty('teams');
         $options = array();
         $options['what'] = 'uid';
         // $options['debug'] = 1;
@@ -57,6 +56,11 @@ class tx_cfcleague_services_Competition extends Tx_Rnbase_Service_Base
 
     /**
      * Anzahl der Spiele des/der Teams in diesem Wettbewerb
+     *
+     * @param tx_cfcleague_models_Competition $comp
+     * @param string $teamIds
+     * @param string $status
+     * @return number
      */
     public function getNumberOfMatches($comp, $teamIds = '', $status = '0,1,2')
     {
@@ -68,7 +72,7 @@ class tx_cfcleague_services_Competition extends Tx_Rnbase_Service_Base
             $options['where'] .= '( home IN(' . $teamIds . ') OR ';
             $options['where'] .= 'guest IN(' . $teamIds . ')) AND ';
         }
-        $options['where'] .= 'competition = ' . $comp->uid . ' ';
+        $options['where'] .= 'competition = ' . $comp->getUid() . ' ';
         $rows = Tx_Rnbase_Database_Connection::getInstance()->doSelect($what, $from, $options, 0);
         $ret = 0;
         if (count($rows))

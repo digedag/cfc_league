@@ -138,7 +138,7 @@ class tx_cfcleague_models_Club extends tx_rnbase_model_base
     {
         if (tx_rnbase_util_Extensions::isLoaded('dam')) {
             if ($this->getProperty('dam_logo')) {
-                $damPics = tx_dam_db::getReferencedFiles('tx_cfcleague_club', $this->uid, 'dam_images');
+                $damPics = tx_dam_db::getReferencedFiles('tx_cfcleague_club', $this->getUid(), 'dam_images');
                 if (list ($uid, $filePath) = each($damPics['files'])) {
                     return $filePath;
                 }

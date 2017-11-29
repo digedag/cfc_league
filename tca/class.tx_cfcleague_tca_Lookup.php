@@ -169,7 +169,9 @@ class tx_cfcleague_tca_Lookup
             foreach ($items as $item) {
                 // $currentAvailable = $currentAvailable ? $currentAvailable : ($current == $item->getUid() || $current == 0);
                 // Je nach Pflege der Daten sind unterschiedliche Felder gefüllt.
-                $label = ($item->record['title'] ? $item->record['title'] : ($item->record['name'] ? $item->record['name'] : $item->record['file']));
+                $label = ($item->getProperty('title') ? $item->getProperty('title') : (
+                    $item->getProperty('name') ? $item->getProperty('name') : $item->getProperty('file'))
+                );
                 $PA['items'][] = array(
                     $label,
                     $item->getUid()

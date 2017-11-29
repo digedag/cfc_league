@@ -90,14 +90,14 @@ class tx_cfcleague_models_Competition extends tx_rnbase_model_base
             $scope = intval($scope);
             if ($scope) {
                 // Feststellen wann die Hinrunde endet: Anz Teams - 1
-                $round = count(Tx_Rnbase_Utility_Strings::intExplode(',', $this->record['teams']));
+                $round = count(Tx_Rnbase_Utility_Strings::intExplode(',', $this->getProperty('teams')));
                 $round = ($round) ? $round - 1 : $round;
             }
             // Check if data is already cached
             if (! is_array($this->matchesByState[$status . '_' . $scope])) {
                 $what = '*';
                 // Die UID der Liga setzen
-                $where = 'competition="' . $this->uid . '" ';
+                $where = 'competition="' . $this->getUid() . '" ';
                 switch ($status) {
                     case 1:
                         $where .= ' AND status>="' . $status . '"';
@@ -230,7 +230,7 @@ class tx_cfcleague_models_Competition extends tx_rnbase_model_base
             $options['groupby'] = 'round,round_name';
             $options['orderby']['MATCHROUND.ROUND'] = 'asc';
             $fields = array();
-            $fields['MATCHROUND.COMPETITION'][OP_EQ_INT] = $this->uid;
+            $fields['MATCHROUND.COMPETITION'][OP_EQ_INT] = $this->getUid();
             $this->cache['rounds'] = $srv->searchMatchRound($fields, $options);
         }
         return $this->cache['rounds'];
