@@ -38,7 +38,7 @@ class Tx_Cfcleague_Controller_Team_ProfileCreate
      * Verwaltet die Erstellung von Spielplänen von Ligen
      *
      * @param tx_rnbase_mod_IModule $module
-     * @param tx_cfcleague_team $team
+     * @param tx_cfcleague_models_Team $team
      */
     public function handleRequest($module, $team, $teamInfo)
     {
@@ -144,27 +144,32 @@ class Tx_Cfcleague_Controller_Team_ProfileCreate
             $row[] = $this->formTool->createSelectByArray('data[tx_cfcleague_profiles][NEW' . $i . '][type]', '', self::getProfileTypeArray()) . $this->formTool->createHidden('data[tx_cfcleague_profiles][NEW' . $i . '][pid]', $this->pid);
             $arr[] = $row;
         }
+        /* @var $tables Tx_Rnbase_Backend_Utility_Tables */
         $tables = tx_rnbase::makeInstance('Tx_Rnbase_Backend_Utility_Tables');
         $tableForm = $tables->buildTable($arr);
-        $tableLayout = Array(
-            'table' => Array(
+        $tableLayout = [
+            'table' => [
                 '<table class="typo3-dblist table" width="100%" cellspacing="0" cellpadding="0" border="0">',
                 '</table><br/>'
-            ),
-            'defRow' => Array( // Formate für alle Zeilen
-                'defCol' => Array(
+            ],
+            'defRow' => [ // Formate für alle Zeilen
+                'defCol' => [
                     '<td valign="top" style="padding:0 5px;">',
                     '</td>'
-                ) // Format für jede Spalte in jeder Zeile
-            )
+                ] // Format für jede Spalte in jeder Zeile
+            ]
+        ];
+        
+        
+        $content .= $tables->buildTable(
+            [
+                [
+                    $tableForm,
+                    $tableProfiles
+                ]
+            ],
+            tx_rnbase_util_TYPO3::isTYPO76OrHigher() ? null : $tableLayout
         );
-
-        $content .= $tables->buildTable(Array(
-            Array(
-                $tableForm,
-                $tableProfiles
-            )
-        ));
         return $content;
     }
 
