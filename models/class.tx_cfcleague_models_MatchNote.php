@@ -212,12 +212,21 @@ class tx_cfcleague_models_MatchNote extends tx_rnbase_model_base
     }
 
     /**
-     * Liefert true wenn die Aktion eine Ein- oder Auswechslung ist
+     * Liefert true, wenn die Aktion eine Ein- oder Auswechslung ist
      *
      * @return boolean
      */
     public function isChange()
     {
         return $this->getType() == '80' || $this->getType() == '81';
+    }
+
+    public function __toString() {
+        return get_class($this).'( uid['. $this->getUid() .
+        '] type[' . $this->getProperty('type') .
+        '] minute[' . $this->getProperty('minute') .
+        '] player_home[' . $this->getProperty('player_home') .
+        '] player_guest[' . $this->getProperty('player_guest') .
+        '])';
     }
 }
