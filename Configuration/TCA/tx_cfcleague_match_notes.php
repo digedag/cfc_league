@@ -105,7 +105,7 @@ $tx_cfcleague_match_notes = Array (
 		),
 		'type' => Array (
 				'exclude' => 1,
-				'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles.type',
+				'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_match_notes.type',
 				'config' => Array (
 						'type' => 'select',
 						'itemsProcFunc' => 'tx_cfcleague_tca_Lookup->getMatchNoteTypes',
