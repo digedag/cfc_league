@@ -2,7 +2,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2008-2017 Rene Nitzsche (rene@system25.de)
+ *  (c) 2008-2018 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -31,7 +31,7 @@ tx_rnbase::load('Tx_Rnbase_Utility_Strings');
 class Tx_Cfcleague_Controller_Team_TeamNotes
 {
 
-    var $mod;
+    protected $mod;
 
     /**
      * Ausführung des Requests.
@@ -83,11 +83,11 @@ class Tx_Cfcleague_Controller_Team_TeamNotes
     /**
      * Darstellung der gefundenen Personen
      *
-     * @param tx_cfcleague_team $currTeam
+     * @param tx_cfcleague_models_Team $currTeam
      * @param tx_cfcleague_models_TeamNoteType $type
      * @return string
      */
-    protected function showTeamNotes($currTeam, $type)
+    protected function showTeamNotes(tx_cfcleague_models_Team $currTeam, tx_cfcleague_models_TeamNoteType $type)
     {
         $out = '<h2>' . $type->getLabel() . '</h2>';
         if ($type->getDescription())
@@ -120,11 +120,17 @@ class Tx_Cfcleague_Controller_Team_TeamNotes
         $tables = tx_rnbase::makeInstance('Tx_Rnbase_Backend_Utility_Tables');
         $out .= $tables->buildTable($rows[0]);
 
+        $options[Tx_Rnbase_Backend_Form_ToolBox::OPTION_DEFVALS] = [
+            'tx_cfcleague_team_notes' => [
+                'team' => $currTeam->getUid(),
+                'type' => $type->getUid(),
+            ],
+        ];
         // We use the mediatype from first entry
-        if (count($notes))
-            $options['params'] = '&mediatype=' . $notes[0]->getMediaType();
-        $options['params'] .= '&type=' . $type->getUid();
-        $options['params'] .= '&team=' . $currTeam->getUid();
+        if (count($notes)) {
+            $options[Tx_Rnbase_Backend_Form_ToolBox::OPTION_DEFVALS]['tx_cfcleague_team_notes']['mediatype'] = $notes[0]->getMediaType();
+        }
+
         $options['title'] = $GLOBALS['LANG']->getLL('label_create_new') . ': ' . $type->getLabel();
         // Zielseite muss immer die Seite des Teams sein
         $out .= $this->getFormTool()->createNewButton('tx_cfcleague_team_notes', $currTeam->getProperty('pid'), $options);

@@ -2,7 +2,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2007-2016 Rene Nitzsche (rene@system25.de)
+ *  (c) 2007-2018 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -161,14 +161,33 @@ class Tx_Cfcleague_Controller_Competition_MatchEdit
         $this->module = $module;
     }
 
-    function getFooter($current_league, $current_round, $pid, $formTool)
+
+    /**
+     *
+     * @param tx_cfcleague_models_Competition $currentLeague
+     * @param int $current_round
+     * @param unknown $pid
+     * @param Tx_Rnbase_Backend_Form_ToolBox $formTool
+     * @return string
+     */
+    protected function getFooter(tx_cfcleague_models_Competition $currentCompetition, int $current_round, $pid, Tx_Rnbase_Backend_Form_ToolBox $formTool)
     {
-        $params = array();
-        $params['params'] = '&competition=' . $current_league->getUid();
-        if ($current_round) {
-            $params['params'] .= '&round=' . ($current_round);
+        $rounds = $currentCompetition->getRounds();
+        $roundName = '';
+        foreach ($rounds as $round) {
+            if ($round['round'] == $current_round) {
+                $roundName = $round['round_name'];
+            }
         }
-        $params['title'] = $GLOBALS['LANG']->getLL('label_create_match');
+        $params = [];
+        $params[Tx_Rnbase_Backend_Form_ToolBox::OPTION_DEFVALS] = [
+            'tx_cfcleague_games' => [
+                'competition' => $currentCompetition->getUid(),
+                'round' => $current_round,
+                'round_name' => $roundName,
+            ]
+        ];
+        $params[Tx_Rnbase_Backend_Form_ToolBox::OPTION_TITLE] = $GLOBALS['LANG']->getLL('label_create_match');
         $content = $formTool->createNewLink('tx_cfcleague_games', $pid, $GLOBALS['LANG']->getLL('label_create_match'), $params);
         return $content;
     }
@@ -191,10 +210,11 @@ class Tx_Cfcleague_Controller_Competition_MatchEdit
             $LANG->getLL('tx_cfcleague_games.guest')
         );
 
-        if ($competition->isAddPartResults() || $parts == 1)
+        if ($competition->isAddPartResults() || $parts == 1) {
             $arr[] = $LANG->getLL('tx_cfcleague_games.endresult');
+        }
         // Hier je Spielart die Überschrift setzen
-        if ($parts > 1)
+        if ($parts > 1) {
             for ($i = $parts; $i > 0; $i --) {
                 $label = $LANG->getLL('tx_cfcleague_games.parts_' . $parts . '_' . $i);
                 if (! $label) {
@@ -205,6 +225,7 @@ class Tx_Cfcleague_Controller_Competition_MatchEdit
                 }
                 $arr[] = $label ? $label : $i . '. part';
             }
+        }
 
         $sports = $competition->getSportsService();
         if ($sports->isSetBased()) {
