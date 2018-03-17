@@ -2,6 +2,14 @@
 Änderungen
 ==========
 
+## v1.2.0 (?.?.2018)
+ * Support for TYPO3 4.5 LTS dropped
+ * Some Bugfixes for TYPO3 7.6
+ * Support for PHP 7.x
+ * Code cleanup
+ * digedag/cfc_league_fe#25 Support for handball, but not yet finished
+ * Many thanks to Mario Näther for contributions!
+
 ## v1.1.1 (04.01.2017)
  * composer.json added
  * Icons and language files moved to Resources folder
