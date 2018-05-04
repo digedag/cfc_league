@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2007-2017 Rene Nitzsche (rene@system25.de)
+*  (c) 2007-2018 Rene Nitzsche (rene@system25.de)
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -67,7 +67,7 @@ class tx_cfcleague_selector{
 
 	/**
 	 * Darstellung der Select-Box mit allen Ligen der übergebenen Seite. Es wird auf die aktuelle Liga eingestellt.
-	 * @return den aktuellen Wettbewerb als Objekt oder 0
+	 * @return tx_cfcleague_models_Competition aktuellen Wettbewerb als Objekt oder 0
 	 */
 	public function showLeagueSelector(&$content, $pid, $leagues=0){
 		// Wenn vorhanden, nehmen wir die übergebenen Wettbewerbe, sonst schauen wir auf der aktuellen Seite nach
@@ -138,7 +138,7 @@ class tx_cfcleague_selector{
 	}
 	/**
 	 * Darstellung der Select-Box mit allen Teams des übergebenen Wettbewerbs. Es wird auf das aktuelle Team eingestellt.
-	 * @return die aktuelle Team als Objekt
+	 * @return tx_cfcleague_models_Team aktuelle Team als Objekt
 	 */
 	public function showTeamSelector(&$content, $pid, $league, $options=array()){
 		if(!$league)
@@ -244,7 +244,7 @@ class tx_cfcleague_selector{
 	 * @param string $content
 	 * @param int $pid
 	 * @param tx_cfcleague_models_Competition $league
-	 * @return current value
+	 * @return int current value
 	 */
 	public function showRoundSelector(&$content, $pid, $league){
 		$entries = Array ();
@@ -281,12 +281,12 @@ class tx_cfcleague_selector{
 		}
 		$content.= $menu;
 
-		return count($objRounds) ? $objRounds[$data['value']] : $data['value'];
+		return (int) count($objRounds) ? $objRounds[$data['value']] : $data['value'];
 	}
 
 	/**
 	 * Darstellung der Select-Box mit allen übergebenen Spielen. Es wird auf das aktuelle Spiel eingestellt.
-	 * @return tx_cfcleague_match current match
+	 * @return tx_cfcleague_models_Match current match
 	 */
 	public function showMatchSelector(&$content, $pid, $matches){
 		$entries = array();
@@ -310,7 +310,7 @@ class tx_cfcleague_selector{
 
 	/**
 	 * Darstellung der Select-Box mit allen Altersgruppen in der Datenbank.
-	 * @return die ID der aktuellen Altersgruppe
+	 * @return int die ID der aktuellen Altersgruppe
      * @deprecated
 	 */
 	function showGroupSelector(&$content, $pid){
@@ -409,7 +409,7 @@ class tx_cfcleague_selector{
 	}
 	/**
 	 * Liefert die Ligen der aktuellen Seite.
-	 * @return ein Array mit Rows
+	 * @return array mit Rows
 	 */
 	private function findLeagues($pid){
 		tx_rnbase::load('Tx_Rnbase_Database_Connection');

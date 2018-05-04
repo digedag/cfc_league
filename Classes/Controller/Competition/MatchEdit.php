@@ -61,8 +61,9 @@ class Tx_Cfcleague_Controller_Competition_MatchEdit
 
         $currentTeam = $this->makeTeamSelector($content, $pid, $current_league);
         // Jetzt den Spieltag wählen lassen
-        if ($currentTeam == null)
+        if ($currentTeam == null) {
             $current_round = $this->getSelector()->showRoundSelector($content, $pid, $current_league);
+        }
 
         $content .= '<div class="cleardiv"/>';
         $data = tx_rnbase_parameters::getPostOrGetParameter('data');
@@ -96,7 +97,7 @@ class Tx_Cfcleague_Controller_Competition_MatchEdit
      *
      * @param tx_cfcleague_models_Team $currentTeam
      * @param int $current_round
-     * @param tx_cfcleague_league $current_league
+     * @param tx_cfcleague_models_Competition $current_league
      */
     private function findMatches($currentTeam, $current_round, $current_league)
     {
@@ -166,7 +167,7 @@ class Tx_Cfcleague_Controller_Competition_MatchEdit
      *
      * @param tx_cfcleague_models_Competition $currentLeague
      * @param int $current_round
-     * @param unknown $pid
+     * @param mixed $pid
      * @param Tx_Rnbase_Backend_Form_ToolBox $formTool
      * @return string
      */
@@ -244,7 +245,7 @@ class Tx_Cfcleague_Controller_Competition_MatchEdit
      * @param string $fieldName
      * @param int $uid
      *            uid of record to edit
-     * @return Ambigous <string, mixed>
+     * @return string|mixed
      */
     private function buildInputField($table, $record, $fieldName, $uid)
     {
