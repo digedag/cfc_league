@@ -58,9 +58,9 @@ class Tx_Cfcleague_Controller_Competition_MatchEdit
             $content .= $this->getFooter($current_league, 0, $pid, $formTool);
             return $content;
         }
-
         $currentTeam = $this->makeTeamSelector($content, $pid, $current_league);
         // Jetzt den Spieltag wählen lassen
+        $current_round = 0;
         if ($currentTeam == null) {
             $current_round = $this->getSelector()->showRoundSelector($content, $pid, $current_league);
         }
@@ -171,7 +171,7 @@ class Tx_Cfcleague_Controller_Competition_MatchEdit
      * @param Tx_Rnbase_Backend_Form_ToolBox $formTool
      * @return string
      */
-    protected function getFooter(tx_cfcleague_models_Competition $currentCompetition, int $current_round, $pid, Tx_Rnbase_Backend_Form_ToolBox $formTool)
+    protected function getFooter(tx_cfcleague_models_Competition $currentCompetition, $current_round, $pid, Tx_Rnbase_Backend_Form_ToolBox $formTool)
     {
         $rounds = $currentCompetition->getRounds();
         $roundName = '';
