@@ -78,14 +78,6 @@ class tx_cfcleague_mod1_Module extends tx_rnbase_mod_BaseModule
         return 'cfc_league';
     }
 
-    protected function getFormTag()
-    {
-        $modUrl = Tx_Rnbase_Backend_Utility::getModuleUrl($this->MCONF['name'], array(
-            'id' => $this->getPid()
-        ), '');
-        return '<form action="' . $modUrl . '" method="POST" name="editform" id="editform">';
-    }
-
     protected function getModuleTemplate()
     {
         return 'EXT:cfc_league/Resources/Private/Templates/module.html';
