@@ -50,13 +50,13 @@ class tx_cfcleague_mod1_AjaxTicker
         }
         $matchRecord = Tx_Rnbase_Backend_Utility::getRecord('tx_cfcleague_games', $t3match);
 
-        $record = array(
+        $record = [
             'comment' => $tickerMessage,
             'game' => $t3match,
             'type' => 100,
             'minute' => $t3Time,
             'pid' => $matchRecord['pid']
-        );
+        ];
         $data = array(
             'tx_cfcleague_match_notes' => array(
                 'NEW1' => $record
@@ -69,9 +69,3 @@ class tx_cfcleague_mod1_AjaxTicker
         $ajaxObj->addContent('message', $GLOBALS['LANG']->getLL('msg_sendInstant'));
     }
 }
-
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/mod1/class.tx_cfcleague_mod1_AjaxTicker.php']) {
-    include_once ($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/mod1/class.tx_cfcleague_mod1_AjaxTicker.php']);
-}
-
-?>

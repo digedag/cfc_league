@@ -2,7 +2,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2007-2017 Rene Nitzsche (rene@system25.de)
+ *  (c) 2007-2018 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -68,11 +68,12 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc
         /* @var $current_league tx_cfcleague_models_Competition */
         $current_league = $this->getSelector()->showLeagueSelector($selector, $this->getModule()
             ->getPid());
-        if (! $current_league)
+        if (! $current_league) {
             return $this->doc->section('Info:', $LANG->getLL('no_league_in_page'), 0, 1, ICON_WARN);
+        }
 
         if (! count($current_league->getRounds())) {
-            $this->getModule()->selector = $selector;
+            $this->setSelectorMenu($selector);
             $content .= $LANG->getLL('no_round_in_league');
             return $content;
         }
@@ -84,9 +85,9 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc
         $matchData = tx_cfcleague_util_ServiceRegistry::getMatchService()->searchMatchesByRound($current_league, $current_round, TRUE);
         $match = $this->getSelector()->showMatchSelector($selector, $this->getModule()
             ->getPid(), $matchData);
-        $this->getModule()->selector = $selector;
+        $this->setSelectorMenu($selector);
 
-        $modContent = '';
+        $modContent = '<div id="editform">';
         $update = Tx_Rnbase_Utility_T3General::_GP('update');
         $data = Tx_Rnbase_Utility_T3General::_GP('data');
         // Haben wir Daten im Request?
@@ -133,13 +134,17 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc
 
         // Den JS-Code für Validierung einbinden
         $content .= $formTool->form->printNeededJSFunctions_top();
-        $content .= $modContent;
+        $content .= $modContent . '</div>';
         // $content .= $this->getModule()->getFormTool()->form->JSbottom('editform');
         $content .= $this->doc->section($LANG->getLL('title_recent_tickers'), $tickerContent);
 
         $content .= $formTool->form->printNeededJSFunctions();
 
         return $content;
+    }
+    protected function setSelectorMenu($selector)
+    {
+        $this->getModule()->selector = '<div id="selector">'.$selector.'</div>';
     }
 
     /**
@@ -178,16 +183,12 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc
         </script>';
 
             return $ret;
-        } elseif (tx_rnbase_util_TYPO3::isTYPO3VersionOrHigher(4004000)) {
-            /* @var $pageRenderer \TYPO3\CMS\Core\Page\PageRenderer */
-            $pageRenderer = $this->doc->getPageRenderer();
-            $pageRenderer->loadPrototype();
-            $pageRenderer->loadScriptaculous('builder,effects,controls');
-        } else {
-            if (! method_exists($this->doc, 'loadJavascriptLib'))
-                return '';
-            $this->doc->loadJavascriptLib('contrib/scriptaculous/scriptaculous.js?load=builder,effects,controls');
         }
+
+        /* @var $pageRenderer \TYPO3\CMS\Core\Page\PageRenderer */
+        $pageRenderer = $this->doc->getPageRenderer();
+        $pageRenderer->loadPrototype();
+        $pageRenderer->loadScriptaculous('builder,effects,controls');
         $ret = '';
         $ret = $this->doc->backPath;
         $ret = '<script type="text/javascript" src="' . tx_rnbase_util_Extensions::extRelPath('cfc_league') . 'mod1/js/ticker.js"></script>';
