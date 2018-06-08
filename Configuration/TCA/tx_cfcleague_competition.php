@@ -28,7 +28,7 @@ $tx_cfcleague_competition = Array (
         'typeicon_classes' => [
             'default' => 'ext-cfcleague-competition-default'
         ],
-		'iconfile' => tx_rnbase_util_Extensions::extRelPath('cfc_league').'Resources/Public/Icons/icon_tx_cfcleague_competition.gif',
+		'iconfile' => 'EXT:cfc_league/Resources/Public/Icons/icon_tx_cfcleague_competition.gif',
 	),
 	'interface' => Array (
 		'showRecordFieldList' => 'hidden,name,agegroup,saison,type,teams'
@@ -237,13 +237,12 @@ $tx_cfcleague_competition = Array (
 */
 	),
 	'types' => Array (
-		'0' => Array('showitem' => 'hidden;;1;;1-1-1, name, tournament, sports, internal_name, short_name, agegroup, saison, type;;2, point_system, logo, t3logo, teams, match_keys, table_marks, match_parts, addparts'),
-		'1' => Array('showitem' => 'hidden;;1;;1-1-1, name, tournament'),
-//		'icehockey' => Array('showitem' => 'hidden;;1;;1-1-1, name, sports, internal_name, short_name, agegroup, saison, type;;2, point_system, logo, t3logo, teams, match_keys, table_marks, match_parts, addparts'),
+		'0' => Array('showitem' => 'hidden, name, tournament, sports, internal_name, short_name, agegroup, saison, type;;1, point_system, logo, t3logo, teams, match_keys, table_marks, match_parts, addparts'),
+		'1' => Array('showitem' => 'hidden, name, tournament'),
+//		'icehockey' => Array('showitem' => 'hidden, name, sports, internal_name, short_name, agegroup, saison, type;;2, point_system, logo, t3logo, teams, match_keys, table_marks, match_parts, addparts'),
 	),
 	'palettes' => Array (
-		'1' => Array('showitem' => ''),
-		'2' => Array('showitem' => 'obligation')
+		'1' => Array('showitem' => 'obligation')
 	)
 );
 

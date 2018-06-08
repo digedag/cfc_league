@@ -26,7 +26,7 @@ $tx_cfcleague_profiles = Array (
         'typeicon_classes' => [
             'default' => 'ext-cfcleague-profiles-default'
         ],
-		'iconfile' => tx_rnbase_util_Extensions::extRelPath('cfc_league').'Resources/Public/Icons/icon_tx_cfcleague_profiles.gif',
+		'iconfile' => 'EXT:cfc_league/Resources/Public/Icons/icon_tx_cfcleague_profiles.gif',
 	),
 	'interface' => Array (
 		'showRecordFieldList' => 'hidden,first_name,last_name,dam_images,birthday,nationality,height,
@@ -265,7 +265,7 @@ $tx_cfcleague_profiles = Array (
 		),
 	),
 	'types' => Array (
-		'0' => Array('showitem' => 'hidden;;1;;1-1-1, first_name, last_name, stage_name, home_town, birthday, native_town, nationality, height, weight, position, duration_of_contract, start_of_contract, email, nickname, extid,
+		'0' => Array('showitem' => 'hidden, first_name, last_name, stage_name, home_town, birthday, native_town, nationality, height, weight, position, duration_of_contract, start_of_contract, email, nickname, extid,
 		--div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles.description,link_report,dam_images,t3images,types, summary;;;richtext[cut|copy|paste|formatblock|textcolor|bold|italic|underline|left|center|right|orderedlist|unorderedlist|outdent|indent|link|table|image|line|chMode]:rte_transform[mode=ts_css|imgpath=uploads/tx_cfcleague/rte/], description;;;richtext[cut|copy|paste|formatblock|textcolor|bold|italic|underline|left|center|right|orderedlist|unorderedlist|outdent|indent|link|table|image|line|chMode]:rte_transform[mode=ts_css|imgpath=uploads/tx_cfcleague/rte/]')
 	),
 	'palettes' => Array (

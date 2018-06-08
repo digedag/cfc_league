@@ -42,7 +42,7 @@ $tx_cfcleague_teams = Array (
         'typeicon_classes' => [
             'default' => 'ext-cfcleague-teams-default'
         ],
-		'iconfile' => tx_rnbase_util_Extensions::extRelPath('cfc_league').'Resources/Public/Icons/icon_tx_cfcleague_teams.gif',
+		'iconfile' => 'EXT:cfc_league/Resources/Public/Icons/icon_tx_cfcleague_teams.gif',
 	),
 	'interface' => Array (
 		'showRecordFieldList' => 'hidden,club,name,short_name'
@@ -219,7 +219,7 @@ $tx_cfcleague_teams = Array (
 		),
 	),
 	'types' => Array (
-		'0' => Array('showitem' => 'hidden;;1;;1-1-1, club,logo, t3logo, name, short_name, tlc, agegroup, dam_images, t3images, dam_logo, link_report, dummy, extid,
+		'0' => Array('showitem' => 'hidden, club,logo, t3logo, name, short_name, tlc, agegroup, dam_images, t3images, dam_logo, link_report, dummy, extid,
 		--div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_teams_tab_members,coaches, players, supporters, players_comment, coaches_comment, supporters_comment, comment;;;richtext[paste|bold|italic|underline|formatblock|class|left|center|right|orderedlist|unorderedlist|outdent|indent|link|image]:rte_transform[mode=ts]')
 	),
 	'palettes' => Array (

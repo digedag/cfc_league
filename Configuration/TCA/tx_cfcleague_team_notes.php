@@ -20,7 +20,7 @@ $tx_cfcleague_team_notes = Array (
         'typeicon_classes' => [
             'default' => 'ext-cfcleague-teamnotes-default'
         ],
-		'iconfile' => tx_rnbase_util_Extensions::extRelPath('cfc_league').'Resources/Public/Icons/icon_tx_cfcleague_teams.gif',
+		'iconfile' => 'EXT:cfc_league/Resources/Public/Icons/icon_tx_cfcleague_teams.gif',
 	),
 	'interface' => Array (
 		'showRecordFieldList' => '',
@@ -118,9 +118,9 @@ $tx_cfcleague_team_notes = Array (
 		),
 	),
 	'types' => Array (
-			'0' => Array('showitem' => 'hidden;;1;;1-1-1, mediatype, team, player, type, comment'),
-			'1' => Array('showitem' => 'hidden;;1;;1-1-1, mediatype, team, player, type, media'),
-			'2' => Array('showitem' => 'hidden;;1;;1-1-1, mediatype, team, player, type, number')
+			'0' => Array('showitem' => 'hidden, mediatype, team, player, type, comment'),
+			'1' => Array('showitem' => 'hidden, mediatype, team, player, type, media'),
+			'2' => Array('showitem' => 'hidden, mediatype, team, player, type, number')
 	),
 	'palettes' => Array (
 			'1' => Array('showitem' => '')

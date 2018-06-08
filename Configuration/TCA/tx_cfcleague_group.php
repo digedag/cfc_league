@@ -24,7 +24,7 @@ $tx_cfcleague_group = Array (
         'typeicon_classes' => [
             'default' => 'ext-cfcleague-group-default'
         ],
-		'iconfile' => tx_rnbase_util_Extensions::extRelPath('cfc_league').'Resources/Public/Icons/icon_tx_cfcleague_group.gif',
+		'iconfile' => 'EXT:cfc_league/Resources/Public/Icons/icon_tx_cfcleague_group.gif',
 	),
 	'interface' => Array (
 		'showRecordFieldList' => 'hidden,starttime,fe_group,name'
@@ -88,7 +88,7 @@ $tx_cfcleague_group = Array (
 		),
 	),
 	'types' => Array (
-		'0' => Array('showitem' => 'hidden;;1;;1-1-1, name, shortname, logo, t3logo')
+		'0' => Array('showitem' => 'hidden;;1, name, shortname, logo, t3logo')
 	),
 	'palettes' => Array (
 		'1' => Array('showitem' => 'starttime, fe_group')

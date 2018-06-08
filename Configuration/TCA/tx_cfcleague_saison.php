@@ -18,7 +18,7 @@ $tx_cfcleague_saison = Array (
         'typeicon_classes' => [
             'default' => 'ext-cfcleague-saison-default'
         ],
-		'iconfile' => tx_rnbase_util_Extensions::extRelPath('cfc_league').'Resources/Public/Icons/icon_tx_cfcleague_saison.gif',
+		'iconfile' => 'EXT:cfc_league/Resources/Public/Icons/icon_tx_cfcleague_saison.gif',
 	),
 	'interface' => Array (
 		'showRecordFieldList' => 'hidden,name'
@@ -58,7 +58,7 @@ $tx_cfcleague_saison = Array (
 		),
 	),
 	'types' => Array (
-		'0' => Array('showitem' => 'hidden;;1;;1-1-1, name, halftime')
+		'0' => Array('showitem' => 'hidden, name, halftime')
 	),
 	'palettes' => Array (
 		'1' => Array('showitem' => '')

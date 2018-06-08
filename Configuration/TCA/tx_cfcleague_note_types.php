@@ -15,7 +15,7 @@ $tx_cfcleague_note_types = Array (
                 'typeicon_classes' => [
                     'default' => 'ext-cfcleague-notetypes-default'
                 ],
-				'iconfile' => tx_rnbase_util_Extensions::extRelPath('cfc_league').'Resources/Public/Icons/icon_table.gif',
+				'iconfile' => 'EXT:cfc_league/Resources/Public/Icons/icon_table.gif',
 		),
 		'interface' => Array (
 				'showRecordFieldList' => '',

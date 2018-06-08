@@ -25,7 +25,7 @@ $tx_cfcleague_match_notes = Array (
         'typeicon_classes' => [
             'default' => 'ext-cfcleague-matchnotes-default'
         ],
-		'iconfile' => tx_rnbase_util_Extensions::extRelPath('cfc_league').'Resources/Public/Icons/icon_table.gif',
+		'iconfile' => 'EXT:cfc_league/Resources/Public/Icons/icon_table.gif',
 	),
 	'interface' => Array (
 		'showRecordFieldList' => 'hidden,game,minute,extra_time,type,player_home,player_guest,comment',
@@ -152,7 +152,7 @@ $tx_cfcleague_match_notes = Array (
 		),
 	),
 	'types' => Array (
-			'0' => Array('showitem' => 'hidden;;1;;1-1-1, game, minute, second, extra_time, type, player_home, player_guest, comment')
+			'0' => Array('showitem' => 'hidden, game, minute, second, extra_time, type, player_home, player_guest, comment')
 	),
 	'palettes' => Array (
 			'1' => Array('showitem' => '')

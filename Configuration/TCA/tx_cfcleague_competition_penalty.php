@@ -21,7 +21,7 @@ $tx_cfcleague_competition_penalty = Array (
         'typeicon_classes' => [
             'default' => 'ext-cfcleague-competition-penalty-default'
         ],
-		'iconfile' => tx_rnbase_util_Extensions::extRelPath('cfc_league').'Resources/Public/Icons/icon_tx_cfcleague_competition_penalty.gif',
+		'iconfile' => 'EXT:cfc_league/Resources/Public/Icons/icon_tx_cfcleague_competition_penalty.gif',
 	),
 	'interface' => Array (
 		'showRecordFieldList' => 'hidden,competition,team,game,comment,points_pos,points_neg,goals_pos,goals_neg,static_position'
@@ -252,7 +252,7 @@ $tx_cfcleague_competition_penalty = Array (
 		),
 	),
 	'types' => Array (
-		'0' => Array('showitem' => 'hidden;;1;;1-1-1, competition, team, game, comment, points_pos, points_neg, goals_pos, goals_neg, matches, wins, draws, loses, static_position, correction')
+		'0' => Array('showitem' => 'hidden, competition, team, game, comment, points_pos, points_neg, goals_pos, goals_neg, matches, wins, draws, loses, static_position, correction')
 	),
 	'palettes' => Array (
 		'1' => Array('showitem' => '')
