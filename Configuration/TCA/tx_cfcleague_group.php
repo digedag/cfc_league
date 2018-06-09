@@ -46,8 +46,8 @@ $tx_cfcleague_group = Array (
 			'label' => 'LLL:EXT:lang/locallang_general.xml:LGL.starttime',
 			'config' => Array (
 				'type' => 'input',
-				'size' => '8',
-				'max' => '20',
+				'renderType' => 'inputDateTime',
+			    'size' => '8',
 				'eval' => 'date',
 				'default' => '0',
 				'checkbox' => '0'
@@ -58,7 +58,8 @@ $tx_cfcleague_group = Array (
 			'label' => 'LLL:EXT:lang/locallang_general.xml:LGL.fe_group',
 			'config' => Array (
 				'type' => 'select',
-				'items' => Array (
+			    'renderType' => 'selectMultipleSideBySide',
+			    'items' => Array (
 					Array('', 0),
 					Array('LLL:EXT:lang/locallang_general.xml:LGL.hide_at_login', -1),
 					Array('LLL:EXT:lang/locallang_general.xml:LGL.any_login', -2),
@@ -88,7 +89,7 @@ $tx_cfcleague_group = Array (
 		),
 	),
 	'types' => Array (
-		'0' => Array('showitem' => 'hidden;;1, name, shortname, logo, t3logo')
+		'0' => Array('showitem' => 'hidden,--palette--;;1, name, shortname, logo, t3logo')
 	),
 	'palettes' => Array (
 		'1' => Array('showitem' => 'starttime, fe_group')

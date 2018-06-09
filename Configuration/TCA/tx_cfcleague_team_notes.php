@@ -8,7 +8,6 @@ $tx_cfcleague_team_notes = Array (
 		'label_alt' => 'type,player,team',
 		'label_alt_force' => 1,
 		'searchFields' => 'uid,comment',
-		'requestUpdate' => 'team',
 		'tstamp' => 'tstamp',
 		'type' => 'mediatype',
 		'crdate' => 'crdate',
@@ -42,11 +41,9 @@ $tx_cfcleague_team_notes = Array (
 			'exclude' => 1,
 			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_teams',
 			'config' => Array (
-//				'type' => 'group',
-//				'internal_type' => 'db',
-//				'allowed' => 'tx_cfcleague_teams',
 				'type' => 'select',
-				'items' => Array (
+			    'renderType' => 'selectSingle',
+			    'items' => Array (
 					Array('', ''),
 					),
 				'foreign_table' => 'tx_cfcleague_teams',
@@ -55,14 +52,16 @@ $tx_cfcleague_team_notes = Array (
 				'size' => 1,
 				'minitems' => 0,
 				'maxitems' => 1,
-			)
+			),
+			'onChange' => 'reload',
 		),
 		'type' => Array (
 			'exclude' => 1,
 			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_note_types',
 			'config' => Array (
 				'type' => 'select',
-				'foreign_table' => 'tx_cfcleague_note_types',
+			    'renderType' => 'selectSingle',
+			    'foreign_table' => 'tx_cfcleague_note_types',
 				'foreign_table_where' => 'ORDER BY tx_cfcleague_note_types.sorting',
 				'eval' => 'required',
 				'size' => 1,
@@ -75,7 +74,8 @@ $tx_cfcleague_team_notes = Array (
 			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_team_notes.mediatype',
 			'config' => Array (
 				'type' => 'select',
-				'items' => Array (
+			    'renderType' => 'selectSingle',
+			    'items' => Array (
 					Array('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_team_notes.mediatype.text', '0'),
 					Array('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_team_notes.mediatype.number', '2'),
 					),
@@ -88,7 +88,8 @@ $tx_cfcleague_team_notes = Array (
 			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles',
 			'config' => Array (
 				'type' => 'select',
-				'foreign_table' => 'tx_cfcleague_profiles',
+			    'renderType' => 'selectSingle',
+			    'foreign_table' => 'tx_cfcleague_profiles',
 				'foreign_table_where' => 'AND tx_cfcleague_profiles.uid = 0',
 				'itemsProcFunc' => 'tx_cfcleague_tca_Lookup->getPlayers4Team',
 				'eval' => 'required',
@@ -127,6 +128,9 @@ $tx_cfcleague_team_notes = Array (
 	)
 );
 
+if (!tx_rnbase_util_TYPO3::isTYPO86OrHigher()) {
+    $tx_cfcleague_team_notes['ctrl']['requestUpdate'] = 'team';
+}
 
 if(tx_rnbase_util_TYPO3::isTYPO60OrHigher()) {
 	tx_rnbase::load('tx_rnbase_util_TSFAL');
