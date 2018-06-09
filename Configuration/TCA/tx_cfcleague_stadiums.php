@@ -4,9 +4,8 @@ if (!defined ('TYPO3_MODE')) 	die ('Access denied.');
 tx_rnbase::load('tx_rnbase_configurations');
 tx_rnbase::load('tx_cfcleague_tca_Lookup');
 
-if(tx_rnbase_util_Extensions::isLoaded('dam')) {
-	require_once(tx_rnbase_util_Extensions::extPath('dam').'tca_media_field.php');
-}
+
+$rteConfig = 'richtext[paste|bold|italic|underline|formatblock|class|left|center|right|orderedlist|unorderedlist|outdent|indent|link|image]:rte_transform[mode=ts]';
 
 $wecmap = array();
 $wecmap['wec_map']['isMappable'] = 1;
@@ -234,18 +233,31 @@ $tx_cfcleague_stadiums = Array (
 		),
 	),
 	'types' => Array (
-			'0' => Array('showitem' => 'name,altname,capacity,logo,t3logo,pictures,t3pictures,clubs,extid,
-						--div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_stadiums_tab_description,description;;4;richtext[paste|bold|italic|underline|formatblock|class|left|center|right|orderedlist|unorderedlist|outdent|indent|link|image]:rte_transform[mode=ts],description2;;4;richtext[paste|bold|italic|underline|formatblock|class|left|center|right|orderedlist|unorderedlist|outdent|indent|link|image]:rte_transform[mode=ts],
-						--div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_stadiums_tab_location,street,city,zip,country,countrycode,lng,lat,address')
+			'0' => [
+			    'showitem' => 'name,altname,capacity,logo,t3logo,pictures,t3pictures,clubs,extid,
+						--div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_stadiums_tab_description,description;;4,description2;;4,
+						--div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_stadiums_tab_location,street,city,zip,country,countrycode,lng,lat,address'
+			],
+    	    'columnsOverrides' => [
+    	        'description' => ['defaultExtras' => $rteConfig],
+    	        'description2' => ['defaultExtras' => $rteConfig],
+    	    ]
 	),
 	'palettes' => Array (
 			'1' => Array('showitem' => '')
 	)
 );
 
-$tca = tx_rnbase::makeInstance('Tx_Rnbase_Utility_TcaTool');
-$tca->addWizard($tx_cfcleague_stadiums, 'description', 'RTE', 'wizard_rte', array());
-$tca->addWizard($tx_cfcleague_stadiums, 'description2', 'RTE', 'wizard_rte', array());
+if(!tx_rnbase_util_TYPO3::isTYPO76OrHigher()) {
+    $tx_cfcleague_stadiums['types'][0]['showitem'] = 'name,altname,capacity,logo,t3logo,pictures,t3pictures,clubs,extid,
+						--div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_stadiums_tab_description,description;;4;'.$rteConfig.',description2;;4;'.$rteConfig.',
+						--div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_stadiums_tab_location,street,city,zip,country,countrycode,lng,lat,address';
+
+    $tca = tx_rnbase::makeInstance('Tx_Rnbase_Utility_TcaTool');
+    $tca->addWizard($tx_cfcleague_stadiums, 'description', 'RTE', 'wizard_rte', array());
+    $tca->addWizard($tx_cfcleague_stadiums, 'description2', 'RTE', 'wizard_rte', array());
+}
+
 
 if(tx_rnbase_util_Extensions::isLoaded('static_info_tables')) {
 	$tx_cfcleague_stadiums['columns']['country'] = tx_cfcleague_tca_Lookup::getCountryField();

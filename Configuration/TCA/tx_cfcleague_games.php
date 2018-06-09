@@ -8,6 +8,7 @@ if(tx_rnbase_util_Extensions::isLoaded('dam')) {
 }
 tx_rnbase::load('tx_cfcleague_tca_Lookup');
 
+$rteConfig = 'richtext[paste|bold|italic|underline|formatblock|class|left|center|right|orderedlist|unorderedlist|outdent|indent|link|image]:rte_transform[mode=ts]';
 
 $tx_cfcleague_games = Array (
 	'ctrl' => Array (
@@ -662,12 +663,16 @@ $tx_cfcleague_games = Array (
 	),
 	'types' => Array (
 	// goals_home_1, goals_guest_1, goals_home_2, goals_guest_2,
-		'0' => Array('showitem' =>
-			'hidden,match_no,competition,home,guest,round,round_name,date,addinfo,status;;6,sets,arena,stadium,visitors,extid,
+		'0' => [
+		    'showitem' => 'hidden,match_no,competition,home,guest,round,round_name,date,addinfo,status;;6,sets,arena,stadium,visitors,extid,
 			--div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.tab_lineup,coach_home, players_home, substitutes_home, system_home, system_guest, coach_guest, players_guest, substitutes_guest, referee, assists,
 			--div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.tab_lineup_stat,players_home_stat, substitutes_home_stat, players_guest_stat, substitutes_guest_stat, scorer_home_stat, scorer_guest_stat,
-			--div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.tab_score, is_extratime;;2, is_penalty;;3;;1-1-1,
-			--div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.game_report, game_report;;4;richtext[paste|bold|italic|underline|formatblock|class|left|center|right|orderedlist|unorderedlist|outdent|indent|link|image]:rte_transform[mode=ts], game_report_author;;5, dam_images, t3images, dam_media, dam_media2, video, videoimg')
+			--div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.tab_score, is_extratime;;2, is_penalty;;3,
+			--div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.game_report, game_report;;4, game_report_author;;5, dam_images, t3images, dam_media, dam_media2, video, videoimg'
+		],
+	    'columnsOverrides' => [
+	        'game_report' => ['defaultExtras' => $rteConfig],
+	    ]
 	),
 	'palettes' => Array (
 		'1' => Array('showitem' => ''),
@@ -679,8 +684,18 @@ $tx_cfcleague_games = Array (
 	)
 );
 
-$tca = tx_rnbase::makeInstance('Tx_Rnbase_Utility_TcaTool');
-$tca->addWizard($tx_cfcleague_games, 'game_report', 'RTE', 'wizard_rte', array());
+if(!tx_rnbase_util_TYPO3::isTYPO76OrHigher()) {
+    $tx_cfcleague_games['types'][0]['showitem'] = 'hidden,match_no,competition,home,guest,round,round_name,date,addinfo,status;;6,sets,arena,stadium,visitors,extid,
+			--div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.tab_lineup,coach_home, players_home, substitutes_home, system_home, system_guest, coach_guest, players_guest, substitutes_guest, referee, assists,
+			--div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.tab_lineup_stat,players_home_stat, substitutes_home_stat, players_guest_stat, substitutes_guest_stat, scorer_home_stat, scorer_guest_stat,
+			--div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.tab_score, is_extratime;;2, is_penalty;;3,
+			--div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.game_report, game_report;;4;'.$rteConfig.', game_report_author;;5, dam_images, t3images, dam_media, dam_media2, video, videoimg';
+
+    $tca = tx_rnbase::makeInstance('Tx_Rnbase_Utility_TcaTool');
+    $tca->addWizard($tx_cfcleague_games, 'game_report', 'RTE', 'wizard_rte', array());
+}
+
+
 
 if(tx_rnbase_util_Extensions::isLoaded('rgmediaimages') && !tx_rnbase_util_TYPO3::isTYPO70OrHigher()) {
 	$tx_cfcleague_games['columns']['video'] = Array (

@@ -4,6 +4,8 @@ if (!defined ('TYPO3_MODE')) 	die ('Access denied.');
 $globalClubs = intval(tx_rnbase_configurations::getExtensionCfgValue('cfc_league', 'useGlobalClubs')) > 0;
 $clubOrdering = intval(tx_rnbase_configurations::getExtensionCfgValue('cfc_league', 'clubOrdering')) > 0;
 
+$rteConfig = 'richtext[paste|bold|italic|underline|formatblock|class|left|center|right|orderedlist|unorderedlist|outdent|indent|link|image]:rte_transform[mode=ts]';
+
 $clubArr = $globalClubs ?
 		Array (
 				'type' => 'select',
@@ -219,16 +221,26 @@ $tx_cfcleague_teams = Array (
 		),
 	),
 	'types' => Array (
-		'0' => Array('showitem' => 'hidden, club,logo, t3logo, name, short_name, tlc, agegroup, dam_images, t3images, dam_logo, link_report, dummy, extid,
-		--div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_teams_tab_members,coaches, players, supporters, players_comment, coaches_comment, supporters_comment, comment;;;richtext[paste|bold|italic|underline|formatblock|class|left|center|right|orderedlist|unorderedlist|outdent|indent|link|image]:rte_transform[mode=ts]')
+		'0' => [
+		    'showitem' => 'hidden, club,logo, t3logo, name, short_name, tlc, agegroup, dam_images, t3images, dam_logo, link_report, dummy, extid,
+    		      --div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_teams_tab_members,coaches, players, supporters, players_comment, coaches_comment, supporters_comment, comment',
+		    'columnsOverrides' => [
+		        'comment' => ['defaultExtras' => $rteConfig],
+		    ],
+		],
 	),
 	'palettes' => Array (
 		'1' => Array('showitem' => '')
 	)
 );
 
-$tca = tx_rnbase::makeInstance('Tx_Rnbase_Utility_TcaTool');
-$tca->addWizard($tx_cfcleague_teams, 'comment', 'RTE', 'wizard_rte', array());
+if(!tx_rnbase_util_TYPO3::isTYPO76OrHigher()) {
+    $tx_cfcleague_teams['types'][0]['showitem'] = 'hidden, club,logo, t3logo, name, short_name, tlc, agegroup, dam_images, t3images, dam_logo, link_report, dummy, extid,
+		      --div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_teams_tab_members,coaches, players, supporters, players_comment, coaches_comment, supporters_comment, comment;;;'.$rteConfig;
+    $tca = tx_rnbase::makeInstance('Tx_Rnbase_Utility_TcaTool');
+    $tca->addWizard($tx_cfcleague_teams, 'comment', 'RTE', 'wizard_rte', array());
+}
+
 
 tx_rnbase::load('tx_cfcleague_tca_Lookup');
 tx_rnbase::load('tx_rnbase_util_TYPO3');

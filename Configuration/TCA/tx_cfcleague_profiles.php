@@ -1,10 +1,10 @@
 <?php
 if (!defined ('TYPO3_MODE')) 	die ('Access denied.');
 
-if(tx_rnbase_util_Extensions::isLoaded('dam')) {
-	require_once(tx_rnbase_util_Extensions::extPath('dam').'tca_media_field.php');
-}
 tx_rnbase::load('tx_cfcleague_tca_Lookup');
+tx_rnbase::load('tx_rnbase_util_TYPO3');
+
+$rteConfig = 'richtext[cut|copy|paste|formatblock|textcolor|bold|italic|underline|left|center|right|orderedlist|unorderedlist|outdent|indent|link|table|image|line|chMode]:rte_transform[mode=ts_css|imgpath=uploads/tx_cfcleague/rte/]';
 
 $tx_cfcleague_profiles = Array (
 	'ctrl' => Array (
@@ -265,45 +265,35 @@ $tx_cfcleague_profiles = Array (
 		),
 	),
 	'types' => Array (
-		'0' => Array('showitem' => 'hidden, first_name, last_name, stage_name, home_town, birthday, native_town, nationality, height, weight, position, duration_of_contract, start_of_contract, email, nickname, extid,
-		--div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles.description,link_report,dam_images,t3images,types, summary;;;richtext[cut|copy|paste|formatblock|textcolor|bold|italic|underline|left|center|right|orderedlist|unorderedlist|outdent|indent|link|table|image|line|chMode]:rte_transform[mode=ts_css|imgpath=uploads/tx_cfcleague/rte/], description;;;richtext[cut|copy|paste|formatblock|textcolor|bold|italic|underline|left|center|right|orderedlist|unorderedlist|outdent|indent|link|table|image|line|chMode]:rte_transform[mode=ts_css|imgpath=uploads/tx_cfcleague/rte/]')
+		'0' => [
+		    'showitem' => 'hidden, first_name, last_name, stage_name, home_town, birthday, native_town, nationality, height, weight, position, duration_of_contract, start_of_contract, email, nickname, extid,
+		         --div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles.description,link_report,dam_images,t3images,types, summary, description'
+		    ],
+    	    'columnsOverrides' => [
+    	        'description' => ['defaultExtras' => $rteConfig],
+    	        'summary' => ['defaultExtras' => $rteConfig],
+    	    ]
 	),
 	'palettes' => Array (
 		'1' => Array('showitem' => '')
 	)
 );
 
-$tca = tx_rnbase::makeInstance('Tx_Rnbase_Utility_TcaTool');
-$tca->addWizard($tx_cfcleague_profiles, 'description', 'RTE', 'wizard_rte', array());
-$tca->addWizard($tx_cfcleague_profiles, 'summary', 'RTE', 'wizard_rte', array());
+if(!tx_rnbase_util_TYPO3::isTYPO76OrHigher()) {
+    $tx_cfcleague_profiles['types'][0]['showitem'] = 'hidden, first_name, last_name, stage_name, home_town, birthday, native_town, nationality, height, weight, position, duration_of_contract, start_of_contract, email, nickname, extid,
+		--div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles.description,link_report,dam_images,t3images,types, summary;;;'.$rteConfig.', description;;;'.$rteConfig;
+}
+
+if (!tx_rnbase_util_TYPO3::isTYPO76OrHigher()) {
+    $tca = tx_rnbase::makeInstance('Tx_Rnbase_Utility_TcaTool');
+    $tca->addWizard($tx_cfcleague_profiles, 'description', 'RTE', 'wizard_rte', array());
+    $tca->addWizard($tx_cfcleague_profiles, 'summary', 'RTE', 'wizard_rte', array());
+}
 
 
-tx_rnbase::load('tx_rnbase_util_TYPO3');
-if(tx_rnbase_util_TYPO3::isTYPO60OrHigher()) {
-	tx_rnbase::load('tx_rnbase_util_TSFAL');
-	$tx_cfcleague_profiles['columns']['t3images'] = tx_rnbase_util_TSFAL::getMediaTCA('t3images', array(
-		'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_stadiums_pictures',
-	));
-}
-elseif(tx_rnbase_util_Extensions::isLoaded('dam')) {
-	$tx_cfcleague_profiles['columns']['dam_images'] = txdam_getMediaTCA('image_field', 'dam_images');
-}
-else {
-	$tx_cfcleague_profiles['columns']['t3images'] = Array (
-		'exclude' => 1,
-		'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.pictures',
-		'config' => Array (
-			'type' => 'group',
-			'internal_type' => 'file',
-			'allowed' => 'gif,png,jpeg,jpg',
-			'max_size' => 900,
-			'uploadfolder' => 'uploads/tx_cfcleague',
-			'show_thumbs' => 1,
-			'size' => 4,
-			'minitems' => 0,
-			'maxitems' => 10,
-		)
-	);
-}
+tx_rnbase::load('tx_rnbase_util_TSFAL');
+$tx_cfcleague_profiles['columns']['t3images'] = tx_rnbase_util_TSFAL::getMediaTCA('t3images', array(
+	'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_stadiums_pictures',
+));
 
 return $tx_cfcleague_profiles;

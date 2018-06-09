@@ -14,7 +14,7 @@ $clubOrdering = intval(tx_rnbase_configurations::getExtensionCfgValue('cfc_leagu
 
 $labelClub = $clubOrdering ? 'city' : 'name';
 $altLabelClub = $clubOrdering ? 'name' : 'city';
-
+$rteConfig = 'richtext[paste|bold|italic|underline|formatblock|class|left|center|right|orderedlist|unorderedlist|outdent|indent|link|image]:rte_transform[mode=ts]';
 
 $tx_cfcleague_club = Array (
     'ctrl' => Array (
@@ -285,25 +285,25 @@ $tx_cfcleague_club = Array (
                 'wizards' => Array(
                 //					'_PADDING' => 1,
                 //					'_VERTICAL' => 1,
-                    'edit' => array(
-                        'type' => 'popup',
-                        'title' => 'Edit',
-                        //						'script' => 'wizard_edit.php',
-                        'popup_onlyOpenIfSelected' => 1,
-                        'icon' => 'edit2.gif',
-                        'JSopenParams' => 'height=350,width=580,status=0,menubar=0,scrollbars=1',
-                    ),
-                    'add' => Array(
-                        'type' => 'script',
-                        'title' => 'Create new record',
-                        'icon' => 'add.gif',
-                        'params' => Array(
-                            'table'=>'tx_cfcleague_stadiums',
-                            'pid' => '###CURRENT_PID###',
-                            'setValue' => 'prepend'
-                            ),
-                            //						'script' => 'wizard_add.php',
-                        ),
+//                     'edit' => array(
+//                         'type' => 'popup',
+//                         'title' => 'Edit',
+//                         //						'script' => 'wizard_edit.php',
+//                         'popup_onlyOpenIfSelected' => 1,
+//                         'icon' => 'edit2.gif',
+//                         'JSopenParams' => 'height=350,width=580,status=0,menubar=0,scrollbars=1',
+//                     ),
+//                     'add' => Array(
+//                         'type' => 'script',
+//                         'title' => 'Create new record',
+//                         'icon' => 'add.gif',
+//                         'params' => Array(
+//                             'table'=>'tx_cfcleague_stadiums',
+//                             'pid' => '###CURRENT_PID###',
+//                             'setValue' => 'prepend'
+//                             ),
+//                             //						'script' => 'wizard_add.php',
+//                         ),
                     ),
                 )
             ),
@@ -314,8 +314,8 @@ $tx_cfcleague_club = Array (
     			--div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_club.tab_contact,www,email,street,zip,city,country,countrycode,address,lng,lat,
     			--div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_club.tab_info,established,yearestablished,colors,members,shortinfo,info,info2',
             'columnsOverrides' => [
-                'info' => ['defaultExtras' => 'richtext[paste|bold|italic|underline|formatblock|class|left|center|right|orderedlist|unorderedlist|outdent|indent|link|image]:rte_transform[mode=ts]'],
-                'info2' => ['defaultExtras' => 'richtext[paste|bold|italic|underline|formatblock|class|left|center|right|orderedlist|unorderedlist|outdent|indent|link|image]:rte_transform[mode=ts]'],
+                'info' => ['defaultExtras' => $rteConfig],
+                'info2' => ['defaultExtras' => $rteConfig],
             ]
         ]
         ),
@@ -327,14 +327,20 @@ $tx_cfcleague_club = Array (
 if(!tx_rnbase_util_TYPO3::isTYPO76OrHigher()) {
     $tx_cfcleague_club['types'][0]['showitem'] = 'hidden, name,short_name,dam_logo, logo,favorite,stadiums,
     	--div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_club.tab_contact,www,email,street,zip,city,country,countrycode,address,lng,lat,
-    	--div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_club.tab_info,established,yearestablished,colors,members,shortinfo,info;;;richtext[paste|bold|italic|underline|formatblock|class|left|center|right|orderedlist|unorderedlist|outdent|indent|link|image]:rte_transform[mode=ts],info2;;;richtext[paste|bold|italic|underline|formatblock|class|left|center|right|orderedlist|unorderedlist|outdent|indent|link|image]:rte_transform[mode=ts]';
+    	--div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_club.tab_info,established,yearestablished,colors,members,shortinfo,info;;;'.$rteConfig.',info2;;;'.$rteConfig;
 }
 
+/** @var $tca Tx_Rnbase_Utility_TcaTool */
 $tca = tx_rnbase::makeInstance('Tx_Rnbase_Utility_TcaTool');
-$tca->addWizard($tx_cfcleague_club, 'stadiums', 'edit', 'wizard_edit', array());
-$tca->addWizard($tx_cfcleague_club, 'stadiums', 'add', 'wizard_add', array());
-$tca->addWizard($tx_cfcleague_club, 'info', 'RTE', 'wizard_rte', array());
-$tca->addWizard($tx_cfcleague_club, 'info2', 'RTE', 'wizard_rte', array());
+if (tx_rnbase_util_TYPO3::isTYPO76OrHigher()) {
+    $tx_cfcleague_club['columns']['stadiums']['config']['wizards'] = Tx_Rnbase_Utility_TcaTool::getWizards('tx_cfcleague_stadiums',['add' => true, 'edit'=> true]);
+}
+else {
+    $tca->addWizard($tx_cfcleague_club, 'stadiums', 'edit', 'wizard_edit', array());
+    $tca->addWizard($tx_cfcleague_club, 'stadiums', 'add', 'wizard_add', array());
+    $tca->addWizard($tx_cfcleague_club, 'info', 'RTE', 'wizard_rte', array());
+    $tca->addWizard($tx_cfcleague_club, 'info2', 'RTE', 'wizard_rte', array());
+}
 
 
 
