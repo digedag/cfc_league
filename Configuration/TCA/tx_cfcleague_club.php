@@ -327,24 +327,16 @@ $tx_cfcleague_club = Array (
         )
     );
 
-/** @var $tca Tx_Rnbase_Utility_TcaTool */
-$tca = tx_rnbase::makeInstance('Tx_Rnbase_Utility_TcaTool');
-if (tx_rnbase_util_TYPO3::isTYPO76OrHigher()) {
-    Tx_Rnbase_Utility_TcaTool::configureWizards($tx_cfcleague_club, [
-        'stadiums'=> ['targettable' => 'tx_cfcleague_stadiums', 'add' => true, 'edit'=> true],
-        'info' => ['RTE' => ['defaultExtras' => $rteConfig]],
-        'info2' => ['RTE' => ['defaultExtras' => $rteConfig]],
-    ]);
-}
-else {
+tx_rnbase::load('Tx_Rnbase_Utility_TcaTool');
+Tx_Rnbase_Utility_TcaTool::configureWizards($tx_cfcleague_club, [
+    'stadiums'=> ['targettable' => 'tx_cfcleague_stadiums', 'add' => true, 'edit'=> true],
+    'info' => ['RTE' => ['defaultExtras' => $rteConfig]],
+    'info2' => ['RTE' => ['defaultExtras' => $rteConfig]],
+]);
+if (!tx_rnbase_util_TYPO3::isTYPO76OrHigher()) {
     $tx_cfcleague_club['types'][0]['showitem'] = 'hidden, name,short_name,dam_logo, logo,favorite,stadiums,
     	--div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_club.tab_contact,www,email,street,zip,city,country,countrycode,address,lng,lat,
     	--div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_club.tab_info,established,yearestablished,colors,members,shortinfo,info;;;'.$rteConfig.',info2;;;'.$rteConfig;
-
-    $tca->addWizard($tx_cfcleague_club, 'stadiums', 'edit', 'wizard_edit', array());
-    $tca->addWizard($tx_cfcleague_club, 'stadiums', 'add', 'wizard_add', array());
-    $tca->addWizard($tx_cfcleague_club, 'info', 'RTE', 'wizard_rte', array());
-    $tca->addWizard($tx_cfcleague_club, 'info2', 'RTE', 'wizard_rte', array());
 }
 
 

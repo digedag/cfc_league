@@ -247,15 +247,9 @@ if (!tx_rnbase_util_TYPO3::isTYPO86OrHigher()) {
     $tx_cfcleague_competition['ctrl']['requestUpdate'] = 'sports';
 }
 
-if (tx_rnbase_util_TYPO3::isTYPO76OrHigher()) {
-    Tx_Rnbase_Utility_TcaTool::configureWizards($tx_cfcleague_competition, [
-        'teams'=> ['targettable' => 'tx_cfcleague_teams', 'add' => true,],
-    ]);
-}
-else {
-    $tca = tx_rnbase::makeInstance('Tx_Rnbase_Utility_TcaTool');
-    $tca->addWizard($tx_cfcleague_competition, 'teams', 'add', 'wizard_add', array());
-}
+Tx_Rnbase_Utility_TcaTool::configureWizards($tx_cfcleague_competition, [
+    'teams'=> ['targettable' => 'tx_cfcleague_teams', 'add' => true,],
+]);
 
 
 

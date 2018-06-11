@@ -132,24 +132,13 @@ if (!tx_rnbase_util_TYPO3::isTYPO86OrHigher()) {
     $tx_cfcleague_team_notes['ctrl']['requestUpdate'] = 'team';
 }
 
-if(tx_rnbase_util_TYPO3::isTYPO60OrHigher()) {
-	tx_rnbase::load('tx_rnbase_util_TSFAL');
-	$tx_cfcleague_team_notes['columns']['mediatype']['config']['items'][] =
-					Array('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_team_notes.mediatype.media', '1');
-	$tx_cfcleague_team_notes['columns']['media'] = tx_rnbase_util_TSFAL::getMediaTCA('media', array(
-		'label' => 'LLL:EXT:lang/locallang_general.xml:LGL.images',
-		'config' => array('size' => 1, 'maxitems' => 1),
-	));
-	$tx_cfcleague_team_notes['columns']['media']['label'] = 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_team_notes.media';
-}
-elseif(tx_rnbase_util_Extensions::isLoaded('dam')) {
-	// Type media is supported with DAM only!
-	$tx_cfcleague_team_notes['columns']['mediatype']['config']['items'][] =
-		Array('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_team_notes.mediatype.media', '1');
-	$tx_cfcleague_team_notes['columns']['media'] = txdam_getMediaTCA('image_field', 'media');
-	$tx_cfcleague_team_notes['columns']['media']['label'] = 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_team_notes.media';
-	$tx_cfcleague_team_notes['columns']['media']['config']['size'] = 1;
-	$tx_cfcleague_team_notes['columns']['media']['config']['maxitems'] = 1;
-}
+tx_rnbase::load('tx_rnbase_util_TSFAL');
+$tx_cfcleague_team_notes['columns']['mediatype']['config']['items'][] =
+				Array('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_team_notes.mediatype.media', '1');
+$tx_cfcleague_team_notes['columns']['media'] = tx_rnbase_util_TSFAL::getMediaTCA('media', array(
+	'label' => 'LLL:EXT:lang/locallang_general.xml:LGL.images',
+	'config' => array('size' => 1, 'maxitems' => 1),
+));
+$tx_cfcleague_team_notes['columns']['media']['label'] = 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_team_notes.media';
 
 return $tx_cfcleague_team_notes;

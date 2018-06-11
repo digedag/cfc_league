@@ -280,17 +280,15 @@ $tx_cfcleague_profiles = Array (
 	)
 );
 
-if(tx_rnbase_util_TYPO3::isTYPO76OrHigher()) {
-    tx_rnbase::load('Tx_Rnbase_Utility_TcaTool');
-    $tx_cfcleague_profiles['columns']['description']['config']['wizards'] = Tx_Rnbase_Utility_TcaTool::getWizards('',['RTE' => true,]);
-    $tx_cfcleague_profiles['columns']['summary']['config']['wizards'] = Tx_Rnbase_Utility_TcaTool::getWizards('',['RTE' => true,]);
-}
-else {
+tx_rnbase::load('Tx_Rnbase_Utility_TcaTool');
+Tx_Rnbase_Utility_TcaTool::configureWizards($tx_cfcleague_profiles, [
+    'description' => ['RTE' => ['defaultExtras' => $rteConfig]],
+    'summary' => ['RTE' => ['defaultExtras' => $rteConfig]],
+]);
+
+if(!tx_rnbase_util_TYPO3::isTYPO76OrHigher()) {
     $tx_cfcleague_profiles['types'][0]['showitem'] = 'hidden, first_name, last_name, stage_name, home_town, birthday, native_town, nationality, height, weight, position, duration_of_contract, start_of_contract, email, nickname, extid,
 		--div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles.description,link_report,dam_images,t3images,types, summary;;;'.$rteConfig.', description;;;'.$rteConfig;
-    $tca = tx_rnbase::makeInstance('Tx_Rnbase_Utility_TcaTool');
-    $tca->addWizard($tx_cfcleague_profiles, 'description', 'RTE', 'wizard_rte', array());
-    $tca->addWizard($tx_cfcleague_profiles, 'summary', 'RTE', 'wizard_rte', array());
 }
 
 

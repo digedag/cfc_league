@@ -704,18 +704,13 @@ if(!tx_rnbase_util_TYPO3::isTYPO76OrHigher()) {
 			--div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.tab_lineup_stat,players_home_stat, substitutes_home_stat, players_guest_stat, substitutes_guest_stat, scorer_home_stat, scorer_guest_stat,
 			--div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.tab_score, is_extratime;;2, is_penalty;;3,
 			--div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.game_report, game_report;;4;'.$rteConfig.', game_report_author;;5, dam_images, t3images, dam_media, dam_media2, video, videoimg';
-
-    $tca = tx_rnbase::makeInstance('Tx_Rnbase_Utility_TcaTool');
-    $tca->addWizard($tx_cfcleague_games, 'game_report', 'RTE', 'wizard_rte', array());
 }
-else {
-    tx_rnbase::load('Tx_Rnbase_Utility_TcaTool');
-    Tx_Rnbase_Utility_TcaTool::configureWizards($tx_cfcleague_games, [
-        'game_report' => ['RTE' => ['defaultExtras' => $rteConfig]],
-        'referee' => ['targettable' => 'tx_cfcleague_profiles', 'suggest' => true],
-        'assists' => ['targettable' => 'tx_cfcleague_profiles', 'suggest' => true],
-    ]);
-}
+tx_rnbase::load('Tx_Rnbase_Utility_TcaTool');
+Tx_Rnbase_Utility_TcaTool::configureWizards($tx_cfcleague_games, [
+    'game_report' => ['RTE' => ['defaultExtras' => $rteConfig]],
+    'referee' => ['targettable' => 'tx_cfcleague_profiles', 'suggest' => true],
+    'assists' => ['targettable' => 'tx_cfcleague_profiles', 'suggest' => true],
+]);
 
 
 

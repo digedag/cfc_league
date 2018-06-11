@@ -265,13 +265,8 @@ if (!tx_rnbase_util_TYPO3::isTYPO86OrHigher()) {
     $tx_cfcleague_competition_penalty['ctrl']['requestUpdate'] = 'competition';
 }
 
-if (tx_rnbase_util_TYPO3::isTYPO76OrHigher()) {
-    tx_rnbase::load('Tx_Rnbase_Utility_TcaTool');
-    $tx_cfcleague_competition_penalty['columns']['comment']['config']['wizards'] = Tx_Rnbase_Utility_TcaTool::getWizards('',['RTE' => true,]);
-}
-else {
-    $tca = tx_rnbase::makeInstance('Tx_Rnbase_Utility_TcaTool');
-    $tca->addWizard($tx_cfcleague_competition_penalty, 'comment', 'RTE', 'wizard_rte', []);
-}
+tx_rnbase::load('Tx_Rnbase_Utility_TcaTool');
+$tx_cfcleague_competition_penalty['columns']['comment']['config']['wizards'] = Tx_Rnbase_Utility_TcaTool::getWizards('',['RTE' => true,]);
+
 
 return $tx_cfcleague_competition_penalty;
