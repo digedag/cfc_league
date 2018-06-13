@@ -1,10 +1,6 @@
 <?php
 if (!defined ('TYPO3_MODE')) 	die ('Access denied.');
 
-if(tx_rnbase_util_Extensions::isLoaded('dam')) {
-	require_once(tx_rnbase_util_Extensions::extPath('dam').'tca_media_field.php');
-}
-
 
 $tx_cfcleague_group = Array (
 	'ctrl' => Array (
@@ -46,7 +42,7 @@ $tx_cfcleague_group = Array (
 			'label' => 'LLL:EXT:lang/locallang_general.xml:LGL.starttime',
 			'config' => Array (
 				'type' => 'input',
-				'renderType' => 'inputDateTime',
+			    'renderType' => (tx_rnbase_util_TYPO3::isTYPO86OrHigher() ? 'inputDateTime' : ''),
 			    'size' => '8',
 				'eval' => 'date',
 				'default' => '0',
@@ -96,36 +92,11 @@ $tx_cfcleague_group = Array (
 	)
 );
 
-if(tx_rnbase_util_TYPO3::isTYPO60OrHigher()) {
-	tx_rnbase::load('tx_rnbase_util_TSFAL');
-	$tx_cfcleague_group['columns']['logo'] = tx_rnbase_util_TSFAL::getMediaTCA('logo', array(
-		'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_club.logo',
-		'size' => 1,
-		'maxitems' => 1
-	));
-}
-elseif(tx_rnbase_util_Extensions::isLoaded('dam')) {
-	$tx_cfcleague_group['columns']['logo'] = txdam_getMediaTCA('image_field', 'logo');
-	$tx_cfcleague_group['columns']['logo']['label'] = 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_club.logo';
-	$tx_cfcleague_group['columns']['logo']['config']['size'] = 1;
-	$tx_cfcleague_group['columns']['logo']['config']['maxitems'] = 1;
-}
-else {
-	$tx_cfcleague_group['columns']['t3logo'] = Array (
-		'exclude' => 1,
-		'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_club.logo',
-		'config' => Array (
-			'type' => 'group',
-			'internal_type' => 'file',
-			'allowed' => 'gif,png,jpeg,jpg',
-			'max_size' => 700,
-			'uploadfolder' => 'uploads/tx_cfcleague',
-			'show_thumbs' => 1,
-			'size' => 1,
-			'minitems' => 0,
-			'maxitems' => 1,
-		)
-	);
-}
+tx_rnbase::load('tx_rnbase_util_TSFAL');
+$tx_cfcleague_group['columns']['logo'] = tx_rnbase_util_TSFAL::getMediaTCA('logo', array(
+	'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_club.logo',
+	'size' => 1,
+	'maxitems' => 1
+));
 
 return $tx_cfcleague_group;
