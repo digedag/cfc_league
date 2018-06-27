@@ -63,11 +63,34 @@ class tx_cfcleague_hooks_tcehook {
 		}
 		if($table == 'tx_cfcleague_competition') {
 			$this->checkProfiles($incomingFieldArray, 'teams', $tcemain);
+			// Neue Teams im Wettbewerb?
+			if (strstr($incomingFieldArray['teams'], 'NEW')) {
+			    tx_rnbase::load('tx_rnbase_util_Strings');
+			    $newItemIds = tx_rnbase_util_Strings::trimExplode(',', $incomingFieldArray['teams']);
+			    $itemUids = array();
+			    for ($i = 0; $i < count($newItemIds); $i ++) {
+			        if (strstr($newItemIds[$i], 'NEW'))
+			            $itemUid = $tcemain->substNEWwithIDs[$newItemIds[$i]];
+			            else
+			                $itemUid = $newItemIds[$i];
+			                // Wir übernehmen nur UIDs, die gefunden werden
+			                if ($itemUid)
+			                    $itemUids[] = $itemUid;
+			    }
+			    $itemUids = array_unique($itemUids);
+			    $incomingFieldArray['teams'] = implode($itemUids, ',');
+			}
 		}
 		if($table == 'tx_cfcleague_games') {
 			if($incomingFieldArray['arena'] > 0 && !$incomingFieldArray['stadium']) {
 				$stadium = tx_rnbase::makeInstance('tx_cfcleague_models_Stadium', $incomingFieldArray['arena']);
 				$incomingFieldArray['stadium'] = $stadium->getName();
+			}
+			if (strstr($incomingFieldArray['home'], 'NEW')) {
+			    $incomingFieldArray['home'] = $tcemain->substNEWwithIDs[$incomingFieldArray['home']];
+			}
+			if (strstr($incomingFieldArray['guest'], 'NEW')) {
+			    $incomingFieldArray['guest'] = $tcemain->substNEWwithIDs[$incomingFieldArray['guest']];
 			}
 		}
 		if($table == 'tx_cfcleague_stadiums' || $table == 'tx_cfcleague_club') {
