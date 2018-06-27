@@ -232,9 +232,19 @@ $tx_cfcleague_competition = Array (
 			)
 		),
 */
+	    'extid' => Array (
+	        'exclude' => 1,
+	        'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition_extid',
+	        'config' => Array (
+	            'type' => 'input',
+	            'size' => '10',
+	            'max' => '255',
+	            'eval' => 'trim',
+            )
+        ),
 	),
 	'types' => Array (
-		'0' => Array('showitem' => 'hidden, name, tournament, sports, internal_name, short_name, agegroup, saison, type,--palette--;;1, point_system, logo, t3logo, teams, match_keys, table_marks, match_parts, addparts'),
+		'0' => Array('showitem' => 'hidden, name, tournament, sports, internal_name, short_name, agegroup, saison, type,--palette--;;1, point_system, logo, t3logo, teams, match_keys, table_marks, match_parts, addparts,extid'),
 		'1' => Array('showitem' => 'hidden, name, tournament'),
 //		'icehockey' => Array('showitem' => 'hidden, name, sports, internal_name, short_name, agegroup, saison, type;;2, point_system, logo, t3logo, teams, match_keys, table_marks, match_parts, addparts'),
 	),

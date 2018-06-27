@@ -76,6 +76,7 @@ CREATE TABLE tx_cfcleague_competition (
 	match_parts tinyint(4) DEFAULT '0' NOT NULL,
 	addparts tinyint(4) DEFAULT '0' NOT NULL,
 	parent int(11) DEFAULT '0' NOT NULL,
+	extid varchar(255) DEFAULT '' NOT NULL,
 
 	PRIMARY KEY (uid),
 	KEY parent (pid)

@@ -21,7 +21,7 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-tx_rnbase::load('Tx_Rnbase_Service_Base');
+tx_rnbase::load('tx_cfcleague_services_Base');
 tx_rnbase::load('tx_rnbase_util_SearchBase');
 
 /**
@@ -29,7 +29,7 @@ tx_rnbase::load('tx_rnbase_util_SearchBase');
  *
  * @author Rene Nitzsche
  */
-class tx_cfcleague_services_Competition extends Tx_Rnbase_Service_Base
+class tx_cfcleague_services_Competition extends tx_cfcleague_services_Base
 {
 
     /**

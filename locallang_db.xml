@@ -43,6 +43,7 @@
 			<label index="tx_cfcleague_competition.point_system_2_icehockey">2 Point-Rule (Icehockey)</label>
 			<label index="tx_cfcleague_competition.point_system_3_icehockey">3 Point-Rule (Icehockey)</label>
 			<label index="tx_cfcleague_competition.teams">Teams</label>
+			<label index="tx_cfcleague_competition_extid">External ID</label>
 			<label index="tx_cfcleague_competition_create_team">Create new team</label>
 			<label index="tx_cfcleague_competition_penalty">Competition penalty</label>
 			<label index="tx_cfcleague_competition_penalty.team">Team</label>

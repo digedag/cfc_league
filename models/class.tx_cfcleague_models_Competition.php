@@ -2,7 +2,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2009-2017 Rene Nitzsche (rene@system25.de)
+ *  (c) 2009-2018 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -441,9 +441,17 @@ class tx_cfcleague_models_Competition extends tx_rnbase_model_base
     /**
      * Liefert den Generation-String für die Liga
      */
-    function getGenerationKey()
+    public function getGenerationKey()
     {
         return $this->getProperty('match_keys');
+    }
+
+    /**
+     * @return string
+     */
+    public function getExtId()
+    {
+        return $this->getProperty('extid');
     }
 
     /**

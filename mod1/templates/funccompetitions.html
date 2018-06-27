@@ -6,13 +6,40 @@ Template for modCompetitions. Not used right now.
 
 ###FUNCCOMPETITIONS###
 
-<!-- Dieser Teil wird in allen Sub-Modulen integriert -->
-###COMMON_START###
-###COMMON_START###
+###FUNC_DFBSYNC###
+<div>
+			<input type="file" name="upload_1" size="40" />
+			<input type="hidden" name="file[upload][1][target]" value="###TARGET_FOLDER###" />
+			<input type="hidden" name="file[upload][1][data]" value="1" />
+			<br />
+			<input class="btn btn-default" type="submit" name="_upload" value="###LABEL_UPLOAD_CSVFILE###" />
+</div>
 
-###COMMON_END###
+###SUB_UPLOAD_STATUS###
+<div>
+<h3>###LABEL_UPLOAD_STATUS###</h3>
+<p>
+<ul>
+<li>###LABEL_UPLOAD_FILE###: ###STATUS_FILE###
+<li>###LABEL_UPLOAD_MATCH_NEW###: ###STATUS_MATCH_NEW###
+<li>###LABEL_UPLOAD_MATCH_UPDATED###: ###STATUS_MATCH_UPDATED###
+<li>###LABEL_UPLOAD_MATCH_SKIPPED###: ###STATUS_MATCH_SKIPPED###
+<li>###LABEL_UPLOAD_TEAM_NEW###: ###STATUS_TEAM_NEW###
+<li>###LABEL_UPLOAD_TIME###: ###STATUS_TIME###
+</ul>
+</p>
+</div>
+###SUB_UPLOAD_STATUS###
+
+
+###FUNC_DFBSYNC###
+
+###MAIN###
+<!-- Dieser Teil wird in allen Sub-Modulen integriert -->
+
+###CONTENT###
 <div>Parsetime: ###MOD_PARSETIME###ms Memory used: ###MOD_MEMUSED### Bytes</div>
-###COMMON_END###
+###MAIN###
 
 ###FUNCCOMPETITIONS###
 

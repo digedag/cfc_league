@@ -59,7 +59,6 @@ class Tx_Cfcleague_Controller_Competition extends tx_rnbase_mod_BaseModFunc
         global $LANG;
         // Zuerst mal müssen wir die passende Liga auswählen lassen:
         // Entweder global über die Datenbank oder die Ligen der aktuellen Seite
-
         // Selector-Instanz bereitstellen
         $this->selector = tx_rnbase::makeInstance('tx_cfcleague_selector');
         $this->selector->init($this->getModule()
@@ -85,7 +84,8 @@ class Tx_Cfcleague_Controller_Competition extends tx_rnbase_mod_BaseModFunc
             ->getPid(), 'comptools', [
             '0' => $LANG->getLL('edit_games'),
             '1' => $LANG->getLL('mod_compteams'),
-            '2' => $LANG->getLL('create_games')
+            '2' => $LANG->getLL('create_games'),
+            '3' => $LANG->getLL('mod_compdfbsync'),
         ]);
 
         $tabs .= $menu['menu'];
@@ -95,23 +95,34 @@ class Tx_Cfcleague_Controller_Competition extends tx_rnbase_mod_BaseModFunc
 
         switch ($menu['value']) {
             case 0:
-                $modContent = $this->showEditMatches($current_league, $this->getModule());
+                $funcContent = $this->showEditMatches($current_league, $this->getModule());
                 break;
             case 1:
                 $mod = tx_rnbase::makeInstance('Tx_Cfcleague_Controller_Competition_Teams');
-                $modContent = $mod->main($this->getModule(), $current_league);
+                $funcContent = $mod->main($this->getModule(), $current_league);
                 break;
             case 2:
                 $mod = tx_rnbase::makeInstance('Tx_Cfcleague_Controller_Competition_MatchTable');
-                $modContent = $mod->main($this->getModule(), $current_league);
+                $funcContent = $mod->main($this->getModule(), $current_league);
+                break;
+            case 3:
+                $funcTemplate = tx_rnbase_util_Templates::getSubpart($template, '###FUNC_DFBSYNC###');
+                $mod = tx_rnbase::makeInstance('Tx_Cfcleague_Controller_Competition_DfbSync');
+                $funcContent = $mod->main($this->getModule(), $current_league, $funcTemplate);
                 break;
         }
         $content .= $formTool->form->printNeededJSFunctions_top();
-        $content .= $modContent;
+        $content .= $funcContent;
         // Den JS-Code für Validierung einbinden
         $content .= $formTool->form->printNeededJSFunctions();
+
+        $modContent = tx_rnbase_util_Templates::getSubpart($template, '###MAIN###');
+        $modContent = tx_rnbase_util_Templates::substituteMarkerArrayCached($modContent, [
+            '###CONTENT###' => $content,
+        ]);
+
         // $content .= $this->formTool->form->JSbottom('editform');
-        return $content;
+        return $modContent;
     }
 
     private function showEditMatches($current_league, $module)

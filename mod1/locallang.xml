@@ -41,6 +41,17 @@
 			<label index="label_add_teams">Add teams to competition</label>
 			<label index="msg_add_teams">Add selected teams to current competition?</label>
 
+			<label index="mod_compdfbsync">DFB synchronization</label>
+			<label index="label_upload_csvfile">Upload CSV-File</label>
+			<label index="label_upload_status">Status</label>
+			<label index="label_upload_failurenofile">No file uploaded.</label>
+			<label index="label_upload_file">File</label>
+			<label index="label_upload_match_new">New matches</label>
+			<label index="label_upload_match_updated">Updated matches</label>
+			<label index="label_upload_match_skipped">Skipped matches</label>
+			<label index="label_upload_team_new">New teams</label>
+			<label index="label_upload_time">Process time</label>
+
 			<label index="label_create_new">Create new</label>
 			<label index="create_games">Create matches</label>
 			<label index="edit_games">Edit matches</label>
@@ -207,6 +218,17 @@
 			<label index="msg_teams_created">Die Mannschaften wurden auf der aktuellen Seite erstellt.</label>
 			<label index="label_add_teams_from_page">Mannschaften der aktuellen Seite hinzufügen</label>
 			<label index="msg_noteams_in_comp">In diesem Wettbewerb wurden keine Mannschaften gefunden.</label>
+
+			<label index="mod_compdfbsync">DFB Synchronisation</label>
+			<label index="label_upload_csvfile">CSV-Datei hochladen</label>
+			<label index="label_upload_status">Status</label>
+			<label index="label_upload_failurenofile">Es wurde keine Datei hochgeladen.</label>
+			<label index="label_upload_file">Datei</label>
+			<label index="label_upload_match_new">Neue Spiele</label>
+			<label index="label_upload_match_updated">Aktualisierte Spiele</label>
+			<label index="label_upload_match_skipped">Ignorierte Spiele</label>
+			<label index="label_upload_team_new">Neue Teams</label>
+			<label index="label_upload_time">Ausführungszeit</label>
 
 			<label index="mod_team">Teams verwalten</label>
 			<label index="create_players">Spieler anlegen</label>
