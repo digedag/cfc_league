@@ -46,7 +46,7 @@ class Tx_Cfcleague_Controller_Competition_DfbSync
      * Verwaltet die Erstellung von Spielplänen von Ligen
      *
      * @param tx_rnbase_mod_IModule $module
-     * @param tx_cfcleague_league $competition
+     * @param tx_cfcleague_models_Competition $competition
      */
     public function main($module, $competition, $template)
     {
@@ -59,6 +59,8 @@ class Tx_Cfcleague_Controller_Competition_DfbSync
         $this->checkUpload();
         $markerArr = $subpartArr = $wrappedSubpartArr = [];
 
+        $markerArr['###STATUS_INFO###'] = $this->buildInfoMessage($competition);
+
         $tempFolder = $this->getDefaultImportExportFolder();
         if ($tempFolder) {
             $markerArr['###TARGET_FOLDER###'] = htmlspecialchars($tempFolder->getCombinedIdentifier());
@@ -68,6 +70,7 @@ class Tx_Cfcleague_Controller_Competition_DfbSync
                     /* @var $synch Tx_Cfcleague_Dfb_Synchronizer */
                     $synch = tx_rnbase::makeInstance('Tx_Cfcleague_Dfb_Synchronizer');
                     $info = $synch->process($this->uploadedFiles[0], $competition);
+
                     $markerArr['###STATUS_MATCH_UPDATED###'] = $info['match']['updated'];
                     $markerArr['###STATUS_MATCH_NEW###'] = $info['match']['new'];
                     $markerArr['###STATUS_MATCH_SKIPPED###'] = $info['match']['skipped'];
@@ -93,6 +96,13 @@ class Tx_Cfcleague_Controller_Competition_DfbSync
         return $content;
     }
 
+    protected function buildInfoMessage(tx_cfcleague_models_Competition $competition)
+    {
+        global $LANG;
+        $key = $competition->getExtId();
+        $msg = $LANG->getLL( $key ? 'label_dfbsync_keyfound' : 'label_dfbsync_nokeyfound');
+        return sprintf($msg, $key);
+    }
     /**
      * Check if a file has been uploaded
      *

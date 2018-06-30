@@ -42,6 +42,12 @@
 			<label index="msg_add_teams">Add selected teams to current competition?</label>
 
 			<label index="mod_compdfbsync">DFB synchronization</label>
+			<label index="label_dfbsync_whatdoesitdo">What does it do?</label>
+			<label index="label_dfbsync_info">This function creates and updates match fixtures for a competition based on exports files (CSV) of DFB.</label>
+			<label index="label_dfbsync_nokeyfound">Current competition has no external key configured. 
+ If you upload a file, the competition of first match (column "Staffelkennung") will be assigned to this competition.</label>
+			<label index="label_dfbsync_keyfound">Current competition has external key "%s" configured. 
+ If you upload a file all match fixtures of this competition (column "Staffelkennung") will be updated or created for this competition.</label>
 			<label index="label_upload_csvfile">Upload CSV-File</label>
 			<label index="label_upload_status">Status</label>
 			<label index="label_upload_failurenofile">No file uploaded.</label>
@@ -220,6 +226,12 @@
 			<label index="msg_noteams_in_comp">In diesem Wettbewerb wurden keine Mannschaften gefunden.</label>
 
 			<label index="mod_compdfbsync">DFB Synchronisation</label>
+			<label index="label_dfbsync_whatdoesitdo">Funktionsweise</label>
+			<label index="label_dfbsync_info">Dieses Modul erstellt und aktualisiert Spielpläne auf Basis von CSV-Dateien aus dem DFBnet.</label>
+			<label index="label_dfbsync_nokeyfound">Der aktuelle Wettbewerb hat keinen externen Key gesetzt. 
+ Wenn eine Datei hochgeladen wird, das wird der Wettbewerb des ersten Spiels in der Datei (Spalte "Staffelkennung") automatisch dem ausgewählten Wettbewerb zugeordnet.</label>
+			<label index="label_dfbsync_keyfound">Der aktuelle Wettbewerb hat den externen Schlüssel "%s" gesetzt. 
+ Wenn eine Datei hochgeladen wird, dann werden alle Spiele mit diesem Schlüssel (Spalte "Staffelkennung") erstellt bzw. aktualisiert.</label>
 			<label index="label_upload_csvfile">CSV-Datei hochladen</label>
 			<label index="label_upload_status">Status</label>
 			<label index="label_upload_failurenofile">Es wurde keine Datei hochgeladen.</label>
