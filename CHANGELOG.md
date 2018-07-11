@@ -2,11 +2,13 @@
 Änderungen
 ==========
 
-## v1.2.0 (?.?.2018)
+## v1.2.0 (11.07.2018)
  * Support for TYPO3 4.5 LTS dropped
- * Some Bugfixes for TYPO3 7.6
+ * Modifications for TYPO3 8.7
+ * Many Bugfixes for TYPO3 7.6
  * Support for PHP 7.x
  * Code cleanup
+ * digedag/cfc_league_fe#41 New feature: Match fixture sync with DFBnet
  * digedag/cfc_league_fe#25 Support for handball, but not yet finished
  * Many thanks to Mario Näther for contributions!
 
