@@ -2,7 +2,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2006-2008 Rene Nitzsche
+ *  (c) 2006-2018 Rene Nitzsche
  *  Contact: rene@system25.de
  *  All rights reserved
  *
@@ -20,54 +20,55 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  ***************************************************************/
-
 tx_rnbase::load('tx_rnbase_util_SearchBase');
 tx_rnbase::load('tx_rnbase_util_Misc');
-
 
 /**
  * Class to search team notes from database
  *
  * @author Rene Nitzsche
  */
-class tx_cfcleague_search_TeamNote extends tx_rnbase_util_SearchBase {
+class tx_cfcleague_search_TeamNote extends tx_rnbase_util_SearchBase
+{
 
-	protected function getTableMappings() {
-		$tableMapping['TEAMNOTE'] = 'tx_cfcleague_team_notes';
-		$tableMapping['NOTETYPE'] = 'tx_cfcleague_note_types';
-		$tableMapping['TEAM'] = 'tx_cfcleague_teams';
-		// Hook to append other tables
-		tx_rnbase_util_Misc::callHook('cfc_league', 'search_TeamNote_getTableMapping_hook',
-			array('tableMapping' => &$tableMapping), $this);
-		return $tableMapping;
-	}
+    protected function getTableMappings()
+    {
+        $tableMapping = [];
+        $tableMapping['TEAMNOTE'] = 'tx_cfcleague_team_notes';
+        $tableMapping['NOTETYPE'] = 'tx_cfcleague_note_types';
+        $tableMapping['TEAM'] = 'tx_cfcleague_teams';
+        // Hook to append other tables
+        tx_rnbase_util_Misc::callHook('cfc_league', 'search_TeamNote_getTableMapping_hook', array(
+            'tableMapping' => &$tableMapping
+        ), $this);
+        return $tableMapping;
+    }
 
-	protected function getBaseTable() {
-		return 'tx_cfcleague_team_notes';
-	}
-	function getWrapperClass() {
-		return 'tx_cfcleague_models_TeamNote';
-	}
+    protected function getBaseTable()
+    {
+        return 'tx_cfcleague_team_notes';
+    }
 
-	protected function getJoins($tableAliases) {
-		$join = '';
-		if(isset($tableAliases['TEAM'])) {
-			$join .= ' JOIN tx_cfcleague_teams ON tx_cfcleague_teams.uid = tx_cfcleague_team_notes.team ';
-		}
-		if(isset($tableAliases['NOTETYPE'])) {
-			$join .= ' JOIN tx_cfcleague_note_types ON tx_cfcleague_note_types.uid = tx_cfcleague_team_notes.type ';
-		}
+    public function getWrapperClass()
+    {
+        return 'tx_cfcleague_models_TeamNote';
+    }
 
-		// Hook to append other tables
-		tx_rnbase_util_Misc::callHook('cfc_league', 'search_TeamNote_getJoins_hook',
-			array('join' => &$join, 'tableAliases' => $tableAliases), $this);
-		return $join;
-	}
+    protected function getJoins($tableAliases)
+    {
+        $join = '';
+        if (isset($tableAliases['TEAM'])) {
+            $join .= ' JOIN tx_cfcleague_teams ON tx_cfcleague_teams.uid = tx_cfcleague_team_notes.team ';
+        }
+        if (isset($tableAliases['NOTETYPE'])) {
+            $join .= ' JOIN tx_cfcleague_note_types ON tx_cfcleague_note_types.uid = tx_cfcleague_team_notes.type ';
+        }
+
+        // Hook to append other tables
+        tx_rnbase_util_Misc::callHook('cfc_league', 'search_TeamNote_getJoins_hook', array(
+            'join' => &$join,
+            'tableAliases' => $tableAliases
+        ), $this);
+        return $join;
+    }
 }
-
-
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/search/class.tx_cfcleague_search_TeamNote.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/search/class.tx_cfcleague_search_TeamNote.php']);
-}
-
-?>

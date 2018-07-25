@@ -2,7 +2,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2008-2010 Rene Nitzsche
+ *  (c) 2008-2018 Rene Nitzsche
  *  Contact: rene@system25.de
  *  All rights reserved
  *
@@ -20,7 +20,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  ***************************************************************/
-
 tx_rnbase::load('tx_rnbase_util_SearchBase');
 
 define('COMPSRV_FIELD_COMP_NAME', 'COMP.NAME');
@@ -31,41 +30,47 @@ define('COMPSRV_FIELD_TEAM_NAME', 'TEAM.NAME');
  *
  * @author Rene Nitzsche
  */
-class tx_cfcleague_search_Competition extends tx_rnbase_util_SearchBase {
+class tx_cfcleague_search_Competition extends tx_rnbase_util_SearchBase
+{
 
-	protected function getTableMappings() {
-		$tableMapping['TEAM'] = 'tx_cfcleague_teams';
-		$tableMapping['COMPETITION'] = 'tx_cfcleague_competition';
-		$tableMapping['MATCH'] = 'tx_cfcleague_games';
-		return $tableMapping;
-	}
-
-  protected function getBaseTable() {
-  	return 'tx_cfcleague_competition';
-  }
-  function getWrapperClass() {
-  	return 'tx_cfcleague_models_Competition';
-  }
-	protected function getBaseTableAlias() {return 'COMPETITION';}
-  protected function useAlias() {
-		return true;
-	}
-
-  protected function getJoins($tableAliases) {
-  	$join = '';
-    if(isset($tableAliases['TEAM'])) {
-    	$join .= ' JOIN tx_cfcleague_teams AS TEAM ON FIND_IN_SET( TEAM.uid, COMPETITION.teams )';
+    protected function getTableMappings()
+    {
+        $tableMapping = [];
+        $tableMapping['TEAM'] = 'tx_cfcleague_teams';
+        $tableMapping['COMPETITION'] = 'tx_cfcleague_competition';
+        $tableMapping['MATCH'] = 'tx_cfcleague_games';
+        return $tableMapping;
     }
-		if(isset($tableAliases['MATCH'])) {
-			$join .= ' JOIN tx_cfcleague_games AS `MATCH` ON MATCH.competition = COMPETITION.uid ';
-		}
-    return $join;
-  }
+
+    protected function getBaseTable()
+    {
+        return 'tx_cfcleague_competition';
+    }
+
+    function getWrapperClass()
+    {
+        return 'tx_cfcleague_models_Competition';
+    }
+
+    protected function getBaseTableAlias()
+    {
+        return 'COMPETITION';
+    }
+
+    protected function useAlias()
+    {
+        return true;
+    }
+
+    protected function getJoins($tableAliases)
+    {
+        $join = '';
+        if (isset($tableAliases['TEAM'])) {
+            $join .= ' JOIN tx_cfcleague_teams AS TEAM ON FIND_IN_SET( TEAM.uid, COMPETITION.teams )';
+        }
+        if (isset($tableAliases['MATCH'])) {
+            $join .= ' JOIN tx_cfcleague_games AS `MATCH` ON MATCH.competition = COMPETITION.uid ';
+        }
+        return $join;
+    }
 }
-
-
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/search/class.tx_cfcleague_search_Competition.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/search/class.tx_cfcleague_search_Competition.php']);
-}
-
-?>
