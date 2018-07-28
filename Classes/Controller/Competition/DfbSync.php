@@ -1,4 +1,5 @@
 <?php
+
 /***************************************************************
  *  Copyright notice
  *
@@ -113,9 +114,17 @@ class Tx_Cfcleague_Controller_Competition_DfbSync
         $file = tx_rnbase_parameters::getPostOrGetParameter('file');
         // Initializing:
         $this->fileProcessor = tx_rnbase::makeInstance('TYPO3\\CMS\\Core\\Utility\\File\\ExtendedFileUtility');
-        $this->fileProcessor->init(array(), $GLOBALS['TYPO3_CONF_VARS']['BE']['fileExtensions']);
-        $this->fileProcessor->setActionPermissions();
-        $this->fileProcessor->dontCheckForUnique = 1;
+        if (tx_rnbase_util_TYPO3::isTYPO87OrHigher()) {
+            $this->fileProcessor->setActionPermissions();
+            $this->fileProcessor->setExistingFilesConflictMode(
+                \TYPO3\CMS\Core\Resource\DuplicationBehavior::REPLACE
+            );
+        }
+        else {
+            $this->fileProcessor->init(array(), $GLOBALS['TYPO3_CONF_VARS']['BE']['fileExtensions']);
+            $this->fileProcessor->setActionPermissions();
+            $this->fileProcessor->dontCheckForUnique = 1;
+        }
         $this->fileProcessor->start($file);
         $result = $this->fileProcessor->processData();
 
