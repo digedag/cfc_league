@@ -28,6 +28,8 @@ tx_rnbase::load('Tx_Rnbase_Backend_Utility_Icons');
 tx_rnbase::load('tx_rnbase_parameters');
 tx_rnbase::load('Tx_Rnbase_Utility_T3General');
 tx_rnbase::load('Tx_Rnbase_Database_Connection');
+tx_rnbase::load('Tx_Rnbase_Configuration_Processor');
+
 
 /**
  * Die Klasse stellt Auswahlmenus zur Verfügung
@@ -102,24 +104,23 @@ class tx_cfcleague_selector
 
         // In den Content einbauen
         // Zusätzlich noch einen Edit-Link setzen
-        $menu = '<div class="cfcselector"><div class="selector col-md-2">' . $menuData['menu'] . '</div></div>';
-        if ($menu) {
-            $links = $this->getFormTool()->createEditLink('tx_cfcleague_competition', $menuData['value'], '');
+        if ($menuData['menu']) {
+            $links = [];
+            $links[] = $this->getFormTool()->createEditLink('tx_cfcleague_competition', $menuData['value'], '');
             // Jetzt noch den Cache-Link
             $cacheIcon = tx_rnbase_util_TYPO3::isTYPO70OrHigher() ?
                     $this->iconFactory->getIcon('actions-system-cache-clear', TYPO3\CMS\Core\Imaging\Icon::SIZE_SMALL)->render()
                     :
                     '<img' . Tx_Rnbase_Backend_Utility_Icons::skinImg($GLOBALS['BACK_PATH'], 'gfx/clear_all_cache.gif', 'width="11" height="12"') . ' title="###LABEL_CLEAR_STATS_CACHE###" border="0" alt="Clear Cache" />';
-            $links .= ' ' . $this->getFormTool()->createModuleLink(['clearCache'=>1], $pid, $cacheIcon, [
+            $links[] = $this->getFormTool()->createModuleLink(['clearCache'=>1], $pid, $cacheIcon, [
                 'params' => [
                     'clearCache' => 1
                 ]
             ]);
 
-            $links .= $this->getFormTool()->createNewLink('tx_cfcleague_competition', $pid, '');
-            $menu = $menu . '<span class="links col-md-2">' . $links . '</span>';
+            $links[] = $this->getFormTool()->createNewLink('tx_cfcleague_competition', $pid, '');
+            $content .= $this->renderSelector($menuData['menu'], $links);
         }
-        $content .= $menu;
 
         if (tx_rnbase_parameters::getPostOrGetParameter('clearCache') && $menuData['value']) {
             // Hook aufrufen
@@ -133,25 +134,6 @@ class tx_cfcleague_selector
             return $menuData['value'] ? $objLeagues[$menuData['value']] : 0;
         }
         return $menuData['value'] ? new tx_cfcleague_models_Competition($menuData['value']) : 0;
-    }
-
-    private function buildDummyMenu($elementName, $menuItems)
-    {
-        // Ab T3 6.2 wird bei einem Menu-Eintrag keine Selectbox mehr erzeugt.
-        // Also sieht man nicht, wo man sich befindet. Somit wird eine Dummy-Box
-        // benötigt.
-        $options = [];
-
-        foreach ($menuItems as $value => $label) {
-            $options[] = '<option value="' . htmlspecialchars($value) . '" selected="selected">' . htmlspecialchars($label, ENT_COMPAT, 'UTF-8', FALSE) . '</option>';
-        }
-        return '<div class="cfcselector"><div class="selector col-md-2">
-				<!-- Function Menu of module -->
-                    <select class="form-control input-sm" name="' . $elementName . '" >
-                        ' . implode('
-                        ', $options) . '
-                    </select>
-				</div></div>';
     }
 
     /**
@@ -185,14 +167,15 @@ class tx_cfcleague_selector
         // In den Content einbauen
         // Zusätzlich noch einen Edit-Link setzen
         $menu = $menuData['menu'];
+        $links = [];
         $noLinks = $options['noLinks'] ? true : false;
         if (! $noLinks && $menu) {
-            $links = $this->getFormTool()->createEditLink('tx_cfcleague_teams', $menuData['value']);
-            if ($teamObj->getProperty('club'))
-                $links .= $this->getFormTool()->createEditLink('tx_cfcleague_club', intval($teamObj->getProperty('club')), $GLOBALS['LANG']->getLL('label_club'));
-            $menu = '<div class="cfcselector"><div class="selector col-md-2">' . $menu . '</div><div class="links">' . $links . '</div></div>';
+            $links[] = $this->getFormTool()->createEditLink('tx_cfcleague_teams', $menuData['value']);
+            if ($teamObj->getProperty('club')) {
+                $links[] = $this->getFormTool()->createEditLink('tx_cfcleague_club', intval($teamObj->getProperty('club')), $GLOBALS['LANG']->getLL('label_club'));
+            }
         }
-        $content .= $menu;
+        $content .= $this->renderSelector($menuData['menu'], $links);
 
         return $teamObj;
     }
@@ -204,8 +187,8 @@ class tx_cfcleague_selector
      */
     protected function lookupClubs($pid)
     {
-        $globalClubs = intval(tx_rnbase_configurations::getExtensionCfgValue('cfc_league', 'useGlobalClubs')) > 0;
-        $clubOrdering = intval(tx_rnbase_configurations::getExtensionCfgValue('cfc_league', 'clubOrdering')) > 0;
+        $globalClubs = intval(Tx_Rnbase_Configuration_Processor::getExtensionCfgValue('cfc_league', 'useGlobalClubs')) > 0;
+        $clubOrdering = intval(Tx_Rnbase_Configuration_Processor::getExtensionCfgValue('cfc_league', 'clubOrdering')) > 0;
         $fields = array();
         if (! $globalClubs) {
             $fields['CLUB.PID'][OP_EQ_INT] = $pid;
@@ -233,7 +216,7 @@ class tx_cfcleague_selector
             $entries[$options['firstItem']['id']] = $options['firstItem']['label'];
         }
 
-        $clubOrdering = intval(tx_rnbase_configurations::getExtensionCfgValue('cfc_league', 'clubOrdering')) > 0;
+        $clubOrdering = intval(Tx_Rnbase_Configuration_Processor::getExtensionCfgValue('cfc_league', 'clubOrdering')) > 0;
         foreach ($clubs as $club) {
             $label = ($clubOrdering ? $club->getCity() . ' - ' : '') . $club->getName();
             $objClubs[$club->getUid()] = $club;
@@ -250,13 +233,13 @@ class tx_cfcleague_selector
         // In den Content einbauen
         // Zusätzlich noch einen Edit-Link setzen
         $menu = $menuData['menu'];
+        $links = [];
         $noLinks = $options['noLinks'] ? true : false;
         if (! $noLinks && $menu) {
-            $links = $this->getFormTool()->createEditLink('tx_cfcleague_club', $menuData['value']);
-            $links .= $this->createNewClubLink($pid);
-            $menu = '<div class="cfcselector"><div class="selector col-md-2">' . $menu . '</div><div class="links">' . $links . '</div></div>';
+            $links[] = $this->getFormTool()->createEditLink('tx_cfcleague_club', $menuData['value']);
+            $links[] = $this->createNewClubLink($pid);
         }
-        $content .= $menu;
+        $content .= $this->renderSelector($menuData['menu'], $links);
 
         return $currItem;
     }
@@ -331,11 +314,10 @@ class tx_cfcleague_selector
         $data = $this->getFormTool()->showMenu($pid, 'match', $this->MCONF['name'], $entries, $this->getScriptURI());
         // In den Content einbauen
         // Zusätzlich noch einen Edit-Link setzen
-        $links = $this->getFormTool()->createEditLink('tx_cfcleague_games', $data['value']);
+        $links = [$this->getFormTool()->createEditLink('tx_cfcleague_games', $data['value'])];
         if ($data['menu']) {
-            $menu = '<div class="cfcselector"><div class="selector col-md-2">' . $data['menu'] . '</div><div class="links col-md-2">' . $links . '</div></div>';
+            $content .= $this->renderSelector($data['menu'], $links);
         }
-        $content .= $menu;
 
         // Aktuellen Wert als Match-Objekt zurückgeben
         tx_rnbase::load('tx_cfcleague_models_Match');
@@ -350,12 +332,12 @@ class tx_cfcleague_selector
     public function showSaisonSelector(&$content, $pid)
     {
         // Zuerst die Saisons ermitteln
-        $saisons = Tx_Rnbase_Database_Connection::getInstance()->doSelect('uid,name', 'tx_cfcleague_saison', array(
+        $saisons = Tx_Rnbase_Database_Connection::getInstance()->doSelect('uid,name', 'tx_cfcleague_saison', [
             'orderby' => 'sorting asc',
             'wrapperclass' => 'tx_cfcleague_models_Saison'
-        ));
+        ]);
 
-        $entries = array();
+        $entries = [];
         foreach ($saisons as $item) {
             $entries[$item->getUid()] = $item->getName();
         }
@@ -364,10 +346,10 @@ class tx_cfcleague_selector
         // In den Content einbauen
         // Wir verzichten hier auf den Link und halten nur den Abstand ein
         if ($data['menu']) {
-            $menu = '<div class="cfcselector"><div class="selector col-md-2">' . $data['menu'] . '</div><div class="links">' . $links . '</div></div>';
+            $menu = $this->renderSelector($data['menu']);
         } elseif (count($entries) == 1) {
             $comp = reset($entries);
-            $menu = '<div class="cfcselector"><div class="selector col-md-2">' . $comp . '</div></div>';
+            $menu = $this->renderSelector($comp);
         }
         $content .= $menu;
 
@@ -411,6 +393,13 @@ class tx_cfcleague_selector
     protected function getScriptURI()
     {
         return '';
+    }
+
+    private function renderSelector($menu, array $links = [])
+    {
+        return '<div class="cfcselector" style="float: left; width: 100%"><span class="selector col-md-2">' . $menu .
+            '</span>'. (empty($links) ? '' : '<span class="links">' . implode(' ', $links) . '</span>').
+            '</div>';
     }
 
     /**
