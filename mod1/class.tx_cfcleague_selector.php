@@ -110,7 +110,7 @@ class tx_cfcleague_selector
                     $this->iconFactory->getIcon('actions-system-cache-clear', TYPO3\CMS\Core\Imaging\Icon::SIZE_SMALL)->render()
                     :
                     '<img' . Tx_Rnbase_Backend_Utility_Icons::skinImg($GLOBALS['BACK_PATH'], 'gfx/clear_all_cache.gif', 'width="11" height="12"') . ' title="###LABEL_CLEAR_STATS_CACHE###" border="0" alt="Clear Cache" />';
-            $links .= ' ' . $this->getFormTool()->createLink('clearCache=1', $pid, $cacheIcon, [
+            $links .= ' ' . $this->getFormTool()->createModuleLink(['clearCache'=>1], $pid, $cacheIcon, [
                 'params' => [
                     'clearCache' => 1
                 ]
@@ -300,8 +300,8 @@ class tx_cfcleague_selector
             $prevIdx = ($currIdx > 0) ? $currIdx - 1 : count($entries) - 1;
             $nextIdx = ($currIdx < (count($entries) - 1)) ? $currIdx + 1 : 0;
 
-            $prev = $this->getFormTool()->createLink('SET[round]=' . ($keys[$prevIdx]), $pid, '&lt;');
-            $next = $this->getFormTool()->createLink('SET[round]=' . ($keys[$nextIdx]), $pid, '&gt;');
+            $prev = $this->getFormTool()->createModuleLink(['SET[round]' => $keys[$prevIdx]], $pid, '&lt;');
+            $next = $this->getFormTool()->createModuleLink(['SET[round]' => $keys[$nextIdx]], $pid, '&gt;');
             if (tx_rnbase_util_TYPO3::isTYPO76OrHigher()) {
                 $menu = '<div class="cfcselector"><div class="selector col-md-2">' . $data['menu'] . '</div></div>';
                 $links = $prev . $next;
@@ -340,37 +340,6 @@ class tx_cfcleague_selector
         // Aktuellen Wert als Match-Objekt zurückgeben
         tx_rnbase::load('tx_cfcleague_models_Match');
         return tx_rnbase::makeInstance('tx_cfcleague_models_Match', $data['value']);
-    }
-
-    /**
-     * Darstellung der Select-Box mit allen Altersgruppen in der Datenbank.
-     *
-     * @return int die ID der aktuellen Altersgruppe
-     * @deprecated
-     */
-    function showGroupSelector(&$content, $pid)
-    {
-        // Zuerst die Gruppen ermitteln
-        $groups = Tx_Rnbase_Database_Connection::getInstance()->doSelect('uid,name', 'tx_cfcleague_group', array(
-            'where' => 'uid > 0',
-            'orderby' => 'sorting'
-        ));
-
-        $this->GROUP_MENU = [
-            'group' => []
-        ];
-        foreach ($groups as $idx => $group) {
-            $this->GROUP_MENU['group'][$group['uid']] = $group['name'];
-        }
-        $this->GROUP_SETTINGS = Tx_Rnbase_Backend_Utility::getModuleData($this->GROUP_MENU, Tx_Rnbase_Utility_T3General::_GP('SET'), $this->MCONF['name']) // Das ist der Name des Moduls
-        ;
-
-        $menu = Tx_Rnbase_Backend_Utility::getFuncMenu($pid, 'SET[group]', $this->GROUP_SETTINGS['group'], $this->GROUP_MENU['group'], $this->getScriptURI());
-        // In den Content einbauen
-        $content .= $this->doc->section('', $this->doc->funcMenu($headerSection, $menu));
-
-        // Aktuellen Wert zurückgeben
-        return $this->GROUP_SETTINGS['group'];
     }
 
     /**
