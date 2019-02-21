@@ -53,7 +53,7 @@ class Tx_Cfcleague_Dfb_Synchronizer
         $fileContent = $this->removeBOM($file->getContents());
         // There are some annoying null bytes...
         $fileContent = str_replace("\0", "", $fileContent);
-        $fileContent = iconv('ISO-8859-1', 'UTF-8', $fileContent);
+        $fileContent = mb_convert_encoding($fileContent, 'UTF-8', 'UTF-8, ISO-8859-1');
         $lines = explode("\n", $fileContent);
         $headers = array_shift($lines);
         $headers = str_getcsv($this->prepareHeaderLine($headers), "\t");
