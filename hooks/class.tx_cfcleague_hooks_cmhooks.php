@@ -37,7 +37,7 @@ class tx_cfcleague_hooks_cmhooks {
 	 * @param	object $pObj the instance of the BE Form
 	 * @return	void
 	 */
-	function processCmdmap_preProcess(&$command, $table, $id, $value, &$pObj)	{
+	public function processCmdmap_preProcess(&$command, $table, $id, $value, &$pObj)	{
 		if($command == 'delete' && $table == 'tx_cfcleague_profiles') {
 			// TODO: Check references
 			$profile = tx_rnbase::makeInstance('tx_cfcleague_models_Profile', $id);
@@ -124,8 +124,3 @@ class tx_cfcleague_hooks_cmhooks {
 		exit;
 	}
 }
-
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/hooks/class.tx_cfcleague_hooks_cmhooks.php'])	{
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/hooks/class.tx_cfcleague_hooks_cmhooks.php']);
-}
-?>

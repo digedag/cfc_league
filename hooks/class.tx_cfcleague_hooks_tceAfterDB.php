@@ -33,20 +33,24 @@ class tx_cfcleague_hooks_tceAfterDB {
 	 * @param string $table Name der Tabelle
 	 * @param int $id UID des Datensatzes
 	 * @param array $fieldArray Felder des Datensatzes, die sich ändern
-	 * @param tce_main $tcemain
+	 * @param \TYPO3\CMS\Core\DataHandling\DataHandler $tcemain
 	 */
-	function processDatamap_afterDatabaseOperations($status, $table, $id, $fieldArray, &$tcemain) {
+	public function processDatamap_afterDatabaseOperations($status, $table, $id, $fieldArray, &$tcemain) {
 		if($table == 'tx_cfcleague_profiles') {
 			if(array_key_exists('types', $fieldArray)){
 				$db = Tx_Rnbase_Database_Connection::getInstance();
 				// Die Types werden zusätzlich in einer MM-Tabelle gespeichert
 				$id = ($status == 'new') ? $tcemain->substNEWwithIDs[$id] : $id;
-				if($status != 'new')
+				if($status != 'new') {
 					$db->doDelete('tx_cfcleague_profiletypes_mm', 'uid_foreign='.$id, 0);
+				}
 				$types = Tx_Rnbase_Utility_Strings::intExplode(',', $fieldArray['types']);
 				$i = 0;
 				foreach($types As $type) {
-					if(!intval($type)) continue;
+				    if(!intval($type)) {
+				        continue;
+				    }
+				    $values = [];
 					$values['uid_local'] = $type;
 					$values['uid_foreign'] = $id;
 					$values['tablenames'] = 'tx_cfcleague_profiles';
@@ -56,8 +60,4 @@ class tx_cfcleague_hooks_tceAfterDB {
 			}
 		}
 	}
-}
-
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/hooks/class.tx_cfcleague_hooks_tceAfterDB.php'])	{
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/hooks/class.tx_cfcleague_hooks_tceAfterDB.php']);
 }
