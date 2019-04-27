@@ -1,9 +1,9 @@
 <?php
 
-
 if (!defined ('TYPO3_MODE')) 	die ('Access denied.');
 
 tx_rnbase::load('tx_rnbase_util_TYPO3');
+$sysLangFile = tx_rnbase_util_TYPO3::isTYPO87OrHigher() ? 'Resources/Private/Language/locallang_general.xlf' : 'locallang_general.xml';
 
 $tx_cfcleague_competition = Array (
 	'ctrl' => Array (
@@ -35,7 +35,7 @@ $tx_cfcleague_competition = Array (
 	'columns' => Array (
 		'hidden' => Array (
 			'exclude' => 1,
-			'label' => 'LLL:EXT:lang/locallang_general.xml:LGL.hidden',
+		    'label' => 'LLL:EXT:lang/'.$sysLangFile.':LGL.hidden',
 			'config' => Array (
 				'type' => 'check',
 				'default' => '0'

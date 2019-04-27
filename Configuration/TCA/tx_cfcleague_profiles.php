@@ -5,6 +5,7 @@ tx_rnbase::load('tx_cfcleague_tca_Lookup');
 tx_rnbase::load('tx_rnbase_util_TYPO3');
 
 $rteConfig = 'richtext[cut|copy|paste|formatblock|textcolor|bold|italic|underline|left|center|right|orderedlist|unorderedlist|outdent|indent|link|table|image|line|chMode]:rte_transform[mode=ts_css|imgpath=uploads/tx_cfcleague/rte/]';
+$sysLangFile = tx_rnbase_util_TYPO3::isTYPO87OrHigher() ? 'Resources/Private/Language/locallang_general.xlf' : 'locallang_general.xml';
 
 $tx_cfcleague_profiles = Array (
 	'ctrl' => Array (
@@ -20,9 +21,9 @@ $tx_cfcleague_profiles = Array (
 //		'sortby' => 'sorting',
 		'default_sortby' => 'ORDER BY last_name, first_name',
 		'delete' => 'deleted',
-		'enablecolumns' => Array (
+		'enablecolumns' => [
 			'disabled' => 'hidden',
-		),
+		],
         'typeicon_classes' => [
             'default' => 'ext-cfcleague-profiles-default'
         ],
@@ -38,14 +39,14 @@ $tx_cfcleague_profiles = Array (
 			stations, nickname, family, hobbies, prosperities, summary, description',
 	),
 	'columns' => Array (
-		'hidden' => Array (
+		'hidden' => [
 			'exclude' => 1,
-			'label' => 'LLL:EXT:lang/locallang_general.xml:LGL.hidden',
-			'config' => Array (
+		    'label' => 'LLL:EXT:lang/'.$sysLangFile.':LGL.hidden',
+			'config' => [
 				'type' => 'check',
 				'default' => '0'
-			)
-		),
+			]
+		],
 		'first_name' => Array (
 			'exclude' => 1,
 			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles.first_name',

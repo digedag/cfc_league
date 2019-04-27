@@ -1,31 +1,35 @@
 <?php
 if (!defined ('TYPO3_MODE')) 	die ('Access denied.');
 
-$globalClubs = intval(tx_rnbase_configurations::getExtensionCfgValue('cfc_league', 'useGlobalClubs')) > 0;
-$clubOrdering = intval(tx_rnbase_configurations::getExtensionCfgValue('cfc_league', 'clubOrdering')) > 0;
+tx_rnbase::load('Tx_Rnbase_Configuration_Processor');
+
+$globalClubs = intval(Tx_Rnbase_Configuration_Processor::getExtensionCfgValue('cfc_league', 'useGlobalClubs')) > 0;
+$clubOrdering = intval(Tx_Rnbase_Configuration_Processor::getExtensionCfgValue('cfc_league', 'clubOrdering')) > 0;
 
 $rteConfig = 'richtext[paste|bold|italic|underline|formatblock|class|left|center|right|orderedlist|unorderedlist|outdent|indent|link|image]:rte_transform[mode=ts]';
 
 $clubArr = $globalClubs ?
-		Array (
+		[
 				'type' => 'select',
 				'renderType' => 'selectSingle',
-				'items' => Array (
-					Array(' ', '0'),
-				),
+				'items' => [
+					[' ', '0'],
+				],
 				'foreign_table' => 'tx_cfcleague_club',
 				'foreign_table_where' => 'ORDER BY ' . ($clubOrdering ? 'tx_cfcleague_club.city,' : '').' tx_cfcleague_club.name',
 				'size' => 1,
 				'minitems' => 0,
 				'maxitems' => 1,
-			) : Array (
+		] : [
 				'type' => 'group',
 				'internal_type' => 'db',
 				'allowed' => 'tx_cfcleague_club',
 				'size' => 1,
 				'minitems' => 0,
 				'maxitems' => 1,
-			);
+		];
+
+$sysLangFile = tx_rnbase_util_TYPO3::isTYPO87OrHigher() ? 'Resources/Private/Language/locallang_general.xlf' : 'locallang_general.xml';
 
 $tx_cfcleague_teams = Array (
 	'ctrl' => Array (
@@ -55,7 +59,7 @@ $tx_cfcleague_teams = Array (
 	'columns' => Array (
 		'hidden' => Array (
 			'exclude' => 1,
-			'label' => 'LLL:EXT:lang/locallang_general.xml:LGL.hidden',
+			'label' => 'LLL:EXT:lang/'.$sysLangFile.':LGL.hidden',
 			'config' => Array (
 				'type' => 'check',
 				'default' => '0'

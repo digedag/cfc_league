@@ -1,6 +1,7 @@
 <?php
 if (!defined ('TYPO3_MODE')) 	die ('Access denied.');
 
+$sysLangFile = tx_rnbase_util_TYPO3::isTYPO87OrHigher() ? 'Resources/Private/Language/locallang_general.xlf' : 'locallang_general.xml';
 
 $tx_cfcleague_group = Array (
 	'ctrl' => Array (
@@ -31,7 +32,7 @@ $tx_cfcleague_group = Array (
 	'columns' => Array (
 		'hidden' => Array (
 			'exclude' => 1,
-			'label' => 'LLL:EXT:lang/locallang_general.xml:LGL.hidden',
+			'label' => 'LLL:EXT:lang/'.$sysLangFile.':LGL.hidden',
 			'config' => Array (
 				'type' => 'check',
 				'default' => '0'
@@ -39,7 +40,7 @@ $tx_cfcleague_group = Array (
 		),
 		'starttime' => Array (
 			'exclude' => 1,
-			'label' => 'LLL:EXT:lang/locallang_general.xml:LGL.starttime',
+			'label' => 'LLL:EXT:lang/'.$sysLangFile.':LGL.starttime',
 			'config' => Array (
 				'type' => 'input',
 			    'renderType' => (tx_rnbase_util_TYPO3::isTYPO86OrHigher() ? 'inputDateTime' : ''),
@@ -51,7 +52,7 @@ $tx_cfcleague_group = Array (
 		),
 		'fe_group' => Array (
 			'exclude' => 1,
-			'label' => 'LLL:EXT:lang/locallang_general.xml:LGL.fe_group',
+			'label' => 'LLL:EXT:lang/'.$sysLangFile.':LGL.fe_group',
 			'config' => Array (
 				'type' => 'select',
 			    'renderType' => 'selectMultipleSideBySide',
