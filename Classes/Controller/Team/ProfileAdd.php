@@ -50,7 +50,7 @@ class Tx_Cfcleague_Controller_Team_ProfileAdd
 
         if ($teamInfo->isTeamFull()) {
             // Kann nix mehr angelegt werden
-            return $this->mod->doc->section('Message:', $GLOBALS['LANG']->getLL('msg_maxPlayers'), 0, 1, ICON_WARN);
+            return $this->mod->doc->section('Message:', $GLOBALS['LANG']->getLL('msg_maxPlayers'), 0, 1, \tx_rnbase_mod_IModFunc::ICON_WARN);
         }
 
         // ggf. Daten im Request verarbeiten
@@ -137,7 +137,7 @@ class Tx_Cfcleague_Controller_Team_ProfileAdd
         global $LANG;
 
         if (! Tx_Cfcleague_Controller_Team_ProfileCreate::isProfilePage($this->mod->getPid())) {
-            $content = $this->mod->getDoc()->section('Message:', $LANG->getLL('msg_pageNotAllowed'), 0, 1, ICON_WARN);
+            $content = $this->mod->getDoc()->section('Message:', $LANG->getLL('msg_pageNotAllowed'), 0, 1, \tx_rnbase_mod_IModFunc::ICON_WARN);
             return $content;
         }
         $arr = Array(
@@ -235,7 +235,7 @@ class Tx_Cfcleague_Controller_Team_ProfileAdd
                 }
             }
         }
-        return (strlen($out)) ? $this->mod->getDoc()->section($GLOBALS['LANG']->getLL('message') . ':', $out, 0, 1, ICON_INFO) : '';
+        return (strlen($out)) ? $this->mod->getDoc()->section($GLOBALS['LANG']->getLL('message') . ':', $out, 0, 1, \tx_rnbase_mod_IModFunc::ICON_INFO) : '';
     }
 
     /**
