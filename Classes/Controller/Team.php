@@ -86,7 +86,7 @@ class Tx_Cfcleague_Controller_Team extends tx_rnbase_mod_BaseModFunc
 
         if (! ($saison && count($competitions))) {
             $this->getModule()->selector = $selector;
-            $content .= $this->doc->section('Info:', $saison ? $LANG->getLL('msg_NoCompetitonsFound') : $LANG->getLL('msg_NoSaisonFound'), 0, 1, ICON_WARN);
+            $content .= $this->doc->section('Info:', $saison ? $LANG->getLL('msg_NoCompetitonsFound') : $LANG->getLL('msg_NoSaisonFound'), 0, 1, self::ICON_WARN);
             return $content;
         }
 
@@ -98,7 +98,7 @@ class Tx_Cfcleague_Controller_Team extends tx_rnbase_mod_BaseModFunc
         $this->getModule()->selector = $selector;
 
         if (! $team) { // Kein Team gefunden
-            $content .= $this->doc->section('Info:', $LANG->getLL('msg_no_team_found'), 0, 1, ICON_WARN);
+            $content .= $this->doc->section('Info:', $LANG->getLL('msg_no_team_found'), 0, 1, self::ICON_WARN);
             return $content;
         }
         // Wenn ein Team gefunden ist, dann können wir das Modul schreiben

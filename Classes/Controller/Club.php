@@ -78,7 +78,7 @@ class Tx_Cfcleague_Controller_Club extends tx_rnbase_mod_BaseModFunc
 
             $content .= $this->getModule()
                 ->getDoc()
-                ->section('###LABEL_MSG_NOCLUBONPAGE###', $addInfo, 0, 1, ICON_INFO);
+                ->section('###LABEL_MSG_NOCLUBONPAGE###', $addInfo, 0, 1, self::ICON_INFO);
             return $content;
         }
 

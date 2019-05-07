@@ -89,7 +89,7 @@ class Tx_Cfcleague_Controller_Profile extends tx_rnbase_mod_BaseModFunc
         if (! $this->hideResults) {
             $searchterm = trim($this->SEARCH_SETTINGS['searchterm']);
             if (strlen($searchterm) && strlen($searchterm) < 3)
-                $content .= $this->doc->section($LANG->getLL('message') . ':', $LANG->getLL('msg_string_too_short'), 0, 1, ICON_INFO);
+                $content .= $this->doc->section($LANG->getLL('message') . ':', $LANG->getLL('msg_string_too_short'), 0, 1, self::ICON_INFO);
             elseif (strlen($searchterm) >= 3) {
                 $profiles = $this->searchProfiles($searchterm);
                 $content .= $this->doc->section($LANG->getLL('msg_found_person'), $this->buildProfileTable($profiles), 0, 1);
@@ -110,12 +110,12 @@ class Tx_Cfcleague_Controller_Profile extends tx_rnbase_mod_BaseModFunc
         $profile2 = intval($data['merge2']);
         if ($data['merge_profiles']) { // Step 1
             if (! ($profile1 && $profile2) || ($profile1 == $profile2)) {
-                return $this->doc->icons(ICON_FATAL) . $LANG->getLL('msg_merge_selectprofiles');
+                return $this->doc->icons(self::ICON_FATAL) . $LANG->getLL('msg_merge_selectprofiles');
             }
             $this->hideResults = true;
             // Beide Profile nochmal anzeigen
             // Das führende Profile muss ausgewählt werden
-            $out .= $this->doc->icons(ICON_INFO) . $LANG->getLL('msg_merge_selectprofile');
+            $out .= $this->doc->icons(self::ICON_INFO) . $LANG->getLL('msg_merge_selectprofile');
             if (tx_rnbase_util_TYPO3::isTYPO70OrHigher()) {
                 $out .= $this->createProfileMergeForm($profile1, $profile2);
             } else
@@ -127,7 +127,7 @@ class Tx_Cfcleague_Controller_Profile extends tx_rnbase_mod_BaseModFunc
             $merger = tx_rnbase::makeInstance('Tx_Cfcleague_Controller_Profile_ProfileMerger');
             $merger->merge($leading, $leading == $profile1 ? $profile2 : $profile1);
 
-            $out .= $this->doc->icons(ICON_OK) . $LANG->getLL('msg_merge_done');
+            $out .= $this->doc->icons(self::ICON_OK) . $LANG->getLL('msg_merge_done');
         }
         if ($out)
             $out = $this->doc->section($LANG->getLL('label_mergehead'), $out, 0, 1);
@@ -232,14 +232,14 @@ class Tx_Cfcleague_Controller_Profile extends tx_rnbase_mod_BaseModFunc
             $date = $profile['birthday'];
             list ($day, $month, $year) = explode('.', $date);
             if (! checkdate($month, $day, $year)) {
-                $out = $this->doc->icons(ICON_FATAL) . ' Invalid date -' . $date . '- für UID: ' . $uid;
+                $out = $this->doc->icons(self::ICON_FATAL) . ' Invalid date -' . $date . '- für UID: ' . $uid;
             } else {
                 // Das ist eher problematisch. Das Datum sollte in GMT gespeichert werden
                 $values = [
                     'birthday' => mktime(0, 0, 0, $month, $day, $year)
                 ];
                 Tx_Rnbase_Database_Connection::getInstance()->doUpdate('tx_cfcleague_profiles', 'uid=' . intval($uid), $values);
-                $out = $this->doc->icons(ICON_OK) . ' ' . $LANG->getLL('msg_date_saved') . ': ' . $date;
+                $out = $this->doc->icons(self::ICON_OK) . ' ' . $LANG->getLL('msg_date_saved') . ': ' . $date;
             }
         }
         return $out;
@@ -255,7 +255,7 @@ class Tx_Cfcleague_Controller_Profile extends tx_rnbase_mod_BaseModFunc
         global $LANG;
         $out = '';
         if (count($profiles) == 0) {
-            $out .= $this->doc->icons(ICON_FATAL) . ' Internal error. Sorry no profile found!';
+            $out .= $this->doc->icons(self::ICON_FATAL) . ' Internal error. Sorry no profile found!';
         } else {
             $profile = $profiles[0];
             // Jetzt das Formular anzeigen
@@ -336,7 +336,7 @@ class Tx_Cfcleague_Controller_Profile extends tx_rnbase_mod_BaseModFunc
 
         $out = '';
         if (! count($profiles)) {
-            $out = $this->doc->icons(ICON_WARN) . ' ' . $LANG->getLL('msg_no_person_found');
+            $out = $this->doc->icons(self::ICON_WARN) . ' ' . $LANG->getLL('msg_no_person_found');
         } else {
             $arr = [
                 [

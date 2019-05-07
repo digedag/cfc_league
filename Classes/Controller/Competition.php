@@ -2,7 +2,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2008-2018 Rene Nitzsche (rene@system25.de)
+ *  (c) 2008-2019 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -74,7 +74,7 @@ class Tx_Cfcleague_Controller_Competition extends tx_rnbase_mod_BaseModFunc
         if (! $current_league) {
             $content .= $this->getModule()
                 ->getDoc()
-                ->section('Info:', $LANG->getLL('no_league_in_page'), 0, 1, ICON_WARN);
+                ->section('Info:', $LANG->getLL('no_league_in_page'), 0, 1, self::ICON_WARN);
             $content .= '<p style="margin-top:5px; font-weight:bold;">' . $formTool->createNewLink('tx_cfcleague_competition', $this->getModule()
                 ->getPid(), $LANG->getLL('msg_create_new_competition')) . '</p>';
             return $content;
