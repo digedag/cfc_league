@@ -249,7 +249,10 @@ class Tx_Cfcleague_Controller_Competition_MatchEdit
      */
     private function buildInputField($table, $record, $fieldName, $uid)
     {
-        return tx_rnbase_util_TYPO3::isTYPO70OrHigher() ? $this->formTool->getTCEForm()->getSoloField($table, $record, $fieldName) : $this->formTool->getTCEForm()->getSoloField($table, $record[$table . '_' . $uid], $fieldName);
+        return tx_rnbase_util_TYPO3::isTYPO70OrHigher() ?
+            $this->formTool->getTCEForm()->getSoloField($table, $record, $fieldName)
+            :
+            $this->formTool->getTCEForm()->getSoloField($table, $record[$table . '_' . $uid], $fieldName);
     }
 
     /**

@@ -285,15 +285,12 @@ class tx_cfcleague_selector
 
             $prev = $this->getFormTool()->createModuleLink(['SET[round]' => $keys[$prevIdx]], $pid, '&lt;');
             $next = $this->getFormTool()->createModuleLink(['SET[round]' => $keys[$nextIdx]], $pid, '&gt;');
-            if (tx_rnbase_util_TYPO3::isTYPO76OrHigher()) {
-                $menu = '<div class="cfcselector"><div class="selector col-md-2">' . $data['menu'] . '</div></div>';
-                $links = $prev . $next;
-                $menu = $menu . '<span class="links col-md-2">' . $links . '</span>';
-            } else {
-                $menu = '<div class="cfcselector"><div class="selector">' . $prev . '' . $data['menu'] . '' . $next . '</div></div>';
-            }
+
+            $links = [$prev, $next];
+            $content .= $this->renderSelector($data['menu'], $links);
+
         }
-        $content .= $menu;
+//        $content .= $menu;
 
         return (int) count($objRounds) ? $objRounds[$data['value']] : $data['value'];
     }
@@ -397,9 +394,20 @@ class tx_cfcleague_selector
 
     private function renderSelector($menu, array $links = [])
     {
-        return '<div class="cfcselector" style="float: left; width: 100%"><span class="selector col-md-2">' . $menu .
-            '</span>'. (empty($links) ? '' : '<span class="links">' . implode(' ', $links) . '</span>').
-            '</div>';
+        if (tx_rnbase_util_TYPO3::isTYPO76OrHigher()) {
+            $menu = '<div class="row"><div class="col-sm-4">' . $menu . '</div>';
+            if( !empty($links) ) {
+                $menu = $menu . '<span class="col-sm-4">' . implode(' ', $links) . '</span>';
+            }
+            $menu .= '</div>';
+        } else {
+            $menu = '<div class="cfcselector"><div class="selector">' . $data['menu'] . '' . implode(' ', $links) . '</div></div>';
+        }
+        return $menu;
+
+//         return '<div class="cfcselector row" style="float: left; width: 100%"><span class="selector col-sm-4">' . $menu .
+//             '</span>'. (empty($links) ? '' : '<span class="links col-sm-4">' . implode(' ', $links) . '</span>').
+//             '</div>';
     }
 
     /**

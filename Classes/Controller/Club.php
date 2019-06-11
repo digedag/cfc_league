@@ -2,7 +2,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2010-2018 Rene Nitzsche (rene@system25.de)
+ *  (c) 2010-2019 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -55,9 +55,9 @@ class Tx_Cfcleague_Controller_Club extends tx_rnbase_mod_BaseModFunc
         // Zuerst holen wir alle Tabs, erstellen die MenuItems und werten den Request aus
         $tabItems = [];
         $tabItems[] = tx_rnbase::makeInstance('tx_cfcleague_mod1_handler_ClubStadiums');
-        tx_rnbase_util_Misc::callHook('cfc_league', 'modClub_tabItems', array(
+        tx_rnbase_util_Misc::callHook('cfc_league', 'modClub_tabItems', [
             'tabItems' => &$tabItems
-        ), $this);
+        ], $this);
 
         $menuItems = [];
         foreach ($tabItems as $idx => $tabItem) {
@@ -74,7 +74,7 @@ class Tx_Cfcleague_Controller_Club extends tx_rnbase_mod_BaseModFunc
             $addInfo = '###LABEL_MSG_CREATENEWCLUBNOW###';
             $linker = tx_rnbase::makeInstance('tx_cfcleague_mod1_linker_NewClub');
             $addInfo .= $linker->makeLink(null, $formTool, $this->getModule()
-                ->getPid(), array());
+                ->getPid(), []);
 
             $content .= $this->getModule()
                 ->getDoc()
@@ -90,14 +90,12 @@ class Tx_Cfcleague_Controller_Club extends tx_rnbase_mod_BaseModFunc
         $tabs .= $menu['menu'];
         $tabs .= '<div style="display: block; border: 1px solid #a2aab8;" ></div>';
 
-        if (tx_rnbase_util_TYPO3::isTYPO42OrHigher())
-            $this->pObj->tabs = $tabs;
-        else
-            $content .= $tabs;
+        $this->pObj->tabs = $tabs;
 
         $handler = $tabItems[$menu['value']];
-        if (is_object($handler))
-            $content .= $handler->showScreen($club, $this->getModule());
+        if (is_object($handler)) {
+            $modContent .= $handler->showScreen($club, $this->getModule());
+        }
 
         $content .= $formTool->getTCEForm()->printNeededJSFunctions_top();
         $content .= $modContent;
