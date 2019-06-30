@@ -294,7 +294,7 @@ CREATE TABLE tx_cfcleague_profiles (
 	deleted tinyint(4) DEFAULT '0' NOT NULL,
 	hidden tinyint(4) DEFAULT '0' NOT NULL,
 	gdpr tinyint(4) DEFAULT '0' NOT NULL,
-	sex tinyint(4) DEFAULT '0' NOT NULL,
+	gender tinyint(4) DEFAULT '0' NOT NULL,
 	stage_name varchar(70) DEFAULT '' NOT NULL,
 	first_name varchar(50) DEFAULT '' NOT NULL,
 	last_name varchar(70) DEFAULT '' NOT NULL,
