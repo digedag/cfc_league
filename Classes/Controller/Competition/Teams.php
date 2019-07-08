@@ -196,7 +196,7 @@ class Tx_Cfcleague_Controller_Competition_Teams
         $tce = Tx_Rnbase_Database_Connection::getInstance()->getTCEmain($tcaData);
         $tce->process_datamap();
         $competition->refresh();
-        $content .= $this->doc->section('Message:', $LANG->getLL('msg_teams_created'), 0, 1, ICON_INFO);
+        $content .= $this->doc->section('Message:', $LANG->getLL('msg_teams_created'), 0, 1, \tx_rnbase_mod_IModFunc::ICON_INFO);
         return $content;
     }
 
@@ -216,7 +216,7 @@ class Tx_Cfcleague_Controller_Competition_Teams
         );
         $teams = $competition->getTeamNames(1);
         if (! count($teams)) {
-            return $content . $this->doc->section('Message:', $LANG->getLL('msg_noteams_in_comp'), 0, 1, ICON_INFO);
+            return $content . $this->doc->section('Message:', $LANG->getLL('msg_noteams_in_comp'), 0, 1, \tx_rnbase_mod_IModFunc::ICON_INFO);
         }
         foreach ($teams as $teamArr) {
             $row = array();

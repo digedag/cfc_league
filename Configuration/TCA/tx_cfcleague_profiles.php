@@ -5,6 +5,7 @@ tx_rnbase::load('tx_cfcleague_tca_Lookup');
 tx_rnbase::load('tx_rnbase_util_TYPO3');
 
 $rteConfig = 'richtext[cut|copy|paste|formatblock|textcolor|bold|italic|underline|left|center|right|orderedlist|unorderedlist|outdent|indent|link|table|image|line|chMode]:rte_transform[mode=ts_css|imgpath=uploads/tx_cfcleague/rte/]';
+$sysLangFile = tx_rnbase_util_TYPO3::isTYPO87OrHigher() ? 'Resources/Private/Language/locallang_general.xlf' : 'locallang_general.xml';
 
 $tx_cfcleague_profiles = Array (
 	'ctrl' => Array (
@@ -12,7 +13,7 @@ $tx_cfcleague_profiles = Array (
 		'label' => 'last_name',
 		'label_alt' => 'first_name',
 		'label_alt_force' => 1,
-		'searchFields' => 'uid,first_name,last_name,stage_name,email,nickname',
+		'searchFields' => 'uid,first_name,last_name,stage_name,email,nickname,extid',
 		'dividers2tabs' => TRUE,
 		'tstamp' => 'tstamp',
 		'crdate' => 'crdate',
@@ -20,9 +21,9 @@ $tx_cfcleague_profiles = Array (
 //		'sortby' => 'sorting',
 		'default_sortby' => 'ORDER BY last_name, first_name',
 		'delete' => 'deleted',
-		'enablecolumns' => Array (
+		'enablecolumns' => [
 			'disabled' => 'hidden',
-		),
+		],
         'typeicon_classes' => [
             'default' => 'ext-cfcleague-profiles-default'
         ],
@@ -38,14 +39,14 @@ $tx_cfcleague_profiles = Array (
 			stations, nickname, family, hobbies, prosperities, summary, description',
 	),
 	'columns' => Array (
-		'hidden' => Array (
+		'hidden' => [
 			'exclude' => 1,
-			'label' => 'LLL:EXT:lang/locallang_general.xml:LGL.hidden',
-			'config' => Array (
+		    'label' => 'LLL:EXT:lang/'.$sysLangFile.':LGL.hidden',
+			'config' => [
 				'type' => 'check',
 				'default' => '0'
-			)
-		),
+			]
+		],
 		'first_name' => Array (
 			'exclude' => 1,
 			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles.first_name',
@@ -76,14 +77,27 @@ $tx_cfcleague_profiles = Array (
 				'eval' => 'trim',
 			)
 		),
-		'link_report' => Array (
+		'link_report' => [
 			'exclude' => 1,
 			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles.link_report',
-			'config' => Array (
+			'config' => [
 				'type' => 'check',
 				'default' => '0'
-			)
-		),
+			]
+		],
+		'gdpr' => [
+			'exclude' => 1,
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles.gdpr',
+			'config' => [
+				'type' => 'select',
+				'items' => [
+					['LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles.gdpr_ok',0],
+					['LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles.gdpr_nameonly',1],
+					['LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles.gdpr_anonymize',2],
+				],
+				'default' => 0
+			]
+		],
 		'birthday' => Array (
 			'exclude' => 1,
 			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles.birthday',
@@ -96,7 +110,40 @@ $tx_cfcleague_profiles = Array (
 				'default' => '0'
 			)
 		),
-		'native_town' => Array (
+		'dayofdeath' => [
+			'exclude' => 1,
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles.dayofdeath',
+			'config' => [
+				'type' => 'input',
+				'renderType' => (tx_rnbase_util_TYPO3::isTYPO86OrHigher() ? 'inputDateTime' : ''),
+				'size' => '8',
+				'eval' => 'date',
+				'checkbox' => '0',
+				'default' => '0'
+			]
+		],
+		'died' => [
+			'exclude' => 1,
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles.died',
+			'config' => [
+				'type' => 'check',
+				'default' => '0'
+			]
+		],
+		'gender' => [
+			'exclude' => 1,
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles.gender',
+			'config' => [
+				'type' => 'select',
+				'items' => [
+					['LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles.gender_male',0],
+					['LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles.gender_female',1],
+					['LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles.gender_unspecified',2],
+				],
+				'default' => 0
+			]
+		],
+	    'native_town' => Array (
 			'exclude' => 1,
 			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles.native_town',
 			'config' => Array (
@@ -123,22 +170,22 @@ $tx_cfcleague_profiles = Array (
 				'eval' => 'trim',
 			)
 		),
-		'height' => Array (
+		'height' => [
 			'exclude' => 1,
 			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles.height',
-			'config' => Array (
+			'config' => [
 				'type' => 'input',
 				'size' => '4',
 				'max' => '4',
 				'eval' => 'int',
 				'checkbox' => '0',
-				'range' => Array (
+				'range' => [
 					'upper' => '1000',
 					'lower' => '0'
-				),
+				],
 				'default' => 0
-			)
-		),
+			]
+		],
 		'weight' => Array (
 			'exclude' => 1,
 			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles.weight',
@@ -203,29 +250,29 @@ $tx_cfcleague_profiles = Array (
 				'eval' => 'trim',
 			)
 		),
-		'summary' => Array (
+		'summary' => [
 			'exclude' => 1,
 			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles.summary',
-			'config' => Array (
+			'config' => [
 				'type' => 'text',
 				'cols' => '30',
 				'rows' => '5',
-				'wizards' => Array(
+				'wizards' => [
 					'_PADDING' => 2,
-					'RTE' => Array(
+					'RTE' => [
 						'notNewRecords' => 1,
 						'RTEonly' => 1,
 						'type' => 'script',
 						'title' => 'Full screen Rich Text Editing|Formatteret redigering i hele vinduet',
 						'icon' => 'wizard_rte2.gif',
-					),
-				),
-			)
-		),
-		'types' => Array (
+					],
+				],
+			]
+		],
+		'types' => [
 			'exclude' => 1,
 			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles.type',
-			'config' => Array (
+			'config' => [
 				'type' => 'select',
 			    'renderType' => 'selectMultipleSideBySide',
 			    'itemsProcFunc' => 'tx_cfcleague_tca_Lookup->getProfileTypes',
@@ -233,51 +280,51 @@ $tx_cfcleague_profiles = Array (
 				'autoSizeMax' => 10,
 				'minitems' => 0,
 				'maxitems' => 20,
-			)
-		),
-		'description' => Array (
+			]
+		],
+		'description' => [
 			'exclude' => 1,
 			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles.description',
-			'config' => Array (
+			'config' => [
 				'type' => 'text',
 				'cols' => '30',
 				'rows' => '5',
-				'wizards' => Array(
+				'wizards' => [
 					'_PADDING' => 2,
-					'RTE' => Array(
+					'RTE' => [
 						'notNewRecords' => 1,
 						'RTEonly' => 1,
 						'type' => 'script',
 						'title' => 'Full screen Rich Text Editing|Formatteret redigering i hele vinduet',
 						'icon' => 'wizard_rte2.gif',
-					),
-				),
-			)
-		),
-		'extid' => Array (
-				'exclude' => 1,
-				'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles_extid',
-				'config' => Array (
-						'type' => 'input',
-						'size' => '10',
-						'max' => '255',
-						'eval' => 'trim',
-				)
-		),
+					],
+				],
+			]
+		],
+		'extid' => [
+			'exclude' => 1,
+			'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles_extid',
+			'config' => [
+				'type' => 'input',
+				'size' => '10',
+				'max' => '255',
+				'eval' => 'trim',
+			]
+		],
 	),
-	'types' => Array (
+	'types' => [
 		'0' => [
-		    'showitem' => 'hidden, first_name, last_name, stage_name, home_town, birthday, native_town, nationality, height, weight, position, duration_of_contract, start_of_contract, email, nickname, extid,
-		         --div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles.description,link_report,dam_images,t3images,types, summary, description'
-		    ],
-    	    'columnsOverrides' => [
-    	        'description' => ['defaultExtras' => $rteConfig],
-    	        'summary' => ['defaultExtras' => $rteConfig],
-    	    ]
-	),
-	'palettes' => Array (
-		'1' => Array('showitem' => '')
-	)
+		    'showitem' => 'hidden, first_name, last_name, stage_name, home_town, birthday, died, dayofdeath, native_town, nationality, gender, height, weight, position, duration_of_contract, start_of_contract, email, nickname, extid,
+		         --div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles.description,gdpr,link_report,dam_images,t3images,types, summary, description'
+		],
+    	'columnsOverrides' => [
+	        'description' => ['defaultExtras' => $rteConfig],
+	        'summary' => ['defaultExtras' => $rteConfig],
+    	]
+	],
+	'palettes' => [
+		'1' => ['showitem' => '']
+	]
 );
 
 tx_rnbase::load('Tx_Rnbase_Utility_TcaTool');
@@ -287,14 +334,14 @@ Tx_Rnbase_Utility_TcaTool::configureWizards($tx_cfcleague_profiles, [
 ]);
 
 if(!tx_rnbase_util_TYPO3::isTYPO76OrHigher()) {
-    $tx_cfcleague_profiles['types'][0]['showitem'] = 'hidden, first_name, last_name, stage_name, home_town, birthday, native_town, nationality, height, weight, position, duration_of_contract, start_of_contract, email, nickname, extid,
-		--div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles.description,link_report,dam_images,t3images,types, summary;;;'.$rteConfig.', description;;;'.$rteConfig;
+    $tx_cfcleague_profiles['types'][0]['showitem'] = 'hidden, first_name, last_name, stage_name, home_town, birthday, died, dayofdeath, native_town, nationality, gender, height, weight, position, duration_of_contract, start_of_contract, email, nickname, extid,
+		--div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles.description,gdpr,link_report,dam_images,t3images,types, summary;;;'.$rteConfig.', description;;;'.$rteConfig;
 }
 
 
 tx_rnbase::load('tx_rnbase_util_TSFAL');
-$tx_cfcleague_profiles['columns']['t3images'] = tx_rnbase_util_TSFAL::getMediaTCA('t3images', array(
+$tx_cfcleague_profiles['columns']['t3images'] = tx_rnbase_util_TSFAL::getMediaTCA('t3images', [
 	'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_stadiums_pictures',
-));
+]);
 
 return $tx_cfcleague_profiles;

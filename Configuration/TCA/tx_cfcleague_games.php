@@ -1,10 +1,10 @@
 <?php
 if (!defined ('TYPO3_MODE')) 	die ('Access denied.');
 
-tx_rnbase::load('tx_rnbase_configurations');
 tx_rnbase::load('tx_cfcleague_tca_Lookup');
 
 $rteConfig = 'richtext[paste|bold|italic|underline|formatblock|class|left|center|right|orderedlist|unorderedlist|outdent|indent|link|image]:rte_transform[mode=ts]';
+$sysLangFile = tx_rnbase_util_TYPO3::isTYPO87OrHigher() ? 'Resources/Private/Language/locallang_general.xlf' : 'locallang_general.xml';
 
 $tx_cfcleague_games = Array (
 	'ctrl' => Array (
@@ -45,7 +45,7 @@ $tx_cfcleague_games = Array (
 	'columns' => Array (
 		'hidden' => Array (
 			'exclude' => 1,
-			'label' => 'LLL:EXT:lang/locallang_general.xml:LGL.hidden',
+		    'label' => 'LLL:EXT:lang/'.$sysLangFile.':LGL.hidden',
 			'config' => Array (
 				'type' => 'check',
 				'default' => '0'
@@ -500,7 +500,7 @@ $tx_cfcleague_games = Array (
 			'config' => Array (
 				'type' => 'input',
 				'renderType' => (tx_rnbase_util_TYPO3::isTYPO86OrHigher() ? 'inputDateTime' : ''),
-			    'size' => '12',
+			    'size' => '8',
 				'eval' => 'datetime',
 				'checkbox' => '0',
 				'default' => '0'

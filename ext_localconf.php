@@ -2,38 +2,41 @@
 
 if (!defined ('TYPO3_MODE')) 	die ('Access denied.');
 tx_rnbase_util_Extensions::addUserTSConfig('
-	options.saveDocNew.tx_cfcleague_group=1
+    options.saveDocNew.tx_cfcleague_group=1
 ');
 tx_rnbase_util_Extensions::addUserTSConfig('
-	options.saveDocNew.tx_cfcleague_saison=1
+    options.saveDocNew.tx_cfcleague_saison=1
 ');
 tx_rnbase_util_Extensions::addUserTSConfig('
-	options.saveDocNew.tx_cfcleague_competition=1
+    options.saveDocNew.tx_cfcleague_competition=1
 ');
 tx_rnbase_util_Extensions::addUserTSConfig('
-	options.saveDocNew.tx_cfcleague_club=1
+    options.saveDocNew.tx_cfcleague_club=1
 ');
 tx_rnbase_util_Extensions::addUserTSConfig('
-	options.saveDocNew.tx_cfcleague_teams=1
+    options.saveDocNew.tx_cfcleague_teams=1
 ');
 tx_rnbase_util_Extensions::addUserTSConfig('
-	options.saveDocNew.tx_cfcleague_profiles=1
+    options.saveDocNew.tx_cfcleague_profiles=1
 ');
 tx_rnbase_util_Extensions::addUserTSConfig('
-	options.saveDocNew.tx_cfcleague_team_notes=1
+    options.saveDocNew.tx_cfcleague_team_notes=1
 ');
 
 // Die TCE-Hooks
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass'][] = 'EXT:' . $_EXTKEY . '/hooks/class.tx_cfcleague_hooks_tceAfterDB.php:tx_cfcleague_hooks_tceAfterDB';
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass'][] = 'EXT:' . $_EXTKEY . '/hooks/class.tx_cfcleague_hooks_tcehook.php:tx_cfcleague_hooks_tcehook';
-$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tceforms.php']['getMainFieldsClass'][] = 'EXT:' . $_EXTKEY . '/hooks/class.tx_cfcleague_hooks_tcehook.php:tx_cfcleague_hooks_tcehook';
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processCmdmapClass'][] = 'EXT:' . $_EXTKEY . '/hooks/class.tx_cfcleague_hooks_cmhooks.php:tx_cfcleague_hooks_cmhooks';
 
+if(!tx_rnbase_util_TYPO3::isTYPO76OrHigher()) {
+    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tceforms.php']['getMainFieldsClass'][] = 'EXT:' . $_EXTKEY . '/hooks/class.tx_cfcleague_hooks_tcehook.php:tx_cfcleague_hooks_tcehook';
+}
+
 if(tx_rnbase_util_TYPO3::isTYPO62OrHigher()) {
-	tx_rnbase_util_Extensions::registerAjaxHandler('T3sports::saveTickerMessage', 'EXT:' . $_EXTKEY . '/mod1/class.tx_cfcleague_mod1_AjaxTicker.php:tx_cfcleague_mod1_AjaxTicker->ajaxSaveTickerMessage');
+    tx_rnbase_util_Extensions::registerAjaxHandler('T3sports::saveTickerMessage', 'EXT:' . $_EXTKEY . '/mod1/class.tx_cfcleague_mod1_AjaxTicker.php:tx_cfcleague_mod1_AjaxTicker->ajaxSaveTickerMessage');
 }
 else {
-	$GLOBALS ['TYPO3_CONF_VARS']['BE']['AJAX']['T3sports::saveTickerMessage'] = 'EXT:' . $_EXTKEY . '/mod1/class.tx_cfcleague_mod1_AjaxTicker.php:tx_cfcleague_mod1_AjaxTicker->ajaxSaveTickerMessage';
+    $GLOBALS ['TYPO3_CONF_VARS']['BE']['AJAX']['T3sports::saveTickerMessage'] = 'EXT:' . $_EXTKEY . '/mod1/class.tx_cfcleague_mod1_AjaxTicker.php:tx_cfcleague_mod1_AjaxTicker->ajaxSaveTickerMessage';
 }
 
 if (TYPO3_MODE == 'BE') {

@@ -2,7 +2,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2008-2017 Rene Nitzsche (rene@system25.de)
+ *  (c) 2008-2019 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -42,7 +42,6 @@ class Tx_Cfcleague_Controller_Team_ProfileCreate
      */
     public function handleRequest($module, $team, $teamInfo)
     {
-        global $LANG;
         // Zuerst mal müssen wir die passende Liga auswählen lassen:
         // Entweder global über die Datenbank oder die Ligen der aktuellen Seite
         // $pid, &$doc, &$formTool
@@ -87,7 +86,7 @@ class Tx_Cfcleague_Controller_Team_ProfileCreate
         global $LANG;
 
         if (! self::isProfilePage($this->pid)) {
-            $content = $this->doc->section('Message:', $LANG->getLL('msg_pageNotAllowed'), 0, 1, ICON_WARN);
+            $content = $this->doc->section('Message:', $LANG->getLL('msg_pageNotAllowed'), 0, 1, \tx_rnbase_mod_IModFunc::ICON_WARN);
             return $content;
         }
 
@@ -98,9 +97,9 @@ class Tx_Cfcleague_Controller_Team_ProfileCreate
 
         if ($teamInfo->isTeamFull()) {
             // Kann nix mehr angelegt werden
-            $content .= $this->doc->section('Message:', $LANG->getLL('msg_maxPlayers'), 0, 1, ICON_WARN);
+            $content .= $this->doc->section('Message:', $LANG->getLL('msg_maxPlayers'), 0, 1, \tx_rnbase_mod_IModFunc::ICON_WARN);
         } else {
-            $content .= $this->doc->section('Info:', $LANG->getLL('msg_checkPage') . ': <b>' . Tx_Rnbase_Backend_Utility::getRecordPath($this->pid, '', 0) . '</b>', 0, 1, ICON_WARN);
+            $content .= $this->doc->section('Info:', $LANG->getLL('msg_checkPage') . ': <b>' . Tx_Rnbase_Backend_Utility::getRecordPath($this->pid, '', 0) . '</b>', 0, 1, \tx_rnbase_mod_IModFunc::ICON_INFO);
             $content .= $teamInfo->getInfoTable($this->doc);
             // Wir zeigen 15 Zeilen mit Eingabefeldern
             $content .= $this->prepareInputTable($team, $teamInfo);
@@ -159,8 +158,8 @@ class Tx_Cfcleague_Controller_Team_ProfileCreate
                 ] // Format für jede Spalte in jeder Zeile
             ]
         ];
-        
-        
+
+
         $content .= $tables->buildTable(
             [
                 [

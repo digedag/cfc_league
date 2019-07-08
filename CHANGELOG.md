@@ -2,6 +2,11 @@
 Änderungen
 ==========
 
+## v1.3.0 (11.06.2019)
+ * better support for TYPO3 8.7 LTS
+ * some final modifications for TYPO3 6.2 in BE layout
+ * many PHP warnings fixed
+
 ## v1.2.0 (11.07.2018)
  * Support for TYPO3 4.5 LTS dropped
  * Modifications for TYPO3 8.7

@@ -2,11 +2,7 @@
 if (! defined('TYPO3_MODE'))
     die('Access denied.');
 
-tx_rnbase::load('tx_rnbase_configurations');
-// Zur Sicherheit einbinden, da die Funktion schon einmal nicht gefunden wurde...
-if (tx_rnbase_util_Extensions::isLoaded('dam')) {
-    require_once (tx_rnbase_util_Extensions::extPath('dam') . 'tca_media_field.php');
-}
+$sysLangFile = tx_rnbase_util_TYPO3::isTYPO87OrHigher() ? 'Resources/Private/Language/locallang_general.xlf' : 'locallang_general.xml';
 
 $tx_cfcleague_match_notes = Array(
     'ctrl' => Array(
@@ -36,14 +32,14 @@ $tx_cfcleague_match_notes = Array(
         'fe_admin_fieldList' => 'hidden, game, minute, extra_time, type, player_home, player_guest, comment'
     ),
     'columns' => Array(
-        'hidden' => Array(
+        'hidden' => [
             'exclude' => 1,
-            'label' => 'LLL:EXT:lang/locallang_general.xml:LGL.hidden',
-            'config' => Array(
+            'label' => 'LLL:EXT:lang/'.$sysLangFile.':LGL.hidden',
+            'config' => [
                 'type' => 'check',
                 'default' => '0'
-            )
-        ),
+            ]
+        ],
         'game' => Array(
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_match_notes.match',

@@ -8,18 +8,18 @@ tx_rnbase::load('tx_cfcleague_tca_Lookup');
 
 $rteConfig = 'richtext[paste|bold|italic|underline|formatblock|class|left|center|right|orderedlist|unorderedlist|outdent|indent|link|image]:rte_transform[mode=ts]';
 
-$wecmap = array();
+$wecmap = [];
 $wecmap['wec_map']['isMappable'] = 1;
-$wecmap['wec_map']['addressFields'] = array(
+$wecmap['wec_map']['addressFields'] = [
     'street' => 'street',
     'city' => 'city',
     'zip' => 'zip'
-);
+];
 
 $globalClubs = intval(Tx_Rnbase_Configuration_Processor::getExtensionCfgValue('cfc_league', 'useGlobalClubs')) > 0;
 // $clubOrdering = intval(tx_rnbase_configurations::getExtensionCfgValue('cfc_league', 'clubOrdering')) > 0;
 
-$stadiumClubArr = $globalClubs ? Array(
+$stadiumClubArr = $globalClubs ? [
     'type' => 'select',
     'renderType' => 'selectSingle',
     'foreign_table' => 'tx_cfcleague_club',
@@ -29,10 +29,10 @@ $stadiumClubArr = $globalClubs ? Array(
     'minitems' => 0,
     'maxitems' => 100,
     'MM' => 'tx_cfcleague_stadiums_mm',
-    'MM_match_fields' => Array(
+    'MM_match_fields' => [
         'tablenames' => 'tx_cfcleague_club'
-    )
-) : Array(
+    ]
+] : [
     'type' => 'group',
     'internal_type' => 'db',
     'allowed' => 'tx_cfcleague_club',
@@ -41,10 +41,10 @@ $stadiumClubArr = $globalClubs ? Array(
     'minitems' => 0,
     'maxitems' => 100,
     'MM' => 'tx_cfcleague_stadiums_mm',
-    'MM_match_fields' => Array(
+    'MM_match_fields' => [
         'tablenames' => 'tx_cfcleague_club'
-    )
-);
+    ]
+];
 
 $tx_cfcleague_stadiums = Array(
     'ctrl' => Array(

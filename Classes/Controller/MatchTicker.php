@@ -69,7 +69,7 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc
         $current_league = $this->getSelector()->showLeagueSelector($selector, $this->getModule()
             ->getPid());
         if (! $current_league) {
-            return $this->doc->section('Info:', $LANG->getLL('no_league_in_page'), 0, 1, ICON_WARN);
+            return $this->doc->section('Info:', $LANG->getLL('no_league_in_page'), 0, 1, self::ICON_WARN);
         }
 
         if (! count($current_league->getRounds())) {

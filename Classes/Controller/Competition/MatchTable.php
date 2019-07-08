@@ -93,7 +93,7 @@ class Tx_Cfcleague_Controller_Competition_MatchTable
         $data = Tx_Rnbase_Utility_T3General::_GP('data');
         if (is_array($data['rounds']) && Tx_Rnbase_Utility_T3General::_GP('update')) {
             $result = $this->createMatches($data['rounds'], $comp);
-            $content .= $this->doc->section($LANG->getLL('message') . ':', $result, 0, 1, ICON_INFO);
+            $content .= $this->doc->section($LANG->getLL('message') . ':', $result, 0, 1, \tx_rnbase_mod_IModFunc::ICON_INFO);
             return $content;
         }
     }
@@ -110,7 +110,7 @@ class Tx_Cfcleague_Controller_Competition_MatchTable
 
         $matchCnt = $comp->getNumberOfMatches(false);
         if ($matchCnt > 0) {
-            $content .= $this->doc->section($LANG->getLL('warning') . ':', $LANG->getLL('msg_league_generation_hasmatches'), 0, 1, ICON_WARN);
+            $content .= $this->doc->section($LANG->getLL('warning') . ':', $LANG->getLL('msg_league_generation_hasmatches'), 0, 1, \tx_rnbase_mod_IModFunc::ICON_WARN);
             $content .= '<br/><br/>';
         }
 
@@ -160,11 +160,11 @@ class Tx_Cfcleague_Controller_Competition_MatchTable
 
         if (count($gen->errors)) {
             // Da gibt es wohl ein Problem bei der Erzeugung der Spiele...
-            $content .= $this->doc->section($LANG->getLL('error') . ':', '<ul><li>' . implode('<li>', $gen->errors) . '</ul>', 0, 1, ICON_FATAL);
+            $content .= $this->doc->section($LANG->getLL('error') . ':', '<ul><li>' . implode('<li>', $gen->errors) . '</ul>', 0, 1, \tx_rnbase_mod_IModFunc::ICON_FATAL);
         }
         if (count($gen->warnings)) {
             // Da gibt es wohl ein Problem bei der Erzeugung der Spiele...
-            $content .= $this->doc->section($LANG->getLL('warning') . ':', '<ul><li>' . implode('<li>', $gen->warnings) . '</ul>', 0, 1, ICON_WARN);
+            $content .= $this->doc->section($LANG->getLL('warning') . ':', '<ul><li>' . implode('<li>', $gen->warnings) . '</ul>', 0, 1, \tx_rnbase_mod_IModFunc::ICON_WARN);
         }
         if (count($table)) {
             // Wir zeigen alle Spieltage und fragen nach dem Termin

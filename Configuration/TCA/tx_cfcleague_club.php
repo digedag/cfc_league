@@ -1,7 +1,7 @@
 <?php
 if (!defined ('TYPO3_MODE')) 	die ('Access denied.');
 
-tx_rnbase::load('tx_rnbase_configurations');
+tx_rnbase::load('Tx_Rnbase_Configuration_Processor');
 // Zur Sicherheit einbinden, da die Funktion schon einmal nicht gefunden wurde...
 if(tx_rnbase_util_Extensions::isLoaded('dam')) {
     require_once(tx_rnbase_util_Extensions::extPath('dam').'tca_media_field.php');
@@ -9,12 +9,14 @@ if(tx_rnbase_util_Extensions::isLoaded('dam')) {
 tx_rnbase::load('tx_cfcleague_tca_Lookup');
 
 
-$globalClubs = intval(tx_rnbase_configurations::getExtensionCfgValue('cfc_league', 'useGlobalClubs')) > 0;
-$clubOrdering = intval(tx_rnbase_configurations::getExtensionCfgValue('cfc_league', 'clubOrdering')) > 0;
+$globalClubs = intval(Tx_Rnbase_Configuration_Processor::getExtensionCfgValue('cfc_league', 'useGlobalClubs')) > 0;
+$clubOrdering = intval(Tx_Rnbase_Configuration_Processor::getExtensionCfgValue('cfc_league', 'clubOrdering')) > 0;
 
 $labelClub = $clubOrdering ? 'city' : 'name';
 $altLabelClub = $clubOrdering ? 'name' : 'city';
 $rteConfig = 'richtext[paste|bold|italic|underline|formatblock|class|left|center|right|orderedlist|unorderedlist|outdent|indent|link|image]:rte_transform[mode=ts]';
+
+$sysLangFile = tx_rnbase_util_TYPO3::isTYPO87OrHigher() ? 'Resources/Private/Language/locallang_general.xlf' : 'locallang_general.xml';
 
 $tx_cfcleague_club = Array (
     'ctrl' => Array (
@@ -46,7 +48,7 @@ $tx_cfcleague_club = Array (
     'columns' => Array (
         'hidden' => Array (
             'exclude' => 1,
-            'label' => 'LLL:EXT:lang/locallang_general.xml:LGL.hidden',
+            'label' => 'LLL:EXT:lang/'.$sysLangFile.':LGL.hidden',
             'config' => Array (
                 'type' => 'check',
                 'default' => '0'

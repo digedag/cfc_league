@@ -128,20 +128,20 @@ class tx_cfcleague_tca_Lookup
             $stadiums = $srv->getStadiums($teamId);
             foreach ($stadiums as $stadium) {
                 $currentAvailable = $currentAvailable ? $currentAvailable : ($current == $stadium->getUid() || $current == 0);
-                $PA['items'][] = array(
+                $PA['items'][] = [
                     $stadium->getName(),
                     $stadium->getUid()
-                );
+                ];
             }
         }
         if (! $currentAvailable) {
             // Das aktuelle Stadium ist nicht mehr im Verein gefunden worden. Es wird daher nachgeladen
             $stadium = tx_rnbase::makeInstance('tx_cfcleague_models_Stadium', $current);
             if ($stadium->isValid())
-                $PA['items'][] = array(
+                $PA['items'][] = [
                     $stadium->getName(),
                     $stadium->getUid()
-                );
+                ];
         }
     }
 
@@ -164,8 +164,9 @@ class tx_cfcleague_tca_Lookup
             $items = $srv->getLogos($clubId);
             // Bei FAL wird die UID der Referenz gespeichert. Damit können die zusätzlichen
             // Daten der Referenz verwendet werden.
-            if (count($items))
-                $PA['items'] = array();
+            if (count($items)) {
+                $PA['items'] = [];
+            }
             foreach ($items as $item) {
                 // $currentAvailable = $currentAvailable ? $currentAvailable : ($current == $item->getUid() || $current == 0);
                 // Je nach Pflege der Daten sind unterschiedliche Felder gefüllt.
@@ -335,7 +336,7 @@ class tx_cfcleague_tca_Lookup
             // Abfrage aus Spieldatensatz
             // Es werden alle Spieler des Teams benötigt
             $players = $this->findProfiles($teamId, 'getPlayers');
-            $PA[items] = $players;
+            $PA['items'] = $players;
         } elseif ($gameId) {
             // Abfrage aus MatchNote-Datensatz
             // Wenn wir die Match ID haben, können wir die Spieler auch so ermitteln
@@ -349,20 +350,20 @@ class tx_cfcleague_tca_Lookup
                 0 => ''
             ]; // empty item
             foreach ($players as $player) {
-                $playerArr[] = Array(
+                $playerArr[] = [
                     $player->getName(true),
                     $player->getUid()
-                );
+                ];
             }
             sort($playerArr);
-            $PA[items] = $playerArr;
+            $PA['items'] = $playerArr;
             // Abschließend noch den Spieler "Unbekannt" hinzufügen! Dieser ist nur in Matchnotes verfügbar
-            $PA[items][] = Array(
+            $PA['items'][] = [
                 $LANG->getLL('tx_cfcleague.unknown'),
                 '-1'
-            );
+            ];
         } else
-            $PA[items] = array();
+            $PA['items'] = [];
     }
 
     /**
@@ -379,7 +380,7 @@ class tx_cfcleague_tca_Lookup
 
         if ($teamId) {
             $players = $this->findProfiles($teamId, 'getPlayers');
-            $PA[items] = $players;
+            $PA['items'] = $players;
         } elseif ($gameId) {
             // Wenn wir die Match ID haben könne wir die Spieler auch so ermitteln
             /* @var $match tx_cfcleague_models_Match */
@@ -390,20 +391,20 @@ class tx_cfcleague_tca_Lookup
                 0 => ''
             ]; // empty item
             foreach ($players as $player) {
-                $playerArr[] = Array(
+                $playerArr[] = [
                     $player->getName(true),
                     $player->getUid()
-                );
+                ];
             }
             sort($playerArr);
-            $PA[items] = $playerArr;
+            $PA['items'] = $playerArr;
             // Abschließend noch den Spieler "Unbekannt" hinzufügen!
-            $PA[items][] = Array(
+            $PA['items'][] = [
                 $LANG->getLL('tx_cfcleague.unknown'),
                 '-1'
-            );
+            ];
         } else // Ohne Daten müssen wir alle Spieler löschen
-            $PA[items] = array();
+            $PA['items'] = [];
     }
 
     /**
@@ -450,9 +451,9 @@ class tx_cfcleague_tca_Lookup
             $players = $this->findProfiles($team, 'getPlayers');
             $players = array_merge($players, $this->findProfiles($team, 'getCoaches'));
             $players = array_merge($players, $this->findProfiles($team, 'getSupporters'));
-            $PA[items] = $players;
+            $PA['items'] = $players;
         } else
-            $PA[items] = array();
+            $PA['items'] = [];
     }
 
     /**
@@ -463,7 +464,7 @@ class tx_cfcleague_tca_Lookup
      */
     private function findProfiles($teamId, $getter)
     {
-        $rows = array();
+        $rows = [];
         if (intval($teamId) == 0)
             return $rows;
 
@@ -490,7 +491,7 @@ class tx_cfcleague_tca_Lookup
 
         if ($teamId) {
             $coaches = $this->findCoaches($teamId);
-            $PA[items] = $coaches;
+            $PA['items'] = $coaches;
         }
     }
 
@@ -503,7 +504,7 @@ class tx_cfcleague_tca_Lookup
 
         if ($teamId) {
             $coaches = $this->findCoaches($teamId);
-            $PA[items] = $coaches;
+            $PA['items'] = $coaches;
         }
     }
 
@@ -539,15 +540,17 @@ class tx_cfcleague_tca_Lookup
      * Liefert die Teams eines Wettbewerbs.
      * Wird im Spiel-TCE-Dialog zur
      * Auswahl der Teams verwendet.
+     * @param array $PA
+     * @param \TYPO3\CMS\Backend\Form\FormDataProvider\TcaSelectItems $fobj
      */
     public function getTeams4Competition($PA, $fobj)
     {
         // Aktuellen Wettbewerb ermitteln, wenn 0 bleiben die Felder leer
         $compId = (int) $this->getPAValue($PA['row']['competition']);
         if ($compId) {
-            $PA[items] = $this->findTeams($compId);
+            $PA['items'] = $this->findTeams($compId);
         } else {
-            $PA[items] = array();
+            $PA['items'] = [];
         }
     }
 
