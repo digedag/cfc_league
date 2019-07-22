@@ -3,7 +3,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2007-2017 Rene Nitzsche (rene@system25.de)
+ *  (c) 2007-2019 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -323,6 +323,8 @@ class tx_cfcleague_tca_Lookup
     /**
      * Die Spieler des Heimteams ermitteln
      * Used: Edit-Maske eines Spiels für Teamaufstellung und Match-Note
+     * @param array $PA
+     * @param TYPO3\CMS\Backend\Form\Element\UserElement $fobj
      */
     public function getPlayersHome4Match($PA, $fobj)
     {
@@ -331,18 +333,18 @@ class tx_cfcleague_tca_Lookup
 
         // tx_rnbase_util_Debug::debug(count($PA[items]), 'items cfcleague');
         $teamId = (int) $this->getPAValue($PA['row']['home']);
-        $gameId = $PA['row']['game'];
+        $matchValue = $this->getPAValue($PA['row']['game']);
         if ($teamId) {
             // Abfrage aus Spieldatensatz
             // Es werden alle Spieler des Teams benötigt
             $players = $this->findProfiles($teamId, 'getPlayers');
             $PA['items'] = $players;
-        } elseif ($gameId) {
+        } elseif ($matchValue) {
             // Abfrage aus MatchNote-Datensatz
             // Wenn wir die Match ID haben, können wir die Spieler auch so ermitteln
             // Es werden alle aufgestellten Spieler des Matches benötigt
             /* @var $match tx_cfcleague_models_Match */
-            $match = tx_rnbase::makeInstance('tx_cfcleague_models_Match', $this->getRowId($gameId));
+            $match = tx_rnbase::makeInstance('tx_cfcleague_models_Match', $this->getRowId($matchValue));
 
             $players = tx_cfcleague_util_ServiceRegistry::getProfileService()->loadProfiles($match->getPlayersHome(true));
             // $players = $match->getPlayerNamesHome();
@@ -368,7 +370,10 @@ class tx_cfcleague_tca_Lookup
 
     /**
      * Die Spieler des Gastteams ermitteln
-     * Used: Edit-Maske eines Spiels für Teamaufstellung
+     * Used: Edit-Maske eines Spiels für Teamaufstellung und MatchNote
+     *
+     * @param array $PA
+     * @param TYPO3\CMS\Backend\Form\Element\UserElement $fobj
      */
     public function getPlayersGuest4Match($PA, $fobj)
     {
@@ -376,15 +381,15 @@ class tx_cfcleague_tca_Lookup
         $LANG->includeLLFile('EXT:cfc_league/locallang_db.xml');
 
         $teamId = (int) $this->getPAValue($PA['row']['guest']);
-        $gameId = $PA['row']['game'];
+        $matchValue = $this->getPAValue($PA['row']['game']);
 
         if ($teamId) {
             $players = $this->findProfiles($teamId, 'getPlayers');
             $PA['items'] = $players;
-        } elseif ($gameId) {
+        } elseif ($matchValue) {
             // Wenn wir die Match ID haben könne wir die Spieler auch so ermitteln
             /* @var $match tx_cfcleague_models_Match */
-            $match = tx_rnbase::makeInstance('tx_cfcleague_models_Match', $this->getRowId($gameId));
+            $match = tx_rnbase::makeInstance('tx_cfcleague_models_Match', $this->getRowId($matchValue));
             // $players = $match->getPlayerNamesGuest();
             $players = tx_cfcleague_util_ServiceRegistry::getProfileService()->loadProfiles($match->getPlayersGuest(true));
             $playerArr = [
@@ -413,6 +418,9 @@ class tx_cfcleague_tca_Lookup
      */
     private function getRowId($value)
     {
+        if (is_array($value)) {
+            return (int) $value['uid'];
+        }
         $ret = Tx_Rnbase_Utility_Strings::trimExplode('|', $value);
         $ret = Tx_Rnbase_Utility_Strings::trimExplode('_', $ret[0]);
         return intval($ret[count($ret) - 1]);

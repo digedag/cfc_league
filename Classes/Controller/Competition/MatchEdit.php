@@ -66,7 +66,7 @@ class Tx_Cfcleague_Controller_Competition_MatchEdit
         }
 
         $content .= '<div class="cleardiv"/>';
-        $data = tx_rnbase_parameters::getPostOrGetParameter('data');
+        $data = Tx_Rnbase_Utility_T3General::_GP('data');
         // Haben wir Daten im Request?
         if (is_array($data['tx_cfcleague_games'])) {
             $this->updateMatches($data);
