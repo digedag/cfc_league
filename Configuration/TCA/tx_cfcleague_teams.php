@@ -224,23 +224,24 @@ $tx_cfcleague_teams = Array (
 				)
 		),
 	),
-	'types' => Array (
-		'0' => [
-		    'showitem' => 'hidden, club,logo, t3logo, name, short_name, tlc, agegroup, dam_images, t3images, dam_logo, link_report, dummy, extid,
-    		      --div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_teams_tab_members,coaches, players, supporters, players_comment, coaches_comment, supporters_comment, comment',
-		],
-	),
-	'palettes' => Array (
-		'1' => Array('showitem' => '')
-	)
+    'types' => [
+        '0' => [
+        'showitem' => 'hidden, club,logo, t3logo, name, short_name, tlc, agegroup, t3images, link_report, dummy, extid,
+            --div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_teams_tab_members,coaches, players, supporters, players_comment, coaches_comment, supporters_comment, comment',
+        ],
+    ],
+    'palettes' => [
+        '1' => ['showitem' => '']
+    ]
 );
 
 tx_rnbase::load('Tx_Rnbase_Utility_TcaTool');
 Tx_Rnbase_Utility_TcaTool::configureWizards($tx_cfcleague_teams, [
     'comment' => ['RTE' => ['defaultExtras' => $rteConfig]],
 ]);
+
 if(!tx_rnbase_util_TYPO3::isTYPO76OrHigher()) {
-    $tx_cfcleague_teams['types'][0]['showitem'] = 'hidden, club,logo, t3logo, name, short_name, tlc, agegroup, dam_images, t3images, dam_logo, link_report, dummy, extid,
+    $tx_cfcleague_teams['types'][0]['showitem'] = 'hidden, club,logo, t3logo, name, short_name, tlc, agegroup, t3images, link_report, dummy, extid,
         --div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_teams_tab_members,coaches, players, supporters, players_comment, coaches_comment, supporters_comment, comment;;;'.$rteConfig;
 }
 
@@ -251,12 +252,12 @@ tx_rnbase::load('tx_rnbase_util_TSFAL');
 // Auswahlbox Vereinslogos
 $tx_cfcleague_teams['columns']['logo'] = tx_cfcleague_tca_Lookup::getTeamLogoField();
 
-$tx_cfcleague_teams['columns']['t3logo'] = tx_rnbase_util_TSFAL::getMediaTCA('t3logo', array(
+$tx_cfcleague_teams['columns']['t3logo'] = tx_rnbase_util_TSFAL::getMediaTCA('t3logo', [
 	'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_teams.logo',
-	'config' => array('size' => 1, 'maxitems' => 1),
-));
-$tx_cfcleague_teams['columns']['t3images'] = tx_rnbase_util_TSFAL::getMediaTCA('t3images', array(
+	'config' => ['size' => 1, 'maxitems' => 1],
+]);
+$tx_cfcleague_teams['columns']['t3images'] = tx_rnbase_util_TSFAL::getMediaTCA('t3images', [
 	'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_teams.pictures',
-));
+]);
 
 return $tx_cfcleague_teams;

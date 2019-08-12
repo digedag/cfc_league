@@ -72,17 +72,8 @@ class tx_cfcleague_services_Teams extends tx_cfcleague_services_Base
      */
     public function getLogos($clubUid)
     {
-        tx_rnbase::load('tx_rnbase_util_TYPO3');
-        if (tx_rnbase_util_TYPO3::isTYPO60OrHigher()) {
-            tx_rnbase::load('tx_rnbase_util_TSFAL');
-            return tx_rnbase_util_TSFAL::fetchFiles('tx_cfcleague_club', $clubUid, 'logo');
-        }
-        $fields = $options = array();
-        $fields['MEDIAREFMM.UID_FOREIGN'][OP_EQ_INT] = $clubUid;
-        $fields['MEDIAREFMM.TABLENAMES'][OP_EQ] = 'tx_cfcleague_club';
-        $fields['MEDIAREFMM.IDENT'][OP_EQ] = 'dam_images';
-        $options['orderby']['MEDIAREFMM.SORTING_FOREIGN'] = 'asc';
-        return $this->searchMedia($fields, $options);
+        tx_rnbase::load('tx_rnbase_util_TSFAL');
+        return tx_rnbase_util_TSFAL::fetchFiles('tx_cfcleague_club', $clubUid, 'logo');
     }
 
     /**
@@ -227,13 +218,6 @@ class tx_cfcleague_services_Teams extends tx_cfcleague_services_Base
     public function searchClubs($fields, $options)
     {
         $searcher = tx_rnbase_util_SearchBase::getInstance('tx_cfcleague_search_Club');
-        return $searcher->search($fields, $options);
-    }
-
-    public function searchMedia($fields, $options)
-    {
-        tx_rnbase::load('tx_rnbase_util_SearchBase');
-        $searcher = tx_rnbase_util_SearchBase::getInstance('tx_cfcleague_search_Media');
         return $searcher->search($fields, $options);
     }
 

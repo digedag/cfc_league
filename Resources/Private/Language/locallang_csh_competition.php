@@ -78,14 +78,14 @@ The default template uses this marker to create a predefined CSS-Class. Have a l
 
   'de' => Array(
     '.description' => '
-      Ein Wettbewerb ist eine Sammlung von zusammengeh�renden Spielen.
+      Ein Wettbewerb ist eine Sammlung von zusammengehörenden Spielen.
       Es gibt drei Arten: Liga, Pokal und Freunschaftspiele. Die meisten
       Angaben in diesem Wettbewerb sind nur bei Ligen notwendig.',
-    'match_keys.description' => 'In der Detailhilfe sind einige Spielplanschl�ssel
-    des DFB aufgef�hrt.
+    'match_keys.description' => 'In der Detailhilfe sind einige Spielplanschlüssel
+    des DFB aufgeführt.
     ',
     'match_keys.details' => '
-<h2>Einige fertige Spielplanschl�ssel des DFB</h2>
+<h2>Einige fertige Spielplanschlüssel des DFB</h2>
 <pre>
 4 Teams:
 --------
@@ -128,20 +128,20 @@ The default template uses this marker to create a predefined CSS-Class. Have a l
     'addparts.description' => 'Addiere Teilergebnisse zum Endergebnis.',
     'addparts.details' => '
     Das ist sinnvoll, wenn man die Teilergebnisse der einzelnen Spielabschnitte im FE anzeigen
-    will. Dies ist in einigen Sportarten �blich. Bei einem Eishockeyspiel
-    gibt man 0:2, 1:1, 2:1 ein. Das Endergebnis w�re dann 3:4.
+    will. Dies ist in einigen Sportarten üblich. Bei einem Eishockeyspiel
+    gibt man 0:2, 1:1, 2:1 ein. Das Endergebnis wäre dann 3:4.
     ',
   	'teams.description' => 'Geben Sie alle Teams zu diesem Wettbewerb an.',
     'teams.details' => '
-      <p><b>Hinweis:</b> F�r einen Wettbewerb k�nnen nur Spiele angelegt werden, wenn mindestens
+      <p><b>Hinweis:</b> Für einen Wettbewerb können nur Spiele angelegt werden, wenn mindestens
       zwei Teams zugeordnet sind!</p>
-      <p>Wenn ein Spielplan �ber den Schl�ssel angelegt werden soll, dann ist die Reihenfolge der
+      <p>Wenn ein Spielplan über den Schlüssel angelegt werden soll, dann ist die Reihenfolge der
       Teams entscheiden. Team 1 steht ganz oben, dann Team 2, 3 usw.</p>
       </p>',
     'internal_name.description' => 'Dieser Name wird nur im Backend verwendet.',
     'table_marks.description' => 'Markierung Plazierungen in der Ligatabelle.',
     'table_marks.details' => '
-Dieses Feld bietet eine einfache M�glichkeit bestimmte Tabellenpl�tze in der Ligatabelle hervorzuheben.
+Dieses Feld bietet eine einfache Möglichkeit bestimmte Tabellenplätze in der Ligatabelle hervorzuheben.
 
 <b>Format:</b>
 position[,position];marker,beschreibung[|position;marker,beschreibung]
@@ -149,10 +149,9 @@ position[,position];marker,beschreibung[|position;marker,beschreibung]
 <b>Beispiel:</b>
 1;gruen,Meister|14,15,16;rot,Abstieg
 
-Im Beispiel wird also Tabellenplatz <b>1</b> als <b style="color:green">gr�n</b> und die Pl�tze <b>14 bis 16</b> <b style="color:red">rot</b> markiert.
-Daf�r steht im HTML-Template der Marker ###ROW_MARK### bereit. Wird eine hier angegebene Tabellenplatzierung ausgegeben, dann wird der Marker mit dem entsprechenden String gef�llt. Die Beschreibung ist �ber den Marker ###ROW_MARKLABEL### erreichbar.
-Im mitgelieferten Template wird der Marker verwendet, um eine bestimmte CSS-Klasse anzusprechen. Diese muss dann nat�rlich auch vorhanden sein, damit die Formatierung gelingt.
+Im Beispiel wird also Tabellenplatz <b>1</b> als <b style="color:green">grün</b> und die Plätze <b>14 bis 16</b> <b style="color:red">rot</b> markiert.
+Dafür steht im HTML-Template der Marker ###ROW_MARK### bereit. Wird eine hier angegebene Tabellenplatzierung ausgegeben, dann wird der Marker mit dem entsprechenden String gefüllt. Die Beschreibung ist über den Marker ###ROW_MARKLABEL### erreichbar.
+Im mitgelieferten Template wird der Marker verwendet, um eine bestimmte CSS-Klasse anzusprechen. Diese muss dann natürlich auch vorhanden sein, damit die Formatierung gelingt.
     ',
   ),
 );
-?>

@@ -44,21 +44,20 @@ class tx_cfcleague_models_Team extends Tx_Rnbase_Domain_Model_Base {
 		return intval($this->getProperty('link_report'));
 	}
 	/**
-	 * Returns the url of the first stadium logo.
+	 * Returns the url of the first team logo.
+     * (not yet implemented)
 	 *
 	 * @return string
 	 */
 	public function getLogoPath() {
-		if(tx_rnbase_util_Extensions::isLoaded('dam')) {
-			if($this->getProperty('logo')) {
-				// LogoFeld
-				$media = tx_rnbase::makeInstance('tx_rnbase_model_media', $this->getProperty('logo'));
-				return $media->getProperty('file');
-			}
-			elseif($this->getProperty('club')) {
-				$club = tx_rnbase::makeInstance('tx_cfcleague_models_Club', $this->getProperty('club'));
-				return $club->getFirstLogo();
-			}
+		if($this->getProperty('logo')) {
+			// LogoFeld
+			$media = tx_rnbase::makeInstance('tx_rnbase_model_media', $this->getProperty('logo'));
+			return $media->getProperty('file');
+		}
+		elseif($this->getProperty('club')) {
+			$club = tx_rnbase::makeInstance('tx_cfcleague_models_Club', $this->getProperty('club'));
+			return $club->getFirstLogo();
 		}
 		return '';
 	}
@@ -70,7 +69,9 @@ class tx_cfcleague_models_Team extends Tx_Rnbase_Domain_Model_Base {
 	 * @return tx_cfcleague_models_Club Verein als Objekt oder null
 	 */
 	public function getClub() {
-		if(!$this->getProperty('club')) return null;
+	    if(!$this->getProperty('club')) {
+	        return null;
+	    }
 		return tx_rnbase::makeInstance('tx_cfcleague_models_Club', $this->getProperty('club'));
 	}
 
