@@ -79,7 +79,7 @@ class tx_cfcleague_util_ProfileSearcher {
     	}
     	else {
     		// Suchbefriff zu kurz
-		    $content .= $this->mod->doc->section('Hinweis:', 'Der Suchbegriff sollte mindestens drei Zeichen lang sein', 0, 1, ICON_INFO);
+    	    $content .= $this->mod->doc->section('Hinweis:', 'Der Suchbegriff sollte mindestens drei Zeichen lang sein', 0, 1, \tx_rnbase_mod_IModFunc::ICON_INFO);
     	}
     }
 		return $content;

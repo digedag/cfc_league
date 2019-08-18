@@ -2,7 +2,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2009-2017 Rene Nitzsche (rene@system25.de)
+ *  (c) 2009-2019 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -200,7 +200,7 @@ class tx_cfcleague_util_TeamInfo
 
         return $this->getFormTool()
             ->getDoc()
-            ->section('Info:', $LANG->getLL('msg_removedProfileFromTeam'), 0, 1, ICON_INFO);
+            ->section('Info:', $LANG->getLL('msg_removedProfileFromTeam'), 0, 1, \tx_rnbase_mod_IModFunc::ICON_INFO);
     }
 
     /**
@@ -216,23 +216,28 @@ class tx_cfcleague_util_TeamInfo
         $i = 1;
         if ($profileNames)
             foreach ($profileNames as $uid => $prof) {
-                if ($i == 1)
-                    $arr[] = array(
+                if ($i == 1) {
+                    $arr[] = [
                         '',
                         '&nbsp;',
                         '',
                         '',
                         ''
-                    ); // Leere Zeile als Trenner;
-                $row = array();
+                    ]; // Leere Zeile als Trenner;
+                }
+                $row = [];
                 $row[] = $i ++ == 1 ? $label : '';
                 $row[] = $prof[first_name];
                 $row[] = $prof[last_name];
                 $row[] = $this->getFormTool()->createEditLink('tx_cfcleague_profiles', $uid);
-                $row[] = $this->getFormTool()->createSubmit('remFromTeam[' . $type . ']', $uid, $LANG->getLL('msg_remove_team_' . $type), array(
-                    'icon' => 'i/be_users__h.gif',
-                    'infomsg' => 'Remove from Team'
-                ));
+                $row[] = $this->getFormTool()->createSubmit(
+                    'remFromTeam[' . $type . ']',
+                    $uid, $LANG->getLL('msg_remove_team_' . $type),
+                    [
+                        'icon' => 'i/be_users__h.gif',
+                        'infomsg' => 'Remove from Team'
+                    ]
+                );
                 $arr[] = $row;
             }
     }
@@ -284,7 +289,7 @@ class tx_cfcleague_util_TeamInfo
      */
     protected function getPlayerNames($team)
     {
-        $name = array();
+        $name = [];
         foreach ($team->getPlayers() as $profile) {
             $name[$profile->getUid()] = $profile->getProperty();
         }
@@ -300,7 +305,7 @@ class tx_cfcleague_util_TeamInfo
      */
     protected function getCoachNames($team)
     {
-        $name = array();
+        $name = [];
         foreach ($team->getCoaches() as $profile) {
             $name[$profile->getUid()] = $profile->getProperty();
         }
@@ -316,7 +321,7 @@ class tx_cfcleague_util_TeamInfo
      */
     protected function getSupporterNames($team)
     {
-        $name = array();
+        $name = [];
         foreach ($team->getSupporters() as $profile) {
             $name[$profile->getUid()] = $profile->getProperty();
         }

@@ -3,7 +3,7 @@
  * *************************************************************
  * Copyright notice
  *
- * (c) 2008-2018 Rene Nitzsche (rene@system25.de)
+ * (c) 2008-2019 Rene Nitzsche (rene@system25.de)
  * All rights reserved
  *
  * This script is part of the TYPO3 project. The TYPO3 project is
@@ -39,7 +39,7 @@ class tx_cfcleague_mod1_profilesearcher
 
     private $SEARCH_SETTINGS;
 
-    public function __construct($mod, $options = array())
+    public function __construct($mod, $options = [])
     {
         $this->init($mod, $options);
     }
@@ -57,14 +57,16 @@ class tx_cfcleague_mod1_profilesearcher
         $this->options['pid'] = $mod->getPid();
         $this->formTool = $mod->getFormTool();
         $this->resultSize = 0;
-        $this->data = tx_rnbase_parameters::getPostOrGetParameter('data');
+        $this->data = \Tx_Rnbase_Utility_T3General::_GP('data');
 
-        if (! isset($options['nopersist']))
-            $this->SEARCH_SETTINGS = Tx_Rnbase_Backend_Utility::getModuleData(array(
+        if (! isset($options['nopersist'])) {
+            $this->SEARCH_SETTINGS = Tx_Rnbase_Backend_Utility::getModuleData([
                 'searchterm' => ''
-            ), $this->data, $mod->getName());
-        else
+            ], $this->data, $mod->getName());
+        }
+        else {
             $this->SEARCH_SETTINGS = $this->data;
+        }
     }
 
     /**
@@ -78,7 +80,7 @@ class tx_cfcleague_mod1_profilesearcher
     public function getSearchForm($label = '')
     {
         $out = '';
-        $out .= $GLOBALS['LANG']->getLL('label_searchterm') . ': ';
+        $out .= '###LABEL_SEARCHTERM###: ';
         $out .= $this->getFormTool()->createTxtInput('data[searchterm]', $this->SEARCH_SETTINGS['searchterm'], 20);
         // Jetzt noch zusätzlichen JavaScriptcode für Buttons auf der Seite
         // $out .= $this->getFormTool()->getJSCode($this->id);
@@ -92,7 +94,7 @@ class tx_cfcleague_mod1_profilesearcher
         $content = '';
         $searchTerm = tx_rnbase_util_Misc::validateSearchString($this->SEARCH_SETTINGS['searchterm']);
         if (! $searchTerm) {
-            return $this->doc->section($GLOBALS['LANG']->getLL('message') . ':', $GLOBALS['LANG']->getLL('msg_searchhelp'), 0, 1, ICON_INFO);
+            return $this->doc->section($GLOBALS['LANG']->getLL('message') . ':', $GLOBALS['LANG']->getLL('msg_searchhelp'), 0, 1, \tx_rnbase_mod_IModFunc::ICON_INFO);
         }
 
         $profiles = $this->searchProfiles($searchTerm);
@@ -103,7 +105,7 @@ class tx_cfcleague_mod1_profilesearcher
 
     private function searchProfiles($searchterm)
     {
-        $fields = array();
+        $joined = $fields = array();
         if (strlen($searchterm)) {
             $joined['value'] = trim($searchterm);
             $joined['cols'] = array(
@@ -140,16 +142,16 @@ class tx_cfcleague_mod1_profilesearcher
         $this->options['tablename'] = 'tx_cfcleague_profiles';
         tx_rnbase::load('tx_cfcleague_mod1_decorator');
         $decor = tx_rnbase::makeInstance('tx_cfcleague_util_ProfileDecorator', $this->formTool);
-        $columns = array(
-            'uid' => array(),
-            'last_name' => array(
+        $columns = [
+            'uid' => [],
+            'last_name' => [
                 'decorator' => $decor,
                 'title' => 'label_name'
-            ),
-            'birthday' => array(
+            ],
+            'birthday' => [
                 'decorator' => $decor
-            )
-        );
+            ]
+        ];
 
         if ($profiles) {
             $arr = tx_cfcleague_mod1_decorator::prepareTable($profiles, $columns, $this->formTool, $this->options);
@@ -158,7 +160,7 @@ class tx_cfcleague_mod1_profilesearcher
         } else {
             $out = '<p><strong>' . $GLOBALS['LANG']->getLL('msg_no_matches_in_betset') . '</strong></p><br/>';
         }
-        return $this->doc->section($headline . ':', $out, 0, 1, ICON_INFO);
+        return $this->doc->section($headline . ':', $out, 0, 1, \tx_rnbase_mod_IModFunc::ICON_INFO);
     }
 
     /**
