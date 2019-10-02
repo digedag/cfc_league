@@ -30,7 +30,7 @@ $tx_cfcleague_profiles = Array (
 		'iconfile' => 'EXT:cfc_league/Resources/Public/Icons/icon_tx_cfcleague_profiles.gif',
 	),
 	'interface' => Array (
-		'showRecordFieldList' => 'hidden,first_name,last_name,dam_images,birthday,nationality,height,
+		'showRecordFieldList' => 'hidden,first_name,last_name,t3images,birthday,nationality,height,
 			weight,position,duration_of_contract,start_of_contract,email,nickname,summary,description'
 	),
 	'feInterface' => Array (
@@ -315,7 +315,7 @@ $tx_cfcleague_profiles = Array (
 	'types' => [
 		'0' => [
 		    'showitem' => 'hidden, first_name, last_name, stage_name, home_town, birthday, died, dayofdeath, native_town, nationality, gender, height, weight, position, duration_of_contract, start_of_contract, email, nickname, extid,
-		         --div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles.description,gdpr,link_report,dam_images,t3images,types, summary, description'
+		         --div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles.description,gdpr,link_report,t3images,types, summary, description'
 		],
     	'columnsOverrides' => [
 	        'description' => ['defaultExtras' => $rteConfig],
@@ -335,7 +335,7 @@ Tx_Rnbase_Utility_TcaTool::configureWizards($tx_cfcleague_profiles, [
 
 if(!tx_rnbase_util_TYPO3::isTYPO76OrHigher()) {
     $tx_cfcleague_profiles['types'][0]['showitem'] = 'hidden, first_name, last_name, stage_name, home_town, birthday, died, dayofdeath, native_town, nationality, gender, height, weight, position, duration_of_contract, start_of_contract, email, nickname, extid,
-		--div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles.description,gdpr,link_report,dam_images,t3images,types, summary;;;'.$rteConfig.', description;;;'.$rteConfig;
+		--div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles.description,gdpr,link_report,t3images,types, summary;;;'.$rteConfig.', description;;;'.$rteConfig;
 }
 
 

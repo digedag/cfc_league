@@ -54,7 +54,7 @@ class Tx_Cfcleague_Handler_MatchCreator
         tx_rnbase::load('Tx_Rnbase_Database_Connection');
         $tce = Tx_Rnbase_Database_Connection::getInstance()->getTCEmain($tcaData);
         $tce->process_datamap();
-        $content = $mod->getDoc()->section('Message:', $GLOBALS['LANG']->getLL('msg_matches_created'), 0, 1, ICON_INFO);
+        $content = $mod->getDoc()->section('Message:', $GLOBALS['LANG']->getLL('msg_matches_created'), 0, 1, \tx_rnbase_mod_IModFunc::ICON_INFO);
         return $content;
     }
 

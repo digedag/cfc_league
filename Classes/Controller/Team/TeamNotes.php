@@ -54,7 +54,7 @@ class Tx_Cfcleague_Controller_Team_TeamNotes
         $srv = tx_cfcleague_util_ServiceRegistry::getTeamService();
         $types = $srv->getNoteTypes();
         if (! count($types)) {
-            $content .= $this->mod->doc->section($GLOBALS['LANG']->getLL('message') . ':', $GLOBALS['LANG']->getLL('msg_create_notetypes'), 0, 1, ICON_INFO);
+            $content .= $this->mod->doc->section($GLOBALS['LANG']->getLL('message') . ':', $GLOBALS['LANG']->getLL('msg_create_notetypes'), 0, 1, \tx_rnbase_mod_IModFunc::ICON_INFO);
             return $content;
         }
         // Für jeden Typ einen Block anzeigen
@@ -168,7 +168,7 @@ class Tx_Cfcleague_Controller_Team_TeamNotes
                 }
             }
         }
-        return (strlen($out)) ? $this->mod->getDoc()->section($GLOBALS['LANG']->getLL('message') . ':', $out, 0, 1, ICON_INFO) : '';
+        return (strlen($out)) ? $this->mod->getDoc()->section($GLOBALS['LANG']->getLL('message') . ':', $out, 0, 1, \tx_rnbase_mod_IModFunc::ICON_INFO) : '';
     }
 
     /**

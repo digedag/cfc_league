@@ -4,7 +4,7 @@ if (! defined('TYPO3_MODE'))
 
 $sysLangFile = tx_rnbase_util_TYPO3::isTYPO87OrHigher() ? 'Resources/Private/Language/locallang_general.xlf' : 'locallang_general.xml';
 
-$tx_cfcleague_match_notes = Array(
+$tx_cfcleague_match_notes = [
     'ctrl' => Array(
         'title' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_match_notes',
         'label' => 'uid',
@@ -113,10 +113,10 @@ $tx_cfcleague_match_notes = Array(
             )
         ),
 
-        'player_home' => Array(
+        'player_home' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_match_notes.player_home',
-            'config' => Array(
+            'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
                 'foreign_table' => 'tx_cfcleague_profiles',
@@ -125,12 +125,12 @@ $tx_cfcleague_match_notes = Array(
                 'size' => 1,
                 'minitems' => 0,
                 'maxitems' => 1
-            )
-        ),
-        'player_guest' => Array(
+            ]
+        ],
+        'player_guest' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_match_notes.player_guest',
-            'config' => Array(
+            'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
                 'foreign_table' => 'tx_cfcleague_profiles',
@@ -139,8 +139,8 @@ $tx_cfcleague_match_notes = Array(
                 'size' => 1,
                 'minitems' => 0,
                 'maxitems' => 1
-            )
-        ),
+            ]
+        ],
         'comment' => Array(
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_match_notes.comment',
@@ -151,16 +151,16 @@ $tx_cfcleague_match_notes = Array(
             )
         )
     ),
-    'types' => Array(
-        '0' => Array(
+    'types' => [
+        '0' => [
             'showitem' => 'hidden, game, minute, second, extra_time, type, player_home, player_guest, comment'
-        )
-    ),
-    'palettes' => Array(
-        '1' => Array(
+        ]
+    ],
+    'palettes' => [
+        '1' => [
             'showitem' => ''
-        )
-    )
-);
+        ]
+    ]
+];
 
 return $tx_cfcleague_match_notes;

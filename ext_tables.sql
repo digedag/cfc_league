@@ -134,8 +134,7 @@ CREATE TABLE tx_cfcleague_club (
 
 	name varchar(150) DEFAULT '' NOT NULL,
 	short_name varchar(100) DEFAULT '' NOT NULL,
-	dam_logo int(11) DEFAULT '0' NOT NULL,
-	logo text,
+	logo int(11) DEFAULT '0' NOT NULL,
 	address int(11) DEFAULT '0' NOT NULL,
 	favorite tinyint(4) DEFAULT '0' NOT NULL,
 
@@ -183,11 +182,9 @@ CREATE TABLE tx_cfcleague_teams (
 	coaches text,
 	players text,
 	supporters text,
-	dam_images int(11) DEFAULT '0' NOT NULL,
-	dam_logo int(11) DEFAULT '0' NOT NULL,
 	logo int(11) DEFAULT '0' NOT NULL,
-	t3logo text,
-	t3images text,
+	t3logo int(11) DEFAULT '0' NOT NULL,
+	t3images int(11) DEFAULT '0' NOT NULL,
 
 	comment text,
 	players_comment text,
@@ -260,10 +257,9 @@ CREATE TABLE tx_cfcleague_games (
 	liveticker_author varchar(100) DEFAULT '' NOT NULL,
 	visitors int(11) DEFAULT '0' NOT NULL,
 
-	dam_images int(11) DEFAULT '0' NOT NULL,
 	dam_media int(11) DEFAULT '0' NOT NULL,
 	dam_media2 int(11) DEFAULT '0' NOT NULL,
-	t3images text NOT NULL,
+	t3images int(11) DEFAULT '0' NOT NULL,
 
 	video text NOT NULL,
 	videoimg text NOT NULL,
@@ -299,8 +295,7 @@ CREATE TABLE tx_cfcleague_profiles (
 	first_name varchar(50) DEFAULT '' NOT NULL,
 	last_name varchar(70) DEFAULT '' NOT NULL,
 	link_report tinyint(4) DEFAULT '0' NOT NULL,
-	dam_images int(11) DEFAULT '0' NOT NULL,
-	t3images text NOT NULL,
+	t3images int(11) DEFAULT '0' NOT NULL,
 	birthday int(11) DEFAULT '0' NOT NULL,
 	dayofdeath int(11) DEFAULT '0' NOT NULL,
 	died tinyint(4) DEFAULT '0' NOT NULL,

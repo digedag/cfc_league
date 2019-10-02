@@ -131,20 +131,13 @@ class tx_cfcleague_models_Club extends tx_rnbase_model_base
 
     /**
      * Returns the url of the first club logo.
+     * (not yet implemented)
      *
      * @return string
      */
     public function getFirstLogo()
     {
-        if (tx_rnbase_util_Extensions::isLoaded('dam')) {
-            if ($this->getProperty('dam_logo')) {
-                $damPics = tx_dam_db::getReferencedFiles('tx_cfcleague_club', $this->getUid(), 'dam_images');
-                if (list ($uid, $filePath) = each($damPics['files'])) {
-                    return $filePath;
-                }
-            }
-        }
-        // TODO: Return logo for simple image field
+        // TODO: Return first logo by FAL
         return '';
     }
 }

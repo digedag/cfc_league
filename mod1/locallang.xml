@@ -84,8 +84,9 @@
 			<label index="no_round_in_league">This Competition containes no matches.</label>
 			<label index="btn_update_msgEditGames">Save changes?</label>
 			<label index="btn_update">Update</label>
-			<label index="btn_watchstart">Start watch</label>
-			<label index="btn_watchstop">Stop watch</label>
+			<label index="label_btn_watchstart">Start watch</label>
+			<label index="label_btn_watchpause">Pause watch</label>
+			<label index="label_btn_watchstop">Stop watch</label>
 			<label index="label_tickerminute">Match minute</label>
 			<label index="label_tickeroffset">Offset</label>
 			<label index="label_showAllTickers">Show all events</label>
@@ -259,8 +260,9 @@
 			<label index="no_round_in_league">Dieser Wettbewerb enth&amp;auml;lt keine Spiele.</label>
 			<label index="btn_update_msgEditGames">Sollen die Ergebnisse gespeichert werden?</label>
 			<label index="btn_update">Aktualisieren</label>
-			<label index="btn_watchstart">Uhr starten</label>
-			<label index="btn_watchstop">Uhr stoppen</label>
+			<label index="label_btn_watchstart">Uhr starten</label>
+			<label index="label_btn_watchpause">Uhr pausieren</label>
+			<label index="label_btn_watchstop">Uhr stoppen</label>
 			<label index="label_tickerminute">Spielminute</label>
 			<label index="label_tickeroffset">Offset</label>
 			<label index="label_showAllTickers">Alle Meldungen anzeigen</label>

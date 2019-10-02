@@ -147,15 +147,6 @@ class tx_cfcleague_models_Stadium extends tx_rnbase_model_base
      */
     public function getLogoPath()
     {
-        if (tx_rnbase_util_Extensions::isLoaded('dam')) {
-            if ($this->getProperty('logo')) {
-                $damPics = tx_dam_db::getReferencedFiles('tx_cfcleague_stadiums', $this->getUid(), 'logo');
-                if (list ($uid, $filePath) = each($damPics['files'])) {
-                    return $filePath;
-                }
-            }
-        }
-        // TODO: Return logo for simple image field
         return '';
     }
 }
