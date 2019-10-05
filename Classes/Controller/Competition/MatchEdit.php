@@ -64,6 +64,17 @@ class Tx_Cfcleague_Controller_Competition_MatchEdit
         if ($currentTeam == null) {
             $current_round = $this->getSelector()->showRoundSelector($content, $pid, $current_league);
         }
+        // Add button to set all games to "Finished"
+        $content .= '<script type="text/javascript">
+                        function setStatusFinished() {
+                          var x = document.querySelectorAll("select[name*=\'status\']");
+                          var i;
+                          for (i = 0; i < x.length; i++) {
+                            x[i].value = "2";
+                          }
+                        }
+                    </script>';
+        $content .= ' <input type="button class="btn btn-default btn-sm" name="setStatus" value="' . $LANG->getLL('btn_statusToFinished') . '" onclick="setStatusFinished()">';
 
         $content .= '<div class="cleardiv"/>';
         $data = Tx_Rnbase_Utility_T3General::_GP('data');
