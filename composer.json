@@ -22,8 +22,8 @@
 		"issues" : "https://github.com/digedag/cfc_league/issues"
 	},
 	"replace" : {
-		"cfc_league" : "self.version",
-		"typo3-ter/cfc-league" : "self.version"
+		"typo3-ter/cfc-league" : "self.version",
+		"digedag/cfc-league" : "self.version"
 	},
 	"require" : {
 		"typo3/cms-core" : ">=6.2.0 <=8.7.99",
@@ -42,5 +42,25 @@
 			"tests/",
 			"util/"
 		]
-	}
+	},
+    "config": {
+        "vendor-dir": ".Build/vendor",
+        "bin-dir": ".Build/bin",
+        "preferred-install": {
+            "typo3/cms": "source"
+        }
+    },
+    "scripts": {
+        "post-autoload-dump": [
+            "mkdir -p .Build/Web/typo3conf/ext/",
+            "[ -L .Build/Web/typo3conf/ext/cfc_league ] || ln -snvf ../../../../. .Build/Web/typo3conf/ext/cfc_league"
+        ]
+    },
+    "extra": {
+        "typo3/cms": {
+            "cms-package-dir": "{$vendor-dir}/typo3/cms",
+            "extension-key": "cfc_league",
+            "web-dir": ".Build/Web"
+        }
+    }
 }
