@@ -2,7 +2,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2007-2019 Rene Nitzsche (rene@system25.de)
+ *  (c) 2007-2020 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -21,9 +21,6 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-tx_rnbase::load('tx_rnbase_util_TYPO3');
-tx_rnbase::load('tx_rnbase_mod_BaseModFunc');
-tx_rnbase::load('Tx_Rnbase_Utility_T3General');
 
 /**
  * Die Klasse stellt den MatchTicker bereit
@@ -154,46 +151,33 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc
      */
     protected function getInstantMessageField()
     {
-        if (tx_rnbase_util_TYPO3::isTYPO76OrHigher()) {
-            $ret = '';
-            $ret .= '<script type="text/javascript">
-                var jQuery = TYPO3.jQuery;
-            </script>';
-            $ret .= '<script type="text/javascript" src="../../../../typo3conf/ext/cfc_league/mod1/js/jeditable.min.js"></script>';
-            $ret .= '<p id="instant" style="background:yellow; margin-bottom:10px; padding:3px"></p>';
-            $ret .= '<script type="text/javascript">
-            var ajaxSaveTickerMessage = "' . \Tx_Rnbase_Backend_Utility::getAjaxUrl('T3sports::saveTickerMessage') . '";
+        $jsPath = \TYPO3\CMS\Core\Utility\PathUtility::getAbsoluteWebPath(
+            \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('cfc_league', 'Resources/Public/JavaScript/')
+        ) . 'jeditable.min'; // .js
 
-            TYPO3.jQuery(document).ready(function() {
-                jQuery(\'#instant\').editable(ajaxSaveTickerMessage, {
-                    placeholder: \'Klicken Sie hier, um eine Sofortmeldung abzusetzen.\',
-                    onblur: \'ignore\',
-                    cancel: \'cancel\',
-                    submit: \'ok\',
-                    event: \'click\',
-                    submitdata: function(){
-                        return {
-                            t3time: jQuery(\'#editform\').find(\'input[name=watch_minute]\').val(),
-                            t3match: jQuery(\'#editform\').find(\'input[name=t3matchid]\').val()
-                        }
-                    },
-                    indicator: \'Speichern ....\'
-                });
-            });
-        </script>';
-
-            return $ret;
-        }
-
-        /* @var $pageRenderer \TYPO3\CMS\Core\Page\PageRenderer */
         $pageRenderer = $this->doc->getPageRenderer();
-        $pageRenderer->loadPrototype();
-        $pageRenderer->loadScriptaculous('builder,effects,controls');
+        $pageRenderer->addRequireJsConfiguration(
+            [
+                'paths' => [
+                    'jquery' => 'typo3/sysext/core/Resources/Public/JavaScript/Contrib/jquery/',
+                    'jeditable' => $jsPath,
+                ],
+                'shim' => [
+                     'jeditable' => [
+                         'deps' => ['jquery'],
+                         'exports' => 'jeditable'
+                     ],
+                ],
+            ]
+        );
+        $pageRenderer->loadRequireJsModule(
+            'TYPO3/CMS/CfcLeague/InstantMessage', 
+            'function (instantMessage) {instantMessage.init("test")}'
+        );
         $ret = '';
-        $ret = $this->doc->backPath;
-        $ret = '<script type="text/javascript" src="' . tx_rnbase_util_Extensions::extRelPath('cfc_league') . 'mod1/js/ticker.js"></script>';
-        $ret .= '<p id="instant" style="background:yellow; margin-bottom:10px; padding:3px">' . $GLOBALS['LANG']->getLL('msg_sendInstant') . '</p>';
-        return '<div id="t3sportsTicker">' . $ret . '</div>';
+        $ret .= '<p id="instant" style="background:yellow; margin-bottom:10px; padding:3px"></p>';
+        
+        return $ret;
     }
 
     protected function toTime($time)
