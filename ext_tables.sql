@@ -11,11 +11,9 @@ CREATE TABLE tx_cfcleague_group (
 	deleted tinyint(4) DEFAULT '0' NOT NULL,
 	hidden tinyint(4) DEFAULT '0' NOT NULL,
 	starttime int(11) DEFAULT '0' NOT NULL,
-	fe_group int(11) DEFAULT '0' NOT NULL,
 	name varchar(255) DEFAULT '' NOT NULL,
 	shortname varchar(55) DEFAULT '' NOT NULL,
 	logo int(11) DEFAULT '0' NOT NULL,
-	t3logo text NOT NULL,
 
 	PRIMARY KEY (uid),
 	KEY parent (pid)
@@ -70,7 +68,6 @@ CREATE TABLE tx_cfcleague_competition (
 	match_keys text NOT NULL,
 	table_marks text NOT NULL,
 	logo int(11) DEFAULT '0' NOT NULL,
-	t3logo text NOT NULL,
 	sports varchar(50) DEFAULT '' NOT NULL,
 
 	match_parts tinyint(4) DEFAULT '0' NOT NULL,

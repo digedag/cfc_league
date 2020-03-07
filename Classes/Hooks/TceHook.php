@@ -1,8 +1,10 @@
 <?php
+namespace System25\T3sports\Hooks;
+
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2007-2019 Rene Nitzsche <rene@system25.de>
+ *  (c) 2007-2020 Rene Nitzsche <rene@system25.de>
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -21,11 +23,8 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-tx_rnbase::load('Tx_Rnbase_Utility_Strings');
-tx_rnbase::load('Tx_Rnbase_Utility_T3General');
-tx_rnbase::load('Tx_Rnbase_Database_Connection');
 
-class tx_cfcleague_hooks_tcehook
+class TceHook
 {
 
     /**
@@ -42,17 +41,17 @@ class tx_cfcleague_hooks_tcehook
             $options['orderby'] = 'sorting_foreign asc';
             $options['enablefieldsoff'] = 1;
             $types = array();
-            $rows = Tx_Rnbase_Database_Connection::getInstance()->doSelect('uid_local', 'tx_cfcleague_profiletypes_mm', $options);
+            $rows = \Tx_Rnbase_Database_Connection::getInstance()->doSelect('uid_local', 'tx_cfcleague_profiletypes_mm', $options);
             foreach ($rows as $type) {
                 $types[] = $type['uid_local'];
             }
-            $row['types'] = tx_cfcleague_tca_Lookup::getProfileTypeItems($types);
+            $row['types'] = \tx_cfcleague_tca_Lookup::getProfileTypeItems($types);
         }
         if ($table == 'tx_cfcleague_club') {
             // Umwandlung eine MySQL Date in einen timestamp
             // Scheint in 8.7 nicht mehr notwendig zu sein
-            tx_rnbase::load('tx_rnbase_util_Dates');
-            $row['established'] = $row['established'] ? tx_rnbase_util_Dates::datetime_mysql2tstamp($row['established']) : time();
+            \tx_rnbase::load('tx_rnbase_util_Dates');
+            $row['established'] = $row['established'] ? \tx_rnbase_util_Dates::datetime_mysql2tstamp($row['established']) : time();
         }
     }
 
@@ -74,8 +73,8 @@ class tx_cfcleague_hooks_tcehook
             $this->checkProfiles($incomingFieldArray, 'teams', $tcemain);
             // Neue Teams im Wettbewerb?
             if (strstr($incomingFieldArray['teams'], 'NEW')) {
-                tx_rnbase::load('Tx_Rnbase_Utility_Strings');
-                $newItemIds = Tx_Rnbase_Utility_Strings::trimExplode(',', $incomingFieldArray['teams']);
+                \tx_rnbase::load('Tx_Rnbase_Utility_Strings');
+                $newItemIds = \Tx_Rnbase_Utility_Strings::trimExplode(',', $incomingFieldArray['teams']);
                 $itemUids = [];
                 for ($i = 0; $i < count($newItemIds); $i ++) {
                     if (strstr($newItemIds[$i], 'NEW')) {
@@ -94,7 +93,7 @@ class tx_cfcleague_hooks_tcehook
         }
         if ($table == 'tx_cfcleague_games') {
             if ($incomingFieldArray['arena'] > 0 && ! $incomingFieldArray['stadium']) {
-                $stadium = tx_rnbase::makeInstance('tx_cfcleague_models_Stadium', $incomingFieldArray['arena']);
+                $stadium = \tx_rnbase::makeInstance('tx_cfcleague_models_Stadium', $incomingFieldArray['arena']);
                 $incomingFieldArray['stadium'] = $stadium->getName();
             }
             if (strstr($incomingFieldArray['home'], 'NEW')) {
@@ -106,7 +105,7 @@ class tx_cfcleague_hooks_tcehook
         }
         if ($table == 'tx_cfcleague_stadiums' || $table == 'tx_cfcleague_club') {
             if ($incomingFieldArray['country'] > 0 && ! $incomingFieldArray['countrycode']) {
-                $country = Tx_Rnbase_Backend_Utility::getRecord('static_countries', intval($incomingFieldArray['country']));
+                $country = \Tx_Rnbase_Backend_Utility::getRecord('static_countries', intval($incomingFieldArray['country']));
                 $incomingFieldArray['countrycode'] = $country['cn_iso_2'];
             }
         }
@@ -131,8 +130,8 @@ class tx_cfcleague_hooks_tcehook
     {
         if ($table == 'tx_cfcleague_club') {
             if (array_key_exists('established', $fieldArray)) {
-                tx_rnbase::load('tx_rnbase_util_Dates');
-                $estDate = tx_rnbase_util_Dates::date_tstamp2mysql($fieldArray['established']);
+                \tx_rnbase::load('tx_rnbase_util_Dates');
+                $estDate = \tx_rnbase_util_Dates::date_tstamp2mysql($fieldArray['established']);
                 $fieldArray['established'] = $estDate;
             }
         }
@@ -149,7 +148,7 @@ class tx_cfcleague_hooks_tcehook
     protected function checkProfiles(&$incomingFieldArray, $profileType, $tcemain)
     {
         if (strstr($incomingFieldArray[$profileType], 'NEW')) {
-            $newProfileIds = Tx_Rnbase_Utility_Strings::trimExplode(',', $incomingFieldArray[$profileType]);
+            $newProfileIds = \Tx_Rnbase_Utility_Strings::trimExplode(',', $incomingFieldArray[$profileType]);
             $profileUids = array();
             for ($i = 0; $i < count($newProfileIds); $i++) {
                 if (strstr($newProfileIds[$i], 'NEW')) {

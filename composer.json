@@ -32,7 +32,6 @@
 	"autoload" : {
 		"classmap" : [
 			"Classes/",
-			"hooks/",
 			"mod1/",
 			"models/",
 			"search/",
