@@ -93,7 +93,8 @@
 			<label index="tx_cfcleague_teams.coaches_comment">Comment on coaches</label>
 			<label index="tx_cfcleague_teams.supporters_comment">Comment on Supporter</label>
 			<label index="tx_cfcleague_teams.players_comment">Comment on players</label>
-			<label index="tx_cfcleague_teams.logo">Alternative team logo</label>
+			<label index="tx_cfcleague_teams.logo">Team logo</label>
+			<label index="tx_cfcleague_teams.altlogo">Alternative team logo</label>
 			<label index="tx_cfcleague_teams.link_report">Enable link to team page</label>
 			<label index="tx_cfcleague_teams.dummy">Free of play</label>
 			<label index="tx_cfcleague_teams_tlc">Three letter code</label>
@@ -336,7 +337,8 @@
 			<label index="tx_cfcleague_teams.coaches_comment">Bemerkung zu Trainern</label>
 			<label index="tx_cfcleague_teams.supporters_comment">Bemerkung zu Betreuern</label>
 			<label index="tx_cfcleague_teams.players_comment">Bemerkung zu Spielern</label>
-			<label index="tx_cfcleague_teams.logo">Alternatives Team-Logo</label>
+			<label index="tx_cfcleague_teams.logo">Vereinswappen des Teams</label>
+			<label index="tx_cfcleague_teams.altlogo">Alternatives Vereinswappen des Teams</label>
 			<label index="tx_cfcleague_teams.link_report">Link auf Team-Seite möglich</label>
 			<label index="tx_cfcleague_teams.dummy">Spielfrei</label>
 			<label index="tx_cfcleague_teams_tlc">3-Zeichen-Kürzel</label>

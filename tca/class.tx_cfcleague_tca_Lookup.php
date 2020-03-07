@@ -183,56 +183,35 @@ class tx_cfcleague_tca_Lookup
 
     /**
      * Build the TCA entry for logo select-field in team record.
-     * All
-     * logos from connected club are selectable.
+     * All logos from connected club are selectable.
      *
      * @return array
      */
     public static function getTeamLogoField()
     {
-        if (tx_rnbase_util_TYPO3::isTYPO60OrHigher()) {
-            $ret = tx_rnbase_util_TSFAL::getMediaTCA('logo', array(
-                'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_teams.logo',
-                'config' => array(
-                    'size' => 1,
-                    'maxitems' => 1
-                )
-            ));
-            unset($ret['config']['filter']);
-            foreach ($ret['config'] as $key => $field) {
-                if (strpos($key, 'foreign_') === 0) {
-                    unset($ret['config'][$key]);
-                }
+        $ret = tx_rnbase_util_TSFAL::getMediaTCA('logo', [
+            'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_teams.logo',
+            'config' => [
+                'size' => 1,
+                'maxitems' => 1
+            ]
+        ]);
+        unset($ret['config']['filter']);
+        foreach ($ret['config'] as $key => $field) {
+            if (strpos($key, 'foreign_') === 0) {
+                unset($ret['config'][$key]);
             }
-        } else {
-            require_once (tx_rnbase_util_Extensions::extPath('dam') . 'tca_media_field.php');
-            $ret = txdam_getMediaTCA('image_field', 'logo');
-            unset($ret['config']['MM']);
-            unset($ret['config']['MM_foreign_select']);
-            unset($ret['config']['MM_match_fields']);
-            unset($ret['config']['MM_opposite_field']);
         }
-        $ret['label'] = 'Team Logo';
         // Die Auswahlbox rendern
-        // In der 7.6 einen eigenen Node-Type anmelden
-        // $GLOBALS['TYPO3_CONF_VARS']['SYS']['formEngine']['nodeRegistry']
-        if (tx_rnbase_util_TYPO3::isTYPO70OrHigher()) {
-            $ret['config']['type'] = 'select'; // 't3s_teamlogo';
-        } else {
-            $ret['config']['userFunc'] = 'EXT:cfc_league/tca/class.tx_cfcleague_tca_Lookup.php:&tx_cfcleague_tca_Lookup->getSingleField_teamLogo';
-            $ret['config']['type'] = tx_rnbase_util_TYPO3::isTYPO60OrHigher() ? 'user' : 'select';
-        }
-        $ret['config']['renderType'] = 'selectSingle';
+        $ret['config']['type'] = 'select';
+        $ret['config']['renderType'] = 't3sLogoSelect';
         // Die passenden Logos suchen
         $ret['config']['itemsProcFunc'] = 'tx_cfcleague_tca_Lookup->getLogo4Team';
         $ret['config']['maxitems'] = '1';
         $ret['config']['size'] = '1';
-        $ret['config']['items'] = Array(
-            Array(
-                '',
-                '0'
-            )
-        );
+        $ret['config']['items'] = [
+            ['','0']
+        ];
         return $ret;
     }
 

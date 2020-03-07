@@ -2,6 +2,10 @@
 Änderungen
 ==========
 
+## v1.4.0 (?.?.2020)
+ * Support for TYPO3 6.2 LTS dropped
+ * Show logo preview in team record
+
 ## v1.3.0 (11.06.2019)
  * better support for TYPO3 8.7 LTS
  * some final modifications for TYPO3 6.2 in BE layout

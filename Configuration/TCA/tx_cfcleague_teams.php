@@ -253,7 +253,7 @@ tx_rnbase::load('tx_rnbase_util_TSFAL');
 $tx_cfcleague_teams['columns']['logo'] = tx_cfcleague_tca_Lookup::getTeamLogoField();
 
 $tx_cfcleague_teams['columns']['t3logo'] = tx_rnbase_util_TSFAL::getMediaTCA('t3logo', [
-	'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_teams.logo',
+	'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_teams.altlogo',
 	'config' => ['size' => 1, 'maxitems' => 1],
 ]);
 $tx_cfcleague_teams['columns']['t3images'] = tx_rnbase_util_TSFAL::getMediaTCA('t3images', [
