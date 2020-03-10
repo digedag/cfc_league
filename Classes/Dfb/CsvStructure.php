@@ -125,7 +125,7 @@ class Tx_Cfcleague_Dfb_CsvStructure
             $time = $this->getData($line, $this->structure[self::COL_MATCH_TIME][self::DATA_COL]);
         }
         $date = tx_rnbase_util_Dates::getDateTime($day.' '.$time);
-        return $date->getTimestamp() + $date->getOffset();
+        return $date->getTimestamp();
     }
 
     protected function getData($line, $col)
