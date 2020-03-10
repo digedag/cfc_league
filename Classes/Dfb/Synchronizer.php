@@ -148,6 +148,17 @@ class Tx_Cfcleague_Dfb_Synchronizer
             $info['match']['new'] += 1;
         }
 
+        $blobFields = [
+            'assists', 'players_home', 'players_guest',
+            'substitutes_home', 'substitutes_guest',
+            'players_home_stat', 'players_guest_stat',
+            'substitutes_home_stat', 'substitutes_guest_stat',
+            'scorer_guest_stat', 'scorer_home_stat', 'game_report'
+        ];
+        foreach ($blobFields as $field) {
+            $data[self::TABLE_GAMES][$matchUid][$field] = '';
+        }
+        
         $data[self::TABLE_GAMES][$matchUid]['pid'] = $this->pageUid;
         $data[self::TABLE_GAMES][$matchUid]['extid'] = $extMatchId;
         $data[self::TABLE_GAMES][$matchUid]['competition'] = $competition->getUid();
@@ -252,7 +263,7 @@ class Tx_Cfcleague_Dfb_Synchronizer
     protected function persist(&$data)
     {
         $start = microtime(TRUE);
-
+        
         $tce = Tx_Rnbase_Database_Connection::getInstance()->getTCEmain($data);
         $tce->process_datamap();
         $this->stats['chunks'][]['time'] = intval(microtime(true) - $start) . 's';
