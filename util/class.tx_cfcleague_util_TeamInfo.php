@@ -1,4 +1,6 @@
 <?php
+use Sys25\RnBase\Frontend\Request\Parameters;
+
 /***************************************************************
  *  Copyright notice
  *
@@ -103,22 +105,17 @@ class tx_cfcleague_util_TeamInfo
     {
         global $LANG;
         tx_rnbase::load('tx_rnbase_util_TYPO3');
-        $tableLayout = Array(
-            'table' => Array(
-                '<table class="typo3-dblist table" width="100%" cellspacing="0" cellpadding="0" border="0">',
-                '</table><br/>'
-            ),
-            'defRow' => Array( // Format für 1. Zeile
-                'tr' => Array(
-                    '<tr class="t3-row-header">',
-                    "</tr>\n"
-                ),
-                'defCol' => Array(
-                    tx_rnbase_util_TYPO3::isTYPO42OrHigher() ? '<td>' : '<td class="c-headLineTable" style="font-weight:bold;color:white;padding:0 5px;">',
-                    '</td>'
-                ) // Format für jede Spalte in der 1. Zeile
-            )
-        );
+        $tableLayout = [
+            'table' => ['<table class="table table-striped table-hover table-condensed">', '</table>'],
+            'defRow' => [ // Format für 1. Zeile
+                'tr' => [
+                    '<tr>', '</tr>'
+                ],
+                'defCol' => [
+                    '<td>', '</td>'
+                ]
+            ]
+        ];
         $arr = [];
         $arr[] = array(
             $LANG->getLL('msg_number_of_players'),
@@ -133,6 +130,7 @@ class tx_cfcleague_util_TeamInfo
             $this->baseInfo['freeSupporters']
         );
 
+        /* @var $tables Tx_Rnbase_Backend_Utility_Tables */
         $tables = tx_rnbase::makeInstance('Tx_Rnbase_Backend_Utility_Tables');
 
         return $tables->buildTable($arr, $tableLayout);
@@ -147,15 +145,15 @@ class tx_cfcleague_util_TeamInfo
     public function getTeamTable(&$doc)
     {
         global $LANG;
-        $arr = Array(
-            Array(
+        $arr = [
+            [
                 '&nbsp;',
                 $LANG->getLL('label_firstname'),
                 $LANG->getLL('label_lastname'),
                 '&nbsp;',
                 '&nbsp;'
-            )
-        );
+            ]
+        ];
 
         $this->addProfiles($arr, $this->getCoachNames($this->getTeam()), $LANG->getLL('label_profile_coach'), 'coach');
         $this->addProfiles($arr, $this->getPlayerNames($this->getTeam()), $LANG->getLL('label_profile_player'), 'player');
@@ -172,21 +170,23 @@ class tx_cfcleague_util_TeamInfo
     public function handleRequest()
     {
         global $LANG;
-        $data = tx_rnbase_parameters::getPostOrGetParameter('remFromTeam');
-        if (! is_array($data))
+        $data = Parameters::getPostOrGetParameter('remFromTeam');
+        if (! is_array($data)) {
             return '';
+        }
 
-        $fields = array(
+        $fields = [
             'player' => 'players',
             'coach' => 'coaches',
             'supporter' => 'supporters'
-        );
+        ];
         $team = $this->getTeam();
-        $tceData = array();
+        $tceData = [];
         foreach ($data as $type => $uid) {
             $profileUids = $team->getProperty($fields[$type]);
-            if (! $profileUids)
+            if (! $profileUids) {
                 continue;
+            }
 
             if (Tx_Rnbase_Utility_T3General::inList($profileUids, $uid)) {
                 $profileUids = Tx_Rnbase_Utility_T3General::rmFromList($uid, $profileUids);
@@ -227,14 +227,14 @@ class tx_cfcleague_util_TeamInfo
                 }
                 $row = [];
                 $row[] = $i ++ == 1 ? $label : '';
-                $row[] = $prof[first_name];
-                $row[] = $prof[last_name];
+                $row[] = $prof['first_name'];
+                $row[] = $prof['last_name'];
                 $row[] = $this->getFormTool()->createEditLink('tx_cfcleague_profiles', $uid);
                 $row[] = $this->getFormTool()->createSubmit(
                     'remFromTeam[' . $type . ']',
                     $uid, $LANG->getLL('msg_remove_team_' . $type),
                     [
-                        'icon' => 'i/be_users__h.gif',
+                        'icon' => 'actions-delete',
                         'infomsg' => 'Remove from Team'
                     ]
                 );

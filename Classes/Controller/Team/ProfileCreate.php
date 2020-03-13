@@ -1,8 +1,10 @@
 <?php
+use Sys25\RnBase\Configuration\Processor;
+
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2008-2019 Rene Nitzsche (rene@system25.de)
+ *  (c) 2008-2020 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -21,8 +23,7 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-tx_rnbase::load('tx_cfcleague_mod1_decorator');
-tx_rnbase::load('Tx_Rnbase_Utility_Strings');
+
 
 /**
  * Die Klasse verwaltet die Erstellung von Spielern für Teams
@@ -54,8 +55,7 @@ class Tx_Cfcleague_Controller_Team_ProfileCreate
         $this->formTool = $formTool;
         $data = Tx_Rnbase_Utility_T3General::_GP('data');
 
-        $content = '';
-        $content .= $this->showCreateProfiles($data, $team, $teamInfo);
+        $content = $this->showCreateProfiles($data, $team, $teamInfo);
 
         return $content;
     }
@@ -68,7 +68,7 @@ class Tx_Cfcleague_Controller_Team_ProfileCreate
      */
     public static function isProfilePage($pid)
     {
-        $rootPage = tx_rnbase_configurations::getExtensionCfgValue('cfc_league', 'profileRootPageId');
+        $rootPage = Processor::getExtensionCfgValue('cfc_league', 'profileRootPageId');
         $t3util = tx_rnbase::makeInstance('Tx_Cfcleague_Utility_TYPO3');
         $goodPages = $t3util->getPagePath($pid);
         return in_array($rootPage, $goodPages);
@@ -103,9 +103,6 @@ class Tx_Cfcleague_Controller_Team_ProfileCreate
             $content .= $teamInfo->getInfoTable($this->doc);
             // Wir zeigen 15 Zeilen mit Eingabefeldern
             $content .= $this->prepareInputTable($team, $teamInfo);
-            // Den Update-Button einfügen
-            $content .= $this->getFormTool()->createSubmit('update', $LANG->getLL('btn_create'), $GLOBALS['LANG']->getLL('msg_CreateProfiles'));
-            // $content .= '<input type="submit" name="update" value="'.$LANG->getLL('btn_create').'" onclick="return confirm('.$GLOBALS['LANG']->JScharCode($GLOBALS['LANG']->getLL('msg_CreateProfiles')).')">';
         }
         return $content;
     }
@@ -115,28 +112,26 @@ class Tx_Cfcleague_Controller_Team_ProfileCreate
      * Personen.
      * Wenn keine Personen da sind, gibt es 15 Eingabefelder, sonst nur 5
      *
-     * @param tx_cfcleague_models_Team $team
-     * @param tx_cfcleague_util_TeamInfo $teamInfo
+     * @param \tx_cfcleague_models_Team $team
+     * @param \tx_cfcleague_util_TeamInfo $teamInfo
      */
-    protected function prepareInputTable(&$team, $teamInfo)
+    protected function prepareInputTable($team, $teamInfo)
     {
-        global $LANG;
-        tx_rnbase::load('tx_rnbase_util_TYPO3');
-
         // Es werden zwei Tabellen erstellt
         $tableProfiles = $teamInfo->getTeamTable($this->doc);
 
-        $arr = Array(
-            Array(
+        $arr = [
+            [
                 '&nbsp;',
-                $LANG->getLL('label_firstname'),
-                $LANG->getLL('label_lastname'),
+                $GLOBALS['LANG']->getLL('label_firstname'),
+                $GLOBALS['LANG']->getLL('label_lastname'),
                 '&nbsp;'
-            )
-        );
-        $maxFields = count($team->getPlayerNames()) > 5 ? 5 : 15;
+            ]
+        ];
+
+        $maxFields = count($team->getPlayers()) > 5 ? 5 : 15;
         for ($i = 0; $i < $maxFields; $i ++) {
-            $row = array();
+            $row = [];
             $row[] = $i + 1;
             $row[] = $this->formTool->createTxtInput('data[tx_cfcleague_profiles][NEW' . $i . '][first_name]', '', 10);
             $row[] = $this->formTool->createTxtInput('data[tx_cfcleague_profiles][NEW' . $i . '][last_name]', '', 10);
@@ -146,29 +141,20 @@ class Tx_Cfcleague_Controller_Team_ProfileCreate
         /* @var $tables Tx_Rnbase_Backend_Utility_Tables */
         $tables = tx_rnbase::makeInstance('Tx_Rnbase_Backend_Utility_Tables');
         $tableForm = $tables->buildTable($arr);
-        $tableLayout = [
-            'table' => [
-                '<table class="typo3-dblist table" width="100%" cellspacing="0" cellpadding="0" border="0">',
-                '</table><br/>'
-            ],
-            'defRow' => [ // Formate für alle Zeilen
-                'defCol' => [
-                    '<td valign="top" style="padding:0 5px;">',
-                    '</td>'
-                ] // Format für jede Spalte in jeder Zeile
-            ]
-        ];
 
-
-        $content .= $tables->buildTable(
-            [
-                [
-                    $tableForm,
-                    $tableProfiles
-                ]
-            ],
-            tx_rnbase_util_TYPO3::isTYPO76OrHigher() ? null : $tableLayout
-        );
+        // Den Update-Button einfügen
+        $button = $this->getFormTool()->createSubmit(
+            'update',
+            $GLOBALS['LANG']->getLL('btn_create'),
+            $GLOBALS['LANG']->getLL('msg_CreateProfiles'),
+            ['class' => 'btn btn-primary']
+            );
+        
+        $content = '<div class="row">
+<div class="col-sm-6">'.$tableForm. $button.'</div>
+<div class="col-sm-6">'.$tableProfiles.'</div>
+</div>
+';
         return $content;
     }
 
@@ -179,12 +165,11 @@ class Tx_Cfcleague_Controller_Team_ProfileCreate
      */
     public static function getProfileTypeArray()
     {
-        global $LANG;
-        return Array(
-            '1' => $LANG->getLL('label_profile_player'),
-            '2' => $LANG->getLL('label_profile_coach'),
-            '3' => $LANG->getLL('label_profile_supporter')
-        );
+        return [
+            '1' => $GLOBALS['LANG']->getLL('label_profile_player'),
+            '2' => $GLOBALS['LANG']->getLL('label_profile_coach'),
+            '3' => $GLOBALS['LANG']->getLL('label_profile_supporter')
+        ];
     }
 
     /**
@@ -205,12 +190,12 @@ class Tx_Cfcleague_Controller_Team_ProfileCreate
         $profiles = $profiles['tx_cfcleague_profiles'];
         $content = '';
 
-        $playerIds = array(); // Sammelt die UIDs der neuen Spieler
-        $coachIds = array(); // Sammelt die UIDs der neuen Trainer
-        $supportIds = array(); // Sammelt die UIDs der neuen Betreuer
-        $warnings = array(); // Sammelt Profile die nicht angelegt werden konnten
+        $playerIds = []; // Sammelt die UIDs der neuen Spieler
+        $coachIds = []; // Sammelt die UIDs der neuen Trainer
+        $supportIds = []; // Sammelt die UIDs der neuen Betreuer
+        $warnings = []; // Sammelt Profile die nicht angelegt werden konnten
 
-        $data = array();
+        $data = [];
         foreach ($profiles as $uid => $profile) {
             // Zuerst Leerzeichen entfernen
             $profile['last_name'] = trim($profile['last_name']);
@@ -226,6 +211,9 @@ class Tx_Cfcleague_Controller_Team_ProfileCreate
                 } elseif ($type == '2' && (($teamInfo->getCoachSize() + count($coachIds)) >= $maxCoaches)) { // Trainer
                     $warnings[] = $profile['last_name'] . ', ' . $profile['first_name'];
                 } else {
+                    $profile['summary'] = '';
+                    $profile['description'] = '';
+                    
                     // Jetzt das Array vorbereiten
                     $data['tx_cfcleague_profiles'][$uid] = $profile;
                     if ($type == '1') {

@@ -108,10 +108,7 @@ class tx_cfcleague_selector
             $links = [];
             $links[] = $this->getFormTool()->createEditLink('tx_cfcleague_competition', $menuData['value'], '');
             // Jetzt noch den Cache-Link
-            $cacheIcon = tx_rnbase_util_TYPO3::isTYPO70OrHigher() ?
-                    $this->iconFactory->getIcon('actions-system-cache-clear', TYPO3\CMS\Core\Imaging\Icon::SIZE_SMALL)->render()
-                    :
-                    '<img' . Tx_Rnbase_Backend_Utility_Icons::skinImg($GLOBALS['BACK_PATH'], 'gfx/clear_all_cache.gif', 'width="11" height="12"') . ' title="###LABEL_CLEAR_STATS_CACHE###" border="0" alt="Clear Cache" />';
+            $cacheIcon = $this->iconFactory->getIcon('actions-system-cache-clear', TYPO3\CMS\Core\Imaging\Icon::SIZE_SMALL)->render();
             $links[] = $this->getFormTool()->createModuleLink(['clearCache'=>1], $pid, $cacheIcon, [
                 'params' => [
                     'clearCache' => 1
