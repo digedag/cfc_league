@@ -421,8 +421,6 @@ CREATE TABLE tx_cfcleague_stadiums (
 
 	logo int(11) DEFAULT '0' NOT NULL,
 	pictures int(11) DEFAULT '0' NOT NULL,
-	t3logo text NOT NULL,
-	t3pictures text NOT NULL,
 	clubs int(11) DEFAULT '0' NOT NULL,
 	address int(11) DEFAULT '0' NOT NULL,
 	extid varchar(255) DEFAULT '' NOT NULL,
