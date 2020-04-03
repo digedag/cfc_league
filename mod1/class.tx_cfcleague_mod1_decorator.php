@@ -42,10 +42,12 @@ class tx_cfcleague_mod1_decorator
             if (isset($options['checkbox'])) {
                 $checkName = isset($options['checkboxname']) ? $options['checkboxname'] : 'checkEntry';
                 // Check if entry is checkable
-                if (! is_array($options['dontcheck']) || ! array_key_exists($record['uid'], $options['dontcheck']))
+                if (! is_array($options['dontcheck']) || ! array_key_exists($record['uid'], $options['dontcheck'])) {
                     $row[] = $formTool->createCheckbox($checkName . '[]', $record['uid']);
-                else
-                    $row[] = '<img' . Tx_Rnbase_Backend_Utility_Icons::skinImg($GLOBALS['BACK_PATH'], 'gfx/zoom2.gif', 'width="11" height="12"') . ' title="Info: ' . $options['dontcheck'][$record['uid']] . '" border="0" alt="" />';
+                }
+                else {
+                    $row[] = tx_rnbase_mod_Util::getSpriteIcon('status-status-checked', $options);
+                }
             }
             reset($columns);
             foreach ($columns as $column => $data) {
@@ -73,7 +75,7 @@ class tx_cfcleague_mod1_decorator
         return $arr;
     }
 
-    public static function prepareMatches($matches, &$competition, $columns, $formTool, $options)
+    public static function prepareMatches($matches, $competition, $columns, $formTool, $options)
     {
         // Ist kein Wettbewerb vorhanden, dann wird nur das Endergebnis angezeigt
         $parts = (! $competition) ? 0 : $competition->getNumberOfMatchParts();
@@ -91,8 +93,12 @@ class tx_cfcleague_mod1_decorator
                 // Check if match is checkable
                 if (! is_array($options['dontcheck']) || ! array_key_exists($matchRec['uid'], $options['dontcheck']))
                     $row[] = $formTool->createCheckbox('checkMatch[]', $matchRec['uid']);
-                else
-                    $row[] = '<img' . Tx_Rnbase_Backend_Utility_Icons::skinImg($GLOBALS['BACK_PATH'], 'gfx/zoom2.gif', 'width="11" height="12"') . ' title="Info: ' . $options['dontcheck'][$matchRec['uid']] . '" border="0" alt="" />';
+                else {
+                    // FIXME: how to add info text?
+                    $row[] = tx_rnbase_mod_Util::getSpriteIcon('status-status-checked', $options);
+//                    $row[] = '<img' . Tx_Rnbase_Backend_Utility_Icons::skinImg($GLOBALS['BACK_PATH'], 'gfx/zoom2.gif', 'width="11" height="12"') . ' title="Info: ' . $options['dontcheck'][$matchRec['uid']] . '" border="0" alt="" />';
+                    
+                }
             }
             if (! $isNoMatch) {
                 reset($columns);

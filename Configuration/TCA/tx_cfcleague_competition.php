@@ -244,9 +244,9 @@ $tx_cfcleague_competition = Array (
         ),
 	),
 	'types' => Array (
-		'0' => Array('showitem' => 'hidden, name, tournament, sports, internal_name, short_name, agegroup, saison, type,--palette--;;1, point_system, logo, t3logo, teams, match_keys, table_marks, match_parts, addparts,extid'),
+		'0' => Array('showitem' => 'hidden, name, tournament, sports, internal_name, short_name, agegroup, saison, type,--palette--;;1, point_system, logo, teams, match_keys, table_marks, match_parts, addparts,extid'),
 		'1' => Array('showitem' => 'hidden, name, tournament'),
-//		'icehockey' => Array('showitem' => 'hidden, name, sports, internal_name, short_name, agegroup, saison, type;;2, point_system, logo, t3logo, teams, match_keys, table_marks, match_parts, addparts'),
+//		'icehockey' => Array('showitem' => 'hidden, name, sports, internal_name, short_name, agegroup, saison, type;;2, point_system, logo, teams, match_keys, table_marks, match_parts, addparts'),
 	),
 	'palettes' => Array (
 		'1' => Array('showitem' => 'obligation')
@@ -264,9 +264,9 @@ Tx_Rnbase_Utility_TcaTool::configureWizards($tx_cfcleague_competition, [
 
 
 tx_rnbase::load('tx_rnbase_util_TSFAL');
-$tx_cfcleague_competition['columns']['logo'] = tx_rnbase_util_TSFAL::getMediaTCA('logo', array(
+$tx_cfcleague_competition['columns']['logo'] = tx_rnbase_util_TSFAL::getMediaTCA('logo', [
 	'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_club.logo',
 	'config' => array('size' => 1, 'maxitems' => 1),
-));
+]);
 
 return $tx_cfcleague_competition;

@@ -1,8 +1,10 @@
 <?php
+use System25\T3sports\Controller\Club\ClubStadiumHandler;
+
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2010-2019 Rene Nitzsche (rene@system25.de)
+ *  (c) 2010-2020 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -54,7 +56,7 @@ class Tx_Cfcleague_Controller_Club extends tx_rnbase_mod_BaseModFunc
 
         // Zuerst holen wir alle Tabs, erstellen die MenuItems und werten den Request aus
         $tabItems = [];
-        $tabItems[] = tx_rnbase::makeInstance('tx_cfcleague_mod1_handler_ClubStadiums');
+        $tabItems[] = tx_rnbase::makeInstance(ClubStadiumHandler::class);
         tx_rnbase_util_Misc::callHook('cfc_league', 'modClub_tabItems', [
             'tabItems' => &$tabItems
         ], $this);

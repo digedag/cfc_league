@@ -2,7 +2,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2010-2017 Rene Nitzsche (rene@system25.de)
+ *  (c) 2010-2020 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -78,29 +78,30 @@ class Tx_Cfcleague_Handler_MatchCreator
 
         $table = 'tx_cfcleague_games';
         // Jetzt 6 Boxen mit Name und Kurzname
-        $arr = Array(
-            0 => array(
+        $arr = [
+            0 => [
                 $LANG->getLL('tx_cfcleague_games.round'),
                 $LANG->getLL('tx_cfcleague_games.date'),
                 $LANG->getLL('tx_cfcleague_games.status'),
                 $LANG->getLL('tx_cfcleague_games.home'),
                 $LANG->getLL('tx_cfcleague_games.guest')
-            )
-        );
+            ]
+        ];
 
-        $dataArr = array(
+        $dataArr = [
             'pid' => $mod->getPid(),
             'competition' => $competition->getUid(),
             'date' => time(),
             'round' => $competition->getNumberOfRounds(),
             'round_name' => $competition->getNumberOfRounds() . $LANG->getLL('createGameTable_round')
-        );
+        ];
 
         /* @var $formBuilder Tx_Rnbase_Backend_Form_FormBuilder */
         $formBuilder = $mod->getFormTool()->getTCEForm();
         for ($i = 0; $i < $maxMatches; $i ++) {
-            $row = array();
+            $row = [];
             $dataArr['uid'] = 'NEW' . $i;
+            $dataArr['date'] = strtotime('+'.$i.' weeks');
             $row[] = $formBuilder->getSoloField($table, $dataArr, 'round') . $formBuilder->getSoloField($table, $dataArr, 'round_name');
             $row[] = $formBuilder->getSoloField($table, $dataArr, 'date');
             $row[] = $formBuilder->getSoloField($table, $dataArr, 'status') . $mod->getFormTool()->createHidden('data[tx_cfcleague_games][NEW' . $i . '][pid]', $mod->getPid()) . $mod->getFormTool()->createHidden('data[tx_cfcleague_games][NEW' . $i . '][competition]', $competition->getUid());

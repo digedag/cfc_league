@@ -2,7 +2,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2008-2017 Rene Nitzsche (rene@system25.de)
+ *  (c) 2008-2020 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -98,33 +98,24 @@ class Tx_Cfcleague_Controller_Team_ProfileAdd
         if ($searcher->getSize()) {
             $tableForm .= $this->getFormTool()->createSelectByArray('profileType', '', Tx_Cfcleague_Controller_Team_ProfileCreate::getProfileTypeArray());
             // Button für Zuordnung
-            $tableForm .= $this->getFormTool()->createSubmit('profile2team', $GLOBALS['LANG']->getLL('label_join_profiles'));
+            $tableForm .= $this->getFormTool()->createSubmit(
+                'profile2team', 
+                $GLOBALS['LANG']->getLL('label_join_profiles'),
+                '',
+                ['class' => 'btn btn-primary btn-sm']
+            );
         }
         // Ein Formular für die Neuanlage
         $tableForm .= $this->getCreateForm();
         // Jetzt noch die Team-Liste
         $teamTable = $teamInfo->getTeamTable($this->mod->getDoc());
 
-        $tableLayout = Array(
-            'table' => Array(
-                '<table class="typo3-dblist table" width="100%" cellspacing="0" cellpadding="0" border="0">',
-                '</table><br/>'
-            ),
-            'defRow' => Array( // Formate für alle Zeilen
-                'defCol' => Array(
-                    '<td valign="top" style="padding:0 5px;">',
-                    '</td>'
-                ) // Format für jede Spalte in jeder Zeile
-            )
-        );
-
-        $tables = tx_rnbase::makeInstance('Tx_Rnbase_Backend_Utility_Tables');
-        $content = $tables->buildTable([
-            [
-                $tableForm,
-                $teamTable
-            ]
-        ], $tableLayout);
+        $content = '<div class="row">
+<div class="col-sm-6">'.$tableForm.'</div>
+<div class="col-sm-6">'.$teamTable.'</div>
+</div>
+';
+        
 
         return $content;
     }
@@ -140,15 +131,15 @@ class Tx_Cfcleague_Controller_Team_ProfileAdd
             $content = $this->mod->getDoc()->section('Message:', $LANG->getLL('msg_pageNotAllowed'), 0, 1, \tx_rnbase_mod_IModFunc::ICON_WARN);
             return $content;
         }
-        $arr = Array(
-            Array(
+        $arr = [
+            [
                 $LANG->getLL('label_firstname'),
                 $LANG->getLL('label_lastname'),
                 '&nbsp;',
                 '&nbsp;'
-            )
-        );
-        $row = array();
+            ]
+        ];
+        $row = [];
         $i = 1;
         $row[] = $this->getFormTool()->createTxtInput('data[tx_cfcleague_profiles][NEW' . $i . '][first_name]', '', 10);
         $row[] = $this->getFormTool()->createTxtInput('data[tx_cfcleague_profiles][NEW' . $i . '][last_name]', '', 10);
@@ -158,7 +149,10 @@ class Tx_Cfcleague_Controller_Team_ProfileAdd
         $tables = tx_rnbase::makeInstance('Tx_Rnbase_Backend_Utility_Tables');
         $formTable = $tables->buildTable($arr);
 
-        $out .= $this->mod->getDoc()->section($LANG->getLL('label_create_profile4team'), $formTable, 0, 1);
+        $out = '<hr /><div class="form-group">
+      <label>'.$LANG->getLL('label_create_profile4team').'</label>
+      '.$formTable.'</div>';
+        
         return $out;
     }
 

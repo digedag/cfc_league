@@ -11,7 +11,7 @@ use TYPO3\CMS\Core\Resource\File;
 /**
  *  Copyright notice
  *
- *  (c) 2015 René Nitzsche <rene@system25.de>
+ *  (c) 2015-2020 René Nitzsche <rene@system25.de>
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -53,11 +53,8 @@ class LogoSelect extends SelectSingleElement
         $this->templateView->setTemplateSource('
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
 	xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers">
-	<div class="media-object"
-		data-preview-height="80">
-		<f:image image="{image}"
-				 maxHeight="80"
-				 class="thumbnail thumbnail-status"/>
+	<div class="media-object" data-preview-height="80">
+		<f:image image="{image}" height="80" class="thumbnail thumbnail-status"/>
 	</div>
 </html>
         ');
@@ -69,10 +66,8 @@ class LogoSelect extends SelectSingleElement
     {
         $resultArray = parent::renderFieldWizard();
         
-        $table = $this->data['tableName'];
         $field = $this->data['fieldName'];
         $row = $this->data['databaseRow'];
-        $value = $row[$field];
         
         $file = $this->getFile($this->data['databaseRow'], $field);
         if (!$file) {
@@ -104,7 +99,7 @@ class LogoSelect extends SelectSingleElement
         if (is_array($fileRefUid) && isset($fileRefUid[0])) {
             $fileRefUid = $fileRefUid[0];
         }
-        if (\tx_rnbase_util_Math::isInteger($fileRefUid)) {
+        if (\tx_rnbase_util_Math::isInteger($fileRefUid) && $fileRefUid) {
             try {
                 $ref = \tx_rnbase_util_TSFAL::getFileReferenceById($fileRefUid);
                 if ($ref) {

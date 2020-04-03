@@ -350,11 +350,12 @@ $tx_cfcleague_games = Array (
 				'internal_type' => 'db',
 				'allowed' => 'tx_cfcleague_profiles',
 				'size' => 1,
+				'default' => 0,
 				'minitems' => 0,
 				'maxitems' => 1,
-			    'wizards' => Tx_Rnbase_Utility_TcaTool::getWizards('tx_cfcleague_profiles', [
-			        'suggest' => true,
-			    ])
+				'wizards' => Tx_Rnbase_Utility_TcaTool::getWizards('tx_cfcleague_profiles', [
+				    'suggest' => true,
+				])
 			)
 		),
 		'assists' => Array (
@@ -707,48 +708,6 @@ Tx_Rnbase_Utility_TcaTool::configureWizards($tx_cfcleague_games, [
     'referee' => ['targettable' => 'tx_cfcleague_profiles', 'suggest' => true],
     'assists' => ['targettable' => 'tx_cfcleague_profiles', 'suggest' => true],
 ]);
-
-
-if(tx_rnbase_util_Extensions::isLoaded('rgmediaimages') && !tx_rnbase_util_TYPO3::isTYPO70OrHigher()) {
-    $tx_cfcleague_games['columns']['video'] = Array (
-        'exclude' => 1,
-        'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games_video',
-        'config' => [
-            'type' => 'group',
-            'internal_type' => 'file',
-            'allowed' => 'flv',
-            'uploadfolder' => 'uploads/tx_cfcleague',
-            'size' => 5,
-            'minitems' => 0,
-            'maxitems' => 20,
-            'max_size' => 225280, // 220MB
-        ]
-    );
-    $tx_cfcleague_games['columns']['videoimg'] = [
-        'exclude' => 1,
-        'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games_videoimg',
-        'config' => [
-            'type' => 'text',
-            'cols' => '30',
-            'rows' => '5',
-            'wizards' => [
-                '_PADDING' => 2,
-                'example' => [
-                    'title' => 'rgmediaimages Wizard:',
-                    'type' => 'script',
-                    'notNewRecords' => 1,
-                    'icon' => tx_rnbase_util_Extensions::extRelPath('rgmediaimages').'wizard/icon.png',
-                    'script' => tx_rnbase_util_Extensions::extRelPath('rgmediaimages').'wizard/index.php?table=tx_cfcleague_games&config=videoimg&internal=video',
-                    'JSopenParams' => 'height=750,width=900,status=0,menubar=0,scrollbars=0',
-                    'notNewRecords' => 1,
-                ],
-            ],
-        ]
-    ];
-	// TODO: Fix for 7.6
-// 	$tca->addWizard($tx_cfcleague_games, 'videoimg', 'RTE', 'wizard_rte',
-// 			array('table'=>'tx_cfcleague_games','config'=>'videoimg', 'internal'=>'video'));
-}
 
 
 tx_rnbase::load('tx_rnbase_util_TSFAL');
