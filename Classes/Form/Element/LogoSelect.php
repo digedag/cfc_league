@@ -99,7 +99,7 @@ class LogoSelect extends SelectSingleElement
         if (is_array($fileRefUid) && isset($fileRefUid[0])) {
             $fileRefUid = $fileRefUid[0];
         }
-        if (\tx_rnbase_util_Math::isInteger($fileRefUid)) {
+        if (\tx_rnbase_util_Math::isInteger($fileRefUid) && $fileRefUid) {
             try {
                 $ref = \tx_rnbase_util_TSFAL::getFileReferenceById($fileRefUid);
                 if ($ref) {
