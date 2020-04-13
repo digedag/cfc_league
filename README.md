@@ -4,6 +4,7 @@ T3sports Backend
 [![cfc_league](ext_icon.gif)](https://github.com/digedag/cfc_league)
 [![Latest Stable Version](https://img.shields.io/packagist/v/digedag/cfc-league.svg?maxAge=3600)](https://packagist.org/packages/digedag/cfc-league)
 [![Total Downloads](https://img.shields.io/packagist/dt/digedag/cfc-league.svg?maxAge=3600)](https://packagist.org/packages/digedag/cfc-league)
+[![Build Status](https://api.travis-ci.org/digedag/cfc_league.png)](https://travis-ci.org/digedag/cfc_league)
 [![License](https://img.shields.io/packagist/l/digedag/cfc-league.svg?maxAge=3600)](https://packagist.org/packages/digedag/cfc-league)
 [CHANGELOG](CHANGELOG.md)
 
