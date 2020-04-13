@@ -1,36 +1,44 @@
 {
-	"name" : "digedag/cfc-league",
-	"description" : "TYPO3 extension to manage sports competitions and clubs.",
-	"type" : "typo3-cms-extension",
-	"keywords" : [
+	"name": "digedag/cfc-league",
+	"description": "TYPO3 extension to manage sports competitions and clubs.",
+	"type": "typo3-cms-extension",
+	"keywords": [
 		"TYPO3 CMS",
 		"mvc",
 		"sports",
 		"football"
 	],
-	"homepage" : "http://www.system25.de/",
-	"license" : "GPL-2.0-or-later",
-	"authors" : [{
-			"name" : "René Nitzsche",
-			"email" : "rene@system25.de",
-			"role" : "Developer"
+	"homepage": "http://www.system25.de/",
+	"license": "GPL-2.0-or-later",
+	"authors": [
+		{
+			"name": "René Nitzsche",
+			"email": "rene@system25.de",
+			"role": "Developer"
 		}
 	],
-	"support" : {
-		"email" : "rene@system25.de",
-		"source" : "https://github.com/digedag/cfc_league",
-		"issues" : "https://github.com/digedag/cfc_league/issues"
+	"support": {
+		"email": "rene@system25.de",
+		"source": "https://github.com/digedag/cfc_league",
+		"issues": "https://github.com/digedag/cfc_league/issues"
 	},
-	"replace" : {
-		"typo3-ter/cfc-league" : "self.version",
-		"digedag/cfc-league" : "self.version"
+	"replace": {
+		"typo3-ter/cfc-league": "self.version",
+		"digedag/cfc-league": "self.version"
 	},
-	"require" : {
+	"require": {
 		"typo3/cms-core": "^7.6 || ^8.7 || ^9.5",
-		"digedag/rn-base" : "~1.11"
+		"digedag/rn-base": "~1.11"
 	},
-	"autoload" : {
-		"classmap" : [
+	"require-dev": {
+		"namelesscoder/typo3-repository-client": "^1.2",
+		"nimut/testing-framework": "^1.1 || ^2.0 || ^4.0",
+		"mikey179/vfsstream": "^1.4 || ^1.6",
+		"phpunit/phpunit": "^4.7|| ^7.0",
+		"friendsofphp/php-cs-fixer": "^2.15"
+	},
+	"autoload": {
+		"classmap": [
 			"Classes/",
 			"mod1/",
 			"models/",
@@ -38,31 +46,36 @@
 			"services/",
 			"sports/",
 			"tca/",
-			"tests/",
 			"util/"
 		]
 	},
-    "config": {
-        "vendor-dir": ".Build/vendor",
-        "bin-dir": ".Build/bin",
-        "preferred-install": {
-            "typo3/cms": "source"
-        }
-    },
-    "scripts": {
-        "post-autoload-dump": [
-            "mkdir -p .Build/Web/typo3conf/ext/",
-            "[ -L .Build/Web/typo3conf/ext/cfc_league ] || ln -snvf ../../../../. .Build/Web/typo3conf/ext/cfc_league"
-        ]
-    },
-    "extra": {
-        "typo3/cms": {
-            "cms-package-dir": "{$vendor-dir}/typo3/cms",
-            "extension-key": "cfc_league",
-            "web-dir": ".Build/Web"
-        },
-        "branch-alias": {
-            "dev-master": "1.x-dev"
-        }
-    }
+	"autoload-dev": {
+		"psr-4": {
+			"System25\\T3sports\\Tests\\" : "Tests/Unit/PHP","TYPO3\\CMS\\Core\\Tests\\":".Build/vendor/typo3/cms/typo3/sysext/core/Tests/",
+			"TYPO3\\CMS\\Fluid\\Tests\\": ".Build/vendor/typo3/cms/typo3/sysext/fluid/Tests/"
+		}
+	},
+	"config": {
+		"vendor-dir": ".Build/vendor",
+		"bin-dir": ".Build/bin",
+		"preferred-install": {
+			"typo3/cms": "source"
+		}
+	},
+	"scripts": {
+		"post-autoload-dump": [
+			"mkdir -p .Build/Web/typo3conf/ext/",
+			"[ -L .Build/Web/typo3conf/ext/cfc_league ] || ln -snvf ../../../../. .Build/Web/typo3conf/ext/cfc_league"
+		]
+	},
+	"extra": {
+		"typo3/cms": {
+			"cms-package-dir": "{$vendor-dir}/typo3/cms",
+			"extension-key": "cfc_league",
+			"web-dir": ".Build/Web"
+		},
+		"branch-alias": {
+			"dev-master": "1.x-dev"
+		}
+	}
 }

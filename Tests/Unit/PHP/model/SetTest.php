@@ -1,8 +1,10 @@
 <?php
+namespace System25\T3sports\Tests\Model;
+
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2012-2013 Rene Nitzsche (rene@system25.de)
+*  (c) 2012-2020 Rene Nitzsche (rene@system25.de)
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -22,20 +24,22 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-tx_rnbase::load('tx_cfcleague_models_Set');
-tx_rnbase::load('tx_rnbase_tests_BaseTestCase');
+class tx_cfcleague_tests_modelsSets_testcase extends \tx_rnbase_tests_BaseTestCase 
+{
 
-class tx_cfcleague_tests_modelsSets_testcase extends tx_rnbase_tests_BaseTestCase {
-
+    /**
+     * @group unit
+     */
 	public function testBuildFromStringEmpty() {
-		$sets = tx_cfcleague_models_Set::buildFromString('');
+		$sets = \tx_cfcleague_models_Set::buildFromString('');
 		$this->assertFalse($sets);
 	}
 	/**
 	 * @dataProvider getStrings
+     * @group unit
 	 */
 	public function testBuildFromString($setString, $setCnt, $setResult) {
-		$sets = tx_cfcleague_models_Set::buildFromString($setString);
+		$sets = \tx_cfcleague_models_Set::buildFromString($setString);
 
 		$this->assertEquals($setCnt, count($sets));
 		$i = 0;
@@ -50,15 +54,10 @@ class tx_cfcleague_tests_modelsSets_testcase extends tx_rnbase_tests_BaseTestCas
 		}
 	}
 	public function getStrings() {
-		return array(
+		return [
 			array('20:11;10:8', 2, array(array(20, 11), array(10, 8))),
 			array('20:11', 1, array(array(20, 11))),
 			array('b:11', 1, array(array(0, 11))),
-		);
+		];
 	}
 }
-
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league_fe/tests/class.tx_cfcleague_tests_modelsSets_testcase.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league_fe/tests/class.tx_cfcleague_tests_modelsSets_testcase.php']);
-}
-?>
