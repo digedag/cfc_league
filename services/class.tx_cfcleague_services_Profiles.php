@@ -26,20 +26,20 @@ tx_rnbase::load('Tx_Rnbase_Utility_Strings');
 tx_rnbase::load('tx_cfcleague_services_Base');
 
 /**
- * Service for accessing profiles
+ * Service for accessing profiles.
  *
  * @author Rene Nitzsche
  */
 class tx_cfcleague_services_Profiles extends tx_cfcleague_services_Base
 {
-
     private $profiles = array();
 
     /**
-     * Return all instances of all requested profiles
+     * Return all instances of all requested profiles.
      *
      * @param string $uids
      *            commaseparated uids
+     *
      * @return array[tx_cfcleague_models_Profile]
      */
     public function loadProfiles($uids)
@@ -48,13 +48,14 @@ class tx_cfcleague_services_Profiles extends tx_cfcleague_services_Base
         $ret = array();
         $toLoad = array();
         foreach ($uids as $key => $uid) {
-            if (array_key_exists($uid, $this->profiles))
+            if (array_key_exists($uid, $this->profiles)) {
                 $ret[$key] = $this->profiles[$uid];
-            else
+            } else {
                 $toLoad[$key] = $uid;
+            }
         }
 
-        if (! empty($toLoad)) {
+        if (!empty($toLoad)) {
             $fields = array();
             $fields['PROFILE.UID'][OP_IN_INT] = implode(',', $toLoad);
             $options = array();
@@ -65,13 +66,15 @@ class tx_cfcleague_services_Profiles extends tx_cfcleague_services_Base
                 $ret[$toLoadFlip[$profile->getUid()]] = $profile;
             }
         }
+
         return $ret;
     }
 
     /**
-     * Returns all team notes for a given profile
+     * Returns all team notes for a given profile.
      *
      * @param tx_cfcleague_models_Profile $profile
+     *
      * @return array An array with all references by table
      */
     public function checkReferences($profile)
@@ -87,19 +90,21 @@ class tx_cfcleague_services_Profiles extends tx_cfcleague_services_Base
             'cols' => array(
                 'TEAM.PLAYERS',
                 'TEAM.SUPPORTERS',
-                'TEAM.COACHES'
+                'TEAM.COACHES',
             ),
-            'operator' => OP_INSET_INT
+            'operator' => OP_INSET_INT,
         );
         $result = tx_cfcleague_util_ServiceRegistry::getTeamService()->searchTeams($fields, $options);
-        if (count($result))
+        if (count($result)) {
             $ret['tx_cfcleague_teams'] = $result;
+        }
 
         $fields = array();
         $fields['TEAMNOTE.PLAYER'][OP_EQ_INT] = $profile->getUid();
         $result = tx_cfcleague_util_ServiceRegistry::getTeamService()->searchTeamNotes($fields, $options);
-        if (count($result))
+        if (count($result)) {
             $ret['tx_cfcleague_team_notes'] = $result;
+        }
 
         $fields = array();
         $fields[SEARCH_FIELD_JOINED][0] = array(
@@ -112,47 +117,50 @@ class tx_cfcleague_services_Profiles extends tx_cfcleague_services_Base
                 'MATCH.SUBSTITUTES_HOME',
                 'MATCH.SUBSTITUTES_GUEST',
                 'MATCH.COACH_HOME',
-                'MATCH.COACH_GUEST'
+                'MATCH.COACH_GUEST',
             ),
-            'operator' => OP_INSET_INT
+            'operator' => OP_INSET_INT,
         );
         $result = tx_cfcleague_util_ServiceRegistry::getMatchService()->search($fields, $options);
-        if (count($result))
+        if (count($result)) {
             $ret['tx_cfcleague_games'] = $result;
+        }
 
         $fields = array();
         $fields[SEARCH_FIELD_JOINED][0] = array(
             'value' => $profile->getUid(),
             'cols' => array(
                 'MATCHNOTE.PLAYER_HOME',
-                'MATCHNOTE.PLAYER_GUEST'
+                'MATCHNOTE.PLAYER_GUEST',
             ),
-            'operator' => OP_EQ_INT
+            'operator' => OP_EQ_INT,
         );
         $result = tx_cfcleague_util_ServiceRegistry::getMatchService()->searchMatchNotes($fields, $options);
-        if (count($result))
+        if (count($result)) {
             $ret['tx_cfcleague_match_notes'] = $result;
+        }
 
         return $ret;
     }
 
     /**
-     * Returns all team notes for a given profile
+     * Returns all team notes for a given profile.
      *
      * @param int $profileUID
      */
-    function getTeamsNotes4Profile($profileUID)
+    public function getTeamsNotes4Profile($profileUID)
     {
-        $options = ['where' => 'player = ' . $profileUID];
+        $options = ['where' => 'player = '.$profileUID];
+
         return Tx_Rnbase_Database_Connection::getInstance()->doSelect('*', 'tx_cfcleague_team_notes', $options);
     }
 
     /**
-     * Returns all available profile types for a TCA select item
+     * Returns all available profile types for a TCA select item.
      *
      * @return array
      */
-    function getProfileTypes4TCA()
+    public function getProfileTypes4TCA()
     {
         $items = array();
         $baseType = 't3sports_profiletype';
@@ -164,9 +172,10 @@ class tx_cfcleague_services_Profiles extends tx_cfcleague_services_Base
         foreach ($types as $typedef) {
             $items[] = array(
                 tx_rnbase_util_Misc::translateLLL($typedef[0]),
-                $typedef[1]
+                $typedef[1],
             );
         }
+
         return $items;
     }
 
@@ -174,9 +183,10 @@ class tx_cfcleague_services_Profiles extends tx_cfcleague_services_Base
      * Find all profile types for a given array with uids.
      *
      * @param array $uids
+     *
      * @return string imploded uid|label-String for TCA select fields
      */
-    function getProfileTypeItems4TCA($uids)
+    public function getProfileTypeItems4TCA($uids)
     {
         $uidArr = array();
         foreach ($uids as $uid) {
@@ -191,22 +201,25 @@ class tx_cfcleague_services_Profiles extends tx_cfcleague_services_Base
         }
         $items = array();
         foreach ($uidArr as $uid => $label) {
-            $items[] = $uid . '|' . tx_rnbase_util_Misc::translateLLL($label);
+            $items[] = $uid.'|'.tx_rnbase_util_Misc::translateLLL($label);
         }
+
         return implode(',', $items);
     }
 
     /**
-     * Search database for profiles
+     * Search database for profiles.
      *
      * @param array $fields
      * @param array $options
+     *
      * @return array[tx_cfcleague_models_Profile]
      */
     public function search($fields, $options)
     {
         tx_rnbase::load('tx_rnbase_util_SearchBase');
         $searcher = tx_rnbase_util_SearchBase::getInstance('tx_cfcleague_search_Profile');
+
         return $searcher->search($fields, $options);
     }
 }

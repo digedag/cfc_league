@@ -1,4 +1,5 @@
 <?php
+
 namespace System25\T3sports\Controller\Club;
 
 /***************************************************************
@@ -30,9 +31,8 @@ namespace System25\T3sports\Controller\Club;
  */
 class ClubStadiumHandler
 {
-
     /**
-     * Returns an instance
+     * Returns an instance.
      *
      * @return string
      */
@@ -42,10 +42,10 @@ class ClubStadiumHandler
     }
 
     public function handleRequest(\tx_rnbase_mod_IModule $mod)
-    {}
+    {
+    }
 
     /**
-     *
      * @param \tx_cfcleague_models_Club $club
      * @param \tx_rnbase_mod_IModule $mod
      */
@@ -66,12 +66,14 @@ class ClubStadiumHandler
         }
 
         $options = [
-            'params' => '&defVals[tx_cfcleague_stadiums][clubs]=' . $club->getUid()
+            'params' => '&defVals[tx_cfcleague_stadiums][clubs]='.$club->getUid(),
         ];
         $content .= $mod->getFormTool()->createNewLink('tx_cfcleague_stadiums', $club->getProperty('pid'), '###LABEL_BTN_ADDSTADIUM###', $options);
+
         return $content;
     }
 
     public function makeLink(\tx_rnbase_mod_IModule $mod)
-    {}
+    {
+    }
 }

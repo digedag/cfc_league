@@ -25,11 +25,10 @@ tx_rnbase::load('tx_rnbase_mod_IModule');
 tx_rnbase::load('Tx_Rnbase_Utility_T3General');
 
 /**
- * Search stadiums
+ * Search stadiums.
  */
 class tx_cfcleague_mod1_searcher_Stadium
 {
-
     private $mod;
 
     private $data;
@@ -39,10 +38,11 @@ class tx_cfcleague_mod1_searcher_Stadium
     private $currentClub;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param tx_rnbase_mod_IModule $mod
      * @param unknown_type $options
+     *
      * @return unknown_type
      */
     public function __construct(tx_rnbase_mod_IModule $mod, $options = array())
@@ -51,7 +51,7 @@ class tx_cfcleague_mod1_searcher_Stadium
     }
 
     /**
-     * Init object
+     * Init object.
      *
      * @param tx_rnbase_mod_IModule $mod
      * @param array $options
@@ -64,16 +64,17 @@ class tx_cfcleague_mod1_searcher_Stadium
         $this->resultSize = 0;
         $this->data = Tx_Rnbase_Utility_T3General::_GP('searchdata');
 
-        if (! isset($options['nopersist']))
+        if (!isset($options['nopersist'])) {
             $this->SEARCH_SETTINGS = Tx_Rnbase_Backend_Utility::getModuleData(array(
-                'searchterm' => ''
+                'searchterm' => '',
             ), $this->data, $mod->getName());
-        else
+        } else {
             $this->SEARCH_SETTINGS = $this->data;
+        }
     }
 
     /**
-     * Returns the complete search form
+     * Returns the complete search form.
      */
     public function getSearchForm()
     {
@@ -83,7 +84,6 @@ class tx_cfcleague_mod1_searcher_Stadium
     }
 
     /**
-     *
      * @return tx_rnbase_mod_IModule
      */
     private function getModule()
@@ -91,8 +91,6 @@ class tx_cfcleague_mod1_searcher_Stadium
         return $this->mod;
     }
 
-    /**
-     */
     public function getResultList()
     {
         $pager = tx_rnbase::makeInstance('tx_rnbase_util_BEPager', 'stadiumPager', $this->getModule()->getName(), 0);
@@ -102,21 +100,20 @@ class tx_cfcleague_mod1_searcher_Stadium
         // Set options
         $options = array(
             'count' => 1,
-            'distinct' => 1
+            'distinct' => 1,
         );
 
         $fields = array();
         // Filter companies according to filter selections
         if ($this->currentClub) {
             $fields['CLUB.UID'] = array(
-                OP_EQ_INT => $this->currentClub
+                OP_EQ_INT => $this->currentClub,
             );
         }
 
-        if (! $this->currentShowHidden) {
+        if (!$this->currentShowHidden) {
             $options['enablefieldsfe'] = 1;
-        }
-        else {
+        } else {
             $options['enablefieldsbe'] = 1;
         }
 
@@ -137,12 +134,13 @@ class tx_cfcleague_mod1_searcher_Stadium
         $ret['table'] = $content;
         $ret['totalsize'] = $cnt;
         $pagerData = $pager->render();
-        $ret['pager'] .= '<div class="pager">' . $pagerData['limits'] . ' - ' . $pagerData['pages'] . '</div>';
+        $ret['pager'] .= '<div class="pager">'.$pagerData['limits'].' - '.$pagerData['pages'].'</div>';
+
         return $ret;
     }
 
     /**
-     * Start creation of result list
+     * Start creation of result list.
      *
      * @param string $content
      * @param array $items
@@ -153,22 +151,22 @@ class tx_cfcleague_mod1_searcher_Stadium
         $columns = array(
             'uid' => array(
                 'title' => 'label_uid',
-                'decorator' => $decor
+                'decorator' => $decor,
             ),
             'name' => array(
-                'title' => 'label_name'
+                'title' => 'label_name',
             ),
             'capacity' => array(
-                'title' => 'label_capacity'
+                'title' => 'label_capacity',
             ),
             'address' => array(
                 'title' => 'label_address',
-                'decorator' => $decor
+                'decorator' => $decor,
             ),
             'longlat' => array(
                 'title' => 'label_longlat',
-                'decorator' => $decor
-            )
+                'decorator' => $decor,
+            ),
         );
 
         if ($items) {
@@ -185,7 +183,7 @@ class tx_cfcleague_mod1_searcher_Stadium
 
     /**
      * Method to get the number of data records
-     * Works only if the result list has been retrieved
+     * Works only if the result list has been retrieved.
      *
      * @return int
      */
@@ -195,7 +193,7 @@ class tx_cfcleague_mod1_searcher_Stadium
     }
 
     /**
-     * Set club filter
+     * Set club filter.
      *
      * @param int $clubUid
      */
@@ -204,4 +202,3 @@ class tx_cfcleague_mod1_searcher_Stadium
         $this->currentClub = $clubUid;
     }
 }
-

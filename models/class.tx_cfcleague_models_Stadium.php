@@ -28,7 +28,6 @@ tx_rnbase::load('tx_rnbase_model_base');
  */
 class tx_cfcleague_models_Stadium extends tx_rnbase_model_base
 {
-
     private static $instances = array();
 
     public function getTableName()
@@ -37,7 +36,7 @@ class tx_cfcleague_models_Stadium extends tx_rnbase_model_base
     }
 
     /**
-     * Returns the stadium name
+     * Returns the stadium name.
      *
      * @return string
      */
@@ -52,7 +51,7 @@ class tx_cfcleague_models_Stadium extends tx_rnbase_model_base
     }
 
     /**
-     * Returns the city
+     * Returns the city.
      *
      * @return string
      */
@@ -62,7 +61,7 @@ class tx_cfcleague_models_Stadium extends tx_rnbase_model_base
     }
 
     /**
-     * Returns the zip
+     * Returns the zip.
      *
      * @return string
      */
@@ -72,7 +71,7 @@ class tx_cfcleague_models_Stadium extends tx_rnbase_model_base
     }
 
     /**
-     * Returns the street
+     * Returns the street.
      *
      * @return string
      */
@@ -92,7 +91,7 @@ class tx_cfcleague_models_Stadium extends tx_rnbase_model_base
     }
 
     /**
-     * Returns coords
+     * Returns coords.
      *
      * @return tx_rnbase_maps_ICoord or false
      */
@@ -104,19 +103,22 @@ class tx_cfcleague_models_Stadium extends tx_rnbase_model_base
             $coords->setLatitude($this->getLatitute());
             $coords->setLongitude($this->getLongitute());
         }
+
         return $coords;
     }
 
     /**
-     * Returns address dataset or null
+     * Returns address dataset or null.
      *
      * @return tx_cfcleague_models_Address or null
      */
     public function getAddress()
     {
-        if (! $this->getProperty('address'))
+        if (!$this->getProperty('address')) {
             return null;
+        }
         $address = tx_rnbase::makeInstance('tx_cfcleague_models_Address', $this->getProperty('address'));
+
         return $address->isValid() ? $address : null;
     }
 
@@ -126,16 +128,19 @@ class tx_cfcleague_models_Stadium extends tx_rnbase_model_base
      * bei zwei Anfragen für die selbe UID nur ein DB Zugriff erfolgt.
      *
      * @param int $uid
+     *
      * @return tx_cfcleague_models_Stadium
      */
-    static function getStadiumInstance($uid = NULL)
+    public static function getStadiumInstance($uid = null)
     {
         $uid = intval($uid);
-        if (! $uid)
-            throw new Exception('No uid for ' . self::getTableName() . ' given!');
-        if (! is_object(self::$instances[$uid])) {
-            self::$instances[$uid] = new tx_cfcleague_models_Stadium($uid);
+        if (!$uid) {
+            throw new Exception('No uid for '.self::getTableName().' given!');
         }
+        if (!is_object(self::$instances[$uid])) {
+            self::$instances[$uid] = new self($uid);
+        }
+
         return self::$instances[$uid];
     }
 
@@ -143,6 +148,7 @@ class tx_cfcleague_models_Stadium extends tx_rnbase_model_base
      * Returns the url of the first stadium logo.
      *
      * @return string
+     *
      * @deprecated use Typoscript
      */
     public function getLogoPath()
@@ -150,4 +156,3 @@ class tx_cfcleague_models_Stadium extends tx_rnbase_model_base
         return '';
     }
 }
-

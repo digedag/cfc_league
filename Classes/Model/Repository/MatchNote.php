@@ -28,51 +28,56 @@ tx_rnbase::load('tx_rnbase_util_SearchBase');
 tx_rnbase::load('tx_rnbase_sv1_Base');
 //tx_rnbase::load('Tx_Rnbase_Domain_Repository_PersistenceRepository');
 
-
-
 /**
  * @author Rene Nitzsche
  */
-class Tx_Cfcleague_Model_Repository_MatchNote extends tx_rnbase_sv1_Base {
+class Tx_Cfcleague_Model_Repository_MatchNote extends tx_rnbase_sv1_Base
+{
+    public function getSearchClass()
+    {
+        return 'tx_cfcleague_search_MatchNote';
+    }
 
-	public function getSearchClass() {
-		return 'tx_cfcleague_search_MatchNote';
-	}
+    /**
+     * FIXME: Methode nach Umstellung auf Repo entfernen!
+     *
+     * @param array $record
+     */
+    public function createNewModel(
+        array $record = array()
+    ) {
+        return $this->getDomainModel()->setProperty($record);
+    }
 
-	/**
-	 * FIXME: Methode nach Umstellung auf Repo entfernen!
-	 * @param array $record
-	 */
-	public function createNewModel(
-			array $record = array()
-	) {
-		return $this->getDomainModel()->setProperty($record);
-	}
+    /**
+     * FIXME: Methode nach Umstellung auf Repo entfernen!
+     *
+     * @param object $model
+     * @param array $options
+     */
+    public function persist($model, $options = null)
+    {
+        if ($model->isPersisted()) {
+            $this->handleUpdate($model, $model->getProperty());
+        } else {
+            $this->create($model->getProperty());
+        }
+    }
 
-	/**
-	 * FIXME: Methode nach Umstellung auf Repo entfernen!
-	 * @param object $model
-	 * @param array $options
-	 */
-	public function persist($model, $options = null) {
-		if($model->isPersisted()) {
-			$this->handleUpdate($model, $model->getProperty());
-		}
-		else {
-			$this->create($model->getProperty());
-		}
-	}
-	private $dummyModel;
-	/**
-	 * FIXME: Methode nach Umstellung auf Repo entfernen!
-	 * @return Tx_Rnbase_Domain_Model_RecordInterface
-	 */
-	protected function getDomainModel() {
-		if (!$this->dummyModel) {
-			$searcher = tx_rnbase_util_SearchBase::getInstance($this->getSearchClass());
-			$this->dummyModel = tx_rnbase::makeInstance($searcher->getWrapperClass(), array('uid' => 0));
-		}
-		return $this->dummyModel;
-	}
+    private $dummyModel;
+
+    /**
+     * FIXME: Methode nach Umstellung auf Repo entfernen!
+     *
+     * @return Tx_Rnbase_Domain_Model_RecordInterface
+     */
+    protected function getDomainModel()
+    {
+        if (!$this->dummyModel) {
+            $searcher = tx_rnbase_util_SearchBase::getInstance($this->getSearchClass());
+            $this->dummyModel = tx_rnbase::makeInstance($searcher->getWrapperClass(), array('uid' => 0));
+        }
+
+        return $this->dummyModel;
+    }
 }
-

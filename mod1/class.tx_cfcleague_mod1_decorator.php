@@ -24,17 +24,16 @@
  ***************************************************************/
 
 /**
- * Die Klasse bereitet Objekte für die Darstellung im Backend auf
+ * Die Klasse bereitet Objekte für die Darstellung im Backend auf.
  */
 class tx_cfcleague_mod1_decorator
 {
-
     public static function prepareTable($entries, $columns, $formTool, $options)
     {
-        $arr = Array(
-            0 => Array(
-                self::getHeadline($parts, $columns, $options)
-            )
+        $arr = array(
+            0 => array(
+                self::getHeadline($parts, $columns, $options),
+            ),
         );
         foreach ($entries as $entry) {
             $record = is_object($entry) ? $entry->getProperty() : $entry;
@@ -42,10 +41,9 @@ class tx_cfcleague_mod1_decorator
             if (isset($options['checkbox'])) {
                 $checkName = isset($options['checkboxname']) ? $options['checkboxname'] : 'checkEntry';
                 // Check if entry is checkable
-                if (! is_array($options['dontcheck']) || ! array_key_exists($record['uid'], $options['dontcheck'])) {
-                    $row[] = $formTool->createCheckbox($checkName . '[]', $record['uid']);
-                }
-                else {
+                if (!is_array($options['dontcheck']) || !array_key_exists($record['uid'], $options['dontcheck'])) {
+                    $row[] = $formTool->createCheckbox($checkName.'[]', $record['uid']);
+                } else {
                     $row[] = tx_rnbase_mod_Util::getSpriteIcon('status-status-checked', $options);
                 }
             }
@@ -59,7 +57,7 @@ class tx_cfcleague_mod1_decorator
                 if (isset($data['method'])) {
                     $row[] = call_user_func(array(
                         $entry,
-                        $data['method']
+                        $data['method'],
                     ));
                 } elseif (isset($data['decorator'])) {
                     $decor = $data['decorator'];
@@ -68,21 +66,23 @@ class tx_cfcleague_mod1_decorator
                     $row[] = $record[$column];
                 }
             }
-            if (isset($options['linker']))
+            if (isset($options['linker'])) {
                 $row[] = self::addLinker($options, $entry, $formTool);
+            }
             $arr[0][] = $row;
         }
+
         return $arr;
     }
 
     public static function prepareMatches($matches, $competition, $columns, $formTool, $options)
     {
         // Ist kein Wettbewerb vorhanden, dann wird nur das Endergebnis angezeigt
-        $parts = (! $competition) ? 0 : $competition->getNumberOfMatchParts();
-        $arr = Array(
-            0 => Array(
-                self::getHeadline($parts, $columns, $options)
-            )
+        $parts = (!$competition) ? 0 : $competition->getNumberOfMatchParts();
+        $arr = array(
+            0 => array(
+                self::getHeadline($parts, $columns, $options),
+            ),
         );
         foreach ($matches as $match) {
             $matchRec = is_object($match) ? $match->getProperty : $match;
@@ -91,16 +91,15 @@ class tx_cfcleague_mod1_decorator
             $row = array();
             if (isset($options['checkbox'])) {
                 // Check if match is checkable
-                if (! is_array($options['dontcheck']) || ! array_key_exists($matchRec['uid'], $options['dontcheck']))
+                if (!is_array($options['dontcheck']) || !array_key_exists($matchRec['uid'], $options['dontcheck'])) {
                     $row[] = $formTool->createCheckbox('checkMatch[]', $matchRec['uid']);
-                else {
+                } else {
                     // FIXME: how to add info text?
                     $row[] = tx_rnbase_mod_Util::getSpriteIcon('status-status-checked', $options);
 //                    $row[] = '<img' . Tx_Rnbase_Backend_Utility_Icons::skinImg($GLOBALS['BACK_PATH'], 'gfx/zoom2.gif', 'width="11" height="12"') . ' title="Info: ' . $options['dontcheck'][$matchRec['uid']] . '" border="0" alt="" />';
-                    
                 }
             }
-            if (! $isNoMatch) {
+            if (!$isNoMatch) {
                 reset($columns);
                 foreach ($columns as $column => $data) {
                     // Hier erfolgt die Ausgabe der Daten für die Tabelle. Wenn eine method angegeben
@@ -111,7 +110,7 @@ class tx_cfcleague_mod1_decorator
                     if (isset($data['method'])) {
                         $row[] = call_user_func(array(
                             $match,
-                            $data['method']
+                            $data['method'],
                         ));
                     } elseif (isset($data['decorator'])) {
                         $decor = $data['decorator'];
@@ -122,8 +121,9 @@ class tx_cfcleague_mod1_decorator
                     // isset($data['decorator']) ? $data['decorator']->format($matchRec[$column], $column) : $matchRec[$column];
                     // isset($data['decorator']) ? get_class($data['decorator']) :
                 }
-                if (isset($options['linker']))
+                if (isset($options['linker'])) {
                     $row[] = self::addLinker($options, $match, $formTool);
+                }
                 $arr[0][] = $row;
             }
         }
@@ -132,9 +132,10 @@ class tx_cfcleague_mod1_decorator
     }
 
     /**
-     * Liefert die passenden Überschrift für die Tabelle
+     * Liefert die passenden Überschrift für die Tabelle.
      *
      * @param int $parts
+     *
      * @return array
      */
     protected static function getHeadline($parts, $columns, $options)
@@ -147,12 +148,15 @@ class tx_cfcleague_mod1_decorator
             $arr[] = '&nbsp;'; // Spalte für Checkbox
         }
         foreach ($columns as $column => $data) {
-            if (intval($data['nocolumn']))
+            if (intval($data['nocolumn'])) {
                 continue;
-            $arr[] = intval($data['notitle']) ? '' : $LANG->getLL((isset($data['title']) ? $data['title'] : $tableName . '.' . $column));
+            }
+            $arr[] = intval($data['notitle']) ? '' : $LANG->getLL((isset($data['title']) ? $data['title'] : $tableName.'.'.$column));
         }
-        if (isset($options['linker']))
+        if (isset($options['linker'])) {
             $arr[] = $LANG->getLL('label_action');
+        }
+
         return $arr;
     }
 
@@ -169,12 +173,12 @@ class tx_cfcleague_mod1_decorator
                 }
             }
         }
+
         return $out;
     }
 }
 
 interface tx_cfcleague_mod1_Linker
 {
-    function makeLink($obj, $formTool, $currentPid, $options);
+    public function makeLink($obj, $formTool, $currentPid, $options);
 }
-

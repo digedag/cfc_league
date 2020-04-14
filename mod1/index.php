@@ -23,13 +23,12 @@
 ***************************************************************/
 
 /**
- * [CLASS/FUNCTION INDEX of SCRIPT]
+ * [CLASS/FUNCTION INDEX of SCRIPT].
  *
  * Hint: use extdeveval to insert/update function index above.
  */
 
 // unset($MCONF);
-
 
 // require_once('conf.php');
 // require_once($BACK_PATH.'init.php');
@@ -41,8 +40,7 @@
 // $GLOBALS['LANG']->includeLLFile('EXT:cfc_league/mod1/locallang.xml');
 // $GLOBALS['LANG']->includeLLFile('EXT:cfc_league/locallang_db.xml');
 // $GLOBALS['BE_USER']->modAccess($GLOBALS['MCONF'], 1);	// This checks permissions and exits if the users has no permission for entry.
-	// DEFAULT initialization of a module [END]
-
+    // DEFAULT initialization of a module [END]
 
 // Make instance:
 $SOBE = tx_rnbase::makeInstance('tx_cfcleague_mod1_Module');
@@ -50,4 +48,3 @@ $SOBE->init();
 
 $SOBE->main();
 $SOBE->printContent();
-

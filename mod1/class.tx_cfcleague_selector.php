@@ -30,14 +30,13 @@ tx_rnbase::load('Tx_Rnbase_Utility_T3General');
 tx_rnbase::load('Tx_Rnbase_Database_Connection');
 tx_rnbase::load('Tx_Rnbase_Configuration_Processor');
 
-
 /**
- * Die Klasse stellt Auswahlmenus zur Verfügung
+ * Die Klasse stellt Auswahlmenus zur Verfügung.
  */
 class tx_cfcleague_selector
 {
-
-    var $doc, $MCONF;
+    public $doc;
+    public $MCONF;
 
     private $modName;
 
@@ -61,17 +60,18 @@ class tx_cfcleague_selector
     }
 
     /**
-     * Returns the form tool
+     * Returns the form tool.
      *
      * @return Tx_Rnbase_Backend_Form_ToolBox
      */
     protected function getFormTool()
     {
-        if (! $this->formTool) {
+        if (!$this->formTool) {
             // TODO: use formtool from module
             $this->formTool = tx_rnbase::makeInstance('Tx_Rnbase_Backend_Form_ToolBox');
             $this->formTool->init($this->doc, $this->module);
         }
+
         return $this->formTool;
     }
 
@@ -96,7 +96,7 @@ class tx_cfcleague_selector
             }
         }
         // Ohne Liga-Array ist eine weitere Verarbeitung sinnlos
-        if (! count($entries)) {
+        if (!count($entries)) {
             return 0;
         }
 
@@ -109,10 +109,10 @@ class tx_cfcleague_selector
             $links[] = $this->getFormTool()->createEditLink('tx_cfcleague_competition', $menuData['value'], '');
             // Jetzt noch den Cache-Link
             $cacheIcon = $this->iconFactory->getIcon('actions-system-cache-clear', TYPO3\CMS\Core\Imaging\Icon::SIZE_SMALL)->render();
-            $links[] = $this->getFormTool()->createModuleLink(['clearCache'=>1], $pid, $cacheIcon, [
+            $links[] = $this->getFormTool()->createModuleLink(['clearCache' => 1], $pid, $cacheIcon, [
                 'params' => [
-                    'clearCache' => 1
-                ]
+                    'clearCache' => 1,
+                ],
             ]);
 
             $links[] = $this->getFormTool()->createNewLink('tx_cfcleague_competition', $pid, '');
@@ -122,7 +122,7 @@ class tx_cfcleague_selector
         if (tx_rnbase_parameters::getPostOrGetParameter('clearCache') && $menuData['value']) {
             // Hook aufrufen
             tx_rnbase_util_Misc::callHook('cfc_league', 'clearStatistics_hook', array(
-                'compUid' => $menuData['value']
+                'compUid' => $menuData['value'],
             ), $this);
         }
 
@@ -130,6 +130,7 @@ class tx_cfcleague_selector
         if (count($objLeagues)) {
             return $menuData['value'] ? $objLeagues[$menuData['value']] : 0;
         }
+
         return $menuData['value'] ? new tx_cfcleague_models_Competition($menuData['value']) : 0;
     }
 
@@ -141,7 +142,7 @@ class tx_cfcleague_selector
      */
     public function showTeamSelector(&$content, $pid, $league, $options = array())
     {
-        if (! $league) {
+        if (!$league) {
             return 0;
         }
 
@@ -166,7 +167,7 @@ class tx_cfcleague_selector
         $menu = $menuData['menu'];
         $links = [];
         $noLinks = $options['noLinks'] ? true : false;
-        if (! $noLinks && $menu) {
+        if (!$noLinks && $menu) {
             $links[] = $this->getFormTool()->createEditLink('tx_cfcleague_teams', $menuData['value']);
             if ($teamObj->getProperty('club')) {
                 $links[] = $this->getFormTool()->createEditLink('tx_cfcleague_club', intval($teamObj->getProperty('club')), $GLOBALS['LANG']->getLL('label_club'));
@@ -178,8 +179,8 @@ class tx_cfcleague_selector
     }
 
     /**
-     *
      * @param int $pid
+     *
      * @return tx_cfcleague_models_Club[]
      */
     protected function lookupClubs($pid)
@@ -187,7 +188,7 @@ class tx_cfcleague_selector
         $globalClubs = intval(Tx_Rnbase_Configuration_Processor::getExtensionCfgValue('cfc_league', 'useGlobalClubs')) > 0;
         $clubOrdering = intval(Tx_Rnbase_Configuration_Processor::getExtensionCfgValue('cfc_league', 'clubOrdering')) > 0;
         $fields = array();
-        if (! $globalClubs) {
+        if (!$globalClubs) {
             $fields['CLUB.PID'][OP_EQ_INT] = $pid;
         }
         $dbOptions = array();
@@ -195,6 +196,7 @@ class tx_cfcleague_selector
             $dbOptions['orderby']['CLUB.CITY'] = 'asc';
         }
         $dbOptions['orderby']['CLUB.NAME'] = 'asc';
+
         return tx_cfcleague_util_ServiceRegistry::getTeamService()->searchClubs($fields, $dbOptions);
     }
 
@@ -215,7 +217,7 @@ class tx_cfcleague_selector
 
         $clubOrdering = intval(Tx_Rnbase_Configuration_Processor::getExtensionCfgValue('cfc_league', 'clubOrdering')) > 0;
         foreach ($clubs as $club) {
-            $label = ($clubOrdering ? $club->getCity() . ' - ' : '') . $club->getName();
+            $label = ($clubOrdering ? $club->getCity().' - ' : '').$club->getName();
             $objClubs[$club->getUid()] = $club;
             $entries[$club->getUid()] = $label;
         }
@@ -232,7 +234,7 @@ class tx_cfcleague_selector
         $menu = $menuData['menu'];
         $links = [];
         $noLinks = $options['noLinks'] ? true : false;
-        if (! $noLinks && $menu) {
+        if (!$noLinks && $menu) {
             $links[] = $this->getFormTool()->createEditLink('tx_cfcleague_club', $menuData['value']);
             $links[] = $this->createNewClubLink($pid);
         }
@@ -244,6 +246,7 @@ class tx_cfcleague_selector
     private function createNewClubLink($pid)
     {
         $linker = tx_rnbase::makeInstance('tx_cfcleague_mod1_linker_NewClub');
+
         return $linker->makeLink(null, $this->getFormTool(), $pid, array());
     }
 
@@ -255,6 +258,7 @@ class tx_cfcleague_selector
      * @param string $content
      * @param int $pid
      * @param tx_cfcleague_models_Competition $league
+     *
      * @return int current value
      */
     public function showRoundSelector(&$content, $pid, $league)
@@ -264,9 +268,9 @@ class tx_cfcleague_selector
         foreach ($league->getRounds() as $round) {
             if (is_object($round)) {
                 $objRounds[$round->getUid()] = $round;
-                $entries[$round->getUid()] = $round->getProperty('name') . (intval($round->getProperty('finished')) ? ' *' : '');
+                $entries[$round->getUid()] = $round->getProperty('name').(intval($round->getProperty('finished')) ? ' *' : '');
             } else {
-                $entries[$round['round']] = $round['round_name'] . (intval($round['max_status']) ? ' *' : '');
+                $entries[$round['round']] = $round['round_name'].(intval($round['max_status']) ? ' *' : '');
             }
         }
 
@@ -285,7 +289,6 @@ class tx_cfcleague_selector
 
             $links = [$prev, $next];
             $content .= $this->renderSelector($data['menu'], $links);
-
         }
 //        $content .= $menu;
 
@@ -302,7 +305,7 @@ class tx_cfcleague_selector
     {
         $entries = array();
         foreach ($matches as $match) {
-            $entries[$match['uid']] = $match['short_name_home'] . ' - ' . $match['short_name_guest'];
+            $entries[$match['uid']] = $match['short_name_home'].' - '.$match['short_name_guest'];
         }
 
         $data = $this->getFormTool()->showMenu($pid, 'match', $this->MCONF['name'], $entries, $this->getScriptURI());
@@ -315,6 +318,7 @@ class tx_cfcleague_selector
 
         // Aktuellen Wert als Match-Objekt zurückgeben
         tx_rnbase::load('tx_cfcleague_models_Match');
+
         return tx_rnbase::makeInstance('tx_cfcleague_models_Match', $data['value']);
     }
 
@@ -328,7 +332,7 @@ class tx_cfcleague_selector
         // Zuerst die Saisons ermitteln
         $saisons = Tx_Rnbase_Database_Connection::getInstance()->doSelect('uid,name', 'tx_cfcleague_saison', [
             'orderby' => 'sorting asc',
-            'wrapperclass' => 'tx_cfcleague_models_Saison'
+            'wrapperclass' => 'tx_cfcleague_models_Saison',
         ]);
 
         $entries = [];
@@ -341,22 +345,23 @@ class tx_cfcleague_selector
         // Wir verzichten hier auf den Link und halten nur den Abstand ein
         if ($data['menu']) {
             $menu = $this->renderSelector($data['menu']);
-        } elseif (count($entries) == 1) {
+        } elseif (1 == count($entries)) {
             $comp = reset($entries);
             $menu = $this->renderSelector($comp);
         }
         $content .= $menu;
 
         // Aktuellen Wert als Saison-Objekt zurückgeben
-        return $data['value'] ? tx_rnbase::makeInstance('tx_cfcleague_models_Saison', $data['value']) : NULL;
+        return $data['value'] ? tx_rnbase::makeInstance('tx_cfcleague_models_Saison', $data['value']) : null;
     }
 
     /**
-     * Zeigt ein TabMenu
+     * Zeigt ein TabMenu.
      *
      * @param int $pid
      * @param string $name
      * @param array $entries
+     *
      * @return array with keys 'menu' and 'value'
      */
     public function showTabMenu($pid, $name, $entries)
@@ -365,7 +370,7 @@ class tx_cfcleague_selector
     }
 
     /**
-     * Zeigt eine Art Tab-Menu
+     * Zeigt eine Art Tab-Menu.
      *
      * @deprecated
      */
@@ -375,13 +380,13 @@ class tx_cfcleague_selector
         $SETTINGS = Tx_Rnbase_Backend_Utility::getModuleData($MENU, Tx_Rnbase_Utility_T3General::_GP('SET'), $this->MCONF['name']) // Das ist der Name des Moduls
         ;
         $ret = array();
-        $ret['menu'] = Tx_Rnbase_Backend_Utility::getFuncMenu($pid, 'SET[' . $name . ']', $SETTINGS[$name], $MENU[$name], $this->getScriptURI());
+        $ret['menu'] = Tx_Rnbase_Backend_Utility::getFuncMenu($pid, 'SET['.$name.']', $SETTINGS[$name], $MENU[$name], $this->getScriptURI());
         $ret['value'] = $SETTINGS[$name];
+
         return $ret;
     }
 
     /**
-     *
      * @return string
      */
     protected function getScriptURI()
@@ -392,14 +397,15 @@ class tx_cfcleague_selector
     private function renderSelector($menu, array $links = [])
     {
         if (tx_rnbase_util_TYPO3::isTYPO76OrHigher()) {
-            $menu = '<div class="row"><div class="col-sm-4">' . $menu . '</div>';
-            if( !empty($links) ) {
-                $menu = $menu . '<span class="col-sm-4">' . implode(' ', $links) . '</span>';
+            $menu = '<div class="row"><div class="col-sm-4">'.$menu.'</div>';
+            if (!empty($links)) {
+                $menu = $menu.'<span class="col-sm-4">'.implode(' ', $links).'</span>';
             }
             $menu .= '</div>';
         } else {
-            $menu = '<div class="cfcselector"><div class="selector">' . $data['menu'] . '' . implode(' ', $links) . '</div></div>';
+            $menu = '<div class="cfcselector"><div class="selector">'.$data['menu'].''.implode(' ', $links).'</div></div>';
         }
+
         return $menu;
 
 //         return '<div class="cfcselector row" style="float: left; width: 100%"><span class="selector col-sm-4">' . $menu .
@@ -415,10 +421,10 @@ class tx_cfcleague_selector
     private function findLeagues($pid)
     {
         tx_rnbase::load('Tx_Rnbase_Database_Connection');
+
         return Tx_Rnbase_Database_Connection::getInstance()->doSelect('*', 'tx_cfcleague_competition', [
-            'where' => 'pid="' . $pid . '"',
-            'orderby' => 'sorting asc'
+            'where' => 'pid="'.$pid.'"',
+            'orderby' => 'sorting asc',
         ]);
     }
 }
-

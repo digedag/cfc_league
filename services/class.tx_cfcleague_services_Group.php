@@ -25,28 +25,28 @@ tx_rnbase::load('tx_rnbase_cache_Manager');
 tx_rnbase::load('Tx_Rnbase_Service_Base');
 
 /**
- * Service for accessing age groups
+ * Service for accessing age groups.
  *
  * @author Rene Nitzsche
  */
 class tx_cfcleague_services_Group extends Tx_Rnbase_Service_Base
 {
-
     /**
      * Returns a group instance by its uid.
      *
      * @param int $uid
+     *
      * @return tx_cfcleague_models_Group
      */
     public function getGroupByUid($uid)
     {
         $cache = tx_rnbase_cache_Manager::getCache('t3sports');
-        $group = $cache->get('group_' . $uid);
-        if (! $group) {
+        $group = $cache->get('group_'.$uid);
+        if (!$group) {
             $group = tx_rnbase::makeInstance('tx_cfcleague_models_Group', $uid);
-            $cache->set('group_' . $uid, $group, 3600);
+            $cache->set('group_'.$uid, $group, 3600);
         }
+
         return $group;
     }
 }
-

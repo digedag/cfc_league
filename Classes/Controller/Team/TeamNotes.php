@@ -26,19 +26,19 @@ tx_rnbase::load('tx_cfcleague_mod1_decorator');
 tx_rnbase::load('Tx_Rnbase_Utility_Strings');
 
 /**
- * Submodul: Bearbeiten von TeamNotes
+ * Submodul: Bearbeiten von TeamNotes.
  */
 class Tx_Cfcleague_Controller_Team_TeamNotes
 {
-
     protected $mod;
 
     /**
      * Ausführung des Requests.
-     * Das Team muss bekannt sein
+     * Das Team muss bekannt sein.
      *
      * @param tx_rnbase_mod_IModule $module
      * @param tx_cfcleague_team $currTeam
+     *
      * @return string
      */
     public function handleRequest($module, $currTeam, $teamInfo)
@@ -53,8 +53,9 @@ class Tx_Cfcleague_Controller_Team_TeamNotes
         // Notizen nach Typ anzeigen
         $srv = tx_cfcleague_util_ServiceRegistry::getTeamService();
         $types = $srv->getNoteTypes();
-        if (! count($types)) {
-            $content .= $this->mod->doc->section($GLOBALS['LANG']->getLL('message') . ':', $GLOBALS['LANG']->getLL('msg_create_notetypes'), 0, 1, \tx_rnbase_mod_IModFunc::ICON_INFO);
+        if (!count($types)) {
+            $content .= $this->mod->doc->section($GLOBALS['LANG']->getLL('message').':', $GLOBALS['LANG']->getLL('msg_create_notetypes'), 0, 1, \tx_rnbase_mod_IModFunc::ICON_INFO);
+
             return $content;
         }
         // Für jeden Typ einen Block anzeigen
@@ -71,7 +72,7 @@ class Tx_Cfcleague_Controller_Team_TeamNotes
     }
 
     /**
-     * Liefert das FormTool
+     * Liefert das FormTool.
      *
      * @return tx_rnbase_util_FormTool
      */
@@ -81,17 +82,19 @@ class Tx_Cfcleague_Controller_Team_TeamNotes
     }
 
     /**
-     * Darstellung der gefundenen Personen
+     * Darstellung der gefundenen Personen.
      *
      * @param tx_cfcleague_models_Team $currTeam
      * @param tx_cfcleague_models_TeamNoteType $type
+     *
      * @return string
      */
     protected function showTeamNotes(tx_cfcleague_models_Team $currTeam, tx_cfcleague_models_TeamNoteType $type)
     {
-        $out = '<h2>' . $type->getLabel() . '</h2>';
-        if ($type->getDescription())
-            $out .= '<p>' . $type->getDescription() . '</p>';
+        $out = '<h2>'.$type->getLabel().'</h2>';
+        if ($type->getDescription()) {
+            $out .= '<p>'.$type->getDescription().'</p>';
+        }
 
         // Alle Notes dieses Teams laden
         $srv = tx_cfcleague_util_ServiceRegistry::getTeamService();
@@ -100,20 +103,20 @@ class Tx_Cfcleague_Controller_Team_TeamNotes
         $decor = tx_rnbase::makeInstance('tx_cfcleague_util_TeamNoteDecorator', $this->getFormTool());
         $columns = array(
             'uid' => array(
-                'decorator' => $decor
+                'decorator' => $decor,
             ),
             'profile' => array(
                 'decorator' => $decor,
-                'title' => 'label_name'
+                'title' => 'label_name',
             ),
             'value' => array(
                 'decorator' => $decor,
-                'title' => 'label_value'
+                'title' => 'label_value',
             ),
             'mediatype' => array(
                 'decorator' => $decor,
-                'title' => 'tx_cfcleague_team_notes.mediatype'
-            )
+                'title' => 'tx_cfcleague_team_notes.mediatype',
+            ),
         );
         $rows = tx_cfcleague_mod1_decorator::prepareTable($notes, $columns, $this->getFormTool(), $options);
 
@@ -131,15 +134,16 @@ class Tx_Cfcleague_Controller_Team_TeamNotes
             $options[Tx_Rnbase_Backend_Form_ToolBox::OPTION_DEFVALS]['tx_cfcleague_team_notes']['mediatype'] = $notes[0]->getMediaType();
         }
 
-        $options['title'] = $GLOBALS['LANG']->getLL('label_create_new') . ': ' . $type->getLabel();
+        $options['title'] = $GLOBALS['LANG']->getLL('label_create_new').': '.$type->getLabel();
         // Zielseite muss immer die Seite des Teams sein
         $out .= $this->getFormTool()->createNewButton('tx_cfcleague_team_notes', $currTeam->getProperty('pid'), $options);
-        return $out . '<br /><br />';
+
+        return $out.'<br /><br />';
     }
 
     /**
-     *
      * @param tx_cfcleague_models_Team $currTeam
+     *
      * @return string
      */
     protected function handleAddProfiles($currTeam, $baseInfo)
@@ -148,12 +152,12 @@ class Tx_Cfcleague_Controller_Team_TeamNotes
         $profile2team = strlen(Tx_Rnbase_Utility_T3General::_GP('profile2team')) > 0; // Wurde der Submit-Button gedrückt?
         if ($profile2team) {
             $entryUids = Tx_Rnbase_Utility_T3General::_GP('checkEntry');
-            if (! is_array($entryUids) || ! count($entryUids)) {
-                $out = $GLOBALS['LANG']->getLL('msg_no_profile_selected') . '<br/><br/>';
+            if (!is_array($entryUids) || !count($entryUids)) {
+                $out = $GLOBALS['LANG']->getLL('msg_no_profile_selected').'<br/><br/>';
             } else {
                 if ($baseInfo['freePlayers'] < count($entryUids)) {
                     // Team ist schon voll
-                    $out = $GLOBALS['LANG']->getLL('msg_maxPlayers') . '<br/><br/>';
+                    $out = $GLOBALS['LANG']->getLL('msg_maxPlayers').'<br/><br/>';
                 } else {
                     // Die Spieler hinzufügen
                     $playerUids = implode(',', tx_cfcleague_profile_create::mergeArrays(Tx_Rnbase_Utility_Strings::intExplode(',', $currTeam->getProperty('players')), $entryUids));
@@ -163,23 +167,26 @@ class Tx_Cfcleague_Controller_Team_TeamNotes
 
                     $tce = Tx_Rnbase_Database_Connection::getInstance()->getTCEmain($data);
                     $tce->process_datamap();
-                    $out .= $GLOBALS['LANG']->getLL('msg_profiles_joined') . '<br/><br/>';
+                    $out .= $GLOBALS['LANG']->getLL('msg_profiles_joined').'<br/><br/>';
                     $currTeam->getProperty('players', $playerUids);
                 }
             }
         }
-        return (strlen($out)) ? $this->mod->getDoc()->section($GLOBALS['LANG']->getLL('message') . ':', $out, 0, 1, \tx_rnbase_mod_IModFunc::ICON_INFO) : '';
+
+        return (strlen($out)) ? $this->mod->getDoc()->section($GLOBALS['LANG']->getLL('message').':', $out, 0, 1, \tx_rnbase_mod_IModFunc::ICON_INFO) : '';
     }
 
     /**
-     * Get a profile searcher
+     * Get a profile searcher.
      *
      * @param array $options
+     *
      * @return tx_cfcleague_mod1_profilesearcher
      */
     protected function getProfileSearcher(&$options)
     {
         $searcher = tx_rnbase::makeInstance('tx_cfcleague_mod1_profilesearcher', $this->mod, $options);
+
         return $searcher;
     }
 }

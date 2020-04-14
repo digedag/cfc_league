@@ -28,30 +28,31 @@ tx_rnbase::load('tx_rnbase_util_BaseMarker');
 tx_rnbase::load('tx_rnbase_util_TYPO3');
 
 /**
- * Die Klasse ist die Einstiegsklasse für das Modul "Wettbewerbe verwalten"
+ * Die Klasse ist die Einstiegsklasse für das Modul "Wettbewerbe verwalten".
  */
 class Tx_Cfcleague_Controller_Competition extends tx_rnbase_mod_BaseModFunc
 {
-
-    var $doc, $MCONF;
+    public $doc;
+    public $MCONF;
 
     /**
-     * Method getFuncId
+     * Method getFuncId.
      *
      * @return string
      */
-    function getFuncId()
+    public function getFuncId()
     {
         return 'funccompetitions';
     }
 
     /**
-     * Verwaltet die Erstellung von Spielplänen von Ligen
+     * Verwaltet die Erstellung von Spielplänen von Ligen.
      *
      * @param string $template
      * @param tx_rnbase_configurations $configurations
      * @param tx_rnbase_util_FormatUtil $formatter
      * @param tx_rnbase_util_FormTool $formTool
+     *
      * @return string
      */
     protected function getContent($template, &$configurations, &$formatter, $formTool)
@@ -71,12 +72,13 @@ class Tx_Cfcleague_Controller_Competition extends tx_rnbase_mod_BaseModFunc
         $content = '';
         $this->getModule()->selector = $selector;
 
-        if (! $current_league) {
+        if (!$current_league) {
             $content .= $this->getModule()
                 ->getDoc()
                 ->section('Info:', $LANG->getLL('no_league_in_page'), 0, 1, self::ICON_WARN);
-            $content .= '<p style="margin-top:5px; font-weight:bold;">' . $formTool->createNewLink('tx_cfcleague_competition', $this->getModule()
-                ->getPid(), $LANG->getLL('msg_create_new_competition')) . '</p>';
+            $content .= '<p style="margin-top:5px; font-weight:bold;">'.$formTool->createNewLink('tx_cfcleague_competition', $this->getModule()
+                ->getPid(), $LANG->getLL('msg_create_new_competition')).'</p>';
+
             return $content;
         }
 
@@ -96,19 +98,23 @@ class Tx_Cfcleague_Controller_Competition extends tx_rnbase_mod_BaseModFunc
         switch ($menu['value']) {
             case 0:
                 $funcContent = $this->showEditMatches($current_league, $this->getModule());
+
                 break;
             case 1:
                 $mod = tx_rnbase::makeInstance('Tx_Cfcleague_Controller_Competition_Teams');
                 $funcContent = $mod->main($this->getModule(), $current_league);
+
                 break;
             case 2:
                 $mod = tx_rnbase::makeInstance('Tx_Cfcleague_Controller_Competition_MatchTable');
                 $funcContent = $mod->main($this->getModule(), $current_league);
+
                 break;
             case 3:
                 $funcTemplate = tx_rnbase_util_Templates::getSubpart($template, '###FUNC_DFBSYNC###');
                 $mod = tx_rnbase::makeInstance('Tx_Cfcleague_Controller_Competition_DfbSync');
                 $funcContent = $mod->main($this->getModule(), $current_league, $funcTemplate);
+
                 break;
         }
         $content .= $formTool->form->printNeededJSFunctions_top();
@@ -129,7 +135,7 @@ class Tx_Cfcleague_Controller_Competition extends tx_rnbase_mod_BaseModFunc
     {
         $subMod = tx_rnbase::makeInstance('Tx_Cfcleague_Controller_Competition_MatchEdit');
         $content = $subMod->main($module, $current_league);
+
         return $content;
     }
 }
-

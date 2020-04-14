@@ -1,4 +1,5 @@
 <?php
+
 use Sys25\RnBase\Configuration\Processor;
 
 /***************************************************************
@@ -24,19 +25,17 @@ use Sys25\RnBase\Configuration\Processor;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-
 /**
- * Die Klasse verwaltet die Erstellung von Spielern für Teams
+ * Die Klasse verwaltet die Erstellung von Spielern für Teams.
  */
 class Tx_Cfcleague_Controller_Team_ProfileCreate
 {
-
     private $doc;
 
     private $modName;
 
     /**
-     * Verwaltet die Erstellung von Spielplänen von Ligen
+     * Verwaltet die Erstellung von Spielplänen von Ligen.
      *
      * @param tx_rnbase_mod_IModule $module
      * @param tx_cfcleague_models_Team $team
@@ -61,32 +60,35 @@ class Tx_Cfcleague_Controller_Team_ProfileCreate
     }
 
     /**
-     * Whether or not the given pid is inside the profile archive
+     * Whether or not the given pid is inside the profile archive.
      *
      * @param int $pid
-     * @return boolean
+     *
+     * @return bool
      */
     public static function isProfilePage($pid)
     {
         $rootPage = Processor::getExtensionCfgValue('cfc_league', 'profileRootPageId');
         $t3util = tx_rnbase::makeInstance('Tx_Cfcleague_Utility_TYPO3');
         $goodPages = $t3util->getPagePath($pid);
+
         return in_array($rootPage, $goodPages);
     }
 
     /**
-     *
      * @param array $data
      * @param tx_cfcleague_models_Team $team
      * @param tx_cfcleague_util_TeamInfo $teamInfo
+     *
      * @return string
      */
     private function showCreateProfiles(&$data, $team, $teamInfo)
     {
         global $LANG;
 
-        if (! self::isProfilePage($this->pid)) {
+        if (!self::isProfilePage($this->pid)) {
             $content = $this->doc->section('Message:', $LANG->getLL('msg_pageNotAllowed'), 0, 1, \tx_rnbase_mod_IModFunc::ICON_WARN);
+
             return $content;
         }
 
@@ -99,18 +101,19 @@ class Tx_Cfcleague_Controller_Team_ProfileCreate
             // Kann nix mehr angelegt werden
             $content .= $this->doc->section('Message:', $LANG->getLL('msg_maxPlayers'), 0, 1, \tx_rnbase_mod_IModFunc::ICON_WARN);
         } else {
-            $content .= $this->doc->section('Info:', $LANG->getLL('msg_checkPage') . ': <b>' . Tx_Rnbase_Backend_Utility::getRecordPath($this->pid, '', 0) . '</b>', 0, 1, \tx_rnbase_mod_IModFunc::ICON_INFO);
+            $content .= $this->doc->section('Info:', $LANG->getLL('msg_checkPage').': <b>'.Tx_Rnbase_Backend_Utility::getRecordPath($this->pid, '', 0).'</b>', 0, 1, \tx_rnbase_mod_IModFunc::ICON_INFO);
             $content .= $teamInfo->getInfoTable($this->doc);
             // Wir zeigen 15 Zeilen mit Eingabefeldern
             $content .= $this->prepareInputTable($team, $teamInfo);
         }
+
         return $content;
     }
 
     /**
      * Erstellt eine Tabelle mit den schon vorhandenen Personen und den noch möglichen neuen
      * Personen.
-     * Wenn keine Personen da sind, gibt es 15 Eingabefelder, sonst nur 5
+     * Wenn keine Personen da sind, gibt es 15 Eingabefelder, sonst nur 5.
      *
      * @param \tx_cfcleague_models_Team $team
      * @param \tx_cfcleague_util_TeamInfo $teamInfo
@@ -125,17 +128,17 @@ class Tx_Cfcleague_Controller_Team_ProfileCreate
                 '&nbsp;',
                 $GLOBALS['LANG']->getLL('label_firstname'),
                 $GLOBALS['LANG']->getLL('label_lastname'),
-                '&nbsp;'
-            ]
+                '&nbsp;',
+            ],
         ];
 
         $maxFields = count($team->getPlayers()) > 5 ? 5 : 15;
-        for ($i = 0; $i < $maxFields; $i ++) {
+        for ($i = 0; $i < $maxFields; ++$i ) {
             $row = [];
             $row[] = $i + 1;
-            $row[] = $this->formTool->createTxtInput('data[tx_cfcleague_profiles][NEW' . $i . '][first_name]', '', 10);
-            $row[] = $this->formTool->createTxtInput('data[tx_cfcleague_profiles][NEW' . $i . '][last_name]', '', 10);
-            $row[] = $this->formTool->createSelectByArray('data[tx_cfcleague_profiles][NEW' . $i . '][type]', '', self::getProfileTypeArray()) . $this->formTool->createHidden('data[tx_cfcleague_profiles][NEW' . $i . '][pid]', $this->pid);
+            $row[] = $this->formTool->createTxtInput('data[tx_cfcleague_profiles][NEW'.$i.'][first_name]', '', 10);
+            $row[] = $this->formTool->createTxtInput('data[tx_cfcleague_profiles][NEW'.$i.'][last_name]', '', 10);
+            $row[] = $this->formTool->createSelectByArray('data[tx_cfcleague_profiles][NEW'.$i.'][type]', '', self::getProfileTypeArray()).$this->formTool->createHidden('data[tx_cfcleague_profiles][NEW'.$i.'][pid]', $this->pid);
             $arr[] = $row;
         }
         /* @var $tables Tx_Rnbase_Backend_Utility_Tables */
@@ -148,18 +151,19 @@ class Tx_Cfcleague_Controller_Team_ProfileCreate
             $GLOBALS['LANG']->getLL('btn_create'),
             $GLOBALS['LANG']->getLL('msg_CreateProfiles'),
             ['class' => 'btn btn-primary']
-            );
-        
+        );
+
         $content = '<div class="row">
-<div class="col-sm-6">'.$tableForm. $button.'</div>
+<div class="col-sm-6">'.$tableForm.$button.'</div>
 <div class="col-sm-6">'.$tableProfiles.'</div>
 </div>
 ';
+
         return $content;
     }
 
     /**
-     * Liefert ein Array der Personentypen
+     * Liefert ein Array der Personentypen.
      *
      * @return array
      */
@@ -168,12 +172,12 @@ class Tx_Cfcleague_Controller_Team_ProfileCreate
         return [
             '1' => $GLOBALS['LANG']->getLL('label_profile_player'),
             '2' => $GLOBALS['LANG']->getLL('label_profile_coach'),
-            '3' => $GLOBALS['LANG']->getLL('label_profile_supporter')
+            '3' => $GLOBALS['LANG']->getLL('label_profile_supporter'),
         ];
     }
 
     /**
-     * Erstellt die angeforderten Profile
+     * Erstellt die angeforderten Profile.
      *
      * @param array $profiles
      *            Array mit den Daten aus dem Request
@@ -206,19 +210,19 @@ class Tx_Cfcleague_Controller_Team_ProfileCreate
                 unset($profile['type']);
 
                 // Darf dieses Profil noch angelegt werden?
-                if ($type == '1' && (($teamInfo->getPlayerSize() + count($playerIds)) >= $maxPlayers)) { // Spieler
-                    $warnings[] = $profile['last_name'] . ', ' . $profile['first_name'];
-                } elseif ($type == '2' && (($teamInfo->getCoachSize() + count($coachIds)) >= $maxCoaches)) { // Trainer
-                    $warnings[] = $profile['last_name'] . ', ' . $profile['first_name'];
+                if ('1' == $type && (($teamInfo->getPlayerSize() + count($playerIds)) >= $maxPlayers)) { // Spieler
+                    $warnings[] = $profile['last_name'].', '.$profile['first_name'];
+                } elseif ('2' == $type && (($teamInfo->getCoachSize() + count($coachIds)) >= $maxCoaches)) { // Trainer
+                    $warnings[] = $profile['last_name'].', '.$profile['first_name'];
                 } else {
                     $profile['summary'] = '';
                     $profile['description'] = '';
-                    
+
                     // Jetzt das Array vorbereiten
                     $data['tx_cfcleague_profiles'][$uid] = $profile;
-                    if ($type == '1') {
+                    if ('1' == $type) {
                         $playerIds[] = $uid;
-                    } elseif ($type == '2') {
+                    } elseif ('2' == $type) {
                         $coachIds[] = $uid;
                     } else {
                         $supportIds[] = $uid;
@@ -248,19 +252,21 @@ class Tx_Cfcleague_Controller_Team_ProfileCreate
             $tce->process_datamap();
             $content .= count($tce->errorLog) ? $LANG->getLL('msg_tce_errors') : $LANG->getLL('msg_profiles_created');
             $content .= '<br /><br />';
-        } else
-            $content .= $LANG->getLL('msg_no_person_found') . '<br /><br />';
+        } else {
+            $content .= $LANG->getLL('msg_no_person_found').'<br /><br />';
+        }
 
         if ($warnings) {
-            $content .= '<b>' . $LANG->getLL('msg_profiles_warnings') . '</b><br><ul><li>';
+            $content .= '<b>'.$LANG->getLL('msg_profiles_warnings').'</b><br><ul><li>';
             $content .= implode('<li>', $warnings);
             $content .= '</ul>';
         }
+
         return $content;
     }
 
     /**
-     * Returns the formtool
+     * Returns the formtool.
      *
      * @return tx_rnbase_util_FormTool
      */
@@ -269,4 +275,3 @@ class Tx_Cfcleague_Controller_Team_ProfileCreate
         return $this->formTool;
     }
 }
-

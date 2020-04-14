@@ -1,4 +1,5 @@
 <?php
+
 namespace System25\T3sports\Tests\Model;
 
 /***************************************************************
@@ -24,40 +25,44 @@ namespace System25\T3sports\Tests\Model;
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-class tx_cfcleague_tests_modelsSets_testcase extends \tx_rnbase_tests_BaseTestCase 
+class SetTest extends \tx_rnbase_tests_BaseTestCase
 {
-
     /**
      * @group unit
      */
-	public function testBuildFromStringEmpty() {
-		$sets = \tx_cfcleague_models_Set::buildFromString('');
-		$this->assertFalse($sets);
-	}
-	/**
-	 * @dataProvider getStrings
-     * @group unit
-	 */
-	public function testBuildFromString($setString, $setCnt, $setResult) {
-		$sets = \tx_cfcleague_models_Set::buildFromString($setString);
+    public function testBuildFromStringEmpty()
+    {
+        $sets = \tx_cfcleague_models_Set::buildFromString('');
+        $this->assertFalse($sets);
+    }
 
-		$this->assertEquals($setCnt, count($sets));
-		$i = 0;
-		foreach($sets As $set) {
-			$expResult = $setResult[$i];
-			$this->assertEquals($i+1, $set->getSet());
-			$this->assertEquals($expResult[0], $set->getPointsHome());
-			$this->assertEquals($expResult[1], $set->getPointsGuest());
-			$this->assertEquals($expResult[0], $set->getProperty('pointshome'));
-			$this->assertEquals($expResult[1], $set->getProperty('pointsguest'));
-			$i++;
-		}
-	}
-	public function getStrings() {
-		return [
-			array('20:11;10:8', 2, array(array(20, 11), array(10, 8))),
-			array('20:11', 1, array(array(20, 11))),
-			array('b:11', 1, array(array(0, 11))),
-		];
-	}
+    /**
+     * @dataProvider getStrings
+     * @group unit
+     */
+    public function testBuildFromString($setString, $setCnt, $setResult)
+    {
+        $sets = \tx_cfcleague_models_Set::buildFromString($setString);
+
+        $this->assertEquals($setCnt, count($sets));
+        $i = 0;
+        foreach ($sets as $set) {
+            $expResult = $setResult[$i];
+            $this->assertEquals($i + 1, $set->getSet());
+            $this->assertEquals($expResult[0], $set->getPointsHome());
+            $this->assertEquals($expResult[1], $set->getPointsGuest());
+            $this->assertEquals($expResult[0], $set->getProperty('pointshome'));
+            $this->assertEquals($expResult[1], $set->getProperty('pointsguest'));
+            ++$i;
+        }
+    }
+
+    public function getStrings()
+    {
+        return [
+            array('20:11;10:8', 2, array(array(20, 11), array(10, 8))),
+            array('20:11', 1, array(array(20, 11))),
+            array('b:11', 1, array(array(0, 11))),
+        ];
+    }
 }

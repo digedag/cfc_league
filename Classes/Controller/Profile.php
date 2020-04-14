@@ -32,20 +32,20 @@ tx_rnbase::load('Tx_Rnbase_Utility_T3General');
  */
 class Tx_Cfcleague_Controller_Profile extends tx_rnbase_mod_BaseModFunc
 {
-
-    var $doc, $MCONF;
+    public $doc;
+    public $MCONF;
 
     /**
-     * Verstecken der Suchergebnisse
+     * Verstecken der Suchergebnisse.
      */
-    var $hideResults = false;
+    public $hideResults = false;
 
     /**
-     * Method getFuncId
+     * Method getFuncId.
      *
      * @return string
      */
-    function getFuncId()
+    public function getFuncId()
     {
         return 'functicker';
     }
@@ -64,7 +64,7 @@ class Tx_Cfcleague_Controller_Profile extends tx_rnbase_mod_BaseModFunc
 
         $data = Tx_Rnbase_Utility_T3General::_GP('data');
         $this->SEARCH_SETTINGS = Tx_Rnbase_Backend_Utility::getModuleData([
-            'searchterm' => ''
+            'searchterm' => '',
         ], $data, $this->getModule()->getName());
 
         $content .= $this->doc->section($LANG->getLL('msg_search_person'), $this->createSearchForm($data), 0, 1);
@@ -76,27 +76,26 @@ class Tx_Cfcleague_Controller_Profile extends tx_rnbase_mod_BaseModFunc
             $content .= $this->handleProfileMerge($data);
         }
         // Wir zeigen die Liste an
-        if (! $this->hideResults) {
+        if (!$this->hideResults) {
             $searchterm = trim($this->SEARCH_SETTINGS['searchterm']);
             if (strlen($searchterm) && strlen($searchterm) < 3) {
-                $content .= $this->doc->section($LANG->getLL('message') . ':', $LANG->getLL('msg_string_too_short'), 0, 1, \tx_rnbase_mod_IModFunc::ICON_INFO);
-            }
-            elseif (strlen($searchterm) >= 3) {
+                $content .= $this->doc->section($LANG->getLL('message').':', $LANG->getLL('msg_string_too_short'), 0, 1, \tx_rnbase_mod_IModFunc::ICON_INFO);
+            } elseif (strlen($searchterm) >= 3) {
                 $profiles = $this->searchProfiles($searchterm);
                 if (!empty($profiles)) {
 //                    $content .= $this->doc->section($LANG->getLL('msg_found_person'), $this->buildProfileTable($profiles), 0, 1);
                     $content .= $this->buildProfileTable($profiles);
-                }
-                else {
+                } else {
                     $content .= $this->doc->section($LANG->getLL('msg_no_person_found'), '', 0, 1, \tx_rnbase_mod_IModFunc::ICON_WARN);
                 }
             }
         }
+
         return $content;
     }
 
     /**
-     * Zusammenführung von zwei Profilen
+     * Zusammenführung von zwei Profilen.
      *
      * @param array $data
      */
@@ -106,7 +105,7 @@ class Tx_Cfcleague_Controller_Profile extends tx_rnbase_mod_BaseModFunc
         $profile1 = (int) $data['merge1'];
         $profile2 = (int) $data['merge2'];
         if ($data['merge_profiles']) { // Step 1
-            if (! ($profile1 && $profile2) || ($profile1 == $profile2)) {
+            if (!($profile1 && $profile2) || ($profile1 == $profile2)) {
                 return $this->doc->section($LANG->getLL('msg_merge_selectprofiles'), '', 0, 1, \tx_rnbase_mod_IModFunc::ICON_FATAL);
             }
             $this->hideResults = true;
@@ -123,6 +122,7 @@ class Tx_Cfcleague_Controller_Profile extends tx_rnbase_mod_BaseModFunc
 
             $out .= $this->doc->section($LANG->getLL('msg_merge_done'), '', 0, 1, \tx_rnbase_mod_IModFunc::ICON_OK);
         }
+
         return $out;
     }
 
@@ -178,14 +178,14 @@ class Tx_Cfcleague_Controller_Profile extends tx_rnbase_mod_BaseModFunc
             $profiles = $this->searchProfiles($data, $uids[0]);
             if (empty($profiles)) {
                 $out .= $this->doc->section($LANG->getLL('msg_edit_person'), 'Internal error. Sorry no profile found!', 0, 1, \tx_rnbase_mod_IModFunc::ICON_FATAL);
-            }
-            else {
+            } else {
                 $out .= $this->doc->section($LANG->getLL('msg_edit_person'), $this->showProfileForm($profiles[0]), 0, 1);
             }
         } elseif ($data['update_profile_do']) { // Wurde der Speichern-Button gedrückt?
             // Das Datum prüfen
             $out .= $this->updateProfiles($data['update_profile']);
         }
+
         return $out;
     }
 
@@ -200,18 +200,19 @@ class Tx_Cfcleague_Controller_Profile extends tx_rnbase_mod_BaseModFunc
         foreach ($profiles as $uid => $profile) {
             // Zuerst das Datum prüfen und umwandeln
             $date = $profile['birthday'];
-            list ($day, $month, $year) = explode('.', $date);
-            if (! checkdate($month, $day, $year)) {
-                $out .= $this->doc->section($LANG->getLL('msg_person_saved'), ' Invalid date -' . $date . '- für UID: ' . $uid, 0, 1, \tx_rnbase_mod_IModFunc::ICON_FATAL);
+            list($day, $month, $year) = explode('.', $date);
+            if (!checkdate($month, $day, $year)) {
+                $out .= $this->doc->section($LANG->getLL('msg_person_saved'), ' Invalid date -'.$date.'- für UID: '.$uid, 0, 1, \tx_rnbase_mod_IModFunc::ICON_FATAL);
             } else {
                 // Das ist eher problematisch. Das Datum sollte in GMT gespeichert werden
                 $values = [
-                    'birthday' => mktime(0, 0, 0, $month, $day, $year)
+                    'birthday' => mktime(0, 0, 0, $month, $day, $year),
                 ];
-                Tx_Rnbase_Database_Connection::getInstance()->doUpdate('tx_cfcleague_profiles', 'uid=' . intval($uid), $values);
-                $out .= $this->doc->section($LANG->getLL('msg_person_saved'), $LANG->getLL('msg_date_saved') . ': ' . $date, 0, 1, \tx_rnbase_mod_IModFunc::ICON_OK);
+                Tx_Rnbase_Database_Connection::getInstance()->doUpdate('tx_cfcleague_profiles', 'uid='.intval($uid), $values);
+                $out .= $this->doc->section($LANG->getLL('msg_person_saved'), $LANG->getLL('msg_date_saved').': '.$date, 0, 1, \tx_rnbase_mod_IModFunc::ICON_OK);
             }
         }
+
         return $out;
     }
 
@@ -227,11 +228,11 @@ class Tx_Cfcleague_Controller_Profile extends tx_rnbase_mod_BaseModFunc
         // Jetzt das Formular anzeigen
         $out .= $profile['last_name'];
         if ($profile['first_name']) {
-            $out .= ', ' . $profile['first_name'];
+            $out .= ', '.$profile['first_name'];
         }
-        $out .= ' [UID: ' . $profile['uid'] . '] ';
-        $out .= $this->formTool->createTxtInput('data[update_profile][' . $profile['uid'] . '][birthday]', date('j.n.Y', $profile['birthday']), 10);
-        $out .= ' <input type="submit" name="data[update_profile_do]" value="' . $LANG->getLL('btn_save') . '"';
+        $out .= ' [UID: '.$profile['uid'].'] ';
+        $out .= $this->formTool->createTxtInput('data[update_profile]['.$profile['uid'].'][birthday]', date('j.n.Y', $profile['birthday']), 10);
+        $out .= ' <input type="submit" name="data[update_profile_do]" value="'.$LANG->getLL('btn_save').'"';
 
         return $out;
     }
@@ -243,38 +244,38 @@ class Tx_Cfcleague_Controller_Profile extends tx_rnbase_mod_BaseModFunc
      */
     protected function searchProfiles($searchterm, $uid = 0)
     {
-        $what = 'tx_cfcleague_profiles.uid,tx_cfcleague_profiles.pid,' . 'last_name, first_name,birthday, ' . "t1.short_name as 'team_name', t1.uid as 'team_uid'";
+        $what = 'tx_cfcleague_profiles.uid,tx_cfcleague_profiles.pid,'.'last_name, first_name,birthday, '."t1.short_name as 'team_name', t1.uid as 'team_uid'";
 
         $from = [
-            'tx_cfcleague_profiles ' . 'LEFT JOIN tx_cfcleague_teams AS t1 ON FIND_IN_SET(tx_cfcleague_profiles.uid, t1.players) ',
-            'tx_cfcleague_profiles'
+            'tx_cfcleague_profiles '.'LEFT JOIN tx_cfcleague_teams AS t1 ON FIND_IN_SET(tx_cfcleague_profiles.uid, t1.players) ',
+            'tx_cfcleague_profiles',
         ];
 
         $where = '';
         if ($uid) {
-            $where .= 'tx_cfcleague_profiles.uid = ' . intval($uid) . ' ';
+            $where .= 'tx_cfcleague_profiles.uid = '.intval($uid).' ';
         } else {
             if (strlen($searchterm)) {
-                $where .= "(last_name like '%" . $searchterm . "%' ";
-                $where .= "OR first_name like '%" . $searchterm . "%') ";
+                $where .= "(last_name like '%".$searchterm."%' ";
+                $where .= "OR first_name like '%".$searchterm."%') ";
             }
         }
         $orderBy = 'last_name, first_name, tx_cfcleague_profiles.uid';
 
         $rows = Tx_Rnbase_Database_Connection::getInstance()->doSelect($what, $from, [
             'where' => $where,
-            'orderby' => $orderBy
+            'orderby' => $orderBy,
         ]);
         $cnt = count($rows);
-        if (! $cnt) {
+        if (!$cnt) {
             return $rows; // Keine Daten gefunden
         }
 
         // Für jedes Team in dem die Person zugeordnet ist, erhalten wir eine Zeile
-                                    // Diese müssen wir jetzt wieder zusammenfügen
+        // Diese müssen wir jetzt wieder zusammenfügen
         $lastRow = $rows[0];
         $ret = [];
-        for ($i = 0; $i < $cnt; $i ++) {
+        for ($i = 0; $i < $cnt; ++$i ) {
             if (intval($lastRow['uid']) != intval($rows[$i]['uid'])) {
                 // Ein neuer Spieler, also den alten ins Ergebnisarray legen
                 $ret[] = $lastRow;
@@ -284,7 +285,7 @@ class Tx_Cfcleague_Controller_Profile extends tx_rnbase_mod_BaseModFunc
             if ($rows[$i]['team_uid']) {
                 $lastRow['teams'][] = [
                     'team_uid' => $rows[$i]['team_uid'],
-                    'team_name' => $rows[$i]['team_name']
+                    'team_name' => $rows[$i]['team_name'],
                 ];
             }
         }
@@ -295,7 +296,7 @@ class Tx_Cfcleague_Controller_Profile extends tx_rnbase_mod_BaseModFunc
     }
 
     /**
-     * Erstellt eine Tabelle mit den gefundenen Personen
+     * Erstellt eine Tabelle mit den gefundenen Personen.
      */
     protected function buildProfileTable(&$profiles)
     {
@@ -313,23 +314,24 @@ class Tx_Cfcleague_Controller_Profile extends tx_rnbase_mod_BaseModFunc
                 '&nbsp;',
                 '&nbsp;',
                 '&nbsp;',
-                '&nbsp;'
-            ]
+                '&nbsp;',
+            ],
         ];
         foreach ($profiles as $profile) {
             $row = [];
-            $row[] = $this->formTool->createRadio('data[merge1]', $profile['uid']) . $this->formTool->createRadio('data[merge2]', $profile['uid']);
+            $row[] = $this->formTool->createRadio('data[merge1]', $profile['uid']).$this->formTool->createRadio('data[merge2]', $profile['uid']);
             $row[] = $profile['uid'];
             $row[] = $profile['last_name'];
             $row[] = $profile['first_name'] ? $profile['first_name'] : '&nbsp;';
-            $row[] = date('j.n.Y', $profile['birthday']) . ' <input type="submit" name="data[edit_profile][' . $profile['uid'] . ']" value="' . $LANG->getLL('btn_edit') . '"';
+            $row[] = date('j.n.Y', $profile['birthday']).' <input type="submit" name="data[edit_profile]['.$profile['uid'].']" value="'.$LANG->getLL('btn_edit').'"';
             // Die Zusatzinfos zusammenstellen
-            $infos = $LANG->getLL('label_page') . ': ' . Tx_Rnbase_Backend_Utility::getRecordPath($profile['pid'], '', 0) . '<br />';
-            if (is_array($profile['teams']))
+            $infos = $LANG->getLL('label_page').': '.Tx_Rnbase_Backend_Utility::getRecordPath($profile['pid'], '', 0).'<br />';
+            if (is_array($profile['teams'])) {
                 foreach ($profile['teams'] as $team) {
-                    $infos .= '&nbsp;Team: ' . $team['team_name'];
-                    $infos .= $this->formTool->createEditLink('tx_cfcleague_teams', $team['team_uid'], '') . '<br />';
+                    $infos .= '&nbsp;Team: '.$team['team_name'];
+                    $infos .= $this->formTool->createEditLink('tx_cfcleague_teams', $team['team_uid'], '').'<br />';
                 }
+            }
 
             $row[] = $infos;
             $row[] = $this->formTool->createEditLink('tx_cfcleague_profiles', $profile['uid'], '');
@@ -347,6 +349,7 @@ class Tx_Cfcleague_Controller_Profile extends tx_rnbase_mod_BaseModFunc
                 ->getFormTool()
                 ->createSubmit('data[merge_profiles]', $LANG->getLL('label_merge'));
         }
+
         return $out;
     }
 
@@ -354,14 +357,14 @@ class Tx_Cfcleague_Controller_Profile extends tx_rnbase_mod_BaseModFunc
     {
         global $LANG;
         $out = '<div class="form-inline">';
-        $out .= $LANG->getLL('label_searchterm') . ': ';
+        $out .= $LANG->getLL('label_searchterm').': ';
         $out .= $this->formTool->createTxtInput('data[searchterm]', $this->SEARCH_SETTINGS['searchterm'], 20, [
-            'class' => 'form-control input-sm'
+            'class' => 'form-control input-sm',
         ]);
         // Den Update-Button einfügen
         $out .= $this->formTool->createSubmit('search', $LANG->getLL('btn_search'));
-        $out .= "</div>";
+        $out .= '</div>';
+
         return $out;
     }
 }
-

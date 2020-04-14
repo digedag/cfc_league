@@ -24,21 +24,21 @@ tx_rnbase::load('tx_rnbase_util_SearchBase');
 tx_rnbase::load('tx_rnbase_util_Misc');
 
 /**
- * Class to search clubs from database
+ * Class to search clubs from database.
  *
  * @author Rene Nitzsche
  */
 class tx_cfcleague_search_Club extends tx_rnbase_util_SearchBase
 {
-
     protected function getTableMappings()
     {
         $tableMapping = [];
         $tableMapping['CLUB'] = 'tx_cfcleague_club';
         // Hook to append other tables
         tx_rnbase_util_Misc::callHook('cfc_league', 'search_Club_getTableMapping_hook', array(
-            'tableMapping' => &$tableMapping
+            'tableMapping' => &$tableMapping,
         ), $this);
+
         return $tableMapping;
     }
 
@@ -59,8 +59,9 @@ class tx_cfcleague_search_Club extends tx_rnbase_util_SearchBase
         // Hook to append other tables
         tx_rnbase_util_Misc::callHook('cfc_league', 'search_Club_getJoins_hook', array(
             'join' => &$join,
-            'tableAliases' => $tableAliases
+            'tableAliases' => $tableAliases,
         ), $this);
+
         return $join;
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace System25\T3sports\Hooks;
 
 /***************************************************************
@@ -26,18 +27,17 @@ namespace System25\T3sports\Hooks;
 
 class TceHook
 {
-
     /**
      * Dieser Hook wird vor der Darstellung eines TCE-Formulars aufgerufen.
      * Werte aus der Datenbank können vor deren Darstellung manipuliert werden.
-     * Nur bis 6.2 verwendet
+     * Nur bis 6.2 verwendet.
      */
     public function getMainFields_preProcess($table, &$row, $tceform)
     {
-        if ($table == 'tx_cfcleague_profiles' && ! strstr($row['uid'], 'NEW')) {
+        if ('tx_cfcleague_profiles' == $table && !strstr($row['uid'], 'NEW')) {
             // '2|Trainer'
             $options = [];
-            $options['where'] = 'uid_foreign=' . $row['uid'];
+            $options['where'] = 'uid_foreign='.$row['uid'];
             $options['orderby'] = 'sorting_foreign asc';
             $options['enablefieldsoff'] = 1;
             $types = array();
@@ -47,7 +47,7 @@ class TceHook
             }
             $row['types'] = \tx_cfcleague_tca_Lookup::getProfileTypeItems($types);
         }
-        if ($table == 'tx_cfcleague_club') {
+        if ('tx_cfcleague_club' == $table) {
             // Umwandlung eine MySQL Date in einen timestamp
             // Scheint in 8.7 nicht mehr notwendig zu sein
             \tx_rnbase::load('tx_rnbase_util_Dates');
@@ -64,19 +64,19 @@ class TceHook
      */
     public function processDatamap_preProcessFieldArray(&$incomingFieldArray, $table, $id, $tcemain)
     {
-        if ($table == 'tx_cfcleague_teams') {
+        if ('tx_cfcleague_teams' == $table) {
             $this->checkProfiles($incomingFieldArray, 'players', $tcemain);
             $this->checkProfiles($incomingFieldArray, 'coaches', $tcemain);
             $this->checkProfiles($incomingFieldArray, 'supporters', $tcemain);
         }
-        if ($table == 'tx_cfcleague_competition') {
+        if ('tx_cfcleague_competition' == $table) {
             $this->checkProfiles($incomingFieldArray, 'teams', $tcemain);
             // Neue Teams im Wettbewerb?
             if (strstr($incomingFieldArray['teams'], 'NEW')) {
                 \tx_rnbase::load('Tx_Rnbase_Utility_Strings');
                 $newItemIds = \Tx_Rnbase_Utility_Strings::trimExplode(',', $incomingFieldArray['teams']);
                 $itemUids = [];
-                for ($i = 0; $i < count($newItemIds); $i ++) {
+                for ($i = 0; $i < count($newItemIds); ++$i ) {
                     if (strstr($newItemIds[$i], 'NEW')) {
                         $itemUid = $tcemain->substNEWwithIDs[$newItemIds[$i]];
                     } else {
@@ -91,8 +91,8 @@ class TceHook
                 $incomingFieldArray['teams'] = implode($itemUids, ',');
             }
         }
-        if ($table == 'tx_cfcleague_games') {
-            if ($incomingFieldArray['arena'] > 0 && ! $incomingFieldArray['stadium']) {
+        if ('tx_cfcleague_games' == $table) {
+            if ($incomingFieldArray['arena'] > 0 && !$incomingFieldArray['stadium']) {
                 $stadium = \tx_rnbase::makeInstance('tx_cfcleague_models_Stadium', $incomingFieldArray['arena']);
                 $incomingFieldArray['stadium'] = $stadium->getName();
             }
@@ -103,8 +103,8 @@ class TceHook
                 $incomingFieldArray['guest'] = $tcemain->substNEWwithIDs[$incomingFieldArray['guest']];
             }
         }
-        if ($table == 'tx_cfcleague_stadiums' || $table == 'tx_cfcleague_club') {
-            if ($incomingFieldArray['country'] > 0 && ! $incomingFieldArray['countrycode']) {
+        if ('tx_cfcleague_stadiums' == $table || 'tx_cfcleague_club' == $table) {
+            if ($incomingFieldArray['country'] > 0 && !$incomingFieldArray['countrycode']) {
                 $country = \Tx_Rnbase_Backend_Utility::getRecord('static_countries', intval($incomingFieldArray['country']));
                 $incomingFieldArray['countrycode'] = $country['cn_iso_2'];
             }
@@ -128,7 +128,7 @@ class TceHook
      */
     public function processDatamap_postProcessFieldArray($status, $table, $id, &$fieldArray, &$tcemain)
     {
-        if ($table == 'tx_cfcleague_club') {
+        if ('tx_cfcleague_club' == $table) {
             if (array_key_exists('established', $fieldArray)) {
                 \tx_rnbase::load('tx_rnbase_util_Dates');
                 $estDate = \tx_rnbase_util_Dates::date_tstamp2mysql($fieldArray['established']);
@@ -150,11 +150,10 @@ class TceHook
         if (strstr($incomingFieldArray[$profileType], 'NEW')) {
             $newProfileIds = \Tx_Rnbase_Utility_Strings::trimExplode(',', $incomingFieldArray[$profileType]);
             $profileUids = array();
-            for ($i = 0; $i < count($newProfileIds); $i++) {
+            for ($i = 0; $i < count($newProfileIds); ++$i) {
                 if (strstr($newProfileIds[$i], 'NEW')) {
                     $profileUid = $tcemain->substNEWwithIDs[$newProfileIds[$i]];
-                }
-                else {
+                } else {
                     $profileUid = $newProfileIds[$i];
                 }
                 // Wir übernehmen nur UIDs, die gefunden werden

@@ -24,24 +24,25 @@
 tx_rnbase::load('Tx_Rnbase_Service_Base');
 
 /**
- * Service for accessing stadiums
+ * Service for accessing stadiums.
  *
  * @author Rene Nitzsche
  */
 class tx_cfcleague_services_Stadiums extends Tx_Rnbase_Service_Base
 {
-
     /**
-     * Search database for trades
+     * Search database for trades.
      *
      * @param array $fields
      * @param array $options
+     *
      * @return array of tx_a4base_models_trade
      */
     public function search($fields, $options)
     {
         tx_rnbase::load('tx_rnbase_util_SearchBase');
         $searcher = tx_rnbase_util_SearchBase::getInstance('tx_cfcleague_search_Stadium');
+
         return $searcher->search($fields, $options);
     }
 }

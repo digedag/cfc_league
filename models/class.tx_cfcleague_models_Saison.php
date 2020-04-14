@@ -24,13 +24,13 @@
 
 tx_rnbase::load('tx_rnbase_model_base');
 
-
 /**
  * Model für eine Saison.
  */
 class tx_cfcleague_models_Saison extends tx_rnbase_model_base
 {
-
-	function getTableName(){return 'tx_cfcleague_saison';}
-
+    public function getTableName()
+    {
+        return 'tx_cfcleague_saison';
+    }
 }

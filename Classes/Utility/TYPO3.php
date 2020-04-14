@@ -24,40 +24,40 @@
 
 tx_rnbase::load('tx_rnbase_parameters');
 
-/**
- *
- */
-class Tx_Cfcleague_Utility_TYPO3 {
-	/**
-	 * Backend method to determine if a page is below another page
-	 * @param int $uid
-	 * @param string $clause
-	 * @return array[int]
-	 */
-	public function getPagePath($uid, $clause='')   {
-		$loopCheck = 100;
-		$output = array(); // We return an array of uids
-		$output[] = $uid;
-		while ($uid!=0 && $loopCheck>0) {
-			$loopCheck--;
+class Tx_Cfcleague_Utility_TYPO3
+{
+    /**
+     * Backend method to determine if a page is below another page.
+     *
+     * @param int $uid
+     * @param string $clause
+     *
+     * @return array[int]
+     */
+    public function getPagePath($uid, $clause = '')
+    {
+        $loopCheck = 100;
+        $output = array(); // We return an array of uids
+        $output[] = $uid;
+        while (0 != $uid && $loopCheck > 0) {
+            --$loopCheck;
 
-			//'uid,pid,title,t3ver_oid,t3ver_wsid,t3ver_swapmode',
-			$rows = Tx_Rnbase_Database_Connection::getInstance()->doSelect('*', 'pages', array(
-					'where' => 'uid='.intval($uid).(strlen(trim($clause)) ? ' AND '.$clause : ''),
-			));
-			if(!empty($rows)) {
-				$row = reset($rows);
-				Tx_Rnbase_Backend_Utility::workspaceOL('pages', $row);
-				Tx_Rnbase_Backend_Utility::fixVersioningPid('pages', $row);
+            //'uid,pid,title,t3ver_oid,t3ver_wsid,t3ver_swapmode',
+            $rows = Tx_Rnbase_Database_Connection::getInstance()->doSelect('*', 'pages', array(
+                    'where' => 'uid='.intval($uid).(strlen(trim($clause)) ? ' AND '.$clause : ''),
+            ));
+            if (!empty($rows)) {
+                $row = reset($rows);
+                Tx_Rnbase_Backend_Utility::workspaceOL('pages', $row);
+                Tx_Rnbase_Backend_Utility::fixVersioningPid('pages', $row);
 
-				$uid = $row['pid'];
-				$output[] = $uid;
-			} else {
-				break;
-			}
-		}
-		return $output;
-	}
+                $uid = $row['pid'];
+                $output[] = $uid;
+            } else {
+                break;
+            }
+        }
 
+        return $output;
+    }
 }
-

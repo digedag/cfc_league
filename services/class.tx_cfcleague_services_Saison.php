@@ -24,24 +24,25 @@
 tx_rnbase::load('Tx_Rnbase_Service_Base');
 
 /**
- * Service for accessing saisons
+ * Service for accessing saisons.
  *
  * @author Rene Nitzsche
  */
 class tx_cfcleague_services_Saison extends Tx_Rnbase_Service_Base
 {
-
     /**
-     * Search database for trades
+     * Search database for trades.
      *
      * @param array $fields
      * @param array $options
+     *
      * @return array of tx_cfcleague_models_Saison
      */
     public function search($fields, $options)
     {
         tx_rnbase::load('tx_rnbase_util_SearchBase');
         $searcher = tx_rnbase_util_SearchBase::getInstance('tx_cfcleague_search_Saison');
+
         return $searcher->search($fields, $options);
     }
 }

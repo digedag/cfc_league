@@ -26,11 +26,10 @@ tx_rnbase::load('tx_cfcleague_models_Competition');
 tx_rnbase::load('Tx_Rnbase_Utility_T3General');
 
 /**
- * Die Klasse verwaltet die Erstellung von Spielplänen für Wettbewerbe
+ * Die Klasse verwaltet die Erstellung von Spielplänen für Wettbewerbe.
  */
 class Tx_Cfcleague_Controller_Competition_MatchTable
 {
-
     /* @var $doc \TYPO3\CMS\Backend\Template\BigDocumentTemplate */
     private $doc;
 
@@ -40,7 +39,6 @@ class Tx_Cfcleague_Controller_Competition_MatchTable
     private $formTool;
 
     /**
-     *
      * @return \TYPO3\CMS\Core\Page\PageRenderer
      */
     private function getPageRenderer()
@@ -49,7 +47,7 @@ class Tx_Cfcleague_Controller_Competition_MatchTable
     }
 
     /**
-     * Verwaltet die Erstellung von Spielplänen von Ligen
+     * Verwaltet die Erstellung von Spielplänen von Ligen.
      *
      * @param tx_rnbase_mod_IModule $module
      * @param tx_cfcleague_models_Competition $competition
@@ -59,9 +57,9 @@ class Tx_Cfcleague_Controller_Competition_MatchTable
         $this->module = $module;
         $this->doc = $module->getDoc();
 
-        if(!tx_rnbase_util_TYPO3::isTYPO70OrHigher()) {
+        if (!tx_rnbase_util_TYPO3::isTYPO70OrHigher()) {
             // Das ist noch nicht auf jQuery umgestellt.
-            $this->getPageRenderer()->addJsFile('js/matchcreate.js', 'text/javascript', FALSE, FALSE, '', TRUE);
+            $this->getPageRenderer()->addJsFile('js/matchcreate.js', 'text/javascript', false, false, '', true);
         }
 
         $this->formTool = $module->getFormTool();
@@ -73,7 +71,7 @@ class Tx_Cfcleague_Controller_Competition_MatchTable
 
         // Die Neuanlage der "automatischen" Spiele übernimmt diese Klasse
         $content .= $this->handleCreateMatchTable($competition);
-        if (! $content) {
+        if (!$content) {
             // Ohne Submit zeigen wir das Formular
             $content .= $this->showMatchTable($competition);
         }
@@ -82,8 +80,8 @@ class Tx_Cfcleague_Controller_Competition_MatchTable
     }
 
     /**
-     *
      * @param tx_cfcleague_models_Competition $comp
+     *
      * @return string
      */
     private function handleCreateMatchTable($comp)
@@ -93,15 +91,17 @@ class Tx_Cfcleague_Controller_Competition_MatchTable
         $data = Tx_Rnbase_Utility_T3General::_GP('data');
         if (is_array($data['rounds']) && Tx_Rnbase_Utility_T3General::_GP('update')) {
             $result = $this->createMatches($data['rounds'], $comp);
-            $content .= $this->doc->section($LANG->getLL('message') . ':', $result, 0, 1, \tx_rnbase_mod_IModFunc::ICON_INFO);
+            $content .= $this->doc->section($LANG->getLL('message').':', $result, 0, 1, \tx_rnbase_mod_IModFunc::ICON_INFO);
+
             return $content;
         }
     }
 
     /**
-     * Zeigt den Spielplan an
+     * Zeigt den Spielplan an.
      *
      * @param tx_cfcleague_models_Competition $comp
+     *
      * @return string
      */
     private function showMatchTable($comp)
@@ -110,7 +110,7 @@ class Tx_Cfcleague_Controller_Competition_MatchTable
 
         $matchCnt = $comp->getNumberOfMatches(false);
         if ($matchCnt > 0) {
-            $content .= $this->doc->section($LANG->getLL('warning') . ':', $LANG->getLL('msg_league_generation_hasmatches'), 0, 1, \tx_rnbase_mod_IModFunc::ICON_WARN);
+            $content .= $this->doc->section($LANG->getLL('warning').':', $LANG->getLL('msg_league_generation_hasmatches'), 0, 1, \tx_rnbase_mod_IModFunc::ICON_WARN);
             $content .= '<br/><br/>';
         }
 
@@ -119,16 +119,15 @@ class Tx_Cfcleague_Controller_Competition_MatchTable
             ->getPid(), 't3s_mcmode', $this->getModule()
             ->getName(), array(
             0 => 'Auto',
-            '1' => 'Manual'
+            '1' => 'Manual',
         ));
         $content .= $menu['menu'];
         $mode = $menu['value'];
         $content .= '<br>';
 
-        if ($mode == 0) { // Automatischer Spielplan
+        if (0 == $mode) { // Automatischer Spielplan
             $content .= $this->showMatchTableAuto($comp);
-        }
-        else { // Manuell Spiele anlegen
+        } else { // Manuell Spiele anlegen
             tx_rnbase::load('Tx_Cfcleague_Handler_MatchCreator');
             $content .= Tx_Cfcleague_Handler_MatchCreator::getInstance()->showScreen($comp, $this->getModule());
         }
@@ -140,6 +139,7 @@ class Tx_Cfcleague_Controller_Competition_MatchTable
      * Automatische Erzeugung eines Spielplans.
      *
      * @param tx_cfcleague_models_Competition $comp
+     *
      * @return string
      */
     private function showMatchTableAuto($comp)
@@ -160,11 +160,11 @@ class Tx_Cfcleague_Controller_Competition_MatchTable
 
         if (count($gen->errors)) {
             // Da gibt es wohl ein Problem bei der Erzeugung der Spiele...
-            $content .= $this->doc->section($LANG->getLL('error') . ':', '<ul><li>' . implode('<li>', $gen->errors) . '</ul>', 0, 1, \tx_rnbase_mod_IModFunc::ICON_FATAL);
+            $content .= $this->doc->section($LANG->getLL('error').':', '<ul><li>'.implode('<li>', $gen->errors).'</ul>', 0, 1, \tx_rnbase_mod_IModFunc::ICON_FATAL);
         }
         if (count($gen->warnings)) {
             // Da gibt es wohl ein Problem bei der Erzeugung der Spiele...
-            $content .= $this->doc->section($LANG->getLL('warning') . ':', '<ul><li>' . implode('<li>', $gen->warnings) . '</ul>', 0, 1, \tx_rnbase_mod_IModFunc::ICON_WARN);
+            $content .= $this->doc->section($LANG->getLL('warning').':', '<ul><li>'.implode('<li>', $gen->warnings).'</ul>', 0, 1, \tx_rnbase_mod_IModFunc::ICON_WARN);
         }
         if (count($table)) {
             // Wir zeigen alle Spieltage und fragen nach dem Termin
@@ -172,6 +172,7 @@ class Tx_Cfcleague_Controller_Competition_MatchTable
             // Den Update-Button einfügen
             $content .= $this->formTool->createSubmit('update', $LANG->getLL('btn_create'), $GLOBALS['LANG']->getLL('msg_CreateGameTable'));
         }
+
         return $content;
     }
 
@@ -185,24 +186,24 @@ class Tx_Cfcleague_Controller_Competition_MatchTable
         $content = '';
         // Wir benötigen eine Select-Box mit der man die Rückrunden-Option einstellen kann
         // Bei Änderung soll die Seite neu geladen werden, damit nur die Halbserie angezeigt wird.
-        $content .= $this->formTool->createSelectByArray('option_halfseries', $option_halfseries, Array(
+        $content .= $this->formTool->createSelectByArray('option_halfseries', $option_halfseries, array(
             '0' => '###LABEL_CREATE_SAISON###',
             '1' => '###LABEL_CREATE_FIRSTHALF###',
-            '2' => '###LABEL_CREATE_SECONDHALF###'
+            '2' => '###LABEL_CREATE_SECONDHALF###',
         ), array(
-            'reload' => 1
+            'reload' => 1,
         ));
         $content .= '<br />';
 
         // Führende 0 für Spieltag im einstelligen Bereich
-        $content .= $this->formTool->createCheckbox('option_leadingZero', '1', FALSE, 't3sMatchCreator.prependZero(this);');
+        $content .= $this->formTool->createCheckbox('option_leadingZero', '1', false, 't3sMatchCreator.prependZero(this);');
         $content .= '###LABEL_LEADING_ZERO###';
         $content .= '<br />';
 
-        $arr = Array(
-            Array(
-                $LANG->getLL('label_roundset')
-            )
+        $arr = array(
+            array(
+                $LANG->getLL('label_roundset'),
+            ),
         );
         // $arr = Array(Array($LANG->getLL('label_round'), $LANG->getLL('label_roundname').' / '.
         // $LANG->getLL('label_rounddate'), $LANG->getLL('label_roundset')));
@@ -213,20 +214,21 @@ class Tx_Cfcleague_Controller_Competition_MatchTable
 
             // Die Formularfelder, die jetzt erstellt werden, wandern später direkt in die neuen Game-Records
             // Ein Hidden-Field für die Runde
-            $row[] = '<div>' . $this->formTool->createHidden('data[rounds][round_' . $round . '][round]', $round) . $this->formTool->createTxtInput('data[rounds][round_' . $round . '][round_name]', $round . $LANG->getLL('createGameTable_round'), 10, array(
-                'class' => 'roundname'
-            )) . $this->formTool->createDateInput('data[rounds][round_' . $round . '][date]', time()) . '</div>' .
+            $row[] = '<div>'.$this->formTool->createHidden('data[rounds][round_'.$round.'][round]', $round).$this->formTool->createTxtInput('data[rounds][round_'.$round.'][round_name]', $round.$LANG->getLL('createGameTable_round'), 10, array(
+                'class' => 'roundname',
+            )).$this->formTool->createDateInput('data[rounds][round_'.$round.'][date]', time()).'</div>'.
             // Anzeige der Paarungen
-            $tables->buildTable($this->createMatchTableArray($matchArr, $league, 'data[rounds][round_' . $round . ']'));
+            $tables->buildTable($this->createMatchTableArray($matchArr, $league, 'data[rounds][round_'.$round.']'));
 
             $arr[] = $row;
         }
         $content .= $tables->buildTable($arr);
+
         return $content;
     }
 
     /**
-     * Erstellt das Datenarray zur Erstellung der HTML-Tabelle mit den Spielen des Spieltages
+     * Erstellt das Datenarray zur Erstellung der HTML-Tabelle mit den Spielen des Spieltages.
      *
      * @param tx_cfcleague_models_Competition $league
      */
@@ -234,18 +236,18 @@ class Tx_Cfcleague_Controller_Competition_MatchTable
     {
         global $LANG;
         $teamNames = $league->getTeamNames();
-        $arr = Array(
-            Array(
+        $arr = array(
+            array(
                 $LANG->getLL('label_match_no'),
                 $LANG->getLL('label_home'),
-                $LANG->getLL('label_guest')
-            )
+                $LANG->getLL('label_guest'),
+            ),
         );
         foreach ($matches as $match) {
             $row = array();
             $row[] = $match->noMatch ? '' : str_pad($match->nr2, 3, '000', STR_PAD_LEFT);
-            $row[] = $this->createSelectBox($teamNames, $match->home, $namePrefix . '[matches][' . $match->nr . '][home]');
-            $row[] = $this->createSelectBox($teamNames, $match->guest, $namePrefix . '[matches][' . $match->nr . '][guest]') . $this->formTool->createHidden($namePrefix . '[matches][' . $match->nr . '][nr2]', $match->nr2);
+            $row[] = $this->createSelectBox($teamNames, $match->home, $namePrefix.'[matches]['.$match->nr.'][home]');
+            $row[] = $this->createSelectBox($teamNames, $match->guest, $namePrefix.'[matches]['.$match->nr.'][guest]').$this->formTool->createHidden($namePrefix.'[matches]['.$match->nr.'][nr2]', $match->nr2);
             // $row[] = $teamNames[$match->home];
             // $row[] = $teamNames[$match->guest];
             $arr[] = $row;
@@ -256,16 +258,17 @@ class Tx_Cfcleague_Controller_Competition_MatchTable
 
     private function createSelectBox($teamNames, $currentTeam, $name)
     {
-        $ret = '<select name="' . $name . '">';
+        $ret = '<select name="'.$name.'">';
         foreach ($teamNames as $key => $teamName) {
-            $ret .= '<option value="' . $key . '"' . ($key == $currentTeam ? ' selected="selected" ' : '') . '>' . $teamName . '</option>';
+            $ret .= '<option value="'.$key.'"'.($key == $currentTeam ? ' selected="selected" ' : '').'>'.$teamName.'</option>';
         }
         $ret .= "</select>\n";
+
         return $ret;
     }
 
     /**
-     * Returns the formtool
+     * Returns the formtool.
      *
      * @return tx_rnbase_util_FormTool
      */
@@ -275,7 +278,6 @@ class Tx_Cfcleague_Controller_Competition_MatchTable
     }
 
     /**
-     *
      * @return tx_rnbase_mod_IModule
      */
     protected function getModule()
@@ -293,7 +295,7 @@ class Tx_Cfcleague_Controller_Competition_MatchTable
 
         // Aus den Spielen der $table die TCA-Datensätze erzeugen
         $data = array(
-            'tx_cfcleague_games' => array()
+            'tx_cfcleague_games' => array(),
         );
 
         // Wir erstellen die Spiel je Spieltag
@@ -312,7 +314,7 @@ class Tx_Cfcleague_Controller_Competition_MatchTable
                 $new_match['match_no'] = $match['nr2'];
                 $new_match['competition'] = $league->getUid();
                 $new_match['pid'] = $league->getPid();
-                $data['tx_cfcleague_games']['NEW' . $matchId] = $new_match;
+                $data['tx_cfcleague_games']['NEW'.$matchId] = $new_match;
             }
         }
 
