@@ -24,13 +24,10 @@
 tx_rnbase::load('tx_cfcleague_sports_ISports');
 tx_rnbase::load('Tx_Rnbase_Service_Base');
 
-/**
- */
 class tx_cfcleague_sports_Handball extends Tx_Rnbase_Service_Base implements tx_cfcleague_sports_ISports
 {
-
     /**
-     * Get match provider
+     * Get match provider.
      *
      * @return tx_cfcleaguefe_table_ITableType
      */
@@ -39,11 +36,11 @@ class tx_cfcleague_sports_Handball extends Tx_Rnbase_Service_Base implements tx_
         if (tx_rnbase_util_Extensions::isLoaded('cfc_league_fe')) {
             return tx_rnbase::makeInstance('tx_cfcleaguefe_table_handball_Table');
         }
+
         return null;
     }
 
     /**
-     *
      * @return array
      */
     public function getTCAPointSystems()
@@ -51,7 +48,7 @@ class tx_cfcleague_sports_Handball extends Tx_Rnbase_Service_Base implements tx_
         return [
             [
                 tx_rnbase_util_Misc::translateLLL('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition.point_system_2'),
-                0
+                0,
             ],
         ];
     }
@@ -66,7 +63,7 @@ class tx_cfcleague_sports_Handball extends Tx_Rnbase_Service_Base implements tx_
         return false;
     }
 
-    private $matchInfo = NULL;
+    private $matchInfo = null;
 
     /*
      * (non-PHPdoc)
@@ -74,16 +71,15 @@ class tx_cfcleague_sports_Handball extends Tx_Rnbase_Service_Base implements tx_
      */
     public function getMatchInfo()
     {
-        if ($this->matchInfo == NULL) {
+        if (null == $this->matchInfo) {
             tx_rnbase::load('tx_cfcleague_sports_MatchInfo');
             $this->matchInfo = tx_rnbase::makeInstance('tx_cfcleague_sports_MatchInfo', array(
                 tx_cfcleague_sports_MatchInfo::MATCH_TIME => 60,
                 tx_cfcleague_sports_MatchInfo::MATCH_PARTS => 2,
-                tx_cfcleague_sports_MatchInfo::MATCH_EXTRA_TIME => 10
+                tx_cfcleague_sports_MatchInfo::MATCH_EXTRA_TIME => 10,
             ));
         }
 
         return $this->matchInfo;
     }
 }
-

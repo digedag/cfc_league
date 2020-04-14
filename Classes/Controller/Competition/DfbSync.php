@@ -28,11 +28,12 @@ tx_rnbase::load('Tx_Rnbase_Utility_Strings');
 tx_rnbase::load('tx_cfcleague_mod1_decorator');
 
 /**
- * Die Klasse verwaltet die Erstellung Teams für Wettbewerbe
+ * Die Klasse verwaltet die Erstellung Teams für Wettbewerbe.
  */
 class Tx_Cfcleague_Controller_Competition_DfbSync
 {
     protected $doc;
+
     /**
      * @var \TYPO3\CMS\Core\Utility\File\ExtendedFileUtility
      */
@@ -44,7 +45,7 @@ class Tx_Cfcleague_Controller_Competition_DfbSync
     protected $uploadedFiles = array();
 
     /**
-     * Verwaltet die Erstellung von Spielplänen von Ligen
+     * Verwaltet die Erstellung von Spielplänen von Ligen.
      *
      * @param tx_rnbase_mod_IModule $module
      * @param tx_cfcleague_models_Competition $competition
@@ -77,8 +78,7 @@ class Tx_Cfcleague_Controller_Competition_DfbSync
                     $markerArr['###STATUS_MATCH_SKIPPED###'] = $info['match']['skipped'];
                     $markerArr['###STATUS_TEAM_NEW###'] = $info['team']['new'];
                     $markerArr['###STATUS_TIME###'] = $synch->getStats()['total']['time'];
-                }
-                else {
+                } else {
                     $markerArr['###STATUS_FILE###'] = '<span class="typo3-red">###LABEL_upload_failureNoFile###</span>';
                     $markerArr['###STATUS_MATCH_UPDATED###'] = 0;
                     $markerArr['###STATUS_MATCH_NEW###'] = 0;
@@ -87,8 +87,7 @@ class Tx_Cfcleague_Controller_Competition_DfbSync
                     $markerArr['###STATUS_TIME###'] = 0;
                 }
                 $wrappedSubpartArr['###SUB_UPLOAD_STATUS###'] = ['', ''];
-            }
-            else {
+            } else {
                 $subpartArr['###SUB_UPLOAD_STATUS###'] = '';
             }
         }
@@ -101,16 +100,18 @@ class Tx_Cfcleague_Controller_Competition_DfbSync
     {
         global $LANG;
         $key = $competition->getExtId();
-        $msg = $LANG->getLL( $key ? 'label_dfbsync_keyfound' : 'label_dfbsync_nokeyfound');
+        $msg = $LANG->getLL($key ? 'label_dfbsync_keyfound' : 'label_dfbsync_nokeyfound');
+
         return sprintf($msg, $key);
     }
+
     /**
-     * Check if a file has been uploaded
+     * Check if a file has been uploaded.
      *
-     * @return void
      * @todo Define visibility
      */
-    public function checkUpload() {
+    public function checkUpload()
+    {
         $file = tx_rnbase_parameters::getPostOrGetParameter('file');
         // Initializing:
         $this->fileProcessor = tx_rnbase::makeInstance('TYPO3\\CMS\\Core\\Utility\\File\\ExtendedFileUtility');
@@ -119,8 +120,7 @@ class Tx_Cfcleague_Controller_Competition_DfbSync
             $this->fileProcessor->setExistingFilesConflictMode(
                 \TYPO3\CMS\Core\Resource\DuplicationBehavior::REPLACE
             );
-        }
-        else {
+        } else {
             $this->fileProcessor->init(array(), $GLOBALS['TYPO3_CONF_VARS']['BE']['fileExtensions']);
             $this->fileProcessor->setActionPermissions();
             $this->fileProcessor->dontCheckForUnique = 1;
@@ -139,20 +139,21 @@ class Tx_Cfcleague_Controller_Competition_DfbSync
      * Returns a \TYPO3\CMS\Core\Resource\Folder object for saving export files
      * to the server and is also used for uploading import files.
      *
-     * @return NULL|\TYPO3\CMS\Core\Resource\Folder
+     * @return null|\TYPO3\CMS\Core\Resource\Folder
      */
-    protected function getDefaultImportExportFolder() {
-        $defaultImportExportFolder = NULL;
+    protected function getDefaultImportExportFolder()
+    {
+        $defaultImportExportFolder = null;
 
         $defaultTemporaryFolder = $this->getBackendUser()->getDefaultUploadTemporaryFolder();
-        if ($defaultTemporaryFolder !== NULL) {
-
+        if (null !== $defaultTemporaryFolder) {
             $importExportFolderName = 'importexport';
             $createFolder = !$defaultTemporaryFolder->hasFolder($importExportFolderName);
-            if ($createFolder === TRUE) {
+            if (true === $createFolder) {
                 try {
                     $defaultImportExportFolder = $defaultTemporaryFolder->createFolder($importExportFolderName);
-                } catch (\TYPO3\CMS\Core\Resource\Exception $folderAccessException) {}
+                } catch (\TYPO3\CMS\Core\Resource\Exception $folderAccessException) {
+                }
             } else {
                 $defaultImportExportFolder = $defaultTemporaryFolder->getSubfolder($importExportFolderName);
             }
@@ -160,6 +161,7 @@ class Tx_Cfcleague_Controller_Competition_DfbSync
 
         return $defaultImportExportFolder;
     }
+
     /**
      * @return \TYPO3\CMS\Core\Authentication\BackendUserAuthentication
      */
@@ -169,7 +171,7 @@ class Tx_Cfcleague_Controller_Competition_DfbSync
     }
 
     /**
-     * Returns the formtool
+     * Returns the formtool.
      *
      * @return tx_rnbase_util_FormTool
      */
@@ -177,5 +179,4 @@ class Tx_Cfcleague_Controller_Competition_DfbSync
     {
         return $this->formTool;
     }
-
 }

@@ -25,52 +25,60 @@
 tx_rnbase::load('tx_cfcleague_sports_ISports');
 tx_rnbase::load('Tx_Rnbase_Service_Base');
 
-/**
- */
-class tx_cfcleague_sports_Volleyball extends Tx_Rnbase_Service_Base implements tx_cfcleague_sports_ISports {
+class tx_cfcleague_sports_Volleyball extends Tx_Rnbase_Service_Base implements tx_cfcleague_sports_ISports
+{
+    /**
+     * Get match provider.
+     *
+     * @return tx_cfcleaguefe_table_ITableType or null
+     */
+    public function getLeagueTable()
+    {
+        if (tx_rnbase_util_Extensions::isLoaded('cfc_league_fe')) {
+            return tx_rnbase::makeInstance('tx_cfcleaguefe_table_volleyball_Table');
+        }
 
-	/**
-	 * Get match provider
-	 * @return tx_cfcleaguefe_table_ITableType or null
-	 */
-	public function getLeagueTable() {
-		if(tx_rnbase_util_Extensions::isLoaded('cfc_league_fe')) {
-			return tx_rnbase::makeInstance('tx_cfcleaguefe_table_volleyball_Table');
-		}
-		return null;
-	}
-	/**
-	 * @return array
-	 */
-	public function getTCAPointSystems() {
-		return array(
-			Array(tx_rnbase_util_Misc::translateLLL('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition.point_system_2'), 0),
-			Array(tx_rnbase_util_Misc::translateLLL('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition.point_system_3'), 1)
-		);
-	}
-	public function getTCALabel() {
-		return 'Volleyball';
-	}
-	public function isSetBased() {
-		return true;
-	}
+        return null;
+    }
 
-	private $matchInfo = NULL;
-	/* (non-PHPdoc)
-	 * @see tx_cfcleague_sports_ISports::getMatchInfo()
-	 */
-	public function getMatchInfo() {
-		if($this->matchInfo == NULL) {
-			// Bei Volleyball gibt es keine festen Zeiten
-			$this->matchInfo = tx_rnbase::makeInstance('tx_cfcleague_sports_MatchInfo', array(
-			));
-		}
+    /**
+     * @return array
+     */
+    public function getTCAPointSystems()
+    {
+        return array(
+            array(tx_rnbase_util_Misc::translateLLL('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition.point_system_2'), 0),
+            array(tx_rnbase_util_Misc::translateLLL('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition.point_system_3'), 1),
+        );
+    }
 
-		return $this->matchInfo;
-	}
+    public function getTCALabel()
+    {
+        return 'Volleyball';
+    }
+
+    public function isSetBased()
+    {
+        return true;
+    }
+
+    private $matchInfo = null;
+
+    /* (non-PHPdoc)
+     * @see tx_cfcleague_sports_ISports::getMatchInfo()
+     */
+    public function getMatchInfo()
+    {
+        if (null == $this->matchInfo) {
+            // Bei Volleyball gibt es keine festen Zeiten
+            $this->matchInfo = tx_rnbase::makeInstance('tx_cfcleague_sports_MatchInfo', array(
+            ));
+        }
+
+        return $this->matchInfo;
+    }
 }
 
-
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/sports/class.tx_cfcleague_sports_Volleyball.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/sports/class.tx_cfcleague_sports_Volleyball.php']);
+    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/sports/class.tx_cfcleague_sports_Volleyball.php'];
 }

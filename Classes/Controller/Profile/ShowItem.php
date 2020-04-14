@@ -1,8 +1,10 @@
 <?php
+
 use TYPO3\CMS\Backend\Controller\ContentElement\ElementInformationController;
 use TYPO3\CMS\Core\Imaging\IconFactory;
 use TYPO3\CMS\Core\Type\Bitmask\Permission;
 use TYPO3\CMS\Backend\Template\ModuleTemplate;
+
 /*
  *  Copyright notice
  *
@@ -26,35 +28,39 @@ use TYPO3\CMS\Backend\Template\ModuleTemplate;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-class Tx_Cfcleague_Controller_Profile_ShowItem extends ElementInformationController {
-	/**
-	 * Constructor
-	 */
-	public function __construct() {
-		// Der parent-Konstruktor darf nicht aufgerufen werden.
-		$this->iconFactory = tx_rnbase::makeInstance(IconFactory::class);
-	}
+class Tx_Cfcleague_Controller_Profile_ShowItem extends ElementInformationController
+{
+    /**
+     * Constructor.
+     */
+    public function __construct()
+    {
+        // Der parent-Konstruktor darf nicht aufgerufen werden.
+        $this->iconFactory = tx_rnbase::makeInstance(IconFactory::class);
+    }
 
-	public function getInfoScreen($table, $uid) {
-		$this->initByParams($table, $uid);
+    public function getInfoScreen($table, $uid)
+    {
+        $this->initByParams($table, $uid);
 
-		$this->main();
-		$content = $this->moduleTemplate->getView()->getRenderingContext()->getVariableProvider()->get('content');
+        $this->main();
+        $content = $this->moduleTemplate->getView()->getRenderingContext()->getVariableProvider()->get('content');
 
-		return $content;
-	}
-	protected function initByParams($table, $uid) {
-		$this->table = $table;
-		$this->uid = $uid;
-		$this->permsClause = $this->getBackendUser()->getPagePermsClause(Permission::PAGE_SHOW);
-		$this->moduleTemplate = \tx_rnbase::makeInstance(ModuleTemplate::class);
-		$this->moduleTemplate->getDocHeaderComponent()->disable();
+        return $content;
+    }
 
-		if (isset($GLOBALS['TCA'][$this->table])) {
-			$this->initDatabaseRecord();
-		} elseif ($this->table == '_FILE' || $this->table == '_FOLDER' || $this->table == 'sys_file') {
-			$this->initFileOrFolderRecord();
-		}
-	}
+    protected function initByParams($table, $uid)
+    {
+        $this->table = $table;
+        $this->uid = $uid;
+        $this->permsClause = $this->getBackendUser()->getPagePermsClause(Permission::PAGE_SHOW);
+        $this->moduleTemplate = \tx_rnbase::makeInstance(ModuleTemplate::class);
+        $this->moduleTemplate->getDocHeaderComponent()->disable();
+
+        if (isset($GLOBALS['TCA'][$this->table])) {
+            $this->initDatabaseRecord();
+        } elseif ('_FILE' == $this->table || '_FOLDER' == $this->table || 'sys_file' == $this->table) {
+            $this->initFileOrFolderRecord();
+        }
+    }
 }
-

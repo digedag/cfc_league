@@ -1,8 +1,10 @@
 <?php
-if (! defined('TYPO3_MODE'))
-    die('Access denied.');
 
-$tx_cfcleague_note_types = Array(
+if (!defined('TYPO3_MODE')) {
+    die('Access denied.');
+}
+
+$tx_cfcleague_note_types = array(
     'ctrl' => [
         'title' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_note_types',
         'label' => 'label',
@@ -12,58 +14,58 @@ $tx_cfcleague_note_types = Array(
         'delete' => 'deleted',
         'enablecolumns' => [],
         'typeicon_classes' => [
-            'default' => 'ext-cfcleague-notetypes-default'
+            'default' => 'ext-cfcleague-notetypes-default',
         ],
-        'iconfile' => 'EXT:cfc_league/Resources/Public/Icons/icon_table.gif'
+        'iconfile' => 'EXT:cfc_league/Resources/Public/Icons/icon_table.gif',
     ],
     'interface' => [
         'showRecordFieldList' => '',
-        'maxDBListItems' => '15'
+        'maxDBListItems' => '15',
     ],
     'feInterface' => [
-        'fe_admin_fieldList' => 'label, marker, description'
+        'fe_admin_fieldList' => 'label, marker, description',
     ],
-    'columns' => Array(
-        'label' => Array(
+    'columns' => array(
+        'label' => array(
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_note_types.label',
             'config' => [
                 'type' => 'input',
                 'size' => '30',
                 'max' => '50',
-                'eval' => 'trim'
-            ]
+                'eval' => 'trim',
+            ],
         ),
-        'marker' => Array(
+        'marker' => array(
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_note_types.marker',
-            'config' => Array(
+            'config' => array(
                 'type' => 'input',
                 'size' => '20',
                 'size' => '20',
-                'eval' => 'trim'
-            )
+                'eval' => 'trim',
+            ),
         ),
-        'description' => Array(
+        'description' => array(
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_note_types.description',
-            'config' => Array(
+            'config' => array(
                 'type' => 'text',
                 'cols' => '30',
-                'rows' => '5'
-            )
-        )
+                'rows' => '5',
+            ),
+        ),
     ),
-    'types' => Array(
+    'types' => array(
         '0' => [
-            'showitem' => 'label, marker, description'
-        ]
+            'showitem' => 'label, marker, description',
+        ],
     ),
-    'palettes' => Array(
+    'palettes' => array(
         '1' => [
-            'showitem' => ''
-        ]
-    )
+            'showitem' => '',
+        ],
+    ),
 );
 
 return $tx_cfcleague_note_types;

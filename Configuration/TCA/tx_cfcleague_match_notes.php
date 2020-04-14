@@ -1,11 +1,13 @@
 <?php
-if (! defined('TYPO3_MODE'))
+
+if (!defined('TYPO3_MODE')) {
     die('Access denied.');
+}
 
 $sysLangFile = tx_rnbase_util_TYPO3::isTYPO87OrHigher() ? 'Resources/Private/Language/locallang_general.xlf' : 'locallang_general.xml';
 
 $tx_cfcleague_match_notes = [
-    'ctrl' => Array(
+    'ctrl' => array(
         'title' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_match_notes',
         'label' => 'uid',
         'label_alt' => 'minute,comment',
@@ -16,101 +18,101 @@ $tx_cfcleague_match_notes = [
         'cruser_id' => 'cruser_id',
         'default_sortby' => 'ORDER BY crdate',
         'delete' => 'deleted',
-        'enablecolumns' => Array(
-            'disabled' => 'hidden'
+        'enablecolumns' => array(
+            'disabled' => 'hidden',
         ),
         'typeicon_classes' => [
-            'default' => 'ext-cfcleague-matchnotes-default'
+            'default' => 'ext-cfcleague-matchnotes-default',
         ],
-        'iconfile' => 'EXT:cfc_league/Resources/Public/Icons/icon_table.gif'
+        'iconfile' => 'EXT:cfc_league/Resources/Public/Icons/icon_table.gif',
     ),
-    'interface' => Array(
+    'interface' => array(
         'showRecordFieldList' => 'hidden,game,minute,extra_time,type,player_home,player_guest,comment',
-        'maxDBListItems' => '5'
+        'maxDBListItems' => '5',
     ),
-    'feInterface' => Array(
-        'fe_admin_fieldList' => 'hidden, game, minute, extra_time, type, player_home, player_guest, comment'
+    'feInterface' => array(
+        'fe_admin_fieldList' => 'hidden, game, minute, extra_time, type, player_home, player_guest, comment',
     ),
-    'columns' => Array(
+    'columns' => array(
         'hidden' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:lang/'.$sysLangFile.':LGL.hidden',
             'config' => [
                 'type' => 'check',
-                'default' => '0'
-            ]
+                'default' => '0',
+            ],
         ],
-        'game' => Array(
+        'game' => array(
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_match_notes.match',
-            'config' => Array(
+            'config' => array(
                 'type' => 'group',
                 'internal_type' => 'db',
                 'allowed' => 'tx_cfcleague_games',
                 'size' => 1,
                 'minitems' => 0,
-                'maxitems' => 1
-            )
+                'maxitems' => 1,
+            ),
         ),
-        'minute' => Array(
+        'minute' => array(
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_match_notes.minute',
-            'config' => Array(
+            'config' => array(
                 'type' => 'input',
                 'size' => '4',
                 'max' => '3',
                 'eval' => 'int',
                 'checkbox' => '0',
-                'range' => Array(
+                'range' => array(
                     'upper' => '200',
-                    'lower' => '-1'
+                    'lower' => '-1',
                 ),
-                'default' => 0
-            )
+                'default' => 0,
+            ),
         ),
-        'extra_time' => Array(
+        'extra_time' => array(
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_match_notes.extra_time',
-            'config' => Array(
+            'config' => array(
                 'type' => 'input',
                 'size' => '4',
                 'max' => '3',
                 'eval' => 'int',
                 'checkbox' => '0',
-                'range' => Array(
+                'range' => array(
                     'upper' => '20',
-                    'lower' => '0'
+                    'lower' => '0',
                 ),
-                'default' => 0
-            )
+                'default' => 0,
+            ),
         ),
-        'second' => Array(
+        'second' => array(
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_match_notes.second',
-            'config' => Array(
+            'config' => array(
                 'type' => 'input',
                 'size' => '4',
                 'max' => '3',
                 'eval' => 'int',
                 'checkbox' => '0',
-                'range' => Array(
+                'range' => array(
                     'upper' => '59',
-                    'lower' => '0'
+                    'lower' => '0',
                 ),
-                'default' => 0
-            )
+                'default' => 0,
+            ),
         ),
-        'type' => Array(
+        'type' => array(
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_match_notes.type',
-            'config' => Array(
+            'config' => array(
                 'type' => 'select',
                 'renderType' => 'selectSingle',
                 'itemsProcFunc' => 'tx_cfcleague_tca_Lookup->getMatchNoteTypes',
                 'size' => 1,
                 'minitems' => 1,
-                'maxitems' => 1
-            )
+                'maxitems' => 1,
+            ),
         ),
 
         'player_home' => [
@@ -124,8 +126,8 @@ $tx_cfcleague_match_notes = [
                 'itemsProcFunc' => 'tx_cfcleague_tca_Lookup->getPlayersHome4Match',
                 'size' => 1,
                 'minitems' => 0,
-                'maxitems' => 1
-            ]
+                'maxitems' => 1,
+            ],
         ],
         'player_guest' => [
             'exclude' => 1,
@@ -138,29 +140,29 @@ $tx_cfcleague_match_notes = [
                 'itemsProcFunc' => 'tx_cfcleague_tca_Lookup->getPlayersGuest4Match',
                 'size' => 1,
                 'minitems' => 0,
-                'maxitems' => 1
-            ]
+                'maxitems' => 1,
+            ],
         ],
-        'comment' => Array(
+        'comment' => array(
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_match_notes.comment',
-            'config' => Array(
+            'config' => array(
                 'type' => 'text',
                 'cols' => '30',
-                'rows' => '5'
-            )
-        )
+                'rows' => '5',
+            ),
+        ),
     ),
     'types' => [
         '0' => [
-            'showitem' => 'hidden, game, minute, second, extra_time, type, player_home, player_guest, comment'
-        ]
+            'showitem' => 'hidden, game, minute, second, extra_time, type, player_home, player_guest, comment',
+        ],
     ],
     'palettes' => [
         '1' => [
-            'showitem' => ''
-        ]
-    ]
+            'showitem' => '',
+        ],
+    ],
 ];
 
 return $tx_cfcleague_match_notes;

@@ -28,7 +28,6 @@ tx_rnbase::load('tx_rnbase_model_base');
  */
 class tx_cfcleague_models_TeamNote extends tx_rnbase_model_base
 {
-
     protected $profile;
 
     public function getTableName()
@@ -37,34 +36,35 @@ class tx_cfcleague_models_TeamNote extends tx_rnbase_model_base
     }
 
     /**
-     * Returns the value according to media type
+     * Returns the value according to media type.
      *
      * @return mixed
      */
     public function getValue()
     {
-        if ($this->getProperty('mediatype') == 0) { // Text
+        if (0 == $this->getProperty('mediatype')) { // Text
             return $this->getProperty('comment');
-        } elseif ($this->getProperty('mediatype') == 1) { // DAM-Media
+        } elseif (1 == $this->getProperty('mediatype')) { // DAM-Media
             return $this->getProperty('media');
-        } elseif ($this->getProperty('mediatype') == 2) { // Integer
+        } elseif (2 == $this->getProperty('mediatype')) { // Integer
             return $this->getProperty('number');
         }
     }
 
     /**
-     * Returns the NoteType
+     * Returns the NoteType.
      *
      * @return tx_cfcleaguefe_models_teamNoteType
      */
     public function getType()
     {
         tx_rnbase::load('tx_cfcleague_models_TeamNoteType');
+
         return tx_cfcleague_models_TeamNoteType::getInstance($this->getProperty('type'));
     }
 
     /**
-     * Returns the media type
+     * Returns the media type.
      *
      * @return int
      */
@@ -74,15 +74,16 @@ class tx_cfcleague_models_TeamNote extends tx_rnbase_model_base
     }
 
     /**
-     * Returns the player
+     * Returns the player.
      *
      * @return tx_cfcleague_models_Profile
      */
     public function getProfile()
     {
-        if (! $this->profile) {
+        if (!$this->profile) {
             $this->profile = tx_rnbase::makeInstance('tx_cfcleague_models_Profile', $this->getProperty('player'));
         }
+
         return $this->profile;
     }
 }

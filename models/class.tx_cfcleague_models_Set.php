@@ -29,8 +29,9 @@ tx_rnbase::load('Tx_Rnbase_Utility_Strings');
  */
 class tx_cfcleague_models_Set extends tx_rnbase_model_base
 {
-
-    protected $p1, $p2, $set;
+    protected $p1;
+    protected $p2;
+    protected $set;
 
     public function __construct($set, $p1 = 0, $p2 = 0)
     {
@@ -45,7 +46,7 @@ class tx_cfcleague_models_Set extends tx_rnbase_model_base
         $this->setProperty(array(
             'set' => $this->set,
             'pointshome' => $this->p1,
-            'pointsguest' => $this->p2
+            'pointsguest' => $this->p2,
         ));
     }
 
@@ -66,15 +67,17 @@ class tx_cfcleague_models_Set extends tx_rnbase_model_base
 
     public static function buildFromString($sets)
     {
-        if (! $sets)
+        if (!$sets) {
             return false;
+        }
         $sets = preg_split("/[\s]*[;,|][\s]*/", $sets);
         // $sets = Tx_Rnbase_Utility_Strings::trimExplode(';', $sets);
         $ret = array();
         foreach ($sets as $idx => $setStr) {
-            list ($p1, $p2) = Tx_Rnbase_Utility_Strings::intExplode(':', $setStr);
+            list($p1, $p2) = Tx_Rnbase_Utility_Strings::intExplode(':', $setStr);
             $ret[] = tx_rnbase::makeInstance('tx_cfcleague_models_Set', $idx + 1, $p1, $p2);
         }
+
         return $ret;
     }
 

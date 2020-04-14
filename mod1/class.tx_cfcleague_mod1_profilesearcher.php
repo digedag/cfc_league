@@ -28,11 +28,10 @@ tx_rnbase::load('tx_rnbase_parameters');
 
 /**
  * Search matches from competitions
- * We to it by showing to select boxes: one for competition and the other for round
+ * We to it by showing to select boxes: one for competition and the other for round.
  */
 class tx_cfcleague_mod1_profilesearcher
 {
-
     private $mod;
 
     private $data;
@@ -45,7 +44,6 @@ class tx_cfcleague_mod1_profilesearcher
     }
 
     /**
-     *
      * @param tx_rnbase_mod_IModule $mod
      * @param array $options
      */
@@ -59,22 +57,22 @@ class tx_cfcleague_mod1_profilesearcher
         $this->resultSize = 0;
         $this->data = \Tx_Rnbase_Utility_T3General::_GP('data');
 
-        if (! isset($options['nopersist'])) {
+        if (!isset($options['nopersist'])) {
             $this->SEARCH_SETTINGS = Tx_Rnbase_Backend_Utility::getModuleData([
-                'searchterm' => ''
+                'searchterm' => '',
             ], $this->data, $mod->getName());
-        }
-        else {
+        } else {
             $this->SEARCH_SETTINGS = $this->data;
         }
     }
 
     /**
      * Liefert das Suchformular.
-     * Hier die beiden Selectboxen anzeigen
+     * Hier die beiden Selectboxen anzeigen.
      *
      * @param string $label
      *            Alternatives Label
+     *
      * @return string
      */
     public function getSearchForm($label = '')
@@ -86,6 +84,7 @@ class tx_cfcleague_mod1_profilesearcher
         // $out .= $this->getFormTool()->getJSCode($this->id);
         // Den Update-Button einfügen
         $out .= $this->getFormTool()->createSubmit('searchProfile', $GLOBALS['LANG']->getLL('btn_search'));
+
         return $out;
     }
 
@@ -93,8 +92,8 @@ class tx_cfcleague_mod1_profilesearcher
     {
         $content = '';
         $searchTerm = tx_rnbase_util_Misc::validateSearchString($this->SEARCH_SETTINGS['searchterm']);
-        if (! $searchTerm) {
-            return $this->doc->section($GLOBALS['LANG']->getLL('message') . ':', $GLOBALS['LANG']->getLL('msg_searchhelp'), 0, 1, \tx_rnbase_mod_IModFunc::ICON_INFO);
+        if (!$searchTerm) {
+            return $this->doc->section($GLOBALS['LANG']->getLL('message').':', $GLOBALS['LANG']->getLL('msg_searchhelp'), 0, 1, \tx_rnbase_mod_IModFunc::ICON_INFO);
         }
 
         $profiles = $this->searchProfiles($searchTerm);
@@ -111,7 +110,7 @@ class tx_cfcleague_mod1_profilesearcher
             $joined['cols'] = array(
                 'PROFILE.LAST_NAME',
                 'PROFILE.FIRST_NAME',
-                'PROFILE.UID'
+                'PROFILE.UID',
             );
             $joined['operator'] = OP_LIKE;
             $fields[SEARCH_FIELD_JOINED][] = $joined;
@@ -123,6 +122,7 @@ class tx_cfcleague_mod1_profilesearcher
         $srv = tx_cfcleague_util_ServiceRegistry::getProfileService();
         $profiles = $srv->search($fields, $options);
         $this->resultSize = count($profiles);
+
         return $profiles;
     }
 
@@ -146,11 +146,11 @@ class tx_cfcleague_mod1_profilesearcher
             'uid' => [],
             'last_name' => [
                 'decorator' => $decor,
-                'title' => 'label_name'
+                'title' => 'label_name',
             ],
             'birthday' => [
-                'decorator' => $decor
-            ]
+                'decorator' => $decor,
+            ],
         ];
 
         if ($profiles) {
@@ -158,13 +158,14 @@ class tx_cfcleague_mod1_profilesearcher
             $tables = tx_rnbase::makeInstance('Tx_Rnbase_Backend_Utility_Tables');
             $out .= $tables->buildTable($arr[0]);
         } else {
-            $out = '<p><strong>' . $GLOBALS['LANG']->getLL('msg_no_matches_in_betset') . '</strong></p><br/>';
+            $out = '<p><strong>'.$GLOBALS['LANG']->getLL('msg_no_matches_in_betset').'</strong></p><br/>';
         }
-        return $this->doc->section($headline . ':', $out, 0, 1, \tx_rnbase_mod_IModFunc::ICON_INFO);
+
+        return $this->doc->section($headline.':', $out, 0, 1, \tx_rnbase_mod_IModFunc::ICON_INFO);
     }
 
     /**
-     * Returns the formTool
+     * Returns the formTool.
      *
      * @return tx_rnbase_util_FormTool
      */
@@ -175,6 +176,5 @@ class tx_cfcleague_mod1_profilesearcher
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/mod1/class.tx_cfcleague_mod1_profilesearcher.php']) {
-    include_once ($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/mod1/class.tx_cfcleague_mod1_profilesearcher.php']);
+    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/mod1/class.tx_cfcleague_mod1_profilesearcher.php'];
 }
-?>

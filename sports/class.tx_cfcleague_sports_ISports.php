@@ -22,32 +22,38 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-
 /**
  * Implementors provide configurations for different kind of sports.
  */
-interface tx_cfcleague_sports_ISports {
-	/**
-	 * Get match provider
-	 * @return tx_cfcleaguefe_table_ITableType or null if none available
-	 */
-	public function getLeagueTable();
-	/**
-	 * Set configuration
-	 * @return array
-	 */
-	public function getTCAPointSystems();
-	public function getTCALabel();
-	/**
-	 * @return boolean
-	 */
-	public function isSetBased();
-	/**
-	 * @return tx_cfcleague_sports_MatchInfo
-	 */
-	public function getMatchInfo();
+interface tx_cfcleague_sports_ISports
+{
+    /**
+     * Get match provider.
+     *
+     * @return tx_cfcleaguefe_table_ITableType or null if none available
+     */
+    public function getLeagueTable();
+
+    /**
+     * Set configuration.
+     *
+     * @return array
+     */
+    public function getTCAPointSystems();
+
+    public function getTCALabel();
+
+    /**
+     * @return boolean
+     */
+    public function isSetBased();
+
+    /**
+     * @return tx_cfcleague_sports_MatchInfo
+     */
+    public function getMatchInfo();
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/sports/sports/class.tx_cfcleague_sports_ISports.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/sports/class.tx_cfcleague_sports_ISports.php']);
+    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/sports/class.tx_cfcleague_sports_ISports.php'];
 }

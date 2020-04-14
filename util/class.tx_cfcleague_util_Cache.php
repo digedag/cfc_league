@@ -22,32 +22,37 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-
 /**
- * Object-Cache
+ * Object-Cache.
  */
-class tx_cfcleague_util_Cache {
-	private static $cache = array();
-  /**
-   * Ein Objekt in den Cache legen
-   * @param string $key
-   * @param mixed $value
-   */
-  public static function add($key, $value){
-  	self::$cache[$key] = $value;
-  }
-  /**
-   * Liefert ein Objekt aus dem Cache
-   * @param $key
-   * @return mixed
-   */
-  public static function get($key){
-  	return self::$cache[$key];
-  }
+class tx_cfcleague_util_Cache
+{
+    private static $cache = array();
+
+    /**
+     * Ein Objekt in den Cache legen.
+     *
+     * @param string $key
+     * @param mixed $value
+     */
+    public static function add($key, $value)
+    {
+        self::$cache[$key] = $value;
+    }
+
+    /**
+     * Liefert ein Objekt aus dem Cache.
+     *
+     * @param $key
+     *
+     * @return mixed
+     */
+    public static function get($key)
+    {
+        return self::$cache[$key];
+    }
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/util/class.tx_cfcleague_util_Cache.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/util/class.tx_cfcleague_util_Cache.php']);
+    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/util/class.tx_cfcleague_util_Cache.php'];
 }
-
-?>

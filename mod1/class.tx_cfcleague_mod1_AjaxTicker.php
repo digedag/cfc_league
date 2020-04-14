@@ -26,7 +26,6 @@ tx_rnbase::load('Tx_Rnbase_Utility_T3General');
 
 class tx_cfcleague_mod1_AjaxTicker
 {
-
     /**
      * Save Tickermessage...
      *
@@ -39,13 +38,15 @@ class tx_cfcleague_mod1_AjaxTicker
         $t3Time = intval(Tx_Rnbase_Utility_T3General::_POST('t3time'));
         $t3match = intval(Tx_Rnbase_Utility_T3General::_POST('t3match'));
 
-        if (! is_object($GLOBALS['BE_USER'])) {
+        if (!is_object($GLOBALS['BE_USER'])) {
             $ajaxObj->addContent('message', 'No BE user found!');
+
             return;
         }
 
-        if (! $tickerMessage || ! $t3match) {
+        if (!$tickerMessage || !$t3match) {
             $ajaxObj->addContent('message', 'Invalid request!');
+
             return;
         }
         $matchRecord = Tx_Rnbase_Backend_Utility::getRecord('tx_cfcleague_games', $t3match);
@@ -55,14 +56,14 @@ class tx_cfcleague_mod1_AjaxTicker
             'game' => $t3match,
             'type' => 100,
             'minute' => $t3Time,
-            'pid' => $matchRecord['pid']
+            'pid' => $matchRecord['pid'],
         ];
         $data = array(
             'tx_cfcleague_match_notes' => array(
-                'NEW1' => $record
-            )
+                'NEW1' => $record,
+            ),
         );
-        $tce = & Tx_Rnbase_Database_Connection::getInstance()->getTCEmain($data);
+        $tce = &Tx_Rnbase_Database_Connection::getInstance()->getTCEmain($data);
         $tce->process_datamap();
 
         $GLOBALS['LANG']->includeLLFile('EXT:cfc_league/mod1/locallang.xml');

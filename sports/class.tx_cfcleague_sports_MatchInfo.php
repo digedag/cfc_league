@@ -22,29 +22,33 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-
 /**
  * Additional information about matches.
  */
-class tx_cfcleague_sports_MatchInfo {
-	const MATCH_TIME = 'MATCH_TIME';
-	const MATCH_EXTRA_TIME = 'MATCH_EXTRA_TIME';
-	const MATCH_PARTS = 'MATCH_PARTS';
-	
-	private $info = array();
+class tx_cfcleague_sports_MatchInfo
+{
+    const MATCH_TIME = 'MATCH_TIME';
 
-	public function __construct($info) {
-		$this->info = $info;
-	}
-	/**
-	 * 
-	 * @param string $key
-	 */
-	public function getInfo($key) {
-		return isset($this->info[$key]) ? $this->info[$key] : NULL;
-	}
+    const MATCH_EXTRA_TIME = 'MATCH_EXTRA_TIME';
+
+    const MATCH_PARTS = 'MATCH_PARTS';
+
+    private $info = array();
+
+    public function __construct($info)
+    {
+        $this->info = $info;
+    }
+
+    /**
+     * @param string $key
+     */
+    public function getInfo($key)
+    {
+        return isset($this->info[$key]) ? $this->info[$key] : null;
+    }
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/sports/sports/class.tx_cfcleague_sports_MatchInfo.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/sports/class.tx_cfcleague_sports_MatchInfo.php']);
+    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/sports/class.tx_cfcleague_sports_MatchInfo.php'];
 }

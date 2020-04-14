@@ -1,6 +1,8 @@
 <?php
-if (! defined('TYPO3_MODE'))
+
+if (!defined('TYPO3_MODE')) {
     die('Access denied.');
+}
 
 $sysLangFile = tx_rnbase_util_TYPO3::isTYPO87OrHigher() ? 'Resources/Private/Language/locallang_general.xlf' : 'locallang_general.xml';
 
@@ -20,36 +22,36 @@ $tx_cfcleague_group = [
             'starttime' => 'starttime',
         ],
         'typeicon_classes' => [
-            'default' => 'ext-cfcleague-group-default'
+            'default' => 'ext-cfcleague-group-default',
         ],
-        'iconfile' => 'EXT:cfc_league/Resources/Public/Icons/icon_tx_cfcleague_group.gif'
+        'iconfile' => 'EXT:cfc_league/Resources/Public/Icons/icon_tx_cfcleague_group.gif',
     ],
     'interface' => [
-        'showRecordFieldList' => 'hidden,starttime,fe_group,name'
+        'showRecordFieldList' => 'hidden,starttime,fe_group,name',
     ],
     'feInterface' => [
-        'fe_admin_fieldList' => 'hidden, starttime, fe_group, name'
+        'fe_admin_fieldList' => 'hidden, starttime, fe_group, name',
     ],
-    'columns' => Array(
-        'hidden' => Array(
+    'columns' => array(
+        'hidden' => array(
             'exclude' => 1,
-            'label' => 'LLL:EXT:lang/' . $sysLangFile . ':LGL.hidden',
+            'label' => 'LLL:EXT:lang/'.$sysLangFile.':LGL.hidden',
             'config' => [
                 'type' => 'check',
-                'default' => '0'
-            ]
+                'default' => '0',
+            ],
         ),
-        'starttime' => Array(
+        'starttime' => array(
             'exclude' => 1,
-            'label' => 'LLL:EXT:lang/' . $sysLangFile . ':LGL.starttime',
+            'label' => 'LLL:EXT:lang/'.$sysLangFile.':LGL.starttime',
             'config' => [
                 'type' => 'input',
                 'renderType' => (tx_rnbase_util_TYPO3::isTYPO86OrHigher() ? 'inputDateTime' : ''),
                 'size' => '8',
                 'eval' => 'date',
                 'default' => '0',
-                'checkbox' => '0'
-            ]
+                'checkbox' => '0',
+            ],
         ),
         'name' => [
             'exclude' => 1,
@@ -57,8 +59,8 @@ $tx_cfcleague_group = [
             'config' => [
                 'type' => 'input',
                 'size' => '30',
-                'eval' => 'required,trim'
-            ]
+                'eval' => 'required,trim',
+            ],
         ],
         'shortname' => [
             'exclude' => 1,
@@ -67,27 +69,27 @@ $tx_cfcleague_group = [
                 'type' => 'input',
                 'size' => '10',
                 'max' => '8',
-                'eval' => 'trim'
-            ]
-        ]
+                'eval' => 'trim',
+            ],
+        ],
     ),
     'types' => [
         '0' => [
-            'showitem' => 'hidden,--palette--;;1, name, shortname, logo, t3logo'
-        ]
+            'showitem' => 'hidden,--palette--;;1, name, shortname, logo, t3logo',
+        ],
     ],
     'palettes' => [
         '1' => [
-            'showitem' => 'starttime'
-        ]
-    ]
+            'showitem' => 'starttime',
+        ],
+    ],
 ];
 
 tx_rnbase::load('tx_rnbase_util_TSFAL');
 $tx_cfcleague_group['columns']['logo'] = tx_rnbase_util_TSFAL::getMediaTCA('logo', array(
     'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_club.logo',
     'size' => 1,
-    'maxitems' => 1
+    'maxitems' => 1,
 ));
 
 return $tx_cfcleague_group;

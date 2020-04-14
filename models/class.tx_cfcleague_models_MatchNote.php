@@ -29,18 +29,31 @@ tx_rnbase::load('tx_rnbase_model_base');
 class tx_cfcleague_models_MatchNote extends tx_rnbase_model_base
 {
     const TYPE_TICKER = 100;
+
     const TYPE_GOAL = 10;
+
     const TYPE_GOAL_HEADER = 11;
+
     const TYPE_GOAL_PENALTY = 12;
+
     const TYPE_GOAL_OWN = 30;
+
     const TYPE_GOAL_ASSIST = 31;
+
     const TYPE_PENALTY_FORGIVEN = 32;
+
     const TYPE_CORNER = 33;
+
     const TYPE_CARD_YELLOW = 70;
+
     const TYPE_CARD_YELLOWRED = 71;
+
     const TYPE_CARD_RED = 72;
+
     const TYPE_CHANGEOUT = 80;
+
     const TYPE_CHANGEIN = 81;
+
     const TYPE_CAPTAIN = 200;
 
     public function getTableName()
@@ -69,7 +82,7 @@ class tx_cfcleague_models_MatchNote extends tx_rnbase_model_base
     }
 
     /**
-     * Liefert die UID des Profils, des an der Aktion beteiligten Spielers der Gastmannschaft
+     * Liefert die UID des Profils, des an der Aktion beteiligten Spielers der Gastmannschaft.
      *
      * @return int
      */
@@ -101,6 +114,7 @@ class tx_cfcleague_models_MatchNote extends tx_rnbase_model_base
         if ($this->isGuest()) {
             return $this->getPlayerGuest();
         }
+
         return 0;
     }
 
@@ -117,11 +131,12 @@ class tx_cfcleague_models_MatchNote extends tx_rnbase_model_base
         if ($this->isGuest()) {
             return $this->getPlayerGuest2();
         }
+
         return 0;
     }
 
     /**
-     * Liefert den Typ der Meldung
+     * Liefert den Typ der Meldung.
      *
      * @return int den Typ der Meldung
      */
@@ -131,7 +146,7 @@ class tx_cfcleague_models_MatchNote extends tx_rnbase_model_base
     }
 
     /**
-     * Liefert die Minute der Meldung
+     * Liefert die Minute der Meldung.
      *
      * @return int
      */
@@ -141,44 +156,45 @@ class tx_cfcleague_models_MatchNote extends tx_rnbase_model_base
     }
 
     /**
-     * Liefert true wenn die Aktion dem Heimteam zugeordnet ist
+     * Liefert true wenn die Aktion dem Heimteam zugeordnet ist.
      *
-     * @return boolean
+     * @return bool
      */
     public function isHome()
     {
-        return $this->getProperty('player_home') > 0 || $this->getProperty('player_home') == - 1;
+        return $this->getProperty('player_home') > 0 || -1 == $this->getProperty('player_home');
     }
 
     /**
-     * Liefert true wenn die Aktion dem Gastteam zugeordnet ist
+     * Liefert true wenn die Aktion dem Gastteam zugeordnet ist.
      *
-     * @return boolean
+     * @return bool
      */
     public function isGuest()
     {
-        return $this->getProperty('player_guest') > 0 || $this->getProperty('player_guest') == - 1;
+        return $this->getProperty('player_guest') > 0 || -1 == $this->getProperty('player_guest');
     }
 
     /**
-     * Liefert true wenn die Meldung ein Tor ist
+     * Liefert true wenn die Meldung ein Tor ist.
      *
-     * @return boolean
+     * @return bool
      */
     public function isGoal()
     {
         $type = $this->getType();
-        return ($type >= 10 && $type < 20) || $type == 30; // 30 ist das Eigentor
+
+        return ($type >= 10 && $type < 20) || 30 == $type; // 30 ist das Eigentor
     }
 
     /**
      * Liefert true wenn es ein Eigentor ist.
      *
-     * @return boolean
+     * @return bool
      */
     public function isGoalOwn()
     {
-        return $this->getType() == 30;
+        return 30 == $this->getType();
     }
 
     /**
@@ -186,13 +202,14 @@ class tx_cfcleague_models_MatchNote extends tx_rnbase_model_base
      * Auch Eigentore werden
      * berücksichtigt.
      *
-     * @return boolean
+     * @return bool
      */
     public function isGoalHome()
     {
         if ($this->isGoal()) {
-            return ($this->isHome() && ! $this->isGoalOwn()) || ($this->isGuest() && $this->isGoalOwn());
+            return ($this->isHome() && !$this->isGoalOwn()) || ($this->isGuest() && $this->isGoalOwn());
         }
+
         return false;
     }
 
@@ -201,32 +218,34 @@ class tx_cfcleague_models_MatchNote extends tx_rnbase_model_base
      * Auch Eigentore werden
      * berücksichtigt.
      *
-     * @return boolean
+     * @return bool
      */
     public function isGoalGuest()
     {
         if ($this->isGoal()) {
-            return ($this->isGuest() && ! ($this->getType() == 30)) || ($this->isHome() && ($this->getType() == 30));
+            return ($this->isGuest() && !(30 == $this->getType())) || ($this->isHome() && (30 == $this->getType()));
         }
+
         return false;
     }
 
     /**
-     * Liefert true, wenn die Aktion eine Ein- oder Auswechslung ist
+     * Liefert true, wenn die Aktion eine Ein- oder Auswechslung ist.
      *
-     * @return boolean
+     * @return bool
      */
     public function isChange()
     {
-        return $this->getType() == '80' || $this->getType() == '81';
+        return '80' == $this->getType() || '81' == $this->getType();
     }
 
-    public function __toString() {
-        return get_class($this).'( uid['. $this->getUid() .
-        '] type[' . $this->getProperty('type') .
-        '] minute[' . $this->getProperty('minute') .
-        '] player_home[' . $this->getProperty('player_home') .
-        '] player_guest[' . $this->getProperty('player_guest') .
+    public function __toString()
+    {
+        return get_class($this).'( uid['.$this->getUid().
+        '] type['.$this->getProperty('type').
+        '] minute['.$this->getProperty('minute').
+        '] player_home['.$this->getProperty('player_home').
+        '] player_guest['.$this->getProperty('player_guest').
         '])';
     }
 }

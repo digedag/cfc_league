@@ -1,4 +1,5 @@
 <?php
+
 use System25\T3sports\Controller\Club\ClubStadiumHandler;
 
 /***************************************************************
@@ -31,19 +32,17 @@ tx_rnbase::load('tx_rnbase_mod_BaseModFunc');
  */
 class Tx_Cfcleague_Controller_Club extends tx_rnbase_mod_BaseModFunc
 {
-
     /**
-     * Method getFuncId
+     * Method getFuncId.
      *
      * @return string
      */
-    function getFuncId()
+    public function getFuncId()
     {
         return 'funcclubs';
     }
 
     /**
-     *
      * @param string $template
      * @param tx_rnbase_configurations $configurations
      * @param tx_rnbase_util_FormatUtil $formatter
@@ -58,7 +57,7 @@ class Tx_Cfcleague_Controller_Club extends tx_rnbase_mod_BaseModFunc
         $tabItems = [];
         $tabItems[] = tx_rnbase::makeInstance(ClubStadiumHandler::class);
         tx_rnbase_util_Misc::callHook('cfc_league', 'modClub_tabItems', [
-            'tabItems' => &$tabItems
+            'tabItems' => &$tabItems,
         ], $this);
 
         $menuItems = [];
@@ -72,7 +71,7 @@ class Tx_Cfcleague_Controller_Club extends tx_rnbase_mod_BaseModFunc
             ->getPid());
         $this->getModule()->selector = $selectorStr;
 
-        if (! $club) {
+        if (!$club) {
             $addInfo = '###LABEL_MSG_CREATENEWCLUBNOW###';
             $linker = tx_rnbase::makeInstance('tx_cfcleague_mod1_linker_NewClub');
             $addInfo .= $linker->makeLink(null, $formTool, $this->getModule()
@@ -81,6 +80,7 @@ class Tx_Cfcleague_Controller_Club extends tx_rnbase_mod_BaseModFunc
             $content .= $this->getModule()
                 ->getDoc()
                 ->section('###LABEL_MSG_NOCLUBONPAGE###', $addInfo, 0, 1, self::ICON_INFO);
+
             return $content;
         }
 
@@ -103,6 +103,7 @@ class Tx_Cfcleague_Controller_Club extends tx_rnbase_mod_BaseModFunc
         $content .= $modContent;
         // Den JS-Code für Validierung einbinden
         $content .= $formTool->getTCEForm()->printNeededJSFunctions();
+
         return $content;
     }
 }

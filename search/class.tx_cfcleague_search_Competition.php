@@ -26,19 +26,19 @@ define('COMPSRV_FIELD_COMP_NAME', 'COMP.NAME');
 define('COMPSRV_FIELD_TEAM_NAME', 'TEAM.NAME');
 
 /**
- * Class to search comptitions from database
+ * Class to search comptitions from database.
  *
  * @author Rene Nitzsche
  */
 class tx_cfcleague_search_Competition extends tx_rnbase_util_SearchBase
 {
-
     protected function getTableMappings()
     {
         $tableMapping = [];
         $tableMapping['TEAM'] = 'tx_cfcleague_teams';
         $tableMapping['COMPETITION'] = 'tx_cfcleague_competition';
         $tableMapping['MATCH'] = 'tx_cfcleague_games';
+
         return $tableMapping;
     }
 
@@ -47,7 +47,7 @@ class tx_cfcleague_search_Competition extends tx_rnbase_util_SearchBase
         return 'tx_cfcleague_competition';
     }
 
-    function getWrapperClass()
+    public function getWrapperClass()
     {
         return 'tx_cfcleague_models_Competition';
     }
@@ -71,6 +71,7 @@ class tx_cfcleague_search_Competition extends tx_rnbase_util_SearchBase
         if (isset($tableAliases['MATCH'])) {
             $join .= ' JOIN tx_cfcleague_games AS `MATCH` ON MATCH.competition = COMPETITION.uid ';
         }
+
         return $join;
     }
 }

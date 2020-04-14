@@ -22,41 +22,46 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-
 /**
- * Util methods for match sets
+ * Util methods for match sets.
  */
-class tx_cfcleague_util_MatchSets {
-	/**
-	 * returns sum of all set points of home team
-	 * @param tx_cfcleague_models_Match $match
-	 */
-	public static function countSetPointsHome($match) {
-		$result = 0;
-		$sets = $match->getSets();
-		/* @var $set tx_cfcleague_models_Set */
-		foreach($sets As $set) {
-			$result += $set->getPointsHome();
-		}
-		return $result;
-	}
-	/**
-	 * returns sum of all set points of guest team
-	 * @param tx_cfcleague_models_Match $match
-	 */
-	public static function countSetPointsGuest($match) {
-		$result = 0;
-		$sets = $match->getSets();
-		/* @var $set tx_cfcleague_models_Set */
-		foreach($sets As $set) {
-			$result += $set->getPointsGuest();
-		}
-		return $result;
-	}
+class tx_cfcleague_util_MatchSets
+{
+    /**
+     * returns sum of all set points of home team.
+     *
+     * @param tx_cfcleague_models_Match $match
+     */
+    public static function countSetPointsHome($match)
+    {
+        $result = 0;
+        $sets = $match->getSets();
+        /* @var $set tx_cfcleague_models_Set */
+        foreach ($sets as $set) {
+            $result += $set->getPointsHome();
+        }
+
+        return $result;
+    }
+
+    /**
+     * returns sum of all set points of guest team.
+     *
+     * @param tx_cfcleague_models_Match $match
+     */
+    public static function countSetPointsGuest($match)
+    {
+        $result = 0;
+        $sets = $match->getSets();
+        /* @var $set tx_cfcleague_models_Set */
+        foreach ($sets as $set) {
+            $result += $set->getPointsGuest();
+        }
+
+        return $result;
+    }
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/util/class.tx_cfcleague_util_MatchSets.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/util/class.tx_cfcleague_util_MatchSets.php']);
+    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/util/class.tx_cfcleague_util_MatchSets.php'];
 }
-
-?>

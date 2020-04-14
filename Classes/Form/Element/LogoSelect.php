@@ -1,15 +1,15 @@
 <?php
+
 namespace System25\T3sports\Form\Element;
 
 use TYPO3\CMS\Backend\Form\Element\SelectSingleElement;
 use TYPO3\CMS\Backend\Form\NodeFactory;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Fluid\View\StandaloneView;
-use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Core\Resource\Exception\FileDoesNotExistException;
 use TYPO3\CMS\Core\Resource\File;
+
 /**
- *  Copyright notice
+ *  Copyright notice.
  *
  *  (c) 2015-2020 René Nitzsche <rene@system25.de>
  *  All rights reserved
@@ -32,11 +32,8 @@ use TYPO3\CMS\Core\Resource\File;
  */
 
 /**
+ * SelectField for club logo in team record.
  *
- * SelectField for club logo in team record
- *
- * @package 		TYPO3
- * @subpackage	 	cfc_league
  * @author 			René Nitzsche <rene@system25.de>
  */
 class LogoSelect extends SelectSingleElement
@@ -45,7 +42,7 @@ class LogoSelect extends SelectSingleElement
      * @var StandaloneView
      */
     protected $templateView;
-    
+
     public function __construct(NodeFactory $nodeFactory, array $data)
     {
         parent::__construct($nodeFactory, $data);
@@ -58,17 +55,15 @@ class LogoSelect extends SelectSingleElement
 	</div>
 </html>
         ');
-        ;
     }
-    
-    
+
     protected function renderFieldWizard(): array
     {
         $resultArray = parent::renderFieldWizard();
-        
+
         $field = $this->data['fieldName'];
         $row = $this->data['databaseRow'];
-        
+
         $file = $this->getFile($this->data['databaseRow'], $field);
         if (!$file) {
             // Early return in case we do not find a file
@@ -81,15 +76,16 @@ class LogoSelect extends SelectSingleElement
 
         $this->templateView->assignMultiple($arguments);
         $resultArray['html'] .= $this->templateView->render();
-        
+
         return $resultArray;
     }
-    
+
     /**
-     * Get file object
+     * Get file object.
      *
      * @param array $row
      * @param string $fieldName
+     *
      * @return File|null
      */
     protected function getFile(array $row, $fieldName)
@@ -109,7 +105,7 @@ class LogoSelect extends SelectSingleElement
             } catch (\InvalidArgumentException $e) {
             }
         }
+
         return $file;
     }
-
 }

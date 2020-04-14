@@ -22,33 +22,34 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-
 /**
- * Neuen Verein anlegen
+ * Neuen Verein anlegen.
  */
-class tx_cfcleague_mod1_linker_NewClub {
-	/**
-	 *
-	 * @param tx_mkhoga_models_Company $item
-	 * @param tx_rnbase_util_FormTool $formTool
-	 * @param int $currentPid
-	 * @param array $options
-	 * @return string
-	 */
-	function makeLink($item, $formTool, $currentPid, $options) {
-		$ret = '';
-		// Gibt es auf der Seite schon Vereine?
-		$fields['CLUB.PID'][OP_EQ_INT] = $currentPid;
-		$cnt = tx_cfcleague_util_ServiceRegistry::getTeamService()->searchClubs($fields, array('count'=>1));
-		$options = array();
-		$options['confirm'] = $cnt == 0 ? $GLOBALS['LANG']->getLL('label_msg_confirmNewClubPage') : $GLOBALS['LANG']->getLL('label_msg_confirmNewClub');
-		$options['title'] = $GLOBALS['LANG']->getLL('label_addclub');
-		$ret .= $formTool->createNewLink('tx_cfcleague_club', $currentPid, '', $options);
-		return $ret;
-	}
+class tx_cfcleague_mod1_linker_NewClub
+{
+    /**
+     * @param tx_mkhoga_models_Company $item
+     * @param tx_rnbase_util_FormTool $formTool
+     * @param int $currentPid
+     * @param array $options
+     *
+     * @return string
+     */
+    public function makeLink($item, $formTool, $currentPid, $options)
+    {
+        $ret = '';
+        // Gibt es auf der Seite schon Vereine?
+        $fields['CLUB.PID'][OP_EQ_INT] = $currentPid;
+        $cnt = tx_cfcleague_util_ServiceRegistry::getTeamService()->searchClubs($fields, array('count' => 1));
+        $options = array();
+        $options['confirm'] = 0 == $cnt ? $GLOBALS['LANG']->getLL('label_msg_confirmNewClubPage') : $GLOBALS['LANG']->getLL('label_msg_confirmNewClub');
+        $options['title'] = $GLOBALS['LANG']->getLL('label_addclub');
+        $ret .= $formTool->createNewLink('tx_cfcleague_club', $currentPid, '', $options);
+
+        return $ret;
+    }
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/mod1/linker/class.tx_cfcleague_mod1_linker_NewClub.php'])	{
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/mod1/linker/class.tx_cfcleague_mod1_linker_NewClub.php']);
+if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/mod1/linker/class.tx_cfcleague_mod1_linker_NewClub.php']) {
+    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/mod1/linker/class.tx_cfcleague_mod1_linker_NewClub.php'];
 }
-?>

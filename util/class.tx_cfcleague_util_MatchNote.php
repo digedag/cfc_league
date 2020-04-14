@@ -22,34 +22,42 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-
 /**
- * Kleine Hilfsmethoden für MatchNotes
+ * Kleine Hilfsmethoden für MatchNotes.
  */
-class tx_cfcleague_util_MatchNote {
-	public static function isChangeIn($note) {
-		return self::isType($note, 81);
-	}
-	public static function isChangeOut($note) {
-		return self::isType($note, 80);
-	}
-	public static function isCardYellow($note) {
-		return self::isType($note, 70);
-	}
-	public static function isCardYellowRed($note) {
-		return self::isType($note, 71);
-	}
-	public static function isCardRed($note) {
-		return self::isType($note, 72);
-	}
-	public static function isType($note, $type) {
-		return $note->getType() == $type;
-	}
-	
+class tx_cfcleague_util_MatchNote
+{
+    public static function isChangeIn($note)
+    {
+        return self::isType($note, 81);
+    }
+
+    public static function isChangeOut($note)
+    {
+        return self::isType($note, 80);
+    }
+
+    public static function isCardYellow($note)
+    {
+        return self::isType($note, 70);
+    }
+
+    public static function isCardYellowRed($note)
+    {
+        return self::isType($note, 71);
+    }
+
+    public static function isCardRed($note)
+    {
+        return self::isType($note, 72);
+    }
+
+    public static function isType($note, $type)
+    {
+        return $note->getType() == $type;
+    }
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/util/class.tx_cfcleague_util_MatchNote.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/util/class.tx_cfcleague_util_MatchNote.php']);
+    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/util/class.tx_cfcleague_util_MatchNote.php'];
 }
-
-?>

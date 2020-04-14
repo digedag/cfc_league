@@ -22,31 +22,32 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-
 /**
- * Diese Klasse ist für die Darstellung von Spielen im Backend verantwortlich
+ * Diese Klasse ist für die Darstellung von Spielen im Backend verantwortlich.
  */
-class tx_cfcleague_util_ProfileDecorator {
-	var $formTool;
-	public function __construct($formTool) {
-		$this->formTool = $formTool;
-	}
+class tx_cfcleague_util_ProfileDecorator
+{
+    public $formTool;
 
-	public function format($value, $colName, $record = array()) {
-		$ret = $value;
-		if($colName == 'birthday') {
-			$ret = intval($value) ? date('d.m.Y', $value) : '-';
-		}
-		elseif($colName == 'last_name') {
-			$ret = $record['last_name'] . ', ' . $record['first_name'];
-			$ret .= $this->formTool->createEditLink('tx_cfcleague_profiles', $record['uid']);
-		}
-		return $ret;
-	}
+    public function __construct($formTool)
+    {
+        $this->formTool = $formTool;
+    }
+
+    public function format($value, $colName, $record = array())
+    {
+        $ret = $value;
+        if ('birthday' == $colName) {
+            $ret = intval($value) ? date('d.m.Y', $value) : '-';
+        } elseif ('last_name' == $colName) {
+            $ret = $record['last_name'].', '.$record['first_name'];
+            $ret .= $this->formTool->createEditLink('tx_cfcleague_profiles', $record['uid']);
+        }
+
+        return $ret;
+    }
 }
 
-
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/util/class.tx_cfcleague_util_ProfileDecorator.php'])	{
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/util/class.tx_cfcleague_util_ProfileDecorator.php']);
+if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/util/class.tx_cfcleague_util_ProfileDecorator.php']) {
+    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/util/class.tx_cfcleague_util_ProfileDecorator.php'];
 }
-?>

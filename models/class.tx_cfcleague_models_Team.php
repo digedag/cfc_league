@@ -25,136 +25,168 @@
 tx_rnbase::load('Tx_Rnbase_Domain_Model_Base');
 tx_rnbase::load('Tx_Rnbase_Utility_Strings');
 
-
 /**
  * Model für ein Team.
  */
-class tx_cfcleague_models_Team extends Tx_Rnbase_Domain_Model_Base {
-	private static $instances = array();
+class tx_cfcleague_models_Team extends Tx_Rnbase_Domain_Model_Base
+{
+    private static $instances = array();
 
-	function getTableName(){return 'tx_cfcleague_teams';}
+    public function getTableName()
+    {
+        return 'tx_cfcleague_teams';
+    }
 
-	public function getNameShort() {
-		return $this->getProperty('short_name');
-	}
-	/**
-	 * Liefert true, wenn für das Team eine Einzelansicht verlinkt werden kann.
-	 */
-	public function hasReport() {
-		return intval($this->getProperty('link_report'));
-	}
-	/**
-	 * Returns the url of the first team logo.
-     * (not yet implemented)
-	 *
-	 * @return string
-	 */
-	public function getLogoPath() {
-		if($this->getProperty('logo')) {
-			// LogoFeld
-			$media = tx_rnbase::makeInstance('tx_rnbase_model_media', $this->getProperty('logo'));
-			return $media->getProperty('file');
-		}
-		elseif($this->getProperty('club')) {
-			$club = tx_rnbase::makeInstance('tx_cfcleague_models_Club', $this->getProperty('club'));
-			return $club->getFirstLogo();
-		}
-		return '';
-	}
-	public function getGroupUid() {
-		return $this->getProperty('agegroup');
-	}
-	/**
-	 * Liefert den Verein des Teams als Objekt
-	 * @return tx_cfcleague_models_Club Verein als Objekt oder null
-	 */
-	public function getClub() {
-	    if(!$this->getProperty('club')) {
-	        return null;
-	    }
-		return tx_rnbase::makeInstance('tx_cfcleague_models_Club', $this->getProperty('club'));
-	}
+    public function getNameShort()
+    {
+        return $this->getProperty('short_name');
+    }
 
-	public function getClubUid() {
-		return $this->getProperty('club');
-	}
+    /**
+     * Liefert true, wenn für das Team eine Einzelansicht verlinkt werden kann.
+     */
+    public function hasReport()
+    {
+        return intval($this->getProperty('link_report'));
+    }
 
-	/**
-	 * Check if team is a dummy for free_of_match.
-	 * @return boolean
-	 */
-	public function isDummy(){
-		return intval($this->getProperty('dummy')) != 0;
-	}
+    /**
+     * Returns the url of the first team logo.
+     * (not yet implemented).
+     *
+     * @return string
+     */
+    public function getLogoPath()
+    {
+        if ($this->getProperty('logo')) {
+            // LogoFeld
+            $media = tx_rnbase::makeInstance('tx_rnbase_model_media', $this->getProperty('logo'));
 
-	/**
-	 * Liefert die Spieler des Teams in der vorgegebenen Reihenfolge als Profile. Der
-	 * Key ist die laufende Nummer und nicht die UID!
-	 * @return array[tx_cfcleague_models_Profile]
-	 */
-	public function getPlayers() {
-		return $this->getTeamMember('players');
-	}
-	/**
-	 * Liefert die Trainer des Teams in der vorgegebenen Reihenfolge als Profile. Der
-	 * Key ist die laufende Nummer und nicht die UID!
-	 * @return array[tx_cfcleague_models_Profile]
-	 */
-	public function getCoaches() {
-		return $this->getTeamMember('coaches');
-	}
+            return $media->getProperty('file');
+        } elseif ($this->getProperty('club')) {
+            $club = tx_rnbase::makeInstance('tx_cfcleague_models_Club', $this->getProperty('club'));
 
-	/**
-	 * Liefert die Betreuer des Teams in der vorgegebenen Reihenfolge als Profile. Der
-	 * Key ist die laufende Nummer und nicht die UID!
-	 * @return array[tx_cfcleague_models_Profile]
-	 */
-	public function getSupporters() {
-		return $this->getTeamMember('supporters');
-	}
+            return $club->getFirstLogo();
+        }
 
-	/**
-	 * Liefert Mitglieder des Teams als Array. Teammitglieder sind Spieler, Trainer und Betreuer.
-	 * Die gefundenen Profile werden sortiert in der Reihenfolge im Team geliefert.
-	 * @column Name der DB-Spalte mit den gesuchten Team-Mitgliedern
-	 * @return array[tx_cfcleague_models_Profile]
-	 */
-	private function getTeamMember($column) {
-		if(strlen(trim($this->getProperty($column))) > 0 ) {
-			$what = '*';
-			$from = 'tx_cfcleague_profiles';
-			$options['where'] = 'uid IN (' .$this->getProperty($column) . ')';
-			$options['wrapperclass'] = 'tx_cfcleague_models_Profile';
+        return '';
+    }
 
-			$rows = Tx_Rnbase_Database_Connection::getInstance()->doSelect($what,$from,$options,0);
-			return $this->sortProfiles($rows, $column);
-		}
-		return array();
-	}
+    public function getGroupUid()
+    {
+        return $this->getProperty('agegroup');
+    }
 
-	/**
-	 * Sortiert die Personen (Spieler/Trainer) entsprechend der Reihenfolge im Team
-	 * @param $profiles array[tx_cfcleague_models_Profile]
-	 */
-	private function sortProfiles($profiles, $recordKey = 'players') {
-		$ret = array();
+    /**
+     * Liefert den Verein des Teams als Objekt.
+     *
+     * @return tx_cfcleague_models_Club Verein als Objekt oder null
+     */
+    public function getClub()
+    {
+        if (!$this->getProperty('club')) {
+            return null;
+        }
 
-		if(strlen(trim($this->getProperty($recordKey))) > 0 ) {
-			if(count($profiles)) {
-				// Jetzt die Spieler in die richtige Reihenfolge bringen
-				$uids = Tx_Rnbase_Utility_Strings::intExplode(',', $this->getProperty($recordKey));
-				$uids = array_flip($uids);
-				foreach($profiles as $player) {
-					$ret[(int)$uids[$player->getUid()]] = $player;
-				}
-				ksort($ret);
-			}
-		}
-		else {
-			// Wenn keine Spieler im Team geladen sind, dann wird das Array unverändert zurückgegeben
-			return $profiles;
-		}
-		return $ret;
-	}
+        return tx_rnbase::makeInstance('tx_cfcleague_models_Club', $this->getProperty('club'));
+    }
 
+    public function getClubUid()
+    {
+        return $this->getProperty('club');
+    }
+
+    /**
+     * Check if team is a dummy for free_of_match.
+     *
+     * @return boolean
+     */
+    public function isDummy()
+    {
+        return 0 != intval($this->getProperty('dummy'));
+    }
+
+    /**
+     * Liefert die Spieler des Teams in der vorgegebenen Reihenfolge als Profile. Der
+     * Key ist die laufende Nummer und nicht die UID!
+     *
+     * @return array[tx_cfcleague_models_Profile]
+     */
+    public function getPlayers()
+    {
+        return $this->getTeamMember('players');
+    }
+
+    /**
+     * Liefert die Trainer des Teams in der vorgegebenen Reihenfolge als Profile. Der
+     * Key ist die laufende Nummer und nicht die UID!
+     *
+     * @return array[tx_cfcleague_models_Profile]
+     */
+    public function getCoaches()
+    {
+        return $this->getTeamMember('coaches');
+    }
+
+    /**
+     * Liefert die Betreuer des Teams in der vorgegebenen Reihenfolge als Profile. Der
+     * Key ist die laufende Nummer und nicht die UID!
+     *
+     * @return array[tx_cfcleague_models_Profile]
+     */
+    public function getSupporters()
+    {
+        return $this->getTeamMember('supporters');
+    }
+
+    /**
+     * Liefert Mitglieder des Teams als Array. Teammitglieder sind Spieler, Trainer und Betreuer.
+     * Die gefundenen Profile werden sortiert in der Reihenfolge im Team geliefert.
+     *
+     * @column Name der DB-Spalte mit den gesuchten Team-Mitgliedern
+     *
+     * @return array[tx_cfcleague_models_Profile]
+     */
+    private function getTeamMember($column)
+    {
+        if (strlen(trim($this->getProperty($column))) > 0) {
+            $what = '*';
+            $from = 'tx_cfcleague_profiles';
+            $options['where'] = 'uid IN ('.$this->getProperty($column).')';
+            $options['wrapperclass'] = 'tx_cfcleague_models_Profile';
+
+            $rows = Tx_Rnbase_Database_Connection::getInstance()->doSelect($what, $from, $options, 0);
+
+            return $this->sortProfiles($rows, $column);
+        }
+
+        return array();
+    }
+
+    /**
+     * Sortiert die Personen (Spieler/Trainer) entsprechend der Reihenfolge im Team.
+     *
+     * @param $profiles array[tx_cfcleague_models_Profile]
+     */
+    private function sortProfiles($profiles, $recordKey = 'players')
+    {
+        $ret = array();
+
+        if (strlen(trim($this->getProperty($recordKey))) > 0) {
+            if (count($profiles)) {
+                // Jetzt die Spieler in die richtige Reihenfolge bringen
+                $uids = Tx_Rnbase_Utility_Strings::intExplode(',', $this->getProperty($recordKey));
+                $uids = array_flip($uids);
+                foreach ($profiles as $player) {
+                    $ret[(int) $uids[$player->getUid()]] = $player;
+                }
+                ksort($ret);
+            }
+        } else {
+            // Wenn keine Spieler im Team geladen sind, dann wird das Array unverändert zurückgegeben
+            return $profiles;
+        }
+
+        return $ret;
+    }
 }

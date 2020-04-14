@@ -24,13 +24,12 @@ tx_rnbase::load('tx_rnbase_util_SearchBase');
 tx_rnbase::load('tx_rnbase_util_Misc');
 
 /**
- * Class to search saison from database
+ * Class to search saison from database.
  *
  * @author Rene Nitzsche
  */
 class tx_cfcleague_search_Saison extends tx_rnbase_util_SearchBase
 {
-
     protected function getTableMappings()
     {
         $tableMapping = [];
@@ -38,8 +37,9 @@ class tx_cfcleague_search_Saison extends tx_rnbase_util_SearchBase
 
         // Hook to append other tables
         tx_rnbase_util_Misc::callHook('cfc_league', 'search_Saison_getTableMapping_hook', array(
-            'tableMapping' => &$tableMapping
+            'tableMapping' => &$tableMapping,
         ), $this);
+
         return $tableMapping;
     }
 
@@ -50,23 +50,24 @@ class tx_cfcleague_search_Saison extends tx_rnbase_util_SearchBase
         // Hook to append other tables
         tx_rnbase_util_Misc::callHook('cfc_league', 'search_Saison_getJoins_hook', array(
             'join' => &$join,
-            'tableAliases' => $tableAliases
+            'tableAliases' => $tableAliases,
         ), $this);
+
         return $join;
     }
 
     /**
-     * (non-PHPdoc)
+     * (non-PHPdoc).
      *
      * @see tx_rnbase_util_SearchBase::useAlias()
      */
     protected function useAlias()
     {
-        return TRUE;
+        return true;
     }
 
     /**
-     * (non-PHPdoc)
+     * (non-PHPdoc).
      *
      * @see tx_rnbase_util_SearchBase::getBaseTable()
      */
@@ -76,7 +77,7 @@ class tx_cfcleague_search_Saison extends tx_rnbase_util_SearchBase
     }
 
     /**
-     * (non-PHPdoc)
+     * (non-PHPdoc).
      *
      * @see tx_rnbase_util_SearchBase::getBaseTableAlias()
      */
@@ -86,7 +87,7 @@ class tx_cfcleague_search_Saison extends tx_rnbase_util_SearchBase
     }
 
     /**
-     * (non-PHPdoc)
+     * (non-PHPdoc).
      *
      * @see tx_rnbase_util_SearchBase::getWrapperClass()
      */
