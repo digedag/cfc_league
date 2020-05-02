@@ -2,7 +2,7 @@
 Änderungen
 ==========
 
-## v1.4.0 (02.05.2020)
+## v1.4.1 (02.05.2020)
  * Support for TYPO3 9.5 LTS
  * Support for TYPO3 6.2 LTS dropped
  * Show logo preview in team record
