@@ -27,6 +27,8 @@
  */
 class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc
 {
+    const TABLE_NOTES = 'tx_cfcleague_match_notes';
+
     public $doc;
     public $MCONF;
 
@@ -118,12 +120,11 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc
         $modContent .= $this->doc->divider(5);
         $arr = $this->createTickerArray($match, Tx_Rnbase_Utility_T3General::_GP('showAll'));
         if ($arr) {
-            $tickerContent = $formTool->createLink('showAll=1', $this->getModule()
-                ->getPid(), $LANG->getLL('label_showAllTickers'), [
-                'params' => [
-                    'showAll' => 1,
-                ],
-            ]);
+            $tickerContent = $formTool->createModuleLink(
+                ['showAll'=>'1'],
+                $this->getModule()->getPid(),
+                $LANG->getLL('label_showAllTickers')
+            );
             $tableLayout = $this->_getTableLayoutForm();
             $tableLayout['defRowEven']['defCol'] = $tableLayout['defRowOdd']['defCol']; // Array('<td valign="top" style="padding:5px 5px;">', '</td>');
             $tickerContent .= $tables->buildTable($arr, $tableLayout);
@@ -651,15 +652,19 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc
      */
     public function insertNotes($data)
     {
-        $notes = $data['tx_cfcleague_match_notes'];
+        $notes = $data[self::TABLE_NOTES];
         foreach ($notes as $noteId => $note) {
-            $playerOk = !(0 != intval($note['player_home']) && 0 != intval($note['player_guest']));
+            $data[self::TABLE_NOTES][$noteId]['player_home'] = (int) $data[self::TABLE_NOTES][$noteId]['player_home'];
+            $data[self::TABLE_NOTES][$noteId]['player_guest'] = (int) $data[self::TABLE_NOTES][$noteId]['player_guest'];
+            $data[self::TABLE_NOTES][$noteId]['player_guest'] = (int) $data[self::TABLE_NOTES][$noteId]['player_guest'];
+            
+            $playerOk = !(0 != (int) $note['player_home'] && 0 != (int) $note['player_guest']);
 
             // Ohne Minute (Feld ist leer) wird nix gespeichert
             // kleinste Minute ist -1 für versteckte Meldungen
             if (strlen($note['minute']) > 0 && intval($note['minute']) >= -1 && $playerOk) { // Minute ist Pflichtfeld
-                $data['tx_cfcleague_match_notes'][$noteId]['pid'] = $this->getModule()->getPid();
-                $data['tx_cfcleague_match_notes'][$noteId]['comment'] = nl2br($data['tx_cfcleague_match_notes'][$noteId]['comment']);
+                $data[self::TABLE_NOTES][$noteId]['pid'] = $this->getModule()->getPid();
+                $data[self::TABLE_NOTES][$noteId]['comment'] = nl2br($data[self::TABLE_NOTES][$noteId]['comment']);
             } else {
                 unset($data['tx_cfcleague_match_notes'][$noteId]);
             }
@@ -669,7 +674,6 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc
         }
         // Die neuen Notes werden jetzt gespeichert
         reset($data);
-        tx_rnbase::load('Tx_Rnbase_Database_Connection');
         $tce = Tx_Rnbase_Database_Connection::getInstance()->getTCEmain($data);
         $tce->process_datamap();
     }
