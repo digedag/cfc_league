@@ -2,9 +2,11 @@
 Änderungen
 ==========
 
-## v1.4.0 (?.?.2020)
+## v1.4.0 (02.05.2020)
+ * Support for TYPO3 9.5 LTS
  * Support for TYPO3 6.2 LTS dropped
  * Show logo preview in team record
+ * Some new fields in profiles useful for GDPR
 
 ## v1.3.0 (11.06.2019)
  * better support for TYPO3 8.7 LTS
