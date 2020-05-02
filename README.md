@@ -1,7 +1,7 @@
 T3sports Backend
 ================
 
-[![cfc_league](ext_icon.svg)](https://github.com/digedag/cfc_league)
+<a href="https://github.com/digedag/cfc_league"><img src="ext_icon.svg" width="20"></a>
 [![Latest Stable Version](https://img.shields.io/packagist/v/digedag/cfc-league.svg?maxAge=3600)](https://packagist.org/packages/digedag/cfc-league)
 [![Total Downloads](https://img.shields.io/packagist/dt/digedag/cfc-league.svg?maxAge=3600)](https://packagist.org/packages/digedag/cfc-league)
 [![Build Status](https://api.travis-ci.org/digedag/cfc_league.png)](https://travis-ci.org/digedag/cfc_league)
@@ -20,4 +20,3 @@ Backend modules
 * Manage teams (Organize players, coaches and staff)
 * Manage clubs and stadiums
 * Organize profiles (including merge function for duplicate profiles)
-
