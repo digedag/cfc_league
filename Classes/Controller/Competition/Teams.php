@@ -158,7 +158,7 @@ class Tx_Cfcleague_Controller_Competition_Teams
             ),
         );
         $maxFields = 6;
-        for ($i = 0; $i < $maxFields; ++$i ) {
+        for ($i = 0; $i < $maxFields; ++$i) {
             $row = array();
             $row[] = ($i + 1).$this->getFormTool()->createHidden('data[tx_cfcleague_teams][NEW'.$i.'][pid]', $pid);
             $row[] = $this->getFormTool()->createTxtInput('data[tx_cfcleague_teams][NEW'.$i.'][name]', '', 20);

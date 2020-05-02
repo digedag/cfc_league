@@ -33,6 +33,7 @@ tx_rnbase::load('Tx_Rnbase_Utility_T3General');
 class Tx_Cfcleague_Controller_Profile extends tx_rnbase_mod_BaseModFunc
 {
     public $doc;
+
     public $MCONF;
 
     /**
@@ -275,7 +276,7 @@ class Tx_Cfcleague_Controller_Profile extends tx_rnbase_mod_BaseModFunc
         // Diese müssen wir jetzt wieder zusammenfügen
         $lastRow = $rows[0];
         $ret = [];
-        for ($i = 0; $i < $cnt; ++$i ) {
+        for ($i = 0; $i < $cnt; ++$i) {
             if (intval($lastRow['uid']) != intval($rows[$i]['uid'])) {
                 // Ein neuer Spieler, also den alten ins Ergebnisarray legen
                 $ret[] = $lastRow;

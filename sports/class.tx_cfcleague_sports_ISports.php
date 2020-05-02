@@ -44,7 +44,7 @@ interface tx_cfcleague_sports_ISports
     public function getTCALabel();
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isSetBased();
 

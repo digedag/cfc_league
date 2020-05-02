@@ -36,6 +36,7 @@ tx_rnbase::load('Tx_Rnbase_Configuration_Processor');
 class tx_cfcleague_selector
 {
     public $doc;
+
     public $MCONF;
 
     private $modName;

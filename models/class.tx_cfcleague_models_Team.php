@@ -99,7 +99,7 @@ class tx_cfcleague_models_Team extends Tx_Rnbase_Domain_Model_Base
     /**
      * Check if team is a dummy for free_of_match.
      *
-     * @return boolean
+     * @return bool
      */
     public function isDummy()
     {
