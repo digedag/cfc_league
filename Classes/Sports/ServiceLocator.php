@@ -29,6 +29,7 @@ class ServiceLocator
 {
     /**
      * @param string $sports
+     *
      * @return ISports
      */
     public function getSportsService($sports)

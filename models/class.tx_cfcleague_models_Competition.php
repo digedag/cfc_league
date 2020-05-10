@@ -622,6 +622,7 @@ class tx_cfcleague_models_Competition extends tx_rnbase_model_base
 
     /**
      * @return tx_cfcleague_sports_ISports
+     *
      * @deprecated use System25\T3sports\Sports\ServiceLocator
      */
     public function getSportsService()
