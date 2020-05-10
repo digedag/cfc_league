@@ -31,12 +31,12 @@ use System25\T3sports\Sports\ServiceLocator;
 class Tx_Cfcleague_Controller_Competition_MatchEdit
 {
     private $sportsServiceLocator;
-    
+
     public function __construct()
     {
         $this->sportsServiceLocator = new ServiceLocator();
     }
-    
+
     /**
      * Bearbeitung von Spielen.
      * Es werden die Paaren je Spieltag angezeigt.
@@ -248,7 +248,7 @@ class Tx_Cfcleague_Controller_Competition_MatchEdit
                 $arr[] = $label ? $label : $i.'. part';
             }
         }
-\tx_rnbase_util_Debug::debug('Test', __FILE__.':'.__LINE__); // TODO: remove me
+        \tx_rnbase_util_Debug::debug('Test', __FILE__.':'.__LINE__); // TODO: remove me
         $sports = $this->sportsServiceLocator->getSportsService($competition->getSports());
         if ($sports->isSetBased()) {
             $arr[] = $LANG->getLL('tx_cfcleague_games_sets');
