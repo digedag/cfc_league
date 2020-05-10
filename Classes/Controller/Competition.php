@@ -33,6 +33,7 @@ tx_rnbase::load('tx_rnbase_util_TYPO3');
 class Tx_Cfcleague_Controller_Competition extends tx_rnbase_mod_BaseModFunc
 {
     public $doc;
+
     public $MCONF;
 
     /**

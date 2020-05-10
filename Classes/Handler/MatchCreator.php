@@ -70,7 +70,7 @@ class Tx_Cfcleague_Handler_MatchCreator
         $LANG->includeLLFile('EXT:cfc_league/locallang_db.xml');
 
         $items = array();
-        for ($i = 1; $i < 33; ++$i ) {
+        for ($i = 1; $i < 33; ++$i) {
             $items[$i] = $i.(1 == $i ? ' ###LABEL_MATCH###' : ' ###LABEL_MATCHES###');
         }
         $menu = $mod->getFormTool()->showMenu($mod->getPid(), 'matchs3create', $mod->getName(), $items);
@@ -99,7 +99,7 @@ class Tx_Cfcleague_Handler_MatchCreator
 
         /* @var $formBuilder Tx_Rnbase_Backend_Form_FormBuilder */
         $formBuilder = $mod->getFormTool()->getTCEForm();
-        for ($i = 0; $i < $maxMatches; ++$i ) {
+        for ($i = 0; $i < $maxMatches; ++$i) {
             $row = [];
             $dataArr['uid'] = 'NEW'.$i;
             $dataArr['date'] = strtotime('+'.$i.' weeks');

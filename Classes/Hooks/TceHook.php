@@ -76,7 +76,7 @@ class TceHook
                 \tx_rnbase::load('Tx_Rnbase_Utility_Strings');
                 $newItemIds = \Tx_Rnbase_Utility_Strings::trimExplode(',', $incomingFieldArray['teams']);
                 $itemUids = [];
-                for ($i = 0; $i < count($newItemIds); ++$i ) {
+                for ($i = 0; $i < count($newItemIds); ++$i) {
                     if (strstr($newItemIds[$i], 'NEW')) {
                         $itemUid = $tcemain->substNEWwithIDs[$newItemIds[$i]];
                     } else {

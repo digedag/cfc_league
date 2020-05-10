@@ -30,6 +30,7 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc
     const TABLE_NOTES = 'tx_cfcleague_match_notes';
 
     public $doc;
+
     public $MCONF;
 
     public $playerNames = [];
@@ -121,7 +122,7 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc
         $arr = $this->createTickerArray($match, Tx_Rnbase_Utility_T3General::_GP('showAll'));
         if ($arr) {
             $tickerContent = $formTool->createModuleLink(
-                ['showAll'=>'1'],
+                ['showAll' => '1'],
                 $this->getModule()->getPid(),
                 $LANG->getLL('label_showAllTickers')
             );
@@ -391,7 +392,7 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc
         $out = '';
 
         $parts = $competition->getNumberOfMatchParts();
-        for ($i = $parts; $i > 0; --$i ) {
+        for ($i = $parts; $i > 0; --$i) {
             $label = $LANG->getLL('tx_cfcleague_games.parts_'.$parts.'_'.$i);
             if (!$label) {
                 // Prüfen ob ein default gesetzt ist
@@ -607,7 +608,7 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc
         $types = $this->getTickerTypes();
         // Wenn kein sinnvoller Wert vorhanden ist, bleibt der Standard bei 4
         $inputFields = $inputFields ? $inputFields : 4;
-        for ($i = 0; $i < $inputFields; ++$i ) {
+        for ($i = 0; $i < $inputFields; ++$i) {
             $row = [];
 
             $row[] = $this->getModule()
@@ -657,7 +658,7 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc
             $data[self::TABLE_NOTES][$noteId]['player_home'] = (int) $data[self::TABLE_NOTES][$noteId]['player_home'];
             $data[self::TABLE_NOTES][$noteId]['player_guest'] = (int) $data[self::TABLE_NOTES][$noteId]['player_guest'];
             $data[self::TABLE_NOTES][$noteId]['player_guest'] = (int) $data[self::TABLE_NOTES][$noteId]['player_guest'];
-            
+
             $playerOk = !(0 != (int) $note['player_home'] && 0 != (int) $note['player_guest']);
 
             // Ohne Minute (Feld ist leer) wird nix gespeichert

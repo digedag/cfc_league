@@ -30,7 +30,9 @@ tx_rnbase::load('Tx_Rnbase_Utility_Strings');
 class tx_cfcleague_models_Set extends tx_rnbase_model_base
 {
     protected $p1;
+
     protected $p2;
+
     protected $set;
 
     public function __construct($set, $p1 = 0, $p2 = 0)

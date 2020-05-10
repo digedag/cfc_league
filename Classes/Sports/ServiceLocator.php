@@ -28,8 +28,8 @@ namespace System25\T3sports\Sports;
 class ServiceLocator
 {
     /**
-     * 
      * @param string $sports
+     *
      * @return \tx_cfcleague_sports_ISports
      */
     public function getSportsService($sports)
