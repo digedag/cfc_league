@@ -228,7 +228,7 @@ class Tx_Cfcleague_Controller_Competition_MatchEdit
         }
         // Hier je Spielart die Überschrift setzen
         if ($parts > 1) {
-            for ($i = $parts; $i > 0; --$i ) {
+            for ($i = $parts; $i > 0; --$i) {
                 $label = $LANG->getLL('tx_cfcleague_games.parts_'.$parts.'_'.$i);
                 if (!$label) {
                     // Prüfen ob ein default gesetzt ist
@@ -308,7 +308,7 @@ class Tx_Cfcleague_Controller_Competition_MatchEdit
                     $row[] = $match->getResult();
                 }
                 // Jetzt die Spielabschitte einbauen, wobei mit dem letzten begonnen wird
-                for ($i = $parts; $i > 0; --$i ) {
+                for ($i = $parts; $i > 0; --$i) {
                     $row[] = $this->formTool->createIntInput('data[tx_cfcleague_games]['.$matchUid.'][goals_home_'.$i.']', $match->getProperty('goals_home_'.$i), 3).' : '.$this->formTool->createIntInput('data[tx_cfcleague_games]['.$matchUid.'][goals_guest_'.$i.']', $match->getProperty('goals_guest_'.$i), 3);
                 }
 

@@ -133,7 +133,7 @@ class Tx_Cfcleague_Controller_Team_ProfileCreate
         ];
 
         $maxFields = count($team->getPlayers()) > 5 ? 5 : 15;
-        for ($i = 0; $i < $maxFields; ++$i ) {
+        for ($i = 0; $i < $maxFields; ++$i) {
             $row = [];
             $row[] = $i + 1;
             $row[] = $this->formTool->createTxtInput('data[tx_cfcleague_profiles][NEW'.$i.'][first_name]', '', 10);

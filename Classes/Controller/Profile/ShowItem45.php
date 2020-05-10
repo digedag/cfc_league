@@ -58,8 +58,6 @@ class Tx_Cfcleague_Controller_Profile_ShowItem45
     /**
      * Initialization of the class
      * Will determine if table/uid GET vars are database record or a file and if the user has access to view information about the item.
-     *
-     * @return	void
      */
     public function init($table = '', $uid = 0)
     {
@@ -128,8 +126,6 @@ class Tx_Cfcleague_Controller_Profile_ShowItem45
 
     /**
      * Main function. Will generate the information to display for the item set internally.
-     *
-     * @return	void
      */
     public function main()
     {
@@ -182,8 +178,6 @@ class Tx_Cfcleague_Controller_Profile_ShowItem45
 
     /**
      * Main function. Will generate the information to display for the item set internally.
-     *
-     * @return	void
      */
     public function renderDBInfo()
     {
@@ -237,9 +231,7 @@ class Tx_Cfcleague_Controller_Profile_ShowItem45
     /**
      * Main function. Will generate the information to display for the item set internally.
      *
-     * @param	string		<a> tag closing/returning.
-     *
-     * @return	void
+     * @param	string		<a> tag closing/returning
      */
     public function renderFileInfo($returnLinkTag)
     {
@@ -360,8 +352,6 @@ class Tx_Cfcleague_Controller_Profile_ShowItem45
 
     /**
      * End page and print content.
-     *
-     * @return	void
      */
     public function printContent()
     {

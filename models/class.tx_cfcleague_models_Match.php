@@ -148,7 +148,7 @@ class tx_cfcleague_models_Match extends tx_rnbase_model_base
 
         // Teilergebnisse holen
         $matchParts = $matchParts > 0 ? $matchParts : 1;
-        for ($i = 1; $i <= $matchParts; ++$i ) {
+        for ($i = 1; $i <= $matchParts; ++$i) {
             $goalsHome += $this->getProperty('goals_home_'.$i);
             $goalsGuest += $this->getProperty('goals_guest_'.$i);
         }
@@ -520,7 +520,7 @@ class tx_cfcleague_models_Match extends tx_rnbase_model_base
             $this->matchNotes = Tx_Rnbase_Database_Connection::getInstance()->doSelect($what, $from, $options, 0);
             // Das Match setzen (foreach geht hier nicht weil es nicht mit Referenzen arbeitet...)
             $anz = count($this->matchNotes);
-            for ($i = 0; $i < $anz; ++$i ) {
+            for ($i = 0; $i < $anz; ++$i) {
                 $this->matchNotes[$i]->setMatch($this);
                 // Zusätzlich die Notes nach ihrem Typ sortieren
                 $this->matchNoteTypes[intval($this->matchNotes[$i]->getProperty('type'))][] = $this->matchNotes[$i];

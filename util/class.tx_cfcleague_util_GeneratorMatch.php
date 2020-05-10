@@ -25,9 +25,13 @@
 class tx_cfcleague_util_GeneratorMatch
 {
     public $home;
+
     public $guest;
+
     public $nr;
+
     public $nr2;
+
     public $noMatch;
 
     public function __construct($n, $n2, $h, $g, $noMatch)

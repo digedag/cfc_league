@@ -47,7 +47,7 @@ interface ISports
     public function getTCALabel();
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isSetBased();
 
@@ -56,4 +56,3 @@ interface ISports
      */
     public function getMatchInfo();
 }
-

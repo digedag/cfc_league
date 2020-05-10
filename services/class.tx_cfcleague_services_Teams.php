@@ -166,7 +166,7 @@ class tx_cfcleague_services_Teams extends tx_cfcleague_services_Base
             }
             if (!$agegroup) {
                 $comps = $this->getCompetitions4Team($team, true);
-                for ($i = 0, $cnt = count($comps); $i < $cnt; ++$i ) {
+                for ($i = 0, $cnt = count($comps); $i < $cnt; ++$i) {
                     if (is_object($comps[$i]->getGroup())) {
                         $agegroup = $comps[$i]->getGroup();
 

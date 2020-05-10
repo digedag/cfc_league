@@ -30,6 +30,7 @@ tx_rnbase::load('tx_rnbase_mod_BaseModFunc');
 class Tx_Cfcleague_Controller_Team extends tx_rnbase_mod_BaseModFunc
 {
     public $doc;
+
     public $MCONF;
 
     /**

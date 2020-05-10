@@ -174,8 +174,8 @@ class tx_cfcleague_tca_Lookup
                 // Je nach Pflege der Daten sind unterschiedliche Felder gefüllt.
                 $label = (
                     $item->getProperty('title') ? $item->getProperty('title') : (
-                    $item->getProperty('name') ? $item->getProperty('name') : $item->getProperty('file')
-                )
+                        $item->getProperty('name') ? $item->getProperty('name') : $item->getProperty('file')
+                    )
                 );
                 $PA['items'][] = array(
                     $label,
