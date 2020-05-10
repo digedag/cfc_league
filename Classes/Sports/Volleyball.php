@@ -1,8 +1,13 @@
 <?php
+
+namespace System25\T3sports\Sports;
+
+use Sys25\RnBase\Typo3Wrapper\Service\AbstractService;
+
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2012-2015 Rene Nitzsche (rene@system25.de)
+ *  (c) 2012-2020 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -22,20 +27,17 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-tx_rnbase::load('tx_cfcleague_sports_ISports');
-tx_rnbase::load('Tx_Rnbase_Service_Base');
-
-class tx_cfcleague_sports_Volleyball extends Tx_Rnbase_Service_Base implements tx_cfcleague_sports_ISports
+class Volleyball extends AbstractService implements ISports
 {
     /**
      * Get match provider.
      *
-     * @return tx_cfcleaguefe_table_ITableType or null
+     * @return \tx_cfcleaguefe_table_ITableType or null
      */
     public function getLeagueTable()
     {
-        if (tx_rnbase_util_Extensions::isLoaded('cfc_league_fe')) {
-            return tx_rnbase::makeInstance('tx_cfcleaguefe_table_volleyball_Table');
+        if (\tx_rnbase_util_Extensions::isLoaded('cfc_league_fe')) {
+            return \tx_rnbase::makeInstance('tx_cfcleaguefe_table_volleyball_Table');
         }
 
         return null;
@@ -46,10 +48,10 @@ class tx_cfcleague_sports_Volleyball extends Tx_Rnbase_Service_Base implements t
      */
     public function getTCAPointSystems()
     {
-        return array(
-            array(tx_rnbase_util_Misc::translateLLL('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition.point_system_2'), 0),
-            array(tx_rnbase_util_Misc::translateLLL('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition.point_system_3'), 1),
-        );
+        return [
+            [\tx_rnbase_util_Misc::translateLLL('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition.point_system_2'), 0],
+            [\tx_rnbase_util_Misc::translateLLL('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition.point_system_3'), 1],
+        ];
     }
 
     public function getTCALabel()
@@ -65,20 +67,15 @@ class tx_cfcleague_sports_Volleyball extends Tx_Rnbase_Service_Base implements t
     private $matchInfo = null;
 
     /* (non-PHPdoc)
-     * @see tx_cfcleague_sports_ISports::getMatchInfo()
+     * @see ISports::getMatchInfo()
      */
     public function getMatchInfo()
     {
         if (null == $this->matchInfo) {
             // Bei Volleyball gibt es keine festen Zeiten
-            $this->matchInfo = tx_rnbase::makeInstance('tx_cfcleague_sports_MatchInfo', array(
-            ));
+            $this->matchInfo = \tx_rnbase::makeInstance('tx_cfcleague_sports_MatchInfo', []);
         }
 
         return $this->matchInfo;
     }
-}
-
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/sports/class.tx_cfcleague_sports_Volleyball.php']) {
-    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/sports/class.tx_cfcleague_sports_Volleyball.php'];
 }

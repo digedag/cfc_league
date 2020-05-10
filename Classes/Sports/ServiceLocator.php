@@ -1,8 +1,11 @@
 <?php
+
+namespace System25\T3sports\Sports;
+
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2011-2013 Rene Nitzsche (rene@system25.de)
+ *  (c) 2010-2020 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -22,38 +25,15 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-/**
- * Implementors provide configurations for different kind of sports.
- */
-interface tx_cfcleague_sports_ISports
+class ServiceLocator
 {
     /**
-     * Get match provider.
-     *
-     * @return tx_cfcleaguefe_table_ITableType or null if none available
+     * 
+     * @param string $sports
+     * @return \tx_cfcleague_sports_ISports
      */
-    public function getLeagueTable();
-
-    /**
-     * Set configuration.
-     *
-     * @return array
-     */
-    public function getTCAPointSystems();
-
-    public function getTCALabel();
-
-    /**
-     * @return boolean
-     */
-    public function isSetBased();
-
-    /**
-     * @return tx_cfcleague_sports_MatchInfo
-     */
-    public function getMatchInfo();
-}
-
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/sports/sports/class.tx_cfcleague_sports_ISports.php']) {
-    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/sports/class.tx_cfcleague_sports_ISports.php'];
+    public function getSportsService($sports)
+    {
+        return \tx_rnbase_util_Misc::getService('t3sports_sports', $sports);
+    }
 }

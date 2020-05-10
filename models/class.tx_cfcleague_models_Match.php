@@ -257,7 +257,7 @@ class tx_cfcleague_models_Match extends tx_rnbase_model_base
     /**
      * Returns the competition.
      *
-     * @return tx_cfcleague_models_Competition
+     * @return \tx_cfcleague_models_Competition
      */
     public function getCompetition()
     {
