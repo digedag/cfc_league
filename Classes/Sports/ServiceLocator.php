@@ -29,8 +29,7 @@ class ServiceLocator
 {
     /**
      * @param string $sports
-     *
-     * @return \tx_cfcleague_sports_ISports
+     * @return ISports
      */
     public function getSportsService($sports)
     {

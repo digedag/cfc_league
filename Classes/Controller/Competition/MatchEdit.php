@@ -1,8 +1,11 @@
 <?php
+
+use System25\T3sports\Sports\ServiceLocator;
+
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2007-2018 Rene Nitzsche (rene@system25.de)
+ *  (c) 2007-2020 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -21,14 +24,19 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-tx_rnbase::load('tx_rnbase_parameters');
-tx_rnbase::load('tx_rnbase_mod_Tables');
 
 /**
  * Die Klasse verwaltet die Bearbeitung der Spieltage.
  */
 class Tx_Cfcleague_Controller_Competition_MatchEdit
 {
+    private $sportsServiceLocator;
+    
+    public function __construct()
+    {
+        $this->sportsServiceLocator = new ServiceLocator();
+    }
+    
     /**
      * Bearbeitung von Spielen.
      * Es werden die Paaren je Spieltag angezeigt.
@@ -240,8 +248,8 @@ class Tx_Cfcleague_Controller_Competition_MatchEdit
                 $arr[] = $label ? $label : $i.'. part';
             }
         }
-
-        $sports = $competition->getSportsService();
+\tx_rnbase_util_Debug::debug('Test', __FILE__.':'.__LINE__); // TODO: remove me
+        $sports = $this->sportsServiceLocator->getSportsService($competition->getSports());
         if ($sports->isSetBased()) {
             $arr[] = $LANG->getLL('tx_cfcleague_games_sets');
         }
@@ -312,7 +320,7 @@ class Tx_Cfcleague_Controller_Competition_MatchEdit
                     $row[] = $this->formTool->createIntInput('data[tx_cfcleague_games]['.$matchUid.'][goals_home_'.$i.']', $match->getProperty('goals_home_'.$i), 3).' : '.$this->formTool->createIntInput('data[tx_cfcleague_games]['.$matchUid.'][goals_guest_'.$i.']', $match->getProperty('goals_guest_'.$i), 3);
                 }
 
-                $sports = $competition->getSportsService();
+                $sports = $this->sportsServiceLocator->getSportsService($competition->getSports());
                 if ($sports->isSetBased()) {
                     $row[] = $this->formTool->createTxtInput('data[tx_cfcleague_games]['.$matchUid.'][sets]', $match->getProperty('sets'), 12);
                 }

@@ -45,7 +45,6 @@ if (TYPO3_MODE == 'BE') {
     ];
 }
 
-tx_rnbase::load('tx_cfcleague_util_Misc');
 
 tx_cfcleague_util_Misc::registerMatchNote('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_match_notes.type.ticker', '100');
 tx_cfcleague_util_Misc::registerMatchNote('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_match_notes.type.goal', '10');
@@ -73,7 +72,6 @@ tx_cfcleague_util_Misc::registerFormation('5-3-2', '1-5-3-2');
 tx_cfcleague_util_Misc::registerFormation('5-4-1', '1-5-4-1');
 
 // Include services
-tx_rnbase::load('tx_cfcleague_util_ServiceRegistry');
 
 tx_rnbase_util_Extensions::addService(
     $_EXTKEY,
@@ -187,54 +185,50 @@ tx_rnbase_util_Extensions::addService(
     $_EXTKEY,
     't3sports_sports' /* sv type */,
     'tx_cfcleague_sports_Football' /* sv key */,
-    array(
+    [
         'title' => 'T3sports Football', 'description' => 'Special configurations for football.',
         'subtype' => 'football',
         'available' => true, 'priority' => 50, 'quality' => 50,
         'os' => '', 'exec' => '',
-        'classFile' => tx_rnbase_util_Extensions::extPath($_EXTKEY).'sports/class.tx_cfcleague_sports_Football.php',
-        'className' => 'tx_cfcleague_sports_Football',
-    )
+        'className' => System25\T3sports\Sports\Football::class,
+    ]
 );
 
 tx_rnbase_util_Extensions::addService(
     $_EXTKEY,
     't3sports_sports' /* sv type */,
     'tx_cfcleague_sports_Handball' /* sv key */,
-    array(
+    [
         'title' => 'T3sports Handball', 'description' => 'Special configurations for handball.',
         'subtype' => 'handball',
         'available' => true, 'priority' => 50, 'quality' => 50,
         'os' => '', 'exec' => '',
-        'classFile' => tx_rnbase_util_Extensions::extPath($_EXTKEY).'sports/class.tx_cfcleague_sports_Handball.php',
-        'className' => 'tx_cfcleague_sports_Handball',
-    )
+        'className' => System25\T3sports\Sports\Handball::class,
+    ]
 );
 
 tx_rnbase_util_Extensions::addService(
     $_EXTKEY,
     't3sports_sports' /* sv type */,
     'tx_cfcleague_sports_IceHockey' /* sv key */,
-    array(
+    [
         'title' => 'T3sports IceHockey', 'description' => 'Special configurations for IceHockey.',
         'subtype' => 'icehockey',
         'available' => true, 'priority' => 50, 'quality' => 50,
         'os' => '', 'exec' => '',
-        'classFile' => tx_rnbase_util_Extensions::extPath($_EXTKEY).'sports/class.tx_cfcleague_sports_IceHockey.php',
-        'className' => 'tx_cfcleague_sports_IceHockey',
-    )
+        'className' => System25\T3sports\Sports\IceHockey::class,
+    ]
 );
 
 tx_rnbase_util_Extensions::addService(
     $_EXTKEY,
     't3sports_sports' /* sv type */,
     'tx_cfcleague_sports_Volleyball' /* sv key */,
-    array(
+    [
         'title' => 'T3sports Volleyball', 'description' => 'Special configurations for Volleyball.',
         'subtype' => 'volleyball',
         'available' => true, 'priority' => 50, 'quality' => 50,
         'os' => '', 'exec' => '',
-        'classFile' => tx_rnbase_util_Extensions::extPath($_EXTKEY).'sports/class.tx_cfcleague_sports_Volleyball.php',
-        'className' => 'tx_cfcleague_sports_Volleyball',
-    )
+        'className' => System25\T3sports\Sports\Volleyball::class,
+    ]
 );

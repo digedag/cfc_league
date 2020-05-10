@@ -294,7 +294,7 @@ class tx_cfcleague_models_Competition extends tx_rnbase_model_base
      * Wenn vorhanden, wird die ID des Spielfrei-Teams geliefert.
      * TODO: sollte nur boolean liefern.
      *
-     * @return ID des Spielfrei-Teams oder 0
+     * @return int ID des Spielfrei-Teams oder 0
      */
     public function hasDummyTeam()
     {
@@ -622,6 +622,7 @@ class tx_cfcleague_models_Competition extends tx_rnbase_model_base
 
     /**
      * @return tx_cfcleague_sports_ISports
+     * @deprecated use System25\T3sports\Sports\ServiceLocator
      */
     public function getSportsService()
     {
