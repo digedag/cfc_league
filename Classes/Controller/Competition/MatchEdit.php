@@ -125,7 +125,7 @@ class Tx_Cfcleague_Controller_Competition_MatchEdit
         $matchTable = $service->getMatchTableBuilder();
         $matchTable->setCompetitions($current_league->getUid());
 
-        $matches = array();
+        $matches = [];
         if (null == $currentTeam) {
             // Nun zeigen wir die Spiele des Spieltags
             $matchTable->setRounds($current_round);
@@ -133,8 +133,7 @@ class Tx_Cfcleague_Controller_Competition_MatchEdit
             $matchTable->setTeams($currentTeam->getUid());
         }
 
-        $fields = array();
-        $options = array();
+        $fields = $options = [];
         $options['orderby']['MATCH.DATE'] = 'ASC';
         $matchTable->getFields($fields, $options);
         $matches = $service->search($fields, $options);
@@ -145,7 +144,7 @@ class Tx_Cfcleague_Controller_Competition_MatchEdit
     private function makeTeamSelector(&$content, $pid, $current_league)
     {
         global $LANG;
-        $teamOptions = array();
+        $teamOptions = [];
         $teamOptions['selectorId'] = 'teamMatchEdit';
         $teamOptions['noLinks'] = true;
         $teamOptions['firstItem']['id'] = -1;
@@ -223,13 +222,13 @@ class Tx_Cfcleague_Controller_Competition_MatchEdit
     private function getHeadline($parts, $competition)
     {
         global $LANG;
-        $arr = array(
+        $arr = [
             '',
             $LANG->getLL('tx_cfcleague_games.date'),
             $LANG->getLL('tx_cfcleague_games.status'),
             $LANG->getLL('tx_cfcleague_games.home'),
             $LANG->getLL('tx_cfcleague_games.guest'),
-        );
+        ];
 
         if ($competition->isAddPartResults() || 1 == $parts) {
             $arr[] = $LANG->getLL('tx_cfcleague_games.endresult');
@@ -248,7 +247,6 @@ class Tx_Cfcleague_Controller_Competition_MatchEdit
                 $arr[] = $label ? $label : $i.'. part';
             }
         }
-        \tx_rnbase_util_Debug::debug('Test', __FILE__.':'.__LINE__); // TODO: remove me
         $sports = $this->sportsServiceLocator->getSportsService($competition->getSports());
         if ($sports->isSetBased()) {
             $arr[] = $LANG->getLL('tx_cfcleague_games_sets');
@@ -272,10 +270,7 @@ class Tx_Cfcleague_Controller_Competition_MatchEdit
      */
     private function buildInputField($table, $record, $fieldName, $uid)
     {
-        return tx_rnbase_util_TYPO3::isTYPO70OrHigher() ?
-            $this->formTool->getTCEForm()->getSoloField($table, $record, $fieldName)
-            :
-            $this->formTool->getTCEForm()->getSoloField($table, $record[$table.'_'.$uid], $fieldName);
+        return $this->formTool->getTCEForm()->getSoloField($table, $record, $fieldName);
     }
 
     /**
@@ -290,14 +285,14 @@ class Tx_Cfcleague_Controller_Competition_MatchEdit
     private function createTableArray($matches, $competition)
     {
         $parts = $competition->getNumberOfMatchParts();
-        $arr = array(
-            0 => array(
+        $arr = [
+            0 => [
                 $this->getHeadline($parts, $competition),
-            ),
-        );
+            ],
+        ];
 
         foreach ($matches as $match) {
-            $row = array();
+            $row = [];
             $isNoMatch = $match->isDummy();
             $matchUid = $match->getUid();
 
