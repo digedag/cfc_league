@@ -1,8 +1,11 @@
 <?php
+
+namespace System25\T3sports\Sports;
+
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2011-2015 Rene Nitzsche (rene@system25.de)
+ *  (c) 2011-2020 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -25,7 +28,7 @@
 /**
  * Additional information about matches.
  */
-class tx_cfcleague_sports_MatchInfo
+class MatchInfo
 {
     const MATCH_TIME = 'MATCH_TIME';
 
@@ -33,7 +36,7 @@ class tx_cfcleague_sports_MatchInfo
 
     const MATCH_PARTS = 'MATCH_PARTS';
 
-    private $info = array();
+    private $info = [];
 
     public function __construct($info)
     {
@@ -47,8 +50,4 @@ class tx_cfcleague_sports_MatchInfo
     {
         return isset($this->info[$key]) ? $this->info[$key] : null;
     }
-}
-
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/sports/sports/class.tx_cfcleague_sports_MatchInfo.php']) {
-    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/sports/class.tx_cfcleague_sports_MatchInfo.php'];
 }

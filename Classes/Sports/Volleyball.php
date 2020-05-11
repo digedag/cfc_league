@@ -73,7 +73,7 @@ class Volleyball extends AbstractService implements ISports
     {
         if (null == $this->matchInfo) {
             // Bei Volleyball gibt es keine festen Zeiten
-            $this->matchInfo = \tx_rnbase::makeInstance('tx_cfcleague_sports_MatchInfo', []);
+            $this->matchInfo = \tx_rnbase::makeInstance(MatchInfo::class, []);
         }
 
         return $this->matchInfo;

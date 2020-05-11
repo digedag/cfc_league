@@ -19,3 +19,7 @@ class tx_cfcleague_sports_Volleyball extends System25\T3sports\Sports\Volleyball
 class tx_cfcleague_sports_IceHockey extends System25\T3sports\Sports\IceHockey
 {
 }
+
+class tx_cfcleague_sports_MatchInfo extends System25\T3sports\Sports\MatchInfo
+{
+}

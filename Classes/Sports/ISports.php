@@ -52,7 +52,7 @@ interface ISports
     public function isSetBased();
 
     /**
-     * @return \tx_cfcleague_sports_MatchInfo
+     * @return MatchInfo
      */
     public function getMatchInfo();
 }

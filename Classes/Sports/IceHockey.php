@@ -73,10 +73,10 @@ class IceHockey extends AbstractService implements ISports
     {
         if (null == $this->matchInfo) {
             // TODO: Beim Eishockey ist die Overtime variabel
-            $this->matchInfo = \tx_rnbase::makeInstance('tx_cfcleague_sports_MatchInfo', [
-                    \tx_cfcleague_sports_MatchInfo::MATCH_TIME => 60,
-                    \tx_cfcleague_sports_MatchInfo::MATCH_PARTS => 3,
-                    \tx_cfcleague_sports_MatchInfo::MATCH_EXTRA_TIME => 20,
+            $this->matchInfo = \tx_rnbase::makeInstance(MatchInfo::class, [
+                    MatchInfo::MATCH_TIME => 60,
+                    MatchInfo::MATCH_PARTS => 3,
+                    MatchInfo::MATCH_EXTRA_TIME => 20,
             ]);
         }
 

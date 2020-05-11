@@ -1,5 +1,7 @@
 <?php
 
+use System25\T3sports\Dfb\Synchronizer;
+
 /***************************************************************
  *  Copyright notice
  *
@@ -69,8 +71,8 @@ class Tx_Cfcleague_Controller_Competition_DfbSync
             if (tx_rnbase_parameters::getPostOrGetParameter('_upload')) {
                 if ($this->fileProcessor->internalUploadMap[1]) {
                     $markerArr['###STATUS_FILE###'] = $this->uploadedFiles[0]->getName();
-                    /* @var $synch Tx_Cfcleague_Dfb_Synchronizer */
-                    $synch = tx_rnbase::makeInstance('Tx_Cfcleague_Dfb_Synchronizer');
+                    /* @var $synch Synchronizer */
+                    $synch = tx_rnbase::makeInstance(Synchronizer::class);
                     $info = $synch->process($this->uploadedFiles[0], $competition);
 
                     $markerArr['###STATUS_MATCH_UPDATED###'] = $info['match']['updated'];

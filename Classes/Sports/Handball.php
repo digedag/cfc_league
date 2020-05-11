@@ -75,11 +75,10 @@ class Handball extends AbstractService implements ISports
     public function getMatchInfo()
     {
         if (null == $this->matchInfo) {
-            \tx_rnbase::load('tx_cfcleague_sports_MatchInfo');
-            $this->matchInfo = \tx_rnbase::makeInstance('tx_cfcleague_sports_MatchInfo', [
-                \tx_cfcleague_sports_MatchInfo::MATCH_TIME => 60,
-                \tx_cfcleague_sports_MatchInfo::MATCH_PARTS => 2,
-                \tx_cfcleague_sports_MatchInfo::MATCH_EXTRA_TIME => 10,
+            $this->matchInfo = \tx_rnbase::makeInstance(MatchInfo::class, [
+                MatchInfo::MATCH_TIME => 60,
+                MatchInfo::MATCH_PARTS => 2,
+                MatchInfo::MATCH_EXTRA_TIME => 10,
             ]);
         }
 

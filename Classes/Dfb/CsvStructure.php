@@ -1,8 +1,11 @@
 <?php
+
+namespace System25\T3sports\Dfb;
+
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2010-2018 Rene Nitzsche (rene@system25.de)
+ *  (c) 2010-2020 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -21,9 +24,8 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-tx_rnbase::load('tx_rnbase_parameters');
 
-class Tx_Cfcleague_Dfb_CsvStructure
+class CsvStructure
 {
     const COL_DATE = 'Datum';
 
@@ -157,7 +159,7 @@ class Tx_Cfcleague_Dfb_CsvStructure
             $day = $this->getData($line, $this->structure[self::COL_MATCH_DATE][self::DATA_COL]);
             $time = $this->getData($line, $this->structure[self::COL_MATCH_TIME][self::DATA_COL]);
         }
-        $date = tx_rnbase_util_Dates::getDateTime($day.' '.$time);
+        $date = \tx_rnbase_util_Dates::getDateTime($day.' '.$time);
 
         return $date->getTimestamp();
     }
