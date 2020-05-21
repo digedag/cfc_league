@@ -4,8 +4,6 @@ if (!defined('TYPO3_MODE')) {
     die('Access denied.');
 }
 
-tx_rnbase::load('Tx_Rnbase_Configuration_Processor');
-
 $globalClubs = intval(Tx_Rnbase_Configuration_Processor::getExtensionCfgValue('cfc_league', 'useGlobalClubs')) > 0;
 $clubOrdering = intval(Tx_Rnbase_Configuration_Processor::getExtensionCfgValue('cfc_league', 'clubOrdering')) > 0;
 
@@ -23,6 +21,7 @@ $clubArr = $globalClubs ?
                 'size' => 1,
                 'minitems' => 0,
                 'maxitems' => 1,
+                'default' => 0,
         ] : [
                 'type' => 'group',
                 'internal_type' => 'db',
@@ -30,11 +29,12 @@ $clubArr = $globalClubs ?
                 'size' => 1,
                 'minitems' => 0,
                 'maxitems' => 1,
+                'default' => 0,
         ];
 
 $sysLangFile = tx_rnbase_util_TYPO3::isTYPO87OrHigher() ? 'Resources/Private/Language/locallang_general.xlf' : 'locallang_general.xml';
 
-$tx_cfcleague_teams = array(
+$tx_cfcleague_teams = [
     'ctrl' => array(
         'title' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_teams',
         'label' => 'name',
@@ -103,20 +103,21 @@ $tx_cfcleague_teams = array(
                 'eval' => 'trim',
             ),
         ),
-        'agegroup' => array(
+        'agegroup' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_group',
-            'config' => array(
+            'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
-                'items' => array(array('', '')),
+                'items' => [['', 0]],
                 'foreign_table' => 'tx_cfcleague_group',
                 'foreign_table_where' => 'ORDER BY tx_cfcleague_group.sorting',
                 'size' => 1,
                 'minitems' => 0,
                 'maxitems' => 1,
-            ),
-        ),
+                'default' => 0,
+            ],
+        ],
         'coaches' => array(
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_teams.coaches',
@@ -236,21 +237,12 @@ $tx_cfcleague_teams = array(
     'palettes' => [
         '1' => ['showitem' => ''],
     ],
-);
+];
 
-tx_rnbase::load('Tx_Rnbase_Utility_TcaTool');
 Tx_Rnbase_Utility_TcaTool::configureWizards($tx_cfcleague_teams, [
     'comment' => ['RTE' => ['defaultExtras' => $rteConfig]],
 ]);
 
-if (!tx_rnbase_util_TYPO3::isTYPO76OrHigher()) {
-    $tx_cfcleague_teams['types'][0]['showitem'] = 'hidden, club,logo, t3logo, name, short_name, tlc, agegroup, t3images, link_report, dummy, extid,
-        --div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_teams_tab_members,coaches, players, supporters, players_comment, coaches_comment, supporters_comment, comment;;;'.$rteConfig;
-}
-
-tx_rnbase::load('tx_cfcleague_tca_Lookup');
-tx_rnbase::load('tx_rnbase_util_TYPO3');
-tx_rnbase::load('tx_rnbase_util_TSFAL');
 // Auswahlbox Vereinslogos
 $tx_cfcleague_teams['columns']['logo'] = tx_cfcleague_tca_Lookup::getTeamLogoField();
 
