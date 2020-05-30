@@ -148,7 +148,7 @@ CREATE TABLE tx_cfcleague_club (
 	info text,
 	info2 text,
 	stadiums int(11) DEFAULT '0' NOT NULL,
-	established date DEFAULT '0000-00-00',
+	established date DEFAULT NULL,
 	yearestablished int(11) DEFAULT '0' NOT NULL,
 	colors varchar(100) DEFAULT '' NOT NULL,
 	members int(11) DEFAULT '0' NOT NULL,

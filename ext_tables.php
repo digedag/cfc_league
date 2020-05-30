@@ -3,10 +3,7 @@
 if (!defined('TYPO3_MODE')) {
     die('Access denied.');
 }
-
-if (TYPO3_MODE == 'BE') {
-    tx_rnbase::load('tx_cfcleague_tca_Lookup');
-}
+$_EXTKEY = 'cfc_league';
 
 tx_rnbase_util_Extensions::addLLrefForTCAdescr('tx_cfcleague_competition', 'EXT:cfc_league/Resources/Private/Language/locallang_csh_competition.php');
 tx_rnbase_util_Extensions::addLLrefForTCAdescr('tx_cfcleague_competition_penalty', 'EXT:cfc_league/Resources/Private/Language/locallang_csh_competition_penalty.xml');
@@ -20,7 +17,6 @@ if (tx_rnbase_util_Extensions::isLoaded('rgmediaimages')) {
 
 if (TYPO3_MODE == 'BE') {
     $modName = 'web_CfcLeagueM1';
-    tx_rnbase::load('tx_cfcleague_mod1_Module');
     tx_rnbase_util_Extensions::registerModule('cfc_league', 'web', 'M1', 'bottom', [], [
         'access' => 'user,group',
         'routeTarget' => 'tx_cfcleague_mod1_Module',
