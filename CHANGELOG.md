@@ -2,6 +2,11 @@
 Änderungen
 ==========
 
+## v1.4.2 (30.05.2020)
+ * Refactoring classes to PSR-4
+ * Folder icon fixed
+ * Fixed some TCA issues
+
 ## v1.4.1 (02.05.2020)
  * Support for TYPO3 9.5 LTS
  * Support for TYPO3 6.2 LTS dropped
