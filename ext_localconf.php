@@ -36,8 +36,6 @@ $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['proc
 //     tx_rnbase_util_Extensions::registerAjaxHandler('T3sports::saveTickerMessage', 'EXT:' . $_EXTKEY . '/mod1/class.tx_cfcleague_mod1_AjaxTicker.php:tx_cfcleague_mod1_AjaxTicker->ajaxSaveTickerMessage');
 // }
 
-
-
 if (TYPO3_MODE == 'BE') {
     // Einbindung einer PageTSConfig
     tx_rnbase_util_Extensions::addPageTSConfig('<INCLUDE_TYPOSCRIPT: source="FILE:EXT:cfc_league/mod1/pageTSconfig.txt">');
@@ -48,7 +46,6 @@ if (TYPO3_MODE == 'BE') {
         'class' => 'System25\T3sports\Form\Element\LogoSelect',
     ];
 }
-
 
 tx_cfcleague_util_Misc::registerMatchNote('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_match_notes.type.ticker', '100');
 tx_cfcleague_util_Misc::registerMatchNote('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_match_notes.type.goal', '10');
@@ -74,7 +71,6 @@ tx_cfcleague_util_Misc::registerFormation('4-4-2', '1-4-4-2');
 tx_cfcleague_util_Misc::registerFormation('4-5-1', '1-4-5-1');
 tx_cfcleague_util_Misc::registerFormation('5-3-2', '1-5-3-2');
 tx_cfcleague_util_Misc::registerFormation('5-4-1', '1-5-4-1');
-
 
 // Include services
 tx_rnbase_util_Extensions::addService(
