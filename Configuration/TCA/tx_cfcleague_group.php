@@ -45,7 +45,7 @@ $tx_cfcleague_group = [
             'config' => [
                 'type' => 'input',
                 'renderType' => (tx_rnbase_util_TYPO3::isTYPO86OrHigher() ? 'inputDateTime' : ''),
-                'eval' => 'datetime' . (tx_rnbase_util_TYPO3::isTYPO104OrHigher() ? ',int' : ''),
+                'eval' => 'datetime'.(tx_rnbase_util_TYPO3::isTYPO104OrHigher() ? ',int' : ''),
                 'default' => '0',
             ],
         ],
