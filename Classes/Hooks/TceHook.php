@@ -40,7 +40,7 @@ class TceHook
             $options['where'] = 'uid_foreign='.$row['uid'];
             $options['orderby'] = 'sorting_foreign asc';
             $options['enablefieldsoff'] = 1;
-            $types = array();
+            $types = [];
             $rows = \Tx_Rnbase_Database_Connection::getInstance()->doSelect('uid_local', 'tx_cfcleague_profiletypes_mm', $options);
             foreach ($rows as $type) {
                 $types[] = $type['uid_local'];
@@ -50,7 +50,6 @@ class TceHook
         if ('tx_cfcleague_club' == $table) {
             // Umwandlung eine MySQL Date in einen timestamp
             // Scheint in 8.7 nicht mehr notwendig zu sein
-            \tx_rnbase::load('tx_rnbase_util_Dates');
             $row['established'] = $row['established'] ? \tx_rnbase_util_Dates::datetime_mysql2tstamp($row['established']) : time();
         }
     }
@@ -130,8 +129,7 @@ class TceHook
     {
         if ('tx_cfcleague_club' == $table) {
             if (array_key_exists('established', $fieldArray)) {
-                \tx_rnbase::load('tx_rnbase_util_Dates');
-                $estDate = \tx_rnbase_util_Dates::date_tstamp2mysql($fieldArray['established']);
+                $estDate = $fieldArray['established'] ? \tx_rnbase_util_Dates::date_tstamp2mysql($fieldArray['established']) : null;
                 $fieldArray['established'] = $estDate;
             }
         }
@@ -149,7 +147,7 @@ class TceHook
     {
         if (strstr($incomingFieldArray[$profileType], 'NEW')) {
             $newProfileIds = \Tx_Rnbase_Utility_Strings::trimExplode(',', $incomingFieldArray[$profileType]);
-            $profileUids = array();
+            $profileUids = [];
             for ($i = 0; $i < count($newProfileIds); ++$i) {
                 if (strstr($newProfileIds[$i], 'NEW')) {
                     $profileUid = $tcemain->substNEWwithIDs[$newProfileIds[$i]];

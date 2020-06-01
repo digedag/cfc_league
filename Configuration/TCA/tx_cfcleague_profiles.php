@@ -1,17 +1,14 @@
 <?php
 
+
 if (!defined('TYPO3_MODE')) {
     die('Access denied.');
 }
 
-tx_rnbase::load('tx_cfcleague_tca_Lookup');
-tx_rnbase::load('tx_rnbase_util_TYPO3');
-
 $rteConfig = 'richtext[cut|copy|paste|formatblock|textcolor|bold|italic|underline|left|center|right|orderedlist|unorderedlist|outdent|indent|link|table|image|line|chMode]:rte_transform[mode=ts_css|imgpath=uploads/tx_cfcleague/rte/]';
-$sysLangFile = tx_rnbase_util_TYPO3::isTYPO87OrHigher() ? 'Resources/Private/Language/locallang_general.xlf' : 'locallang_general.xml';
 
-$tx_cfcleague_profiles = array(
-    'ctrl' => array(
+$tx_cfcleague_profiles = [
+    'ctrl' => [
         'title' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles',
         'label' => 'last_name',
         'label_alt' => 'first_name',
@@ -31,55 +28,55 @@ $tx_cfcleague_profiles = array(
             'default' => 'ext-cfcleague-profiles-default',
         ],
         'iconfile' => 'EXT:cfc_league/Resources/Public/Icons/icon_tx_cfcleague_profiles.gif',
-    ),
-    'interface' => array(
+    ],
+    'interface' => [
         'showRecordFieldList' => 'hidden,first_name,last_name,t3images,birthday,nationality,height,
 			weight,position,duration_of_contract,start_of_contract,email,nickname,summary,description',
-    ),
-    'feInterface' => array(
+    ],
+    'feInterface' => [
         'fe_admin_fieldList' => 'hidden, first_name, last_name, image, birthday, nationality, height,
 			weight, position, duration_of_contract, start_of_contract, email,
 			stations, nickname, family, hobbies, prosperities, summary, description',
-    ),
-    'columns' => array(
+    ],
+    'columns' => [
         'hidden' => [
             'exclude' => 1,
-            'label' => 'LLL:EXT:lang/'.$sysLangFile.':LGL.hidden',
+            'label' => \Sys25\RnBase\Backend\Utility\TcaTool::buildGeneralLabel('hidden'),
             'config' => [
                 'type' => 'check',
                 'default' => '0',
             ],
         ],
-        'first_name' => array(
+        'first_name' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles.first_name',
-            'config' => array(
+            'config' => [
                 'type' => 'input',
                 'size' => '30',
                 'max' => '50',
                 'eval' => 'trim',
-            ),
-        ),
-        'last_name' => array(
+            ],
+        ],
+        'last_name' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles.last_name',
-            'config' => array(
+            'config' => [
                 'type' => 'input',
                 'size' => '30',
                 'max' => '70',
                 'eval' => 'required,trim',
-            ),
-        ),
-        'stage_name' => array(
+            ],
+        ],
+        'stage_name' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles.stage_name',
-            'config' => array(
+            'config' => [
                 'type' => 'input',
                 'size' => '30',
                 'max' => '70',
                 'eval' => 'trim',
-            ),
-        ),
+            ],
+        ],
         'link_report' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles.link_report',
@@ -93,6 +90,7 @@ $tx_cfcleague_profiles = array(
             'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles.gdpr',
             'config' => [
                 'type' => 'select',
+                'renderType' => 'selectSingle',
                 'items' => [
                     ['LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles.gdpr_ok', 0],
                     ['LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles.gdpr_nameonly', 1],
@@ -101,24 +99,24 @@ $tx_cfcleague_profiles = array(
                 'default' => 0,
             ],
         ],
-        'birthday' => array(
+        'birthday' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles.birthday',
-            'config' => array(
+            'config' => [
                 'type' => 'input',
-                'renderType' => (tx_rnbase_util_TYPO3::isTYPO86OrHigher() ? 'inputDateTime' : ''),
+                'renderType' => (\Sys25\RnBase\Utility\TYPO3::isTYPO86OrHigher() ? 'inputDateTime' : ''),
                 'size' => '8',
                 'eval' => 'date',
                 'checkbox' => '0',
                 'default' => '0',
-            ),
-        ),
+            ],
+        ],
         'dayofdeath' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles.dayofdeath',
             'config' => [
                 'type' => 'input',
-                'renderType' => (tx_rnbase_util_TYPO3::isTYPO86OrHigher() ? 'inputDateTime' : ''),
+                'renderType' => (\Sys25\RnBase\Utility\TYPO3::isTYPO86OrHigher() ? 'inputDateTime' : ''),
                 'size' => '8',
                 'eval' => 'date',
                 'checkbox' => '0',
@@ -138,6 +136,7 @@ $tx_cfcleague_profiles = array(
             'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles.gender',
             'config' => [
                 'type' => 'select',
+                'renderType' => 'selectSingle',
                 'items' => [
                     ['LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles.gender_male', 0],
                     ['LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles.gender_female', 1],
@@ -146,15 +145,15 @@ $tx_cfcleague_profiles = array(
                 'default' => 0,
             ],
         ],
-        'native_town' => array(
+        'native_town' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles.native_town',
-            'config' => array(
+            'config' => [
                 'type' => 'input',
                 'size' => '30',
                 'eval' => 'trim',
-            ),
-        ),
+            ],
+        ],
         'home_town' => array(
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles.home_town',
@@ -189,52 +188,52 @@ $tx_cfcleague_profiles = array(
                 'default' => 0,
             ],
         ],
-        'weight' => array(
+        'weight' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles.weight',
-            'config' => array(
+            'config' => [
                 'type' => 'input',
                 'size' => '4',
                 'max' => '4',
                 'eval' => 'int',
                 'checkbox' => '0',
-                'range' => array(
+                'range' => [
                     'upper' => '1000',
                     'lower' => '0',
-                ),
+                ],
                 'default' => 0,
-            ),
-        ),
-        'position' => array(
+            ],
+        ],
+        'position' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles.position',
-            'config' => array(
+            'config' => [
                 'type' => 'input',
                 'size' => '30',
                 'eval' => 'trim',
-            ),
-        ),
-        'duration_of_contract' => array(
+            ],
+        ],
+        'duration_of_contract' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles.duration_of_contract',
-            'config' => array(
+            'config' => [
                 'type' => 'input',
-                'renderType' => (tx_rnbase_util_TYPO3::isTYPO86OrHigher() ? 'inputDateTime' : ''),
+                'renderType' => (\Sys25\RnBase\Utility\TYPO3::isTYPO86OrHigher() ? 'inputDateTime' : ''),
                 'size' => '8',
                 'eval' => 'date',
                 'checkbox' => '0',
                 'default' => '0',
-            ),
-        ),
-        'start_of_contract' => array(
+            ],
+        ],
+        'start_of_contract' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles.start_of_contract',
-            'config' => array(
+            'config' => [
                 'type' => 'input',
                 'size' => '30',
                 'eval' => 'trim',
-            ),
-        ),
+            ],
+        ],
         'email' => array(
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles.email',
@@ -314,7 +313,7 @@ $tx_cfcleague_profiles = array(
                 'eval' => 'trim',
             ],
         ],
-    ),
+    ],
     'types' => [
         '0' => [
             'showitem' => 'hidden, first_name, last_name, stage_name, home_town, birthday, died, dayofdeath, native_town, nationality, gender, height, weight, position, duration_of_contract, start_of_contract, email, nickname, extid,
@@ -328,22 +327,19 @@ $tx_cfcleague_profiles = array(
     'palettes' => [
         '1' => ['showitem' => ''],
     ],
-);
+];
 
-tx_rnbase::load('Tx_Rnbase_Utility_TcaTool');
-Tx_Rnbase_Utility_TcaTool::configureWizards($tx_cfcleague_profiles, [
+if (\Sys25\RnBase\Utility\TYPO3::isTYPO104OrHigher()) {
+    unset($tx_cfcleague_profiles['interface']['showRecordFieldList']);
+}
+
+\Sys25\RnBase\Backend\Utility\TcaTool::configureWizards($tx_cfcleague_profiles, [
     'description' => ['RTE' => ['defaultExtras' => $rteConfig]],
     'summary' => ['RTE' => ['defaultExtras' => $rteConfig]],
 ]);
 
-if (!tx_rnbase_util_TYPO3::isTYPO76OrHigher()) {
-    $tx_cfcleague_profiles['types'][0]['showitem'] = 'hidden, first_name, last_name, stage_name, home_town, birthday, died, dayofdeath, native_town, nationality, gender, height, weight, position, duration_of_contract, start_of_contract, email, nickname, extid,
-		--div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles.description,gdpr,link_report,t3images,types, summary;;;'.$rteConfig.', description;;;'.$rteConfig;
-}
-
-tx_rnbase::load('tx_rnbase_util_TSFAL');
 $tx_cfcleague_profiles['columns']['t3images'] = tx_rnbase_util_TSFAL::getMediaTCA('t3images', [
-    'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_stadiums_pictures',
+    'label' => \Sys25\RnBase\Backend\Utility\TcaTool::buildGeneralLabel('images'),
 ]);
 
 return $tx_cfcleague_profiles;

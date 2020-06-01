@@ -4,11 +4,8 @@ if (!defined('TYPO3_MODE')) {
     die('Access denied.');
 }
 
-tx_rnbase::load('tx_rnbase_util_TYPO3');
-$sysLangFile = tx_rnbase_util_TYPO3::isTYPO87OrHigher() ? 'Resources/Private/Language/locallang_general.xlf' : 'locallang_general.xml';
-
-$tx_cfcleague_competition = array(
-    'ctrl' => array(
+$tx_cfcleague_competition = [
+    'ctrl' => [
         'title' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition',
         'label' => 'name',
         'label_alt' => 'internal_name',
@@ -20,37 +17,37 @@ $tx_cfcleague_competition = array(
         'cruser_id' => 'cruser_id',
         'sortby' => 'sorting',
         'delete' => 'deleted',
-        'enablecolumns' => array(
+        'enablecolumns' => [
             'disabled' => 'hidden',
-        ),
+        ],
         'typeicon_classes' => [
             'default' => 'ext-cfcleague-competition-default',
         ],
         'iconfile' => 'EXT:cfc_league/Resources/Public/Icons/icon_tx_cfcleague_competition.gif',
-    ),
-    'interface' => array(
+    ],
+    'interface' => [
         'showRecordFieldList' => 'hidden,name,agegroup,saison,type,teams',
-    ),
-    'feInterface' => array(
+    ],
+    'feInterface' => [
         'fe_admin_fieldList' => 'hidden, name, short_name, internal_name, agegroup, saison, type, teams, match_keys, table_marks',
-    ),
-    'columns' => array(
-        'hidden' => array(
+    ],
+    'columns' => [
+        'hidden' => [
             'exclude' => 1,
-            'label' => 'LLL:EXT:lang/'.$sysLangFile.':LGL.hidden',
-            'config' => array(
+            'label' => \Sys25\RnBase\Backend\Utility\TcaTool::buildGeneralLabel('hidden'),
+            'config' => [
                 'type' => 'check',
                 'default' => '0',
-            ),
-        ),
-        'tournament' => array(
+            ],
+        ],
+        'tournament' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition_tournament',
-            'config' => array(
+            'config' => [
                 'type' => 'check',
                 'default' => '0',
-            ),
-        ),
+            ],
+        ],
         'name' => array(
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition.name',
@@ -195,31 +192,18 @@ $tx_cfcleague_competition = array(
                 'default' => 0,
             ),
         ),
-        'teams' => array(
+        'teams' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition.teams',
-            'config' => array(
+            'config' => [
                 'type' => 'group',
                 'internal_type' => 'db',
                 'allowed' => 'tx_cfcleague_teams',
                 'size' => 20,
                 'minitems' => 0,
                 'maxitems' => 100,
-// 				'wizards' => array(
-// 						'add' => array(
-// 								'type' => 'script',
-// 								'title' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition_create_team',
-// 								'icon' => 'EXT:cfc_league/Resources/Public/Icons/icon_tx_cfcleague_teams.gif',
-// //								'script' => 'wizard_add.php',
-// 								'params' => array(
-// 									'table'=>'tx_cfcleague_teams',
-// 									'pid' => '###CURRENT_PID###',
-// 									'setValue' => 'append'
-// 						),
-// 					)
-// 				)
-            ),
-        ),
+            ],
+        ],
 /* used for combined competitions later...
         'parent' => Array (
             'exclude' => 0,
@@ -234,39 +218,42 @@ $tx_cfcleague_competition = array(
             )
         ),
 */
-        'extid' => array(
+        'extid' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition_extid',
-            'config' => array(
+            'config' => [
                 'type' => 'input',
                 'size' => '10',
                 'max' => '255',
                 'eval' => 'trim',
-            ),
-        ),
-    ),
-    'types' => array(
-        '0' => array('showitem' => 'hidden, name, tournament, sports, internal_name, short_name, agegroup, saison, type,--palette--;;1, point_system, logo, teams, match_keys, table_marks, match_parts, addparts,extid'),
-        '1' => array('showitem' => 'hidden, name, tournament'),
+            ],
+        ],
+    ],
+    'types' => [
+        '0' => ['showitem' => 'hidden, name, tournament, sports, internal_name, short_name, agegroup, saison, type,--palette--;;1, point_system, logo, teams, match_keys, table_marks, match_parts, addparts,extid'],
+        '1' => ['showitem' => 'hidden, name, tournament'],
 //		'icehockey' => Array('showitem' => 'hidden, name, sports, internal_name, short_name, agegroup, saison, type;;2, point_system, logo, teams, match_keys, table_marks, match_parts, addparts'),
-    ),
-    'palettes' => array(
-        '1' => array('showitem' => 'obligation'),
-    ),
-);
+    ],
+    'palettes' => [
+        '1' => ['showitem' => 'obligation'],
+    ],
+];
 
-if (!tx_rnbase_util_TYPO3::isTYPO86OrHigher()) {
+if (\Sys25\RnBase\Utility\TYPO3::isTYPO104OrHigher()) {
+    unset($tx_cfcleague_competition['interface']['showRecordFieldList']);
+}
+
+if (!\Sys25\RnBase\Utility\TYPO3::isTYPO86OrHigher()) {
     $tx_cfcleague_competition['ctrl']['requestUpdate'] = 'sports';
 }
 
-Tx_Rnbase_Utility_TcaTool::configureWizards($tx_cfcleague_competition, [
+\Sys25\RnBase\Backend\Utility\TcaTool::configureWizards($tx_cfcleague_competition, [
     'teams' => ['targettable' => 'tx_cfcleague_teams', 'add' => true],
 ]);
 
-tx_rnbase::load('tx_rnbase_util_TSFAL');
 $tx_cfcleague_competition['columns']['logo'] = tx_rnbase_util_TSFAL::getMediaTCA('logo', [
     'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_club.logo',
-    'config' => array('size' => 1, 'maxitems' => 1),
+    'config' => ['size' => 1, 'maxitems' => 1],
 ]);
 
 return $tx_cfcleague_competition;

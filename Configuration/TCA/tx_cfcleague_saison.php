@@ -4,10 +4,8 @@ if (!defined('TYPO3_MODE')) {
     die('Access denied.');
 }
 
-$sysLangFile = tx_rnbase_util_TYPO3::isTYPO87OrHigher() ? 'Resources/Private/Language/locallang_general.xlf' : 'locallang_general.xml';
-
-$tx_cfcleague_saison = array(
-    'ctrl' => array(
+$tx_cfcleague_saison = [
+    'ctrl' => [
         'title' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_saison',
         'label' => 'name',
         'searchFields' => 'uid,name',
@@ -16,57 +14,61 @@ $tx_cfcleague_saison = array(
         'cruser_id' => 'cruser_id',
         'sortby' => 'sorting',
         'delete' => 'deleted',
-        'enablecolumns' => array(
+        'enablecolumns' => [
             'disabled' => 'hidden',
-        ),
+        ],
         'typeicon_classes' => [
             'default' => 'ext-cfcleague-saison-default',
         ],
         'iconfile' => 'EXT:cfc_league/Resources/Public/Icons/icon_tx_cfcleague_saison.gif',
-    ),
-    'interface' => array(
+    ],
+    'interface' => [
         'showRecordFieldList' => 'hidden,name',
-    ),
-    'feInterface' => array(
+    ],
+    'feInterface' => [
         'fe_admin_fieldList' => 'hidden, name',
-    ),
-    'columns' => array(
-        'hidden' => array(
+    ],
+    'columns' => [
+        'hidden' => [
             'exclude' => 1,
-            'label' => 'LLL:EXT:lang/'.$sysLangFile.':LGL.hidden',
-            'config' => array(
+            'label' => \Sys25\RnBase\Backend\Utility\TcaTool::buildGeneralLabel('hidden'),
+            'config' => [
                 'type' => 'check',
                 'default' => '0',
-            ),
-        ),
-        'name' => array(
+            ],
+        ],
+        'name' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_saison.name',
-            'config' => array(
+            'config' => [
                 'type' => 'input',
                 'size' => '30',
                 'eval' => 'required,trim',
-            ),
-        ),
-        'halftime' => array(
+            ],
+        ],
+        'halftime' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_saison.halftime',
-            'config' => array(
+            'config' => [
                 'type' => 'input',
-                'renderType' => (tx_rnbase_util_TYPO3::isTYPO86OrHigher() ? 'inputDateTime' : ''),
+                'renderType' => (\Sys25\RnBase\Utility\TYPO3::isTYPO86OrHigher() ? 'inputDateTime' : ''),
                 'size' => '8',
                 'eval' => 'date',
                 'checkbox' => '0',
                 'default' => '0',
-            ),
-        ),
-    ),
-    'types' => array(
-        '0' => array('showitem' => 'hidden, name, halftime'),
-    ),
-    'palettes' => array(
-        '1' => array('showitem' => ''),
-    ),
-);
+            ],
+        ],
+    ],
+    'types' => [
+        '0' => ['showitem' => 'hidden, name, halftime'],
+    ],
+    'palettes' => [
+        '1' => ['showitem' => ''],
+    ],
+];
+
+if (\Sys25\RnBase\Utility\TYPO3::isTYPO104OrHigher()) {
+    unset($tx_cfcleague_saison['interface']['showRecordFieldList']);
+}
 
 return $tx_cfcleague_saison;

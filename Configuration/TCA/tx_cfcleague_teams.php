@@ -1,41 +1,40 @@
 <?php
 
+
 if (!defined('TYPO3_MODE')) {
     die('Access denied.');
 }
 
-$globalClubs = intval(Tx_Rnbase_Configuration_Processor::getExtensionCfgValue('cfc_league', 'useGlobalClubs')) > 0;
-$clubOrdering = intval(Tx_Rnbase_Configuration_Processor::getExtensionCfgValue('cfc_league', 'clubOrdering')) > 0;
+$globalClubs = intval(\Sys25\RnBase\Configuration\Processor::getExtensionCfgValue('cfc_league', 'useGlobalClubs')) > 0;
+$clubOrdering = intval(\Sys25\RnBase\Configuration\Processor::getExtensionCfgValue('cfc_league', 'clubOrdering')) > 0;
 
 $rteConfig = 'richtext[paste|bold|italic|underline|formatblock|class|left|center|right|orderedlist|unorderedlist|outdent|indent|link|image]:rte_transform[mode=ts]';
 
 $clubArr = $globalClubs ?
-        [
-                'type' => 'select',
-                'renderType' => 'selectSingle',
-                'items' => [
-                    [' ', '0'],
-                ],
-                'foreign_table' => 'tx_cfcleague_club',
-                'foreign_table_where' => 'ORDER BY '.($clubOrdering ? 'tx_cfcleague_club.city,' : '').' tx_cfcleague_club.name',
-                'size' => 1,
-                'minitems' => 0,
-                'maxitems' => 1,
-                'default' => 0,
-        ] : [
-                'type' => 'group',
-                'internal_type' => 'db',
-                'allowed' => 'tx_cfcleague_club',
-                'size' => 1,
-                'minitems' => 0,
-                'maxitems' => 1,
-                'default' => 0,
-        ];
-
-$sysLangFile = tx_rnbase_util_TYPO3::isTYPO87OrHigher() ? 'Resources/Private/Language/locallang_general.xlf' : 'locallang_general.xml';
+    [
+        'type' => 'select',
+        'renderType' => 'selectSingle',
+        'items' => [
+            [' ', '0'],
+        ],
+        'foreign_table' => 'tx_cfcleague_club',
+        'foreign_table_where' => 'ORDER BY '.($clubOrdering ? 'tx_cfcleague_club.city,' : '').' tx_cfcleague_club.name',
+        'size' => 1,
+        'minitems' => 0,
+        'maxitems' => 1,
+        'default' => 0,
+    ] : [
+        'type' => 'group',
+        'internal_type' => 'db',
+        'allowed' => 'tx_cfcleague_club',
+        'size' => 1,
+        'minitems' => 0,
+        'maxitems' => 1,
+        'default' => 0,
+    ];
 
 $tx_cfcleague_teams = [
-    'ctrl' => array(
+    'ctrl' => [
         'title' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_teams',
         'label' => 'name',
         'searchFields' => 'uid,name,short_name,tlc',
@@ -45,64 +44,64 @@ $tx_cfcleague_teams = [
         'dividers2tabs' => true,
         'sortby' => 'sorting',
         'delete' => 'deleted',
-        'enablecolumns' => array(
+        'enablecolumns' => [
             'disabled' => 'hidden',
-        ),
+        ],
         'typeicon_classes' => [
             'default' => 'ext-cfcleague-teams-default',
         ],
         'iconfile' => 'EXT:cfc_league/Resources/Public/Icons/icon_tx_cfcleague_teams.gif',
-    ),
-    'interface' => array(
+    ],
+    'interface' => [
         'showRecordFieldList' => 'hidden,club,name,short_name',
-    ),
-    'feInterface' => array(
+    ],
+    'feInterface' => [
         'fe_admin_fieldList' => 'hidden, name, short_name',
-    ),
-    'columns' => array(
-        'hidden' => array(
+    ],
+    'columns' => [
+        'hidden' => [
             'exclude' => 1,
-            'label' => 'LLL:EXT:lang/'.$sysLangFile.':LGL.hidden',
-            'config' => array(
+            'label' => \Sys25\RnBase\Backend\Utility\TcaTool::buildGeneralLabel('hidden'),
+            'config' => [
                 'type' => 'check',
                 'default' => '0',
-            ),
-        ),
-        'club' => array(
+            ],
+        ],
+        'club' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_teams.club',
             'config' => $clubArr,
-        ),
-        'name' => array(
+        ],
+        'name' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_teams.name',
-            'config' => array(
+            'config' => [
                 'type' => 'input',
                 'size' => '30',
                 'max' => '100',
                 'eval' => 'required,trim',
-            ),
-        ),
-        'short_name' => array(
+            ],
+        ],
+        'short_name' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_teams.short_name',
-            'config' => array(
+            'config' => [
                 'type' => 'input',
                 'size' => '30',
                 'max' => '100',
                 'eval' => 'required,trim',
-            ),
-        ),
-        'tlc' => array(
+            ],
+        ],
+        'tlc' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_teams_tlc',
-            'config' => array(
+            'config' => [
                 'type' => 'input',
                 'size' => '5',
                 'max' => '3',
                 'eval' => 'trim',
-            ),
-        ),
+            ],
+        ],
         'agegroup' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_group',
@@ -118,18 +117,18 @@ $tx_cfcleague_teams = [
                 'default' => 0,
             ],
         ],
-        'coaches' => array(
+        'coaches' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_teams.coaches',
-            'config' => array(
+            'config' => [
                 'type' => 'group',
                 'internal_type' => 'db',
                 'allowed' => 'tx_cfcleague_profiles',
                 'size' => 4,
                 'minitems' => 0,
                 'maxitems' => 10,
-            ),
-        ),
+            ],
+        ],
         'players' => array(
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_teams.players',
@@ -209,25 +208,25 @@ $tx_cfcleague_teams = [
                 ),
             ),
         ),
-        'dummy' => array(
+        'dummy' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_teams.dummy',
-            'config' => array(
+            'config' => [
                 'type' => 'check',
                 'default' => '0',
-            ),
-        ),
-        'extid' => array(
-                'exclude' => 1,
-                'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_teams_extid',
-                'config' => array(
-                        'type' => 'input',
-                        'size' => '10',
-                        'max' => '255',
-                        'eval' => 'trim',
-                ),
-        ),
-    ),
+            ],
+        ],
+        'extid' => [
+            'exclude' => 1,
+            'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_teams_extid',
+            'config' => [
+                'type' => 'input',
+                'size' => '10',
+                'max' => '255',
+                'eval' => 'trim',
+            ],
+        ],
+    ],
     'types' => [
         '0' => [
         'showitem' => 'hidden, club,logo, t3logo, name, short_name, tlc, agegroup, t3images, link_report, dummy, extid,
@@ -239,7 +238,11 @@ $tx_cfcleague_teams = [
     ],
 ];
 
-Tx_Rnbase_Utility_TcaTool::configureWizards($tx_cfcleague_teams, [
+if (\Sys25\RnBase\Utility\TYPO3::isTYPO104OrHigher()) {
+    unset($tx_cfcleague_teams['interface']['showRecordFieldList']);
+}
+
+\Sys25\RnBase\Backend\Utility\TcaTool::configureWizards($tx_cfcleague_teams, [
     'comment' => ['RTE' => ['defaultExtras' => $rteConfig]],
 ]);
 

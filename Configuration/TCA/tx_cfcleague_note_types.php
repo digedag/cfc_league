@@ -4,7 +4,7 @@ if (!defined('TYPO3_MODE')) {
     die('Access denied.');
 }
 
-$tx_cfcleague_note_types = array(
+$tx_cfcleague_note_types = [
     'ctrl' => [
         'title' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_note_types',
         'label' => 'label',
@@ -25,8 +25,8 @@ $tx_cfcleague_note_types = array(
     'feInterface' => [
         'fe_admin_fieldList' => 'label, marker, description',
     ],
-    'columns' => array(
-        'label' => array(
+    'columns' => [
+        'label' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_note_types.label',
             'config' => [
@@ -35,37 +35,41 @@ $tx_cfcleague_note_types = array(
                 'max' => '50',
                 'eval' => 'trim',
             ],
-        ),
-        'marker' => array(
+        ],
+        'marker' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_note_types.marker',
-            'config' => array(
+            'config' => [
                 'type' => 'input',
                 'size' => '20',
                 'size' => '20',
                 'eval' => 'trim',
-            ),
-        ),
-        'description' => array(
+            ],
+        ],
+        'description' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_note_types.description',
-            'config' => array(
+            'config' => [
                 'type' => 'text',
                 'cols' => '30',
                 'rows' => '5',
-            ),
-        ),
-    ),
-    'types' => array(
+            ],
+        ],
+    ],
+    'types' => [
         '0' => [
             'showitem' => 'label, marker, description',
         ],
-    ),
-    'palettes' => array(
+    ],
+    'palettes' => [
         '1' => [
             'showitem' => '',
         ],
-    ),
-);
+    ],
+];
+
+if (\Sys25\RnBase\Utility\TYPO3::isTYPO104OrHigher()) {
+    unset($tx_cfcleague_note_types['interface']['showRecordFieldList']);
+}
 
 return $tx_cfcleague_note_types;

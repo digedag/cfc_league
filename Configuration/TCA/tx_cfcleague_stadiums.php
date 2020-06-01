@@ -4,10 +4,6 @@ if (!defined('TYPO3_MODE')) {
     die('Access denied.');
 }
 
-tx_rnbase::load('Tx_Rnbase_Configuration_Processor');
-tx_rnbase::load('tx_rnbase_util_TYPO3');
-tx_rnbase::load('tx_cfcleague_tca_Lookup');
-
 $rteConfig = 'richtext[paste|bold|italic|underline|formatblock|class|left|center|right|orderedlist|unorderedlist|outdent|indent|link|image]:rte_transform[mode=ts]';
 
 $wecmap = [];
@@ -48,8 +44,8 @@ $stadiumClubArr = $globalClubs ? [
     ],
 ];
 
-$tx_cfcleague_stadiums = array(
-    'ctrl' => array(
+$tx_cfcleague_stadiums = [
+    'ctrl' => [
         'title' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_stadiums',
         'label' => 'name',
         'searchFields' => 'uid,name,altname,description,city,street',
@@ -60,29 +56,29 @@ $tx_cfcleague_stadiums = array(
         'default_sortby' => 'ORDER BY name',
         'EXT' => $wecmap,
         'delete' => 'deleted',
-        'enablecolumns' => array(),
+        'enablecolumns' => [],
         'typeicon_classes' => [
             'default' => 'ext-cfcleague-statiums-default',
         ],
         'iconfile' => 'EXT:cfc_league/Resources/Public/Icons/icon_table.gif',
-    ),
-    'interface' => array(
+    ],
+    'interface' => [
         'showRecordFieldList' => 'name',
-    ),
-    'feInterface' => array(
+    ],
+    'feInterface' => [
         'fe_admin_fieldList' => 'hidden, starttime, fe_group, name',
-    ),
-    'columns' => array(
-        'name' => array(
+    ],
+    'columns' => [
+        'name' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_stadiums_name',
-            'config' => array(
+            'config' => [
                 'type' => 'input',
                 'size' => '30',
                 'max' => '50',
                 'eval' => 'required,trim',
-            ),
-        ),
+            ],
+        ],
         'altname' => array(
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_stadiums_altname',
@@ -104,54 +100,54 @@ $tx_cfcleague_stadiums = array(
                 'default' => 0,
             ),
         ),
-        'description' => array(
+        'description' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_stadiums_description',
-            'config' => array(
+            'config' => [
                 'type' => 'text',
                 'cols' => '30',
                 'rows' => '5',
-                'wizards' => array(
+                'wizards' => [
                     '_PADDING' => 2,
-                    'RTE' => array(
+                    'RTE' => [
                         'notNewRecords' => 1,
                         'RTEonly' => 1,
                         'type' => 'script',
                         'title' => 'Full screen Rich Text Editing|Formatteret redigering i hele vinduet',
                         'icon' => 'wizard_rte2.gif',
-                    ),
-                ),
-            ),
-        ),
-        'description2' => array(
+                    ],
+                ],
+            ],
+        ],
+        'description2' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_stadiums_description2',
-            'config' => array(
+            'config' => [
                 'type' => 'text',
                 'cols' => '30',
                 'rows' => '5',
-                'wizards' => array(
+                'wizards' => [
                     '_PADDING' => 2,
-                    'RTE' => array(
+                    'RTE' => [
                         'notNewRecords' => 1,
                         'RTEonly' => 1,
                         'type' => 'script',
                         'title' => 'Full screen Rich Text Editing|Formatteret redigering i hele vinduet',
                         'icon' => 'wizard_rte2.gif',
-                    ),
-                ),
-            ),
-        ),
-        'street' => array(
+                    ],
+                ],
+            ],
+        ],
+        'street' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_stadiums_street',
-            'config' => array(
+            'config' => [
                 'type' => 'input',
                 'size' => '30',
                 'max' => '250',
                 'eval' => 'trim',
-            ),
-        ),
+            ],
+        ],
         'city' => array(
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_stadiums_city',
@@ -202,11 +198,11 @@ $tx_cfcleague_stadiums = array(
                 'eval' => 'trim',
             ),
         ),
-        'clubs' => array(
+        'clubs' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_club',
             'config' => $stadiumClubArr,
-        ),
+        ],
         'address' => array(
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_club.address',
@@ -231,8 +227,8 @@ $tx_cfcleague_stadiums = array(
                 'eval' => 'trim',
             ),
         ),
-    ),
-    'types' => array(
+    ],
+    'types' => [
         '0' => [
             'showitem' => 'name,altname,capacity,logo,t3logo,pictures,t3pictures,clubs,extid,
 						--div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_stadiums_tab_description,description,description2,
@@ -246,16 +242,19 @@ $tx_cfcleague_stadiums = array(
                 'defaultExtras' => $rteConfig,
             ],
         ],
-    ),
+    ],
     'palettes' => [
         '1' => [
             'showitem' => '',
         ],
     ],
-);
+];
 
-tx_rnbase::load('Tx_Rnbase_Utility_TcaTool');
-Tx_Rnbase_Utility_TcaTool::configureWizards($tx_cfcleague_stadiums, [
+if (\Sys25\RnBase\Utility\TYPO3::isTYPO104OrHigher()) {
+    unset($tx_cfcleague_stadiums['interface']['showRecordFieldList']);
+}
+
+\Sys25\RnBase\Backend\Utility\TcaTool::configureWizards($tx_cfcleague_stadiums, [
     'description' => ['RTE' => ['defaultExtras' => $rteConfig]],
     'description2' => ['RTE' => ['defaultExtras' => $rteConfig]],
 ]);
@@ -263,7 +262,7 @@ Tx_Rnbase_Utility_TcaTool::configureWizards($tx_cfcleague_stadiums, [
 if (tx_rnbase_util_Extensions::isLoaded('static_info_tables')) {
     $tx_cfcleague_stadiums['columns']['country'] = tx_cfcleague_tca_Lookup::getCountryField();
 }
-tx_rnbase::load('tx_rnbase_util_TSFAL');
+
 $tx_cfcleague_stadiums['columns']['logo'] = tx_rnbase_util_TSFAL::getMediaTCA('logo', [
     'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_stadiums_logo',
     'config' => [
