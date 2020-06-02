@@ -1,4 +1,8 @@
 <?php
+
+use Sys25\RnBase\Backend\Utility\BackendUtility;
+use Sys25\RnBase\Utility\TYPO3;
+
 /***************************************************************
  *  Copyright notice
  *
@@ -156,28 +160,11 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc
      */
     protected function getInstantMessageField()
     {
-        $jsPath = \TYPO3\CMS\Core\Utility\PathUtility::getAbsoluteWebPath(
-            \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('cfc_league', 'Resources/Public/JavaScript/')
-        ).'jeditable.min'; // .js
-
+        /* @var $pageRenderer TYPO3\CMS\Core\Page\PageRenderer */
         $pageRenderer = $this->doc->getPageRenderer();
-        $pageRenderer->addRequireJsConfiguration(
-            [
-                'paths' => [
-                    'jquery' => 'typo3/sysext/core/Resources/Public/JavaScript/Contrib/jquery/',
-                    'jeditable' => $jsPath,
-                ],
-                'shim' => [
-                     'jeditable' => [
-                         'deps' => ['jquery'],
-                         'exports' => 'jeditable',
-                     ],
-                ],
-            ]
-        );
         $pageRenderer->loadRequireJsModule(
             'TYPO3/CMS/CfcLeague/InstantMessage',
-            'function (instantMessage) {instantMessage.init("test")}'
+            'function (instantMessage) {instantMessage.init("test");}'
         );
         $ret = '';
         $ret .= '<p id="instant" style="background:yellow; margin-bottom:10px; padding:3px"></p>';
@@ -217,7 +204,7 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc
             $currentValues['watch_paused'] = $clickTime;
         }
 
-        $modValues = Tx_Rnbase_Backend_Utility::getModuleData(
+        $modValues = BackendUtility::getModuleData(
             ['watch_starttime' => 0, 'watch_paused' => 0],
             $start || $stop || $pause ? $currentValues : [],
             $this->getModule()->getName()
@@ -230,7 +217,7 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc
         $offset = [
             'watch_offset' => (int) Tx_Rnbase_Utility_T3General::_GP('watch_offset'),
         ];
-        $modValues = Tx_Rnbase_Backend_Utility::getModuleData(
+        $modValues = BackendUtility::getModuleData(
             ['watch_offset' => 0],
             $offset,
             $this->getModule()->getName()
@@ -246,7 +233,7 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc
         $out .= '###LABEL_TICKEROFFSET###: ';
         $out .= $this->getModule()
             ->getFormTool()
-            ->createTxtInput('watch_offset', $offset, tx_rnbase_util_TYPO3::isTYPO70OrHigher() ? 3 : 2).' ';
+            ->createTxtInput('watch_offset', $offset, 3).' ';
         $out .= '###LABEL_TICKERMINUTE###: ';
         $out .= $this->getModule()
             ->getFormTool()
@@ -334,46 +321,25 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc
     protected function getMatchMinuteJsCode()
     {
         // use jQuery for 7.6. or higher
-        if (tx_rnbase_util_TYPO3::isTYPO76OrHigher()) {
-            $jsCode = '<script>
-            function setMatchMinute(elem) {
-                var form = elem.form;
-                min = form.watch_minute.value;
-                if(min == 0) return;
-                line = elem.name.match(/NEW(\d+)/)[1];
-                var elements = jQuery(elem.form).find(":input");
-                for (var i = 0; i < elements.length; i++) {
+        $jsCode = '<script>
+        function setMatchMinute(elem) {
+            var form = elem.form;
+            min = form.watch_minute.value;
+            if(min == 0) return;
+            line = elem.name.match(/NEW(\d+)/)[1];
+            var elements = jQuery(elem.form).find(":input");
+            for (var i = 0; i < elements.length; i++) {
 
-                    if(elements[i].name == "data[tx_cfcleague_match_notes][NEW"+line+"][minute]") {
+                if(elements[i].name == "data[tx_cfcleague_match_notes][NEW"+line+"][minute]") {
 
-                        if(jQuery(elements[i]).val() == "") {
-                            jQuery(elements[i]).val(min);
-                            jQuery(elem.form).find("[data-formengine-input-name=\'"+elements[i].name+"\']").val(min);
-                        }
+                    if(jQuery(elements[i]).val() == "") {
+                        jQuery(elements[i]).val(min);
+                        jQuery(elem.form).find("[data-formengine-input-name=\'"+elements[i].name+"\']").val(min);
                     }
                 }
             }
-            </script>
-                    ';
-        } else {
-            $jsCode = '<script>
-            function setMatchMinute(elem) {
-                var form = elem.form;
-                min = form.watch_minute.value;
-                if(min == 0) return;
-                line = elem.name.match(/NEW(\d+)/)[1];
-                var elements = Form.getInputs(elem.form);
-                for (var i = 0; i < elements.length; i++) {
-                    if(elements[i].name == "data[tx_cfcleague_match_notes][NEW"+line+"][minute]_hr") {
-                        if(Field.getValue(elements[i]) == "") {
-                            elements[i].value = min;
-                            typo3FormFieldGet("data[tx_cfcleague_match_notes][NEW"+line+"][minute]", "int", "", 0,0);
-                        }
-                    }
-                }
-            }
-            </script>';
         }
+        </script>';
 
         return $jsCode;
     }
@@ -388,7 +354,7 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc
     {
         global $LANG;
 
-        $standingWidth = tx_rnbase_util_TYPO3::isTYPO70OrHigher() ? 3 : 2;
+        $standingWidth = 3;
         $out = '';
 
         $parts = $competition->getNumberOfMatchParts();
@@ -432,10 +398,10 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc
     protected function _getTableLayoutForm()
     {
         $arr = [
-            'table' => array(
+            'table' => [
                 '<table class="typo3-dblist table" width="100%" cellspacing="0" cellpadding="0" border="0">',
                 '</table><br/>',
-            ),
+            ],
             '0' => [ // Format für 1. Zeile
                 'tr' => [
                     '<tr class="c-headLineTable">',
@@ -446,16 +412,16 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc
                     '</td>',
                 ], // Format für jede Spalte in der 1. Zeile
             ],
-            'defRowOdd' => array( // Formate für alle geraden Zeilen
-                'tr' => array(
+            'defRowOdd' => [ // Formate für alle geraden Zeilen
+                'tr' => [
                     '<tr class="db_list_normal">',
                     '</tr>',
-                ),
-                'defCol' => array(
+                ],
+                'defCol' => [
                     '<td valign="top" style="padding:5px 5px;">',
                     '</td>',
-                ), // Format für jede Spalte in jeder Zeile
-            ),
+                ], // Format für jede Spalte in jeder Zeile
+            ],
             'defRowEven' => [ // Formate für alle ungeraden Zeilen (die Textbox)
                 'tr' => [
                     '<tr class="db_list_alt">',
@@ -581,10 +547,10 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc
             ],
         ];
 
-        $minuteWidth = tx_rnbase_util_TYPO3::isTYPO70OrHigher() ? 3 : 2;
+        $minuteWidth = 3;
 
         // TS-Config der aktuellen Seite laden, um die Anzahl der Felder zu ermitteln
-        $pageTSconfig = Tx_Rnbase_Backend_Utility::getPagesTSconfig($this->getModule()->getPid());
+        $pageTSconfig = BackendUtility::getPagesTSconfig($this->getModule()->getPid());
         $inputFields = (is_array($pageTSconfig) && is_array($pageTSconfig['tx_cfcleague.']['matchTickerCfg.'])) ? intval($pageTSconfig['tx_cfcleague.']['matchTickerCfg.']['numberOfInputFields']) : 4;
         $cols = (is_array($pageTSconfig) && is_array($pageTSconfig['tx_cfcleague.']['matchTickerCfg.'])) ? intval($pageTSconfig['tx_cfcleague.']['matchTickerCfg.']['commentFieldCols']) : 35;
         $rows = (is_array($pageTSconfig) && is_array($pageTSconfig['tx_cfcleague.']['matchTickerCfg.'])) ? intval($pageTSconfig['tx_cfcleague.']['matchTickerCfg.']['commentFieldRows']) : 3;

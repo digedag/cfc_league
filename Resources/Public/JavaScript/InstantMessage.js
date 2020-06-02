@@ -1,4 +1,4 @@
-define([ 'jquery', 'jeditable'], function($, jeditable) {
+define([ 'TYPO3/CMS/CfcLeague/jeditable.min', 'jquery' ], function(jeditable, $) {
 	var InstantMessage = {
 		previewField : null
 	};
