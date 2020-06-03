@@ -4,6 +4,7 @@ use TYPO3\CMS\Backend\Controller\ContentElement\ElementInformationController;
 use TYPO3\CMS\Core\Imaging\IconFactory;
 use TYPO3\CMS\Core\Type\Bitmask\Permission;
 use TYPO3\CMS\Backend\Template\ModuleTemplate;
+use Sys25\RnBase\Utility\TYPO3;
 
 /*
  *  Copyright notice
@@ -44,7 +45,13 @@ class Tx_Cfcleague_Controller_Profile_ShowItem extends ElementInformationControl
         $this->initByParams($table, $uid);
 
         $this->main();
-        $content = $this->moduleTemplate->getView()->getRenderingContext()->getVariableProvider()->get('content');
+
+        if (TYPO3::isTYPO87OrHigher()) {
+            $content = $this->moduleTemplate->getView()->getRenderingContext()->getVariableProvider()->get('content');
+        }
+        else {
+            $content = $this->content;
+        }
 
         return $content;
     }
@@ -56,6 +63,10 @@ class Tx_Cfcleague_Controller_Profile_ShowItem extends ElementInformationControl
         $this->permsClause = $this->getBackendUser()->getPagePermsClause(Permission::PAGE_SHOW);
         $this->moduleTemplate = \tx_rnbase::makeInstance(ModuleTemplate::class);
         $this->moduleTemplate->getDocHeaderComponent()->disable();
+        if (!TYPO3::isTYPO87OrHigher()) {
+            $this->doc = \tx_rnbase::makeInstance(\TYPO3\CMS\Backend\Template\DocumentTemplate::class);
+            $this->doc->divClass = 'container';
+        }
 
         if (isset($GLOBALS['TCA'][$this->table])) {
             $this->initDatabaseRecord();
