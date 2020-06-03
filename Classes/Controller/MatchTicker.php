@@ -284,7 +284,6 @@ class MatchTicker extends \tx_rnbase_mod_BaseModFunc
         return $out;
     }
 
-
     /**
      * Erstellt die Eingabemaske für den Spielstand.
      *
@@ -422,7 +421,7 @@ class MatchTicker extends \tx_rnbase_mod_BaseModFunc
             $row[] = $note['comment'];
             $row[] = $this->getModule()
                 ->getFormTool()
-                ->createEditLink('tx_cfcleague_match_notes', $note['uid']) .
+                ->createEditLink('tx_cfcleague_match_notes', $note['uid']).
             $this->getModule()
                 ->getFormTool()
                 ->createHideLink('tx_cfcleague_match_notes', $note['uid'], $note['hidden'] > 0);
