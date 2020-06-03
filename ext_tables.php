@@ -23,11 +23,11 @@ if (TYPO3_MODE == 'BE') {
         'icon' => 'EXT:cfc_league/Resources/Public/Icons/module-t3sports.svg',
         'labels' => 'LLL:EXT:cfc_league/mod1/locallang_mod.xml',
     ]);
-    tx_rnbase_util_Extensions::insertModuleFunction($modName, 'Tx_Cfcleague_Controller_Competition', tx_rnbase_util_Extensions::extPath($_EXTKEY).'Classes/Controller/Competition.php', 'LLL:EXT:cfc_league/mod1/locallang.xml:mod_competition');
-    tx_rnbase_util_Extensions::insertModuleFunction($modName, 'Tx_Cfcleague_Controller_MatchTicker', tx_rnbase_util_Extensions::extPath($_EXTKEY).'Classes/Controller/MatchTicker.php', 'LLL:EXT:cfc_league/mod1/locallang.xml:match_ticker');
-    tx_rnbase_util_Extensions::insertModuleFunction($modName, 'Tx_Cfcleague_Controller_Team', tx_rnbase_util_Extensions::extPath($_EXTKEY).'Classes/Controller/Team.php', 'LLL:EXT:cfc_league/mod1/locallang.xml:mod_team');
-    tx_rnbase_util_Extensions::insertModuleFunction($modName, 'Tx_Cfcleague_Controller_Club', tx_rnbase_util_Extensions::extPath($_EXTKEY).'Classes/Controller/Club.php', 'LLL:EXT:cfc_league/mod1/locallang.xml:mod_club');
-    tx_rnbase_util_Extensions::insertModuleFunction($modName, 'Tx_Cfcleague_Controller_Profile', tx_rnbase_util_Extensions::extPath($_EXTKEY).'Classes/Controller/Profile.php', 'LLL:EXT:cfc_league/mod1/locallang.xml:search_profiles');
+    tx_rnbase_util_Extensions::insertModuleFunction($modName, 'Tx_Cfcleague_Controller_Competition', '', 'LLL:EXT:cfc_league/mod1/locallang.xml:mod_competition');
+    tx_rnbase_util_Extensions::insertModuleFunction($modName, System25\T3sports\Controller\MatchTicker::class, '', 'LLL:EXT:cfc_league/mod1/locallang.xml:match_ticker');
+    tx_rnbase_util_Extensions::insertModuleFunction($modName, 'Tx_Cfcleague_Controller_Team', '', 'LLL:EXT:cfc_league/mod1/locallang.xml:mod_team');
+    tx_rnbase_util_Extensions::insertModuleFunction($modName, 'Tx_Cfcleague_Controller_Club', '', 'LLL:EXT:cfc_league/mod1/locallang.xml:mod_club');
+    tx_rnbase_util_Extensions::insertModuleFunction($modName, 'Tx_Cfcleague_Controller_Profile', '', 'LLL:EXT:cfc_league/mod1/locallang.xml:search_profiles');
 
     $iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
     $icons = [
