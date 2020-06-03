@@ -48,8 +48,7 @@ class Tx_Cfcleague_Controller_Profile_ShowItem extends ElementInformationControl
 
         if (TYPO3::isTYPO87OrHigher()) {
             $content = $this->moduleTemplate->getView()->getRenderingContext()->getVariableProvider()->get('content');
-        }
-        else {
+        } else {
             $content = $this->content;
         }
 
