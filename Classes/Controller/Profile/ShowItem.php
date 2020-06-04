@@ -5,6 +5,8 @@ use TYPO3\CMS\Core\Imaging\IconFactory;
 use TYPO3\CMS\Core\Type\Bitmask\Permission;
 use TYPO3\CMS\Backend\Template\ModuleTemplate;
 use Sys25\RnBase\Utility\TYPO3;
+use TYPO3\CMS\Core\Http\ServerRequestFactory;
+use TYPO3\CMS\Core\Http\NormalizedParams;
 
 /*
  *  Copyright notice
@@ -44,7 +46,14 @@ class Tx_Cfcleague_Controller_Profile_ShowItem extends ElementInformationControl
     {
         $this->initByParams($table, $uid);
 
-        $this->main();
+        if (TYPO3::isTYPO104OrHigher()) {
+            $request = ServerRequestFactory::fromGlobals();
+            $normalizedParams = NormalizedParams::createFromRequest($request);
+            $request = $request->withAttribute('normalizedParams', $normalizedParams);
+            $this->main($request);
+        } else {
+            $this->main();
+        }
 
         if (TYPO3::isTYPO87OrHigher()) {
             $content = $this->moduleTemplate->getView()->getRenderingContext()->getVariableProvider()->get('content');
