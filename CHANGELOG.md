@@ -2,6 +2,10 @@
 Änderungen
 ==========
 
+## v1.5.0 (06.06.2020)
+ * Support for TYPO3 10.4 LTS
+ * Some bugfixes
+
 ## v1.4.2 (30.05.2020)
  * Refactoring classes to PSR-4
  * Folder icon fixed
