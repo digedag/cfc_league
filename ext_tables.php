@@ -55,7 +55,7 @@ if (TYPO3_MODE == 'BE') {
     $GLOBALS['TCA']['pages']['ctrl']['typeicon_classes']['contains-cfcleague'] = 'ext-cfcleague-folder-default';
 
     $GLOBALS['TCA']['pages']['columns']['module']['config']['items'][] = [
-        'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_folder',
+        'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_folder',
         'cfcleague',
         'ext-cfcleague-ext-default',
     ];

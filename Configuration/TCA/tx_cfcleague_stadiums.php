@@ -46,7 +46,7 @@ $stadiumClubArr = $globalClubs ? [
 
 $tx_cfcleague_stadiums = [
     'ctrl' => [
-        'title' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_stadiums',
+        'title' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_stadiums',
         'label' => 'name',
         'searchFields' => 'uid,name,altname,description,city,street',
         'tstamp' => 'tstamp',
@@ -71,7 +71,7 @@ $tx_cfcleague_stadiums = [
     'columns' => [
         'name' => [
             'exclude' => 1,
-            'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_stadiums_name',
+            'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_stadiums_name',
             'config' => [
                 'type' => 'input',
                 'size' => '30',
@@ -81,7 +81,7 @@ $tx_cfcleague_stadiums = [
         ],
         'altname' => array(
             'exclude' => 1,
-            'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_stadiums_altname',
+            'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_stadiums_altname',
             'config' => array(
                 'type' => 'input',
                 'size' => '30',
@@ -91,7 +91,7 @@ $tx_cfcleague_stadiums = [
         ),
         'capacity' => array(
             'exclude' => 1,
-            'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_stadiums_capacity',
+            'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_stadiums_capacity',
             'config' => array(
                 'type' => 'input',
                 'size' => '10',
@@ -102,7 +102,7 @@ $tx_cfcleague_stadiums = [
         ),
         'description' => [
             'exclude' => 1,
-            'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_stadiums_description',
+            'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_stadiums_description',
             'config' => [
                 'type' => 'text',
                 'cols' => '30',
@@ -121,7 +121,7 @@ $tx_cfcleague_stadiums = [
         ],
         'description2' => [
             'exclude' => 1,
-            'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_stadiums_description2',
+            'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_stadiums_description2',
             'config' => [
                 'type' => 'text',
                 'cols' => '30',
@@ -140,7 +140,7 @@ $tx_cfcleague_stadiums = [
         ],
         'street' => [
             'exclude' => 1,
-            'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_stadiums_street',
+            'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_stadiums_street',
             'config' => [
                 'type' => 'input',
                 'size' => '30',
@@ -150,7 +150,7 @@ $tx_cfcleague_stadiums = [
         ],
         'city' => array(
             'exclude' => 1,
-            'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_stadiums_city',
+            'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_stadiums_city',
             'config' => array(
                 'type' => 'input',
                 'size' => '30',
@@ -160,7 +160,7 @@ $tx_cfcleague_stadiums = [
         ),
         'zip' => array(
             'exclude' => 1,
-            'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_stadiums_zip',
+            'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_stadiums_zip',
             'config' => array(
                 'type' => 'input',
                 'size' => '10',
@@ -170,7 +170,7 @@ $tx_cfcleague_stadiums = [
         ),
         'countrycode' => array(
             'exclude' => 1,
-            'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_common_countrycode',
+            'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_common_countrycode',
             'config' => array(
                 'type' => 'input',
                 'size' => '10',
@@ -180,7 +180,7 @@ $tx_cfcleague_stadiums = [
         ),
         'lng' => array(
             'exclude' => 1,
-            'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_common_lng',
+            'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_common_lng',
             'config' => array(
                 'type' => 'input',
                 'size' => '20',
@@ -190,7 +190,7 @@ $tx_cfcleague_stadiums = [
         ),
         'lat' => array(
             'exclude' => 1,
-            'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_common_lat',
+            'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_common_lat',
             'config' => array(
                 'type' => 'input',
                 'size' => '20',
@@ -200,12 +200,12 @@ $tx_cfcleague_stadiums = [
         ),
         'clubs' => [
             'exclude' => 1,
-            'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_club',
+            'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_club',
             'config' => $stadiumClubArr,
         ],
         'address' => array(
             'exclude' => 1,
-            'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_club.address',
+            'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_club.address',
             'config' => array(
                 'type' => 'inline',
                 'foreign_table' => 'tt_address',
@@ -219,7 +219,7 @@ $tx_cfcleague_stadiums = [
         ),
         'extid' => array(
             'exclude' => 1,
-            'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_teams_extid',
+            'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_teams_extid',
             'config' => array(
                 'type' => 'input',
                 'size' => '5',
@@ -231,8 +231,8 @@ $tx_cfcleague_stadiums = [
     'types' => [
         '0' => [
             'showitem' => 'name,altname,capacity,logo,t3logo,pictures,t3pictures,clubs,extid,
-						--div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_stadiums_tab_description,description,description2,
-						--div--;LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_stadiums_tab_location,street,city,zip,country,countrycode,lng,lat,address',
+						--div--;LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_stadiums_tab_description,description,description2,
+						--div--;LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_stadiums_tab_location,street,city,zip,country,countrycode,lng,lat,address',
         ],
         'columnsOverrides' => [
             'description' => [
@@ -264,14 +264,14 @@ if (tx_rnbase_util_Extensions::isLoaded('static_info_tables')) {
 }
 
 $tx_cfcleague_stadiums['columns']['logo'] = tx_rnbase_util_TSFAL::getMediaTCA('logo', [
-    'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_stadiums_logo',
+    'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_stadiums_logo',
     'config' => [
         'size' => 1,
         'maxitems' => 1,
     ],
 ]);
 $tx_cfcleague_stadiums['columns']['pictures'] = tx_rnbase_util_TSFAL::getMediaTCA('pictures', [
-    'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_stadiums_pictures',
+    'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_stadiums_pictures',
 ]);
 
 return $tx_cfcleague_stadiums;

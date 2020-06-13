@@ -6,7 +6,7 @@ if (!defined('TYPO3_MODE')) {
 
 $tx_cfcleague_note_types = [
     'ctrl' => [
-        'title' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_note_types',
+        'title' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_note_types',
         'label' => 'label',
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
@@ -28,7 +28,7 @@ $tx_cfcleague_note_types = [
     'columns' => [
         'label' => [
             'exclude' => 1,
-            'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_note_types.label',
+            'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_note_types.label',
             'config' => [
                 'type' => 'input',
                 'size' => '30',
@@ -38,7 +38,7 @@ $tx_cfcleague_note_types = [
         ],
         'marker' => [
             'exclude' => 1,
-            'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_note_types.marker',
+            'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_note_types.marker',
             'config' => [
                 'type' => 'input',
                 'size' => '20',
@@ -48,7 +48,7 @@ $tx_cfcleague_note_types = [
         ],
         'description' => [
             'exclude' => 1,
-            'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_note_types.description',
+            'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_note_types.description',
             'config' => [
                 'type' => 'text',
                 'cols' => '30',

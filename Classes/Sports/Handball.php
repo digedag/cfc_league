@@ -50,7 +50,7 @@ class Handball extends AbstractService implements ISports
     {
         return [
             [
-                \tx_rnbase_util_Misc::translateLLL('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition.point_system_2'),
+                \tx_rnbase_util_Misc::translateLLL('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_competition.point_system_2'),
                 0,
             ],
         ];

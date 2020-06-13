@@ -6,7 +6,7 @@ if (!defined('TYPO3_MODE')) {
 
 $tx_cfcleague_competition_penalty = [
     'ctrl' => [
-        'title' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition_penalty',
+        'title' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_competition_penalty',
         'label' => 'comment',
         'label_alt' => 'team,competition',
         'label_alt_force' => 1,
@@ -41,7 +41,7 @@ $tx_cfcleague_competition_penalty = [
         ],
         'competition' => [
             'exclude' => 0,
-            'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_games.competition',
+            'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_games.competition',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
@@ -59,7 +59,7 @@ $tx_cfcleague_competition_penalty = [
         ],
         'team' => [
             'exclude' => 0,
-            'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition_penalty.team',
+            'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_competition_penalty.team',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
@@ -74,7 +74,7 @@ $tx_cfcleague_competition_penalty = [
         ],
         'game' => [
             'exclude' => 0,
-            'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition_penalty.game',
+            'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_competition_penalty.game',
             'config' => [
                 'type' => 'group',
                 'internal_type' => 'db',
@@ -87,7 +87,7 @@ $tx_cfcleague_competition_penalty = [
         ],
         'comment' => array(
             'exclude' => 0,
-            'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition_penalty.comment',
+            'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_competition_penalty.comment',
             'config' => array(
                 'type' => 'text',
                 'cols' => '30',
@@ -106,7 +106,7 @@ $tx_cfcleague_competition_penalty = [
         ),
         'matches' => array(
             'exclude' => 0,
-            'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition_penalty.matches',
+            'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_competition_penalty.matches',
             'config' => array(
                 'type' => 'input',
                 'size' => '4',
@@ -122,7 +122,7 @@ $tx_cfcleague_competition_penalty = [
         ),
         'wins' => array(
             'exclude' => 0,
-            'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition_penalty.wins',
+            'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_competition_penalty.wins',
             'config' => array(
                 'type' => 'input',
                 'size' => '4',
@@ -138,7 +138,7 @@ $tx_cfcleague_competition_penalty = [
         ),
         'loses' => array(
             'exclude' => 0,
-            'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition_penalty.loses',
+            'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_competition_penalty.loses',
             'config' => array(
                 'type' => 'input',
                 'size' => '4',
@@ -154,7 +154,7 @@ $tx_cfcleague_competition_penalty = [
         ),
         'draws' => array(
             'exclude' => 0,
-            'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition_penalty.draws',
+            'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_competition_penalty.draws',
             'config' => array(
                 'type' => 'input',
                 'size' => '4',
@@ -171,7 +171,7 @@ $tx_cfcleague_competition_penalty = [
 
         'goals_pos' => array(
             'exclude' => 0,
-            'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition_penalty.goals_pos',
+            'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_competition_penalty.goals_pos',
             'config' => array(
                 'type' => 'input',
                 'size' => '4',
@@ -187,7 +187,7 @@ $tx_cfcleague_competition_penalty = [
         ),
         'goals_neg' => array(
             'exclude' => 0,
-            'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition_penalty.goals_neg',
+            'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_competition_penalty.goals_neg',
             'config' => array(
                 'type' => 'input',
                 'size' => '4',
@@ -203,7 +203,7 @@ $tx_cfcleague_competition_penalty = [
         ),
         'points_pos' => array(
             'exclude' => 0,
-            'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition_penalty.points_pos',
+            'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_competition_penalty.points_pos',
             'config' => array(
                 'type' => 'input',
                 'size' => '4',
@@ -219,7 +219,7 @@ $tx_cfcleague_competition_penalty = [
         ),
         'points_neg' => array(
             'exclude' => 0,
-            'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition_penalty.points_neg',
+            'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_competition_penalty.points_neg',
             'config' => array(
                 'type' => 'input',
                 'size' => '4',
@@ -235,7 +235,7 @@ $tx_cfcleague_competition_penalty = [
         ),
         'static_position' => array(
             'exclude' => 0,
-            'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition_penalty.static_position',
+            'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_competition_penalty.static_position',
             'config' => array(
                 'type' => 'input',
                 'size' => '4',
@@ -250,7 +250,7 @@ $tx_cfcleague_competition_penalty = [
         ),
         'correction' => [
             'exclude' => 1,
-            'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition_penalty.correction',
+            'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_competition_penalty.correction',
             'config' => [
                 'type' => 'check',
                 'default' => '0',

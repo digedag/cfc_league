@@ -142,7 +142,7 @@ class tx_cfcleague_mod1_decorator
     {
         global $LANG;
         $tableName = isset($options['tablename']) ? $options['tablename'] : 'tx_cfcleague_games';
-        $LANG->includeLLFile('EXT:cfc_league/locallang_db.xml');
+        $LANG->includeLLFile('EXT:cfc_league/Resources/Private/Language/locallang_db.xml');
         $arr = array();
         if (isset($options['checkbox'])) {
             $arr[] = '&nbsp;'; // Spalte für Checkbox

@@ -49,8 +49,8 @@ class IceHockey extends AbstractService implements ISports
     public function getTCAPointSystems()
     {
         return [
-            [\tx_rnbase_util_Misc::translateLLL('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition.point_system_2_icehockey'), 1],
-            [\tx_rnbase_util_Misc::translateLLL('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition.point_system_3_icehockey'), 0],
+            [\tx_rnbase_util_Misc::translateLLL('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_competition.point_system_2_icehockey'), 1],
+            [\tx_rnbase_util_Misc::translateLLL('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_competition.point_system_3_icehockey'), 0],
         ];
     }
 

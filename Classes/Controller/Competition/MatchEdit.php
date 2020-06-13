@@ -54,7 +54,7 @@ class Tx_Cfcleague_Controller_Competition_MatchEdit
 
         $formTool = $module->getFormTool();
         $this->formTool = $formTool;
-        $LANG->includeLLFile('EXT:cfc_league/locallang_db.xml');
+        $LANG->includeLLFile('EXT:cfc_league/Resources/Private/Language/locallang_db.xml');
 
         // Zuerst mal müssen wir die passende Liga auswählen lassen:
         $content = '';

@@ -6,7 +6,7 @@ if (!defined('TYPO3_MODE')) {
 
 $tx_cfcleague_team_notes = [
     'ctrl' => [
-        'title' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_team_notes',
+        'title' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_team_notes',
         'label' => 'uid',
         'label_alt' => 'type,player,team',
         'label_alt_force' => 1,
@@ -42,7 +42,7 @@ $tx_cfcleague_team_notes = [
         ],
         'team' => [
             'exclude' => 1,
-            'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_teams',
+            'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_teams',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
@@ -60,7 +60,7 @@ $tx_cfcleague_team_notes = [
         ],
         'type' => [
             'exclude' => 1,
-            'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_note_types',
+            'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_note_types',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
@@ -74,13 +74,13 @@ $tx_cfcleague_team_notes = [
         ],
         'mediatype' => [
             'exclude' => 1,
-            'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_team_notes.mediatype',
+            'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_team_notes.mediatype',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
                 'items' => [
-                    ['LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_team_notes.mediatype.text', '0'],
-                    ['LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_team_notes.mediatype.number', '2'],
+                    ['LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_team_notes.mediatype.text', '0'],
+                    ['LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_team_notes.mediatype.number', '2'],
                 ],
                 'size' => 1,
                 'maxitems' => 1,
@@ -88,7 +88,7 @@ $tx_cfcleague_team_notes = [
         ],
         'player' => array(
             'exclude' => 1,
-            'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_profiles',
+            'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_profiles',
             'config' => array(
                 'type' => 'select',
                 'renderType' => 'selectSingle',
@@ -103,7 +103,7 @@ $tx_cfcleague_team_notes = [
         ),
         'comment' => [
             'exclude' => 1,
-            'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_match_notes.comment',
+            'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_match_notes.comment',
             'config' => [
                 'type' => 'text',
                 'cols' => '30',
@@ -112,7 +112,7 @@ $tx_cfcleague_team_notes = [
         ],
         'number' => [
             'exclude' => 1,
-            'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_team_notes.number',
+            'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_team_notes.number',
             'config' => [
                 'type' => 'input',
                 'size' => '4',
@@ -140,11 +140,11 @@ if (!\Sys25\RnBase\Utility\TYPO3::isTYPO86OrHigher()) {
 }
 
 $tx_cfcleague_team_notes['columns']['mediatype']['config']['items'][] =
-                ['LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_team_notes.mediatype.media', '1'];
+                ['LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_team_notes.mediatype.media', '1'];
 $tx_cfcleague_team_notes['columns']['media'] = tx_rnbase_util_TSFAL::getMediaTCA('media', [
     'label' => 'LLL:EXT:lang/locallang_general.xml:LGL.images',
     'config' => ['size' => 1, 'maxitems' => 1],
 ]);
-$tx_cfcleague_team_notes['columns']['media']['label'] = 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_team_notes.media';
+$tx_cfcleague_team_notes['columns']['media']['label'] = 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_team_notes.media';
 
 return $tx_cfcleague_team_notes;

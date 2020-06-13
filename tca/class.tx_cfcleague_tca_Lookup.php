@@ -107,8 +107,8 @@ class tx_cfcleague_tca_Lookup
         }
 
         // $config['items'] = array(
-        // Array(tx_rnbase_util_Misc::translateLLL('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition.point_system_2'), 1),
-        // Array(tx_rnbase_util_Misc::translateLLL('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition.point_system_3'), 0)
+        // Array(tx_rnbase_util_Misc::translateLLL('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_competition.point_system_2'), 1),
+        // Array(tx_rnbase_util_Misc::translateLLL('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_competition.point_system_3'), 0)
         // );
     }
 
@@ -194,7 +194,7 @@ class tx_cfcleague_tca_Lookup
     public static function getTeamLogoField()
     {
         $ret = tx_rnbase_util_TSFAL::getMediaTCA('logo', [
-            'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_teams.logo',
+            'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_teams.logo',
             'config' => [
                 'size' => 1,
                 'maxitems' => 1,
@@ -237,7 +237,7 @@ class tx_cfcleague_tca_Lookup
         $row = $PA['row'];
 
         if (!$row['club']) {
-            return $tceforms->sL('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_tca_noclubselected');
+            return $tceforms->sL('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_tca_noclubselected');
         }
         $config = $PA['fieldConf']['config'];
 
@@ -289,7 +289,7 @@ class tx_cfcleague_tca_Lookup
     {
         return array(
             'exclude' => 0,
-            'label' => 'LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_common_country',
+            'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_common_country',
             'config' => array(
                 'type' => 'select',
                 'items' => array(
@@ -318,7 +318,7 @@ class tx_cfcleague_tca_Lookup
     public function getPlayersHome4Match($PA, $fobj)
     {
         global $LANG;
-        $LANG->includeLLFile('EXT:cfc_league/locallang_db.xml');
+        $LANG->includeLLFile('EXT:cfc_league/Resources/Private/Language/locallang_db.xml');
 
         // tx_rnbase_util_Debug::debug(count($PA[items]), 'items cfcleague');
         $teamId = (int) $this->getPAValue($PA['row']['home']);
@@ -368,7 +368,7 @@ class tx_cfcleague_tca_Lookup
     public function getPlayersGuest4Match($PA, $fobj)
     {
         global $LANG;
-        $LANG->includeLLFile('EXT:cfc_league/locallang_db.xml');
+        $LANG->includeLLFile('EXT:cfc_league/Resources/Private/Language/locallang_db.xml');
 
         $teamId = (int) $this->getPAValue($PA['row']['guest']);
         $matchValue = $this->getPAValue($PA['row']['game']);
@@ -429,7 +429,7 @@ class tx_cfcleague_tca_Lookup
     public function getPlayers4Team(&$PA, $fobj)
     {
         global $LANG;
-        $LANG->includeLLFile('EXT:cfc_league/locallang_db.xml');
+        $LANG->includeLLFile('EXT:cfc_league/Resources/Private/Language/locallang_db.xml');
         $column = 'team';
         if ($PA['row'][$column]) {
             $tablename = 'tx_cfcleague_team_notes';

@@ -67,7 +67,7 @@ class Tx_Cfcleague_Handler_MatchCreator
     public function showScreen($competition, tx_rnbase_mod_IModule $mod)
     {
         global $LANG;
-        $LANG->includeLLFile('EXT:cfc_league/locallang_db.xml');
+        $LANG->includeLLFile('EXT:cfc_league/Resources/Private/Language/locallang_db.xml');
 
         $items = array();
         for ($i = 1; $i < 33; ++$i) {

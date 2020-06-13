@@ -28,20 +28,6 @@
  * Hint: use extdeveval to insert/update function index above.
  */
 
-// unset($MCONF);
-
-// require_once('conf.php');
-// require_once($BACK_PATH.'init.php');
-
-// tx_rnbase::load('tx_rnbase_util_TYPO3');
-// if(!tx_rnbase_util_TYPO3::isTYPO62OrHigher())
-// 	require_once(PATH_typo3.'template.php');
-
-// $GLOBALS['LANG']->includeLLFile('EXT:cfc_league/mod1/locallang.xml');
-// $GLOBALS['LANG']->includeLLFile('EXT:cfc_league/locallang_db.xml');
-// $GLOBALS['BE_USER']->modAccess($GLOBALS['MCONF'], 1);	// This checks permissions and exits if the users has no permission for entry.
-    // DEFAULT initialization of a module [END]
-
 // Make instance:
 $SOBE = tx_rnbase::makeInstance('tx_cfcleague_mod1_Module');
 $SOBE->init();

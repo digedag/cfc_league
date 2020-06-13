@@ -57,7 +57,7 @@ class tx_cfcleague_mod1_Module extends tx_rnbase_mod_BaseModule
         }
 
         $GLOBALS['LANG']->includeLLFile('EXT:cfc_league/mod1/locallang.xml');
-        $GLOBALS['LANG']->includeLLFile('EXT:cfc_league/locallang_db.xml');
+        $GLOBALS['LANG']->includeLLFile('EXT:cfc_league/Resources/Private/Language/locallang_db.xml');
 
         // $GLOBALS['BE_USER']->modAccess($GLOBALS['MCONF'], 1); // This checks permissions and exits if the users has no permission for entry.
         $GLOBALS['BE_USER']->modAccess($this->MCONF, 1);
