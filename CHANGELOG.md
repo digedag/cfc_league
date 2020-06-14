@@ -2,6 +2,9 @@
 Änderungen
 ==========
 
+## v1.5.1 (14.06.2020)
+ * Language file moved to resource folder
+
 ## v1.5.0 (06.06.2020)
  * Support for TYPO3 10.4 LTS
  * Some bugfixes
