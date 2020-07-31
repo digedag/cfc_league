@@ -82,7 +82,7 @@ class Tx_Cfcleague_Controller_Competition_MatchEdit
                           }
                         }
                     </script>';
-        $content .= ' <input type="button class="btn btn-default btn-sm" name="setStatus" value="'.$LANG->getLL('btn_statusToFinished').'" onclick="setStatusFinished()">';
+        $content .= ' <input type="button" class="btn btn-default btn-sm" name="setStatus" value="'.$LANG->getLL('btn_statusToFinished').'" onclick="setStatusFinished()">';
 
         $content .= '<div class="cleardiv"/>';
         $data = Tx_Rnbase_Utility_T3General::_GP('data');
