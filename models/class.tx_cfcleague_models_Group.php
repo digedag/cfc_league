@@ -24,18 +24,17 @@
 tx_rnbase::load('tx_rnbase_model_base');
 
 /**
- * Model for age group
+ * Model for age group.
  */
 class tx_cfcleague_models_Group extends tx_rnbase_model_base
 {
-
     public function getTableName()
     {
         return 'tx_cfcleague_group';
     }
 
     /**
-     * Liefert den Namen
+     * Liefert den Namen.
      *
      * @return string
      */
@@ -45,9 +44,10 @@ class tx_cfcleague_models_Group extends tx_rnbase_model_base
     }
 
     /**
-     * Returns an instance
+     * Returns an instance.
      *
      * @param int $uid
+     *
      * @return tx_cfcleague_models_Group
      */
     public static function getGroupInstance($uid)
@@ -67,10 +67,10 @@ class tx_cfcleague_models_Group extends tx_rnbase_model_base
     {
         // SELECT * FROM tx_cfcleague_group WHERE uid IN ($uid)
         $options = [];
-        $options['where'] = (is_string($uids) && strlen($uids) > 0) ? 'uid IN (' . $uids . ')' : '1';
+        $options['where'] = (is_string($uids) && strlen($uids) > 0) ? 'uid IN ('.$uids.')' : '1';
         $options['orderby'] = 'sorting asc';
         $options['wrapperclass'] = 'tx_cfcleague_models_Group';
+
         return Tx_Rnbase_Database_Connection::getInstance()->doSelect('*', 'tx_cfcleague_group', $options);
     }
 }
-

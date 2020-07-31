@@ -1,9 +1,11 @@
 <?php
-use TYPO3\CMS\Backend\Form\Element\SelectSingleElement;
-/**
+
+namespace System25\T3sports\Sports;
+
+/***************************************************************
  *  Copyright notice
  *
- *  (c) 2015 René Nitzsche <rene@system25.de>
+ *  (c) 2010-2020 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -21,17 +23,17 @@ use TYPO3\CMS\Backend\Form\Element\SelectSingleElement;
  *  GNU General Public License for more details.
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
- */
+ ***************************************************************/
 
-/**
- *
- * SelectField for club logo in team record
- *
- * @package 		TYPO3
- * @subpackage	 	cfc_league
- * @author 			René Nitzsche <rene@system25.de>
- */
-class Tx_Cfcleague_Form_SelectTeamLogo extends SelectSingleElement {
-
-
+class ServiceLocator
+{
+    /**
+     * @param string $sports
+     *
+     * @return ISports
+     */
+    public function getSportsService($sports)
+    {
+        return \tx_rnbase_util_Misc::getService('t3sports_sports', $sports);
+    }
 }

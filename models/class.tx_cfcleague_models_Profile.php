@@ -28,7 +28,6 @@ tx_rnbase::load('tx_rnbase_model_base');
  */
 class tx_cfcleague_models_Profile extends tx_rnbase_model_base
 {
-
     private static $instances = array();
 
     public function getTableName()
@@ -47,14 +46,15 @@ class tx_cfcleague_models_Profile extends tx_rnbase_model_base
     }
 
     /**
-     * Returns the profile name
+     * Returns the profile name.
      *
-     * @param boolean $reverse
+     * @param bool $reverse
+     *
      * @return string
      */
     public function getName($reverse = false)
     {
-        return $reverse ? $this->getLastName() . ', ' . $this->getFirstName() : $this->getFirstName() . ' ' . $this->getLastName();
+        return $reverse ? $this->getLastName().', '.$this->getFirstName() : $this->getFirstName().' '.$this->getLastName();
     }
 
     public function getHomeTown()
@@ -68,17 +68,19 @@ class tx_cfcleague_models_Profile extends tx_rnbase_model_base
      * bei zwei Anfragen für die selbe UID nur ein DB Zugriff erfolgt.
      *
      * @param int $uid
+     *
      * @return tx_netfewo_models_Objekt
      */
     public static function getProfileInstance($uid)
     {
         $uid = intval($uid);
-        if (! $uid) {
-            throw new Exception('No uid for ' . self::class . ' given!');
+        if (!$uid) {
+            throw new Exception('No uid for '.self::class.' given!');
         }
-        if (! is_object(self::$instances[$uid])) {
-            self::$instances[$uid] = new tx_cfcleague_models_Profile($uid);
+        if (!is_object(self::$instances[$uid])) {
+            self::$instances[$uid] = new self($uid);
         }
+
         return self::$instances[$uid];
     }
 
@@ -87,9 +89,9 @@ class tx_cfcleague_models_Profile extends tx_rnbase_model_base
         // TODO: Umstellen!
     }
 
-
     /**
      * Liefert true, wenn für den Spieler eine Einzelansicht verlinkt werden soll.
+     *
      * @return true
      */
     public function hasReport()

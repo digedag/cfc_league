@@ -1,9 +1,11 @@
 <?php
 
+namespace System25\T3sports\Controller\Club;
+
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2010-2019 Rene Nitzsche (rene@system25.de)
+ *  (c) 2010-2020 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -27,11 +29,10 @@
  * Die Klasse verwaltet Stadien eines Vereins.
  * Es implementiert das Tab "Stadien" im Vereinsmodul.
  */
-class tx_cfcleague_mod1_handler_ClubStadiums
+class ClubStadiumHandler
 {
-
     /**
-     * Returns an instance
+     * Returns an instance.
      *
      * @return string
      */
@@ -40,19 +41,19 @@ class tx_cfcleague_mod1_handler_ClubStadiums
         return '###LABEL_TAB_STADIUMS###';
     }
 
-    public function handleRequest(tx_rnbase_mod_IModule $mod)
-    {}
+    public function handleRequest(\tx_rnbase_mod_IModule $mod)
+    {
+    }
 
     /**
-     *
-     * @param tx_cfcleague_models_Club $club
-     * @param tx_rnbase_mod_IModule $mod
+     * @param \tx_cfcleague_models_Club $club
+     * @param \tx_rnbase_mod_IModule $mod
      */
-    public function showScreen($club, tx_rnbase_mod_IModule $mod)
+    public function showScreen($club, \tx_rnbase_mod_IModule $mod)
     {
         global $LANG;
 
-        $searcher = tx_rnbase::makeInstance('tx_cfcleague_mod1_searcher_Stadium', $mod);
+        $searcher = \tx_rnbase::makeInstance('tx_cfcleague_mod1_searcher_Stadium', $mod);
         $searcher->setClub($club->getUid());
 
         $result = $searcher->getResultList();
@@ -65,12 +66,14 @@ class tx_cfcleague_mod1_handler_ClubStadiums
         }
 
         $options = [
-            'params' => '&defVals[tx_cfcleague_stadiums][clubs]=tx_cfcleague_club_' . $club->getUid()
+            'params' => '&defVals[tx_cfcleague_stadiums][clubs]='.$club->getUid(),
         ];
         $content .= $mod->getFormTool()->createNewLink('tx_cfcleague_stadiums', $club->getProperty('pid'), '###LABEL_BTN_ADDSTADIUM###', $options);
+
         return $content;
     }
 
-    public function makeLink(tx_rnbase_mod_IModule $mod)
-    {}
+    public function makeLink(\tx_rnbase_mod_IModule $mod)
+    {
+    }
 }

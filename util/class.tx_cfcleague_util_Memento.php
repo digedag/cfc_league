@@ -22,8 +22,8 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-require_once(tx_rnbase_util_Extensions::extPath('rn_memento') . 'sv1/class.tx_rnmemento_sv1.php');
-require_once(tx_rnbase_util_Extensions::extPath('rn_base') . 'util/class.tx_rnbase_util_Spyc.php');
+require_once tx_rnbase_util_Extensions::extPath('rn_memento').'sv1/class.tx_rnmemento_sv1.php';
+require_once tx_rnbase_util_Extensions::extPath('rn_base').'util/class.tx_rnbase_util_Spyc.php';
 
 /**
  * Basisklasse für die Verwendung des internen Caches.
@@ -34,43 +34,47 @@ require_once(tx_rnbase_util_Extensions::extPath('rn_base') . 'util/class.tx_rnba
  * wird es so möglich, bei Änderungen an einem Wettbewerb automatisch die Mementos
  * zu löschen.
  */
-abstract class tx_cfcleaguefe_util_Memento implements IMemento {
-  private $data; // data object
-  private $yamlStr; // serialized data
+abstract class tx_cfcleaguefe_util_Memento implements IMemento
+{
+    private $data; // data object
 
-  /**
-   * Child classes implement this method to convert data object to php array
-   */
-  abstract function data2Array($data);
+    private $yamlStr; // serialized data
 
-  /**
-   * Child classes implement this method to convert php array to data object
-   */
-  abstract function array2Data($arr);
+    /**
+     * Child classes implement this method to convert data object to php array.
+     */
+    abstract public function data2Array($data);
 
-  function setData($data) {
-    $this->data = $data;
-  }
+    /**
+     * Child classes implement this method to convert php array to data object.
+     */
+    abstract public function array2Data($arr);
 
-  function getData() {
-    $yamlArr = tx_rnbase_util_Spyc::YAMLLoad($this->yamlStr);
-    return $this->array2Data($yamlArr);
-  }
+    public function setData($data)
+    {
+        $this->data = $data;
+    }
 
-  function setString($str){
-    $this->yamlStr = $str;
-  }
+    public function getData()
+    {
+        $yamlArr = tx_rnbase_util_Spyc::YAMLLoad($this->yamlStr);
 
-  function getString(){
-    $arr = $this->data2Array($this->data);
-    return tx_rnbase_util_Spyc::YAMLDump($arr);
-  }
+        return $this->array2Data($yamlArr);
+    }
 
+    public function setString($str)
+    {
+        $this->yamlStr = $str;
+    }
 
+    public function getString()
+    {
+        $arr = $this->data2Array($this->data);
+
+        return tx_rnbase_util_Spyc::YAMLDump($arr);
+    }
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/util/class.tx_cfcleague_util_Memento.php']) {
-  include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/util/class.tx_cfcleague_util_Memento.php']);
+    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/util/class.tx_cfcleague_util_Memento.php'];
 }
-
-?>

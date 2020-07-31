@@ -28,7 +28,6 @@ tx_rnbase::load('tx_rnbase_model_base');
  */
 class tx_cfcleague_models_Club extends tx_rnbase_model_base
 {
-
     public function getTableName()
     {
         return 'tx_cfcleague_club';
@@ -50,9 +49,9 @@ class tx_cfcleague_models_Club extends tx_rnbase_model_base
     }
 
     /**
-     * Whether or not this is a favorite club
+     * Whether or not this is a favorite club.
      *
-     * @return boolean
+     * @return bool
      */
     public function isFavorite()
     {
@@ -60,7 +59,7 @@ class tx_cfcleague_models_Club extends tx_rnbase_model_base
     }
 
     /**
-     * Returns the city
+     * Returns the city.
      *
      * @return string
      */
@@ -70,21 +69,22 @@ class tx_cfcleague_models_Club extends tx_rnbase_model_base
     }
 
     /**
-     * Returns address dataset or null
+     * Returns address dataset or null.
      *
      * @return tx_cfcleague_models_Address or null
      */
     public function getAddress()
     {
-        if (! $this->getProperty('address')) {
+        if (!$this->getProperty('address')) {
             return null;
         }
         $address = tx_rnbase::makeInstance('tx_cfcleague_models_Address', $this->getProperty('address'));
+
         return $address->isValid() ? $address : null;
     }
 
     /**
-     * Returns the zip
+     * Returns the zip.
      *
      * @return string
      */
@@ -94,7 +94,7 @@ class tx_cfcleague_models_Club extends tx_rnbase_model_base
     }
 
     /**
-     * Returns the street
+     * Returns the street.
      *
      * @return string
      */
@@ -114,7 +114,7 @@ class tx_cfcleague_models_Club extends tx_rnbase_model_base
     }
 
     /**
-     * Returns coords
+     * Returns coords.
      *
      * @return tx_rnbase_maps_ICoord or false
      */
@@ -126,12 +126,13 @@ class tx_cfcleague_models_Club extends tx_rnbase_model_base
             $coords->setLatitude($this->getLatitute());
             $coords->setLongitude($this->getLongitute());
         }
+
         return $coords;
     }
 
     /**
      * Returns the url of the first club logo.
-     * (not yet implemented)
+     * (not yet implemented).
      *
      * @return string
      */

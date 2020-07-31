@@ -24,13 +24,12 @@ tx_rnbase::load('tx_rnbase_util_SearchBase');
 tx_rnbase::load('tx_rnbase_util_Misc');
 
 /**
- * Class to search matches from database
+ * Class to search matches from database.
  *
  * @author Rene Nitzsche
  */
 class tx_cfcleague_search_Profile extends tx_rnbase_util_SearchBase
 {
-
     protected function getTableMappings()
     {
         $tableMapping = [
@@ -40,8 +39,9 @@ class tx_cfcleague_search_Profile extends tx_rnbase_util_SearchBase
         ];
         // Hook to append other tables
         tx_rnbase_util_Misc::callHook('cfc_league', 'search_Profile_getTableMapping_hook', array(
-            'tableMapping' => &$tableMapping
+            'tableMapping' => &$tableMapping,
         ), $this);
+
         return $tableMapping;
     }
 
@@ -50,7 +50,7 @@ class tx_cfcleague_search_Profile extends tx_rnbase_util_SearchBase
         return 'tx_cfcleague_profiles';
     }
 
-    function getWrapperClass()
+    public function getWrapperClass()
     {
         return 'tx_cfcleague_models_Profile';
     }
@@ -68,10 +68,12 @@ class tx_cfcleague_search_Profile extends tx_rnbase_util_SearchBase
         // Hook to append other tables
         tx_rnbase_util_Misc::callHook('cfc_league', 'search_Profile_getJoins_hook', array(
             'join' => &$join,
-            'tableAliases' => $tableAliases
+            'tableAliases' => $tableAliases,
         ), $this);
+
         return $join;
     }
+
     protected function useAlias()
     {
         return true;

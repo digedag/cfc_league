@@ -25,17 +25,17 @@ tx_rnbase::load('tx_cfcleague_services_Base');
 tx_rnbase::load('tx_rnbase_util_SearchBase');
 
 /**
- * Service for accessing competitions
+ * Service for accessing competitions.
  *
  * @author Rene Nitzsche
  */
 class tx_cfcleague_services_Competition extends tx_cfcleague_services_Base
 {
-
     /**
-     * Returns uids of dummy teams
+     * Returns uids of dummy teams.
      *
      * @param tx_cfcleague_models_Competition $comp
+     *
      * @return array[int]
      */
     public function getDummyTeamIds($comp)
@@ -49,17 +49,20 @@ class tx_cfcleague_services_Competition extends tx_cfcleague_services_Base
         // $options['debug'] = 1;
         $rows = $srv->searchTeams($fields, $options);
         $ret = array();
-        foreach ($rows as $row)
+        foreach ($rows as $row) {
             $ret[] = $row['uid'];
+        }
+
         return $ret;
     }
 
     /**
-     * Anzahl der Spiele des/der Teams in diesem Wettbewerb
+     * Anzahl der Spiele des/der Teams in diesem Wettbewerb.
      *
      * @param tx_cfcleague_models_Competition $comp
      * @param string $teamIds
      * @param string $status
+     *
      * @return number
      */
     public function getNumberOfMatches($comp, $teamIds = '', $status = '0,1,2')
@@ -67,40 +70,45 @@ class tx_cfcleague_services_Competition extends tx_cfcleague_services_Base
         $what = 'count(uid) As matches';
         $from = 'tx_cfcleague_games';
         $options = array();
-        $options['where'] = 'status IN(' . $status . ') AND ';
+        $options['where'] = 'status IN('.$status.') AND ';
         if ($teamIds) {
-            $options['where'] .= '( home IN(' . $teamIds . ') OR ';
-            $options['where'] .= 'guest IN(' . $teamIds . ')) AND ';
+            $options['where'] .= '( home IN('.$teamIds.') OR ';
+            $options['where'] .= 'guest IN('.$teamIds.')) AND ';
         }
-        $options['where'] .= 'competition = ' . $comp->getUid() . ' ';
+        $options['where'] .= 'competition = '.$comp->getUid().' ';
         $rows = Tx_Rnbase_Database_Connection::getInstance()->doSelect($what, $from, $options, 0);
         $ret = 0;
-        if (count($rows))
+        if (count($rows)) {
             $ret = intval($rows[0]['matches']);
+        }
+
         return $ret;
     }
 
     /**
-     * Search database for competitions
+     * Search database for competitions.
      *
      * @param array $fields
      * @param array $options
+     *
      * @return array of tx_cfcleague_models_Competition
      */
     public function search($fields, $options)
     {
         $searcher = tx_rnbase_util_SearchBase::getInstance('tx_cfcleague_search_Competition');
+
         return $searcher->search($fields, $options);
     }
 
     public function getPointSystems($sports)
     {
         $srv = tx_rnbase_util_Misc::getService('t3sports_sports', $sports);
+
         return $srv->getTCAPointSystems();
     }
 
     /**
-     * Returns all available table types for a TCA select item
+     * Returns all available table types for a TCA select item.
      *
      * @return array
      */
@@ -115,21 +123,21 @@ class tx_cfcleague_services_Competition extends tx_cfcleague_services_Base
             $srv = tx_rnbase_util_Misc::getService($baseType, $subtype);
             $types[] = array(
                 $srv->getTCALabel(),
-                $subtype
+                $subtype,
             );
         }
 
         foreach ($types as $typedef) {
             $items[] = array(
                 tx_rnbase_util_Misc::translateLLL($typedef[0]),
-                $typedef[1]
+                $typedef[1],
             );
         }
+
         return $items;
     }
 
     /**
-     *
      * @param tx_cfcleague_models_Competition $competition
      */
     public function checkReferences($competition)
@@ -138,26 +146,29 @@ class tx_cfcleague_services_Competition extends tx_cfcleague_services_Base
         $fields = array();
         $fields['MATCH.COMPETITION'][OP_EQ_INT] = $competition->getUid();
         $result = tx_cfcleague_util_ServiceRegistry::getMatchService()->search($fields, array(
-            'count' => 1
+            'count' => 1,
         ));
-        if ($result > 0)
+        if ($result > 0) {
             $ret['tx_cfcleague_games'] = $result;
+        }
+
         return $ret;
     }
 
     /**
-     *
      * @param tx_cfcleague_models_Saison $saison
+     *
      * @return array[tx_cfcleague_models_Competition]
      */
     public function getCompetitionsBySaison(tx_cfcleague_models_Saison $saison)
     {
         $fields = array();
         $fields['COMPETITION.SAISON'][OP_EQ_INT] = $saison->getUid();
+
         return $this->search($fields, array(
             'orderby' => array(
-                'COMPETITION.NAME' => 'asc'
-            )
+                'COMPETITION.NAME' => 'asc',
+            ),
         ));
     }
 }

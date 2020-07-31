@@ -22,111 +22,123 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-
 /**
- * Kleine Methoden
+ * Kleine Methoden.
  */
-class tx_cfcleague_util_Misc {
-  /**
-   * Zwei Arrays zusammenführen. Sollte eines der Array leer sein, dann wird es ignoriert.
-   * Somit werden unnötige 0-Werte vermieden.
-   */
-  public static function mergeArrays($arr1, $arr2){
-    $ret = $arr1[0] ? $arr1 : 0;
-    if($ret && $arr2) {
-      $ret = array_merge($ret, $arr2);
+class tx_cfcleague_util_Misc
+{
+    /**
+     * Zwei Arrays zusammenführen. Sollte eines der Array leer sein, dann wird es ignoriert.
+     * Somit werden unnötige 0-Werte vermieden.
+     */
+    public static function mergeArrays($arr1, $arr2)
+    {
+        $ret = $arr1[0] ? $arr1 : 0;
+        if ($ret && $arr2) {
+            $ret = array_merge($ret, $arr2);
+        } elseif ($arr2) {
+            $ret = $arr2;
+        }
+
+        return $ret;
     }
-    elseif($arr2)
-      $ret = $arr2;
-    return $ret;
-  }
 
-	/**
-	 * Register a new matchnote.
-	 * @param string $label
-	 * @param mixed $typeId
-	 */
-	public static function registerMatchNote($label, $typeId) {
-		if(!is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['matchnotetypes']))
-			$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['matchnotetypes'] = array();
-		$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['matchnotetypes'][] = array($label, $typeId);
-	}
-	/**
-	 * De-Register a matchnote.
-	 * @param mixed $typeId
-	 */
-	public static function removeMatchNote($typeId) {
-		if(!is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['matchnotetypes']))
-			return;
-		foreach ($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['matchnotetypes'] As $idx => $note) {
-			list(, $type) = $note;
-			if($type === $typeId) {
-				unset($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['matchnotetypes'][$idx]);
-				break;
-			}
-		}
-	}
-	/**
-	 * Register a new match formation.
-	 * @param string $label
-	 * @param mixed $formationString
-	 */
-	public static function registerFormation($label, $formationString) {
-		if(!is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['formations']))
-			$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['formations'] = array();
-		$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['formations'][] = array($label, $formationString);
-	}
+    /**
+     * Register a new matchnote.
+     *
+     * @param string $label
+     * @param mixed $typeId
+     */
+    public static function registerMatchNote($label, $typeId)
+    {
+        if (!is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['matchnotetypes'])) {
+            $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['matchnotetypes'] = array();
+        }
+        $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['matchnotetypes'][] = array($label, $typeId);
+    }
 
-	/**
-	 *
-	 * Prints out the error
-	 * @param 	String 	$error
-	 */
+    /**
+     * De-Register a matchnote.
+     *
+     * @param mixed $typeId
+     */
+    public static function removeMatchNote($typeId)
+    {
+        if (!is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['matchnotetypes'])) {
+            return;
+        }
+        foreach ($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['matchnotetypes'] as $idx => $note) {
+            list(, $type) = $note;
+            if ($type === $typeId) {
+                unset($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['matchnotetypes'][$idx]);
 
-	public static function tceError($error, $addinfo='')	{
-		$error_doc = tx_rnbase::makeInstance(tx_rnbase_util_Typo3Classes::getDocumentTemplateClass());
-		$error_doc->backPath = '';
+                break;
+            }
+        }
+    }
 
-		$content.= $error_doc->startPage('T3sports error Output');
-		$content.= '
+    /**
+     * Register a new match formation.
+     *
+     * @param string $label
+     * @param mixed $formationString
+     */
+    public static function registerFormation($label, $formationString)
+    {
+        if (!is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['formations'])) {
+            $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['formations'] = array();
+        }
+        $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['formations'][] = array($label, $formationString);
+    }
+
+    /**
+     * Prints out the error.
+     *
+     * @param 	string 	$error
+     */
+    public static function tceError($error, $addinfo = '')
+    {
+        $error_doc = tx_rnbase::makeInstance(tx_rnbase_util_Typo3Classes::getDocumentTemplateClass());
+        $error_doc->backPath = '';
+
+        $content .= $error_doc->startPage('T3sports error Output');
+        $content .= '
 			<br/><br/>
 			<table border="0" cellpadding="1" cellspacing="1" width="300" align="center">';
 
-		$content.='	<tr class="bgColor5">
+        $content .= '	<tr class="bgColor5">
 					<td colspan="2" align="center"><strong>Fehler</strong></td>
 				</tr>';
 
-		$content.='
+        $content .= '
 				<tr class="bgColor4">
 					<td valign="top"><img'.Tx_Rnbase_Backend_Utility_Icons::skinImg('', 'gfx/icon_fatalerror.gif', 'width="18" height="16"').' alt="" /></td>
 					<td>'.$GLOBALS['LANG']->sL($error, 0).'</td>
 				</tr>';
-		if($addinfo)
-			$content.='
+        if ($addinfo) {
+            $content .= '
 					<tr class="bgColor4">
 						<td valign="top"></td>
 						<td>'.$addinfo.'</td>
 					</tr>';
+        }
 
-
-		$content.='
+        $content .= '
 				<tr>
 					<td colspan="2" align="center"><br />'.
 
-					'<form action="'.htmlspecialchars($_SERVER["HTTP_REFERER"]).'"><input type="submit" value="Weiter" onclick="document.location='.htmlspecialchars($_SERVER["HTTP_REFERER"]).'return false;" /></form>'.
-					'</td>
+                    '<form action="'.htmlspecialchars($_SERVER['HTTP_REFERER']).'"><input type="submit" value="Weiter" onclick="document.location='.htmlspecialchars($_SERVER['HTTP_REFERER']).'return false;" /></form>'.
+                    '</td>
 				</tr>';
 
-		$content.= '</table>';
+        $content .= '</table>';
 
-		$content.= $error_doc->endPage();
-		echo $content;
-		exit();
-	}
+        $content .= $error_doc->endPage();
+        echo $content;
+        exit();
+    }
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/util/class.tx_cfcleague_util_Misc.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/util/class.tx_cfcleague_util_Misc.php']);
+    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/util/class.tx_cfcleague_util_Misc.php'];
 }
-
-?>

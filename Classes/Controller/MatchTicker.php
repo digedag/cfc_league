@@ -1,8 +1,14 @@
 <?php
+
+namespace System25\T3sports\Controller;
+
+use Sys25\RnBase\Backend\Utility\BackendUtility;
+use Sys25\RnBase\Utility\TYPO3;
+
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2007-2019 Rene Nitzsche (rene@system25.de)
+ *  (c) 2007-2020 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -21,33 +27,33 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-tx_rnbase::load('tx_rnbase_util_TYPO3');
-tx_rnbase::load('tx_rnbase_mod_BaseModFunc');
-tx_rnbase::load('Tx_Rnbase_Utility_T3General');
 
 /**
- * Die Klasse stellt den MatchTicker bereit
+ * Die Klasse stellt den MatchTicker bereit.
  */
-class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc
+class MatchTicker extends \tx_rnbase_mod_BaseModFunc
 {
+    const TABLE_NOTES = 'tx_cfcleague_match_notes';
 
-    var $doc, $MCONF;
+    public $doc;
 
-    var $playerNames = [];
+    public $MCONF;
+
+    public $playerNames = [];
 
     /**
-     * Method getFuncId
+     * Method getFuncId.
      *
      * @return string
      */
-    function getFuncId()
+    public function getFuncId()
     {
         return 'functicker';
     }
 
     /**
      * Bearbeitung von Spielen.
-     * Es werden die Paaren je Spieltag angezeigt
+     * Es werden die Paaren je Spieltag angezeigt.
      */
     protected function getContent($template, &$configurations, &$formatter, $formTool)
     {
@@ -56,7 +62,7 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc
         $this->doc = $this->getModule()->getDoc();
 
         // Selector-Instanz bereitstellen
-        $this->selector = tx_rnbase::makeInstance('tx_cfcleague_selector');
+        $this->selector = \tx_rnbase::makeInstance('tx_cfcleague_selector');
         $this->selector->init($this->getModule()
             ->getDoc(), $this->getModule());
 
@@ -65,16 +71,17 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc
 
         $selector = '';
         // Anzeige der vorhandenen Ligen
-        /* @var $current_league tx_cfcleague_models_Competition */
+        /* @var $current_league \tx_cfcleague_models_Competition */
         $current_league = $this->getSelector()->showLeagueSelector($selector, $this->getModule()
             ->getPid());
-        if (! $current_league) {
+        if (!$current_league) {
             return $this->doc->section('Info:', $LANG->getLL('no_league_in_page'), 0, 1, self::ICON_WARN);
         }
 
-        if (! count($current_league->getRounds())) {
+        if (!count($current_league->getRounds())) {
             $this->setSelectorMenu($selector);
             $content .= $LANG->getLL('no_round_in_league');
+
             return $content;
         }
         // Jetzt den Spieltag wählen lassen
@@ -82,18 +89,18 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc
             ->getPid(), $current_league);
 
         // Und nun das Spiel wählen
-        $matchData = tx_cfcleague_util_ServiceRegistry::getMatchService()->searchMatchesByRound($current_league, $current_round, TRUE);
+        $matchData = \tx_cfcleague_util_ServiceRegistry::getMatchService()->searchMatchesByRound($current_league, $current_round, true);
         $match = $this->getSelector()->showMatchSelector($selector, $this->getModule()
             ->getPid(), $matchData);
         $this->setSelectorMenu($selector);
 
         $modContent = '<div id="editform">';
-        $update = Tx_Rnbase_Utility_T3General::_GP('update');
-        $data = Tx_Rnbase_Utility_T3General::_GP('data');
+        $update = \Tx_Rnbase_Utility_T3General::_GP('update');
+        $data = \Tx_Rnbase_Utility_T3General::_GP('data');
         // Haben wir Daten im Request?
         if ($update && is_array($data['tx_cfcleague_match_notes'])) {
             $this->insertNotes($data);
-            $modContent .= '<i>' . $LANG->getLL('msg_data_saved') . '</i>';
+            $modContent .= '<i>'.$LANG->getLL('msg_data_saved').'</i>';
             // Jetzt das Spiel nochmal laden, da sich Daten geändert haben könnten
             $match->reset();
         }
@@ -104,8 +111,8 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc
         $modContent .= $this->getFormHeadline();
         $arr = $this->createFormArray($match);
 
-        /* @var $tables Tx_Rnbase_Backend_Utility_Tables */
-        $tables = tx_rnbase::makeInstance('Tx_Rnbase_Backend_Utility_Tables');
+        /* @var $tables \Tx_Rnbase_Backend_Utility_Tables */
+        $tables = \tx_rnbase::makeInstance('Tx_Rnbase_Backend_Utility_Tables');
         $modContent .= $tables->buildTable($arr, $this->_getTableLayoutForm());
         $modContent .= '<br />';
 
@@ -118,120 +125,96 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc
             ->createSubmit('update', $LANG->getLL('btn_save'));
         // Jetzt listen wir noch die zum Spiel vorhandenen Tickermeldungen auf
         $modContent .= $this->doc->divider(5);
-        $arr = $this->createTickerArray($match, Tx_Rnbase_Utility_T3General::_GP('showAll'));
+        $arr = $this->createTickerArray($match, \Tx_Rnbase_Utility_T3General::_GP('showAll'));
         if ($arr) {
-            $tickerContent = $formTool->createLink('showAll=1', $this->getModule()
-                ->getPid(), $LANG->getLL('label_showAllTickers'), [
-                'params' => [
-                    'showAll' => 1
-                ]
-            ]);
+            $tickerContent = $formTool->createModuleLink(
+                ['showAll' => '1'],
+                $this->getModule()->getPid(),
+                $LANG->getLL('label_showAllTickers')
+            );
             $tableLayout = $this->_getTableLayoutForm();
             $tableLayout['defRowEven']['defCol'] = $tableLayout['defRowOdd']['defCol']; // Array('<td valign="top" style="padding:5px 5px;">', '</td>');
             $tickerContent .= $tables->buildTable($arr, $tableLayout);
-        } else
+        } else {
             $tickerContent .= $LANG->getLL('msg_NoTicker');
+        }
 
         // Den JS-Code für Validierung einbinden
         $content .= $formTool->form->printNeededJSFunctions_top();
-        $content .= $modContent . '</div>';
+        $content .= $modContent.'</div>';
         // $content .= $this->getModule()->getFormTool()->form->JSbottom('editform');
         $content .= $this->doc->section($LANG->getLL('title_recent_tickers'), $tickerContent);
 
         $content .= $formTool->form->printNeededJSFunctions();
 
+        /* @var $pageRenderer TYPO3\CMS\Core\Page\PageRenderer */
+        $pageRenderer = $this->doc->getPageRenderer();
+        $pageRenderer->loadRequireJsModule(
+            'TYPO3/CMS/CfcLeague/TickerForm',
+            'function (mod) {mod.init("Ticker");}'
+        );
+
         return $content;
     }
+
     protected function setSelectorMenu($selector)
     {
         $this->getModule()->selector = '<div id="selector">'.$selector.'</div>';
     }
 
     /**
-     * Liefert ein Textfeld für eine SofortMeldung per Ajax
+     * Liefert ein Textfeld für eine SofortMeldung per Ajax.
      *
      * @return string
      */
     protected function getInstantMessageField()
     {
-        if (tx_rnbase_util_TYPO3::isTYPO76OrHigher()) {
-            $ret = '';
-            $ret .= '<script type="text/javascript">
-                var jQuery = TYPO3.jQuery;
-            </script>';
-            $ret .= '<script type="text/javascript" src="../../../../typo3conf/ext/cfc_league/mod1/js/jeditable.min.js"></script>';
-            $ret .= '<p id="instant" style="background:yellow; margin-bottom:10px; padding:3px"></p>';
-            $ret .= '<script type="text/javascript">
-            var ajaxSaveTickerMessage = "' . \Tx_Rnbase_Backend_Utility::getAjaxUrl('T3sports::saveTickerMessage') . '";
-
-            TYPO3.jQuery(document).ready(function() {
-                jQuery(\'#instant\').editable(ajaxSaveTickerMessage, {
-                    placeholder: \'Klicken Sie hier, um eine Sofortmeldung abzusetzen.\',
-                    onblur: \'ignore\',
-                    cancel: \'cancel\',
-                    submit: \'ok\',
-                    event: \'click\',
-                    submitdata: function(){
-                        return {
-                            t3time: jQuery(\'#editform\').find(\'input[name=watch_minute]\').val(),
-                            t3match: jQuery(\'#editform\').find(\'input[name=t3matchid]\').val()
-                        }
-                    },
-                    indicator: \'Speichern ....\'
-                });
-            });
-        </script>';
-
-            return $ret;
-        }
-
-        /* @var $pageRenderer \TYPO3\CMS\Core\Page\PageRenderer */
+        /* @var $pageRenderer TYPO3\CMS\Core\Page\PageRenderer */
         $pageRenderer = $this->doc->getPageRenderer();
-        $pageRenderer->loadPrototype();
-        $pageRenderer->loadScriptaculous('builder,effects,controls');
+        $pageRenderer->loadRequireJsModule(
+            'TYPO3/CMS/CfcLeague/InstantMessage',
+            'function (instantMessage) {instantMessage.init("test");}'
+        );
         $ret = '';
-        $ret = $this->doc->backPath;
-        $ret = '<script type="text/javascript" src="' . tx_rnbase_util_Extensions::extRelPath('cfc_league') . 'mod1/js/ticker.js"></script>';
-        $ret .= '<p id="instant" style="background:yellow; margin-bottom:10px; padding:3px">' . $GLOBALS['LANG']->getLL('msg_sendInstant') . '</p>';
-        return '<div id="t3sportsTicker">' . $ret . '</div>';
+        $ret .= '<p id="instant" style="background:yellow; margin-bottom:10px; padding:3px"></p>';
+
+        return $ret;
     }
 
     protected function toTime($time)
     {
-        return (new \DateTime('@'.((int) ($time/1000))))->format('Y-m-d H:i:s') . ' - ' . $time;
+        return (new \DateTime('@'.((int) ($time / 1000))))->format('Y-m-d H:i:s').' - '.$time;
     }
+
     protected function getFormHeadline()
     {
-        $stop = Tx_Rnbase_Utility_T3General::_GP('btn_watch_stop');
-        $pause = Tx_Rnbase_Utility_T3General::_GP('btn_watch_pause');
-        $start = Tx_Rnbase_Utility_T3General::_GP('btn_watch_start');
-        $pauseTime = (int) Tx_Rnbase_Utility_T3General::_GP('watch_pausetime');
-        $startTime = (int) Tx_Rnbase_Utility_T3General::_GP('watch_starttime');
-        $clickTime = (int) Tx_Rnbase_Utility_T3General::_GP('watch_localtime');
+        $stop = \Tx_Rnbase_Utility_T3General::_GP('btn_watch_stop');
+        $pause = \Tx_Rnbase_Utility_T3General::_GP('btn_watch_pause');
+        $start = \Tx_Rnbase_Utility_T3General::_GP('btn_watch_start');
+        $pauseTime = (int) \Tx_Rnbase_Utility_T3General::_GP('watch_pausetime');
+        $startTime = (int) \Tx_Rnbase_Utility_T3General::_GP('watch_starttime');
+        $clickTime = (int) \Tx_Rnbase_Utility_T3General::_GP('watch_localtime');
 
         // Daten: Startuhrzeit auf dem Client und gewünschtes offset
         $currentValues = [];
         if ($stop) {
             $currentValues['watch_starttime'] = 0;
             $currentValues['watch_paused'] = 0;
-        }
-        elseif ($start) {
+        } elseif ($start) {
             if ($pauseTime > 0) {
                 // Restart nach der Pause
-                $currentValues['watch_starttime'] = $clickTime - ($pauseTime-$startTime);
-            }
-            else {
+                $currentValues['watch_starttime'] = $clickTime - ($pauseTime - $startTime);
+            } else {
                 $currentValues['watch_starttime'] = $clickTime;
             }
             $currentValues['watch_paused'] = 0;
-        }
-        else {
+        } else {
             // Zeitpunkt sichern, an dem Pause gedrückt wurde
             $currentValues['watch_paused'] = $clickTime;
         }
 
-        $modValues = Tx_Rnbase_Backend_Utility::getModuleData(
-            [ 'watch_starttime' => 0, 'watch_paused' => 0 ],
+        $modValues = BackendUtility::getModuleData(
+            ['watch_starttime' => 0, 'watch_paused' => 0],
             $start || $stop || $pause ? $currentValues : [],
             $this->getModule()->getName()
         );
@@ -241,10 +224,10 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc
 
         // Der übergebene Offset wird immer gespeichert
         $offset = [
-            'watch_offset' => (int) Tx_Rnbase_Utility_T3General::_GP('watch_offset')
+            'watch_offset' => (int) \Tx_Rnbase_Utility_T3General::_GP('watch_offset'),
         ];
-        $modValues = Tx_Rnbase_Backend_Utility::getModuleData(
-            [ 'watch_offset' => 0],
+        $modValues = BackendUtility::getModuleData(
+            ['watch_offset' => 0],
             $offset,
             $this->getModule()->getName()
         );
@@ -259,7 +242,7 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc
         $out .= '###LABEL_TICKEROFFSET###: ';
         $out .= $this->getModule()
             ->getFormTool()
-            ->createTxtInput('watch_offset', $offset, tx_rnbase_util_TYPO3::isTYPO70OrHigher() ? 3 : 2) . ' ';
+            ->createTxtInput('watch_offset', $offset, 3).' ';
         $out .= '###LABEL_TICKERMINUTE###: ';
         $out .= $this->getModule()
             ->getFormTool()
@@ -284,117 +267,25 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc
             $out .= $this->getModule()
                 ->getFormTool()
                 ->createSubmit('btn_watch_stop', '###LABEL_BTN_WATCHSTOP###');
-        }
-        elseif ($startTime > 0) {
+        } elseif ($startTime > 0) {
             $out .= $this->getModule()
                 ->getFormTool()
                 ->createSubmit('btn_watch_pause', '###LABEL_BTN_WATCHPAUSE###');
             $out .= $this->getModule()
                 ->getFormTool()
                 ->createSubmit('btn_watch_stop', '###LABEL_BTN_WATCHSTOP###');
-        }
-        else {
+        } else {
             $out .= $this->getModule()
                 ->getFormTool()
                 ->createSubmit('btn_watch_start', '###LABEL_BTN_WATCHSTART###');
         }
         $out .= '</td></tr></table>';
 
-        $out .= '<script>
-	function pause() {
-		var form = document.forms[0];
-		var now = (new Date()).getTime();
-		form.watch_localtime.value = now;
-		setTimeout("pause()", 1000);
-	}
-    function toTime(tstamp) {
-    	return new Date(tstamp).toLocaleString() + " (" + tstamp +")";
-    }
-	function ticker() {
-		var form = document.forms[0];
-		var now = (new Date()).getTime();
-		form.watch_localtime.value = now;
-
-		var paused = parseInt(form.watch_pausetime.value);
-		var start = parseInt(form.watch_starttime.value);
-		if(start > 0) {
-			offset = trim(form.watch_offset.value);
-			offset = parseInt(isNaN(offset) || offset == "" ? 0 : offset);
-			diff = new Date((paused > 0 ? paused : now) - start);
-			std = diff.getHours();
-			min = diff.getMinutes() + ((std - 1) * 60) + offset;
-			sec = diff.getSeconds();
-			form.watch_minute.value = min + 1;
-			form.watch.value = ((min>9) ? min : "0" + min) + ":" + ((sec>9) ? sec : "0" + sec);
-		}
-		if (paused == 0) {
-			setTimeout("ticker()", 1000);
-		}
-		else {
-			setTimeout("pause()", 1000);
-		}
-	}
-	function trim(str) {
-		return str ? str.replace(/\s+/,"") : "";
-	}
-	ticker();
-</script>
-';
-
-        $out .= $this->getMatchMinuteJsCode();
-
         return $out;
     }
 
-    protected function getMatchMinuteJsCode()
-    {
-
-        // use jQuery for 7.6. or higher
-        if (tx_rnbase_util_TYPO3::isTYPO76OrHigher()) {
-            $jsCode = '<script>
-            function setMatchMinute(elem) {
-                var form = elem.form;
-                min = form.watch_minute.value;
-                if(min == 0) return;
-                line = elem.name.match(/NEW(\d+)/)[1];
-                var elements = jQuery(elem.form).find(":input");
-                for (var i = 0; i < elements.length; i++) {
-
-                    if(elements[i].name == "data[tx_cfcleague_match_notes][NEW"+line+"][minute]") {
-
-                        if(jQuery(elements[i]).val() == "") {
-                            jQuery(elements[i]).val(min);
-                            jQuery(elem.form).find("[data-formengine-input-name=\'"+elements[i].name+"\']").val(min);
-                        }
-                    }
-                }
-            }
-            </script>
-                    ';
-        } else {
-            $jsCode = '<script>
-            function setMatchMinute(elem) {
-                var form = elem.form;
-                min = form.watch_minute.value;
-                if(min == 0) return;
-                line = elem.name.match(/NEW(\d+)/)[1];
-                var elements = Form.getInputs(elem.form);
-                for (var i = 0; i < elements.length; i++) {
-                    if(elements[i].name == "data[tx_cfcleague_match_notes][NEW"+line+"][minute]_hr") {
-                        if(Field.getValue(elements[i]) == "") {
-                            elements[i].value = min;
-                            typo3FormFieldGet("data[tx_cfcleague_match_notes][NEW"+line+"][minute]", "int", "", 0,0);
-                        }
-                    }
-                }
-            }
-            </script>';
-        }
-        return $jsCode;
-    }
-
     /**
-     * Erstellt die Eingabemaske für den Spielstand
+     * Erstellt die Eingabemaske für den Spielstand.
      *
      * @param \tx_cfcleague_models_Match $match
      * @param \tx_cfcleague_models_Competition $competition
@@ -403,96 +294,99 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc
     {
         global $LANG;
 
-        $standingWidth = tx_rnbase_util_TYPO3::isTYPO70OrHigher() ? 3 : 2;
+        $standingWidth = 3;
         $out = '';
 
         $parts = $competition->getNumberOfMatchParts();
-        for ($i = $parts; $i > 0; $i --) {
-            $label = $LANG->getLL('tx_cfcleague_games.parts_' . $parts . '_' . $i);
-            if (! $label) {
+        for ($i = $parts; $i > 0; --$i) {
+            $label = $LANG->getLL('tx_cfcleague_games.parts_'.$parts.'_'.$i);
+            if (!$label) {
                 // Prüfen ob ein default gesetzt ist
-                $label = $LANG->getLL('tx_cfcleague_games.parts_' . $parts . '_default');
-                if ($label)
-                    $label = $i . '. ' . $label;
+                $label = $LANG->getLL('tx_cfcleague_games.parts_'.$parts.'_default');
+                if ($label) {
+                    $label = $i.'. '.$label;
+                }
             }
-            $out .= $label ? $label : $i . '. part';
+            $out .= $label ? $label : $i.'. part';
             $out .= ': ';
             $out .= $this->getModule()
                 ->getFormTool()
-                ->createIntInput('data[tx_cfcleague_games][' . $match->getUid() . '][goals_home_' . $i . ']', $match->getProperty('goals_home_' . $i), $standingWidth);
+                ->createIntInput('data[tx_cfcleague_games]['.$match->getUid().'][goals_home_'.$i.']', $match->getProperty('goals_home_'.$i), $standingWidth);
             $out .= ':';
             $out .= $this->getModule()
                 ->getFormTool()
-                ->createIntInput('data[tx_cfcleague_games][' . $match->getUid() . '][goals_guest_' . $i . ']', $match->getProperty('goals_guest_' . $i), $standingWidth);
+                ->createIntInput('data[tx_cfcleague_games]['.$match->getUid().'][goals_guest_'.$i.']', $match->getProperty('goals_guest_'.$i), $standingWidth);
         }
         $out .= $this->getModule()
             ->getFormTool()
-            ->createSelectSingle('data[tx_cfcleague_games][' . $match->getUid() . '][status]', intval($match->getProperty('status')), 'tx_cfcleague_games', 'status');
-        $out .= $LANG->getLL('tx_cfcleague_games.visitors') . ': ';
+            ->createSelectSingle('data[tx_cfcleague_games]['.$match->getUid().'][status]', intval($match->getProperty('status')), 'tx_cfcleague_games', 'status');
+        $out .= $LANG->getLL('tx_cfcleague_games.visitors').': ';
         $out .= $this->getModule()
             ->getFormTool()
-            ->createIntInput('data[tx_cfcleague_games][' . $match->getUid() . '][visitors]', $match->getProperty('visitors'), tx_rnbase_util_TYPO3::isTYPO70OrHigher() ? 6 : 4);
+            ->createIntInput('data[tx_cfcleague_games]['.$match->getUid().'][visitors]', $match->getProperty('visitors'), 6);
         $out .= $this->getModule()
             ->getFormTool()
             ->createHidden('t3matchid', $match->getUid());
         $out .= '<br />';
+
         return $out;
     }
 
     /**
-     * Für das Formular benötigen wir ein spezielles Layout
+     * Für das Formular benötigen wir ein spezielles Layout.
      */
     protected function _getTableLayoutForm()
     {
         $arr = [
-            'table' => Array(
+            'table' => [
                 '<table class="typo3-dblist table" width="100%" cellspacing="0" cellpadding="0" border="0">',
-                '</table><br/>'
-            ),
+                '</table><br/>',
+            ],
             '0' => [ // Format für 1. Zeile
                 'tr' => [
                     '<tr class="c-headLineTable">',
-                    '</tr>'
+                    '</tr>',
                 ],
                 'defCol' => [
                     '<td valign="top" class="t3-row-header c-headLineTable" style="font-weight:bold;padding:2px 5px;">',
-                    '</td>'
-                ] // Format für jede Spalte in der 1. Zeile
+                    '</td>',
+                ], // Format für jede Spalte in der 1. Zeile
             ],
-            'defRowOdd' => Array( // Formate für alle geraden Zeilen
-                'tr' => Array(
+            'defRowOdd' => [ // Formate für alle geraden Zeilen
+                'tr' => [
                     '<tr class="db_list_normal">',
-                    '</tr>'
-                ),
-                'defCol' => Array(
+                    '</tr>',
+                ],
+                'defCol' => [
                     '<td valign="top" style="padding:5px 5px;">',
-                    '</td>'
-                ) // Format für jede Spalte in jeder Zeile
-            ),
+                    '</td>',
+                ], // Format für jede Spalte in jeder Zeile
+            ],
             'defRowEven' => [ // Formate für alle ungeraden Zeilen (die Textbox)
                 'tr' => [
                     '<tr class="db_list_alt">',
-                    '</tr>'
+                    '</tr>',
                 ],
                 'defCol' => [
                     '<td colspan="2" style="border-bottom:solid 1px #A2AAB8;">&nbsp;</td><td valign="top" align="left" colspan="2" style="padding:2px 5px;border-bottom:solid 1px #A2AAB8;">',
-                    '</td>'
-                ] // Format für jede Spalte in jeder Zeile
-            ]
+                    '</td>',
+                ], // Format für jede Spalte in jeder Zeile
+            ],
         ];
+
         return $arr;
     }
 
     /**
-     * Wir listen die Tickermeldungen des Spiels auf
+     * Wir listen die Tickermeldungen des Spiels auf.
      *
-     * @param tx_cfcleague_models_Match $match
+     * @param \tx_cfcleague_models_Match $match
      */
     protected function createTickerArray($match, $showAll)
     {
         global $LANG;
         $notes = $match->getMatchNotes('desc', $showAll ? false : 5);
-        if (! count($notes)) {
+        if (!count($notes)) {
             return 0;
         }
 
@@ -503,8 +397,8 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc
                 $LANG->getLL('tx_cfcleague_match_notes.player_home'),
                 $LANG->getLL('tx_cfcleague_match_notes.player_guest'),
                 $LANG->getLL('tx_cfcleague_match_notes.comment'),
-                ''
-            ]
+                '',
+            ],
         ];
 
         // Die NotesTypen laden
@@ -516,40 +410,41 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc
             $note = $noteObj->getProperty();
             $row = [];
 
-            $min = $note['minute'] . ($note['extra_time'] ? '+' . $note['extra_time'] : '');
+            $min = $note['minute'].($note['extra_time'] ? '+'.$note['extra_time'] : '');
             $min .= $note['hidden'] ? '*' : '';
             $row[] = $min;
             $row[] = $types[$note['type']];
 
-            $row[] = intval($note['player_home']) == - 1 ? $LANG->getLL('tx_cfcleague.unknown') : $playersHome[$note['player_home']];
-            $row[] = intval($note['player_guest']) == - 1 ? $LANG->getLL('tx_cfcleague.unknown') : $playersGuest[$note['player_guest']];
+            $row[] = -1 == intval($note['player_home']) ? $LANG->getLL('tx_cfcleague.unknown') : $playersHome[$note['player_home']];
+            $row[] = -1 == intval($note['player_guest']) ? $LANG->getLL('tx_cfcleague.unknown') : $playersGuest[$note['player_guest']];
 
             $row[] = $note['comment'];
             $row[] = $this->getModule()
                 ->getFormTool()
-                ->createEditLink('tx_cfcleague_match_notes', $note['uid']);
-            $row[] = $this->getModule()
+                ->createEditLink('tx_cfcleague_match_notes', $note['uid']).
+            $this->getModule()
                 ->getFormTool()
-                ->createHideLink('tx_cfcleague_match_notes', $note['uid']);
+                ->createHideLink('tx_cfcleague_match_notes', $note['uid'], $note['hidden'] > 0);
             $arr[] = $row;
         }
+
         return $arr;
     }
 
     protected function getTickerTypes()
     {
-        $srv = tx_cfcleague_util_ServiceRegistry::getMatchService();
+        $srv = \tx_cfcleague_util_ServiceRegistry::getMatchService();
         $tcaTypes = $srv->getMatchNoteTypes4TCA();
         $types = [];
         foreach ($tcaTypes as $typeDef) {
             $types[$typeDef[1]] = $typeDef[0];
         }
+
         return $types;
     }
 
     /**
-     *
-     * @param tx_cfcleague_models_Match $match
+     * @param \tx_cfcleague_models_Match $match
      * @param string $team
      */
     protected function getPlayerNames($match, $team)
@@ -558,14 +453,14 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc
             return $this->playerNames[$team];
         }
 
-        $profileSrv = tx_cfcleague_util_ServiceRegistry::getProfileService();
-        if ($team == 'home') {
+        $profileSrv = \tx_cfcleague_util_ServiceRegistry::getProfileService();
+        if ('home' == $team) {
             $players = $profileSrv->loadProfiles($match->getPlayersHome(true));
         } else {
             $players = $profileSrv->loadProfiles($match->getPlayersGuest(true));
         }
         $this->playerNames = [
-            $team => []
+            $team => [],
         ];
         foreach ($players as $player) {
             $this->playerNames[$team][$player->getUid()] = $player->getName(true);
@@ -575,9 +470,9 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc
     }
 
     /**
-     * Erstellt das Formular für die Eingabe der Tickermeldungen
+     * Erstellt das Formular für die Eingabe der Tickermeldungen.
      *
-     * @param tx_cfcleague_models_Match $match
+     * @param \tx_cfcleague_models_Match $match
      */
     protected function createFormArray($match)
     {
@@ -588,61 +483,61 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc
                 $LANG->getLL('tx_cfcleague_match_notes.minute'),
                 $LANG->getLL('tx_cfcleague_match_notes.type'),
                 $LANG->getLL('tx_cfcleague_match_notes.player_home'),
-                $LANG->getLL('tx_cfcleague_match_notes.player_guest')
-            ]
+                $LANG->getLL('tx_cfcleague_match_notes.player_guest'),
+            ],
         ];
 
-        $minuteWidth = tx_rnbase_util_TYPO3::isTYPO70OrHigher() ? 3 : 2;
+        $minuteWidth = 3;
 
         // TS-Config der aktuellen Seite laden, um die Anzahl der Felder zu ermitteln
-        $pageTSconfig = Tx_Rnbase_Backend_Utility::getPagesTSconfig($this->getModule()->getPid());
+        $pageTSconfig = BackendUtility::getPagesTSconfig($this->getModule()->getPid());
         $inputFields = (is_array($pageTSconfig) && is_array($pageTSconfig['tx_cfcleague.']['matchTickerCfg.'])) ? intval($pageTSconfig['tx_cfcleague.']['matchTickerCfg.']['numberOfInputFields']) : 4;
         $cols = (is_array($pageTSconfig) && is_array($pageTSconfig['tx_cfcleague.']['matchTickerCfg.'])) ? intval($pageTSconfig['tx_cfcleague.']['matchTickerCfg.']['commentFieldCols']) : 35;
         $rows = (is_array($pageTSconfig) && is_array($pageTSconfig['tx_cfcleague.']['matchTickerCfg.'])) ? intval($pageTSconfig['tx_cfcleague.']['matchTickerCfg.']['commentFieldRows']) : 3;
 
         $playersHome = $playersGuest = [
-            0 => ''
+            0 => '',
         ]; // Erster Eintrag bleibt leer
-        $players = tx_cfcleague_util_ServiceRegistry::getProfileService()->loadProfiles($match->getPlayersHome(true));
+        $players = \tx_cfcleague_util_ServiceRegistry::getProfileService()->loadProfiles($match->getPlayersHome(true));
         foreach ($players as $player) {
             $playersHome[$player->getUid()] = $player->getName(true);
         }
         asort($playersHome);
-        $players = tx_cfcleague_util_ServiceRegistry::getProfileService()->loadProfiles($match->getPlayersGuest(true));
+        $players = \tx_cfcleague_util_ServiceRegistry::getProfileService()->loadProfiles($match->getPlayersGuest(true));
         foreach ($players as $player) {
             $playersGuest[$player->getUid()] = $player->getName(true);
         }
         asort($playersGuest);
         // Jetzt noch den Dummy-Player anhängen
-        $playersHome[- 1] = $playersGuest[- 1] = $LANG->getLL('tx_cfcleague.unknown');
+        $playersHome[-1] = $playersGuest[-1] = $LANG->getLL('tx_cfcleague.unknown');
 
         $types = $this->getTickerTypes();
         // Wenn kein sinnvoller Wert vorhanden ist, bleibt der Standard bei 4
         $inputFields = $inputFields ? $inputFields : 4;
-        for ($i = 0; $i < $inputFields; $i ++) {
+        for ($i = 0; $i < $inputFields; ++$i) {
             $row = [];
 
             $row[] = $this->getModule()
                 ->getFormTool()
-                ->createIntInput('data[tx_cfcleague_match_notes][NEW' . $i . '][minute]', '', $minuteWidth, 3) . '+' . $this->getModule()
+                ->createIntInput('data[tx_cfcleague_match_notes][NEW'.$i.'][minute]', '', $minuteWidth, 3).'+'.$this->getModule()
                 ->getFormTool()
-                ->createIntInput('data[tx_cfcleague_match_notes][NEW' . $i . '][extra_time]', '', $minuteWidth, 2) . $this->getModule()
+                ->createIntInput('data[tx_cfcleague_match_notes][NEW'.$i.'][extra_time]', '', $minuteWidth, 2).$this->getModule()
                 ->getFormTool()
-                ->createHidden('data[tx_cfcleague_match_notes][NEW' . $i . '][game]', $match->getUid());
+                ->createHidden('data[tx_cfcleague_match_notes][NEW'.$i.'][game]', $match->getUid());
             $row[] = $this->getModule()
                 ->getFormTool()
-                ->createSelectByArray('data[tx_cfcleague_match_notes][NEW' . $i . '][type]', '0', $types, [
-                'onchange' => 'setMatchMinute(this);'
+                ->createSelectByArray('data[tx_cfcleague_match_notes][NEW'.$i.'][type]', '0', $types, [
+                'onchange' => 'TickerForm.setMatchMinute(this);',
             ]);
             $row[] = $this->getModule()
                 ->getFormTool()
-                ->createSelectByArray('data[tx_cfcleague_match_notes][NEW' . $i . '][player_home]', '0', $playersHome, [
-                'onchange' => 'setMatchMinute(this);'
+                ->createSelectByArray('data[tx_cfcleague_match_notes][NEW'.$i.'][player_home]', '0', $playersHome, [
+                'onchange' => 'TickerForm.setMatchMinute(this);',
             ]);
             $row[] = $this->getModule()
                 ->getFormTool()
-                ->createSelectByArray('data[tx_cfcleague_match_notes][NEW' . $i . '][player_guest]', '0', $playersGuest, [
-                'onchange' => 'setMatchMinute(this);'
+                ->createSelectByArray('data[tx_cfcleague_match_notes][NEW'.$i.'][player_guest]', '0', $playersGuest, [
+                'onchange' => 'TickerForm.setMatchMinute(this);',
             ]);
             $arr[] = $row;
 
@@ -650,46 +545,50 @@ class Tx_Cfcleague_Controller_MatchTicker extends tx_rnbase_mod_BaseModFunc
             $row = [];
             $row[] = $this->getModule()
                 ->getFormTool()
-                ->createTextArea('data[tx_cfcleague_match_notes][NEW' . $i . '][comment]', '', $cols, $rows, [
-                'onchange' => 'setMatchMinute(this);'
+                ->createTextArea('data[tx_cfcleague_match_notes][NEW'.$i.'][comment]', '', $cols, $rows, [
+                'onchange' => 'TickerForm.setMatchMinute(this);',
             ]);
             $arr[] = $row;
         }
+
         return $arr;
     }
 
     /**
-     * Erstellt eine neue Spielaktion mit den Daten aus dem Request
+     * Erstellt eine neue Spielaktion mit den Daten aus dem Request.
      */
     public function insertNotes($data)
     {
-        $notes = $data['tx_cfcleague_match_notes'];
+        $notes = $data[self::TABLE_NOTES];
         foreach ($notes as $noteId => $note) {
-            $playerOk = ! (intval($note['player_home']) != 0 && intval($note['player_guest']) != 0);
+            $data[self::TABLE_NOTES][$noteId]['player_home'] = (int) $data[self::TABLE_NOTES][$noteId]['player_home'];
+            $data[self::TABLE_NOTES][$noteId]['player_guest'] = (int) $data[self::TABLE_NOTES][$noteId]['player_guest'];
+            $data[self::TABLE_NOTES][$noteId]['player_guest'] = (int) $data[self::TABLE_NOTES][$noteId]['player_guest'];
+
+            $playerOk = !(0 != (int) $note['player_home'] && 0 != (int) $note['player_guest']);
 
             // Ohne Minute (Feld ist leer) wird nix gespeichert
             // kleinste Minute ist -1 für versteckte Meldungen
-            if (strlen($note['minute']) > 0 && intval($note['minute']) >= - 1 && $playerOk) { // Minute ist Pflichtfeld
-                $data['tx_cfcleague_match_notes'][$noteId]['pid'] = $this->getModule()->getPid();
-                $data['tx_cfcleague_match_notes'][$noteId]['comment'] = nl2br($data['tx_cfcleague_match_notes'][$noteId]['comment']);
+            if (strlen($note['minute']) > 0 && intval($note['minute']) >= -1 && $playerOk) { // Minute ist Pflichtfeld
+                $data[self::TABLE_NOTES][$noteId]['pid'] = $this->getModule()->getPid();
+                $data[self::TABLE_NOTES][$noteId]['comment'] = nl2br($data[self::TABLE_NOTES][$noteId]['comment']);
             } else {
                 unset($data['tx_cfcleague_match_notes'][$noteId]);
             }
         }
-        if (! count($data['tx_cfcleague_match_notes'])) {
+        if (!count($data['tx_cfcleague_match_notes'])) {
             unset($data['tx_cfcleague_match_notes']);
         }
         // Die neuen Notes werden jetzt gespeichert
         reset($data);
-        tx_rnbase::load('Tx_Rnbase_Database_Connection');
-        $tce = Tx_Rnbase_Database_Connection::getInstance()->getTCEmain($data);
+        $tce = \Tx_Rnbase_Database_Connection::getInstance()->getTCEmain($data);
         $tce->process_datamap();
     }
 
     /**
-     * Liefert die Selector Instanz
+     * Liefert die Selector Instanz.
      *
-     * @return tx_cfcleague_selector
+     * @return \tx_cfcleague_selector
      */
     private function getSelector()
     {

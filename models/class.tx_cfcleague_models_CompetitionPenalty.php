@@ -28,7 +28,6 @@ tx_rnbase::load('tx_rnbase_model_base');
  */
 class tx_cfcleague_models_CompetitionPenalty extends tx_rnbase_model_base
 {
-
     public function getTableName()
     {
         return 'tx_cfcleague_competition_penalty';

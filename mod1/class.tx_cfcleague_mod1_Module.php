@@ -23,45 +23,41 @@
  * This copyright notice MUST APPEAR in all copies of the script!
  * *************************************************************
  */
-require_once (tx_rnbase_util_Extensions::extPath('cfc_league') . 'mod1/class.tx_cfcleague_selector.php');
+require_once tx_rnbase_util_Extensions::extPath('cfc_league').'mod1/class.tx_cfcleague_selector.php';
 tx_rnbase::load('tx_rnbase_mod_BaseModule');
 tx_rnbase::load('Tx_Rnbase_Backend_Utility');
 
 /**
- * Module 'T3sports'
+ * Module 'T3sports'.
  *
  * @author René Nitzsche rene@system25.de
- * @package TYPO3
  */
 class tx_cfcleague_mod1_Module extends tx_rnbase_mod_BaseModule
 {
+    public $pageinfo;
 
-    var $pageinfo;
-
-    var $tabs;
+    public $tabs;
 
     /**
      * Initializes the backend module by setting internal variables, initializing the menu.
-     *
-     * @return void
      */
     public function init()
     {
-        if (! $this->MCONF['name']) {
+        if (!$this->MCONF['name']) {
             $this->MCONF = array_merge((array) $GLOBALS['MCONF'], array(
                 'name' => 'web_CfcLeagueM1',
                 'access' => 'user,group',
                 'default' => array(
                     'tabs_images' => array(
-                        'tab' => 'moduleicon.gif'
+                        'tab' => 'moduleicon.gif',
                     ),
-                    'll_ref' => 'LLL:EXT:mksearch/mod1/locallang_mod.xml'
-                )
+                    'll_ref' => 'LLL:EXT:mksearch/mod1/locallang_mod.xml',
+                ),
             ));
         }
 
         $GLOBALS['LANG']->includeLLFile('EXT:cfc_league/mod1/locallang.xml');
-        $GLOBALS['LANG']->includeLLFile('EXT:cfc_league/locallang_db.xml');
+        $GLOBALS['LANG']->includeLLFile('EXT:cfc_league/Resources/Private/Language/locallang_db.xml');
 
         // $GLOBALS['BE_USER']->modAccess($GLOBALS['MCONF'], 1); // This checks permissions and exits if the users has no permission for entry.
         $GLOBALS['BE_USER']->modAccess($this->MCONF, 1);
@@ -69,7 +65,7 @@ class tx_cfcleague_mod1_Module extends tx_rnbase_mod_BaseModule
     }
 
     /**
-     * Method to get the extension key
+     * Method to get the extension key.
      *
      * @return string Extension key
      */

@@ -1,10 +1,17 @@
 <?php
+
 use TYPO3\CMS\Backend\Controller\ContentElement\ElementInformationController;
 use TYPO3\CMS\Core\Imaging\IconFactory;
+use TYPO3\CMS\Core\Type\Bitmask\Permission;
+use TYPO3\CMS\Backend\Template\ModuleTemplate;
+use Sys25\RnBase\Utility\TYPO3;
+use TYPO3\CMS\Core\Http\ServerRequestFactory;
+use TYPO3\CMS\Core\Http\NormalizedParams;
+
 /*
  *  Copyright notice
  *
- *  (c) 2007-2016 Rene Nitzsche (rene@system25.de)
+ *  (c) 2007-2020 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -24,34 +31,55 @@ use TYPO3\CMS\Core\Imaging\IconFactory;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-class Tx_Cfcleague_Controller_Profile_ShowItem extends ElementInformationController {
-	/**
-	 * Constructor
-	 */
-	public function __construct() {
-		// Der parent-Konstruktor darf nicht aufgerufen werden.
-		$this->iconFactory = tx_rnbase::makeInstance(IconFactory::class);
-	}
+class Tx_Cfcleague_Controller_Profile_ShowItem extends ElementInformationController
+{
+    /**
+     * Constructor.
+     */
+    public function __construct()
+    {
+        // Der parent-Konstruktor darf nicht aufgerufen werden.
+        $this->iconFactory = tx_rnbase::makeInstance(IconFactory::class);
+    }
 
-	public function getInfoScreen($table, $uid) {
-		$this->initByParams($table, $uid);
-		$content = $this->renderPropertiesAsTable();
-		$content .= $this->renderReferences();
+    public function getInfoScreen($table, $uid)
+    {
+        $this->initByParams($table, $uid);
 
-		return $content;
-	}
-	protected function initByParams($table, $uid) {
-		$this->table = $table;
-		$this->uid = $uid;
-		$this->permsClause = $this->getBackendUser()->getPagePermsClause(1);
-		$this->doc = tx_rnbase::makeInstance(\TYPO3\CMS\Backend\Template\DocumentTemplate::class);
-		$this->doc->divClass = 'container';
+        if (TYPO3::isTYPO104OrHigher()) {
+            $request = ServerRequestFactory::fromGlobals();
+            $normalizedParams = NormalizedParams::createFromRequest($request);
+            $request = $request->withAttribute('normalizedParams', $normalizedParams);
+            $this->main($request);
+        } else {
+            $this->main();
+        }
 
-		if (isset($GLOBALS['TCA'][$this->table])) {
-			$this->initDatabaseRecord();
-		} elseif ($this->table == '_FILE' || $this->table == '_FOLDER' || $this->table == 'sys_file') {
-			$this->initFileOrFolderRecord();
-		}
-	}
+        if (TYPO3::isTYPO87OrHigher()) {
+            $content = $this->moduleTemplate->getView()->getRenderingContext()->getVariableProvider()->get('content');
+        } else {
+            $content = $this->content;
+        }
+
+        return $content;
+    }
+
+    protected function initByParams($table, $uid)
+    {
+        $this->table = $table;
+        $this->uid = $uid;
+        $this->permsClause = $this->getBackendUser()->getPagePermsClause(Permission::PAGE_SHOW);
+        $this->moduleTemplate = \tx_rnbase::makeInstance(ModuleTemplate::class);
+        $this->moduleTemplate->getDocHeaderComponent()->disable();
+        if (!TYPO3::isTYPO87OrHigher()) {
+            $this->doc = \tx_rnbase::makeInstance(\TYPO3\CMS\Backend\Template\DocumentTemplate::class);
+            $this->doc->divClass = 'container';
+        }
+
+        if (isset($GLOBALS['TCA'][$this->table])) {
+            $this->initDatabaseRecord();
+        } elseif ('_FILE' == $this->table || '_FOLDER' == $this->table || 'sys_file' == $this->table) {
+            $this->initFileOrFolderRecord();
+        }
+    }
 }
-

@@ -22,25 +22,33 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
+class tx_cfcleague_util_GeneratorMatch
+{
+    public $home;
 
-/**
- */
-class tx_cfcleague_util_GeneratorMatch {
-	var $home, $guest, $nr, $nr2, $noMatch;
-	function __construct($n, $n2, $h, $g, $noMatch){
-		$this->nr = $n; // ID
-		$this->nr2 = $n2; // Spielnummer
-		$this->home = $h;
-		$this->guest = $g;
-		$this->noMatch = $noMatch;
-	}
-	function toString() {
-		return 'SNr '.$this->nr.': ' . $this->home . ' - ' . $this->guest . "\n";
-	}
+    public $guest;
+
+    public $nr;
+
+    public $nr2;
+
+    public $noMatch;
+
+    public function __construct($n, $n2, $h, $g, $noMatch)
+    {
+        $this->nr = $n; // ID
+        $this->nr2 = $n2; // Spielnummer
+        $this->home = $h;
+        $this->guest = $g;
+        $this->noMatch = $noMatch;
+    }
+
+    public function toString()
+    {
+        return 'SNr '.$this->nr.': '.$this->home.' - '.$this->guest."\n";
+    }
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/util/class.tx_cfcleague_util_GeneratorMatch.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/util/class.tx_cfcleague_util_GeneratorMatch.php']);
+    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/util/class.tx_cfcleague_util_GeneratorMatch.php'];
 }
-
-?>

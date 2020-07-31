@@ -28,13 +28,12 @@ define('MATCHSRV_FIELD_MATCH_ROUND', 'MATCH.ROUND');
 define('MATCHSRV_FIELD_MATCH_DATE', 'MATCH.DATE');
 
 /**
- * Class to search matches from database
+ * Class to search matches from database.
  *
  * @author Rene Nitzsche
  */
 class tx_cfcleague_search_MatchRound extends tx_rnbase_util_SearchBase
 {
-
     protected function getTableMappings()
     {
         $tableMapping = [];
@@ -43,8 +42,9 @@ class tx_cfcleague_search_MatchRound extends tx_rnbase_util_SearchBase
 
         // Hook to append other tables
         tx_rnbase_util_Misc::callHook('cfc_league', 'search_MatchRound_getTableMapping_hook', array(
-            'tableMapping' => &$tableMapping
+            'tableMapping' => &$tableMapping,
         ), $this);
+
         return $tableMapping;
     }
 
@@ -67,8 +67,9 @@ class tx_cfcleague_search_MatchRound extends tx_rnbase_util_SearchBase
         // Hook to append other tables
         tx_rnbase_util_Misc::callHook('cfc_league', 'search_MatchRound_getJoins_hook', array(
             'join' => &$join,
-            'tableAliases' => $tableAliases
+            'tableAliases' => $tableAliases,
         ), $this);
+
         return $join;
     }
 }

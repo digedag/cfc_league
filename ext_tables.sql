@@ -11,11 +11,9 @@ CREATE TABLE tx_cfcleague_group (
 	deleted tinyint(4) DEFAULT '0' NOT NULL,
 	hidden tinyint(4) DEFAULT '0' NOT NULL,
 	starttime int(11) DEFAULT '0' NOT NULL,
-	fe_group int(11) DEFAULT '0' NOT NULL,
 	name varchar(255) DEFAULT '' NOT NULL,
 	shortname varchar(55) DEFAULT '' NOT NULL,
 	logo int(11) DEFAULT '0' NOT NULL,
-	t3logo text NOT NULL,
 
 	PRIMARY KEY (uid),
 	KEY parent (pid)
@@ -70,7 +68,6 @@ CREATE TABLE tx_cfcleague_competition (
 	match_keys text NOT NULL,
 	table_marks text NOT NULL,
 	logo int(11) DEFAULT '0' NOT NULL,
-	t3logo text NOT NULL,
 	sports varchar(50) DEFAULT '' NOT NULL,
 
 	match_parts tinyint(4) DEFAULT '0' NOT NULL,
@@ -151,7 +148,7 @@ CREATE TABLE tx_cfcleague_club (
 	info text,
 	info2 text,
 	stadiums int(11) DEFAULT '0' NOT NULL,
-	established date DEFAULT '0000-00-00',
+	established date DEFAULT NULL,
 	yearestablished int(11) DEFAULT '0' NOT NULL,
 	colors varchar(100) DEFAULT '' NOT NULL,
 	members int(11) DEFAULT '0' NOT NULL,
@@ -260,9 +257,6 @@ CREATE TABLE tx_cfcleague_games (
 	dam_media int(11) DEFAULT '0' NOT NULL,
 	dam_media2 int(11) DEFAULT '0' NOT NULL,
 	t3images int(11) DEFAULT '0' NOT NULL,
-
-	video text NOT NULL,
-	videoimg text NOT NULL,
 
 	is_extratime tinyint(3) DEFAULT '0' NOT NULL,
 	goals_home_et int(11) DEFAULT '0' NOT NULL,
@@ -427,8 +421,6 @@ CREATE TABLE tx_cfcleague_stadiums (
 
 	logo int(11) DEFAULT '0' NOT NULL,
 	pictures int(11) DEFAULT '0' NOT NULL,
-	t3logo text NOT NULL,
-	t3pictures text NOT NULL,
 	clubs int(11) DEFAULT '0' NOT NULL,
 	address int(11) DEFAULT '0' NOT NULL,
 	extid varchar(255) DEFAULT '' NOT NULL,

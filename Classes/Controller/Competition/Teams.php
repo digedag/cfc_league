@@ -27,15 +27,14 @@ tx_rnbase::load('Tx_Rnbase_Utility_Strings');
 tx_rnbase::load('tx_cfcleague_mod1_decorator');
 
 /**
- * Die Klasse verwaltet die Erstellung Teams für Wettbewerbe
+ * Die Klasse verwaltet die Erstellung Teams für Wettbewerbe.
  */
 class Tx_Cfcleague_Controller_Competition_Teams
 {
-
-    var $doc;
+    public $doc;
 
     /**
-     * Verwaltet die Erstellung von Spielplänen von Ligen
+     * Verwaltet die Erstellung von Spielplänen von Ligen.
      *
      * @param tx_rnbase_mod_IModule $module
      * @param tx_cfcleague_league $competition
@@ -57,11 +56,12 @@ class Tx_Cfcleague_Controller_Competition_Teams
         $content .= $this->showCurrentTeams($competition);
         $content .= $addTeams;
         $content .= $newTeams;
+
         return $content;
     }
 
     /**
-     * Returns the formtool
+     * Returns the formtool.
      *
      * @return tx_rnbase_util_FormTool
      */
@@ -71,10 +71,11 @@ class Tx_Cfcleague_Controller_Competition_Teams
     }
 
     /**
-     * Show all teams from current page and not part of current competition
+     * Show all teams from current page and not part of current competition.
      *
      * @param int $pid
      * @param tx_cfcleague_models_Competition $competition
+     *
      * @return string
      */
     protected function showTeamsFromPage($pid, $competition)
@@ -96,33 +97,36 @@ class Tx_Cfcleague_Controller_Competition_Teams
         // Teams der Seite laden
         $fields = array();
         $fields['TEAM.PID'][OP_EQ_INT] = $pid;
-        if ($teamIds)
+        if ($teamIds) {
             $fields['TEAM.UID'][OP_NOTIN_INT] = $teamIds;
+        }
         $options = array();
         $options['orderby']['TEAM.NAME'] = 'asc';
         // $options['debug']=1;
         $teams = $srv->searchTeams($fields, $options);
-        if (! count($teams))
+        if (!count($teams)) {
             return '';
+        }
 
         $options = array();
         $options['checkbox'] = 1;
         $columns = array(
             'uid' => array(
-                'title' => 'label_uid'
+                'title' => 'label_uid',
             ),
             'name' => array(
                 'title' => 'label_teamname',
-                'method' => 'getName'
-            )
+                'method' => 'getName',
+            ),
         );
         $arr = tx_cfcleague_mod1_decorator::prepareTable($teams, $columns, $this->getFormTool(), $options);
 
-        $content = '<h2>' . $LANG->getLL('label_add_teams_from_page') . '</h2>';
+        $content = '<h2>'.$LANG->getLL('label_add_teams_from_page').'</h2>';
 
         $tables = tx_rnbase::makeInstance('Tx_Rnbase_Backend_Utility_Tables');
         $content .= $tables->buildTable($arr[0]);
         $content .= $this->formTool->createSubmit('addteams', $LANG->getLL('label_add_teams'), $GLOBALS['LANG']->getLL('msg_add_teams'));
+
         return $content;
     }
 
@@ -136,50 +140,54 @@ class Tx_Cfcleague_Controller_Competition_Teams
         global $LANG;
         $show = intval(tx_rnbase_parameters::getPostOrGetParameter('check_newcompteam'));
         $content = '<h2>
-		<input type="checkbox" name="check_newcompteam" value="1" ' . ($show ? 'checked="checked"' : '') . ' onClick="this.form.submit()">
-		' . $LANG->getLL('label_create_teams') . '</h2>
+		<input type="checkbox" name="check_newcompteam" value="1" '.($show ? 'checked="checked"' : '').' onClick="this.form.submit()">
+		'.$LANG->getLL('label_create_teams').'</h2>
 		';
 
-        if (! $show)
+        if (!$show) {
             return $content;
+        }
         $content .= $this->createTeams(tx_rnbase_parameters::getPostOrGetParameter('data'), $competition);
 
         // Jetzt 6 Boxen mit Name und Kurzname
-        $arr = Array(
-            Array(
+        $arr = array(
+            array(
                 '&nbsp;',
                 $LANG->getLL('label_teamname'),
-                $LANG->getLL('label_teamshortname')
-            )
+                $LANG->getLL('label_teamshortname'),
+            ),
         );
         $maxFields = 6;
-        for ($i = 0; $i < $maxFields; $i ++) {
+        for ($i = 0; $i < $maxFields; ++$i) {
             $row = array();
-            $row[] = ($i + 1) . $this->getFormTool()->createHidden('data[tx_cfcleague_teams][NEW' . $i . '][pid]', $pid);
-            $row[] = $this->getFormTool()->createTxtInput('data[tx_cfcleague_teams][NEW' . $i . '][name]', '', 20);
-            $row[] = $this->getFormTool()->createTxtInput('data[tx_cfcleague_teams][NEW' . $i . '][short_name]', '', 10);
+            $row[] = ($i + 1).$this->getFormTool()->createHidden('data[tx_cfcleague_teams][NEW'.$i.'][pid]', $pid);
+            $row[] = $this->getFormTool()->createTxtInput('data[tx_cfcleague_teams][NEW'.$i.'][name]', '', 20);
+            $row[] = $this->getFormTool()->createTxtInput('data[tx_cfcleague_teams][NEW'.$i.'][short_name]', '', 10);
             $arr[] = $row;
         }
         /* @var $tables Tx_Rnbase_Backend_Utility_Tables */
         $tables = tx_rnbase::makeInstance('Tx_Rnbase_Backend_Utility_Tables');
         $content .= $tables->buildTable($arr, $this->getTableLayout());
         $content .= $this->getFormTool()->createSubmit('update', $LANG->getLL('btn_create'), $GLOBALS['LANG']->getLL('msg_create_teams'));
+
         return $content;
     }
 
     /**
-     * Creates new teams and adds to current competition
+     * Creates new teams and adds to current competition.
      *
      * @param array $data
      *            request data
      * @param tx_cfcleague_models_Competition $competition
+     *
      * @return string
      */
     protected function createTeams($data, $competition)
     {
         global $LANG;
-        if (! is_array($data['tx_cfcleague_teams']))
+        if (!is_array($data['tx_cfcleague_teams'])) {
             return '';
+        }
         $tcaData = array();
         $uids = array();
         foreach ($data['tx_cfcleague_teams'] as $uid => $arr) {
@@ -188,8 +196,9 @@ class Tx_Cfcleague_Controller_Competition_Teams
                 $uids[] = $uid;
             }
         }
-        if (! count($uids))
+        if (!count($uids)) {
             return '';
+        }
         $tcaData['tx_cfcleague_competition'][$competition->getUid()]['teams'] = implode(',', $this->mergeArrays(Tx_Rnbase_Utility_Strings::intExplode(',', $competition->getProperty('teams')), $uids));
         reset($tcaData);
 
@@ -197,67 +206,70 @@ class Tx_Cfcleague_Controller_Competition_Teams
         $tce->process_datamap();
         $competition->refresh();
         $content .= $this->doc->section('Message:', $LANG->getLL('msg_teams_created'), 0, 1, \tx_rnbase_mod_IModFunc::ICON_INFO);
+
         return $content;
     }
 
     /**
-     * Darstellung einer Tabelle mit den aktuellen Teams
+     * Darstellung einer Tabelle mit den aktuellen Teams.
      *
      * @param tx_cfcleague_models_Competition $competition
      */
     protected function showCurrentTeams($competition)
     {
         global $LANG;
-        $content = '<h2>' . $LANG->getLL('label_current_teams') . '</h2>';
+        $content = '<h2>'.$LANG->getLL('label_current_teams').'</h2>';
         $arr[] = array(
             'UID',
             'Team',
-            'Info'
+            'Info',
         );
         $teams = $competition->getTeamNames(1);
-        if (! count($teams)) {
-            return $content . $this->doc->section('Message:', $LANG->getLL('msg_noteams_in_comp'), 0, 1, \tx_rnbase_mod_IModFunc::ICON_INFO);
+        if (!count($teams)) {
+            return $content.$this->doc->section('Message:', $LANG->getLL('msg_noteams_in_comp'), 0, 1, \tx_rnbase_mod_IModFunc::ICON_INFO);
         }
         foreach ($teams as $teamArr) {
             $row = array();
             $row[] = $teamArr['uid'];
             $row[] = $teamArr['name'];
-            $buttons = $this->formTool->createEditLink('tx_cfcleague_teams', $teamArr['uid']) . $this->formTool->createInfoLink('tx_cfcleague_teams', $teamArr['uid']);
-            if (intval($teamArr['club']))
+            $buttons = $this->formTool->createEditLink('tx_cfcleague_teams', $teamArr['uid']).$this->formTool->createInfoLink('tx_cfcleague_teams', $teamArr['uid']);
+            if (intval($teamArr['club'])) {
                 $buttons .= $this->formTool->createEditLink('tx_cfcleague_club', $teamArr['club'], $LANG->getLL('label_edit_club'));
+            }
             $row[] = $buttons;
             $arr[] = $row;
         }
         $tables = tx_rnbase::makeInstance('Tx_Rnbase_Backend_Utility_Tables');
         $content .= $tables->buildTable($arr);
+
         return $content;
     }
 
     protected function getTableLayout()
     {
-        return Array(
-            'table' => Array(
+        return array(
+            'table' => array(
                 '<table class="typo3-dblist table" cellspacing="0" cellpadding="0" border="0">',
-                '</table><br/>'
+                '</table><br/>',
             ),
-            '0' => Array( // Format für 1. Zeile
-                'defCol' => Array(
+            '0' => array( // Format für 1. Zeile
+                'defCol' => array(
                     '<td valign="top" class="c-headLineTable" style="font-weight:bold;padding:2px 5px;">',
-                    '</td>'
-                ) // Format für jede Spalte in der 1. Zeile
+                    '</td>',
+                ), // Format für jede Spalte in der 1. Zeile
             ),
-            'defRow' => Array( // Formate für alle Zeilen
-                'defCol' => Array(
+            'defRow' => array( // Formate für alle Zeilen
+                'defCol' => array(
                     '<td valign="middle" style="padding:0px 1px;">',
-                    '</td>'
-                ) // Format für jede Spalte in jeder Zeile
+                    '</td>',
+                ), // Format für jede Spalte in jeder Zeile
             ),
-            'defRowEven' => Array( // Formate für alle Zeilen
-                'defCol' => Array(
+            'defRowEven' => array( // Formate für alle Zeilen
+                'defCol' => array(
                     '<td valign="middle" class="db_list_alt" style="padding:0px 1px;">',
-                    '</td>'
-                ) // Format für jede Spalte in jeder Zeile
-            )
+                    '</td>',
+                ), // Format für jede Spalte in jeder Zeile
+            ),
         );
     }
 
@@ -271,8 +283,10 @@ class Tx_Cfcleague_Controller_Competition_Teams
         $ret = $arr1[0] ? $arr1 : 0;
         if ($ret && $arr2) {
             $ret = array_merge($ret, $arr2);
-        } elseif ($arr2)
+        } elseif ($arr2) {
             $ret = $arr2;
+        }
+
         return $ret;
     }
 }

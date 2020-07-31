@@ -1,8 +1,13 @@
 <?php
+
+namespace System25\T3sports\Sports;
+
+use Sys25\RnBase\Typo3Wrapper\Service\AbstractService;
+
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2017 Rene Nitzsche (rene@system25.de)
+ *  (c) 2017-2020 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -21,37 +26,32 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-tx_rnbase::load('tx_cfcleague_sports_ISports');
-tx_rnbase::load('Tx_Rnbase_Service_Base');
 
-/**
- */
-class tx_cfcleague_sports_Handball extends Tx_Rnbase_Service_Base implements tx_cfcleague_sports_ISports
+class Handball extends AbstractService implements ISports
 {
-
     /**
-     * Get match provider
+     * Get match provider.
      *
-     * @return tx_cfcleaguefe_table_ITableType
+     * @return \tx_cfcleaguefe_table_ITableType
      */
     public function getLeagueTable()
     {
-        if (tx_rnbase_util_Extensions::isLoaded('cfc_league_fe')) {
-            return tx_rnbase::makeInstance('tx_cfcleaguefe_table_handball_Table');
+        if (\tx_rnbase_util_Extensions::isLoaded('cfc_league_fe')) {
+            return \tx_rnbase::makeInstance('tx_cfcleaguefe_table_handball_Table');
         }
+
         return null;
     }
 
     /**
-     *
      * @return array
      */
     public function getTCAPointSystems()
     {
         return [
             [
-                tx_rnbase_util_Misc::translateLLL('LLL:EXT:cfc_league/locallang_db.xml:tx_cfcleague_competition.point_system_2'),
-                0
+                \tx_rnbase_util_Misc::translateLLL('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_competition.point_system_2'),
+                0,
             ],
         ];
     }
@@ -66,24 +66,22 @@ class tx_cfcleague_sports_Handball extends Tx_Rnbase_Service_Base implements tx_
         return false;
     }
 
-    private $matchInfo = NULL;
+    private $matchInfo = null;
 
     /*
      * (non-PHPdoc)
-     * @see tx_cfcleague_sports_ISports::getMatchInfo()
+     * @see ISports::getMatchInfo()
      */
     public function getMatchInfo()
     {
-        if ($this->matchInfo == NULL) {
-            tx_rnbase::load('tx_cfcleague_sports_MatchInfo');
-            $this->matchInfo = tx_rnbase::makeInstance('tx_cfcleague_sports_MatchInfo', array(
-                tx_cfcleague_sports_MatchInfo::MATCH_TIME => 60,
-                tx_cfcleague_sports_MatchInfo::MATCH_PARTS => 2,
-                tx_cfcleague_sports_MatchInfo::MATCH_EXTRA_TIME => 10
-            ));
+        if (null == $this->matchInfo) {
+            $this->matchInfo = \tx_rnbase::makeInstance(MatchInfo::class, [
+                MatchInfo::MATCH_TIME => 60,
+                MatchInfo::MATCH_PARTS => 2,
+                MatchInfo::MATCH_EXTRA_TIME => 10,
+            ]);
         }
 
         return $this->matchInfo;
     }
 }
-

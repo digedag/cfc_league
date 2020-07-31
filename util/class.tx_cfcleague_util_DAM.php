@@ -22,23 +22,21 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
+class tx_cfcleague_util_DAM
+{
+    public static function fetchFiles($tablename, $uid, $refField)
+    {
+        tx_rnbase::load('tx_rnbase_util_TSDAM');
 
-/**
- */
-class tx_cfcleague_util_DAM {
+        return tx_rnbase_util_TSDAM::fetchFiles($tablename, $uid, $refField);
+    }
 
-	static function fetchFiles($tablename, $uid, $refField) {
-		tx_rnbase::load('tx_rnbase_util_TSDAM');
-		return tx_rnbase_util_TSDAM::fetchFiles($tablename, $uid, $refField);
-	}
-
-	static function createThumbnails($damFiles, $size, $addAttr) {
-		return tx_rnbase_util_TSDAM::createThumbnails($damFiles, $size, $addAttr);
-	}
+    public static function createThumbnails($damFiles, $size, $addAttr)
+    {
+        return tx_rnbase_util_TSDAM::createThumbnails($damFiles, $size, $addAttr);
+    }
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/util/class.tx_cfcleague_util_DAM.php']) {
-  include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/util/class.tx_cfcleague_util_DAM.php']);
+    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/util/class.tx_cfcleague_util_DAM.php'];
 }
-
-?>

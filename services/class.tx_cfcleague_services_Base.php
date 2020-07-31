@@ -31,9 +31,8 @@ tx_rnbase::load('Tx_Rnbase_Service_Base');
  */
 class tx_cfcleague_services_Base extends Tx_Rnbase_Service_Base
 {
-
     /**
-     * Create or update model
+     * Create or update model.
      *
      * @param Tx_Rnbase_Domain_Model_RecordInterface $model
      */
@@ -47,8 +46,8 @@ class tx_cfcleague_services_Base extends Tx_Rnbase_Service_Base
     }
 
     /**
-     *
      * @param Tx_Rnbase_Domain_Model_RecordInterface $model
+     *
      * @return Tx_Rnbase_Domain_Model_RecordInterface
      */
     protected function update($model)
@@ -58,7 +57,7 @@ class tx_cfcleague_services_Base extends Tx_Rnbase_Service_Base
         $table = $model->getTableName();
         $uid = (int) $model->getUid();
 
-        $where = '1=1 AND `' . $table . '`.`uid`=' . $uid;
+        $where = '1=1 AND `'.$table.'`.`uid`='.$uid;
 
         // remove uid if exists
         if (array_key_exists('uid', $data)) {
@@ -73,10 +72,11 @@ class tx_cfcleague_services_Base extends Tx_Rnbase_Service_Base
 
     /**
      * Create a new record
-     * TODO: remove after migration to repository
+     * TODO: remove after migration to repository.
      *
      * @param Tx_Rnbase_Domain_Model_RecordInterface $model
      * @param string $table
+     *
      * @return int UID of just created record
      */
     protected function create($model)
@@ -87,7 +87,7 @@ class tx_cfcleague_services_Base extends Tx_Rnbase_Service_Base
         $newUid = Tx_Rnbase_Database_Connection::getInstance()->doInsert($model->getTableName(), $model->getProperty());
         $model->uid = $newUid;
         $model->setUid($newUid);
+
         return $newUid;
     }
 }
-

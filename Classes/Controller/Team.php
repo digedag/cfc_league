@@ -25,15 +25,16 @@ tx_rnbase::load('tx_rnbase_util_TYPO3');
 tx_rnbase::load('tx_rnbase_mod_BaseModFunc');
 
 /**
- * Die Klasse verwaltet die automatische Erstellung von Spielplänen
+ * Die Klasse verwaltet die automatische Erstellung von Spielplänen.
  */
 class Tx_Cfcleague_Controller_Team extends tx_rnbase_mod_BaseModFunc
 {
+    public $doc;
 
-    var $doc, $MCONF;
+    public $MCONF;
 
     /**
-     * Method getFuncId
+     * Method getFuncId.
      *
      * @return string
      */
@@ -43,20 +44,20 @@ class Tx_Cfcleague_Controller_Team extends tx_rnbase_mod_BaseModFunc
     }
 
     /**
-     *
      * @return tx_cfcleague_selector
      */
     private function getSelector()
     {
-        if (! $this->selector) {
+        if (!$this->selector) {
             $this->selector = tx_rnbase::makeInstance('tx_cfcleague_selector');
             $this->selector->init($this->doc, $this->getModule());
         }
+
         return $this->selector;
     }
 
     /**
-     * Verwaltet die Erstellung von Spielplänen von Ligen
+     * Verwaltet die Erstellung von Spielplänen von Ligen.
      *
      * {@inheritdoc}
      *
@@ -79,14 +80,16 @@ class Tx_Cfcleague_Controller_Team extends tx_rnbase_mod_BaseModFunc
         $saison = $this->getSelector()->showSaisonSelector($selector, $this->getModule()
             ->getPid());
         $competitions = array();
-        if ($saison)
+        if ($saison) {
             $competitions = tx_cfcleague_util_ServiceRegistry::getCompetitionService()->getCompetitionsBySaison($saison);
+        }
 
         $content = '';
 
-        if (! ($saison && count($competitions))) {
+        if (!($saison && count($competitions))) {
             $this->getModule()->selector = $selector;
             $content .= $this->doc->section('Info:', $saison ? $LANG->getLL('msg_NoCompetitonsFound') : $LANG->getLL('msg_NoSaisonFound'), 0, 1, self::ICON_WARN);
+
             return $content;
         }
 
@@ -97,8 +100,9 @@ class Tx_Cfcleague_Controller_Team extends tx_rnbase_mod_BaseModFunc
             ->getPid(), $league);
         $this->getModule()->selector = $selector;
 
-        if (! $team) { // Kein Team gefunden
+        if (!$team) { // Kein Team gefunden
             $content .= $this->doc->section('Info:', $LANG->getLL('msg_no_team_found'), 0, 1, self::ICON_WARN);
+
             return $content;
         }
         // Wenn ein Team gefunden ist, dann können wir das Modul schreiben
@@ -106,16 +110,17 @@ class Tx_Cfcleague_Controller_Team extends tx_rnbase_mod_BaseModFunc
             ->getPid(), 'teamtools', [
             '0' => $LANG->getLL('create_players'),
             '1' => $LANG->getLL('add_players'),
-            '2' => $LANG->getLL('manage_teamnotes')
+            '2' => $LANG->getLL('manage_teamnotes'),
         ]);
 
         $tabs .= $menu['menu'];
         $tabs .= '<div style="display: block; border: 1px solid #a2aab8;" ></div>';
 
-        if (tx_rnbase_util_TYPO3::isTYPO42OrHigher())
+        if (tx_rnbase_util_TYPO3::isTYPO42OrHigher()) {
             $this->pObj->tabs = $tabs;
-        else
+        } else {
             $content .= $tabs;
+        }
 
         tx_rnbase::load('tx_cfcleague_util_TeamInfo');
         $teamInfo = new tx_cfcleague_util_TeamInfo($team, $this->formTool);
@@ -125,14 +130,17 @@ class Tx_Cfcleague_Controller_Team extends tx_rnbase_mod_BaseModFunc
             case 0:
                 $mod = tx_rnbase::makeInstance('Tx_Cfcleague_Controller_Team_ProfileCreate');
                 $content .= $mod->handleRequest($this->getModule(), $team, $teamInfo);
+
                 break;
             case 1:
                 $mod = tx_rnbase::makeInstance('Tx_Cfcleague_Controller_Team_ProfileAdd');
                 $content .= $mod->handleRequest($this->getModule(), $team, $teamInfo);
+
                 break;
             case 2:
                 $mod = tx_rnbase::makeInstance('Tx_Cfcleague_Controller_Team_TeamNotes');
                 $content .= $mod->handleRequest($this->getModule(), $team, $teamInfo);
+
                 break;
         }
         $content .= $this->formTool->form->printNeededJSFunctions_top();
@@ -142,4 +150,3 @@ class Tx_Cfcleague_Controller_Team extends tx_rnbase_mod_BaseModFunc
         return $content;
     }
 }
-

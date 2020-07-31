@@ -82,6 +82,7 @@
 			<label index="match_ticker">Match ticker/Statistics</label>
 			<label index="no_league_in_page">No competitions found on current page.</label>
 			<label index="no_round_in_league">This Competition containes no matches.</label>
+			<label index="btn_statusToFinished">All games 'Finished'</label>
 			<label index="btn_update_msgEditGames">Save changes?</label>
 			<label index="btn_update">Update</label>
 			<label index="label_btn_watchstart">Start watch</label>
@@ -258,6 +259,7 @@
 			<label index="match_ticker">Spielticker/Statistik</label>
 			<label index="no_league_in_page">Die aktuelle Seite enth&amp;auml;lt keine Wettbewerbe.</label>
 			<label index="no_round_in_league">Dieser Wettbewerb enth&amp;auml;lt keine Spiele.</label>
+			<label index="btn_statusToFinished">Alle Spiele 'Beendet'</label>
 			<label index="btn_update_msgEditGames">Sollen die Ergebnisse gespeichert werden?</label>
 			<label index="btn_update">Aktualisieren</label>
 			<label index="label_btn_watchstart">Uhr starten</label>

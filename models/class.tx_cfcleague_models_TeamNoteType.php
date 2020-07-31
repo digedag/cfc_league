@@ -28,7 +28,6 @@ tx_rnbase::load('tx_rnbase_model_base');
  */
 class tx_cfcleague_models_TeamNoteType extends tx_rnbase_model_base
 {
-
     private static $instances = array();
 
     public function getTableName()
@@ -37,7 +36,7 @@ class tx_cfcleague_models_TeamNoteType extends tx_rnbase_model_base
     }
 
     /**
-     * Liefert den Namen des Markers
+     * Liefert den Namen des Markers.
      *
      * @return string
      */
@@ -47,7 +46,7 @@ class tx_cfcleague_models_TeamNoteType extends tx_rnbase_model_base
     }
 
     /**
-     * Liefert den Namen des Types
+     * Liefert den Namen des Types.
      *
      * @return string
      */
@@ -57,7 +56,7 @@ class tx_cfcleague_models_TeamNoteType extends tx_rnbase_model_base
     }
 
     /**
-     * Liefert die Beschreibung des Types
+     * Liefert die Beschreibung des Types.
      *
      * @return string
      */
@@ -67,25 +66,28 @@ class tx_cfcleague_models_TeamNoteType extends tx_rnbase_model_base
     }
 
     /**
-     * Liefert die Instance eines Landes
+     * Liefert die Instance eines Landes.
      *
      * @param int $uid
+     *
      * @return tx_cfcleague_models_TeamNoteType
      */
-    public static function getInstance($uid = NULL)
+    public static function getInstance($uid = null)
     {
         self::_init();
+
         return self::$instances[$uid];
     }
 
     /**
-     * Returns an array with all types
+     * Returns an array with all types.
      *
      * @return array
      */
     public static function getAll()
     {
         self::_init();
+
         return array_values(self::$instances);
     }
 
@@ -100,7 +102,7 @@ class tx_cfcleague_models_TeamNoteType extends tx_rnbase_model_base
         }
 
         $options = [
-            'wrapperclass' => 'tx_cfcleague_models_TeamNoteType'
+            'wrapperclass' => 'tx_cfcleague_models_TeamNoteType',
         ];
         $result = Tx_Rnbase_Database_Connection::getInstance()->doSelect('*', 'tx_cfcleague_note_types', $options, 0);
 
