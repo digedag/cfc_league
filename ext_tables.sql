@@ -152,6 +152,7 @@ CREATE TABLE tx_cfcleague_club (
 	yearestablished int(11) DEFAULT '0' NOT NULL,
 	colors varchar(100) DEFAULT '' NOT NULL,
 	members int(11) DEFAULT '0' NOT NULL,
+	extid varchar(255) DEFAULT '' NOT NULL,
 
 	PRIMARY KEY (uid),
 	KEY parent (pid)
