@@ -16,16 +16,16 @@ $tx_cfcleague_club = [
         'label' => $labelClub,
         'label_alt' => $altLabelClub,
         'label_alt_force' => 1,
-        'searchFields' => 'uid,name,short_name',
+        'searchFields' => 'uid,name,short_name,extid',
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
         'cruser_id' => 'cruser_id',
         'sortby' => 'sorting',
         'dividers2tabs' => true,
         'delete' => 'deleted',
-        'enablecolumns' => array(
+        'enablecolumns' => [
             'disabled' => 'hidden',
-            ),
+        ],
         'typeicon_classes' => [
             'default' => 'ext-cfcleague-clubs-default',
         ],
@@ -46,26 +46,26 @@ $tx_cfcleague_club = [
                 'default' => '0',
             ],
         ],
-        'name' => array(
+        'name' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_club.name',
-            'config' => array(
+            'config' => [
                 'type' => 'input',
                 'size' => '30',
                 'max' => '100',
                 'eval' => 'required,trim',
-            ),
-        ),
-        'short_name' => array(
+            ],
+        ],
+        'short_name' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_club.short_name',
-            'config' => array(
+            'config' => [
                 'type' => 'input',
                 'size' => '30',
                 'max' => '100',
                 'eval' => 'required,trim',
-            ),
-        ),
+            ],
+        ],
         'address' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_club.address',
@@ -87,99 +87,99 @@ $tx_cfcleague_club = [
                 'default' => '0',
             ],
         ],
-        'www' => array(
+        'www' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_club.www',
-            'config' => array(
+            'config' => [
                 'type' => 'input',
                 'size' => '30',
                 'max' => '200',
                 'eval' => 'trim',
-            ),
-        ),
-        'email' => array(
+            ],
+        ],
+        'email' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_club.email',
-            'config' => array(
+            'config' => [
                 'type' => 'input',
                 'size' => '30',
                 'max' => '200',
                 'eval' => 'trim',
-            ),
-        ),
-        'street' => array(
+            ],
+        ],
+        'street' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_club.street',
-            'config' => array(
+            'config' => [
                 'type' => 'input',
                 'size' => '30',
                 'max' => '200',
                 'eval' => 'trim',
-            ),
-        ),
-        'zip' => array(
+            ],
+        ],
+        'zip' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_club.zip',
-            'config' => array(
+            'config' => [
                 'type' => 'input',
                 'size' => '10',
                 'max' => '10',
                 'eval' => 'trim',
-            ),
-        ),
-        'city' => array(
+            ],
+        ],
+        'city' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_club.city',
-            'config' => array(
+            'config' => [
                 'type' => 'input',
                 'size' => '30',
                 'max' => '200',
                 'eval' => 'trim',
-            ),
-        ),
-        'countrycode' => array(
+            ],
+        ],
+        'countrycode' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_common_countrycode',
-            'config' => array(
+            'config' => [
                 'type' => 'input',
                 'size' => '10',
                 'max' => '20',
                 'eval' => 'trim',
-            ),
-        ),
-        'lng' => array(
+            ],
+        ],
+        'lng' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_common_lng',
-            'config' => array(
+            'config' => [
                 'type' => 'input',
                 'size' => '20',
                 'max' => '50',
                 'eval' => 'trim',
-            ),
-        ),
-        'lat' => array(
+            ],
+        ],
+        'lat' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_common_lat',
-            'config' => array(
+            'config' => [
                 'type' => 'input',
                 'size' => '20',
                 'max' => '50',
                 'eval' => 'trim',
-            ),
-        ),
-        'shortinfo' => array(
+            ],
+        ],
+        'shortinfo' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_club.shortinfo',
-            'config' => array(
+            'config' => [
                 'type' => 'text',
                 'cols' => '30',
                 'rows' => '5',
-            ),
-        ),
-        'info' => array(
+            ],
+        ],
+        'info' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_club_info',
-            'config' => array(
+            'config' => [
                 'type' => 'text',
                 'cols' => '30',
                 'rows' => '5',
@@ -194,12 +194,12 @@ $tx_cfcleague_club = [
                         //						'script' => 'wizard_rte.php',
                     ),
                 ),
-            ),
-        ),
-        'info2' => array(
+            ],
+        ],
+        'info2' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_club_info2',
-            'config' => array(
+            'config' => [
                 'type' => 'text',
                 'cols' => '30',
                 'rows' => '5',
@@ -214,8 +214,8 @@ $tx_cfcleague_club = [
                         //						'script' => 'wizard_rte.php',
                     ),
                 ),
-            ),
-        ),
+            ],
+        ],
 
         'established' => [
             'exclude' => 1,
@@ -229,40 +229,40 @@ $tx_cfcleague_club = [
                 'checkbox' => '0',
             ],
         ],
-        'yearestablished' => array(
+        'yearestablished' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_club_yearestablished',
-            'config' => array(
+            'config' => [
                 'type' => 'input',
                 'size' => '10',
                 'max' => '4',
                 'eval' => 'int',
-            ),
-        ),
-        'colors' => array(
+            ],
+        ],
+        'colors' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_club_colors',
-            'config' => array(
+            'config' => [
                 'type' => 'input',
                 'size' => '30',
                 'max' => '200',
                 'eval' => 'trim',
-                ),
-            ),
-        'members' => array(
+            ],
+        ],
+        'members' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_club_members',
-            'config' => array(
+            'config' => [
                 'type' => 'input',
                 'size' => '10',
                 'max' => '10s',
                 'eval' => 'int',
-            ),
-        ),
-        'stadiums' => array(
+            ],
+        ],
+        'stadiums' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_stadiums',
-            'config' => array(
+            'config' => [
                 'type' => 'select',
                 'renderType' => 'selectMultipleSideBySide',
                 'size' => 10,
@@ -277,12 +277,22 @@ $tx_cfcleague_club = [
                 'MM_match_fields' => [
                     'tablenames' => 'tx_cfcleague_club',
                 ],
-            ),
-        ),
+            ],
+        ],
+        'extid' => [
+            'exclude' => 1,
+            'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_teams_extid',
+            'config' => [
+                'type' => 'input',
+                'size' => '10',
+                'max' => '255',
+                'eval' => 'trim',
+            ],
+        ],
     ],
     'types' => [
         '0' => [
-            'showitem' => 'hidden, name,short_name,logo,favorite,stadiums,
+            'showitem' => 'hidden, name,short_name,logo,favorite,stadiums,extid,
                 --div--;LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_club.tab_contact,www,email,street,zip,city,country,countrycode,address,lng,lat,
                 --div--;LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_club.tab_info,established,yearestablished,colors,members,shortinfo,info,info2',
         ],

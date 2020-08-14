@@ -30,6 +30,8 @@ Ein Spieldatensatz in T3sports. Nachdem man den Wettbewerb ausgewählt hat, kann
 			<label index="addinfo.details"><![CDATA[<p>Diese Zusatzinformation kann bspw. im Spielplan angezeigt werden.</p>]]></label>
 			<label index="sets.description"><![CDATA[Satzergebnisse. Beispiel: 15:11;13:15;15:9]]></label>
 			<label index="sets.details"><![CDATA[<p>Eingabe der Satzergebnisse.</p>]]></label>
+			<label index="extid.description"><![CDATA[Unique ID aus Fremdsystem.]]></label>
+			<label index="extid.details"><![CDATA[<p>Wird für den automatisch Import von Daten durch externe Datenanbieter verwendet.<br/>Mögliche Extensions sind <strong>dflsync</strong> und <strong>dfbsync</strong>.</p>]]></label>
 		</languageKey>
 	</data>
 </T3locallang>
