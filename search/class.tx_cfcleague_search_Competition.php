@@ -2,7 +2,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2008-2018 Rene Nitzsche
+ *  (c) 2008-2020 Rene Nitzsche
  *  Contact: rene@system25.de
  *  All rights reserved
  *
@@ -20,10 +20,7 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  ***************************************************************/
-tx_rnbase::load('tx_rnbase_util_SearchBase');
 
-define('COMPSRV_FIELD_COMP_NAME', 'COMP.NAME');
-define('COMPSRV_FIELD_TEAM_NAME', 'TEAM.NAME');
 
 /**
  * Class to search comptitions from database.
@@ -38,6 +35,11 @@ class tx_cfcleague_search_Competition extends tx_rnbase_util_SearchBase
         $tableMapping['TEAM'] = 'tx_cfcleague_teams';
         $tableMapping['COMPETITION'] = 'tx_cfcleague_competition';
         $tableMapping['MATCH'] = 'tx_cfcleague_games';
+
+        // Hook to append other tables
+        tx_rnbase_util_Misc::callHook('cfc_league', 'search_Competition_getTableMapping_hook', [
+            'tableMapping' => &$tableMapping,
+        ], $this);
 
         return $tableMapping;
     }
@@ -71,6 +73,12 @@ class tx_cfcleague_search_Competition extends tx_rnbase_util_SearchBase
         if (isset($tableAliases['MATCH'])) {
             $join .= ' JOIN tx_cfcleague_games AS `MATCH` ON MATCH.competition = COMPETITION.uid ';
         }
+
+        // Hook to append other tables
+        tx_rnbase_util_Misc::callHook('cfc_league', 'search_Competition_getJoins_hook', [
+            'join' => &$join,
+            'tableAliases' => $tableAliases,
+        ], $this);
 
         return $join;
     }

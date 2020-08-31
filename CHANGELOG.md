@@ -2,6 +2,11 @@
 Änderungen
 ==========
 
+## v1.5.2 (31.08.2020)
+ * Fix db issues with datetime columns
+ * add constants for match status
+ * add hook to competition search
+
 ## v1.5.1 (14.06.2020)
  * Language file moved to resource folder
 

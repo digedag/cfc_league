@@ -2,7 +2,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2007-2017 Rene Nitzsche (rene@system25.de)
+ *  (c) 2007-2020 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -21,13 +21,15 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-tx_rnbase::load('tx_rnbase_model_base');
 
 /**
  * Model for a match.
  */
 class tx_cfcleague_models_Match extends tx_rnbase_model_base
 {
+    const MATCH_STATUS_INVALID = -1;
+    const MATCH_STATUS_RESCHEDULED = -10;
+
     const MATCH_STATUS_OPEN = 0;
 
     const MATCH_STATUS_RUNNING = 1;
@@ -216,8 +218,7 @@ class tx_cfcleague_models_Match extends tx_rnbase_model_base
     /**
      * Liefert die Spieler des Gastteams der Startelf.
      *
-     * @param $all wenn
-     *            true werden auch die Ersatzspieler mit geliefert
+     * @param bool $all wenn true werden auch die Ersatzspieler mit geliefert
      *
      * @return string comma separated uids
      */
