@@ -2,6 +2,9 @@
 Änderungen
 ==========
 
+## v1.5.3 (??.0?.2020)
+ * change label for match status "invalid" to cancelled
+
 ## v1.5.2 (31.08.2020)
  * Fix db issues with datetime columns
  * add constants for match status

@@ -116,7 +116,7 @@
 			<label index="tx_cfcleague_games.status_rescheduled">Re-Scheduled</label>
 			<label index="tx_cfcleague_games.status_running">Running</label>
 			<label index="tx_cfcleague_games.status_finished">Finished</label>
-			<label index="tx_cfcleague_games.status_invalid">Invalid</label>
+			<label index="tx_cfcleague_games.status_invalid">Cancelled</label>
 			<label index="tx_cfcleague_games.coach_home">Coach Home</label>
 			<label index="tx_cfcleague_games.coach_guest">Coach Guest</label>
 			<label index="tx_cfcleague_games.players_home">Players Home</label>
@@ -360,7 +360,7 @@
 			<label index="tx_cfcleague_games.status_rescheduled">Verlegt</label>
 			<label index="tx_cfcleague_games.status_running">Läuft</label>
 			<label index="tx_cfcleague_games.status_finished">Beendet</label>
-			<label index="tx_cfcleague_games.status_invalid">Ungültig</label>
+			<label index="tx_cfcleague_games.status_invalid">Abgesagt</label>
 			<label index="tx_cfcleague_games.coach_home">Heimtrainer</label>
 			<label index="tx_cfcleague_games.coach_guest">Gasttrainer</label>
 			<label index="tx_cfcleague_games.players_home">Aufstellung Heim</label>
