@@ -200,7 +200,7 @@ class tx_cfcleague_services_Match extends tx_cfcleague_services_Base implements 
         $where = 'competition="'.$competition->getUid().'"';
         $where .= ' AND round='.intval($round);
         if ($ignoreFreeOfPlay) { // keine spielfreien Spiele laden
-            $where .= ' AND t1.dummy = 0 AND t2.dummy = 0 ';
+            $where .= ' AND t1.dummy <> 1 AND t2.dummy <> 1 ';
         }
 
         return Tx_Rnbase_Database_Connection::getInstance()->doSelect($what, $from, [

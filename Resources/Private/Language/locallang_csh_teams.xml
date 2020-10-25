@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+	<meta type="array">
+		<type>CSH</type>
+		<csh_table>tx_cfcleague_teams</csh_table>
+		<description>csh for 'team'</description>
+		<keep_original_text>1</keep_original_text>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array">
+			<label index=".description"><![CDATA[A team is a collection of players and coaches taking part in competitions.]]></label>
+			<label index="dummy.description"><![CDATA[Special function of team in competition.]]></label>
+			<label index="dummy.details"><![CDATA[Assign a special function for team: 
+			<strong>Free of play</strong> - a match against this team means "free of play" for opponent team.
+			<strong>Out of competition</strong> - matches against this teams will not be scored in league table.]]></label>
+			<label index="extid.description"><![CDATA[Identifier on external system.]]></label>
+			<label index="extid.details"><![CDATA[<p>Used for automatically synchronizations with external data providers.</p>]]></label>
+		</languageKey>
+		<languageKey index="de" type="array">
+			<label index=".description"><![CDATA[Eine Mannschaft besteht aus Spielern und Trainern und nimmt an Wettbewerben teil.]]></label>
+			<label index=".details"><![CDATA[Mannschaften unterschiedlicher Spieljahre und Alterklassen können über Vereine organisatorisch zusammengeführt werden.]]></label>
+			<label index="dummy.description"><![CDATA[Sonderfunktion des Teams im Wettbewerb.]]></label>
+			<label index="dummy.details"><![CDATA[Zuweisung einer Sonderfunktion für das Team:
+			<strong>Spielfrei</strong>Ein Spiel gegen dieses Team bedeutet "spielfrei" für das gegnerische Team.
+			<strong>Außer Wettbewerb</strong>Spiele gegen dieses Team werden in der Ligatabelle ignoriert.]]></label>
+			<label index="extid.description"><![CDATA[Unique ID aus Fremdsystem.]]></label>
+			<label index="extid.details"><![CDATA[<p>Wird für den automatisch Import von Daten durch externe Datenanbieter verwendet.<br/>Mögliche Extensions sind <strong>dflsync</strong> und <strong>dfbsync</strong>.</p>]]></label>
+		</languageKey>
+	</data>
+</T3locallang>

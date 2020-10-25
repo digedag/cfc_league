@@ -134,20 +134,20 @@ $tx_cfcleague_competition = [
             ),
             'onChange' => 'reload',
         ),
-        'type' => array(
+        'type' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_competition.type',
-            'config' => array(
+            'config' => [
                 'type' => 'radio',
-                'items' => array(
-                    array('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_competition.type_league', 1),
-                    array('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_competition.type_ko', 2),
-                    array('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_competition.type_other', 0),
+                'items' => [
+                    ['LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_competition.type_league', 1],
+                    ['LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_competition.type_ko', 2],
+                    ['LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_competition.type_other', 0],
 //					, Array('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_competition.type_combined',100)
-                ),
+                ],
                 'default' => 1,
-            ),
-        ),
+            ],
+        ],
         'obligation' => array(
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_competition.obligation',

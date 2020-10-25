@@ -103,7 +103,17 @@ class tx_cfcleague_models_Team extends Tx_Rnbase_Domain_Model_Base
      */
     public function isDummy()
     {
-        return 0 != intval($this->getProperty('dummy'));
+        return 1 === (int) $this->getProperty('dummy');
+    }
+
+    /**
+     * Check if team is marked as out of competition.
+     *
+     * @return bool
+     */
+    public function isOutOfCompetition()
+    {
+        return 2 === (int) $this->getProperty('dummy');
     }
 
     /**

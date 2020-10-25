@@ -122,15 +122,15 @@ class tx_cfcleague_services_Teams extends tx_cfcleague_services_Base
      */
     public function getTeamNames($comp, $asArray = 0)
     {
-        $teamNames = array();
+        $teamNames = [];
         // Ohne zugeordnete Team, muss nicht gefragt werden
         if (!$comp->getProperty('teams')) {
             return $teamNames;
         }
 
-        $fields = array();
+        $fields = [];
         $fields['TEAM.UID'][OP_IN_INT] = $comp->getProperty('teams');
-        $options = array();
+        $options = [];
         $options['what'] = 'uid,name,short_name,dummy,club';
         $rows = $this->searchTeams($fields, $options);
         foreach ($rows as $row) {

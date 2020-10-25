@@ -128,90 +128,95 @@ $tx_cfcleague_teams = [
                 'maxitems' => 10,
             ],
         ],
-        'players' => array(
+        'players' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_teams.players',
-            'config' => array(
+            'config' => [
                 'type' => 'group',
                 'internal_type' => 'db',
                 'allowed' => 'tx_cfcleague_profiles',
                 'size' => 20,
                 'minitems' => 0,
                 'maxitems' => 60,
-            ),
-        ),
-        'supporters' => array(
+            ],
+        ],
+        'supporters' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_teams.supporters',
-            'config' => array(
+            'config' => [
                 'type' => 'group',
                 'internal_type' => 'db',
                 'allowed' => 'tx_cfcleague_profiles',
                 'size' => 4,
                 'minitems' => 0,
                 'maxitems' => 10,
-            ),
-        ),
+            ],
+        ],
 
-        'coaches_comment' => array(
+        'coaches_comment' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_teams.coaches_comment',
-            'config' => array(
+            'config' => [
                 'type' => 'text',
                 'cols' => '30',
                 'rows' => '5',
-            ),
-        ),
-        'supporters_comment' => array(
+            ],
+        ],
+        'supporters_comment' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_teams.supporters_comment',
-            'config' => array(
+            'config' => [
                 'type' => 'text',
                 'cols' => '30',
                 'rows' => '5',
-            ),
-        ),
-        'players_comment' => array(
+            ],
+        ],
+        'players_comment' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_teams.players_comment',
-            'config' => array(
+            'config' => [
                 'type' => 'text',
                 'cols' => '30',
                 'rows' => '5',
-            ),
-        ),
-        'link_report' => array(
+            ],
+        ],
+        'link_report' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_teams.link_report',
-            'config' => array(
+            'config' => [
                 'type' => 'check',
                 'default' => '0',
-            ),
-        ),
-        'comment' => array(
+            ],
+        ],
+        'comment' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_teams.comment',
-            'config' => array(
+            'config' => [
                 'type' => 'text',
                 'cols' => '30',
                 'rows' => '5',
-                'wizards' => array(
+                'wizards' => [
                     '_PADDING' => 2,
-                    'RTE' => array(
+                    'RTE' => [
                         'notNewRecords' => 1,
                         'RTEonly' => 1,
                         'type' => 'script',
                         'title' => 'Full screen Rich Text Editing|Formatteret redigering i hele vinduet',
                         'icon' => 'wizard_rte2.gif',
-                    ),
-                ),
-            ),
-        ),
+                    ],
+                ],
+            ],
+        ],
         'dummy' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_teams.dummy',
             'config' => [
-                'type' => 'check',
+                'type' => 'radio',
+                'items' => [
+                    ['LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_teams_dummy_none', 0],
+                    ['LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_teams_dummy_simple', 1],
+                    ['LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_teams_dummy_outofcompetition', 2],
+                ],
                 'default' => '0',
             ],
         ],

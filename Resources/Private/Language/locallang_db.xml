@@ -96,7 +96,10 @@
 			<label index="tx_cfcleague_teams.logo">Team logo</label>
 			<label index="tx_cfcleague_teams.altlogo">Alternative team logo</label>
 			<label index="tx_cfcleague_teams.link_report">Enable link to team page</label>
-			<label index="tx_cfcleague_teams.dummy">Free of play</label>
+			<label index="tx_cfcleague_teams.dummy">Specials</label>
+			<label index="tx_cfcleague_teams_dummy_none">No specials</label>
+			<label index="tx_cfcleague_teams_dummy_simple">Free of play</label>
+			<label index="tx_cfcleague_teams_dummy_outofcompetition">Out of competition</label>
 			<label index="tx_cfcleague_teams_tlc">Three letter code</label>
 			<label index="tx_cfcleague_teams_extid">External ID</label>
 			<label index="tx_cfcleague_games">Match</label>
@@ -340,7 +343,10 @@
 			<label index="tx_cfcleague_teams.logo">Vereinswappen des Teams</label>
 			<label index="tx_cfcleague_teams.altlogo">Alternatives Vereinswappen des Teams</label>
 			<label index="tx_cfcleague_teams.link_report">Link auf Team-Seite möglich</label>
-			<label index="tx_cfcleague_teams.dummy">Spielfrei</label>
+			<label index="tx_cfcleague_teams.dummy">Sonderfunktion</label>
+			<label index="tx_cfcleague_teams_dummy_none">keine</label>
+			<label index="tx_cfcleague_teams_dummy_simple">Spielfrei</label>
+			<label index="tx_cfcleague_teams_dummy_outofcompetition">Außer Wettbewerb</label>
 			<label index="tx_cfcleague_teams_tlc">3-Zeichen-Kürzel</label>
 			<label index="tx_cfcleague_teams_extid">Externe ID</label>
 			<label index="tx_cfcleague_games">Spiel</label>

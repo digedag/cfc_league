@@ -300,7 +300,7 @@ class tx_cfcleague_models_Competition extends tx_rnbase_model_base
     {
         $teams = $this->getTeamNames(1);
         foreach ($teams as $team) {
-            if ($team['dummy']) {
+            if ($team['dummy'] == 1) {
                 return $team['uid'];
             }
         }
@@ -431,13 +431,13 @@ class tx_cfcleague_models_Competition extends tx_rnbase_model_base
         if (!is_array($this->teams)) {
             $uids = $this->getProperty('teams');
             if (!$uids) {
-                return array();
+                return [];
             }
             $options = [
                 'where' => 'uid IN ('.$uids.') ',
             ];
             if ($ignoreDummies) {
-                $options['where'] .= ' AND dummy = 0  ';
+                $options['where'] .= ' AND dummy <> 1  ';
             }
             $options['wrapperclass'] = 'tx_cfcleaguefe_models_team';
             $options['orderby'] = 'sorting';
