@@ -385,13 +385,23 @@ class tx_cfcleague_models_Match extends tx_rnbase_model_base
     }
 
     /**
-     * Returns true of match is a dummy (free of play).
+     * Returns true if match is a dummy (free of play).
      *
      * @return bool
      */
-    public function isDummy()
+    public function isDummy() : bool
     {
         return $this->getHome()->isDummy() || $this->getGuest()->isDummy();
+    }
+
+    /**
+     * Returns true if match is out of competition.
+     *
+     * @return bool
+     */
+    public function isOutOfCompetition() : bool
+    {
+        return $this->getHome()->isOutOfCompetition() || $this->getGuest()->isOutOfCompetition();
     }
 
     /**

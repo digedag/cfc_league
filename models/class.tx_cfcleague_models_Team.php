@@ -111,7 +111,7 @@ class tx_cfcleague_models_Team extends Tx_Rnbase_Domain_Model_Base
      *
      * @return bool
      */
-    public function isOutOfCompetition()
+    public function isOutOfCompetition() : bool
     {
         return 2 === (int) $this->getProperty('dummy');
     }
