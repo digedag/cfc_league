@@ -346,7 +346,7 @@
 			<label index="tx_cfcleague_teams.dummy">Sonderfunktion</label>
 			<label index="tx_cfcleague_teams_dummy_none">keine</label>
 			<label index="tx_cfcleague_teams_dummy_simple">Spielfrei</label>
-			<label index="tx_cfcleague_teams_dummy_outofcompetition">Außer Wettbewerb</label>
+			<label index="tx_cfcleague_teams_dummy_outofcompetition">Außer Wertung</label>
 			<label index="tx_cfcleague_teams_tlc">3-Zeichen-Kürzel</label>
 			<label index="tx_cfcleague_teams_extid">Externe ID</label>
 			<label index="tx_cfcleague_games">Spiel</label>
