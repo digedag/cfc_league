@@ -30,20 +30,6 @@ use Sys25\RnBase\Typo3Wrapper\Service\AbstractService;
 class IceHockey extends AbstractService implements ISports
 {
     /**
-     * Get match provider.
-     *
-     * @return \tx_cfcleaguefe_table_ITableType or null
-     */
-    public function getLeagueTable()
-    {
-        if (\tx_rnbase_util_Extensions::isLoaded('cfc_league_fe')) {
-            return \tx_rnbase::makeInstance('tx_cfcleaguefe_table_icehockey_Table');
-        }
-
-        return null;
-    }
-
-    /**
      * @return array
      */
     public function getTCAPointSystems()

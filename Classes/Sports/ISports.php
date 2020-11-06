@@ -31,13 +31,6 @@ namespace System25\T3sports\Sports;
 interface ISports
 {
     /**
-     * Get match provider.
-     *
-     * @return \tx_cfcleaguefe_table_ITableType or null if none available
-     */
-    public function getLeagueTable();
-
-    /**
      * Set configuration.
      *
      * @return array
