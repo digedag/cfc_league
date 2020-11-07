@@ -251,7 +251,7 @@ if (\Sys25\RnBase\Utility\TYPO3::isTYPO104OrHigher()) {
 ]);
 
 // Auswahlbox Vereinslogos
-$tx_cfcleague_teams['columns']['logo'] = tx_cfcleague_tca_Lookup::getTeamLogoField();
+$tx_cfcleague_teams['columns']['logo'] = System25\T3sports\Utility\TcaLookup::getTeamLogoField();
 
 $tx_cfcleague_teams['columns']['t3logo'] = tx_rnbase_util_TSFAL::getMediaTCA('t3logo', [
     'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_teams.altlogo',

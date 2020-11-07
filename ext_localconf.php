@@ -72,6 +72,8 @@ tx_cfcleague_util_Misc::registerFormation('4-5-1', '1-4-5-1');
 tx_cfcleague_util_Misc::registerFormation('5-3-2', '1-5-3-2');
 tx_cfcleague_util_Misc::registerFormation('5-4-1', '1-5-4-1');
 
+tx_cfcleague_util_Misc::registerTableStrategy('default','LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_competition_tablestrategy_default', '');
+
 // Include services
 tx_rnbase_util_Extensions::addService(
     $_EXTKEY,

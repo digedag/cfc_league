@@ -69,7 +69,7 @@ $tx_cfcleague_games = [
                 'renderType' => 'selectSingle',
                 'foreign_table' => 'tx_cfcleague_teams',
                 'foreign_table_where' => 'AND tx_cfcleague_teams.pid=###CURRENT_PID### ORDER BY tx_cfcleague_teams.uid',
-                'itemsProcFunc' => 'tx_cfcleague_tca_Lookup->getTeams4Competition',
+                'itemsProcFunc' => System25\T3sports\Utility\TcaLookup::class.'->getTeams4Competition',
                 'size' => 1,
                 'minitems' => 0,
                 'maxitems' => 1,
@@ -83,7 +83,7 @@ $tx_cfcleague_games = [
                 'renderType' => 'selectSingle',
                 'foreign_table' => 'tx_cfcleague_teams',
                 'foreign_table_where' => 'AND tx_cfcleague_teams.pid=###CURRENT_PID### ORDER BY tx_cfcleague_teams.uid',
-                'itemsProcFunc' => 'tx_cfcleague_tca_Lookup->getTeams4Competition',
+                'itemsProcFunc' => System25\T3sports\Utility\TcaLookup::class.'->getTeams4Competition',
                 'size' => 1,
                 'minitems' => 0,
                 'maxitems' => 1,
@@ -186,7 +186,7 @@ $tx_cfcleague_games = [
                 'renderType' => 'selectSingle',
                 'items' => [['', '0']],
                 'size' => '1',
-                'itemsProcFunc' => 'tx_cfcleague_tca_Lookup->getStadium4Match',
+                'itemsProcFunc' => System25\T3sports\Utility\TcaLookup::class.'->getStadium4Match',
                 'minitems' => 0,
                 'maxitems' => 1,
             ],
@@ -199,7 +199,7 @@ $tx_cfcleague_games = [
                 'renderType' => 'selectSingle',
                 'foreign_table' => 'tx_cfcleague_profiles',
                 'foreign_table_where' => 'AND tx_cfcleague_profiles.uid = 0',
-                'itemsProcFunc' => 'tx_cfcleague_tca_Lookup->getCoachesHome4Match',
+                'itemsProcFunc' => System25\T3sports\Utility\TcaLookup::class.'->getCoachesHome4Match',
                 'size' => 1,
                 'minitems' => 0,
                 'maxitems' => 1,
@@ -213,7 +213,7 @@ $tx_cfcleague_games = [
                 'renderType' => 'selectSingle',
                 'foreign_table' => 'tx_cfcleague_profiles',
                 'foreign_table_where' => 'AND tx_cfcleague_profiles.uid = 0',
-                'itemsProcFunc' => 'tx_cfcleague_tca_Lookup->getCoachesGuest4Match',
+                'itemsProcFunc' => System25\T3sports\Utility\TcaLookup::class.'->getCoachesGuest4Match',
                 'size' => 1,
                 'minitems' => 0,
                 'maxitems' => 1,
@@ -225,7 +225,7 @@ $tx_cfcleague_games = [
             'config' => array(
                 'type' => 'select',
                 'renderType' => 'selectMultipleSideBySide',
-                'itemsProcFunc' => 'tx_cfcleague_tca_Lookup->getPlayersHome4Match',
+                'itemsProcFunc' => System25\T3sports\Utility\TcaLookup::class.'->getPlayersHome4Match',
                 'size' => 11,
                 'minitems' => 0,
                 'maxitems' => 11,
@@ -237,7 +237,7 @@ $tx_cfcleague_games = [
             'config' => array(
                 'type' => 'select',
                 'renderType' => 'selectMultipleSideBySide',
-                'itemsProcFunc' => 'tx_cfcleague_tca_Lookup->getPlayersGuest4Match',
+                'itemsProcFunc' => System25\T3sports\Utility\TcaLookup::class.'->getPlayersGuest4Match',
                 'size' => 11,
                 'minitems' => 0,
                 'maxitems' => 11,
@@ -249,7 +249,7 @@ $tx_cfcleague_games = [
             'config' => array(
                 'type' => 'select',
                 'renderType' => 'selectMultipleSideBySide',
-                'itemsProcFunc' => 'tx_cfcleague_tca_Lookup->getPlayersHome4Match',
+                'itemsProcFunc' => System25\T3sports\Utility\TcaLookup::class.'->getPlayersHome4Match',
                 'size' => 9,
                 'minitems' => 0,
                 'maxitems' => 10,
@@ -261,7 +261,7 @@ $tx_cfcleague_games = [
             'config' => array(
                 'type' => 'select',
                 'renderType' => 'selectMultipleSideBySide',
-                'itemsProcFunc' => 'tx_cfcleague_tca_Lookup->getPlayersGuest4Match',
+                'itemsProcFunc' => System25\T3sports\Utility\TcaLookup::class.'->getPlayersGuest4Match',
                 'size' => 9,
                 'minitems' => 0,
                 'maxitems' => 10,
@@ -321,26 +321,26 @@ $tx_cfcleague_games = [
                 'rows' => '5',
             ),
         ),
-        'system_home' => array(
+        'system_home' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_games.system_home',
-            'config' => array(
+            'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
-                'itemsProcFunc' => 'tx_cfcleague_tca_Lookup->getFormations',
+                'itemsProcFunc' => System25\T3sports\Utility\TcaLookup::class.'->getFormations',
                 'default' => 0,
-            ),
-        ),
-        'system_guest' => array(
+            ],
+        ],
+        'system_guest' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_games.system_guest',
-            'config' => array(
+            'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
-                'itemsProcFunc' => 'tx_cfcleague_tca_Lookup->getFormations',
+                'itemsProcFunc' => System25\T3sports\Utility\TcaLookup::class.'->getFormations',
                 'default' => 0,
-            ),
-        ),
+            ],
+        ],
         'referee' => array(
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_games.referee',

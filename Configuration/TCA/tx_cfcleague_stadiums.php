@@ -260,7 +260,7 @@ if (\Sys25\RnBase\Utility\TYPO3::isTYPO104OrHigher()) {
 ]);
 
 if (tx_rnbase_util_Extensions::isLoaded('static_info_tables')) {
-    $tx_cfcleague_stadiums['columns']['country'] = tx_cfcleague_tca_Lookup::getCountryField();
+    $tx_cfcleague_stadiums['columns']['country'] = System25\T3sports\Utility\TcaLookup::getCountryField();
 }
 
 $tx_cfcleague_stadiums['columns']['logo'] = tx_rnbase_util_TSFAL::getMediaTCA('logo', [

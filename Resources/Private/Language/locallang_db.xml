@@ -42,6 +42,8 @@
 			<label index="tx_cfcleague_competition.point_system_3">3 Point-Rule</label>
 			<label index="tx_cfcleague_competition.point_system_2_icehockey">2 Point-Rule (Icehockey)</label>
 			<label index="tx_cfcleague_competition.point_system_3_icehockey">3 Point-Rule (Icehockey)</label>
+			<label index="tx_cfcleague_competition_tablestrategy">Strategy for score board calculation</label>
+			<label index="tx_cfcleague_competition_tablestrategy_default">Standard</label>
 			<label index="tx_cfcleague_competition.teams">Teams</label>
 			<label index="tx_cfcleague_competition_extid">External ID</label>
 			<label index="tx_cfcleague_competition_create_team">Create new team</label>
@@ -295,6 +297,8 @@
 			<label index="tx_cfcleague_competition.point_system_3">3 Punkte-Regel</label>
 			<label index="tx_cfcleague_competition.point_system_2_icehockey">2 Punkte-Regel (Eishockey)</label>
 			<label index="tx_cfcleague_competition.point_system_3_icehockey">3 Punkte-Regel (Eishockey)</label>
+			<label index="tx_cfcleague_competition_tablestrategy">Strategie zur Berechnung der Tabelle</label>
+			<label index="tx_cfcleague_competition_tablestrategy_default">Standard</label>
 			<label index="tx_cfcleague_competition_penalty">Wettbewerbsstrafe</label>
 			<label index="tx_cfcleague_competition_penalty.game">Spiel (optional)</label>
 			<label index="tx_cfcleague_competition_penalty.comment">Kommentar</label>

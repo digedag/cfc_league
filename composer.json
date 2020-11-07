@@ -44,7 +44,6 @@
 			"models/",
 			"search/",
 			"services/",
-			"tca/",
 			"util/"
 		],
         "psr-4": {"System25\\T3sports\\" : "Classes"}

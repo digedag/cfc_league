@@ -21,8 +21,6 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-tx_rnbase::load('tx_cfcleague_services_Base');
-tx_rnbase::load('tx_rnbase_util_SearchBase');
 
 /**
  * Service for accessing competitions.
@@ -170,5 +168,27 @@ class tx_cfcleague_services_Competition extends tx_cfcleague_services_Base
                 'COMPETITION.NAME' => 'asc',
             ),
         ));
+    }
+
+    /**
+     * Returns all available table strategies for a TCA select item.
+     *
+     * @return array
+     */
+    public function getTableStrategies4TCA()
+    {
+        $types = [];
+        // Zuerst in der Ext_Conf die BasisTypen laden
+        $types = $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['tablestrategy'];
+
+        $items = [];
+        foreach ($types as $key => $data) {
+            $items[] = [
+                tx_rnbase_util_Misc::translateLLL($data['label']),
+                $key,
+            ];
+        }
+
+        return $items;
     }
 }

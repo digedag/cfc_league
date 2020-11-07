@@ -94,7 +94,7 @@ $tx_cfcleague_team_notes = [
                 'renderType' => 'selectSingle',
                 'foreign_table' => 'tx_cfcleague_profiles',
                 'foreign_table_where' => 'AND tx_cfcleague_profiles.uid = 0',
-                'itemsProcFunc' => 'tx_cfcleague_tca_Lookup->getPlayers4Team',
+                'itemsProcFunc' => System25\T3sports\Utility\TcaLookup::class.'->getPlayers4Team',
                 'eval' => 'required',
                 'size' => 1,
                 'minitems' => 0,

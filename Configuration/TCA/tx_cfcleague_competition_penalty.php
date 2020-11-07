@@ -65,7 +65,7 @@ $tx_cfcleague_competition_penalty = [
                 'renderType' => 'selectSingle',
                 'foreign_table' => 'tx_cfcleague_teams',
                 'foreign_table_where' => 'AND tx_cfcleague_teams.pid=###CURRENT_PID### ORDER BY tx_cfcleague_teams.uid',
-                'itemsProcFunc' => 'tx_cfcleague_tca_Lookup->getTeams4Competition',
+                'itemsProcFunc' => System25\T3sports\Utility\TcaLookup::class . '->getTeams4Competition',
                 'size' => 1,
                 'minitems' => 0,
                 'maxitems' => 1,

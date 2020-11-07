@@ -1,5 +1,17 @@
 <?php
 
+namespace System25\T3sports\Utility;
+
+use tx_rnbase;
+use tx_rnbase_util_TSFAL;
+use tx_rnbase_util_TYPO3;
+use Tx_Rnbase_Utility_Strings;
+use tx_rnbase_util_Debug;
+
+use tx_cfcleague_util_ServiceRegistry;
+
+use Exception;
+
 /***************************************************************
  *  Copyright notice
  *
@@ -22,11 +34,8 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-tx_rnbase::load('tx_rnbase_util_Misc');
-tx_rnbase::load('tx_rnbase_util_TYPO3');
-tx_rnbase::load('Tx_Rnbase_Utility_Strings');
 
-class tx_cfcleague_tca_Lookup
+class TcaLookup
 {
     /**
      * Returns all available profile types for a TCA select item.
@@ -35,14 +44,12 @@ class tx_cfcleague_tca_Lookup
      */
     public function getProfileTypes(&$config)
     {
-        tx_rnbase::load('tx_cfcleague_util_ServiceRegistry');
         $srv = tx_cfcleague_util_ServiceRegistry::getProfileService();
         $config['items'] = $srv->getProfileTypes4TCA();
     }
 
     public function getProfileTypeItems($uids)
     {
-        tx_rnbase::load('tx_cfcleague_util_ServiceRegistry');
         $srv = tx_cfcleague_util_ServiceRegistry::getProfileService();
 
         return $srv->getProfileTypeItems4TCA($uids);
@@ -58,9 +65,14 @@ class tx_cfcleague_tca_Lookup
      */
     public function getMatchNoteTypes(&$config)
     {
-        tx_rnbase::load('tx_cfcleague_util_ServiceRegistry');
         $srv = tx_cfcleague_util_ServiceRegistry::getMatchService();
         $config['items'] = $srv->getMatchNoteTypes4TCA();
+    }
+
+    public function getTableStrategies(&$config)
+    {
+        $srv = tx_cfcleague_util_ServiceRegistry::getCompetitionService();
+        $config['items'] = $srv->getTableStrategies4TCA();
     }
 
     /**
@@ -73,7 +85,6 @@ class tx_cfcleague_tca_Lookup
      */
     public function getSportsTypes(&$config)
     {
-        tx_rnbase::load('tx_cfcleague_util_ServiceRegistry');
         $srv = tx_cfcleague_util_ServiceRegistry::getCompetitionService();
         $config['items'] = $srv->getSports4TCA();
     }
@@ -91,7 +102,6 @@ class tx_cfcleague_tca_Lookup
      */
     public function getFormations(&$config)
     {
-        tx_rnbase::load('tx_cfcleague_util_ServiceRegistry');
         $items = $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['formations'];
         $config['items'] = $items;
     }
@@ -121,7 +131,7 @@ class tx_cfcleague_tca_Lookup
      */
     public function getStadium4Match($PA, $fobj)
     {
-        $current = intval($PA['row']['arena']);
+        $current = (int) $PA['row']['arena'];
         $currentAvailable = false;
         $teamId = is_array($PA['row']['home']) ? reset($PA['row']['home']) : $PA['row']['home'];
         if ($teamId) {
@@ -210,7 +220,7 @@ class tx_cfcleague_tca_Lookup
         $ret['config']['type'] = 'select';
         $ret['config']['renderType'] = 't3sLogoSelect';
         // Die passenden Logos suchen
-        $ret['config']['itemsProcFunc'] = 'tx_cfcleague_tca_Lookup->getLogo4Team';
+        $ret['config']['itemsProcFunc'] = TcaLookup::class.'->getLogo4Team';
         $ret['config']['maxitems'] = '1';
         $ret['config']['size'] = '1';
         $ret['config']['items'] = [
@@ -224,7 +234,7 @@ class tx_cfcleague_tca_Lookup
      * Build a select box and an image preview of selected logo.
      *
      * @param array $PA
-     * @param TYPO3\CMS\Backend\Form\Element\UserElement $fObj
+     * @param \TYPO3\CMS\Backend\Form\Element\UserElement $fObj
      */
     public function getSingleField_teamLogo($PA, $fObj)
     {
@@ -243,43 +253,26 @@ class tx_cfcleague_tca_Lookup
 
         $item = $tceforms->getSingleField_typeSelect($table, $field, $row, $PA);
         if ($row['logo']) {
-            if (tx_rnbase_util_TYPO3::isTYPO60OrHigher()) {
-                $item = '<table cellspacing="0" cellpadding="0" border="0">
-								<tr><td style="padding-bottom:1em" colspan="2">'.$item.'</td></tr>';
+            $item = '<table cellspacing="0" cellpadding="0" border="0">
+							<tr><td style="padding-bottom:1em" colspan="2">'.$item.'</td></tr>';
 
-                try {
-                    // Im Logo wird die UID der Referenz zwischen Verein und dem Logo gespeichert
-                    // Damit können die zusätzlichen Metadaten der Referenz genutzt werden
-                    $fileObject = tx_rnbase_util_TSFAL::getFileReferenceById($row['logo']);
-                    tx_rnbase::load('tx_rnbase_util_TSFAL');
-                    $thumbs = tx_rnbase_util_TSFAL::createThumbnails(array(
-                        $fileObject,
-                    ));
-                    $item .= '<tr><td>'.$thumbs[0].'</td>
-										<td style="padding-left:1em"><table cellspacing="0" cellpadding="0" border="0">
-										<tr><td style="padding-right:1em">Filename: </td><td>'.$fileObject->getProperty('identifier').'</td></tr>
-										<tr><td style="padding-right:1em">Size: </td><td>'.\TYPO3\CMS\Core\Utility\GeneralUtility::formatSize($fileObject->getProperty('size')).'</td></tr>
-										<tr><td style="padding-right:1em">Dimension: </td><td>'.$fileObject->getProperty('width').'x'.$fileObject->getProperty('height').' px</td></tr>
-									</table></td></tr>';
-                } catch (Exception $e) {
-                    $item .= sprintf('<tr><td>Error rendering file with uid "%d"</td></tr>', $row['logo']);
-                }
-                $item .= '</table>';
-            } else {
-                // Logo anzeigen
-                $currPic = t3lib_BEfunc::getRecord('tx_dam', $row['logo']);
-                require_once tx_rnbase_util_Extensions::extPath('dam').'lib/class.tx_dam_tcefunc.php';
-                $tcefunc = tx_rnbase::makeInstance('tx_dam_tcefunc');
-                if (!method_exists($tcefunc, 'renderFileList')) {
-                    return $item;
-                }
-                $tcefunc->tceforms = &$tceforms;
-                $item .= $tcefunc->renderFileList(array(
-                    'rows' => array(
-                        $currPic,
-                    ),
+            try {
+                // Im Logo wird die UID der Referenz zwischen Verein und dem Logo gespeichert
+                // Damit können die zusätzlichen Metadaten der Referenz genutzt werden
+                $fileObject = tx_rnbase_util_TSFAL::getFileReferenceById($row['logo']);
+                $thumbs = tx_rnbase_util_TSFAL::createThumbnails(array(
+                    $fileObject,
                 ));
+                $item .= '<tr><td>'.$thumbs[0].'</td>
+									<td style="padding-left:1em"><table cellspacing="0" cellpadding="0" border="0">
+									<tr><td style="padding-right:1em">Filename: </td><td>'.$fileObject->getProperty('identifier').'</td></tr>
+									<tr><td style="padding-right:1em">Size: </td><td>'.\TYPO3\CMS\Core\Utility\GeneralUtility::formatSize($fileObject->getProperty('size')).'</td></tr>
+									<tr><td style="padding-right:1em">Dimension: </td><td>'.$fileObject->getProperty('width').'x'.$fileObject->getProperty('height').' px</td></tr>
+								</table></td></tr>';
+            } catch (Exception $e) {
+                $item .= sprintf('<tr><td>Error rendering file with uid "%d"</td></tr>', $row['logo']);
             }
+            $item .= '</table>';
         }
 
         return $item;
@@ -287,25 +280,25 @@ class tx_cfcleague_tca_Lookup
 
     public static function getCountryField()
     {
-        return array(
+        return [
             'exclude' => 0,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_common_country',
-            'config' => array(
+            'config' => [
                 'type' => 'select',
-                'items' => array(
-                    array(
+                'items' => [
+                    [
                         ' ',
                         '0',
-                    ),
-                ),
+                    ],
+                ],
                 'foreign_table' => 'static_countries',
                 'foreign_table_where' => ' ORDER BY static_countries.cn_short_en ',
                 'size' => 1,
                 'default' => 54,
                 'minitems' => 0,
                 'maxitems' => 1,
-            ),
-        );
+            ],
+        ];
     }
 
     /**
@@ -313,7 +306,7 @@ class tx_cfcleague_tca_Lookup
      * Used: Edit-Maske eines Spiels für Teamaufstellung und Match-Note.
      *
      * @param array $PA
-     * @param TYPO3\CMS\Backend\Form\Element\UserElement $fobj
+     * @param \TYPO3\CMS\Backend\Form\Element\UserElement $fobj
      */
     public function getPlayersHome4Match($PA, $fobj)
     {
@@ -332,7 +325,7 @@ class tx_cfcleague_tca_Lookup
             // Abfrage aus MatchNote-Datensatz
             // Wenn wir die Match ID haben, können wir die Spieler auch so ermitteln
             // Es werden alle aufgestellten Spieler des Matches benötigt
-            /* @var $match tx_cfcleague_models_Match */
+            /* @var $match \tx_cfcleague_models_Match */
             $match = tx_rnbase::makeInstance('tx_cfcleague_models_Match', $this->getRowId($matchValue));
 
             $players = tx_cfcleague_util_ServiceRegistry::getProfileService()->loadProfiles($match->getPlayersHome(true));
@@ -363,7 +356,7 @@ class tx_cfcleague_tca_Lookup
      * Used: Edit-Maske eines Spiels für Teamaufstellung und MatchNote.
      *
      * @param array $PA
-     * @param TYPO3\CMS\Backend\Form\Element\UserElement $fobj
+     * @param \TYPO3\CMS\Backend\Form\Element\UserElement $fobj
      */
     public function getPlayersGuest4Match($PA, $fobj)
     {
@@ -378,7 +371,7 @@ class tx_cfcleague_tca_Lookup
             $PA['items'] = $players;
         } elseif ($matchValue) {
             // Wenn wir die Match ID haben könne wir die Spieler auch so ermitteln
-            /* @var $match tx_cfcleague_models_Match */
+            /* @var $match \tx_cfcleague_models_Match */
             $match = tx_rnbase::makeInstance('tx_cfcleague_models_Match', $this->getRowId($matchValue));
             // $players = $match->getPlayerNamesGuest();
             $players = tx_cfcleague_util_ServiceRegistry::getProfileService()->loadProfiles($match->getPlayersGuest(true));
@@ -424,7 +417,7 @@ class tx_cfcleague_tca_Lookup
      * Used: Edit mask for team notes.
      *
      * @param array $PA
-     * @param TYPO3\CMS\Backend\Form\Element\UserElement $fobj
+     * @param \TYPO3\CMS\Backend\Form\Element\UserElement $fobj
      */
     public function getPlayers4Team(&$PA, $fobj)
     {
@@ -473,7 +466,7 @@ class tx_cfcleague_tca_Lookup
         }
 
         $team = tx_rnbase::makeInstance('tx_cfcleague_models_Team', $teamId);
-        /* @var $profile tx_cfcleague_models_Profile */
+        /* @var $profile \tx_cfcleague_models_Profile */
         $profiles = $team->$getter();
         foreach ($profiles as $profile) {
             $rows[] = array(
@@ -522,19 +515,19 @@ class tx_cfcleague_tca_Lookup
             return $rows;
         }
 
-        /* @var $team tx_cfcleague_models_Team */
+        /* @var $team \tx_cfcleague_models_Team */
         $team = tx_rnbase::makeInstance('tx_cfcleague_models_Team', $teamId);
-        /* @var $profile tx_cfcleague_models_Profile */
+        /* @var $profile \tx_cfcleague_models_Profile */
         $profiles = $team->getCoaches();
         $rows[] = [
             '',
             0,
         ]; // Leeres erstes Element
         foreach ($profiles as $profile) {
-            $rows[] = array(
+            $rows[] = [
                 $profile->getName(),
                 $profile->getUid(),
-            );
+            ];
         }
 
         return $rows;
@@ -567,7 +560,7 @@ class tx_cfcleague_tca_Lookup
      */
     private function findTeams($competitionId, $complete_row = '0')
     {
-        /* @var $competition tx_cfcleague_models_Competition */
+        /* @var $competition \tx_cfcleague_models_Competition */
         $competition = tx_rnbase::makeInstance('tx_cfcleague_models_Competition', $competitionId);
         $teamNames = $competition->getTeamNames();
         $rows = [];

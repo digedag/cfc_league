@@ -69,6 +69,7 @@ CREATE TABLE tx_cfcleague_competition (
 	table_marks text,
 	logo int(11) DEFAULT '0' NOT NULL,
 	sports varchar(50) DEFAULT '' NOT NULL,
+	tablestrategy varchar(50) DEFAULT '' NOT NULL,
 
 	match_parts tinyint(4) DEFAULT '0' NOT NULL,
 	addparts tinyint(4) DEFAULT '0' NOT NULL,

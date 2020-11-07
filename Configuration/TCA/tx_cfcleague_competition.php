@@ -127,7 +127,7 @@ $tx_cfcleague_competition = [
             'config' => array(
                 'type' => 'select',
                 'renderType' => 'selectSingle',
-                'itemsProcFunc' => 'tx_cfcleague_tca_Lookup->getSportsTypes',
+                'itemsProcFunc' => System25\T3sports\Utility\TcaLookup::class.'->getSportsTypes',
                 'size' => 1,
                 'minitems' => 0,
                 'maxitems' => 1,
@@ -185,13 +185,25 @@ $tx_cfcleague_competition = [
             'config' => array(
                 'type' => 'select',
                 'renderType' => 'selectSingle',
-                'itemsProcFunc' => 'tx_cfcleague_tca_Lookup->getPointSystems',
+                'itemsProcFunc' => System25\T3sports\Utility\TcaLookup::class.'->getPointSystems',
                 'size' => 1,
                 'minitems' => 0,
                 'maxitems' => 1,
                 'default' => 0,
             ),
         ),
+        'tablestrategy' => [
+            'exclude' => 1,
+            'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_competition_tablestrategy',
+            'config' => [
+                'type' => 'select',
+                'renderType' => 'selectSingle',
+                'itemsProcFunc' => System25\T3sports\Utility\TcaLookup::class.'->getTableStrategies',
+                'size' => 1,
+                'minitems' => 1,
+                'maxitems' => 1,
+            ],
+        ],
         'teams' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_competition.teams',
@@ -230,7 +242,7 @@ $tx_cfcleague_competition = [
         ],
     ],
     'types' => [
-        '0' => ['showitem' => 'hidden, name, tournament, sports, internal_name, short_name, agegroup, saison, type,--palette--;;1, point_system, logo, teams, match_keys, table_marks, match_parts, addparts,extid'],
+        '0' => ['showitem' => 'hidden, name, tournament, sports, internal_name, short_name, agegroup, saison, type,--palette--;;1, tablestrategy, point_system, logo, teams, match_keys, table_marks, match_parts, addparts,extid'],
         '1' => ['showitem' => 'hidden, name, tournament'],
 //		'icehockey' => Array('showitem' => 'hidden, name, sports, internal_name, short_name, agegroup, saison, type;;2, point_system, logo, teams, match_keys, table_marks, match_parts, addparts'),
     ],

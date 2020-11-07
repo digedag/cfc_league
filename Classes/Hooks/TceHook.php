@@ -2,6 +2,8 @@
 
 namespace System25\T3sports\Hooks;
 
+use System25\T3sports\Utility\TcaLookup;
+
 /***************************************************************
  *  Copyright notice
  *
@@ -45,7 +47,7 @@ class TceHook
             foreach ($rows as $type) {
                 $types[] = $type['uid_local'];
             }
-            $row['types'] = \tx_cfcleague_tca_Lookup::getProfileTypeItems($types);
+            $row['types'] = TcaLookup::getProfileTypeItems($types);
         }
         if ('tx_cfcleague_club' == $table) {
             // Umwandlung eine MySQL Date in einen timestamp

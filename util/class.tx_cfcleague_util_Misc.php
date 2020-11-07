@@ -52,9 +52,9 @@ class tx_cfcleague_util_Misc
     public static function registerMatchNote($label, $typeId)
     {
         if (!is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['matchnotetypes'])) {
-            $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['matchnotetypes'] = array();
+            $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['matchnotetypes'] = [];
         }
-        $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['matchnotetypes'][] = array($label, $typeId);
+        $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['matchnotetypes'][] = [$label, $typeId];
     }
 
     /**
@@ -76,6 +76,24 @@ class tx_cfcleague_util_Misc
             }
         }
     }
+
+    /**
+     * Register a new table strategy.
+     *
+     * @param string $label
+     * @param string $comparator
+     */
+    public static function registerTableStrategy(string $id, string $label, string $comparator)
+    {
+        if (!is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['tablestrategy'])) {
+            $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['tablestrategy'] = [];
+        }
+        $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['tablestrategy'][$id] = [
+            'label' => $label,
+            'comparator' => $comparator,
+        ];
+    }
+
 
     /**
      * Register a new match formation.
