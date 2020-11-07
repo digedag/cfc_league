@@ -73,20 +73,21 @@ class tx_cfcleague_models_Competition extends tx_rnbase_model_base
      * <li> 0 - angesetzt
      * <li> 1 - läuft
      * <li> 2 - beendet
-     * </ul>.
+     * </ul>
      *
-     * @param
-     *            scope - 0,1,2 für alle, Hin-, Rückrunde
+     * @param int $status - 0,1,2 für alle, Hin-, Rückrunde
+     * @param int $scope - 0,1,2 für alle, Hin-, Rückrunde
+     * @return tx_cfcleague_models_match[]
      */
     public function getMatches($status, $scope = 0)
     {
         // Sicherstellen, dass wir eine Zahl bekommen
         if ((isset($status) && tx_rnbase_util_Math::isInteger($status))) {
-            $status = intval($status);
+            $status = (int) $status;
             // Wir laden die Spieldaten zunächst ohne die Teams
             // Um die Datenmenge in Grenzen zu halten
             $round = 0;
-            $scope = intval($scope);
+            $scope = (int) $scope;
             if ($scope) {
                 // Feststellen wann die Hinrunde endet: Anz Teams - 1
                 $round = count(Tx_Rnbase_Utility_Strings::intExplode(',', $this->getProperty('teams')));
@@ -119,7 +120,7 @@ class tx_cfcleague_models_Competition extends tx_rnbase_model_base
                 }
                 $options = [
                     'where' => $where,
-                    'wrapperclass' => 'tx_cfcleaguefe_models_match',
+                    'wrapperclass' => 'tx_cfcleague_models_match',
                 ];
                 // Issue 1880237: Return matches sorted by round
                 $options['orderby'] = 'round, date';
