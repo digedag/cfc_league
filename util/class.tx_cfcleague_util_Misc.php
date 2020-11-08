@@ -94,6 +94,19 @@ class tx_cfcleague_util_Misc
         ];
     }
 
+    /**
+     *
+     * @param string $id
+     * @return array
+     */
+    public static function lookupTableStrategy(string $id) : array
+    {
+        $ret = [];
+        if (isset($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['tablestrategy'][$id])) {
+            $ret = $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['tablestrategy'][$id];
+        }
+        return $ret;
+    }
 
     /**
      * Register a new match formation.
@@ -155,8 +168,4 @@ class tx_cfcleague_util_Misc
         echo $content;
         exit();
     }
-}
-
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/util/class.tx_cfcleague_util_Misc.php']) {
-    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/util/class.tx_cfcleague_util_Misc.php'];
 }
