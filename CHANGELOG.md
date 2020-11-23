@@ -2,8 +2,11 @@
 Änderungen
 ==========
 
-## v1.5.3 (??.0?.2020)
+## v1.6.0 (23.11.2020)
  * change label for match status "invalid" to cancelled
+ * #71 mark teams as "out of competition". That means results will not be scored in league table.
+ * #72 allow to configure league table strategy in competition
+ * some code refactoring
 
 ## v1.5.2 (31.08.2020)
  * Fix db issues with datetime columns
