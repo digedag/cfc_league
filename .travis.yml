@@ -93,4 +93,4 @@ jobs:
         echo "Release comment ${TAG_MESSAGE}";
         echo;
         echo;
-        $HOME/config/.composer/vendor/bin/ter-client upload cfc_league . -u "$TYPO3_ORG_USERNAME" -p "$TYPO3_ORG_PASS" -m "$TAG_MESSAGE";
+        $HOME/.config/composer/vendor/bin/ter-client upload cfc_league . -u "$TYPO3_ORG_USERNAME" -p "$TYPO3_ORG_PASS" -m "$TAG_MESSAGE";
