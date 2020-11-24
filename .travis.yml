@@ -19,7 +19,7 @@ language: php
 #  - TYPO3_CORE="typo3/cms=^8.7.0"
 #  - TYPO3_CORE="typo3/minimal=^9.5"
 
-sudo: false
+#sudo: false
 
 addons:
     apt:
@@ -46,6 +46,8 @@ before_script:
 script:
     - >
         echo;
+        echo "Current HOME: ${HOME}";
+        echo "Current DIR: ${PWD}";
         echo "Running unit tests";
         .Build/bin/phpunit
 # disabled, because there are direct tx_rnbase::load calls in the files!
@@ -91,4 +93,4 @@ jobs:
         echo "Release comment ${TAG_MESSAGE}";
         echo;
         echo;
-        $HOME/.composer/vendor/bin/ter-client upload cfc_league . -u "$TYPO3_ORG_USERNAME" -p "$TYPO3_ORG_PASS" -m "$TAG_MESSAGE";
+        $HOME/config/.composer/vendor/bin/ter-client upload cfc_league . -u "$TYPO3_ORG_USERNAME" -p "$TYPO3_ORG_PASS" -m "$TAG_MESSAGE";
