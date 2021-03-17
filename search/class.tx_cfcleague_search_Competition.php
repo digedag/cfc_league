@@ -1,4 +1,7 @@
 <?php
+use Sys25\RnBase\Database\Query\Join;
+use Sys25\RnBase\Search\SearchBase;
+
 /***************************************************************
  *  Copyright notice
  *
@@ -27,7 +30,7 @@
  *
  * @author Rene Nitzsche
  */
-class tx_cfcleague_search_Competition extends tx_rnbase_util_SearchBase
+class tx_cfcleague_search_Competition extends SearchBase
 {
     protected function getTableMappings()
     {
@@ -67,11 +70,12 @@ class tx_cfcleague_search_Competition extends tx_rnbase_util_SearchBase
     protected function getJoins($tableAliases)
     {
         $join = '';
+        $join = [];
         if (isset($tableAliases['TEAM'])) {
-            $join .= ' JOIN tx_cfcleague_teams AS TEAM ON FIND_IN_SET( TEAM.uid, COMPETITION.teams )';
+            $join[] = new Join('COMPETITION','tx_cfcleague_teams', 'FIND_IN_SET( TEAM.uid, COMPETITION.teams )', 'TEAM');
         }
         if (isset($tableAliases['MATCH'])) {
-            $join .= ' JOIN tx_cfcleague_games AS `MATCH` ON MATCH.competition = COMPETITION.uid ';
+            $join[] = new Join('COMPETITION','tx_cfcleague_games', 'MATCH.competition = COMPETITION.uid', 'MATCH');
         }
 
         // Hook to append other tables
