@@ -39,8 +39,8 @@ class tx_cfcleague_search_Match extends tx_rnbase_util_SearchBase
         $tableMapping = [];
         $tableMapping['MATCH'] = 'tx_cfcleague_games';
         $tableMapping['COMPETITION'] = 'tx_cfcleague_competition';
-        $tableMapping['TEAM1'] = 't1';
-        $tableMapping['TEAM2'] = 't2';
+        $tableMapping['TEAM1'] = 'TEAM1';
+        $tableMapping['TEAM2'] = 'TEAM2';
         // Hook to append other tables
         tx_rnbase_util_Misc::callHook('cfc_league', 'search_Match_getTableMapping_hook', [
             'tableMapping' => &$tableMapping,
@@ -77,10 +77,10 @@ class tx_cfcleague_search_Match extends tx_rnbase_util_SearchBase
             $join[] = new Join('MATCH','tx_cfcleague_competition', 'MATCH.competition = COMPETITION.uid', 'COMPETITION');
         }
         if (isset($tableAliases['TEAM1'])) {
-            $join[] = new Join('MATCH','tx_cfcleague_teams', 'MATCH.home = t1.uid', 't1');
+            $join[] = new Join('MATCH','tx_cfcleague_teams', 'MATCH.home = TEAM1.uid', 'TEAM1');
         }
         if (isset($tableAliases['TEAM2'])) {
-            $join[] = new Join('MATCH','tx_cfcleague_teams', 'MATCH.guest = t2.uid', 't2');
+            $join[] = new Join('MATCH','tx_cfcleague_teams', 'MATCH.guest = TEAM2.uid', 'TEAM2');
         }
         // Hook to append other tables
         tx_rnbase_util_Misc::callHook('cfc_league', 'search_Match_getJoins_hook', [
