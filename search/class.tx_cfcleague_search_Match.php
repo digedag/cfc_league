@@ -1,5 +1,6 @@
 <?php
 use Sys25\RnBase\Database\Query\Join;
+use Sys25\RnBase\Search\SearchBase;
 
 /***************************************************************
  *  Copyright notice
@@ -32,7 +33,7 @@ define('MATCHSRV_FIELD_MATCH_DATE', 'MATCH.DATE');
  *
  * @author Rene Nitzsche
  */
-class tx_cfcleague_search_Match extends tx_rnbase_util_SearchBase
+class tx_cfcleague_search_Match extends SearchBase
 {
     protected function getTableMappings()
     {
@@ -71,7 +72,6 @@ class tx_cfcleague_search_Match extends tx_rnbase_util_SearchBase
 
     protected function getJoins($tableAliases)
     {
-//        $join = '';
         $join = [];
         if (isset($tableAliases['COMPETITION'])) {
             $join[] = new Join('MATCH','tx_cfcleague_competition', 'MATCH.competition = COMPETITION.uid', 'COMPETITION');

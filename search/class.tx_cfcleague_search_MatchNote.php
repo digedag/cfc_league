@@ -1,8 +1,11 @@
 <?php
+use Sys25\RnBase\Search\SearchBase;
+use Sys25\RnBase\Database\Query\Join;
+
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2006-2018 Rene Nitzsche
+ *  (c) 2006-2021 Rene Nitzsche
  *  Contact: rene@system25.de
  *  All rights reserved
  *
@@ -20,15 +23,13 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  ***************************************************************/
-tx_rnbase::load('tx_rnbase_util_SearchBase');
-tx_rnbase::load('tx_rnbase_util_Misc');
 
 /**
  * Class to search match notes from database.
  *
  * @author Rene Nitzsche
  */
-class tx_cfcleague_search_MatchNote extends tx_rnbase_util_SearchBase
+class tx_cfcleague_search_MatchNote extends SearchBase
 {
     protected function getTableMappings()
     {
@@ -36,9 +37,9 @@ class tx_cfcleague_search_MatchNote extends tx_rnbase_util_SearchBase
         $tableMapping['MATCHNOTE'] = 'tx_cfcleague_match_notes';
         $tableMapping['MATCH'] = 'tx_cfcleague_games';
         // Hook to append other tables
-        tx_rnbase_util_Misc::callHook('cfc_league', 'search_MatchNote_getTableMapping_hook', array(
+        tx_rnbase_util_Misc::callHook('cfc_league', 'search_MatchNote_getTableMapping_hook', [
             'tableMapping' => &$tableMapping,
-        ), $this);
+        ], $this);
 
         return $tableMapping;
     }
@@ -48,6 +49,16 @@ class tx_cfcleague_search_MatchNote extends tx_rnbase_util_SearchBase
         return 'tx_cfcleague_match_notes';
     }
 
+    protected function getBaseTableAlias()
+    {
+        return 'MATCHNOTE';
+    }
+
+    protected function useAlias()
+    {
+        return true;
+    }
+
     public function getWrapperClass()
     {
         return 'tx_cfcleague_models_MatchNote';
@@ -55,16 +66,16 @@ class tx_cfcleague_search_MatchNote extends tx_rnbase_util_SearchBase
 
     protected function getJoins($tableAliases)
     {
-        $join = '';
+        $join = [];
         if (isset($tableAliases['MATCH'])) {
-            $join .= ' JOIN tx_cfcleague_games ON tx_cfcleague_games.uid = tx_cfcleague_match_notes.game ';
+            $join[] = new Join('MATCHNOTE','tx_cfcleague_games', 'MATCH.uid = MATCHNOTE.game', 'MATCH');
         }
 
         // Hook to append other tables
-        tx_rnbase_util_Misc::callHook('cfc_league', 'search_MatchNote_getJoins_hook', array(
+        tx_rnbase_util_Misc::callHook('cfc_league', 'search_MatchNote_getJoins_hook', [
             'join' => &$join,
             'tableAliases' => $tableAliases,
-        ), $this);
+        ], $this);
 
         return $join;
     }

@@ -69,7 +69,6 @@ class tx_cfcleague_search_Competition extends SearchBase
 
     protected function getJoins($tableAliases)
     {
-        $join = '';
         $join = [];
         if (isset($tableAliases['TEAM'])) {
             $join[] = new Join('COMPETITION','tx_cfcleague_teams', 'FIND_IN_SET( TEAM.uid, COMPETITION.teams )', 'TEAM');
