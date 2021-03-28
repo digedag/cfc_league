@@ -22,16 +22,13 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-tx_rnbase::load('tx_rnbase_util_SearchBase');
-
 // FIXME: Nach Umstellung MatchNote auf Tx_Rnbase_Domain_Model_Base das Repo einsetzen!!
-tx_rnbase::load('tx_rnbase_sv1_Base');
 //tx_rnbase::load('Tx_Rnbase_Domain_Repository_PersistenceRepository');
 
 /**
  * @author Rene Nitzsche
  */
-class Tx_Cfcleague_Model_Repository_MatchNote extends tx_rnbase_sv1_Base
+class Tx_Cfcleague_Model_Repository_MatchNote extends \Sys25\RnBase\Typo3Wrapper\Service\AbstractService
 {
     public function getSearchClass()
     {
@@ -43,9 +40,8 @@ class Tx_Cfcleague_Model_Repository_MatchNote extends tx_rnbase_sv1_Base
      *
      * @param array $record
      */
-    public function createNewModel(
-        array $record = array()
-    ) {
+    public function createNewModel(array $record = [])
+    {
         return $this->getDomainModel()->setProperty($record);
     }
 
