@@ -1,11 +1,14 @@
 <?php
+namespace System25\T3sports\Search;
+
 use Sys25\RnBase\Search\SearchBase;
 use Sys25\RnBase\Database\Query\Join;
+use tx_rnbase_util_Misc;
 
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2006-2020 Rene Nitzsche
+ *  (c) 2006-2021 Rene Nitzsche
  *  Contact: rene@system25.de
  *  All rights reserved
  *
@@ -29,7 +32,7 @@ use Sys25\RnBase\Database\Query\Join;
  *
  * @author Rene Nitzsche
  */
-class tx_cfcleague_search_Stadium extends SearchBase
+class StadiumSearch extends SearchBase
 {
     protected function getTableMappings()
     {

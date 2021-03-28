@@ -1,8 +1,11 @@
 <?php
+use Sys25\RnBase\Search\SearchBase;
+use System25\T3sports\Search\ProfileSearch;
+
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2009-2017 Rene Nitzsche (rene@system25.de)
+ *  (c) 2009-2021 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -21,9 +24,6 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-tx_rnbase::load('Tx_Rnbase_Database_Connection');
-tx_rnbase::load('Tx_Rnbase_Utility_Strings');
-tx_rnbase::load('tx_cfcleague_services_Base');
 
 /**
  * Service for accessing profiles.
@@ -32,7 +32,7 @@ tx_rnbase::load('tx_cfcleague_services_Base');
  */
 class tx_cfcleague_services_Profiles extends tx_cfcleague_services_Base
 {
-    private $profiles = array();
+    private $profiles = [];
 
     /**
      * Return all instances of all requested profiles.
@@ -45,8 +45,8 @@ class tx_cfcleague_services_Profiles extends tx_cfcleague_services_Base
     public function loadProfiles($uids)
     {
         $uids = is_array($uids) ? $uids : Tx_Rnbase_Utility_Strings::intExplode(',', $uids);
-        $ret = array();
-        $toLoad = array();
+        $ret = [];
+        $toLoad = [];
         foreach ($uids as $key => $uid) {
             if (array_key_exists($uid, $this->profiles)) {
                 $ret[$key] = $this->profiles[$uid];
@@ -56,9 +56,9 @@ class tx_cfcleague_services_Profiles extends tx_cfcleague_services_Base
         }
 
         if (!empty($toLoad)) {
-            $fields = array();
+            $fields = [];
             $fields['PROFILE.UID'][OP_IN_INT] = implode(',', $toLoad);
-            $options = array();
+            $options = [];
             $rows = $this->search($fields, $options);
             $toLoadFlip = array_flip($toLoad);
             foreach ($rows as $profile) {
@@ -79,37 +79,37 @@ class tx_cfcleague_services_Profiles extends tx_cfcleague_services_Base
      */
     public function checkReferences($profile)
     {
-        $ret = array();
+        $ret = [];
         // Zuerst die Teams
-        $options = array();
+        $options = [];
         $options['what'] = 'uid';
 
-        $fields = array();
-        $fields[SEARCH_FIELD_JOINED][0] = array(
+        $fields = [];
+        $fields[SEARCH_FIELD_JOINED][0] = [
             'value' => $profile->getUid(),
-            'cols' => array(
+            'cols' => [
                 'TEAM.PLAYERS',
                 'TEAM.SUPPORTERS',
                 'TEAM.COACHES',
-            ),
+            ],
             'operator' => OP_INSET_INT,
-        );
+        ];
         $result = tx_cfcleague_util_ServiceRegistry::getTeamService()->searchTeams($fields, $options);
         if (count($result)) {
             $ret['tx_cfcleague_teams'] = $result;
         }
 
-        $fields = array();
+        $fields = [];
         $fields['TEAMNOTE.PLAYER'][OP_EQ_INT] = $profile->getUid();
         $result = tx_cfcleague_util_ServiceRegistry::getTeamService()->searchTeamNotes($fields, $options);
         if (count($result)) {
             $ret['tx_cfcleague_team_notes'] = $result;
         }
 
-        $fields = array();
-        $fields[SEARCH_FIELD_JOINED][0] = array(
+        $fields = [];
+        $fields[SEARCH_FIELD_JOINED][0] = [
             'value' => $profile->getUid(),
-            'cols' => array(
+            'cols' => [
                 'MATCH.REFEREE',
                 'MATCH.ASSISTS',
                 'MATCH.PLAYERS_HOME',
@@ -118,23 +118,23 @@ class tx_cfcleague_services_Profiles extends tx_cfcleague_services_Base
                 'MATCH.SUBSTITUTES_GUEST',
                 'MATCH.COACH_HOME',
                 'MATCH.COACH_GUEST',
-            ),
+            ],
             'operator' => OP_INSET_INT,
-        );
+        ];
         $result = tx_cfcleague_util_ServiceRegistry::getMatchService()->search($fields, $options);
         if (count($result)) {
             $ret['tx_cfcleague_games'] = $result;
         }
 
-        $fields = array();
-        $fields[SEARCH_FIELD_JOINED][0] = array(
+        $fields = [];
+        $fields[SEARCH_FIELD_JOINED][0] = [
             'value' => $profile->getUid(),
-            'cols' => array(
+            'cols' => [
                 'MATCHNOTE.PLAYER_HOME',
                 'MATCHNOTE.PLAYER_GUEST',
-            ),
+            ],
             'operator' => OP_EQ_INT,
-        );
+        ];
         $result = tx_cfcleague_util_ServiceRegistry::getMatchService()->searchMatchNotes($fields, $options);
         if (count($result)) {
             $ret['tx_cfcleague_match_notes'] = $result;
@@ -162,7 +162,7 @@ class tx_cfcleague_services_Profiles extends tx_cfcleague_services_Base
      */
     public function getProfileTypes4TCA()
     {
-        $items = array();
+        $items = [];
         $baseType = 't3sports_profiletype';
         $services = tx_rnbase_util_Misc::lookupServices($baseType);
         foreach ($services as $subtype => $info) {
@@ -170,10 +170,10 @@ class tx_cfcleague_services_Profiles extends tx_cfcleague_services_Base
             $types = array_merge($items, $srv->getProfileTypes());
         }
         foreach ($types as $typedef) {
-            $items[] = array(
+            $items[] = [
                 tx_rnbase_util_Misc::translateLLL($typedef[0]),
                 $typedef[1],
-            );
+            ];
         }
 
         return $items;
@@ -188,7 +188,7 @@ class tx_cfcleague_services_Profiles extends tx_cfcleague_services_Base
      */
     public function getProfileTypeItems4TCA($uids)
     {
-        $uidArr = array();
+        $uidArr = [];
         foreach ($uids as $uid) {
             $uidArr[$uid] = '';
         }
@@ -199,7 +199,7 @@ class tx_cfcleague_services_Profiles extends tx_cfcleague_services_Base
             $srv = tx_rnbase_util_Misc::getService($baseType, $subtype);
             $srv->setProfileTypeItems($uidArr);
         }
-        $items = array();
+        $items = [];
         foreach ($uidArr as $uid => $label) {
             $items[] = $uid.'|'.tx_rnbase_util_Misc::translateLLL($label);
         }
@@ -217,8 +217,7 @@ class tx_cfcleague_services_Profiles extends tx_cfcleague_services_Base
      */
     public function search($fields, $options)
     {
-        tx_rnbase::load('tx_rnbase_util_SearchBase');
-        $searcher = tx_rnbase_util_SearchBase::getInstance('tx_cfcleague_search_Profile');
+        $searcher = SearchBase::getInstance(ProfileSearch::class);
 
         return $searcher->search($fields, $options);
     }

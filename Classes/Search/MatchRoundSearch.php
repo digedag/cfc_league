@@ -1,6 +1,9 @@
 <?php
+namespace System25\T3sports\Search;
+
 use Sys25\RnBase\Search\SearchBase;
 use Sys25\RnBase\Database\Query\Join;
+use tx_rnbase_util_Misc;
 
 /***************************************************************
  *  Copyright notice
@@ -33,7 +36,7 @@ define('MATCHSRV_FIELD_MATCH_DATE', 'MATCH.DATE');
  *
  * @author Rene Nitzsche
  */
-class tx_cfcleague_search_MatchRound extends SearchBase
+class MatchRoundSearch extends SearchBase
 {
     protected function getTableMappings()
     {

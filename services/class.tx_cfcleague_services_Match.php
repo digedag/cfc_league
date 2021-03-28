@@ -1,8 +1,13 @@
 <?php
+use Sys25\RnBase\Search\SearchBase;
+use System25\T3sports\Search\MatchSearch;
+use System25\T3sports\Search\MatchNoteSearch;
+use System25\T3sports\Search\MatchRoundSearch;
+
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2009-2019 Rene Nitzsche (rene@system25.de)
+ *  (c) 2009-2021 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -21,20 +26,13 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-tx_rnbase::load('tx_cfcleague_services_Base');
-tx_rnbase::load('tx_rnbase_util_SearchBase');
-
-interface tx_cfcleague_MatchService
-{
-    public function search($fields, $options);
-}
 
 /**
  * Service for accessing match information.
  *
  * @author Rene Nitzsche
  */
-class tx_cfcleague_services_Match extends tx_cfcleague_services_Base implements tx_cfcleague_MatchService
+class tx_cfcleague_services_Match extends tx_cfcleague_services_Base
 {
     /**
      * Returns all available profile types for a TCA select item.
@@ -107,7 +105,7 @@ class tx_cfcleague_services_Match extends tx_cfcleague_services_Base implements 
      */
     public function search($fields, $options)
     {
-        $searcher = tx_rnbase_util_SearchBase::getInstance('tx_cfcleague_search_Match');
+        $searcher = SearchBase::getInstance(MatchSearch::class);
 
         return $searcher->search($fields, $options);
     }
@@ -122,7 +120,7 @@ class tx_cfcleague_services_Match extends tx_cfcleague_services_Base implements 
      */
     public function searchMatchNotes($fields, $options)
     {
-        $searcher = tx_rnbase_util_SearchBase::getInstance('tx_cfcleague_search_MatchNote');
+        $searcher = SearchBase::getInstance(MatchNoteSearch::class);
 
         return $searcher->search($fields, $options);
     }
@@ -172,8 +170,7 @@ class tx_cfcleague_services_Match extends tx_cfcleague_services_Base implements 
      */
     public function searchMatchRound($fields, $options)
     {
-        tx_rnbase::load('tx_rnbase_util_SearchBase');
-        $searcher = tx_rnbase_util_SearchBase::getInstance('tx_cfcleague_search_MatchRound');
+        $searcher = SearchBase::getInstance(MatchRoundSearch::class);
 
         return $searcher->search($fields, $options);
     }

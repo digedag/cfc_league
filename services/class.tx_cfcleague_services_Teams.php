@@ -1,8 +1,13 @@
 <?php
+use Sys25\RnBase\Search\SearchBase;
+use System25\T3sports\Search\TeamNoteSearch;
+use System25\T3sports\Search\TeamSearch;
+use System25\T3sports\Search\ClubSearch;
+
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2009-2017 Rene Nitzsche (rene@system25.de)
+ *  (c) 2009-2021 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -21,9 +26,6 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-tx_rnbase::load('tx_rnbase_util_SearchBase');
-tx_rnbase::load('tx_cfcleague_search_Builder');
-tx_rnbase::load('tx_cfcleague_services_Base');
 
 /**
  * Service for accessing teams.
@@ -42,7 +44,7 @@ class tx_cfcleague_services_Teams extends tx_cfcleague_services_Base
      */
     public function getStadiums($teamUid)
     {
-        $fields = $options = array();
+        $fields = $options = [];
         $fields['TEAM.UID'][OP_EQ_INT] = $teamUid;
         $options['orderby']['STADIUM.NAME'] = 'asc';
         $srv = tx_cfcleague_util_ServiceRegistry::getStadiumService();
@@ -75,8 +77,6 @@ class tx_cfcleague_services_Teams extends tx_cfcleague_services_Base
      */
     public function getLogos($clubUid)
     {
-        tx_rnbase::load('tx_rnbase_util_TSFAL');
-
         return tx_rnbase_util_TSFAL::fetchFiles('tx_cfcleague_club', $clubUid, 'logo');
     }
 
@@ -87,8 +87,6 @@ class tx_cfcleague_services_Teams extends tx_cfcleague_services_Base
      */
     public function getNoteTypes()
     {
-        tx_rnbase::load('tx_cfcleague_models_TeamNoteType');
-
         return tx_cfcleague_models_TeamNoteType::getAll();
     }
 
@@ -100,12 +98,12 @@ class tx_cfcleague_services_Teams extends tx_cfcleague_services_Base
      */
     public function getTeamNotes($team, $type = false)
     {
-        $fields = $options = array();
+        $fields = $options = [];
         $fields['TEAMNOTE.TEAM'][OP_EQ_INT] = $team->getUid();
         if (is_object($type)) {
             $fields['TEAMNOTE.TYPE'][OP_EQ_INT] = $type->getUid();
         }
-        $options = array();
+        $options = [];
 
         return $this->searchTeamNotes($fields, $options);
     }
@@ -115,12 +113,11 @@ class tx_cfcleague_services_Teams extends tx_cfcleague_services_Base
      * Key ist die ID des Teams.
      *
      * @param tx_cfcleague_models_Competition $comp
-     * @param $asArray Wenn
-     *            1 wird pro Team ein Array mit Name, Kurzname und Flag spielfrei geliefert
+     * @param boolean $asArray Wenn 1 wird pro Team ein Array mit Name, Kurzname und Flag spielfrei geliefert
      *
      * @return array
      */
-    public function getTeamNames($comp, $asArray = 0)
+    public function getTeamNames($comp, $asArray = false)
     {
         $teamNames = [];
         // Ohne zugeordnete Team, muss nicht gefragt werden
@@ -156,8 +153,6 @@ class tx_cfcleague_services_Teams extends tx_cfcleague_services_Base
             return null;
         }
 
-        tx_rnbase::load('tx_cfcleague_models_Group');
-        tx_rnbase::load('tx_rnbase_cache_Manager');
         $cache = tx_rnbase_cache_Manager::getCache('t3sports');
         $agegroup = $cache->get('team_'.$team->getUid());
         if (!$agegroup) {
@@ -192,7 +187,7 @@ class tx_cfcleague_services_Teams extends tx_cfcleague_services_Base
      */
     public function getCompetitions4Team($team, $obligateOnly = false)
     {
-        $fields = $options = array();
+        $fields = $options = [];
         tx_cfcleague_search_Builder::buildCompetitionByTeam($fields, $team->getUid(), $obligateOnly);
         $srv = tx_cfcleague_util_ServiceRegistry::getCompetitionService();
 
@@ -209,7 +204,7 @@ class tx_cfcleague_services_Teams extends tx_cfcleague_services_Base
      */
     public function searchTeamNotes($fields, $options)
     {
-        $searcher = tx_rnbase_util_SearchBase::getInstance('tx_cfcleague_search_TeamNote');
+        $searcher = SearchBase::getInstance(TeamNoteSearch::class);
 
         return $searcher->search($fields, $options);
     }
@@ -220,11 +215,11 @@ class tx_cfcleague_services_Teams extends tx_cfcleague_services_Base
      * @param array $fields
      * @param array $options
      *
-     * @return array[tx_cfcleague_models_Team]
+     * @return tx_cfcleague_models_Team[]
      */
     public function searchTeams($fields, $options)
     {
-        $searcher = tx_rnbase_util_SearchBase::getInstance('tx_cfcleague_search_Team');
+        $searcher = SearchBase::getInstance(TeamSearch::class);
 
         return $searcher->search($fields, $options);
     }
@@ -235,11 +230,11 @@ class tx_cfcleague_services_Teams extends tx_cfcleague_services_Base
      * @param array $fields
      * @param array $options
      *
-     * @return array[tx_cfcleague_models_Club]
+     * @return tx_cfcleague_models_Club[]
      */
     public function searchClubs($fields, $options)
     {
-        $searcher = tx_rnbase_util_SearchBase::getInstance('tx_cfcleague_search_Club');
+        $searcher = SearchBase::getInstance(ClubSearch::class);
 
         return $searcher->search($fields, $options);
     }
@@ -253,7 +248,7 @@ class tx_cfcleague_services_Teams extends tx_cfcleague_services_Base
      */
     public function searchTeamsByProfile($profileUid)
     {
-        $fields = $options = array();
+        $fields = $options = [];
         // FIXME: Umstellen https://github.com/digedag/rn_base/issues/47
         $fields[SEARCH_FIELD_CUSTOM] = '( FIND_IN_SET('.$profileUid.', players)
 				 OR FIND_IN_SET('.$profileUid.', coaches)

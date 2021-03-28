@@ -1,8 +1,11 @@
 <?php
+use Sys25\RnBase\Search\SearchBase;
+use System25\T3sports\Search\CompetitionSearch;
+
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2009-2017 Rene Nitzsche (rene@system25.de)
+ *  (c) 2009-2021 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -39,14 +42,14 @@ class tx_cfcleague_services_Competition extends tx_cfcleague_services_Base
     public function getDummyTeamIds($comp)
     {
         $srv = tx_cfcleague_util_ServiceRegistry::getTeamService();
-        $fields = array();
+        $fields = [];
         $fields['TEAM.DUMMY'][OP_EQ_INT] = 1;
         $fields['TEAM.UID'][OP_IN_INT] = $comp->getProperty('teams');
-        $options = array();
+        $options = [];
         $options['what'] = 'uid';
         // $options['debug'] = 1;
         $rows = $srv->searchTeams($fields, $options);
-        $ret = array();
+        $ret = [];
         foreach ($rows as $row) {
             $ret[] = $row['uid'];
         }
@@ -67,7 +70,7 @@ class tx_cfcleague_services_Competition extends tx_cfcleague_services_Base
     {
         $what = 'count(uid) As matches';
         $from = 'tx_cfcleague_games';
-        $options = array();
+        $options = [];
         $options['where'] = 'status IN('.$status.') AND ';
         if ($teamIds) {
             $options['where'] .= '( home IN('.$teamIds.') OR ';
@@ -77,7 +80,7 @@ class tx_cfcleague_services_Competition extends tx_cfcleague_services_Base
         $rows = Tx_Rnbase_Database_Connection::getInstance()->doSelect($what, $from, $options, 0);
         $ret = 0;
         if (count($rows)) {
-            $ret = intval($rows[0]['matches']);
+            $ret = (int) $rows[0]['matches'];
         }
 
         return $ret;
@@ -93,7 +96,7 @@ class tx_cfcleague_services_Competition extends tx_cfcleague_services_Base
      */
     public function search($fields, $options)
     {
-        $searcher = tx_rnbase_util_SearchBase::getInstance('tx_cfcleague_search_Competition');
+        $searcher = SearchBase::getInstance(CompetitionSearch::class);
 
         return $searcher->search($fields, $options);
     }
@@ -112,24 +115,24 @@ class tx_cfcleague_services_Competition extends tx_cfcleague_services_Base
      */
     public function getSports4TCA()
     {
-        $items = $types = array();
+        $items = $types = [];
 
         // Jetzt schauen, ob noch weitere Sportarten per Service geliefert werden
         $baseType = 't3sports_sports';
         $services = tx_rnbase_util_Misc::lookupServices($baseType);
         foreach ($services as $subtype => $info) {
             $srv = tx_rnbase_util_Misc::getService($baseType, $subtype);
-            $types[] = array(
+            $types[] = [
                 $srv->getTCALabel(),
                 $subtype,
-            );
+            ];
         }
 
         foreach ($types as $typedef) {
-            $items[] = array(
+            $items[] = [
                 tx_rnbase_util_Misc::translateLLL($typedef[0]),
                 $typedef[1],
-            );
+            ];
         }
 
         return $items;
@@ -140,12 +143,12 @@ class tx_cfcleague_services_Competition extends tx_cfcleague_services_Base
      */
     public function checkReferences($competition)
     {
-        $ret = array();
-        $fields = array();
+        $ret = [];
+        $fields = [];
         $fields['MATCH.COMPETITION'][OP_EQ_INT] = $competition->getUid();
-        $result = tx_cfcleague_util_ServiceRegistry::getMatchService()->search($fields, array(
+        $result = tx_cfcleague_util_ServiceRegistry::getMatchService()->search($fields, [
             'count' => 1,
-        ));
+        ]);
         if ($result > 0) {
             $ret['tx_cfcleague_games'] = $result;
         }
@@ -160,14 +163,14 @@ class tx_cfcleague_services_Competition extends tx_cfcleague_services_Base
      */
     public function getCompetitionsBySaison(tx_cfcleague_models_Saison $saison)
     {
-        $fields = array();
+        $fields = [];
         $fields['COMPETITION.SAISON'][OP_EQ_INT] = $saison->getUid();
 
-        return $this->search($fields, array(
-            'orderby' => array(
+        return $this->search($fields, [
+            'orderby' => [
                 'COMPETITION.NAME' => 'asc',
-            ),
-        ));
+            ],
+        ]);
     }
 
     /**

@@ -1,6 +1,8 @@
 <?php
+namespace System25\T3sports\Search;
+
 use Sys25\RnBase\Search\SearchBase;
-use Sys25\RnBase\Database\Query\Join;
+use tx_rnbase_util_Misc;
 
 /***************************************************************
  *  Copyright notice
@@ -25,58 +27,75 @@ use Sys25\RnBase\Database\Query\Join;
  ***************************************************************/
 
 /**
- * Class to search match notes from database.
+ * Class to search saison from database.
  *
  * @author Rene Nitzsche
  */
-class tx_cfcleague_search_MatchNote extends SearchBase
+class SaisonSearch extends SearchBase
 {
     protected function getTableMappings()
     {
         $tableMapping = [];
-        $tableMapping['MATCHNOTE'] = 'tx_cfcleague_match_notes';
-        $tableMapping['MATCH'] = 'tx_cfcleague_games';
+        $tableMapping['SAISON'] = 'tx_cfcleague_stadiums';
+
         // Hook to append other tables
-        tx_rnbase_util_Misc::callHook('cfc_league', 'search_MatchNote_getTableMapping_hook', [
+        tx_rnbase_util_Misc::callHook('cfc_league', 'search_Saison_getTableMapping_hook', [
             'tableMapping' => &$tableMapping,
         ], $this);
 
         return $tableMapping;
     }
 
-    protected function getBaseTable()
-    {
-        return 'tx_cfcleague_match_notes';
-    }
-
-    protected function getBaseTableAlias()
-    {
-        return 'MATCHNOTE';
-    }
-
-    protected function useAlias()
-    {
-        return true;
-    }
-
-    public function getWrapperClass()
-    {
-        return 'tx_cfcleague_models_MatchNote';
-    }
-
     protected function getJoins($tableAliases)
     {
         $join = [];
-        if (isset($tableAliases['MATCH'])) {
-            $join[] = new Join('MATCHNOTE','tx_cfcleague_games', 'MATCH.uid = MATCHNOTE.game', 'MATCH');
-        }
 
         // Hook to append other tables
-        tx_rnbase_util_Misc::callHook('cfc_league', 'search_MatchNote_getJoins_hook', [
+        tx_rnbase_util_Misc::callHook('cfc_league', 'search_Saison_getJoins_hook', [
             'join' => &$join,
             'tableAliases' => $tableAliases,
         ], $this);
 
         return $join;
+    }
+
+    /**
+     * (non-PHPdoc).
+     *
+     * @see SearchBase::useAlias()
+     */
+    protected function useAlias()
+    {
+        return true;
+    }
+
+    /**
+     * (non-PHPdoc).
+     *
+     * @see SearchBase::getBaseTable()
+     */
+    protected function getBaseTable()
+    {
+        return 'tx_cfcleague_saison';
+    }
+
+    /**
+     * (non-PHPdoc).
+     *
+     * @see SearchBase::getBaseTableAlias()
+     */
+    protected function getBaseTableAlias()
+    {
+        return 'SAISON';
+    }
+
+    /**
+     * (non-PHPdoc).
+     *
+     * @see SearchBase::getWrapperClass()
+     */
+    public function getWrapperClass()
+    {
+        return 'tx_cfcleague_models_Saison';
     }
 }

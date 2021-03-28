@@ -2,6 +2,9 @@
 Änderungen
 ==========
 
+## v1.7.0 (??.04.2021)
+ * BREAKING CHANGE: all SearchClasses support new querybuilder API. Update hooks on search classes.
+
 ## v1.6.0 (23.11.2020)
  * change label for match status "invalid" to cancelled
  * #71 mark teams as "out of competition". That means results will not be scored in league table.

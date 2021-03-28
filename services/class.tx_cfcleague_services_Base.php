@@ -1,8 +1,10 @@
 <?php
+use Sys25\RnBase\Typo3Wrapper\Service\AbstractService;
+
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2009-2017 Rene Nitzsche (rene@system25.de)
+ *  (c) 2009-2021 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -21,7 +23,6 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-tx_rnbase::load('Tx_Rnbase_Service_Base');
 
 /**
  * Base service.
@@ -29,7 +30,7 @@ tx_rnbase::load('Tx_Rnbase_Service_Base');
  *
  * @author Rene Nitzsche
  */
-class tx_cfcleague_services_Base extends Tx_Rnbase_Service_Base
+class tx_cfcleague_services_Base extends AbstractService
 {
     /**
      * Create or update model.
@@ -64,7 +65,6 @@ class tx_cfcleague_services_Base extends Tx_Rnbase_Service_Base
             unset($data['uid']);
         }
 
-        tx_rnbase::load('Tx_Rnbase_Database_Connection');
         Tx_Rnbase_Database_Connection::getInstance()->doUpdate($table, $where, $data);
 
         return $model;
@@ -83,7 +83,6 @@ class tx_cfcleague_services_Base extends Tx_Rnbase_Service_Base
     {
         $model->setProperty('crdate', time());
         $model->setProperty('tstamp', time());
-        tx_rnbase::load('Tx_Rnbase_Database_Connection');
         $newUid = Tx_Rnbase_Database_Connection::getInstance()->doInsert($model->getTableName(), $model->getProperty());
         $model->uid = $newUid;
         $model->setUid($newUid);

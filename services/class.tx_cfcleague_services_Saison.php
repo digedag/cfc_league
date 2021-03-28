@@ -1,8 +1,12 @@
 <?php
+use Sys25\RnBase\Typo3Wrapper\Service\AbstractService;
+use Sys25\RnBase\Search\SearchBase;
+use System25\T3sports\Search\SaisonSearch;
+
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2009-2017 Rene Nitzsche (rene@system25.de)
+ *  (c) 2009-2021 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -21,14 +25,13 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-tx_rnbase::load('Tx_Rnbase_Service_Base');
 
 /**
  * Service for accessing saisons.
  *
  * @author Rene Nitzsche
  */
-class tx_cfcleague_services_Saison extends Tx_Rnbase_Service_Base
+class tx_cfcleague_services_Saison extends AbstractService
 {
     /**
      * Search database for trades.
@@ -40,8 +43,7 @@ class tx_cfcleague_services_Saison extends Tx_Rnbase_Service_Base
      */
     public function search($fields, $options)
     {
-        tx_rnbase::load('tx_rnbase_util_SearchBase');
-        $searcher = tx_rnbase_util_SearchBase::getInstance('tx_cfcleague_search_Saison');
+        $searcher = SearchBase::getInstance(SaisonSearch::class);
 
         return $searcher->search($fields, $options);
     }
