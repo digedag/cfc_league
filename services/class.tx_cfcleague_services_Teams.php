@@ -2,9 +2,9 @@
 
 use Sys25\RnBase\Search\SearchBase;
 use System25\T3sports\Search\ClubSearch;
+use System25\T3sports\Search\SearchBuilder;
 use System25\T3sports\Search\TeamNoteSearch;
 use System25\T3sports\Search\TeamSearch;
-use System25\T3sports\Search\SearchBuilder;
 
 /***************************************************************
  *  Copyright notice
