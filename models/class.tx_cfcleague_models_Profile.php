@@ -28,7 +28,7 @@ tx_rnbase::load('tx_rnbase_model_base');
  */
 class tx_cfcleague_models_Profile extends tx_rnbase_model_base
 {
-    private static $instances = array();
+    private static $instances = [];
 
     public function getTableName()
     {

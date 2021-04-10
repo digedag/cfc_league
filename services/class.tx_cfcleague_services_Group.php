@@ -1,4 +1,5 @@
 <?php
+
 use Sys25\RnBase\Typo3Wrapper\Service\AbstractService;
 
 /***************************************************************

@@ -44,7 +44,7 @@ class Tx_Cfcleague_Controller_Competition_DfbSync
     /**
      * @var array|\TYPO3\CMS\Core\Resource\File[]
      */
-    protected $uploadedFiles = array();
+    protected $uploadedFiles = [];
 
     /**
      * Verwaltet die Erstellung von Spielplänen von Ligen.
@@ -123,7 +123,7 @@ class Tx_Cfcleague_Controller_Competition_DfbSync
                 \TYPO3\CMS\Core\Resource\DuplicationBehavior::REPLACE
             );
         } else {
-            $this->fileProcessor->init(array(), $GLOBALS['TYPO3_CONF_VARS']['BE']['fileExtensions']);
+            $this->fileProcessor->init([], $GLOBALS['TYPO3_CONF_VARS']['BE']['fileExtensions']);
             $this->fileProcessor->setActionPermissions();
             $this->fileProcessor->dontCheckForUnique = 1;
         }
@@ -141,7 +141,7 @@ class Tx_Cfcleague_Controller_Competition_DfbSync
      * Returns a \TYPO3\CMS\Core\Resource\Folder object for saving export files
      * to the server and is also used for uploading import files.
      *
-     * @return null|\TYPO3\CMS\Core\Resource\Folder
+     * @return \TYPO3\CMS\Core\Resource\Folder|null
      */
     protected function getDefaultImportExportFolder()
     {

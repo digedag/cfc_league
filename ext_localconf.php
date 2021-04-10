@@ -1,7 +1,7 @@
 <?php
 
 if (!defined('TYPO3_MODE')) {
-    die('Access denied.');
+    exit('Access denied.');
 }
 $_EXTKEY = 'cfc_league';
 
@@ -72,111 +72,111 @@ tx_cfcleague_util_Misc::registerFormation('4-5-1', '1-4-5-1');
 tx_cfcleague_util_Misc::registerFormation('5-3-2', '1-5-3-2');
 tx_cfcleague_util_Misc::registerFormation('5-4-1', '1-5-4-1');
 
-tx_cfcleague_util_Misc::registerTableStrategy('default','LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_competition_tablestrategy_default', '');
+tx_cfcleague_util_Misc::registerTableStrategy('default', 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_competition_tablestrategy_default', '');
 
 // Include services
 tx_rnbase_util_Extensions::addService(
     $_EXTKEY,
-    't3sports_srv' /* sv type */,
-    'tx_cfcleague_services_Stadiums' /* sv key */,
-    array(
+    't3sports_srv' /* sv type */ ,
+    'tx_cfcleague_services_Stadiums' /* sv key */ ,
+    [
         'title' => 'T3sports stadium service', 'description' => 'Operations for stadiums', 'subtype' => 'stadiums',
         'available' => true, 'priority' => 50, 'quality' => 50,
         'os' => '', 'exec' => '',
         'classFile' => tx_rnbase_util_Extensions::extPath($_EXTKEY).'services/class.tx_cfcleague_services_Stadiums.php',
         'className' => 'tx_cfcleague_services_Stadiums',
-    )
+    ]
 );
 
 tx_rnbase_util_Extensions::addService(
     $_EXTKEY,
-    't3sports_srv' /* sv type */,
-    'tx_cfcleague_services_Saison' /* sv key */,
-    array(
+    't3sports_srv' /* sv type */ ,
+    'tx_cfcleague_services_Saison' /* sv key */ ,
+    [
         'title' => 'T3sports saison service', 'description' => 'Operations for saisons', 'subtype' => 'saison',
         'available' => true, 'priority' => 50, 'quality' => 50,
         'os' => '', 'exec' => '',
         'classFile' => tx_rnbase_util_Extensions::extPath($_EXTKEY).'services/class.tx_cfcleague_services_Saison.php',
         'className' => 'tx_cfcleague_services_Saison',
-    )
+    ]
 );
 
 tx_rnbase_util_Extensions::addService(
     $_EXTKEY,
-    't3sports_srv' /* sv type */,
-    'tx_cfcleague_services_Competition' /* sv key */,
-    array(
+    't3sports_srv' /* sv type */ ,
+    'tx_cfcleague_services_Competition' /* sv key */ ,
+    [
         'title' => 'T3sports stadium service', 'description' => 'Operations for competitions', 'subtype' => 'competition',
         'available' => true, 'priority' => 50, 'quality' => 50,
         'os' => '', 'exec' => '',
         'classFile' => tx_rnbase_util_Extensions::extPath($_EXTKEY).'services/class.tx_cfcleague_services_Competition.php',
         'className' => 'tx_cfcleague_services_Competition',
-    )
+    ]
 );
 
 tx_rnbase_util_Extensions::addService(
     $_EXTKEY,
-    't3sports_srv' /* sv type */,
-    'tx_cfcleague_services_Match' /* sv key */,
-    array(
+    't3sports_srv' /* sv type */ ,
+    'tx_cfcleague_services_Match' /* sv key */ ,
+    [
         'title' => 'T3sports match service', 'description' => 'Operations for matches', 'subtype' => 'match',
         'available' => true, 'priority' => 50, 'quality' => 50,
         'os' => '', 'exec' => '',
         'classFile' => tx_rnbase_util_Extensions::extPath($_EXTKEY).'services/class.tx_cfcleague_services_Match.php',
         'className' => 'tx_cfcleague_services_Match',
-    )
+    ]
 );
 
 tx_rnbase_util_Extensions::addService(
     $_EXTKEY,
-    't3sports_srv' /* sv type */,
-    'tx_cfcleague_services_Group' /* sv key */,
-    array(
+    't3sports_srv' /* sv type */ ,
+    'tx_cfcleague_services_Group' /* sv key */ ,
+    [
         'title' => 'T3sports group service', 'description' => 'Operations for groups', 'subtype' => 'group',
         'available' => true, 'priority' => 50, 'quality' => 50,
         'os' => '', 'exec' => '',
         'classFile' => tx_rnbase_util_Extensions::extPath($_EXTKEY).'services/class.tx_cfcleague_services_Group.php',
         'className' => 'tx_cfcleague_services_Group',
-    )
+    ]
 );
 
 tx_rnbase_util_Extensions::addService(
     $_EXTKEY,
-    't3sports_srv' /* sv type */,
-    'tx_cfcleague_services_Teams' /* sv key */,
-    array(
+    't3sports_srv' /* sv type */ ,
+    'tx_cfcleague_services_Teams' /* sv key */ ,
+    [
         'title' => 'T3sports team service', 'description' => 'Operations for teams', 'subtype' => 'teams',
         'available' => true, 'priority' => 50, 'quality' => 50,
         'os' => '', 'exec' => '',
         'classFile' => tx_rnbase_util_Extensions::extPath($_EXTKEY).'services/class.tx_cfcleague_services_Teams.php',
         'className' => 'tx_cfcleague_services_Teams',
-    )
+    ]
 );
 
 tx_rnbase_util_Extensions::addService(
     $_EXTKEY,
-    't3sports_srv' /* sv type */,
-    'tx_cfcleague_services_Profiles' /* sv key */,
-    array(
+    't3sports_srv' /* sv type */ ,
+    'tx_cfcleague_services_Profiles' /* sv key */ ,
+    [
         'title' => 'T3sports profile service', 'description' => 'Operations for profiles', 'subtype' => 'profiles',
         'available' => true, 'priority' => 50, 'quality' => 50,
         'os' => '', 'exec' => '',
         'classFile' => tx_rnbase_util_Extensions::extPath($_EXTKEY).'services/class.tx_cfcleague_services_Profiles.php',
         'className' => 'tx_cfcleague_services_Profiles',
-    )
+    ]
 );
 
 tx_rnbase_util_Extensions::addService(
     $_EXTKEY,
-    't3sports_profiletype' /* sv type */,
-    'tx_cfcleague_services_ProfileTypes' /* sv key */,
-    array(
+    't3sports_profiletype' /* sv type */ ,
+    'tx_cfcleague_services_ProfileTypes' /* sv key */ ,
+    [
         'title' => 'Base profile types', 'description' => 'Defines the base types for profiles like players, coaches...', 'subtype' => 'basetypes',
         'available' => true, 'priority' => 50, 'quality' => 50,
         'os' => '', 'exec' => '',
         'classFile' => tx_rnbase_util_Extensions::extPath($_EXTKEY).'services/class.tx_cfcleague_services_ProfileTypes.php',
         'className' => 'tx_cfcleague_services_ProfileTypes',
-    )
+    ]
 );
 
 // ---------------
@@ -185,8 +185,8 @@ tx_rnbase_util_Extensions::addService(
 
 tx_rnbase_util_Extensions::addService(
     $_EXTKEY,
-    't3sports_sports' /* sv type */,
-    'tx_cfcleague_sports_Football' /* sv key */,
+    't3sports_sports' /* sv type */ ,
+    'tx_cfcleague_sports_Football' /* sv key */ ,
     [
         'title' => 'T3sports Football', 'description' => 'Special configurations for football.',
         'subtype' => 'football',
@@ -198,8 +198,8 @@ tx_rnbase_util_Extensions::addService(
 
 tx_rnbase_util_Extensions::addService(
     $_EXTKEY,
-    't3sports_sports' /* sv type */,
-    'tx_cfcleague_sports_Handball' /* sv key */,
+    't3sports_sports' /* sv type */ ,
+    'tx_cfcleague_sports_Handball' /* sv key */ ,
     [
         'title' => 'T3sports Handball', 'description' => 'Special configurations for handball.',
         'subtype' => 'handball',
@@ -211,8 +211,8 @@ tx_rnbase_util_Extensions::addService(
 
 tx_rnbase_util_Extensions::addService(
     $_EXTKEY,
-    't3sports_sports' /* sv type */,
-    'tx_cfcleague_sports_IceHockey' /* sv key */,
+    't3sports_sports' /* sv type */ ,
+    'tx_cfcleague_sports_IceHockey' /* sv key */ ,
     [
         'title' => 'T3sports IceHockey', 'description' => 'Special configurations for IceHockey.',
         'subtype' => 'icehockey',
@@ -224,8 +224,8 @@ tx_rnbase_util_Extensions::addService(
 
 tx_rnbase_util_Extensions::addService(
     $_EXTKEY,
-    't3sports_sports' /* sv type */,
-    'tx_cfcleague_sports_Volleyball' /* sv key */,
+    't3sports_sports' /* sv type */ ,
+    'tx_cfcleague_sports_Volleyball' /* sv key */ ,
     [
         'title' => 'T3sports Volleyball', 'description' => 'Special configurations for Volleyball.',
         'subtype' => 'volleyball',

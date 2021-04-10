@@ -117,10 +117,10 @@ class Tx_Cfcleague_Controller_Competition_MatchTable
         // Hier zwischen Automatisch und Manuell unterscheiden
         $menu = $this->getFormTool()->showMenu($this->getModule()
             ->getPid(), 't3s_mcmode', $this->getModule()
-            ->getName(), array(
+            ->getName(), [
             0 => 'Auto',
             '1' => 'Manual',
-        ));
+        ]);
         $content .= $menu['menu'];
         $mode = $menu['value'];
         $content .= '<br>';
@@ -148,7 +148,7 @@ class Tx_Cfcleague_Controller_Competition_MatchTable
         $content = '';
         // Wir holen die Mannschaften und den GameString aus der Liga
         // Beides jagen wir durch den Generator
-        $options = array();
+        $options = [];
         $options['halfseries'] = intval(Tx_Rnbase_Utility_T3General::_GP('option_halfseries'));
         $options['nomatch'] = $comp->getDummyTeamIds();
         $options['firstmatchday'] = $comp->getNumberOfRounds();
@@ -186,13 +186,13 @@ class Tx_Cfcleague_Controller_Competition_MatchTable
         $content = '';
         // Wir benötigen eine Select-Box mit der man die Rückrunden-Option einstellen kann
         // Bei Änderung soll die Seite neu geladen werden, damit nur die Halbserie angezeigt wird.
-        $content .= $this->formTool->createSelectByArray('option_halfseries', $option_halfseries, array(
+        $content .= $this->formTool->createSelectByArray('option_halfseries', $option_halfseries, [
             '0' => '###LABEL_CREATE_SAISON###',
             '1' => '###LABEL_CREATE_FIRSTHALF###',
             '2' => '###LABEL_CREATE_SECONDHALF###',
-        ), array(
+        ], [
             'reload' => 1,
-        ));
+        ]);
         $content .= '<br />';
 
         // Führende 0 für Spieltag im einstelligen Bereich
@@ -200,23 +200,23 @@ class Tx_Cfcleague_Controller_Competition_MatchTable
         $content .= '###LABEL_LEADING_ZERO###';
         $content .= '<br />';
 
-        $arr = array(
-            array(
+        $arr = [
+            [
                 $LANG->getLL('label_roundset'),
-            ),
-        );
+            ],
+        ];
         // $arr = Array(Array($LANG->getLL('label_round'), $LANG->getLL('label_roundname').' / '.
         // $LANG->getLL('label_rounddate'), $LANG->getLL('label_roundset')));
         $tables = tx_rnbase::makeInstance('Tx_Rnbase_Backend_Utility_Tables');
 
         foreach ($table as $round => $matchArr) {
-            $row = array();
+            $row = [];
 
             // Die Formularfelder, die jetzt erstellt werden, wandern später direkt in die neuen Game-Records
             // Ein Hidden-Field für die Runde
-            $row[] = '<div>'.$this->formTool->createHidden('data[rounds][round_'.$round.'][round]', $round).$this->formTool->createTxtInput('data[rounds][round_'.$round.'][round_name]', $round.$LANG->getLL('createGameTable_round'), 10, array(
+            $row[] = '<div>'.$this->formTool->createHidden('data[rounds][round_'.$round.'][round]', $round).$this->formTool->createTxtInput('data[rounds][round_'.$round.'][round_name]', $round.$LANG->getLL('createGameTable_round'), 10, [
                 'class' => 'roundname',
-            )).$this->formTool->createDateInput('data[rounds][round_'.$round.'][date]', time()).'</div>'.
+            ]).$this->formTool->createDateInput('data[rounds][round_'.$round.'][date]', time()).'</div>'.
             // Anzeige der Paarungen
             $tables->buildTable($this->createMatchTableArray($matchArr, $league, 'data[rounds][round_'.$round.']'));
 
@@ -236,15 +236,15 @@ class Tx_Cfcleague_Controller_Competition_MatchTable
     {
         global $LANG;
         $teamNames = $league->getTeamNames();
-        $arr = array(
-            array(
+        $arr = [
+            [
                 $LANG->getLL('label_match_no'),
                 $LANG->getLL('label_home'),
                 $LANG->getLL('label_guest'),
-            ),
-        );
+            ],
+        ];
         foreach ($matches as $match) {
-            $row = array();
+            $row = [];
             $row[] = $match->noMatch ? '' : str_pad($match->nr2, 3, '000', STR_PAD_LEFT);
             $row[] = $this->createSelectBox($teamNames, $match->home, $namePrefix.'[matches]['.$match->nr.'][home]');
             $row[] = $this->createSelectBox($teamNames, $match->guest, $namePrefix.'[matches]['.$match->nr.'][guest]').$this->formTool->createHidden($namePrefix.'[matches]['.$match->nr.'][nr2]', $match->nr2);
@@ -294,9 +294,9 @@ class Tx_Cfcleague_Controller_Competition_MatchTable
         global $LANG;
 
         // Aus den Spielen der $table die TCA-Datensätze erzeugen
-        $data = array(
-            'tx_cfcleague_games' => array(),
-        );
+        $data = [
+            'tx_cfcleague_games' => [],
+        ];
 
         // Wir erstellen die Spiel je Spieltag
         foreach ($rounds as $roundData) {
@@ -305,7 +305,7 @@ class Tx_Cfcleague_Controller_Competition_MatchTable
             // Die Paarungen holen
             foreach ($matches as $matchId => $match) {
                 // Die Basis des Spieldatensatzes ist $roundData
-                $new_match = array();
+                $new_match = [];
                 $new_match['round'] = (int) $roundData['round'];
                 $new_match['round_name'] = $roundData['round_name'];
                 $new_match['date'] = $roundData['date'];

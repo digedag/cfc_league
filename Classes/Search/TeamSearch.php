@@ -1,8 +1,9 @@
 <?php
+
 namespace System25\T3sports\Search;
 
-use Sys25\RnBase\Search\SearchBase;
 use Sys25\RnBase\Database\Query\Join;
+use Sys25\RnBase\Search\SearchBase;
 use tx_rnbase_util_Misc;
 
 /***************************************************************
@@ -73,7 +74,7 @@ class TeamSearch extends SearchBase
     {
         $join = [];
         if (isset($tableAliases['COMPETITION'])) {
-            $join[] = new Join('TEAM','tx_cfcleague_competition', 'FIND_IN_SET(TEAM.uid, COMPETITION.teams)', 'COMPETITION');
+            $join[] = new Join('TEAM', 'tx_cfcleague_competition', 'FIND_IN_SET(TEAM.uid, COMPETITION.teams)', 'COMPETITION');
         }
 
         // Hook to append other tables

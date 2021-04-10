@@ -1,4 +1,5 @@
 <?php
+
 namespace System25\T3sports\Search;
 
 use Sys25\RnBase\Database\Query\Join;
@@ -73,13 +74,13 @@ class MatchSearch extends SearchBase
     {
         $join = [];
         if (isset($tableAliases['COMPETITION'])) {
-            $join[] = new Join('MATCH','tx_cfcleague_competition', 'MATCH.competition = COMPETITION.uid', 'COMPETITION');
+            $join[] = new Join('MATCH', 'tx_cfcleague_competition', 'MATCH.competition = COMPETITION.uid', 'COMPETITION');
         }
         if (isset($tableAliases['TEAM1'])) {
-            $join[] = new Join('MATCH','tx_cfcleague_teams', 'MATCH.home = TEAM1.uid', 'TEAM1');
+            $join[] = new Join('MATCH', 'tx_cfcleague_teams', 'MATCH.home = TEAM1.uid', 'TEAM1');
         }
         if (isset($tableAliases['TEAM2'])) {
-            $join[] = new Join('MATCH','tx_cfcleague_teams', 'MATCH.guest = TEAM2.uid', 'TEAM2');
+            $join[] = new Join('MATCH', 'tx_cfcleague_teams', 'MATCH.guest = TEAM2.uid', 'TEAM2');
         }
         // Hook to append other tables
         tx_rnbase_util_Misc::callHook('cfc_league', 'search_Match_getJoins_hook', [

@@ -30,7 +30,7 @@ tx_rnbase::load('Tx_Rnbase_Utility_Strings');
  */
 class tx_cfcleague_models_Competition extends tx_rnbase_model_base
 {
-    private static $instances = array();
+    private static $instances = [];
 
     /**
      * array of teams.
@@ -41,14 +41,14 @@ class tx_cfcleague_models_Competition extends tx_rnbase_model_base
      * array of matches
      * Containes retrieved matches by state.
      */
-    private $matchesByState = array();
+    private $matchesByState = [];
 
     /**
      * array of penalties.
      */
     private $penalties;
 
-    private $cache = array();
+    private $cache = [];
 
     public function getTableName()
     {
@@ -58,7 +58,7 @@ class tx_cfcleague_models_Competition extends tx_rnbase_model_base
     public function refresh()
     {
         parent::reset();
-        $this->cache = array();
+        $this->cache = [];
     }
 
     public function getSaisonUid()
@@ -73,10 +73,11 @@ class tx_cfcleague_models_Competition extends tx_rnbase_model_base
      * <li> 0 - angesetzt
      * <li> 1 - läuft
      * <li> 2 - beendet
-     * </ul>
+     * </ul>.
      *
      * @param int $status - 0,1,2 für alle, Hin-, Rückrunde
      * @param int $scope - 0,1,2 für alle, Hin-, Rückrunde
+     *
      * @return tx_cfcleague_models_match[]
      */
     public function getMatches($status, $scope = 0)
@@ -230,12 +231,12 @@ class tx_cfcleague_models_Competition extends tx_rnbase_model_base
         if (!array_key_exists('rounds', $this->cache)) {
             $srv = tx_cfcleague_util_ServiceRegistry::getMatchService();
             // build SQL for select
-            $options = array();
+            $options = [];
             // TODO: Die vielen Spaltennamen haben historische Gründe. Da müsste bei den Clients aufgeräumt werden...
             $options['what'] = 'distinct round as uid,round AS number,round,round_name,round_name As name, max(status) As finished, max(status) As max_status';
             $options['groupby'] = 'round,round_name';
             $options['orderby']['MATCHROUND.ROUND'] = 'asc';
-            $fields = array();
+            $fields = [];
             $fields['MATCHROUND.COMPETITION'][OP_EQ_INT] = $this->getUid();
             $this->cache['rounds'] = $srv->searchMatchRound($fields, $options);
         }
@@ -263,8 +264,8 @@ class tx_cfcleague_models_Competition extends tx_rnbase_model_base
      */
     public function getMatchesByRound($roundId)
     {
-        $fields = array();
-        $options = array();
+        $fields = [];
+        $options = [];
         $fields['MATCH.ROUND'][OP_EQ_INT] = $roundId;
         $fields['MATCH.COMPETITION'][OP_EQ_INT] = $this->getUid();
         $service = tx_cfcleague_util_ServiceRegistry::getMatchService();
@@ -280,9 +281,9 @@ class tx_cfcleague_models_Competition extends tx_rnbase_model_base
      */
     public function getLastMatchNumber()
     {
-        $fields = array();
+        $fields = [];
         $fields['MATCH.COMPETITION'][OP_EQ_INT] = $this->getUid();
-        $options = array();
+        $options = [];
         // $options['debug'] =1;
         $options['what'] = 'max(convert(match_no,signed)) AS max_no';
         $srv = tx_cfcleague_util_ServiceRegistry::getMatchService();
@@ -301,7 +302,7 @@ class tx_cfcleague_models_Competition extends tx_rnbase_model_base
     {
         $teams = $this->getTeamNames(1);
         foreach ($teams as $team) {
-            if ($team['dummy'] == 1) {
+            if (1 == $team['dummy']) {
                 return $team['uid'];
             }
         }
@@ -384,7 +385,7 @@ class tx_cfcleague_models_Competition extends tx_rnbase_model_base
         if (!$all) {
             return tx_cfcleague_models_Group::getGroupInstance($groupIds[0]);
         }
-        $ret = array();
+        $ret = [];
         foreach ($groupIds as $groupId) {
             $ret[] = tx_cfcleague_models_Group::getGroupInstance($groupId);
         }
@@ -414,7 +415,7 @@ class tx_cfcleague_models_Competition extends tx_rnbase_model_base
     {
         tx_rnbase::load('tx_cfcleague_models_Group');
         $groupIds = Tx_Rnbase_Utility_Strings::intExplode(',', $this->getProperty('agegroup'));
-        $ret = array();
+        $ret = [];
         foreach ($groupIds as $groupId) {
             $ret[] = tx_cfcleague_models_Group::getGroupInstance($groupId);
         }
@@ -544,11 +545,11 @@ class tx_cfcleague_models_Competition extends tx_rnbase_model_base
          * SELECT * FROM tx_cfcleague_competition WHERE uid IN ($uid)
          */
 
-        return Tx_Rnbase_Database_Connection::getInstance()->doSelect('*', 'tx_cfcleague_competition', array(
+        return Tx_Rnbase_Database_Connection::getInstance()->doSelect('*', 'tx_cfcleague_competition', [
             'where' => $where,
             'orderby' => 'sorting',
             'wrapperclass' => 'tx_cfcleaguefe_models_competition',
-        ));
+        ]);
     }
 
     /**
@@ -562,7 +563,7 @@ class tx_cfcleague_models_Competition extends tx_rnbase_model_base
             return 0;
         }
 
-        $ret = array();
+        $ret = [];
         $arr = Tx_Rnbase_Utility_Strings::trimExplode('|', $str);
         foreach ($arr as $item) {
             // Jedes Item splitten
@@ -571,10 +572,10 @@ class tx_cfcleague_models_Competition extends tx_rnbase_model_base
             $comments = Tx_Rnbase_Utility_Strings::trimExplode(',', $mark[1]);
             // Jetzt das Ergebnisarray aufbauen
             foreach ($positions as $position) {
-                $ret[$position] = array(
+                $ret[$position] = [
                     $comments[0],
                     $comments[1],
-                );
+                ];
             }
         }
 

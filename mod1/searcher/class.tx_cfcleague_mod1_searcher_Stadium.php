@@ -45,7 +45,7 @@ class tx_cfcleague_mod1_searcher_Stadium
      *
      * @return unknown_type
      */
-    public function __construct(tx_rnbase_mod_IModule $mod, $options = array())
+    public function __construct(tx_rnbase_mod_IModule $mod, $options = [])
     {
         $this->init($mod, $options);
     }
@@ -65,9 +65,9 @@ class tx_cfcleague_mod1_searcher_Stadium
         $this->data = Tx_Rnbase_Utility_T3General::_GP('searchdata');
 
         if (!isset($options['nopersist'])) {
-            $this->SEARCH_SETTINGS = Tx_Rnbase_Backend_Utility::getModuleData(array(
+            $this->SEARCH_SETTINGS = Tx_Rnbase_Backend_Utility::getModuleData([
                 'searchterm' => '',
-            ), $this->data, $mod->getName());
+            ], $this->data, $mod->getName());
         } else {
             $this->SEARCH_SETTINGS = $this->data;
         }
@@ -98,17 +98,17 @@ class tx_cfcleague_mod1_searcher_Stadium
         $srv = tx_cfcleague_util_ServiceRegistry::getStadiumService();
 
         // Set options
-        $options = array(
+        $options = [
             'count' => 1,
             'distinct' => 1,
-        );
+        ];
 
-        $fields = array();
+        $fields = [];
         // Filter companies according to filter selections
         if ($this->currentClub) {
-            $fields['CLUB.UID'] = array(
+            $fields['CLUB.UID'] = [
                 OP_EQ_INT => $this->currentClub,
-            );
+            ];
         }
 
         if (!$this->currentShowHidden) {
@@ -128,7 +128,7 @@ class tx_cfcleague_mod1_searcher_Stadium
 
         // Get data
         $items = $srv->search($fields, $options);
-        $ret = array();
+        $ret = [];
         $content = '';
         $this->showStadiums($content, $items);
         $ret['table'] = $content;
@@ -148,26 +148,26 @@ class tx_cfcleague_mod1_searcher_Stadium
     private function showStadiums(&$content, $items)
     {
         $decor = tx_rnbase::makeInstance('tx_cfcleague_mod1_decorator_Stadium', $this->getModule());
-        $columns = array(
-            'uid' => array(
+        $columns = [
+            'uid' => [
                 'title' => 'label_uid',
                 'decorator' => $decor,
-            ),
-            'name' => array(
+            ],
+            'name' => [
                 'title' => 'label_name',
-            ),
-            'capacity' => array(
+            ],
+            'capacity' => [
                 'title' => 'label_capacity',
-            ),
-            'address' => array(
+            ],
+            'address' => [
                 'title' => 'label_address',
                 'decorator' => $decor,
-            ),
-            'longlat' => array(
+            ],
+            'longlat' => [
                 'title' => 'label_longlat',
                 'decorator' => $decor,
-            ),
-        );
+            ],
+        ];
 
         if ($items) {
             $tables = tx_rnbase::makeInstance('Tx_Rnbase_Backend_Utility_Tables');

@@ -60,9 +60,9 @@ class SetTest extends \tx_rnbase_tests_BaseTestCase
     public function getStrings()
     {
         return [
-            array('20:11;10:8', 2, array(array(20, 11), array(10, 8))),
-            array('20:11', 1, array(array(20, 11))),
-            array('b:11', 1, array(array(0, 11))),
+            ['20:11;10:8', 2, [[20, 11], [10, 8]]],
+            ['20:11', 1, [[20, 11]]],
+            ['b:11', 1, [[0, 11]]],
         ];
     }
 }

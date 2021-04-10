@@ -30,14 +30,14 @@ class tx_cfcleague_mod1_decorator
 {
     public static function prepareTable($entries, $columns, $formTool, $options)
     {
-        $arr = array(
-            0 => array(
+        $arr = [
+            0 => [
                 self::getHeadline($parts, $columns, $options),
-            ),
-        );
+            ],
+        ];
         foreach ($entries as $entry) {
             $record = is_object($entry) ? $entry->getProperty() : $entry;
-            $row = array();
+            $row = [];
             if (isset($options['checkbox'])) {
                 $checkName = isset($options['checkboxname']) ? $options['checkboxname'] : 'checkEntry';
                 // Check if entry is checkable
@@ -55,10 +55,10 @@ class tx_cfcleague_mod1_decorator
                 // von diesem die Methode format aufgerufen und der Wert, sowie der Name der aktuellen
                 // Spalte übergeben. Ist nichts gesetzt wird einfach der aktuelle Wert verwendet.
                 if (isset($data['method'])) {
-                    $row[] = call_user_func(array(
+                    $row[] = call_user_func([
                         $entry,
                         $data['method'],
-                    ));
+                    ]);
                 } elseif (isset($data['decorator'])) {
                     $decor = $data['decorator'];
                     $row[] = $decor->format($record[$column], $column, $record, $entry);
@@ -79,16 +79,16 @@ class tx_cfcleague_mod1_decorator
     {
         // Ist kein Wettbewerb vorhanden, dann wird nur das Endergebnis angezeigt
         $parts = (!$competition) ? 0 : $competition->getNumberOfMatchParts();
-        $arr = array(
-            0 => array(
+        $arr = [
+            0 => [
                 self::getHeadline($parts, $columns, $options),
-            ),
-        );
+            ],
+        ];
         foreach ($matches as $match) {
             $matchRec = is_object($match) ? $match->getProperty : $match;
             $isNoMatch = is_object($match) ? $match->isDummy() : $matchRec['no_match_home'] || $matchRec['no_match_guest'];
 
-            $row = array();
+            $row = [];
             if (isset($options['checkbox'])) {
                 // Check if match is checkable
                 if (!is_array($options['dontcheck']) || !array_key_exists($matchRec['uid'], $options['dontcheck'])) {
@@ -108,10 +108,10 @@ class tx_cfcleague_mod1_decorator
                     // von diesem die Methode format aufgerufen und der Wert, sowie der Name der aktuellen
                     // Spalte übergeben. Ist nichts gesetzt wird einfach der aktuelle Wert verwendet.
                     if (isset($data['method'])) {
-                        $row[] = call_user_func(array(
+                        $row[] = call_user_func([
                             $match,
                             $data['method'],
-                        ));
+                        ]);
                     } elseif (isset($data['decorator'])) {
                         $decor = $data['decorator'];
                         $row[] = $decor->format($matchRec[$column], $column);
@@ -143,7 +143,7 @@ class tx_cfcleague_mod1_decorator
         global $LANG;
         $tableName = isset($options['tablename']) ? $options['tablename'] : 'tx_cfcleague_games';
         $LANG->includeLLFile('EXT:cfc_league/Resources/Private/Language/locallang_db.xml');
-        $arr = array();
+        $arr = [];
         if (isset($options['checkbox'])) {
             $arr[] = '&nbsp;'; // Spalte für Checkbox
         }

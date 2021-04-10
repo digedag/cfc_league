@@ -119,11 +119,11 @@ class tx_cfcleague_util_Generator
         // Zählung des Spieltags
         $dayCnt = isset($options['firstmatchday']) ? intval($options['firstmatchday']) : 0;
 
-        $ret = array();
+        $ret = [];
         // die Hinrunde hinzufügen
         if (2 != $option_halfseries) {
             foreach ($table as $day => $matches) {
-                $dayArr = array(); // Hier kommen die Spiele rein
+                $dayArr = []; // Hier kommen die Spiele rein
                 foreach ($matches as $k => $match) {
                     $teamIds = explode('-', $match);
                     // Ist es ein spielfreies Spiel

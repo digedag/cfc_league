@@ -58,11 +58,11 @@ class tx_cfcleague_mod1_AjaxTicker
             'minute' => $t3Time,
             'pid' => $matchRecord['pid'],
         ];
-        $data = array(
-            'tx_cfcleague_match_notes' => array(
+        $data = [
+            'tx_cfcleague_match_notes' => [
                 'NEW1' => $record,
-            ),
-        );
+            ],
+        ];
         $tce = &Tx_Rnbase_Database_Connection::getInstance()->getTCEmain($data);
         $tce->process_datamap();
 

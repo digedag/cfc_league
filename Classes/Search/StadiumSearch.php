@@ -1,8 +1,9 @@
 <?php
+
 namespace System25\T3sports\Search;
 
-use Sys25\RnBase\Search\SearchBase;
 use Sys25\RnBase\Database\Query\Join;
+use Sys25\RnBase\Search\SearchBase;
 use tx_rnbase_util_Misc;
 
 /***************************************************************
@@ -76,19 +77,19 @@ class StadiumSearch extends SearchBase
     {
         $join = [];
         if (isset($tableAliases['STADIUMMM']) || isset($tableAliases['CLUB']) || isset($tableAliases['TEAM'])) {
-            $join[] = new Join('STADIUM','tx_cfcleague_stadiums_mm', 'STADIUMMM.uid_local = STADIUM.uid', 'STADIUMMM');
+            $join[] = new Join('STADIUM', 'tx_cfcleague_stadiums_mm', 'STADIUMMM.uid_local = STADIUM.uid', 'STADIUMMM');
         }
         if (isset($tableAliases['CLUB']) || isset($tableAliases['TEAM'])) {
-            $join[] = new Join('STADIUMMM','tx_cfcleague_club', 'STADIUMMM.uid_foreign = CLUB.uid', 'CLUB');
+            $join[] = new Join('STADIUMMM', 'tx_cfcleague_club', 'STADIUMMM.uid_foreign = CLUB.uid', 'CLUB');
         }
         if (isset($tableAliases['TEAM'])) {
-            $join[] = new Join('CLUB','tx_cfcleague_teams', 'TEAM.club = CLUB.uid', 'TEAM');
+            $join[] = new Join('CLUB', 'tx_cfcleague_teams', 'TEAM.club = CLUB.uid', 'TEAM');
         }
         if (isset($tableAliases['MATCH']) || isset($tableAliases['COMPETITION'])) {
-            $join[] = new Join('STADIUM','tx_cfcleague_games', 'STADIUM.uid = MATCH.arena', 'MATCH');
+            $join[] = new Join('STADIUM', 'tx_cfcleague_games', 'STADIUM.uid = MATCH.arena', 'MATCH');
         }
         if (isset($tableAliases['COMPETITION'])) {
-            $join[] = new Join('MATCH','tx_cfcleague_competition', 'COMPETITION.uid = MATCH.competition', 'COMPETITION');
+            $join[] = new Join('MATCH', 'tx_cfcleague_competition', 'COMPETITION.uid = MATCH.competition', 'COMPETITION');
         }
 
         // Hook to append other tables

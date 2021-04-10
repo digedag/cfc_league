@@ -47,7 +47,7 @@ class Tx_Cfcleague_Controller_Profile_ProfileMerger
         // TODO: tx_cfcleague_teamnotes
 
         // Wir machen alles über die TCA, also das Array aufbauen
-        $data = array();
+        $data = [];
         $this->mergeTeams($data, $leadingProfileUID, $obsoleteProfileUID);
         $this->mergeMatches($data, $leadingProfileUID, $obsoleteProfileUID);
         $this->mergeMatchNotes($data, $leadingProfileUID, $obsoleteProfileUID);
@@ -56,7 +56,7 @@ class Tx_Cfcleague_Controller_Profile_ProfileMerger
         tx_rnbase_util_Misc::callHook(
             'cfc_league',
             'mergeProfiles_hook',
-            array('data' => &$data, 'leadingUid' => $leadingProfileUID, 'obsoleteUid' => $obsoleteProfileUID),
+            ['data' => &$data, 'leadingUid' => $leadingProfileUID, 'obsoleteUid' => $obsoleteProfileUID],
             $this
         );
 

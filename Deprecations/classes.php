@@ -1,7 +1,8 @@
 <?php
 
-
-class tx_cfcleague_tca_Lookup extends System25\T3sports\Utility\TcaLookup {};
+class tx_cfcleague_tca_Lookup extends System25\T3sports\Utility\TcaLookup
+{
+}
 
 interface tx_cfcleague_sports_ISports extends System25\T3sports\Sports\ISports
 {

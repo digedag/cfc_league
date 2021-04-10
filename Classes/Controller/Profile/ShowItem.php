@@ -1,12 +1,12 @@
 <?php
 
+use Sys25\RnBase\Utility\TYPO3;
 use TYPO3\CMS\Backend\Controller\ContentElement\ElementInformationController;
+use TYPO3\CMS\Backend\Template\ModuleTemplate;
+use TYPO3\CMS\Core\Http\NormalizedParams;
+use TYPO3\CMS\Core\Http\ServerRequestFactory;
 use TYPO3\CMS\Core\Imaging\IconFactory;
 use TYPO3\CMS\Core\Type\Bitmask\Permission;
-use TYPO3\CMS\Backend\Template\ModuleTemplate;
-use Sys25\RnBase\Utility\TYPO3;
-use TYPO3\CMS\Core\Http\ServerRequestFactory;
-use TYPO3\CMS\Core\Http\NormalizedParams;
 
 /*
  *  Copyright notice

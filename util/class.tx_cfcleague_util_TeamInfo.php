@@ -33,7 +33,7 @@ tx_rnbase::load('Tx_Rnbase_Database_Connection');
  */
 class tx_cfcleague_util_TeamInfo
 {
-    private $baseInfo = array();
+    private $baseInfo = [];
 
     private $team = null;
 
@@ -115,18 +115,18 @@ class tx_cfcleague_util_TeamInfo
             ],
         ];
         $arr = [];
-        $arr[] = array(
+        $arr[] = [
             $LANG->getLL('msg_number_of_players'),
             $this->baseInfo['freePlayers'],
-        );
-        $arr[] = array(
+        ];
+        $arr[] = [
             $LANG->getLL('msg_number_of_coaches'),
             $this->baseInfo['freeCoaches'],
-        );
-        $arr[] = array(
+        ];
+        $arr[] = [
             $LANG->getLL('msg_number_of_supporters'),
             $this->baseInfo['freeSupporters'],
-        );
+        ];
 
         /* @var $tables Tx_Rnbase_Backend_Utility_Tables */
         $tables = tx_rnbase::makeInstance('Tx_Rnbase_Backend_Utility_Tables');

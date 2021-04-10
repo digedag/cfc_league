@@ -37,15 +37,15 @@ class Tx_Cfcleague_Utility_TYPO3
     public function getPagePath($uid, $clause = '')
     {
         $loopCheck = 100;
-        $output = array(); // We return an array of uids
+        $output = []; // We return an array of uids
         $output[] = $uid;
         while (0 != $uid && $loopCheck > 0) {
             --$loopCheck;
 
             //'uid,pid,title,t3ver_oid,t3ver_wsid,t3ver_swapmode',
-            $rows = Tx_Rnbase_Database_Connection::getInstance()->doSelect('*', 'pages', array(
+            $rows = Tx_Rnbase_Database_Connection::getInstance()->doSelect('*', 'pages', [
                     'where' => 'uid='.intval($uid).(strlen(trim($clause)) ? ' AND '.$clause : ''),
-            ));
+            ]);
             if (!empty($rows)) {
                 $row = reset($rows);
                 Tx_Rnbase_Backend_Utility::workspaceOL('pages', $row);

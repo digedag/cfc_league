@@ -34,7 +34,7 @@ class tx_cfcleague_util_ProfileDecorator
         $this->formTool = $formTool;
     }
 
-    public function format($value, $colName, $record = array())
+    public function format($value, $colName, $record = [])
     {
         $ret = $value;
         if ('birthday' == $colName) {

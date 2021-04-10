@@ -1,8 +1,9 @@
 <?php
+
 use Sys25\RnBase\Search\SearchBase;
-use System25\T3sports\Search\MatchSearch;
 use System25\T3sports\Search\MatchNoteSearch;
 use System25\T3sports\Search\MatchRoundSearch;
+use System25\T3sports\Search\MatchSearch;
 
 /***************************************************************
  *  Copyright notice

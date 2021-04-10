@@ -323,7 +323,7 @@ class Tx_Cfcleague_Controller_Competition_MatchEdit
                 $row[] = $this->formTool->createIntInput('data[tx_cfcleague_games]['.$matchUid.'][visitors]', $match->getProperty('visitors'), 6);
                 $arr[0][] = $row;
             } else {
-                $row = array();
+                $row = [];
                 $isHomeDummy = $match->getHome()->isDummy();
                 $row['team'] = $isHomeDummy ? $match->getGuest()->getName() : $match->getHome()->getName();
                 $row['team_edit'] = $this->formTool->createEditLink('tx_cfcleague_teams', ($isHomeDummy ? $match->getProperty('guest') : $match->getProperty('home')), ($isHomeDummy ? $match->getGuest()

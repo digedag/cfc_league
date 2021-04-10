@@ -1,7 +1,7 @@
 <?php
 
 if (!defined('TYPO3_MODE')) {
-    die('Access denied.');
+    exit('Access denied.');
 }
 
 $tx_cfcleague_competition = [
@@ -48,57 +48,57 @@ $tx_cfcleague_competition = [
                 'default' => '0',
             ],
         ],
-        'name' => array(
+        'name' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_competition.name',
-            'config' => array(
+            'config' => [
                 'type' => 'input',
                 'size' => '30',
                 'eval' => 'required,trim',
-            ),
-        ),
-        'internal_name' => array(
+            ],
+        ],
+        'internal_name' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_competition.internal_name',
-            'config' => array(
+            'config' => [
                 'type' => 'input',
                 'size' => '30',
                 'eval' => 'trim',
-            ),
-        ),
-        'short_name' => array(
+            ],
+        ],
+        'short_name' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_competition.short_name',
-            'config' => array(
+            'config' => [
                 'type' => 'input',
                 'size' => '20',
                 'eval' => 'trim',
-            ),
-        ),
-        'match_keys' => array(
+            ],
+        ],
+        'match_keys' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_competition.match_keys',
-            'config' => array(
+            'config' => [
                 'type' => 'input',
                 'size' => '50',
                 'max' => '2000',
                 'eval' => 'trim',
-            ),
-        ),
-        'table_marks' => array(
+            ],
+        ],
+        'table_marks' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_competition.table_marks',
-            'config' => array(
+            'config' => [
                 'type' => 'input',
                 'size' => '50',
                 'max' => '2000',
                 'eval' => 'trim',
-            ),
-        ),
-        'agegroup' => array(
+            ],
+        ],
+        'agegroup' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_group',
-            'config' => array(
+            'config' => [
                 'type' => 'select',
                 'renderType' => 'selectMultipleSideBySide',
                 'foreign_table' => 'tx_cfcleague_group',
@@ -106,12 +106,12 @@ $tx_cfcleague_competition = [
                 'size' => 5,
                 'minitems' => 0,
                 'maxitems' => 5,
-            ),
-        ),
-        'saison' => array(
+            ],
+        ],
+        'saison' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_competition.saison',
-            'config' => array(
+            'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
                 'foreign_table' => 'tx_cfcleague_saison',
@@ -119,21 +119,21 @@ $tx_cfcleague_competition = [
                 'size' => 1,
                 'minitems' => 0,
                 'maxitems' => 1,
-            ),
-        ),
-        'sports' => array(
+            ],
+        ],
+        'sports' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_competition.sports',
-            'config' => array(
+            'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
                 'itemsProcFunc' => System25\T3sports\Utility\TcaLookup::class.'->getSportsTypes',
                 'size' => 1,
                 'minitems' => 0,
                 'maxitems' => 1,
-            ),
+            ],
             'onChange' => 'reload',
-        ),
+        ],
         'type' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_competition.type',
@@ -148,41 +148,41 @@ $tx_cfcleague_competition = [
                 'default' => 1,
             ],
         ],
-        'obligation' => array(
+        'obligation' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_competition.obligation',
-            'config' => array(
+            'config' => [
                 'type' => 'check',
                 'default' => '1',
-            ),
-        ),
-        'match_parts' => array(
+            ],
+        ],
+        'match_parts' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_competition.match_parts',
-            'config' => array(
+            'config' => [
                 'type' => 'radio',
-                'items' => array(
-                    array('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_competition.match_parts_0', 0),
-                    array('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_competition.match_parts_1', 1),
-                    array('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_competition.match_parts_2', 2),
-                    array('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_competition.match_parts_3', 3),
-                    array('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_competition.match_parts_4', 4),
-                ),
+                'items' => [
+                    ['LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_competition.match_parts_0', 0],
+                    ['LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_competition.match_parts_1', 1],
+                    ['LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_competition.match_parts_2', 2],
+                    ['LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_competition.match_parts_3', 3],
+                    ['LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_competition.match_parts_4', 4],
+                ],
                 'default' => 0,
-            ),
-        ),
-        'addparts' => array(
+            ],
+        ],
+        'addparts' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_competition_addparts',
-            'config' => array(
+            'config' => [
                 'type' => 'check',
                 'default' => '0',
-            ),
-        ),
-        'point_system' => array(
+            ],
+        ],
+        'point_system' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_competition.point_system',
-            'config' => array(
+            'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
                 'itemsProcFunc' => System25\T3sports\Utility\TcaLookup::class.'->getPointSystems',
@@ -190,8 +190,8 @@ $tx_cfcleague_competition = [
                 'minitems' => 0,
                 'maxitems' => 1,
                 'default' => 0,
-            ),
-        ),
+            ],
+        ],
         'tablestrategy' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_competition_tablestrategy',

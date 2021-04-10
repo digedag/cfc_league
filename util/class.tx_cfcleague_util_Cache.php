@@ -27,7 +27,7 @@
  */
 class tx_cfcleague_util_Cache
 {
-    private static $cache = array();
+    private static $cache = [];
 
     /**
      * Ein Objekt in den Cache legen.

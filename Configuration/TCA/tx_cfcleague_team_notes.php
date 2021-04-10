@@ -1,7 +1,7 @@
 <?php
 
 if (!defined('TYPO3_MODE')) {
-    die('Access denied.');
+    exit('Access denied.');
 }
 
 $tx_cfcleague_team_notes = [
@@ -86,10 +86,10 @@ $tx_cfcleague_team_notes = [
                 'maxitems' => 1,
             ],
         ],
-        'player' => array(
+        'player' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_profiles',
-            'config' => array(
+            'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
                 'foreign_table' => 'tx_cfcleague_profiles',
@@ -99,8 +99,8 @@ $tx_cfcleague_team_notes = [
                 'size' => 1,
                 'minitems' => 0,
                 'maxitems' => 1,
-            ),
-        ),
+            ],
+        ],
         'comment' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_match_notes.comment',

@@ -104,19 +104,19 @@ class tx_cfcleague_mod1_profilesearcher
 
     private function searchProfiles($searchterm)
     {
-        $joined = $fields = array();
+        $joined = $fields = [];
         if (strlen($searchterm)) {
             $joined['value'] = trim($searchterm);
-            $joined['cols'] = array(
+            $joined['cols'] = [
                 'PROFILE.LAST_NAME',
                 'PROFILE.FIRST_NAME',
                 'PROFILE.UID',
-            );
+            ];
             $joined['operator'] = OP_LIKE;
             $fields[SEARCH_FIELD_JOINED][] = $joined;
         }
 
-        $options = array();
+        $options = [];
         $options['orderby']['PROFILE.LAST_NAME'] = 'ASC';
         $options['orderby']['PROFILE.FIRST_NAME'] = 'ASC';
         $srv = tx_cfcleague_util_ServiceRegistry::getProfileService();

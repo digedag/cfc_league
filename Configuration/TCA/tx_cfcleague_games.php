@@ -1,7 +1,7 @@
 <?php
 
 if (!defined('TYPO3_MODE')) {
-    die('Access denied.');
+    exit('Access denied.');
 }
 
 $rteConfig = 'richtext[paste|bold|italic|underline|formatblock|class|left|center|right|orderedlist|unorderedlist|outdent|indent|link|image]:rte_transform[mode=ts]';
@@ -116,42 +116,42 @@ $tx_cfcleague_games = [
             ],
             'onChange' => 'reload',
         ],
-        'round' => array(
+        'round' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_games.round',
-            'config' => array(
+            'config' => [
                 'type' => 'input',
                 'size' => '4',
                 'max' => '4',
                 'eval' => 'required,int',
 //				'checkbox' => '0',
-                'range' => array(
+                'range' => [
                     'upper' => '1000',
                     'lower' => '1',
-                ),
+                ],
                 'default' => 0,
-            ),
-        ),
-        'round_name' => array(
+            ],
+        ],
+        'round_name' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_games.round_name',
-            'config' => array(
+            'config' => [
                 'type' => 'input',
                 'size' => '10',
                 'max' => '100',
                 'eval' => 'required,trim',
-            ),
-        ),
-        'addinfo' => array(
+            ],
+        ],
+        'addinfo' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_games.addinfo',
-            'config' => array(
+            'config' => [
                 'type' => 'input',
                 'size' => '30',
                 'max' => '254',
                 'eval' => 'trim',
-            ),
-        ),
+            ],
+        ],
         'status' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_games.status',
@@ -168,16 +168,16 @@ $tx_cfcleague_games = [
                 'default' => 0,
             ],
         ],
-        'stadium' => array(
+        'stadium' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_games.stadium',
-            'config' => array(
+            'config' => [
                 'type' => 'input',
                 'size' => '30',
                 'max' => '200',
                 'eval' => 'trim',
-            ),
-        ),
+            ],
+        ],
         'arena' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_stadiums',
@@ -219,108 +219,108 @@ $tx_cfcleague_games = [
                 'maxitems' => 1,
             ],
         ],
-        'players_home' => array(
+        'players_home' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_games.players_home',
-            'config' => array(
+            'config' => [
                 'type' => 'select',
                 'renderType' => 'selectMultipleSideBySide',
                 'itemsProcFunc' => System25\T3sports\Utility\TcaLookup::class.'->getPlayersHome4Match',
                 'size' => 11,
                 'minitems' => 0,
                 'maxitems' => 11,
-            ),
-        ),
-        'players_guest' => array(
+            ],
+        ],
+        'players_guest' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_games.players_guest',
-            'config' => array(
+            'config' => [
                 'type' => 'select',
                 'renderType' => 'selectMultipleSideBySide',
                 'itemsProcFunc' => System25\T3sports\Utility\TcaLookup::class.'->getPlayersGuest4Match',
                 'size' => 11,
                 'minitems' => 0,
                 'maxitems' => 11,
-            ),
-        ),
-        'substitutes_home' => array(
+            ],
+        ],
+        'substitutes_home' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_games.substitutes_home',
-            'config' => array(
+            'config' => [
                 'type' => 'select',
                 'renderType' => 'selectMultipleSideBySide',
                 'itemsProcFunc' => System25\T3sports\Utility\TcaLookup::class.'->getPlayersHome4Match',
                 'size' => 9,
                 'minitems' => 0,
                 'maxitems' => 10,
-            ),
-        ),
-        'substitutes_guest' => array(
+            ],
+        ],
+        'substitutes_guest' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_games.substitutes_guest',
-            'config' => array(
+            'config' => [
                 'type' => 'select',
                 'renderType' => 'selectMultipleSideBySide',
                 'itemsProcFunc' => System25\T3sports\Utility\TcaLookup::class.'->getPlayersGuest4Match',
                 'size' => 9,
                 'minitems' => 0,
                 'maxitems' => 10,
-            ),
-        ),
-        'players_home_stat' => array(
+            ],
+        ],
+        'players_home_stat' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_games.players_home',
-            'config' => array(
+            'config' => [
                 'type' => 'text',
                 'cols' => '30',
                 'rows' => '5',
-            ),
-        ),
-        'players_guest_stat' => array(
+            ],
+        ],
+        'players_guest_stat' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_games.players_guest',
-            'config' => array(
+            'config' => [
                 'type' => 'text',
                 'cols' => '30',
                 'rows' => '5',
-            ),
-        ),
-        'substitutes_home_stat' => array(
+            ],
+        ],
+        'substitutes_home_stat' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_games.substitutes_home',
-            'config' => array(
+            'config' => [
                 'type' => 'text',
                 'cols' => '30',
                 'rows' => '5',
-            ),
-        ),
-        'substitutes_guest_stat' => array(
+            ],
+        ],
+        'substitutes_guest_stat' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_games.substitutes_guest',
-            'config' => array(
+            'config' => [
                 'type' => 'text',
                 'cols' => '30',
                 'rows' => '5',
-            ),
-        ),
-        'scorer_home_stat' => array(
+            ],
+        ],
+        'scorer_home_stat' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_games.scorer_home_stat',
-            'config' => array(
+            'config' => [
                 'type' => 'text',
                 'cols' => '30',
                 'rows' => '5',
-            ),
-        ),
-        'scorer_guest_stat' => array(
+            ],
+        ],
+        'scorer_guest_stat' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_games.scorer_guest_stat',
-            'config' => array(
+            'config' => [
                 'type' => 'text',
                 'cols' => '30',
                 'rows' => '5',
-            ),
-        ),
+            ],
+        ],
         'system_home' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_games.system_home',
@@ -341,10 +341,10 @@ $tx_cfcleague_games = [
                 'default' => 0,
             ],
         ],
-        'referee' => array(
+        'referee' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_games.referee',
-            'config' => array(
+            'config' => [
                 'type' => 'group',
                 'internal_type' => 'db',
                 'allowed' => 'tx_cfcleague_profiles',
@@ -355,12 +355,12 @@ $tx_cfcleague_games = [
                 'wizards' => Tx_Rnbase_Utility_TcaTool::getWizards('tx_cfcleague_profiles', [
                     'suggest' => true,
                 ]),
-            ),
-        ),
-        'assists' => array(
+            ],
+        ],
+        'assists' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_games.assists',
-            'config' => array(
+            'config' => [
                 'type' => 'group',
                 'internal_type' => 'db',
                 'allowed' => 'tx_cfcleague_profiles',
@@ -370,295 +370,295 @@ $tx_cfcleague_games = [
                 'wizards' => Tx_Rnbase_Utility_TcaTool::getWizards('tx_cfcleague_profiles', [
                     'suggest' => true,
                 ]),
-            ),
-        ),
+            ],
+        ],
 
-        'goals_home_1' => array(
+        'goals_home_1' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_games.goals_home_1',
-            'config' => array(
+            'config' => [
                 'type' => 'input',
                 'size' => '4',
                 'max' => '4',
                 'eval' => 'int',
-                'range' => array(
+                'range' => [
                     'upper' => '1000',
                     'lower' => '0',
-                ),
+                ],
                 'default' => 0,
-            ),
-        ),
-        'goals_guest_1' => array(
+            ],
+        ],
+        'goals_guest_1' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_games.goals_guest_1',
-            'config' => array(
+            'config' => [
                 'type' => 'input',
                 'size' => '4',
                 'max' => '4',
                 'eval' => 'int',
-                'range' => array(
+                'range' => [
                     'upper' => '1000',
                     'lower' => '0',
-                ),
+                ],
                 'default' => 0,
-            ),
-        ),
-        'goals_home_2' => array(
+            ],
+        ],
+        'goals_home_2' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_games.goals_home_2',
-            'config' => array(
+            'config' => [
                 'type' => 'input',
                 'size' => '4',
                 'max' => '4',
                 'eval' => 'int',
-                'range' => array(
+                'range' => [
                     'upper' => '1000',
                     'lower' => '0',
-                ),
+                ],
                 'default' => 0,
-            ),
-        ),
-        'goals_guest_2' => array(
+            ],
+        ],
+        'goals_guest_2' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_games.goals_guest_2',
-            'config' => array(
+            'config' => [
                 'type' => 'input',
                 'size' => '4',
                 'max' => '4',
                 'eval' => 'int',
-                'range' => array(
+                'range' => [
                     'upper' => '1000',
                     'lower' => '0',
-                ),
+                ],
                 'default' => 0,
-            ),
-        ),
-        'goals_home_3' => array(
+            ],
+        ],
+        'goals_home_3' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_games.goals_home_3',
-            'config' => array(
+            'config' => [
                 'type' => 'input',
                 'size' => '4',
                 'max' => '4',
                 'eval' => 'int',
-                'range' => array(
+                'range' => [
                     'upper' => '1000',
                     'lower' => '0',
-                ),
+                ],
                 'default' => 0,
-            ),
-        ),
-        'goals_guest_3' => array(
+            ],
+        ],
+        'goals_guest_3' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_games.goals_guest_3',
-            'config' => array(
+            'config' => [
                 'type' => 'input',
                 'size' => '4',
                 'max' => '4',
                 'eval' => 'int',
-                'range' => array(
+                'range' => [
                     'upper' => '1000',
                     'lower' => '0',
-                ),
+                ],
                 'default' => 0,
-            ),
-        ),
-        'goals_home_4' => array(
+            ],
+        ],
+        'goals_home_4' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_games.goals_home_4',
-            'config' => array(
+            'config' => [
                 'type' => 'input',
                 'size' => '4',
                 'max' => '4',
                 'eval' => 'int',
-                'range' => array(
+                'range' => [
                     'upper' => '1000',
                     'lower' => '0',
-                ),
+                ],
                 'default' => 0,
-            ),
-        ),
-        'goals_guest_4' => array(
+            ],
+        ],
+        'goals_guest_4' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_games.goals_guest_4',
-            'config' => array(
+            'config' => [
                 'type' => 'input',
                 'size' => '4',
                 'max' => '4',
                 'eval' => 'int',
-                'range' => array(
+                'range' => [
                     'upper' => '1000',
                     'lower' => '0',
-                ),
+                ],
                 'default' => 0,
-            ),
-        ),
+            ],
+        ],
 
-        'date' => array(
+        'date' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_games.date',
-            'config' => array(
+            'config' => [
                 'type' => 'input',
                 'renderType' => (tx_rnbase_util_TYPO3::isTYPO86OrHigher() ? 'inputDateTime' : ''),
                 'size' => '8',
                 'eval' => 'datetime',
                 'checkbox' => '0',
                 'default' => '0',
-            ),
-        ),
-        'link_report' => array(
+            ],
+        ],
+        'link_report' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_games.link_report',
-            'config' => array(
+            'config' => [
                 'type' => 'check',
                 'default' => '0',
-            ),
-        ),
-        'link_ticker' => array(
+            ],
+        ],
+        'link_ticker' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_games.link_ticker',
-            'config' => array(
+            'config' => [
                 'type' => 'check',
                 'default' => '0',
-            ),
-        ),
-        'game_report_author' => array(
+            ],
+        ],
+        'game_report_author' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_games.game_report_author',
-            'config' => array(
+            'config' => [
                 'type' => 'input',
                 'size' => '30',
                 'max' => '100',
                 'eval' => 'trim',
-            ),
-        ),
-        'liveticker_author' => array(
+            ],
+        ],
+        'liveticker_author' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_games.liveticker_author',
-            'config' => array(
+            'config' => [
                 'type' => 'input',
                 'size' => '30',
                 'max' => '100',
                 'eval' => 'trim',
-            ),
-        ),
-        'game_report' => array(
+            ],
+        ],
+        'game_report' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_games.game_report',
-            'config' => array(
+            'config' => [
                 'type' => 'text',
                 'cols' => '30',
                 'rows' => '5',
-                'wizards' => array(
+                'wizards' => [
                     '_PADDING' => 2,
-                    'RTE' => array(
+                    'RTE' => [
                         'notNewRecords' => 1,
                         'RTEonly' => 1,
                         'type' => 'script',
                         'title' => 'Full screen Rich Text Editing|Formatteret redigering i hele vinduet',
                         'icon' => 'wizard_rte2.gif',
-                    ),
-                ),
-            ),
-        ),
-        'visitors' => array(
+                    ],
+                ],
+            ],
+        ],
+        'visitors' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_games.visitors',
-            'config' => array(
+            'config' => [
                 'type' => 'input',
                 'size' => '4',
                 'max' => '6',
                 'eval' => 'int',
                 'checkbox' => '0',
-                'range' => array(
+                'range' => [
                     'upper' => '500000',
                     'lower' => '0',
-                ),
+                ],
                 'default' => 0,
-            ),
-        ),
+            ],
+        ],
 
-        'is_extratime' => array(
+        'is_extratime' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_games.extratime',
-            'config' => array(
+            'config' => [
                 'type' => 'check',
-            ),
-        ),
+            ],
+        ],
 
-        'goals_home_et' => array(
+        'goals_home_et' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_games.goals_home_et',
-            'config' => array(
+            'config' => [
                 'type' => 'input',
                 'size' => '4',
                 'max' => '4',
                 'eval' => 'int',
 //				'checkbox' => '0',
-                'range' => array(
+                'range' => [
                     'upper' => '1000',
                     'lower' => '0',
-                ),
+                ],
                 'default' => 0,
-            ),
-        ),
-        'goals_guest_et' => array(
+            ],
+        ],
+        'goals_guest_et' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_games.goals_guest_et',
-            'config' => array(
+            'config' => [
                 'type' => 'input',
                 'size' => '4',
                 'max' => '4',
                 'eval' => 'int',
 //				'checkbox' => '0',
-                'range' => array(
+                'range' => [
                     'upper' => '1000',
                     'lower' => '0',
-                ),
+                ],
                 'default' => 0,
-            ),
-        ),
+            ],
+        ],
 
-        'is_penalty' => array(
+        'is_penalty' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_games.penalty',
-            'config' => array(
+            'config' => [
                 'type' => 'check',
-            ),
-        ),
+            ],
+        ],
 
-        'goals_home_ap' => array(
+        'goals_home_ap' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_games.goals_home_ap',
-            'config' => array(
+            'config' => [
                 'type' => 'input',
                 'size' => '4',
                 'max' => '4',
                 'eval' => 'int',
 //				'checkbox' => '0',
-                'range' => array(
+                'range' => [
                     'upper' => '1000',
                     'lower' => '0',
-                ),
+                ],
                 'default' => 0,
-            ),
-        ),
-        'goals_guest_ap' => array(
+            ],
+        ],
+        'goals_guest_ap' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_games.goals_guest_ap',
-            'config' => array(
+            'config' => [
                 'type' => 'input',
                 'size' => '4',
                 'max' => '4',
                 'eval' => 'int',
 //				'checkbox' => '0',
-                'range' => array(
+                'range' => [
                     'upper' => '1000',
                     'lower' => '0',
-                ),
+                ],
                 'default' => 0,
-            ),
-        ),
+            ],
+        ],
         'extid' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_games_extid',

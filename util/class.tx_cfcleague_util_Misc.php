@@ -95,16 +95,17 @@ class tx_cfcleague_util_Misc
     }
 
     /**
-     *
      * @param string $id
+     *
      * @return array
      */
-    public static function lookupTableStrategy(string $id) : array
+    public static function lookupTableStrategy(string $id): array
     {
         $ret = [];
         if (isset($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['tablestrategy'][$id])) {
             $ret = $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['tablestrategy'][$id];
         }
+
         return $ret;
     }
 
@@ -117,9 +118,9 @@ class tx_cfcleague_util_Misc
     public static function registerFormation($label, $formationString)
     {
         if (!is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['formations'])) {
-            $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['formations'] = array();
+            $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['formations'] = [];
         }
-        $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['formations'][] = array($label, $formationString);
+        $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['formations'][] = [$label, $formationString];
     }
 
     /**

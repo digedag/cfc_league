@@ -1,8 +1,9 @@
 <?php
+
 namespace System25\T3sports\Search;
 
-use Sys25\RnBase\Search\SearchBase;
 use Sys25\RnBase\Database\Query\Join;
+use Sys25\RnBase\Search\SearchBase;
 use tx_rnbase_util_Misc;
 
 /***************************************************************
@@ -72,10 +73,10 @@ class TeamNoteSearch extends SearchBase
     {
         $join = '';
         if (isset($tableAliases['TEAM'])) {
-            $join[] = new Join('TEAMNOTE','tx_cfcleague_teams', 'TEAM.uid = TEAMNOTE.team', 'TEAM');
+            $join[] = new Join('TEAMNOTE', 'tx_cfcleague_teams', 'TEAM.uid = TEAMNOTE.team', 'TEAM');
         }
         if (isset($tableAliases['NOTETYPE'])) {
-            $join[] = new Join('TEAMNOTE','tx_cfcleague_note_types', 'NOTETYPE.uid = TEAMNOTE.type', 'NOTETYPE');
+            $join[] = new Join('TEAMNOTE', 'tx_cfcleague_note_types', 'NOTETYPE.uid = TEAMNOTE.type', 'NOTETYPE');
         }
 
         // Hook to append other tables

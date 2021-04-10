@@ -30,7 +30,7 @@ tx_rnbase::load('Tx_Rnbase_Utility_Strings');
  */
 class tx_cfcleague_models_Team extends Tx_Rnbase_Domain_Model_Base
 {
-    private static $instances = array();
+    private static $instances = [];
 
     public function getTableName()
     {
@@ -111,7 +111,7 @@ class tx_cfcleague_models_Team extends Tx_Rnbase_Domain_Model_Base
      *
      * @return bool
      */
-    public function isOutOfCompetition() : bool
+    public function isOutOfCompetition(): bool
     {
         return 2 === (int) $this->getProperty('dummy');
     }
@@ -170,7 +170,7 @@ class tx_cfcleague_models_Team extends Tx_Rnbase_Domain_Model_Base
             return $this->sortProfiles($rows, $column);
         }
 
-        return array();
+        return [];
     }
 
     /**
@@ -180,7 +180,7 @@ class tx_cfcleague_models_Team extends Tx_Rnbase_Domain_Model_Base
      */
     private function sortProfiles($profiles, $recordKey = 'players')
     {
-        $ret = array();
+        $ret = [];
 
         if (strlen(trim($this->getProperty($recordKey))) > 0) {
             if (count($profiles)) {

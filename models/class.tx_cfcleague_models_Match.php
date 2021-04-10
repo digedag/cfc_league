@@ -184,7 +184,7 @@ class tx_cfcleague_models_Match extends tx_rnbase_model_base
         if (!is_array($this->sets)) {
             tx_rnbase::load('tx_cfcleague_models_Set');
             $this->sets = tx_cfcleague_models_Set::buildFromString($this->getProperty('sets'));
-            $this->sets = $this->sets ? $this->sets : array();
+            $this->sets = $this->sets ? $this->sets : [];
         }
 
         return $this->sets;
@@ -389,7 +389,7 @@ class tx_cfcleague_models_Match extends tx_rnbase_model_base
      *
      * @return bool
      */
-    public function isDummy() : bool
+    public function isDummy(): bool
     {
         return $this->getHome()->isDummy() || $this->getGuest()->isDummy();
     }
@@ -399,7 +399,7 @@ class tx_cfcleague_models_Match extends tx_rnbase_model_base
      *
      * @return bool
      */
-    public function isOutOfCompetition() : bool
+    public function isOutOfCompetition(): bool
     {
         return $this->getHome()->isOutOfCompetition() || $this->getGuest()->isOutOfCompetition();
     }
@@ -523,7 +523,7 @@ class tx_cfcleague_models_Match extends tx_rnbase_model_base
         if (!isset($this->matchNotes)) {
             $what = '*';
             $from = 'tx_cfcleague_match_notes';
-            $options = array();
+            $options = [];
             $options['where'] = 'game = '.$this->getUid();
             $options['wrapperclass'] = 'tx_cfcleague_models_MatchNote';
             // HINT: Die Sortierung nach dem Typ ist für die Auswechslungen wichtig.

@@ -79,7 +79,7 @@ class Tx_Cfcleague_Controller_Team extends tx_rnbase_mod_BaseModFunc
         $selector = '';
         $saison = $this->getSelector()->showSaisonSelector($selector, $this->getModule()
             ->getPid());
-        $competitions = array();
+        $competitions = [];
         if ($saison) {
             $competitions = tx_cfcleague_util_ServiceRegistry::getCompetitionService()->getCompetitionsBySaison($saison);
         }

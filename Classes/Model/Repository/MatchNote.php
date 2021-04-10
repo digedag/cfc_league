@@ -71,7 +71,7 @@ class Tx_Cfcleague_Model_Repository_MatchNote extends \Sys25\RnBase\Typo3Wrapper
     {
         if (!$this->dummyModel) {
             $searcher = tx_rnbase_util_SearchBase::getInstance($this->getSearchClass());
-            $this->dummyModel = tx_rnbase::makeInstance($searcher->getWrapperClass(), array('uid' => 0));
+            $this->dummyModel = tx_rnbase::makeInstance($searcher->getWrapperClass(), ['uid' => 0]);
         }
 
         return $this->dummyModel;

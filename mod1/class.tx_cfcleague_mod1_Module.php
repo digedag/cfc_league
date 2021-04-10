@@ -44,16 +44,16 @@ class tx_cfcleague_mod1_Module extends tx_rnbase_mod_BaseModule
     public function init()
     {
         if (!$this->MCONF['name']) {
-            $this->MCONF = array_merge((array) $GLOBALS['MCONF'], array(
+            $this->MCONF = array_merge((array) $GLOBALS['MCONF'], [
                 'name' => 'web_CfcLeagueM1',
                 'access' => 'user,group',
-                'default' => array(
-                    'tabs_images' => array(
+                'default' => [
+                    'tabs_images' => [
                         'tab' => 'moduleicon.gif',
-                    ),
+                    ],
                     'll_ref' => 'LLL:EXT:mksearch/mod1/locallang_mod.xml',
-                ),
-            ));
+                ],
+            ]);
         }
 
         $GLOBALS['LANG']->includeLLFile('EXT:cfc_league/mod1/locallang.xml');

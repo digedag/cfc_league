@@ -4,9 +4,9 @@ namespace System25\T3sports\Form\Element;
 
 use TYPO3\CMS\Backend\Form\Element\SelectSingleElement;
 use TYPO3\CMS\Backend\Form\NodeFactory;
-use TYPO3\CMS\Fluid\View\StandaloneView;
 use TYPO3\CMS\Core\Resource\Exception\FileDoesNotExistException;
 use TYPO3\CMS\Core\Resource\File;
+use TYPO3\CMS\Fluid\View\StandaloneView;
 
 /**
  *  Copyright notice.

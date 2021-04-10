@@ -40,8 +40,8 @@ class tx_cfcleague_mod1_linker_NewClub
         $ret = '';
         // Gibt es auf der Seite schon Vereine?
         $fields['CLUB.PID'][OP_EQ_INT] = $currentPid;
-        $cnt = tx_cfcleague_util_ServiceRegistry::getTeamService()->searchClubs($fields, array('count' => 1));
-        $options = array();
+        $cnt = tx_cfcleague_util_ServiceRegistry::getTeamService()->searchClubs($fields, ['count' => 1]);
+        $options = [];
         $options['confirm'] = 0 == $cnt ? $GLOBALS['LANG']->getLL('label_msg_confirmNewClubPage') : $GLOBALS['LANG']->getLL('label_msg_confirmNewClub');
         $options['title'] = $GLOBALS['LANG']->getLL('label_addclub');
         $ret .= $formTool->createNewLink('tx_cfcleague_club', $currentPid, '', $options);

@@ -88,9 +88,9 @@ class Synchronizer
                     // Wettbewerb neu laden, da ggf. neue Teams drin stehen
                     $competition->reset();
                 }
-                $cnt += 1;
+                ++$cnt;
             } else {
-                $info['match']['skipped'] += 1;
+                ++$info['match']['skipped'];
             }
         }
         // Die restlichen Spiele speichern
@@ -142,9 +142,9 @@ class Synchronizer
         $matchUid = 'NEW_'.$extMatchId;
         if (array_key_exists($extMatchId, $this->matchMap)) {
             $matchUid = $this->matchMap[$extMatchId];
-            $info['match']['updated'] += 1;
+            ++$info['match']['updated'];
         } else {
-            $info['match']['new'] += 1;
+            ++$info['match']['new'];
         }
 
         $blobFields = [
@@ -180,7 +180,7 @@ class Synchronizer
             // Das Team ist noch nicht im Cache, also in der DB suchen
             /* @var $teamSrv \tx_cfcleague_services_Teams */
             $teamSrv = \tx_cfcleague_util_ServiceRegistry::getTeamService();
-            $fields = array();
+            $fields = [];
             $fields['TEAM.EXTID'][OP_EQ_NOCASE] = $extTeamId;
             $fields['TEAM.PID'][OP_EQ_INT] = $competition->getPid();
 
@@ -194,7 +194,7 @@ class Synchronizer
                 // Team anlegen, falls es noch nicht in der Data-Map liegt
                 if (!array_key_exists($uid, $data[self::TABLE_TEAMS])) {
                     $data[self::TABLE_TEAMS][$uid] = $this->loadTeamData($extTeamId, $extTeam);
-                    $info['team']['new'] += 1;
+                    ++$info['team']['new'];
                 }
             }
             // Sicherstellen, daß das Team im Wettbewerb ist
@@ -266,10 +266,10 @@ class Synchronizer
         $this->stats['chunks'][]['time'] = intval(microtime(true) - $start).'s';
         $this->stats['chunks'][]['matches'] = count($data[self::TABLE_GAMES]);
 
-        $data[self::TABLE_TEAMS] = array();
-        $data[self::TABLE_STADIUMS] = array();
-        $data[self::TABLE_GAMES] = array();
-        $data[self::TABLE_COMPETITION] = array();
+        $data[self::TABLE_TEAMS] = [];
+        $data[self::TABLE_STADIUMS] = [];
+        $data[self::TABLE_GAMES] = [];
+        $data[self::TABLE_COMPETITION] = [];
     }
 
     /**

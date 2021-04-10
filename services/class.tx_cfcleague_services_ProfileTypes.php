@@ -1,4 +1,5 @@
 <?php
+
 use Sys25\RnBase\Typo3Wrapper\Service\AbstractService;
 
 /***************************************************************
@@ -32,22 +33,22 @@ use Sys25\RnBase\Typo3Wrapper\Service\AbstractService;
 class tx_cfcleague_services_ProfileTypes extends AbstractService
 {
     public static $types = [
-        1 => array(
+        1 => [
             'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_profiles_type_player',
             1,
-        ),
-        2 => array(
+        ],
+        2 => [
             'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_profiles_type_coach',
             2,
-        ),
-        3 => array(
+        ],
+        3 => [
             'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_profiles_type_referee',
             3,
-        ),
-        4 => array(
+        ],
+        4 => [
             'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_profiles_type_supporter',
             4,
-        ),
+        ],
     ];
 
     public function getProfileTypes()

@@ -101,23 +101,23 @@ class Tx_Cfcleague_Controller_Team_TeamNotes
         $notes = $srv->getTeamNotes($currTeam, $type);
 
         $decor = tx_rnbase::makeInstance('tx_cfcleague_util_TeamNoteDecorator', $this->getFormTool());
-        $columns = array(
-            'uid' => array(
+        $columns = [
+            'uid' => [
                 'decorator' => $decor,
-            ),
-            'profile' => array(
+            ],
+            'profile' => [
                 'decorator' => $decor,
                 'title' => 'label_name',
-            ),
-            'value' => array(
+            ],
+            'value' => [
                 'decorator' => $decor,
                 'title' => 'label_value',
-            ),
-            'mediatype' => array(
+            ],
+            'mediatype' => [
                 'decorator' => $decor,
                 'title' => 'tx_cfcleague_team_notes.mediatype',
-            ),
-        );
+            ],
+        ];
         $rows = tx_cfcleague_mod1_decorator::prepareTable($notes, $columns, $this->getFormTool(), $options);
 
         $tables = tx_rnbase::makeInstance('Tx_Rnbase_Backend_Utility_Tables');

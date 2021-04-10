@@ -69,7 +69,7 @@ class Tx_Cfcleague_Handler_MatchCreator
         global $LANG;
         $LANG->includeLLFile('EXT:cfc_league/Resources/Private/Language/locallang_db.xml');
 
-        $items = array();
+        $items = [];
         for ($i = 1; $i < 33; ++$i) {
             $items[$i] = $i.(1 == $i ? ' ###LABEL_MATCH###' : ' ###LABEL_MATCHES###');
         }

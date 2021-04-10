@@ -35,7 +35,7 @@ class tx_cfcleague_util_ProfileSearcher
 
     private $SEARCH_SETTINGS;
 
-    public function __construct(&$mod, $options = array())
+    public function __construct(&$mod, $options = [])
     {
         $this->init($mod, $options);
     }
@@ -49,7 +49,7 @@ class tx_cfcleague_util_ProfileSearcher
         $this->data = Tx_Rnbase_Utility_T3General::_GP('searchdata');
 
         if (!isset($options['nopersist'])) {
-            $this->SEARCH_SETTINGS = Tx_Rnbase_Backend_Utility::getModuleData(array('searchtermProfile' => ''), $this->data, $this->mod->MCONF['name']);
+            $this->SEARCH_SETTINGS = Tx_Rnbase_Backend_Utility::getModuleData(['searchtermProfile' => ''], $this->data, $this->mod->MCONF['name']);
         } else {
             $this->SEARCH_SETTINGS = $this->data;
         }

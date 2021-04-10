@@ -2,8 +2,8 @@
 
 namespace System25\T3sports\Controller\Ajax;
 
-use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Core\Http\Response;
 
 /**

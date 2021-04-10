@@ -1,7 +1,7 @@
 <?php
 
 if (!defined('TYPO3_MODE')) {
-    die('Access denied.');
+    exit('Access denied.');
 }
 
 $clubOrdering = intval(\Sys25\RnBase\Configuration\Processor::getExtensionCfgValue('cfc_league', 'clubOrdering')) > 0;
@@ -183,17 +183,17 @@ $tx_cfcleague_club = [
                 'type' => 'text',
                 'cols' => '30',
                 'rows' => '5',
-                'wizards' => array(
+                'wizards' => [
                     '_PADDING' => 2,
-                    'RTE' => array(
+                    'RTE' => [
                         'notNewRecords' => 1,
                         'RTEonly' => 1,
                         'type' => 'script',
                         'title' => 'Full screen Rich Text Editing|Formatteret redigering i hele vinduet',
                         'icon' => 'wizard_rte2.gif',
                         //						'script' => 'wizard_rte.php',
-                    ),
-                ),
+                    ],
+                ],
             ],
         ],
         'info2' => [
@@ -203,17 +203,17 @@ $tx_cfcleague_club = [
                 'type' => 'text',
                 'cols' => '30',
                 'rows' => '5',
-                'wizards' => array(
+                'wizards' => [
                     '_PADDING' => 2,
-                    'RTE' => array(
+                    'RTE' => [
                         'notNewRecords' => 1,
                         'RTEonly' => 1,
                         'type' => 'script',
                         'title' => 'Full screen Rich Text Editing|Formatteret redigering i hele vinduet',
                         'icon' => 'wizard_rte2.gif',
                         //						'script' => 'wizard_rte.php',
-                    ),
-                ),
+                    ],
+                ],
             ],
         ],
 

@@ -45,11 +45,11 @@ class tx_cfcleague_models_Set extends tx_rnbase_model_base
         $this->set = $set;
         $this->p1 = $p1;
         $this->p2 = $p2;
-        $this->setProperty(array(
+        $this->setProperty([
             'set' => $this->set,
             'pointshome' => $this->p1,
             'pointsguest' => $this->p2,
-        ));
+        ]);
     }
 
     public function getSet()
@@ -74,7 +74,7 @@ class tx_cfcleague_models_Set extends tx_rnbase_model_base
         }
         $sets = preg_split("/[\s]*[;,|][\s]*/", $sets);
         // $sets = Tx_Rnbase_Utility_Strings::trimExplode(';', $sets);
-        $ret = array();
+        $ret = [];
         foreach ($sets as $idx => $setStr) {
             list($p1, $p2) = Tx_Rnbase_Utility_Strings::intExplode(':', $setStr);
             $ret[] = tx_rnbase::makeInstance('tx_cfcleague_models_Set', $idx + 1, $p1, $p2);

@@ -44,7 +44,7 @@ class tx_cfcleague_util_TeamNoteDecorator
      *
      * @return string
      */
-    public function format($value, $colName, $record = array(), $item = false)
+    public function format($value, $colName, $record = [], $item = false)
     {
         $ret = $value;
         if (!$item) {
@@ -91,7 +91,7 @@ class tx_cfcleague_util_TeamNoteDecorator
         tx_rnbase::load('tx_rnbase_util_TSFAL');
         $fileReference = tx_rnbase_util_TSFAL::getFirstReference('tx_cfcleague_team_notes', $item->getUid(), 'media');
         if ($fileReference) {
-            $thumbs = tx_rnbase_util_TSFAL::createThumbnails(array($fileReference), array('width' => 50, 'height' => 50));
+            $thumbs = tx_rnbase_util_TSFAL::createThumbnails([$fileReference], ['width' => 50, 'height' => 50]);
 
             return ''.$thumbs[0];
         }

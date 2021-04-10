@@ -1,8 +1,9 @@
 <?php
+
 use Sys25\RnBase\Search\SearchBase;
+use System25\T3sports\Search\ClubSearch;
 use System25\T3sports\Search\TeamNoteSearch;
 use System25\T3sports\Search\TeamSearch;
-use System25\T3sports\Search\ClubSearch;
 
 /***************************************************************
  *  Copyright notice
@@ -113,7 +114,7 @@ class tx_cfcleague_services_Teams extends tx_cfcleague_services_Base
      * Key ist die ID des Teams.
      *
      * @param tx_cfcleague_models_Competition $comp
-     * @param boolean $asArray Wenn 1 wird pro Team ein Array mit Name, Kurzname und Flag spielfrei geliefert
+     * @param bool $asArray Wenn 1 wird pro Team ein Array mit Name, Kurzname und Flag spielfrei geliefert
      *
      * @return array
      */

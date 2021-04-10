@@ -1,4 +1,5 @@
 <?php
+
 namespace System25\T3sports\Search;
 
 use Sys25\RnBase\Search\SearchBase;

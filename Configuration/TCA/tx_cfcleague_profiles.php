@@ -1,7 +1,7 @@
 <?php
 
 if (!defined('TYPO3_MODE')) {
-    die('Access denied.');
+    exit('Access denied.');
 }
 
 $rteConfig = 'richtext[cut|copy|paste|formatblock|textcolor|bold|italic|underline|left|center|right|orderedlist|unorderedlist|outdent|indent|link|table|image|line|chMode]:rte_transform[mode=ts_css|imgpath=uploads/tx_cfcleague/rte/]';
@@ -153,24 +153,24 @@ $tx_cfcleague_profiles = [
                 'eval' => 'trim',
             ],
         ],
-        'home_town' => array(
+        'home_town' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_profiles.home_town',
-            'config' => array(
+            'config' => [
                 'type' => 'input',
                 'size' => '30',
                 'eval' => 'trim',
-            ),
-        ),
-        'nationality' => array(
+            ],
+        ],
+        'nationality' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_profiles.nationality',
-            'config' => array(
+            'config' => [
                 'type' => 'input',
                 'size' => '30',
                 'eval' => 'trim',
-            ),
-        ),
+            ],
+        ],
         'height' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_profiles.height',
@@ -233,24 +233,24 @@ $tx_cfcleague_profiles = [
                 'eval' => 'trim',
             ],
         ],
-        'email' => array(
+        'email' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_profiles.email',
-            'config' => array(
+            'config' => [
                 'type' => 'input',
                 'size' => '30',
                 'eval' => 'trim',
-            ),
-        ),
-        'nickname' => array(
+            ],
+        ],
+        'nickname' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_profiles.nickname',
-            'config' => array(
+            'config' => [
                 'type' => 'input',
                 'size' => '30',
                 'eval' => 'trim',
-            ),
-        ),
+            ],
+        ],
         'summary' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_profiles.summary',

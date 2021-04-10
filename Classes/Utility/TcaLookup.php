@@ -2,15 +2,13 @@
 
 namespace System25\T3sports\Utility;
 
+use Exception;
+use tx_cfcleague_util_ServiceRegistry;
 use tx_rnbase;
+use tx_rnbase_util_Debug;
 use tx_rnbase_util_TSFAL;
 use tx_rnbase_util_TYPO3;
 use Tx_Rnbase_Utility_Strings;
-use tx_rnbase_util_Debug;
-
-use tx_cfcleague_util_ServiceRegistry;
-
-use Exception;
 
 /***************************************************************
  *  Copyright notice
@@ -187,10 +185,10 @@ class TcaLookup
                         $item->getProperty('name') ? $item->getProperty('name') : $item->getProperty('file')
                     )
                 );
-                $PA['items'][] = array(
+                $PA['items'][] = [
                     $label,
                     $item->getUid(),
-                );
+                ];
             }
         }
     }
@@ -260,9 +258,9 @@ class TcaLookup
                 // Im Logo wird die UID der Referenz zwischen Verein und dem Logo gespeichert
                 // Damit können die zusätzlichen Metadaten der Referenz genutzt werden
                 $fileObject = tx_rnbase_util_TSFAL::getFileReferenceById($row['logo']);
-                $thumbs = tx_rnbase_util_TSFAL::createThumbnails(array(
+                $thumbs = tx_rnbase_util_TSFAL::createThumbnails([
                     $fileObject,
-                ));
+                ]);
                 $item .= '<tr><td>'.$thumbs[0].'</td>
 									<td style="padding-left:1em"><table cellspacing="0" cellpadding="0" border="0">
 									<tr><td style="padding-right:1em">Filename: </td><td>'.$fileObject->getProperty('identifier').'</td></tr>
@@ -469,10 +467,10 @@ class TcaLookup
         /* @var $profile \tx_cfcleague_models_Profile */
         $profiles = $team->$getter();
         foreach ($profiles as $profile) {
-            $rows[] = array(
+            $rows[] = [
                 $profile->getName(true),
                 $profile->getUid(),
-            );
+            ];
         }
         sort($rows);
 
@@ -510,7 +508,7 @@ class TcaLookup
      */
     private function findCoaches($teamId)
     {
-        $rows = array();
+        $rows = [];
         if (0 == intval($teamId)) {
             return $rows;
         }

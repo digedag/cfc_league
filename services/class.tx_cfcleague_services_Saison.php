@@ -1,6 +1,7 @@
 <?php
-use Sys25\RnBase\Typo3Wrapper\Service\AbstractService;
+
 use Sys25\RnBase\Search\SearchBase;
+use Sys25\RnBase\Typo3Wrapper\Service\AbstractService;
 use System25\T3sports\Search\SaisonSearch;
 
 /***************************************************************
