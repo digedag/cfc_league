@@ -1,8 +1,11 @@
 <?php
+
+namespace System25\T3sports\Search;
+
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2008-2018 Rene Nitzsche
+ *  (c) 2008-2021 Rene Nitzsche
  *  Contact: rene@system25.de
  *  All rights reserved
  *
@@ -20,14 +23,13 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  ***************************************************************/
-tx_rnbase::load('tx_rnbase_util_SearchBase');
 
 /**
  * Mit dem Builder werden haufig auftretende Suchanfragen zusammengebaut.
  *
  * @author Rene Nitzsche
  */
-class tx_cfcleague_search_Builder
+class SearchBuilder
 {
     /**
      * Search for competition by scope data.

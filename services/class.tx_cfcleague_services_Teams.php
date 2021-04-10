@@ -4,6 +4,7 @@ use Sys25\RnBase\Search\SearchBase;
 use System25\T3sports\Search\ClubSearch;
 use System25\T3sports\Search\TeamNoteSearch;
 use System25\T3sports\Search\TeamSearch;
+use System25\T3sports\Search\SearchBuilder;
 
 /***************************************************************
  *  Copyright notice
@@ -189,7 +190,7 @@ class tx_cfcleague_services_Teams extends tx_cfcleague_services_Base
     public function getCompetitions4Team($team, $obligateOnly = false)
     {
         $fields = $options = [];
-        tx_cfcleague_search_Builder::buildCompetitionByTeam($fields, $team->getUid(), $obligateOnly);
+        SearchBuilder::buildCompetitionByTeam($fields, $team->getUid(), $obligateOnly);
         $srv = tx_cfcleague_util_ServiceRegistry::getCompetitionService();
 
         return $srv->search($fields, $options);

@@ -1,4 +1,6 @@
 <?php
+use System25\T3sports\Search\SearchBuilder;
+
 /***************************************************************
 *  Copyright notice
 *
@@ -22,7 +24,6 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-tx_rnbase::load('tx_cfcleague_search_Builder');
 tx_rnbase::load('Tx_Rnbase_Utility_Strings');
 
 /**
@@ -90,21 +91,21 @@ class tx_cfcleague_util_MatchTableBuilder
      */
     public function getFields(&$fields, &$options)
     {
-        tx_cfcleague_search_Builder::setField($fields, 'COMPETITION.SAISON', OP_IN_INT, $this->_saisonIds);
-        tx_cfcleague_search_Builder::setField($fields, 'COMPETITION.AGEGROUP', OP_INSET_INT, $this->_groupIds);
-        tx_cfcleague_search_Builder::setField($fields, 'MATCH.COMPETITION', OP_IN_INT, $this->_compIds);
-        tx_cfcleague_search_Builder::setField($fields, 'MATCH.ROUND', OP_IN_INT, $this->_roundIds);
-        tx_cfcleague_search_Builder::setField($fields, 'TEAM1.CLUB', OP_IN_INT, $this->_homeClubIds);
-        tx_cfcleague_search_Builder::setField($fields, 'TEAM2.CLUB', OP_IN_INT, $this->_guestClubIds);
-        tx_cfcleague_search_Builder::setField($fields, 'MATCH.REFEREE', OP_IN_INT, $this->_refereeIds);
-        tx_cfcleague_search_Builder::setField($fields, 'MATCH.ROUND', OP_LTEQ_INT, $this->_maxRound);
-        tx_cfcleague_search_Builder::setField($fields, 'MATCH.ROUND', OP_GTEQ_INT, $this->_minRound);
+        SearchBuilder::setField($fields, 'COMPETITION.SAISON', OP_IN_INT, $this->_saisonIds);
+        SearchBuilder::setField($fields, 'COMPETITION.AGEGROUP', OP_INSET_INT, $this->_groupIds);
+        SearchBuilder::setField($fields, 'MATCH.COMPETITION', OP_IN_INT, $this->_compIds);
+        SearchBuilder::setField($fields, 'MATCH.ROUND', OP_IN_INT, $this->_roundIds);
+        SearchBuilder::setField($fields, 'TEAM1.CLUB', OP_IN_INT, $this->_homeClubIds);
+        SearchBuilder::setField($fields, 'TEAM2.CLUB', OP_IN_INT, $this->_guestClubIds);
+        SearchBuilder::setField($fields, 'MATCH.REFEREE', OP_IN_INT, $this->_refereeIds);
+        SearchBuilder::setField($fields, 'MATCH.ROUND', OP_LTEQ_INT, $this->_maxRound);
+        SearchBuilder::setField($fields, 'MATCH.ROUND', OP_GTEQ_INT, $this->_minRound);
 
         $this->handleClubInternals($fields);
 
-        tx_cfcleague_search_Builder::buildMatchByClub($fields, $this->_clubIds);
-        tx_cfcleague_search_Builder::buildMatchByTeam($fields, $this->_teamIds);
-        tx_cfcleague_search_Builder::buildMatchByTeamAgeGroup($fields, $this->_teamgroupIds);
+        SearchBuilder::buildMatchByClub($fields, $this->_clubIds);
+        SearchBuilder::buildMatchByTeam($fields, $this->_teamIds);
+        SearchBuilder::buildMatchByTeamAgeGroup($fields, $this->_teamgroupIds);
         // Wird der Zeitraum eingegrenzt?
         if (intval($this->_daysPast) || intval($this->_daysAhead)) {
             // Wenn in eine Richtung eingegrenzt wird und in der anderen Richtung kein
@@ -126,23 +127,23 @@ class tx_cfcleague_util_MatchTableBuilder
             $fields['MATCH.DATE'][OP_LT_INT] = $cal->getTime();
         }
         // bestimmtes Startdatum
-        tx_cfcleague_search_Builder::setField($fields, 'MATCH.DATE', OP_GTEQ_INT, $this->_dateStart);
+        SearchBuilder::setField($fields, 'MATCH.DATE', OP_GTEQ_INT, $this->_dateStart);
         // bestimmtes Enddatum
-        tx_cfcleague_search_Builder::setField($fields, 'MATCH.DATE', OP_LT_INT, $this->_dateEnd);
+        SearchBuilder::setField($fields, 'MATCH.DATE', OP_LT_INT, $this->_dateEnd);
         if ($this->_ignoreDummy) {
-            tx_cfcleague_search_Builder::setField($fields, 'TEAM1.DUMMY', OP_EQ_INT, 0);
-            tx_cfcleague_search_Builder::setField($fields, 'TEAM2.DUMMY', OP_EQ_INT, 0);
+            SearchBuilder::setField($fields, 'TEAM1.DUMMY', OP_EQ_INT, 0);
+            SearchBuilder::setField($fields, 'TEAM2.DUMMY', OP_EQ_INT, 0);
         }
         // Spielstatus
-        tx_cfcleague_search_Builder::setField($fields, 'MATCH.STATUS', OP_IN_INT, $this->_status);
+        SearchBuilder::setField($fields, 'MATCH.STATUS', OP_IN_INT, $this->_status);
         if ($this->_ticker) {
-            tx_cfcleague_search_Builder::setField($fields, 'MATCH.LINK_TICKER', OP_EQ_INT, 1);
+            SearchBuilder::setField($fields, 'MATCH.LINK_TICKER', OP_EQ_INT, 1);
         }
         if ($this->_report) {
-            tx_cfcleague_search_Builder::setField($fields, 'MATCH.LINK_REPORT', OP_EQ_INT, 1);
+            SearchBuilder::setField($fields, 'MATCH.LINK_REPORT', OP_EQ_INT, 1);
         }
 
-        tx_cfcleague_search_Builder::setField($fields, 'COMPETITION.TYPE', OP_IN_INT, $this->_compTypes);
+        SearchBuilder::setField($fields, 'COMPETITION.TYPE', OP_IN_INT, $this->_compTypes);
         if (intval($this->_compObligation)) {
             if (1 == intval($this->_compObligation)) {
                 $fields['COMPETITION.OBLIGATION'][OP_EQ_INT] = 1;
