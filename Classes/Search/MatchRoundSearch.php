@@ -27,10 +27,6 @@ use tx_rnbase_util_Misc;
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  ***************************************************************/
 
-define('MATCHSRV_FIELD_MATCH_COMPETITION', 'MATCH.COMPETITION');
-define('MATCHSRV_FIELD_MATCH_ROUND', 'MATCH.ROUND');
-define('MATCHSRV_FIELD_MATCH_DATE', 'MATCH.DATE');
-
 /**
  * Class to search matches from database.
  *
