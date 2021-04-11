@@ -2,9 +2,10 @@
 Änderungen
 ==========
 
-## v1.7.0 (??.04.2021)
+## v1.7.0 (11.04.2021)
  * BREAKING CHANGE: all SearchClasses support new querybuilder API. Update hooks on search classes.
- * tx_cfcleague_search_Builder moved to PSR-4
+ * `tx_cfcleague_search_Builder` moved to PSR-4
+ * classes `tx_cfcleague_util_Cache`, `tx_cfcleague_util_DAM` deleted
 
 ## v1.6.0 (23.11.2020)
  * change label for match status "invalid" to cancelled
