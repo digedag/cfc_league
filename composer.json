@@ -72,7 +72,43 @@
 		"post-autoload-dump": [
 			"mkdir -p .Build/Web/typo3conf/ext/",
 			"[ -L .Build/Web/typo3conf/ext/cfc_league ] || ln -snvf ../../../../. .Build/Web/typo3conf/ext/cfc_league"
-		]
+		],
+        "lint:php": [
+            "[ -e .Build/bin/parallel-lint ] || composer update",
+            ".Build/bin/parallel-lint ./Classes"
+        ],
+        "lint": [
+            "@lint:php"
+        ],
+        "test:phpcs": [
+            "[ -e .Build/bin/php-cs-fixer ] || composer update --ansi",
+            ".Build/bin/php-cs-fixer fix -v --dry-run --diff  --ansi"
+        ],
+        "test:phpmd": [
+            "[ -e .Build/bin/phpmd ] || composer update --ansi",
+            ".Build/bin/phpmd ./Classes/ text phpmd.xml"
+        ],
+        "test:phpstan": [
+            "[ -e .Build/bin/phpstan ] || composer update --ansi",
+            ".Build/bin/phpstan analyse -c phpstan.neon --memory-limit=512M --ansi"
+        ],
+        "test:phpunit": [
+            "[ -e .Build/bin/phpunit ] || composer update --ansi",
+            "export TYPO3_PATH_WEB=$PWD/.Build/Web && .Build/bin/phpunit --colors=always"
+        ],
+        "test": [
+            "@test:phpcs",
+            "@test:phpmd",
+            "@test:phpstan",
+            "@test:phpunit"
+        ],
+        "fix:phpcs": [
+            "[ -e .Build/bin/php-cs-fixer ] || composer update --ansi",
+            ".Build/bin/php-cs-fixer fix -v"
+        ],
+        "fix": [
+            "@fix:phpcs"
+        ]
 	},
 	"extra": {
 		"typo3/cms": {
