@@ -108,37 +108,37 @@ jobs:
             matrix:
                 include:
                     -
-                        typo3-version: "^7.6"
+                        typo3-version: "typo3/cms:^7.6"
                         php-version: "7.1"
                     -
-                        typo3-version: "^8.7"
+                        typo3-version: "typo3/minimal:^8.7"
                         php-version: "7.1"
                     -
-                        typo3-version: "^8.7"
+                        typo3-version: "typo3/minimal:^8.7"
                         php-version: "7.2"
                     -
-                        typo3-version: "^8.7"
+                        typo3-version: "typo3/minimal:^8.7"
                         php-version: "7.3"
                     -
-                        typo3-version: "^8.7"
+                        typo3-version: "typo3/minimal:^8.7"
                         php-version: "7.4"
                     -
-                        typo3-version: "^9.5"
+                        typo3-version: "typo3/minimal:^9.5"
                         php-version: "7.2"
                     -
-                        typo3-version: "^9.5"
+                        typo3-version: "typo3/minimal:^9.5"
                         php-version: "7.3"
                     -
-                        typo3-version: "^9.5"
+                        typo3-version: "typo3/minimal:^9.5"
                         php-version: "7.4"
                     -
-                        typo3-version: "^10.4"
+                        typo3-version: "typo3/minimal:^10.4"
                         php-version: "7.2"
                     -
-                        typo3-version: "^10.4"
+                        typo3-version: "typo3/minimal:^10.4"
                         php-version: "7.3"
                     -
-                        typo3-version: "^10.4"
+                        typo3-version: "typo3/minimal:^10.4"
                         php-version: "7.4"
 
         steps:
@@ -169,7 +169,7 @@ jobs:
                 name: "Install composer dependencies"
                 run: |
                     composer remove --no-update typo3/cms typo3/cms-core
-                    composer require typo3/minimal:"${{ matrix.typo3-version }}"
+                    composer require "${{ matrix.typo3-version }}"
             -
                 name: "Run PHP unit tests"
                 run: "composer test:phpunit"
