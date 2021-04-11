@@ -108,7 +108,7 @@ jobs:
             matrix:
                 include:
                     -
-                        typo3-version: "^7.4"
+                        typo3-version: "^7.6"
                         php-version: "7.1"
                     -
                         typo3-version: "^8.7"
