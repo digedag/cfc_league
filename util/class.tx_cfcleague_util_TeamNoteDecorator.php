@@ -72,11 +72,7 @@ class tx_cfcleague_util_TeamNoteDecorator
         } elseif ('value' == $colName) {
             $ret = $item->getValue();
             if (1 == $item->getMediaType()) {
-                if (tx_rnbase_util_TYPO3::isTYPO60OrHigher()) {
-                    $ret .= $this->showMediaFAL($item);
-                } else {
-                    $ret .= $this->showMediaDAM($item);
-                }
+                $ret .= $this->showMediaFAL($item);
             }
         } elseif ('profile' == $colName) {
             $ret = $item->getProfile()->getName();
