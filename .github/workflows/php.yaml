@@ -45,7 +45,7 @@ jobs:
                     restore-keys: "php-${{ matrix.php-version }}-composer-"
             -
                 name: "Install composer dependencies"
-                run: "composer install --no-interaction --no-progress --no-suggest"
+                run: "composer install --no-interaction --no-progress"
             -
                 name: "Run Linter"
                 run: "composer lint:php"

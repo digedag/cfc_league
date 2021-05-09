@@ -21,8 +21,6 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-tx_rnbase::load('tx_rnbase_util_TYPO3');
-tx_rnbase::load('tx_rnbase_mod_BaseModFunc');
 
 /**
  * Die Klasse verwaltet die automatische Erstellung von Spielplänen.
@@ -116,13 +114,8 @@ class Tx_Cfcleague_Controller_Team extends tx_rnbase_mod_BaseModFunc
         $tabs .= $menu['menu'];
         $tabs .= '<div style="display: block; border: 1px solid #a2aab8;" ></div>';
 
-        if (tx_rnbase_util_TYPO3::isTYPO42OrHigher()) {
-            $this->pObj->tabs = $tabs;
-        } else {
-            $content .= $tabs;
-        }
+        $this->pObj->tabs = $tabs;
 
-        tx_rnbase::load('tx_cfcleague_util_TeamInfo');
         $teamInfo = new tx_cfcleague_util_TeamInfo($team, $this->formTool);
         $content .= $teamInfo->handleRequest();
 
