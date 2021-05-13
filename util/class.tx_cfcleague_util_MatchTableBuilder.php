@@ -1,6 +1,7 @@
 <?php
 
 use System25\T3sports\Search\SearchBuilder;
+use Sys25\RnBase\Utility\Strings;
 
 /***************************************************************
 *  Copyright notice
@@ -184,12 +185,12 @@ class tx_cfcleague_util_MatchTableBuilder
      */
     private function handleClubInternals(&$fields)
     {
-        $homeClubs = Tx_Rnbase_Utility_Strings::intExplode(',', $this->_homeClubIds);
-        $clubs = array_merge($homeClubs, Tx_Rnbase_Utility_Strings::intExplode(',', $this->_guestClubIds));
+        $homeClubs = Strings::intExplode(',', $this->_homeClubIds);
+        $clubs = array_merge($homeClubs, Strings::intExplode(',', $this->_guestClubIds));
         $clubs = array_unique($clubs);
         if (count($clubs) > 1) {
             // Interne Spiele der Vereine ausschließen
-            $fields[SEARCH_FIELD_CUSTOM] = 't1.club != t2.club';
+            $fields[SEARCH_FIELD_CUSTOM] = 'TEAM1.club != TEAM2.club';
         }
     }
 
