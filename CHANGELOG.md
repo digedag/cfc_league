@@ -2,6 +2,10 @@
 Änderungen
 ==========
 
+## v1.7.1 (13.05.2021)
+ * Integrate Github actions
+ * Fix table alias for match table queries
+
 ## v1.7.0 (11.04.2021)
  * BREAKING CHANGE: all SearchClasses support new querybuilder API. Update hooks on search classes.
  * `tx_cfcleague_search_Builder` moved to PSR-4
