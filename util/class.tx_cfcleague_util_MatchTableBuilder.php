@@ -1,7 +1,7 @@
 <?php
 
-use System25\T3sports\Search\SearchBuilder;
 use Sys25\RnBase\Utility\Strings;
+use System25\T3sports\Search\SearchBuilder;
 
 /***************************************************************
 *  Copyright notice
