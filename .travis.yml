@@ -21,6 +21,9 @@ language: php
 
 #sudo: false
 
+os: linux
+dist: xenial
+
 addons:
     apt:
         packages:

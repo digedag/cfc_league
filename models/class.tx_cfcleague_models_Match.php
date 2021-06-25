@@ -39,6 +39,7 @@ class tx_cfcleague_models_Match extends tx_rnbase_model_base
     private $sets;
 
     private $resultInited = false;
+    private $competition;
 
     public function __construct($rowOrUid)
     {
@@ -263,7 +264,6 @@ class tx_cfcleague_models_Match extends tx_rnbase_model_base
     public function getCompetition()
     {
         if (!$this->competition) {
-            tx_rnbase::load('tx_cfcleague_models_Competition');
             $this->competition = tx_cfcleague_models_Competition::getCompetitionInstance($this->getProperty('competition'));
         }
 
