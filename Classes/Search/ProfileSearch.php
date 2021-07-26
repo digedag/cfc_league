@@ -72,7 +72,7 @@ class ProfileSearch extends SearchBase
 
     protected function getJoins($tableAliases)
     {
-        $join = '';
+        $join = [];
         if (isset($tableAliases['TEAM'])) {
             $join[] = new Join('PROFILE', 'tx_cfcleague_teams', 'FIND_IN_SET(PROFILE.uid, TEAM.players)', 'TEAM');
         }
