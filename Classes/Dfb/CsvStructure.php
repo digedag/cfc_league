@@ -27,73 +27,73 @@ namespace System25\T3sports\Dfb;
 
 class CsvStructure
 {
-    const COL_DATE = 'Datum';
+    public const COL_DATE = 'Datum';
 
-    const COL_TIME = 'Uhrzeit';
+    public const COL_TIME = 'Uhrzeit';
 
-    const COL_SAISON = 'Saison';
+    public const COL_SAISON = 'Saison';
 
-    const COL_UNION = 'Verband';
+    public const COL_UNION = 'Verband';
 
-    const COL_AGE_GROUP_ID = 'MannschaftsartID';
+    public const COL_AGE_GROUP_ID = 'MannschaftsartID';
 
-    const COL_AGE_GROUP = 'Mannschaftsart';
+    public const COL_AGE_GROUP = 'Mannschaftsart';
 
-    const COL_LEAGUE_ID = 'SpielklasseID';
+    public const COL_LEAGUE_ID = 'SpielklasseID';
 
-    const COL_LEAGUE_TYPE = 'Spielklasse';
+    public const COL_LEAGUE_TYPE = 'Spielklasse';
 
-    const COL_AREA_ID = 'SpielgebietID';
+    public const COL_AREA_ID = 'SpielgebietID';
 
-    const COL_AREA = 'Spielgebiet';
+    public const COL_AREA = 'Spielgebiet';
 
-    const COL_MATCHTABLE = 'Rahmenspielplan';
+    public const COL_MATCHTABLE = 'Rahmenspielplan';
 
-    const COL_LEAGUE_NUMBER = 'Staffelnummer';
+    public const COL_LEAGUE_NUMBER = 'Staffelnummer';
 
-    const COL_LEAGUE = 'Staffel';
+    public const COL_LEAGUE = 'Staffel';
 
-    const COL_LEAGUE_IDENT = 'Staffelkennung';
+    public const COL_LEAGUE_IDENT = 'Staffelkennung';
 
-    const COL_LEAGUE_CHIEF = 'Staffelleiter';
+    public const COL_LEAGUE_CHIEF = 'Staffelleiter';
 
-    const COL_MATCH_DATE = 'Spieldatum';
+    public const COL_MATCH_DATE = 'Spieldatum';
 
-    const COL_MATCH_TIME = 'Anstosszeit'; // Changed from "Uhrzeit"
+    public const COL_MATCH_TIME = 'Anstosszeit'; // Changed from "Uhrzeit"
 
-    const COL_MATCH_WEEKDAY = 'Wochentag';
+    public const COL_MATCH_WEEKDAY = 'Wochentag';
 
-    const COL_MATCH_ROUND = 'Spieltag';
+    public const COL_MATCH_ROUND = 'Spieltag';
 
-    const COL_MATCH_KEYDAY = 'Schlüsseltag';
+    public const COL_MATCH_KEYDAY = 'Schlüsseltag';
 
-    const COL_MATCH_HOME = 'Heimmannschaft';
+    public const COL_MATCH_HOME = 'Heimmannschaft';
 
-    const COL_MATCH_GUEST = 'Gastmannschaft';
+    public const COL_MATCH_GUEST = 'Gastmannschaft';
 
-    const COL_MATCH_ID = 'Spielkennung';
+    public const COL_MATCH_ID = 'Spielkennung';
 
-    const COL_MATCH_VALID = 'freigegeben';
+    public const COL_MATCH_VALID = 'freigegeben';
 
-    const COL_STADIUM = 'Spielstätte';
+    public const COL_STADIUM = 'Spielstätte';
 
-    const COL_REFEREE = 'Spielleitung';
+    public const COL_REFEREE = 'Spielleitung';
 
-    const COL_ASSIST_1 = 'Assistent 1';
+    public const COL_ASSIST_1 = 'Assistent 1';
 
-    const COL_ASSIST_2 = 'Assistent 2';
+    public const COL_ASSIST_2 = 'Assistent 2';
 
-    const COL_POSTPONE_WEEKDAY = 'verlegtWochentag';
+    public const COL_POSTPONE_WEEKDAY = 'verlegtWochentag';
 
-    const COL_POSTPONE_DATE = 'verlegtSpieldatum';
+    public const COL_POSTPONE_DATE = 'verlegtSpieldatum';
 
-    const COL_POSTPONE_TIME = 'verlegtUhrzeit';
+    public const COL_POSTPONE_TIME = 'verlegtUhrzeit';
 
     /** Spalte in CSV-Datei */
-    const DATA_COL = 'data_col';
+    public const DATA_COL = 'data_col';
 
     /** Pflichtfeld */
-    const DATA_REQUIRED = 'data_required';
+    public const DATA_REQUIRED = 'data_required';
 
     protected $structure = [];
 

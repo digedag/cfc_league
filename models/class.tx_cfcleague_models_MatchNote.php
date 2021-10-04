@@ -28,33 +28,33 @@ tx_rnbase::load('tx_rnbase_model_base');
  */
 class tx_cfcleague_models_MatchNote extends tx_rnbase_model_base
 {
-    const TYPE_TICKER = 100;
+    public const TYPE_TICKER = 100;
 
-    const TYPE_GOAL = 10;
+    public const TYPE_GOAL = 10;
 
-    const TYPE_GOAL_HEADER = 11;
+    public const TYPE_GOAL_HEADER = 11;
 
-    const TYPE_GOAL_PENALTY = 12;
+    public const TYPE_GOAL_PENALTY = 12;
 
-    const TYPE_GOAL_OWN = 30;
+    public const TYPE_GOAL_OWN = 30;
 
-    const TYPE_GOAL_ASSIST = 31;
+    public const TYPE_GOAL_ASSIST = 31;
 
-    const TYPE_PENALTY_FORGIVEN = 32;
+    public const TYPE_PENALTY_FORGIVEN = 32;
 
-    const TYPE_CORNER = 33;
+    public const TYPE_CORNER = 33;
 
-    const TYPE_CARD_YELLOW = 70;
+    public const TYPE_CARD_YELLOW = 70;
 
-    const TYPE_CARD_YELLOWRED = 71;
+    public const TYPE_CARD_YELLOWRED = 71;
 
-    const TYPE_CARD_RED = 72;
+    public const TYPE_CARD_RED = 72;
 
-    const TYPE_CHANGEOUT = 80;
+    public const TYPE_CHANGEOUT = 80;
 
-    const TYPE_CHANGEIN = 81;
+    public const TYPE_CHANGEIN = 81;
 
-    const TYPE_CAPTAIN = 200;
+    public const TYPE_CAPTAIN = 200;
 
     public function getTableName()
     {

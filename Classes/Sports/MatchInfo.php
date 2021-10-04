@@ -30,11 +30,11 @@ namespace System25\T3sports\Sports;
  */
 class MatchInfo
 {
-    const MATCH_TIME = 'MATCH_TIME';
+    public const MATCH_TIME = 'MATCH_TIME';
 
-    const MATCH_EXTRA_TIME = 'MATCH_EXTRA_TIME';
+    public const MATCH_EXTRA_TIME = 'MATCH_EXTRA_TIME';
 
-    const MATCH_PARTS = 'MATCH_PARTS';
+    public const MATCH_PARTS = 'MATCH_PARTS';
 
     private $info = [];
 

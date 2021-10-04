@@ -27,14 +27,14 @@
  */
 class tx_cfcleague_models_Match extends tx_rnbase_model_base
 {
-    const MATCH_STATUS_INVALID = -1;
-    const MATCH_STATUS_RESCHEDULED = -10;
+    public const MATCH_STATUS_INVALID = -1;
+    public const MATCH_STATUS_RESCHEDULED = -10;
 
-    const MATCH_STATUS_OPEN = 0;
+    public const MATCH_STATUS_OPEN = 0;
 
-    const MATCH_STATUS_RUNNING = 1;
+    public const MATCH_STATUS_RUNNING = 1;
 
-    const MATCH_STATUS_FINISHED = 2;
+    public const MATCH_STATUS_FINISHED = 2;
 
     private $sets;
 

@@ -1,8 +1,15 @@
 <?php
+
+namespace System25\T3sports\Utility;
+
+use Sys25\RnBase\Backend\Utility\Icons;
+use Sys25\RnBase\Utility\Typo3Classes;
+use tx_rnbase;
+
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2009 Rene Nitzsche (rene@system25.de)
+*  (c) 2009-2021 Rene Nitzsche (rene@system25.de)
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -25,7 +32,7 @@
 /**
  * Kleine Methoden.
  */
-class tx_cfcleague_util_Misc
+class Misc
 {
     /**
      * Zwei Arrays zusammenführen. Sollte eines der Array leer sein, dann wird es ignoriert.
@@ -130,7 +137,7 @@ class tx_cfcleague_util_Misc
      */
     public static function tceError($error, $addinfo = '')
     {
-        $error_doc = tx_rnbase::makeInstance(tx_rnbase_util_Typo3Classes::getDocumentTemplateClass());
+        $error_doc = tx_rnbase::makeInstance(Typo3Classes::getDocumentTemplateClass());
         $error_doc->backPath = '';
 
         $content .= $error_doc->startPage('T3sports error Output');
@@ -144,7 +151,7 @@ class tx_cfcleague_util_Misc
 
         $content .= '
 				<tr class="bgColor4">
-					<td valign="top"><img'.Tx_Rnbase_Backend_Utility_Icons::skinImg('', 'gfx/icon_fatalerror.gif', 'width="18" height="16"').' alt="" /></td>
+					<td valign="top"><img'.Icons::skinImg('', 'gfx/icon_fatalerror.gif', 'width="18" height="16"').' alt="" /></td>
 					<td>'.$GLOBALS['LANG']->sL($error, 0).'</td>
 				</tr>';
         if ($addinfo) {

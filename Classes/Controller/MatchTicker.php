@@ -33,7 +33,7 @@ use Sys25\RnBase\Utility\TYPO3;
  */
 class MatchTicker extends \tx_rnbase_mod_BaseModFunc
 {
-    const TABLE_NOTES = 'tx_cfcleague_match_notes';
+    public const TABLE_NOTES = 'tx_cfcleague_match_notes';
 
     public $doc;
 

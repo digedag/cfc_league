@@ -2,6 +2,7 @@
 
 namespace System25\T3sports\Tests\Sports;
 
+use Sys25\RnBase\Tests\BaseTestCase;
 use System25\T3sports\Sports\Football;
 
 /***************************************************************
@@ -27,7 +28,7 @@ use System25\T3sports\Sports\Football;
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-class FootballTest extends \tx_rnbase_tests_BaseTestCase
+class FootballTest extends BaseTestCase
 {
     /**
      * @group unit

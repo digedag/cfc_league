@@ -1,6 +1,9 @@
 <?php
 
 use Sys25\RnBase\Configuration\Processor;
+use Sys25\RnBase\Database\Connection;
+use Sys25\RnBase\Utility\Strings;
+use System25\T3sports\Utility\Misc;
 
 /***************************************************************
  *  Copyright notice
@@ -231,24 +234,23 @@ class Tx_Cfcleague_Controller_Team_ProfileCreate
             }
         }
 
-        tx_rnbase::load('tx_cfcleague_util_Misc');
         // Die IDs der Trainer, Spieler und Betreuer mergen
         if (count($coachIds)) {
             $data['tx_cfcleague_teams'][$team->getUid()]['coaches'] =
-                implode(',', tx_cfcleague_util_Misc::mergeArrays(Tx_Rnbase_Utility_Strings::intExplode(',', $team->getProperty('coaches')), $coachIds));
+                implode(',', Misc::mergeArrays(Strings::intExplode(',', $team->getProperty('coaches')), $coachIds));
         }
         if (count($playerIds)) {
             $data['tx_cfcleague_teams'][$team->getUid()]['players'] =
-                implode(',', tx_cfcleague_util_Misc::mergeArrays(Tx_Rnbase_Utility_Strings::intExplode(',', $team->getProperty('players')), $playerIds));
+                implode(',', Misc::mergeArrays(Strings::intExplode(',', $team->getProperty('players')), $playerIds));
         }
         if (count($supportIds)) {
             $data['tx_cfcleague_teams'][$team->getUid()]['supporters'] =
-                implode(',', tx_cfcleague_util_Misc::mergeArrays(Tx_Rnbase_Utility_Strings::intExplode(',', $team->getProperty('supporters')), $supportIds));
+                implode(',', Misc::mergeArrays(Strings::intExplode(',', $team->getProperty('supporters')), $supportIds));
         }
 
         if (count($data)) {
             reset($data);
-            $tce = Tx_Rnbase_Database_Connection::getInstance()->getTCEmain($data);
+            $tce = Connection::getInstance()->getTCEmain($data);
             $tce->process_datamap();
             $content .= count($tce->errorLog) ? $LANG->getLL('msg_tce_errors') : $LANG->getLL('msg_profiles_created');
             $content .= '<br /><br />';

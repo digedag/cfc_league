@@ -2,11 +2,14 @@
 
 namespace System25\T3sports\Hooks;
 
+use System25\T3sports\Utility\Misc;
+use tx_rnbase;
+
 /**
  * *************************************************************
  * Copyright notice.
  *
- * (c) 2009-2020 Rene Nitzsche <rene@system25.de>
+ * (c) 2009-2021 Rene Nitzsche <rene@system25.de>
  * All rights reserved
  *
  * This script is part of the TYPO3 project. The TYPO3 project is
@@ -45,7 +48,7 @@ class CommandMapHook
     {
         if ('delete' == $command && 'tx_cfcleague_profiles' == $table) {
             // TODO: Check references
-            $profile = \tx_rnbase::makeInstance('tx_cfcleague_models_Profile', $id);
+            $profile = tx_rnbase::makeInstance('tx_cfcleague_models_Profile', $id);
             $refArr = \tx_cfcleague_util_ServiceRegistry::getProfileService()->checkReferences($profile);
             if (count($refArr) > 0) {
                 // Abbruch
@@ -54,8 +57,7 @@ class CommandMapHook
                     $addInfo .= '<b>'.$table.':</b> '.count($data).'<br />';
                 }
                 $addInfo .= '</p>';
-                \tx_rnbase::load('tx_cfcleague_util_Misc');
-                \tx_cfcleague_util_Misc::tceError('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:label_msg_refError', $addInfo);
+                Misc::tceError('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:label_msg_refError', $addInfo);
             }
         } elseif ('delete' == $command && 'tx_cfcleague_competition' == $table) {
             $competition = \tx_rnbase::makeInstance('tx_cfcleague_models_Competition', $id);
@@ -67,8 +69,7 @@ class CommandMapHook
                     $addInfo .= '<b>'.$table.':</b> '.$data.'<br />';
                 }
                 $addInfo .= '</p>';
-                \tx_rnbase::load('tx_cfcleague_util_Misc');
-                \tx_cfcleague_util_Misc::tceError('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:label_msg_refError', $addInfo);
+                Misc::tceError('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:label_msg_refError', $addInfo);
             }
         }
     }

@@ -27,13 +27,13 @@ namespace System25\T3sports\Dfb;
 
 class Synchronizer
 {
-    const TABLE_GAMES = 'tx_cfcleague_games';
+    public const TABLE_GAMES = 'tx_cfcleague_games';
 
-    const TABLE_TEAMS = 'tx_cfcleague_teams';
+    public const TABLE_TEAMS = 'tx_cfcleague_teams';
 
-    const TABLE_STADIUMS = 'tx_cfcleague_stadiums';
+    public const TABLE_STADIUMS = 'tx_cfcleague_stadiums';
 
-    const TABLE_COMPETITION = 'tx_cfcleague_competition';
+    public const TABLE_COMPETITION = 'tx_cfcleague_competition';
 
     /**
      * Key ist DFB-ID, value ist T3-UID.

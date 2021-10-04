@@ -1,4 +1,12 @@
 <?php
+
+use Sys25\RnBase\Backend\Module\IModFunc;
+use Sys25\RnBase\Backend\Utility\Tables;
+use Sys25\RnBase\Database\Connection;
+use Sys25\RnBase\Utility\Strings;
+use Sys25\RnBase\Utility\T3General;
+use System25\T3sports\Utility\Misc;
+
 /***************************************************************
  *  Copyright notice
  *
@@ -21,11 +29,6 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-tx_rnbase::load('tx_rnbase_util_Misc');
-tx_rnbase::load('tx_cfcleague_mod1_profilesearcher');
-tx_rnbase::load('Tx_Cfcleague_Controller_Team_ProfileCreate');
-tx_rnbase::load('Tx_Rnbase_Utility_Strings');
-tx_rnbase::load('Tx_Rnbase_Utility_T3General');
 
 /**
  * Submodul: Hinzufügen von vorhandenen Spielern zu einem Team.
@@ -50,7 +53,7 @@ class Tx_Cfcleague_Controller_Team_ProfileAdd
 
         if ($teamInfo->isTeamFull()) {
             // Kann nix mehr angelegt werden
-            return $this->mod->doc->section('Message:', $GLOBALS['LANG']->getLL('msg_maxPlayers'), 0, 1, \tx_rnbase_mod_IModFunc::ICON_WARN);
+            return $this->mod->doc->section('Message:', $GLOBALS['LANG']->getLL('msg_maxPlayers'), 0, 1, IModFunc::ICON_WARN);
         }
 
         // ggf. Daten im Request verarbeiten
@@ -129,7 +132,7 @@ class Tx_Cfcleague_Controller_Team_ProfileAdd
         global $LANG;
 
         if (!Tx_Cfcleague_Controller_Team_ProfileCreate::isProfilePage($this->mod->getPid())) {
-            $content = $this->mod->getDoc()->section('Message:', $LANG->getLL('msg_pageNotAllowed'), 0, 1, \tx_rnbase_mod_IModFunc::ICON_WARN);
+            $content = $this->mod->getDoc()->section('Message:', $LANG->getLL('msg_pageNotAllowed'), 0, 1, IModFunc::ICON_WARN);
 
             return $content;
         }
@@ -148,7 +151,7 @@ class Tx_Cfcleague_Controller_Team_ProfileAdd
         $row[] = $this->getFormTool()->createSelectByArray('data[tx_cfcleague_profiles][NEW'.$i.'][type]', '', Tx_Cfcleague_Controller_Team_ProfileCreate::getProfileTypeArray());
         $row[] = $this->getFormTool()->createSubmit('newprofile2team', $GLOBALS['LANG']->getLL('btn_create'), $GLOBALS['LANG']->getLL('msg_CreateProfiles')).$this->getFormTool()->createHidden('data[tx_cfcleague_profiles][NEW'.$i.'][pid]', $this->mod->getPid());
         $arr[] = $row;
-        $tables = tx_rnbase::makeInstance('Tx_Rnbase_Backend_Utility_Tables');
+        $tables = tx_rnbase::makeInstance(Tables::class);
         $formTable = $tables->buildTable($arr);
 
         $out = '<hr /><div class="form-group">
@@ -173,7 +176,7 @@ class Tx_Cfcleague_Controller_Team_ProfileAdd
         if (!$profile2team) {
             return $out;
         }
-        $request = Tx_Rnbase_Utility_T3General::_GP('data');
+        $request = T3General::_GP('data');
 
         $profiles = [
             'tx_cfcleague_profiles' => $request['tx_cfcleague_profiles'],
@@ -208,13 +211,13 @@ class Tx_Cfcleague_Controller_Team_ProfileAdd
     protected function handleAddProfiles(&$currTeam, $teamInfo)
     {
         $out = '';
-        $profile2team = strlen(Tx_Rnbase_Utility_T3General::_GP('profile2team')) > 0; // Wurde der Submit-Button gedrückt?
+        $profile2team = strlen(T3General::_GP('profile2team')) > 0; // Wurde der Submit-Button gedrückt?
         if ($profile2team) {
-            $entryUids = Tx_Rnbase_Utility_T3General::_GP('checkEntry');
+            $entryUids = T3General::_GP('checkEntry');
             if (!is_array($entryUids) || !count($entryUids)) {
                 $out = $GLOBALS['LANG']->getLL('msg_no_profile_selected').'<br/><br/>';
             } else {
-                $type = (int) Tx_Rnbase_Utility_T3General::_GP('profileType');
+                $type = (int) T3General::_GP('profileType');
                 if (1 == $type) {
                     if ($teamInfo->get('freePlayers') < count($entryUids)) {
                         // Team ist schon voll
@@ -248,12 +251,12 @@ class Tx_Cfcleague_Controller_Team_ProfileAdd
      */
     protected function addProfiles2Team(&$currTeam, $profileCol, $entryUids)
     {
-        tx_rnbase::load('tx_cfcleague_util_Misc');
-        $playerUids = implode(',', tx_cfcleague_util_Misc::mergeArrays(Tx_Rnbase_Utility_Strings::intExplode(',', $currTeam->getProperty($profileCol)), $entryUids));
+        $playerUids = implode(',', Misc::mergeArrays(Strings::intExplode(',', $currTeam->getProperty($profileCol)), $entryUids));
+        $data = [];
         $data['tx_cfcleague_teams'][$currTeam->getUid()][$profileCol] = $playerUids;
 
         reset($data);
-        $tce = Tx_Rnbase_Database_Connection::getInstance()->getTCEmain($data);
+        $tce = Connection::getInstance()->getTCEmain($data);
         $tce->process_datamap();
         $currTeam->setProperty($profileCol, $playerUids);
     }

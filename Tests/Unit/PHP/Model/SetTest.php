@@ -2,10 +2,12 @@
 
 namespace System25\T3sports\Tests\Model;
 
+use Sys25\RnBase\Tests\BaseTestCase;
+
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2012-2020 Rene Nitzsche (rene@system25.de)
+*  (c) 2012-2021 Rene Nitzsche (rene@system25.de)
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -25,7 +27,7 @@ namespace System25\T3sports\Tests\Model;
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-class SetTest extends \tx_rnbase_tests_BaseTestCase
+class SetTest extends BaseTestCase
 {
     /**
      * @group unit
