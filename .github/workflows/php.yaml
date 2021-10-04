@@ -90,18 +90,18 @@ jobs:
             fail-fast: false
             matrix:
                 include:
-                    -
-                        typo3-version: "typo3/minimal:^8.7"
-                        php-version: "7.1"
-                    -
-                        typo3-version: "typo3/minimal:^8.7"
-                        php-version: "7.2"
-                    -
-                        typo3-version: "typo3/minimal:^8.7"
-                        php-version: "7.3"
-                    -
-                        typo3-version: "typo3/minimal:^8.7"
-                        php-version: "7.4"
+#                    -
+#                        typo3-version: "typo3/minimal:^8.7"
+#                        php-version: "7.1"
+#                    -
+#                        typo3-version: "typo3/minimal:^8.7"
+#                        php-version: "7.2"
+#                    -
+#                        typo3-version: "typo3/minimal:^8.7"
+#                        php-version: "7.3"
+#                    -
+#                        typo3-version: "typo3/minimal:^8.7"
+#                        php-version: "7.4"
                     -
                         typo3-version: "typo3/minimal:^9.5"
                         php-version: "7.2"
