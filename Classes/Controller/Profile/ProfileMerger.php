@@ -7,7 +7,6 @@ use Sys25\RnBase\Utility\Misc;
 use Sys25\RnBase\Utility\Strings;
 use Sys25\RnBase\Utility\T3General;
 use tx_cfcleague_util_ServiceRegistry as ServiceRegistry;
-use tx_rnbase;
 
 /***************************************************************
 *  Copyright notice

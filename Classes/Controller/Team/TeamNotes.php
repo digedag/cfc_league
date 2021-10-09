@@ -5,16 +5,15 @@ namespace System25\T3sports\Controller\Team;
 use Sys25\RnBase\Backend\Form\ToolBox;
 use Sys25\RnBase\Backend\Module\IModFunc;
 use Sys25\RnBase\Backend\Module\IModule;
-use Sys25\RnBase\Utility\T3General;
-use Sys25\RnBase\Utility\Strings;
 use Sys25\RnBase\Database\Connection;
+use Sys25\RnBase\Utility\Strings;
+use Sys25\RnBase\Utility\T3General;
 use System25\T3sports\Utility\Misc;
 use tx_cfcleague_mod1_decorator;
 use tx_cfcleague_models_Team as Team;
 use tx_cfcleague_models_TeamNoteType as TeamNoteType;
 use tx_cfcleague_util_ServiceRegistry as ServiceRegistry;
 use tx_rnbase;
-
 
 /***************************************************************
  *  Copyright notice

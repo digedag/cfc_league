@@ -2,17 +2,17 @@
 
 namespace System25\T3sports\Controller\Competition;
 
-use System25\T3sports\Sports\ServiceLocator;
-use Sys25\RnBase\Utility\T3General;
-use tx_rnbase;
-use tx_cfcleague_util_ServiceRegistry as ServiceRegistry;
-use tx_cfcleague_models_Competition as Competition;
-use Sys25\RnBase\Backend\Utility\Tables;
-use Sys25\RnBase\Backend\Module\BaseModule;
 use Sys25\RnBase\Backend\Form\ToolBox;
-use Sys25\RnBase\Utility\TYPO3;
-use Sys25\RnBase\Database\Connection;
+use Sys25\RnBase\Backend\Module\BaseModule;
 use Sys25\RnBase\Backend\Module\IModule;
+use Sys25\RnBase\Backend\Utility\Tables;
+use Sys25\RnBase\Database\Connection;
+use Sys25\RnBase\Utility\T3General;
+use Sys25\RnBase\Utility\TYPO3;
+use System25\T3sports\Sports\ServiceLocator;
+use tx_cfcleague_models_Competition as Competition;
+use tx_cfcleague_util_ServiceRegistry as ServiceRegistry;
+use tx_rnbase;
 
 /***************************************************************
  *  Copyright notice

@@ -2,14 +2,14 @@
 
 namespace System25\T3sports\Controller;
 
-use Sys25\RnBase\Backend\Utility\BackendUtility;
-use Sys25\RnBase\Utility\TYPO3;
 use Sys25\RnBase\Backend\Module\BaseModFunc;
+use Sys25\RnBase\Backend\Utility\BackendUtility;
+use Sys25\RnBase\Backend\Utility\Tables;
+use Sys25\RnBase\Database\Connection;
+use Sys25\RnBase\Utility\T3General;
+use Sys25\RnBase\Utility\TYPO3;
 use tx_cfcleague_util_ServiceRegistry as ServiceRegistry;
 use tx_rnbase;
-use Sys25\RnBase\Backend\Utility\Tables;
-use Sys25\RnBase\Utility\T3General;
-use Sys25\RnBase\Database\Connection;
 
 /***************************************************************
  *  Copyright notice

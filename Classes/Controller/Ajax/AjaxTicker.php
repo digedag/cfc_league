@@ -4,10 +4,10 @@ namespace System25\T3sports\Controller\Ajax;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use TYPO3\CMS\Core\Http\Response;
-use Sys25\RnBase\Utility\T3General;
 use Sys25\RnBase\Backend\Utility\BackendUtility;
+use Sys25\RnBase\Utility\T3General;
 use Sys25\RnBase\Utility\TYPO3;
+use TYPO3\CMS\Core\Http\Response;
 
 /**
  * Handling requirejs client requests.
@@ -19,7 +19,6 @@ class AjaxTicker
         $tickerMessage = trim(strip_tags(T3General::_POST('value')));
         $t3Time = (int) T3General::_POST('t3time');
         $t3match = (int) T3General::_POST('t3match');
-
 
         if (!is_object(TYPO3::getBEUser())) {
             return $this->createResponse('No BE user found!', 401);

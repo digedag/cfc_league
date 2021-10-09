@@ -3,15 +3,15 @@
 namespace System25\T3sports\Controller\Competition;
 
 use Sys25\RnBase\Backend\Form\ToolBox;
+use Sys25\RnBase\Backend\Module\IModFunc;
+use Sys25\RnBase\Backend\Module\IModule;
 use Sys25\RnBase\Backend\Utility\Tables;
 use Sys25\RnBase\Database\Connection;
 use Sys25\RnBase\Frontend\Request\Parameters;
+use Sys25\RnBase\Utility\Strings;
 use tx_cfcleague_models_Competition as Competition;
 use tx_cfcleague_util_ServiceRegistry as ServiceRegistry;
 use tx_rnbase;
-use Sys25\RnBase\Utility\Strings;
-use Sys25\RnBase\Backend\Module\IModFunc;
-use Sys25\RnBase\Backend\Module\IModule;
 
 /***************************************************************
  *  Copyright notice

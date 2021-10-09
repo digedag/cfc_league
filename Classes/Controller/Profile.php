@@ -3,14 +3,14 @@
 namespace System25\T3sports\Controller;
 
 use Sys25\RnBase\Backend\Module\BaseModFunc;
-use Sys25\RnBase\Utility\T3General;
-use Sys25\RnBase\Backend\Utility\BackendUtility;
 use Sys25\RnBase\Backend\Module\IModFunc;
-use Sys25\RnBase\Database\Connection;
+use Sys25\RnBase\Backend\Utility\BackendUtility;
 use Sys25\RnBase\Backend\Utility\Tables;
-use tx_rnbase;
+use Sys25\RnBase\Database\Connection;
+use Sys25\RnBase\Utility\T3General;
 use System25\T3sports\Controller\Profile\ProfileMerger;
 use System25\T3sports\Controller\Profile\ShowItem;
+use tx_rnbase;
 
 /***************************************************************
  *  Copyright notice

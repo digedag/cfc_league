@@ -2,15 +2,14 @@
 
 namespace System25\T3sports\Controller;
 
-use System25\T3sports\Controller\Competition\Teams;
-use System25\T3sports\Controller\Competition\MatchTable;
+use Sys25\RnBase\Backend\Form\ToolBox;
+use Sys25\RnBase\Backend\Module\BaseModFunc;
 use Sys25\RnBase\Frontend\Marker\Templates;
 use System25\T3sports\Controller\Competition\DfbSync;
 use System25\T3sports\Controller\Competition\MatchEdit;
-use Sys25\RnBase\Backend\Module\BaseModFunc;
+use System25\T3sports\Controller\Competition\MatchTable;
+use System25\T3sports\Controller\Competition\Teams;
 use tx_rnbase;
-use Sys25\RnBase\Backend\Form\ToolBox;
-
 
 /***************************************************************
  *  Copyright notice

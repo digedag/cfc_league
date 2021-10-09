@@ -2,14 +2,14 @@
 
 namespace System25\T3sports\Controller\Team;
 
+use Sys25\RnBase\Backend\Form\ToolBox;
 use Sys25\RnBase\Backend\Module\IModFunc;
+use Sys25\RnBase\Backend\Module\IModule;
 use Sys25\RnBase\Backend\Utility\Tables;
 use Sys25\RnBase\Database\Connection;
 use Sys25\RnBase\Utility\Strings;
 use Sys25\RnBase\Utility\T3General;
 use System25\T3sports\Utility\Misc;
-use Sys25\RnBase\Backend\Module\IModule;
-use Sys25\RnBase\Backend\Form\ToolBox;
 use tx_rnbase;
 
 /***************************************************************

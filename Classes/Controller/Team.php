@@ -3,12 +3,12 @@
 namespace System25\T3sports\Controller;
 
 use Sys25\RnBase\Backend\Module\BaseModFunc;
-use tx_cfcleague_util_ServiceRegistry as ServiceRegistry;
-use tx_cfcleague_util_TeamInfo as TeamInfo;
-use tx_rnbase;
 use System25\T3sports\Controller\Team\ProfileAdd;
 use System25\T3sports\Controller\Team\ProfileCreate;
 use System25\T3sports\Controller\Team\TeamNotes;
+use tx_cfcleague_util_ServiceRegistry as ServiceRegistry;
+use tx_cfcleague_util_TeamInfo as TeamInfo;
+use tx_rnbase;
 
 /***************************************************************
  *  Copyright notice

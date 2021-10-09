@@ -2,6 +2,8 @@
 
 namespace System25\T3sports\Dfb;
 
+use Sys25\RnBase\Utility\Dates;
+
 /***************************************************************
  *  Copyright notice
  *
@@ -159,7 +161,7 @@ class CsvStructure
             $day = $this->getData($line, $this->structure[self::COL_MATCH_DATE][self::DATA_COL]);
             $time = $this->getData($line, $this->structure[self::COL_MATCH_TIME][self::DATA_COL]);
         }
-        $date = \tx_rnbase_util_Dates::getDateTime($day.' '.$time);
+        $date = Dates::getDateTime($day.' '.$time);
 
         return $date->getTimestamp();
     }

@@ -2,10 +2,17 @@
 
 namespace System25\T3sports\Dfb;
 
+use Sys25\RnBase\Database\Connection;
+use Sys25\RnBase\Utility\Logger;
+use Sys25\RnBase\Utility\Strings;
+use tx_cfcleague_models_Competition as Competition;
+use tx_cfcleague_util_ServiceRegistry as ServiceRegistry;
+use tx_rnbase;
+
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2010-2020 Rene Nitzsche (rene@system25.de)
+ *  (c) 2010-2021 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -49,7 +56,7 @@ class Synchronizer
 
     private $pageUid = 0;
 
-    public function process(\TYPO3\CMS\Core\Resource\File $file, \tx_cfcleague_models_Competition $competition)
+    public function process(\TYPO3\CMS\Core\Resource\File $file, Competition $competition)
     {
         $fileContent = $this->removeBOM($file->getContents());
         // There are some annoying null bytes...
@@ -58,7 +65,7 @@ class Synchronizer
         $lines = explode("\n", $fileContent);
         $headers = array_shift($lines);
         $headers = str_getcsv($this->prepareHeaderLine($headers), "\t");
-        $structure = \tx_rnbase::makeInstance(CsvStructure::class, $headers);
+        $structure = tx_rnbase::makeInstance(CsvStructure::class, $headers);
         $start = microtime(true);
 
         $this->pageUid = $competition->getPid();
@@ -98,7 +105,7 @@ class Synchronizer
         $this->stats['total']['time'] = intval(microtime(true) - $start).'s';
         $this->stats['total']['matches'] = $cnt;
 
-        \tx_rnbase_util_Logger::info('Update match schedule finished!', 'cfc_league', [
+        Logger::info('Update match schedule finished!', 'cfc_league', [
             'stats' => $this->stats,
             'info' => $info,
         ]);
@@ -120,7 +127,7 @@ class Synchronizer
      *
      * @return bool true if line was processed
      */
-    protected function handleMatch(array &$data, \tx_cfcleague_models_Competition $competition, array $matchData, CsvStructure $structure, array &$info)
+    protected function handleMatch(array &$data, Competition $competition, array $matchData, CsvStructure $structure, array &$info)
     {
         $extCompId = $structure->getCompetitionId($matchData);
         if ($competition->getExtId() && $competition->getExtId() != $extCompId) {
@@ -130,7 +137,7 @@ class Synchronizer
             if (empty($this->matchMap)) {
                 // Wettbewerb zuordnen
                 $competition->setProperty('extid', $extCompId);
-                \tx_cfcleague_util_ServiceRegistry::getCompetitionService()->persist($competition);
+                ServiceRegistry::getCompetitionService()->persist($competition);
             } else {
                 // Automatische Zuordnung nicht mehr möglich
                 return false;
@@ -172,14 +179,14 @@ class Synchronizer
         return true;
     }
 
-    protected function findTeam($extTeam, array &$data, \tx_cfcleague_models_Competition $competition, array &$info)
+    protected function findTeam($extTeam, array &$data, Competition $competition, array &$info)
     {
         $extTeamId = $this->buildKey($extTeam);
         $uid = 'NEW_'.$extTeamId;
         if (!array_key_exists($extTeamId, $this->teamMap)) {
             // Das Team ist noch nicht im Cache, also in der DB suchen
             /* @var $teamSrv \tx_cfcleague_services_Teams */
-            $teamSrv = \tx_cfcleague_util_ServiceRegistry::getTeamService();
+            $teamSrv = ServiceRegistry::getTeamService();
             $fields = [];
             $fields['TEAM.EXTID'][OP_EQ_NOCASE] = $extTeamId;
             $fields['TEAM.PID'][OP_EQ_INT] = $competition->getPid();
@@ -221,7 +228,7 @@ class Synchronizer
     {
         $add = true;
         if ($competition->getProperty('teams')) {
-            $teamUids = array_flip(\Tx_Rnbase_Utility_Strings::trimExplode(',', $competition->getProperty('teams')));
+            $teamUids = array_flip(Strings::trimExplode(',', $competition->getProperty('teams')));
             $add = !(array_key_exists($teamUid, $teamUids));
         }
         if (!$add) {
@@ -261,7 +268,7 @@ class Synchronizer
     {
         $start = microtime(true);
 
-        $tce = \Tx_Rnbase_Database_Connection::getInstance()->getTCEmain($data);
+        $tce = Connection::getInstance()->getTCEmain($data);
         $tce->process_datamap();
         $this->stats['chunks'][]['time'] = intval(microtime(true) - $start).'s';
         $this->stats['chunks'][]['matches'] = count($data[self::TABLE_GAMES]);
@@ -312,23 +319,20 @@ class Synchronizer
      *
      * @param \tx_cfcleague_models_Competition $competition
      */
-    protected function initMatches(\tx_cfcleague_models_Competition $competition)
+    protected function initMatches(Competition $competition)
     {
         $fields = $options = [];
         /* @var $matchSrv \tx_cfcleague_services_Match */
-        $matchSrv = \tx_cfcleague_util_ServiceRegistry::getMatchService();
+        $matchSrv = ServiceRegistry::getMatchService();
         $fields['MATCH.COMPETITION'][OP_EQ_INT] = $competition->getUid();
         $options['what'] = 'uid,extid';
         $options['orderby'] = 'uid asc';
         $options['callback'] = [
             $this,
-            'cbAddMatch',
+            function ($record) {
+                $this->matchMap[$record['extid']] = $record['uid'];
+            },
         ];
         $matchSrv->search($fields, $options);
-    }
-
-    public function cbAddMatch($record)
-    {
-        $this->matchMap[$record['extid']] = $record['uid'];
     }
 }

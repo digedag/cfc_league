@@ -2,15 +2,14 @@
 
 namespace System25\T3sports\Controller\Competition;
 
-use System25\T3sports\Dfb\Synchronizer;
-use Sys25\RnBase\Frontend\Request\Parameters;
+use Sys25\RnBase\Backend\Form\ToolBox;
 use Sys25\RnBase\Backend\Module\IModule;
 use Sys25\RnBase\Frontend\Marker\Templates;
+use Sys25\RnBase\Frontend\Request\Parameters;
+use Sys25\RnBase\Utility\TYPO3;
+use System25\T3sports\Dfb\Synchronizer;
 use tx_cfcleague_models_Competition as Competition;
 use tx_rnbase;
-use Sys25\RnBase\Utility\TYPO3;
-use Sys25\RnBase\Backend\Form\ToolBox;
-
 
 /***************************************************************
  *  Copyright notice

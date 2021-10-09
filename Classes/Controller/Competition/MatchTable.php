@@ -4,14 +4,13 @@ namespace System25\T3sports\Controller\Competition;
 
 use Sys25\RnBase\Backend\Form\ToolBox;
 use Sys25\RnBase\Backend\Module\IModule;
-use Sys25\RnBase\Utility\TYPO3;
-use tx_cfcleague_models_Competition as Competition;
-use Tx_Cfcleague_Handler_MatchCreator as MatchCreator;
-use tx_rnbase;
-use Sys25\RnBase\Utility\T3General;
 use Sys25\RnBase\Backend\Utility\Tables;
 use Sys25\RnBase\Database\Connection;
-
+use Sys25\RnBase\Utility\T3General;
+use Sys25\RnBase\Utility\TYPO3;
+use Tx_Cfcleague_Handler_MatchCreator as MatchCreator;
+use tx_cfcleague_models_Competition as Competition;
+use tx_rnbase;
 
 /***************************************************************
  *  Copyright notice
