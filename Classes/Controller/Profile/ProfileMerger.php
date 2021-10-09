@@ -1,8 +1,18 @@
 <?php
+
+namespace System25\T3sports\Controller\Profile;
+
+use Sys25\RnBase\Database\Connection;
+use Sys25\RnBase\Utility\Misc;
+use Sys25\RnBase\Utility\Strings;
+use Sys25\RnBase\Utility\T3General;
+use tx_cfcleague_util_ServiceRegistry as ServiceRegistry;
+use tx_rnbase;
+
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2007-2016 Rene Nitzsche <rene@system25.de>
+*  (c) 2007-2021 Rene Nitzsche <rene@system25.de>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -22,12 +32,7 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-tx_rnbase::load('tx_cfcleague_util_ServiceRegistry');
-tx_rnbase::load('tx_rnbase_util_Misc');
-tx_rnbase::load('Tx_Rnbase_Utility_Strings');
-tx_rnbase::load('Tx_Rnbase_Utility_T3General');
-
-class Tx_Cfcleague_Controller_Profile_ProfileMerger
+class ProfileMerger
 {
     /**
      * Start merging profile. The leading profile will overtake all references
@@ -53,21 +58,20 @@ class Tx_Cfcleague_Controller_Profile_ProfileMerger
         $this->mergeMatchNotes($data, $leadingProfileUID, $obsoleteProfileUID);
         $this->mergeTeamNotes($data, $leadingProfileUID, $obsoleteProfileUID);
 
-        tx_rnbase_util_Misc::callHook(
+        Misc::callHook(
             'cfc_league',
             'mergeProfiles_hook',
             ['data' => &$data, 'leadingUid' => $leadingProfileUID, 'obsoleteUid' => $obsoleteProfileUID],
             $this
         );
 
-        tx_rnbase::load('Tx_Rnbase_Database_Connection');
-        $tce = Tx_Rnbase_Database_Connection::getInstance()->getTCEmain($data);
+        $tce = Connection::getInstance()->getTCEmain($data);
         $tce->process_datamap();
     }
 
     private function mergeTeamNotes(&$data, $leading, $obsolete)
     {
-        $srv = tx_cfcleague_util_ServiceRegistry::getProfileService();
+        $srv = ServiceRegistry::getProfileService();
         $rows = $srv->getTeamsNotes4Profile($obsolete);
         foreach ($rows as $row) {
             $data['tx_cfcleague_team_notes'][$row['uid']]['player'] = $leading;
@@ -76,7 +80,7 @@ class Tx_Cfcleague_Controller_Profile_ProfileMerger
 
     private function mergeMatchNotes(&$data, $leading, $obsolete)
     {
-        $rows = tx_cfcleague_util_ServiceRegistry::getMatchService()->searchMatchNotesByProfile($obsolete);
+        $rows = ServiceRegistry::getMatchService()->searchMatchNotesByProfile($obsolete);
         foreach ($rows as $matchNote) {
             $this->mergeField('player_home', 'tx_cfcleague_match_notes', $data, $matchNote->getRecord(), $leading, $obsolete);
             $this->mergeField('player_guest', 'tx_cfcleague_match_notes', $data, $matchNote->getRecord(), $leading, $obsolete);
@@ -85,7 +89,7 @@ class Tx_Cfcleague_Controller_Profile_ProfileMerger
 
     private function mergeMatches(&$data, $leading, $obsolete)
     {
-        $rows = tx_cfcleague_util_ServiceRegistry::getMatchService()->searchMatchesByProfile($obsolete);
+        $rows = ServiceRegistry::getMatchService()->searchMatchesByProfile($obsolete);
         foreach ($rows as $match) {
             $this->mergeField('players_home', 'tx_cfcleague_games', $data, $match->getRecord(), $leading, $obsolete);
             $this->mergeField('players_guest', 'tx_cfcleague_games', $data, $match->getRecord(), $leading, $obsolete);
@@ -101,7 +105,7 @@ class Tx_Cfcleague_Controller_Profile_ProfileMerger
     private function mergeTeams(&$data, $leading, $obsolete)
     {
         // Teams suchen, in denen obsolete spielt
-        $teamRows = tx_cfcleague_util_ServiceRegistry::getTeamService()->searchTeamsByProfile($obsolete);
+        $teamRows = ServiceRegistry::getTeamService()->searchTeamsByProfile($obsolete);
         foreach ($teamRows as $team) {
             // Drei Felder können das Profile enthalten:
             // players
@@ -122,8 +126,8 @@ class Tx_Cfcleague_Controller_Profile_ProfileMerger
     private function replaceUid($fieldValue, $leading, $obsolete)
     {
         $ret = '';
-        if (Tx_Rnbase_Utility_T3General::inList($fieldValue, $obsolete)) {
-            $values = Tx_Rnbase_Utility_Strings::intExplode(',', $fieldValue);
+        if (T3General::inList($fieldValue, $obsolete)) {
+            $values = Strings::intExplode(',', $fieldValue);
             $idx = array_search($obsolete, $values);
             if (false !== $idx) {
                 $values[$idx] = $leading;
@@ -133,8 +137,4 @@ class Tx_Cfcleague_Controller_Profile_ProfileMerger
 
         return $ret;
     }
-}
-
-if (defined('TYPO3_MODE') && $GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/cfc_league/mod1/class.tx_cfcleague_mod1_profileMerger.php']) {
-    include_once $GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/cfc_league/mod1/class.tx_cfcleague_mod1_profileMerger.php'];
 }

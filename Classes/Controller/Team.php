@@ -1,8 +1,19 @@
 <?php
+
+namespace System25\T3sports\Controller;
+
+use Sys25\RnBase\Backend\Module\BaseModFunc;
+use tx_cfcleague_util_ServiceRegistry as ServiceRegistry;
+use tx_cfcleague_util_TeamInfo as TeamInfo;
+use tx_rnbase;
+use System25\T3sports\Controller\Team\ProfileAdd;
+use System25\T3sports\Controller\Team\ProfileCreate;
+use System25\T3sports\Controller\Team\TeamNotes;
+
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2009-2018 Rene Nitzsche (rene@system25.de)
+ *  (c) 2009-2021 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -25,7 +36,7 @@
 /**
  * Die Klasse verwaltet die automatische Erstellung von Spielplänen.
  */
-class Tx_Cfcleague_Controller_Team extends tx_rnbase_mod_BaseModFunc
+class Team extends BaseModFunc
 {
     public $doc;
 
@@ -42,7 +53,7 @@ class Tx_Cfcleague_Controller_Team extends tx_rnbase_mod_BaseModFunc
     }
 
     /**
-     * @return tx_cfcleague_selector
+     * @return \tx_cfcleague_selector
      */
     private function getSelector()
     {
@@ -59,7 +70,7 @@ class Tx_Cfcleague_Controller_Team extends tx_rnbase_mod_BaseModFunc
      *
      * {@inheritdoc}
      *
-     * @see tx_rnbase_mod_BaseModFunc::getContent()
+     * @see BaseModFunc::getContent()
      */
     protected function getContent($template, &$configurations, &$formatter, $formTool)
     {
@@ -79,7 +90,7 @@ class Tx_Cfcleague_Controller_Team extends tx_rnbase_mod_BaseModFunc
             ->getPid());
         $competitions = [];
         if ($saison) {
-            $competitions = tx_cfcleague_util_ServiceRegistry::getCompetitionService()->getCompetitionsBySaison($saison);
+            $competitions = ServiceRegistry::getCompetitionService()->getCompetitionsBySaison($saison);
         }
 
         $content = '';
@@ -116,22 +127,22 @@ class Tx_Cfcleague_Controller_Team extends tx_rnbase_mod_BaseModFunc
 
         $this->pObj->tabs = $tabs;
 
-        $teamInfo = new tx_cfcleague_util_TeamInfo($team, $this->formTool);
+        $teamInfo = new TeamInfo($team, $this->formTool);
         $content .= $teamInfo->handleRequest();
 
         switch ($menu['value']) {
             case 0:
-                $mod = tx_rnbase::makeInstance('Tx_Cfcleague_Controller_Team_ProfileCreate');
+                $mod = tx_rnbase::makeInstance(ProfileCreate::class);
                 $content .= $mod->handleRequest($this->getModule(), $team, $teamInfo);
 
                 break;
             case 1:
-                $mod = tx_rnbase::makeInstance('Tx_Cfcleague_Controller_Team_ProfileAdd');
+                $mod = tx_rnbase::makeInstance(ProfileAdd::class);
                 $content .= $mod->handleRequest($this->getModule(), $team, $teamInfo);
 
                 break;
             case 2:
-                $mod = tx_rnbase::makeInstance('Tx_Cfcleague_Controller_Team_TeamNotes');
+                $mod = tx_rnbase::makeInstance(TeamNotes::class);
                 $content .= $mod->handleRequest($this->getModule(), $team, $teamInfo);
 
                 break;

@@ -1,11 +1,21 @@
 <?php
 
+namespace System25\T3sports\Controller\Competition;
+
 use System25\T3sports\Dfb\Synchronizer;
+use Sys25\RnBase\Frontend\Request\Parameters;
+use Sys25\RnBase\Backend\Module\IModule;
+use Sys25\RnBase\Frontend\Marker\Templates;
+use tx_cfcleague_models_Competition as Competition;
+use tx_rnbase;
+use Sys25\RnBase\Utility\TYPO3;
+use Sys25\RnBase\Backend\Form\ToolBox;
+
 
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2008-2018 Rene Nitzsche (rene@system25.de)
+ *  (c) 2008-2021 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -24,15 +34,11 @@ use System25\T3sports\Dfb\Synchronizer;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-tx_rnbase::load('tx_rnbase_parameters');
-tx_rnbase::load('Tx_Rnbase_Database_Connection');
-tx_rnbase::load('Tx_Rnbase_Utility_Strings');
-tx_rnbase::load('tx_cfcleague_mod1_decorator');
 
 /**
  * Die Klasse verwaltet die Erstellung Teams für Wettbewerbe.
  */
-class Tx_Cfcleague_Controller_Competition_DfbSync
+class DfbSync
 {
     protected $doc;
 
@@ -45,12 +51,13 @@ class Tx_Cfcleague_Controller_Competition_DfbSync
      * @var array|\TYPO3\CMS\Core\Resource\File[]
      */
     protected $uploadedFiles = [];
+    protected $formTool;
 
     /**
      * Verwaltet die Erstellung von Spielplänen von Ligen.
      *
-     * @param tx_rnbase_mod_IModule $module
-     * @param tx_cfcleague_models_Competition $competition
+     * @param IModule $module
+     * @param Competition $competition
      */
     public function main($module, $competition, $template)
     {
@@ -68,7 +75,7 @@ class Tx_Cfcleague_Controller_Competition_DfbSync
         $tempFolder = $this->getDefaultImportExportFolder();
         if ($tempFolder) {
             $markerArr['###TARGET_FOLDER###'] = htmlspecialchars($tempFolder->getCombinedIdentifier());
-            if (tx_rnbase_parameters::getPostOrGetParameter('_upload')) {
+            if (Parameters::getPostOrGetParameter('_upload')) {
                 if ($this->fileProcessor->internalUploadMap[1]) {
                     $markerArr['###STATUS_FILE###'] = $this->uploadedFiles[0]->getName();
                     /* @var $synch Synchronizer */
@@ -93,12 +100,12 @@ class Tx_Cfcleague_Controller_Competition_DfbSync
                 $subpartArr['###SUB_UPLOAD_STATUS###'] = '';
             }
         }
-        $content = tx_rnbase_util_Templates::substituteMarkerArrayCached($template, $markerArr, $subpartArr, $wrappedSubpartArr);
+        $content = Templates::substituteMarkerArrayCached($template, $markerArr, $subpartArr, $wrappedSubpartArr);
 
         return $content;
     }
 
-    protected function buildInfoMessage(tx_cfcleague_models_Competition $competition)
+    protected function buildInfoMessage(Competition $competition)
     {
         global $LANG;
         $key = $competition->getExtId();
@@ -114,10 +121,10 @@ class Tx_Cfcleague_Controller_Competition_DfbSync
      */
     public function checkUpload()
     {
-        $file = tx_rnbase_parameters::getPostOrGetParameter('file');
+        $file = Parameters::getPostOrGetParameter('file');
         // Initializing:
         $this->fileProcessor = tx_rnbase::makeInstance('TYPO3\\CMS\\Core\\Utility\\File\\ExtendedFileUtility');
-        if (tx_rnbase_util_TYPO3::isTYPO87OrHigher()) {
+        if (TYPO3::isTYPO87OrHigher()) {
             $this->fileProcessor->setActionPermissions();
             $this->fileProcessor->setExistingFilesConflictMode(
                 \TYPO3\CMS\Core\Resource\DuplicationBehavior::REPLACE
@@ -169,13 +176,13 @@ class Tx_Cfcleague_Controller_Competition_DfbSync
      */
     protected function getBackendUser()
     {
-        return $GLOBALS['BE_USER'];
+        return TYPO3::getBEUser();
     }
 
     /**
      * Returns the formtool.
      *
-     * @return tx_rnbase_util_FormTool
+     * @return ToolBox
      */
     protected function getFormTool()
     {

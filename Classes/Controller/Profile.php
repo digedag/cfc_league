@@ -1,8 +1,21 @@
 <?php
+
+namespace System25\T3sports\Controller;
+
+use Sys25\RnBase\Backend\Module\BaseModFunc;
+use Sys25\RnBase\Utility\T3General;
+use Sys25\RnBase\Backend\Utility\BackendUtility;
+use Sys25\RnBase\Backend\Module\IModFunc;
+use Sys25\RnBase\Database\Connection;
+use Sys25\RnBase\Backend\Utility\Tables;
+use tx_rnbase;
+use System25\T3sports\Controller\Profile\ProfileMerger;
+use System25\T3sports\Controller\Profile\ShowItem;
+
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2007-2020 Rene Nitzsche (rene@system25.de)
+ *  (c) 2007-2021 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -27,7 +40,7 @@
  * Das Modul wurde relativ schnell runterprogrammiert und ist daher nicht auf Erweiterbarkeit
  * ausgelegt.
  */
-class Tx_Cfcleague_Controller_Profile extends tx_rnbase_mod_BaseModFunc
+class Profile extends BaseModFunc
 {
     public $doc;
 
@@ -60,8 +73,8 @@ class Tx_Cfcleague_Controller_Profile extends tx_rnbase_mod_BaseModFunc
         $this->selector = tx_rnbase::makeInstance('tx_cfcleague_selector');
         $this->selector->init($this->getModule()->getDoc(), $this->getModule());
 
-        $data = Tx_Rnbase_Utility_T3General::_GP('data');
-        $this->SEARCH_SETTINGS = Tx_Rnbase_Backend_Utility::getModuleData([
+        $data = T3General::_GP('data');
+        $this->SEARCH_SETTINGS = BackendUtility::getModuleData([
             'searchterm' => '',
         ], $data, $this->getModule()->getName());
 
@@ -84,7 +97,7 @@ class Tx_Cfcleague_Controller_Profile extends tx_rnbase_mod_BaseModFunc
 //                    $content .= $this->doc->section($LANG->getLL('msg_found_person'), $this->buildProfileTable($profiles), 0, 1);
                     $content .= $this->buildProfileTable($profiles);
                 } else {
-                    $content .= $this->doc->section($LANG->getLL('msg_no_person_found'), '', 0, 1, \tx_rnbase_mod_IModFunc::ICON_WARN);
+                    $content .= $this->doc->section($LANG->getLL('msg_no_person_found'), '', 0, 1, IModFunc::ICON_WARN);
                 }
             }
         }
@@ -104,7 +117,7 @@ class Tx_Cfcleague_Controller_Profile extends tx_rnbase_mod_BaseModFunc
         $profile2 = (int) $data['merge2'];
         if ($data['merge_profiles']) { // Step 1
             if (!($profile1 && $profile2) || ($profile1 == $profile2)) {
-                return $this->doc->section($LANG->getLL('msg_merge_selectprofiles'), '', 0, 1, \tx_rnbase_mod_IModFunc::ICON_FATAL);
+                return $this->doc->section($LANG->getLL('msg_merge_selectprofiles'), '', 0, 1, IModFunc::ICON_FATAL);
             }
             $this->hideResults = true;
             // Beide Profile nochmal anzeigen
@@ -115,10 +128,10 @@ class Tx_Cfcleague_Controller_Profile extends tx_rnbase_mod_BaseModFunc
         } elseif ($data['merge_profiles_do']) { // Step 2
             $leading = intval($data['merge']);
 
-            $merger = tx_rnbase::makeInstance('Tx_Cfcleague_Controller_Profile_ProfileMerger');
+            $merger = tx_rnbase::makeInstance(ProfileMerger::class);
             $merger->merge($leading, $leading == $profile1 ? $profile2 : $profile1);
 
-            $out .= $this->doc->section($LANG->getLL('msg_merge_done'), '', 0, 1, \tx_rnbase_mod_IModFunc::ICON_OK);
+            $out .= $this->doc->section($LANG->getLL('msg_merge_done'), '', 0, 1, IModFunc::ICON_OK);
         }
 
         return $out;
@@ -138,7 +151,7 @@ class Tx_Cfcleague_Controller_Profile extends tx_rnbase_mod_BaseModFunc
         $out .= '<div class="row">';
 
         /* @var $info \Tx_Cfcleague_Controller_Profile_ShowItem */
-        $info = tx_rnbase::makeInstance('Tx_Cfcleague_Controller_Profile_ShowItem');
+        $info = tx_rnbase::makeInstance(ShowItem::class);
 
         $out .= '<div class="col-xs-6">';
         $out .= $this->formTool->createRadio('data[merge]', $uid1, true);
@@ -206,7 +219,7 @@ class Tx_Cfcleague_Controller_Profile extends tx_rnbase_mod_BaseModFunc
                 $values = [
                     'birthday' => mktime(0, 0, 0, $month, $day, $year),
                 ];
-                Tx_Rnbase_Database_Connection::getInstance()->doUpdate('tx_cfcleague_profiles', 'uid='.intval($uid), $values);
+                Connection::getInstance()->doUpdate('tx_cfcleague_profiles', 'uid='.intval($uid), $values);
                 $out .= $this->doc->section($LANG->getLL('msg_person_saved'), $LANG->getLL('msg_date_saved').': '.$date, 0, 1, \tx_rnbase_mod_IModFunc::ICON_OK);
             }
         }
@@ -260,7 +273,7 @@ class Tx_Cfcleague_Controller_Profile extends tx_rnbase_mod_BaseModFunc
         }
         $orderBy = 'last_name, first_name, tx_cfcleague_profiles.uid';
 
-        $rows = Tx_Rnbase_Database_Connection::getInstance()->doSelect($what, $from, [
+        $rows = Connection::getInstance()->doSelect($what, $from, [
             'where' => $where,
             'orderby' => $orderBy,
         ]);
@@ -323,7 +336,7 @@ class Tx_Cfcleague_Controller_Profile extends tx_rnbase_mod_BaseModFunc
             $row[] = $profile['first_name'] ? $profile['first_name'] : '&nbsp;';
             $row[] = date('j.n.Y', $profile['birthday']).' <input type="submit" name="data[edit_profile]['.$profile['uid'].']" value="'.$LANG->getLL('btn_edit').'"';
             // Die Zusatzinfos zusammenstellen
-            $infos = $LANG->getLL('label_page').': '.Tx_Rnbase_Backend_Utility::getRecordPath($profile['pid'], '', 0).'<br />';
+            $infos = $LANG->getLL('label_page').': '.BackendUtility::getRecordPath($profile['pid'], '', 0).'<br />';
             if (is_array($profile['teams'])) {
                 foreach ($profile['teams'] as $team) {
                     $infos .= '&nbsp;Team: '.$team['team_name'];
@@ -339,7 +352,7 @@ class Tx_Cfcleague_Controller_Profile extends tx_rnbase_mod_BaseModFunc
             $arr[] = $row;
         }
 
-        $tables = tx_rnbase::makeInstance('Tx_Rnbase_Backend_Utility_Tables');
+        $tables = tx_rnbase::makeInstance(Tables::class);
         $out .= $tables->buildTable($arr);
         if (count($arr)) {
             // Button für Merge einbauen

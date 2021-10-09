@@ -1,11 +1,23 @@
 <?php
 
+namespace System25\T3sports\Controller\Competition;
+
 use System25\T3sports\Sports\ServiceLocator;
+use Sys25\RnBase\Utility\T3General;
+use tx_rnbase;
+use tx_cfcleague_util_ServiceRegistry as ServiceRegistry;
+use tx_cfcleague_models_Competition as Competition;
+use Sys25\RnBase\Backend\Utility\Tables;
+use Sys25\RnBase\Backend\Module\BaseModule;
+use Sys25\RnBase\Backend\Form\ToolBox;
+use Sys25\RnBase\Utility\TYPO3;
+use Sys25\RnBase\Database\Connection;
+use Sys25\RnBase\Backend\Module\IModule;
 
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2007-2020 Rene Nitzsche (rene@system25.de)
+ *  (c) 2007-2021 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -28,9 +40,10 @@ use System25\T3sports\Sports\ServiceLocator;
 /**
  * Die Klasse verwaltet die Bearbeitung der Spieltage.
  */
-class Tx_Cfcleague_Controller_Competition_MatchEdit
+class MatchEdit
 {
     private $sportsServiceLocator;
+    protected $formTool;
 
     public function __construct()
     {
@@ -41,7 +54,7 @@ class Tx_Cfcleague_Controller_Competition_MatchEdit
      * Bearbeitung von Spielen.
      * Es werden die Paaren je Spieltag angezeigt.
      *
-     * @param tx_rnbase_mod_IModule $module
+     * @param IModule $module
      */
     public function main($module, $current_league)
     {
@@ -85,7 +98,7 @@ class Tx_Cfcleague_Controller_Competition_MatchEdit
         $content .= ' <input type="button" class="btn btn-default btn-sm" name="setStatus" value="'.$LANG->getLL('btn_statusToFinished').'" onclick="setStatusFinished()"><br><br>';
 
         $content .= '<div class="cleardiv"/>';
-        $data = Tx_Rnbase_Utility_T3General::_GP('data');
+        $data = T3General::_GP('data');
         // Haben wir Daten im Request?
         if (is_array($data['tx_cfcleague_games'])) {
             $this->updateMatches($data);
@@ -94,7 +107,7 @@ class Tx_Cfcleague_Controller_Competition_MatchEdit
         $matches = $this->findMatches($currentTeam, $current_round, $current_league);
         $arr = $this->createTableArray($matches, $current_league);
 
-        $tables = tx_rnbase::makeInstance('Tx_Rnbase_Backend_Utility_Tables');
+        $tables = tx_rnbase::makeInstance(Tables::class);
         $content .= $tables->buildTable($arr[0]);
 
         // Den Update-Button einfügen
@@ -114,14 +127,14 @@ class Tx_Cfcleague_Controller_Competition_MatchEdit
     }
 
     /**
-     * @param tx_cfcleague_models_Team $currentTeam
+     * @param \tx_cfcleague_models_Team $currentTeam
      * @param int $current_round
-     * @param tx_cfcleague_models_Competition $current_league
+     * @param Competition $current_league
      */
     private function findMatches($currentTeam, $current_round, $current_league)
     {
         // Mit Matchtable nach Spielen suchen
-        $service = tx_cfcleague_util_ServiceRegistry::getMatchService();
+        $service = ServiceRegistry::getMatchService();
         $matchTable = $service->getMatchTableBuilder();
         $matchTable->setCompetitions($current_league->getUid());
 
@@ -154,7 +167,7 @@ class Tx_Cfcleague_Controller_Competition_MatchEdit
     }
 
     /**
-     * @return tx_cfcleague_selector
+     * @return \tx_cfcleague_selector
      */
     private function getSelector()
     {
@@ -168,7 +181,7 @@ class Tx_Cfcleague_Controller_Competition_MatchEdit
     }
 
     /**
-     * @return tx_rnbase_mod_BaseModule
+     * @return BaseModule
      */
     private function getModule()
     {
@@ -181,14 +194,14 @@ class Tx_Cfcleague_Controller_Competition_MatchEdit
     }
 
     /**
-     * @param tx_cfcleague_models_Competition $currentLeague
+     * @param Competition $currentLeague
      * @param int $current_round
      * @param mixed $pid
-     * @param Tx_Rnbase_Backend_Form_ToolBox $formTool
+     * @param ToolBox $formTool
      *
      * @return string
      */
-    protected function getFooter(tx_cfcleague_models_Competition $currentCompetition, $current_round, $pid, Tx_Rnbase_Backend_Form_ToolBox $formTool)
+    protected function getFooter(Competition $currentCompetition, $current_round, $pid, ToolBox $formTool)
     {
         $rounds = $currentCompetition->getRounds();
         $roundName = '';
@@ -198,14 +211,14 @@ class Tx_Cfcleague_Controller_Competition_MatchEdit
             }
         }
         $params = [];
-        $params[Tx_Rnbase_Backend_Form_ToolBox::OPTION_DEFVALS] = [
+        $params[ToolBox::OPTION_DEFVALS] = [
             'tx_cfcleague_games' => [
                 'competition' => $currentCompetition->getUid(),
                 'round' => $current_round,
                 'round_name' => $roundName,
             ],
         ];
-        $params[Tx_Rnbase_Backend_Form_ToolBox::OPTION_TITLE] = $GLOBALS['LANG']->getLL('label_create_match');
+        $params[ToolBox::OPTION_TITLE] = $GLOBALS['LANG']->getLL('label_create_match');
         $content = $formTool->createNewLink('tx_cfcleague_games', $pid, $GLOBALS['LANG']->getLL('label_create_match'), $params);
 
         return $content;
@@ -215,7 +228,7 @@ class Tx_Cfcleague_Controller_Competition_MatchEdit
      * Liefert die passenden Überschrift für die Tabelle.
      *
      * @param int $parts
-     * @param tx_cfcleague_models_Competition $competition
+     * @param Competition $competition
      *
      * @return array
      */
@@ -276,8 +289,8 @@ class Tx_Cfcleague_Controller_Competition_MatchEdit
     /**
      * Erstellt das Datenarray zur Erstellung der HTML-Tabelle mit den Spielen des Spieltages.
      *
-     * @param tx_cfcleague_models_Match[] $matches
-     * @param tx_cfcleague_models_Competition $competition
+     * @param \tx_cfcleague_models_Match[] $matches
+     * @param Competition $competition
      *
      * @return array mit zwei Elementen: Idx 0 enthält Array für Darstellung als Tabelle, Idx 1
      *         enthält, falls vorhanden den Namen des spielfreien Teams
@@ -299,7 +312,7 @@ class Tx_Cfcleague_Controller_Competition_MatchEdit
             $table = 'tx_cfcleague_games';
             if (!$isNoMatch) {
                 $row[] = $matchUid.$this->formTool->createEditLink('tx_cfcleague_games', $matchUid, '');
-                $dataArr = tx_rnbase_util_TYPO3::isTYPO70OrHigher() ? $match->getProperty() : $this->formTool->getTCEFormArray($table, $matchUid);
+                $dataArr = TYPO3::isTYPO70OrHigher() ? $match->getProperty() : $this->formTool->getTCEFormArray($table, $matchUid);
                 $row[] = $this->buildInputField($table, $dataArr, 'date', $matchUid);
                 $row[] = $this->buildInputField($table, $dataArr, 'status', $matchUid);
                 $row[] = $this->formTool->createEditLink('tx_cfcleague_teams', $match->getProperty('home'), $match->getHome()
@@ -342,8 +355,7 @@ class Tx_Cfcleague_Controller_Competition_MatchEdit
      */
     private function updateMatches($tcaData)
     {
-        tx_rnbase::load('Tx_Rnbase_Database_Connection');
-        $tce = Tx_Rnbase_Database_Connection::getInstance()->getTCEmain($tcaData);
+        $tce = Connection::getInstance()->getTCEmain($tcaData);
         $tce->process_datamap();
     }
 }

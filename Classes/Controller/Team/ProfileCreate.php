@@ -1,14 +1,23 @@
 <?php
 
+namespace System25\T3sports\Controller\Team;
+
 use Sys25\RnBase\Configuration\Processor;
 use Sys25\RnBase\Database\Connection;
 use Sys25\RnBase\Utility\Strings;
 use System25\T3sports\Utility\Misc;
+use Sys25\RnBase\Backend\Module\IModule;
+use Sys25\RnBase\Utility\T3General;
+use tx_rnbase;
+use Sys25\RnBase\Backend\Utility\BackendUtility;
+use Sys25\RnBase\Backend\Module\IModFunc;
+use Sys25\RnBase\Backend\Utility\Tables;
+use Sys25\RnBase\Backend\Form\ToolBox;
 
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2008-2020 Rene Nitzsche (rene@system25.de)
+ *  (c) 2008-2021 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -31,7 +40,7 @@ use System25\T3sports\Utility\Misc;
 /**
  * Die Klasse verwaltet die Erstellung von Spielern für Teams.
  */
-class Tx_Cfcleague_Controller_Team_ProfileCreate
+class ProfileCreate
 {
     private $doc;
 
@@ -40,8 +49,8 @@ class Tx_Cfcleague_Controller_Team_ProfileCreate
     /**
      * Verwaltet die Erstellung von Spielplänen von Ligen.
      *
-     * @param tx_rnbase_mod_IModule $module
-     * @param tx_cfcleague_models_Team $team
+     * @param IModule $module
+     * @param \tx_cfcleague_models_Team $team
      */
     public function handleRequest($module, $team, $teamInfo)
     {
@@ -55,7 +64,7 @@ class Tx_Cfcleague_Controller_Team_ProfileCreate
         $this->pid = $pid;
         $this->doc = $doc;
         $this->formTool = $formTool;
-        $data = Tx_Rnbase_Utility_T3General::_GP('data');
+        $data = T3General::_GP('data');
 
         $content = $this->showCreateProfiles($data, $team, $teamInfo);
 
@@ -80,8 +89,8 @@ class Tx_Cfcleague_Controller_Team_ProfileCreate
 
     /**
      * @param array $data
-     * @param tx_cfcleague_models_Team $team
-     * @param tx_cfcleague_util_TeamInfo $teamInfo
+     * @param \tx_cfcleague_models_Team $team
+     * @param \tx_cfcleague_util_TeamInfo $teamInfo
      *
      * @return string
      */
@@ -90,7 +99,7 @@ class Tx_Cfcleague_Controller_Team_ProfileCreate
         global $LANG;
 
         if (!self::isProfilePage($this->pid)) {
-            $content = $this->doc->section('Message:', $LANG->getLL('msg_pageNotAllowed'), 0, 1, \tx_rnbase_mod_IModFunc::ICON_WARN);
+            $content = $this->doc->section('Message:', $LANG->getLL('msg_pageNotAllowed'), 0, 1, IModFunc::ICON_WARN);
 
             return $content;
         }
@@ -102,9 +111,9 @@ class Tx_Cfcleague_Controller_Team_ProfileCreate
 
         if ($teamInfo->isTeamFull()) {
             // Kann nix mehr angelegt werden
-            $content .= $this->doc->section('Message:', $LANG->getLL('msg_maxPlayers'), 0, 1, \tx_rnbase_mod_IModFunc::ICON_WARN);
+            $content .= $this->doc->section('Message:', $LANG->getLL('msg_maxPlayers'), 0, 1, IModFunc::ICON_WARN);
         } else {
-            $content .= $this->doc->section('Info:', $LANG->getLL('msg_checkPage').': <b>'.Tx_Rnbase_Backend_Utility::getRecordPath($this->pid, '', 0).'</b>', 0, 1, \tx_rnbase_mod_IModFunc::ICON_INFO);
+            $content .= $this->doc->section('Info:', $LANG->getLL('msg_checkPage').': <b>'.BackendUtility::getRecordPath($this->pid, '', 0).'</b>', 0, 1, \tx_rnbase_mod_IModFunc::ICON_INFO);
             $content .= $teamInfo->getInfoTable($this->doc);
             // Wir zeigen 15 Zeilen mit Eingabefeldern
             $content .= $this->prepareInputTable($team, $teamInfo);
@@ -141,11 +150,12 @@ class Tx_Cfcleague_Controller_Team_ProfileCreate
             $row[] = $i + 1;
             $row[] = $this->formTool->createTxtInput('data[tx_cfcleague_profiles][NEW'.$i.'][first_name]', '', 10);
             $row[] = $this->formTool->createTxtInput('data[tx_cfcleague_profiles][NEW'.$i.'][last_name]', '', 10);
-            $row[] = $this->formTool->createSelectByArray('data[tx_cfcleague_profiles][NEW'.$i.'][type]', '', self::getProfileTypeArray()).$this->formTool->createHidden('data[tx_cfcleague_profiles][NEW'.$i.'][pid]', $this->pid);
+            $row[] = $this->formTool->createSelectByArray('data[tx_cfcleague_profiles][NEW'.$i.'][type]', '',
+                    self::getProfileTypeArray()).$this->formTool->createHidden('data[tx_cfcleague_profiles][NEW'.$i.'][pid]', $this->pid);
             $arr[] = $row;
         }
-        /* @var $tables Tx_Rnbase_Backend_Utility_Tables */
-        $tables = tx_rnbase::makeInstance('Tx_Rnbase_Backend_Utility_Tables');
+        /* @var $tables Tables */
+        $tables = tx_rnbase::makeInstance(Tables::class);
         $tableForm = $tables->buildTable($arr);
 
         // Den Update-Button einfügen
@@ -184,9 +194,8 @@ class Tx_Cfcleague_Controller_Team_ProfileCreate
      *
      * @param array $profiles
      *            Array mit den Daten aus dem Request
-     * @param tx_cfcleague_models_Team $team
-     *            das aktuelle Team, dem die Personen zugeordnet werden
-     * @param tx_cfcleague_util_TeamInfo $teamInfo
+     * @param \tx_cfcleague_models_Team $team das aktuelle Team, dem die Personen zugeordnet werden
+     * @param \tx_cfcleague_util_TeamInfo $teamInfo
      */
     public static function createProfiles($profiles, $team, $teamInfo)
     {
@@ -270,7 +279,7 @@ class Tx_Cfcleague_Controller_Team_ProfileCreate
     /**
      * Returns the formtool.
      *
-     * @return tx_rnbase_util_FormTool
+     * @return ToolBox
      */
     private function getFormTool()
     {

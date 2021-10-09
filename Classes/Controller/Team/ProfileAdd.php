@@ -1,16 +1,21 @@
 <?php
 
+namespace System25\T3sports\Controller\Team;
+
 use Sys25\RnBase\Backend\Module\IModFunc;
 use Sys25\RnBase\Backend\Utility\Tables;
 use Sys25\RnBase\Database\Connection;
 use Sys25\RnBase\Utility\Strings;
 use Sys25\RnBase\Utility\T3General;
 use System25\T3sports\Utility\Misc;
+use Sys25\RnBase\Backend\Module\IModule;
+use Sys25\RnBase\Backend\Form\ToolBox;
+use tx_rnbase;
 
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2008-2020 Rene Nitzsche (rene@system25.de)
+ *  (c) 2008-2021 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -33,7 +38,7 @@ use System25\T3sports\Utility\Misc;
 /**
  * Submodul: Hinzufügen von vorhandenen Spielern zu einem Team.
  */
-class Tx_Cfcleague_Controller_Team_ProfileAdd
+class ProfileAdd
 {
     public $mod;
 
@@ -41,9 +46,9 @@ class Tx_Cfcleague_Controller_Team_ProfileAdd
      * Ausführung des Requests.
      * Das Team muss bekannt sein.
      *
-     * @param tx_rnbase_mod_IModule $module
-     * @param tx_cfcleague_models_Team $currTeam
-     * @param tx_cfcleague_util_TeamInfo $teamInfo
+     * @param IModule $module
+     * @param \tx_cfcleague_models_Team $currTeam
+     * @param \tx_cfcleague_util_TeamInfo $teamInfo
      *
      * @return string
      */
@@ -70,7 +75,7 @@ class Tx_Cfcleague_Controller_Team_ProfileAdd
     /**
      * Liefert das FormTool.
      *
-     * @return tx_rnbase_util_FormTool
+     * @return ToolBox
      */
     protected function getFormTool()
     {
@@ -80,8 +85,8 @@ class Tx_Cfcleague_Controller_Team_ProfileAdd
     /**
      * Darstellung der gefundenen Personen.
      *
-     * @param tx_cfcleague_models_Team $currTeam
-     * @param tx_cfcleague_util_TeamInfo $teamInfo
+     * @param \tx_cfcleague_models_Team $currTeam
+     * @param \tx_cfcleague_util_TeamInfo $teamInfo
      *
      * @return string
      */
@@ -101,7 +106,7 @@ class Tx_Cfcleague_Controller_Team_ProfileAdd
         $tableForm = '<div style="margin-top:10px">'.$searcher->getSearchForm().'</div>';
         $tableForm .= $searcher->getResultList();
         if ($searcher->getSize()) {
-            $tableForm .= $this->getFormTool()->createSelectByArray('profileType', '', Tx_Cfcleague_Controller_Team_ProfileCreate::getProfileTypeArray());
+            $tableForm .= $this->getFormTool()->createSelectByArray('profileType', '', ProfileCreate::getProfileTypeArray());
             // Button für Zuordnung
             $tableForm .= $this->getFormTool()->createSubmit(
                 'profile2team',
@@ -131,7 +136,7 @@ class Tx_Cfcleague_Controller_Team_ProfileAdd
     {
         global $LANG;
 
-        if (!Tx_Cfcleague_Controller_Team_ProfileCreate::isProfilePage($this->mod->getPid())) {
+        if (!ProfileCreate::isProfilePage($this->mod->getPid())) {
             $content = $this->mod->getDoc()->section('Message:', $LANG->getLL('msg_pageNotAllowed'), 0, 1, IModFunc::ICON_WARN);
 
             return $content;
@@ -148,7 +153,7 @@ class Tx_Cfcleague_Controller_Team_ProfileAdd
         $i = 1;
         $row[] = $this->getFormTool()->createTxtInput('data[tx_cfcleague_profiles][NEW'.$i.'][first_name]', '', 10);
         $row[] = $this->getFormTool()->createTxtInput('data[tx_cfcleague_profiles][NEW'.$i.'][last_name]', '', 10);
-        $row[] = $this->getFormTool()->createSelectByArray('data[tx_cfcleague_profiles][NEW'.$i.'][type]', '', Tx_Cfcleague_Controller_Team_ProfileCreate::getProfileTypeArray());
+        $row[] = $this->getFormTool()->createSelectByArray('data[tx_cfcleague_profiles][NEW'.$i.'][type]', '', ProfileCreate::getProfileTypeArray());
         $row[] = $this->getFormTool()->createSubmit('newprofile2team', $GLOBALS['LANG']->getLL('btn_create'), $GLOBALS['LANG']->getLL('msg_CreateProfiles')).$this->getFormTool()->createHidden('data[tx_cfcleague_profiles][NEW'.$i.'][pid]', $this->mod->getPid());
         $arr[] = $row;
         $tables = tx_rnbase::makeInstance(Tables::class);
@@ -164,14 +169,14 @@ class Tx_Cfcleague_Controller_Team_ProfileAdd
     /**
      * Add profiles to a team.
      *
-     * @param tx_cfcleague_models_Team $currTeam
-     * @param tx_cfcleague_util_TeamInfo $teamInfo
+     * @param \tx_cfcleague_models_Team $currTeam
+     * @param \tx_cfcleague_util_TeamInfo $teamInfo
      *
      * @return string
      */
     protected function handleNewProfiles($currTeam, $teamInfo)
     {
-        $profile2team = strlen(Tx_Rnbase_Utility_T3General::_GP('newprofile2team')) > 0; // Wurde der Submit-Button gedrückt?
+        $profile2team = strlen(T3General::_GP('newprofile2team')) > 0; // Wurde der Submit-Button gedrückt?
         $out = '';
         if (!$profile2team) {
             return $out;
@@ -182,7 +187,7 @@ class Tx_Cfcleague_Controller_Team_ProfileAdd
             'tx_cfcleague_profiles' => $request['tx_cfcleague_profiles'],
         ];
 
-        $out = Tx_Cfcleague_Controller_Team_ProfileCreate::createProfiles($profiles, $currTeam, $teamInfo);
+        $out = ProfileCreate::createProfiles($profiles, $currTeam, $teamInfo);
 
         return $out;
     }
@@ -203,8 +208,8 @@ class Tx_Cfcleague_Controller_Team_ProfileAdd
     /**
      * Add profiles to a team.
      *
-     * @param tx_cfcleague_models_Team $currTeam
-     * @param tx_cfcleague_util_TeamInfo $teamInfo
+     * @param \tx_cfcleague_models_Team $currTeam
+     * @param \tx_cfcleague_util_TeamInfo $teamInfo
      *
      * @return string
      */
@@ -245,7 +250,7 @@ class Tx_Cfcleague_Controller_Team_ProfileAdd
     /**
      * Fügt Personen einem Team hinzu.
      *
-     * @param tx_cfcleague_models_Team $currTeam
+     * @param \tx_cfcleague_models_Team $currTeam
      * @param string $profileCol
      * @param array $entryUids
      */
@@ -266,7 +271,7 @@ class Tx_Cfcleague_Controller_Team_ProfileAdd
      *
      * @param array $options
      *
-     * @return tx_cfcleague_mod1_profilesearcher
+     * @return \tx_cfcleague_mod1_profilesearcher
      */
     protected function getProfileSearcher(&$options)
     {

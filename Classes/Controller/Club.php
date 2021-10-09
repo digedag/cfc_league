@@ -1,11 +1,17 @@
 <?php
 
+namespace System25\T3sports\Controller;
+
 use System25\T3sports\Controller\Club\ClubStadiumHandler;
+use Sys25\RnBase\Backend\Module\BaseModFunc;
+use Sys25\RnBase\Backend\Form\ToolBox;
+use Sys25\RnBase\Utility\Misc;
+use tx_rnbase;
 
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2010-2020 Rene Nitzsche (rene@system25.de)
+ *  (c) 2010-2021 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -24,13 +30,11 @@ use System25\T3sports\Controller\Club\ClubStadiumHandler;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-tx_rnbase::load('tx_rnbase_util_TYPO3');
-tx_rnbase::load('tx_rnbase_mod_BaseModFunc');
 
 /**
  * BaseModule to manage clubs, stadiums etc.
  */
-class Tx_Cfcleague_Controller_Club extends tx_rnbase_mod_BaseModFunc
+class Club extends BaseModFunc
 {
     /**
      * Method getFuncId.
@@ -44,9 +48,9 @@ class Tx_Cfcleague_Controller_Club extends tx_rnbase_mod_BaseModFunc
 
     /**
      * @param string $template
-     * @param tx_rnbase_configurations $configurations
-     * @param tx_rnbase_util_FormatUtil $formatter
-     * @param tx_rnbase_util_FormTool $formTool
+     * @param \tx_rnbase_configurations $configurations
+     * @param \tx_rnbase_util_FormatUtil $formatter
+     * @param ToolBox $formTool
      */
     protected function getContent($template, &$configurations, &$formatter, $formTool)
     {
@@ -56,7 +60,7 @@ class Tx_Cfcleague_Controller_Club extends tx_rnbase_mod_BaseModFunc
         // Zuerst holen wir alle Tabs, erstellen die MenuItems und werten den Request aus
         $tabItems = [];
         $tabItems[] = tx_rnbase::makeInstance(ClubStadiumHandler::class);
-        tx_rnbase_util_Misc::callHook('cfc_league', 'modClub_tabItems', [
+        Misc::callHook('cfc_league', 'modClub_tabItems', [
             'tabItems' => &$tabItems,
         ], $this);
 

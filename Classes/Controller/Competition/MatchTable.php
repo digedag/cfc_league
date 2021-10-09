@@ -1,8 +1,22 @@
 <?php
+
+namespace System25\T3sports\Controller\Competition;
+
+use Sys25\RnBase\Backend\Form\ToolBox;
+use Sys25\RnBase\Backend\Module\IModule;
+use Sys25\RnBase\Utility\TYPO3;
+use tx_cfcleague_models_Competition as Competition;
+use Tx_Cfcleague_Handler_MatchCreator as MatchCreator;
+use tx_rnbase;
+use Sys25\RnBase\Utility\T3General;
+use Sys25\RnBase\Backend\Utility\Tables;
+use Sys25\RnBase\Database\Connection;
+
+
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2009-2017 Rene Nitzsche (rene@system25.de)
+ *  (c) 2009-2021 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -21,21 +35,18 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-tx_rnbase::load('tx_cfcleague_mod1_decorator');
-tx_rnbase::load('tx_cfcleague_models_Competition');
-tx_rnbase::load('Tx_Rnbase_Utility_T3General');
 
 /**
  * Die Klasse verwaltet die Erstellung von Spielplänen für Wettbewerbe.
  */
-class Tx_Cfcleague_Controller_Competition_MatchTable
+class MatchTable
 {
     /* @var $doc \TYPO3\CMS\Backend\Template\BigDocumentTemplate */
     private $doc;
 
     private $module;
 
-    /* @var $formTool Tx_Rnbase_Backend_Form_ToolBox */
+    /* @var ToolBox */
     private $formTool;
 
     /**
@@ -49,15 +60,15 @@ class Tx_Cfcleague_Controller_Competition_MatchTable
     /**
      * Verwaltet die Erstellung von Spielplänen von Ligen.
      *
-     * @param tx_rnbase_mod_IModule $module
-     * @param tx_cfcleague_models_Competition $competition
+     * @param IModule $module
+     * @param Competition $competition
      */
     public function main($module, $competition)
     {
         $this->module = $module;
         $this->doc = $module->getDoc();
 
-        if (!tx_rnbase_util_TYPO3::isTYPO70OrHigher()) {
+        if (!TYPO3::isTYPO70OrHigher()) {
             // Das ist noch nicht auf jQuery umgestellt.
             $this->getPageRenderer()->addJsFile('js/matchcreate.js', 'text/javascript', false, false, '', true);
         }
@@ -65,9 +76,8 @@ class Tx_Cfcleague_Controller_Competition_MatchTable
         $this->formTool = $module->getFormTool();
         // $start = microtime(true);
 
-        tx_rnbase::load('Tx_Cfcleague_Handler_MatchCreator');
         // Die Neuanlage der manuellen Spiele erledigt der MatchCreator
-        $content .= Tx_Cfcleague_Handler_MatchCreator::getInstance()->handleRequest($this->getModule());
+        $content .= MatchCreator::getInstance()->handleRequest($this->getModule());
 
         // Die Neuanlage der "automatischen" Spiele übernimmt diese Klasse
         $content .= $this->handleCreateMatchTable($competition);
@@ -80,7 +90,7 @@ class Tx_Cfcleague_Controller_Competition_MatchTable
     }
 
     /**
-     * @param tx_cfcleague_models_Competition $comp
+     * @param Competition $comp
      *
      * @return string
      */
@@ -88,8 +98,8 @@ class Tx_Cfcleague_Controller_Competition_MatchTable
     {
         global $LANG;
         // Haben wir Daten im Request?
-        $data = Tx_Rnbase_Utility_T3General::_GP('data');
-        if (is_array($data['rounds']) && Tx_Rnbase_Utility_T3General::_GP('update')) {
+        $data = T3General::_GP('data');
+        if (is_array($data['rounds']) && T3General::_GP('update')) {
             $result = $this->createMatches($data['rounds'], $comp);
             $content .= $this->doc->section($LANG->getLL('message').':', $result, 0, 1, \tx_rnbase_mod_IModFunc::ICON_INFO);
 
@@ -100,7 +110,7 @@ class Tx_Cfcleague_Controller_Competition_MatchTable
     /**
      * Zeigt den Spielplan an.
      *
-     * @param tx_cfcleague_models_Competition $comp
+     * @param Competition $comp
      *
      * @return string
      */
@@ -128,8 +138,7 @@ class Tx_Cfcleague_Controller_Competition_MatchTable
         if (0 == $mode) { // Automatischer Spielplan
             $content .= $this->showMatchTableAuto($comp);
         } else { // Manuell Spiele anlegen
-            tx_rnbase::load('Tx_Cfcleague_Handler_MatchCreator');
-            $content .= Tx_Cfcleague_Handler_MatchCreator::getInstance()->showScreen($comp, $this->getModule());
+            $content .= MatchCreator::getInstance()->showScreen($comp, $this->getModule());
         }
 
         return $content;
@@ -138,7 +147,7 @@ class Tx_Cfcleague_Controller_Competition_MatchTable
     /**
      * Automatische Erzeugung eines Spielplans.
      *
-     * @param tx_cfcleague_models_Competition $comp
+     * @param Competition $comp
      *
      * @return string
      */
@@ -149,12 +158,12 @@ class Tx_Cfcleague_Controller_Competition_MatchTable
         // Wir holen die Mannschaften und den GameString aus der Liga
         // Beides jagen wir durch den Generator
         $options = [];
-        $options['halfseries'] = intval(Tx_Rnbase_Utility_T3General::_GP('option_halfseries'));
+        $options['halfseries'] = intval(T3General::_GP('option_halfseries'));
         $options['nomatch'] = $comp->getDummyTeamIds();
         $options['firstmatchday'] = $comp->getNumberOfRounds();
         $options['firstmatchnumber'] = $comp->getLastMatchNumber();
         // Zunächst mal Anzeige der Daten
-        /* @var $gen tx_cfcleague_util_Generator */
+        /* @var $gen \tx_cfcleague_util_Generator */
         $gen = tx_rnbase::makeInstance('tx_cfcleague_util_Generator');
         $table = $gen->main($comp->getTeamIds(), $comp->getGenerationKey(), $options);
 
@@ -207,7 +216,7 @@ class Tx_Cfcleague_Controller_Competition_MatchTable
         ];
         // $arr = Array(Array($LANG->getLL('label_round'), $LANG->getLL('label_roundname').' / '.
         // $LANG->getLL('label_rounddate'), $LANG->getLL('label_roundset')));
-        $tables = tx_rnbase::makeInstance('Tx_Rnbase_Backend_Utility_Tables');
+        $tables = tx_rnbase::makeInstance(Tables::class);
 
         foreach ($table as $round => $matchArr) {
             $row = [];
@@ -230,7 +239,7 @@ class Tx_Cfcleague_Controller_Competition_MatchTable
     /**
      * Erstellt das Datenarray zur Erstellung der HTML-Tabelle mit den Spielen des Spieltages.
      *
-     * @param tx_cfcleague_models_Competition $league
+     * @param Competition $league
      */
     private function createMatchTableArray(&$matches, &$league, $namePrefix)
     {
@@ -270,7 +279,7 @@ class Tx_Cfcleague_Controller_Competition_MatchTable
     /**
      * Returns the formtool.
      *
-     * @return tx_rnbase_util_FormTool
+     * @return ToolBox
      */
     protected function getFormTool()
     {
@@ -278,7 +287,7 @@ class Tx_Cfcleague_Controller_Competition_MatchTable
     }
 
     /**
-     * @return tx_rnbase_mod_IModule
+     * @return IModule
      */
     protected function getModule()
     {
@@ -321,8 +330,7 @@ class Tx_Cfcleague_Controller_Competition_MatchTable
         // Die neuen Notes werden jetzt gespeichert
         reset($data);
 
-        tx_rnbase::load('Tx_Rnbase_Database_Connection');
-        $tce = Tx_Rnbase_Database_Connection::getInstance()->getTCEmain($data);
+        $tce = Connection::getInstance()->getTCEmain($data);
         $tce->process_datamap();
 
         return $LANG->getLL('msg_matches_created');

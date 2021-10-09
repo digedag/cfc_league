@@ -5,6 +5,9 @@ namespace System25\T3sports\Controller\Ajax;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Core\Http\Response;
+use Sys25\RnBase\Utility\T3General;
+use Sys25\RnBase\Backend\Utility\BackendUtility;
+use Sys25\RnBase\Utility\TYPO3;
 
 /**
  * Handling requirejs client requests.
@@ -13,18 +16,19 @@ class AjaxTicker
 {
     public function dispatch(ServerRequestInterface $request): ResponseInterface
     {
-        $tickerMessage = trim(strip_tags(\Tx_Rnbase_Utility_T3General::_POST('value')));
-        $t3Time = (int) \Tx_Rnbase_Utility_T3General::_POST('t3time');
-        $t3match = (int) \Tx_Rnbase_Utility_T3General::_POST('t3match');
+        $tickerMessage = trim(strip_tags(T3General::_POST('value')));
+        $t3Time = (int) T3General::_POST('t3time');
+        $t3match = (int) T3General::_POST('t3match');
 
-        if (!is_object($GLOBALS['BE_USER'])) {
+
+        if (!is_object(TYPO3::getBEUser())) {
             return $this->createResponse('No BE user found!', 401);
         }
 
         if (!$tickerMessage || !$t3match) {
             return $this->createJsonResponse('Invalid request!', 400);
         }
-        $matchRecord = \Tx_Rnbase_Backend_Utility::getRecord('tx_cfcleague_games', $t3match);
+        $matchRecord = BackendUtility::getRecord('tx_cfcleague_games', $t3match);
 
         $record = [
             'comment' => $tickerMessage,

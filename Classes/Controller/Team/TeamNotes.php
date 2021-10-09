@@ -1,8 +1,25 @@
 <?php
+
+namespace System25\T3sports\Controller\Team;
+
+use Sys25\RnBase\Backend\Form\ToolBox;
+use Sys25\RnBase\Backend\Module\IModFunc;
+use Sys25\RnBase\Backend\Module\IModule;
+use Sys25\RnBase\Utility\T3General;
+use Sys25\RnBase\Utility\Strings;
+use Sys25\RnBase\Database\Connection;
+use System25\T3sports\Utility\Misc;
+use tx_cfcleague_mod1_decorator;
+use tx_cfcleague_models_Team as Team;
+use tx_cfcleague_models_TeamNoteType as TeamNoteType;
+use tx_cfcleague_util_ServiceRegistry as ServiceRegistry;
+use tx_rnbase;
+
+
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2008-2018 Rene Nitzsche (rene@system25.de)
+ *  (c) 2008-2021 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -21,14 +38,11 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-tx_rnbase::load('tx_rnbase_util_Misc');
-tx_rnbase::load('tx_cfcleague_mod1_decorator');
-tx_rnbase::load('Tx_Rnbase_Utility_Strings');
 
 /**
  * Submodul: Bearbeiten von TeamNotes.
  */
-class Tx_Cfcleague_Controller_Team_TeamNotes
+class TeamNotes
 {
     protected $mod;
 
@@ -36,8 +50,8 @@ class Tx_Cfcleague_Controller_Team_TeamNotes
      * Ausführung des Requests.
      * Das Team muss bekannt sein.
      *
-     * @param tx_rnbase_mod_IModule $module
-     * @param tx_cfcleague_team $currTeam
+     * @param IModule $module
+     * @param \tx_cfcleague_models_team $currTeam
      *
      * @return string
      */
@@ -51,10 +65,11 @@ class Tx_Cfcleague_Controller_Team_TeamNotes
         // 1. Alle Team-Notizen des Teams anzeigen
         // SELECT * FROM notizen where team=123
         // Notizen nach Typ anzeigen
-        $srv = tx_cfcleague_util_ServiceRegistry::getTeamService();
+        $srv = ServiceRegistry::getTeamService();
         $types = $srv->getNoteTypes();
         if (!count($types)) {
-            $content .= $this->mod->doc->section($GLOBALS['LANG']->getLL('message').':', $GLOBALS['LANG']->getLL('msg_create_notetypes'), 0, 1, \tx_rnbase_mod_IModFunc::ICON_INFO);
+            $content .= $this->mod->doc->section($GLOBALS['LANG']->getLL('message').':',
+                $GLOBALS['LANG']->getLL('msg_create_notetypes'), 0, 1, IModFunc::ICON_INFO);
 
             return $content;
         }
@@ -74,7 +89,7 @@ class Tx_Cfcleague_Controller_Team_TeamNotes
     /**
      * Liefert das FormTool.
      *
-     * @return tx_rnbase_util_FormTool
+     * @return ToolBox
      */
     protected function getFormTool()
     {
@@ -84,12 +99,12 @@ class Tx_Cfcleague_Controller_Team_TeamNotes
     /**
      * Darstellung der gefundenen Personen.
      *
-     * @param tx_cfcleague_models_Team $currTeam
-     * @param tx_cfcleague_models_TeamNoteType $type
+     * @param Team $currTeam
+     * @param TeamNoteType $type
      *
      * @return string
      */
-    protected function showTeamNotes(tx_cfcleague_models_Team $currTeam, tx_cfcleague_models_TeamNoteType $type)
+    protected function showTeamNotes(Team $currTeam, TeamNoteType $type)
     {
         $out = '<h2>'.$type->getLabel().'</h2>';
         if ($type->getDescription()) {
@@ -97,7 +112,7 @@ class Tx_Cfcleague_Controller_Team_TeamNotes
         }
 
         // Alle Notes dieses Teams laden
-        $srv = tx_cfcleague_util_ServiceRegistry::getTeamService();
+        $srv = ServiceRegistry::getTeamService();
         $notes = $srv->getTeamNotes($currTeam, $type);
 
         $decor = tx_rnbase::makeInstance('tx_cfcleague_util_TeamNoteDecorator', $this->getFormTool());
@@ -123,7 +138,7 @@ class Tx_Cfcleague_Controller_Team_TeamNotes
         $tables = tx_rnbase::makeInstance('Tx_Rnbase_Backend_Utility_Tables');
         $out .= $tables->buildTable($rows[0]);
 
-        $options[Tx_Rnbase_Backend_Form_ToolBox::OPTION_DEFVALS] = [
+        $options[ToolBox::OPTION_DEFVALS] = [
             'tx_cfcleague_team_notes' => [
                 'team' => $currTeam->getUid(),
                 'type' => $type->getUid(),
@@ -131,7 +146,7 @@ class Tx_Cfcleague_Controller_Team_TeamNotes
         ];
         // We use the mediatype from first entry
         if (count($notes)) {
-            $options[Tx_Rnbase_Backend_Form_ToolBox::OPTION_DEFVALS]['tx_cfcleague_team_notes']['mediatype'] = $notes[0]->getMediaType();
+            $options[ToolBox::OPTION_DEFVALS]['tx_cfcleague_team_notes']['mediatype'] = $notes[0]->getMediaType();
         }
 
         $options['title'] = $GLOBALS['LANG']->getLL('label_create_new').': '.$type->getLabel();
@@ -142,16 +157,16 @@ class Tx_Cfcleague_Controller_Team_TeamNotes
     }
 
     /**
-     * @param tx_cfcleague_models_Team $currTeam
+     * @param Team $currTeam
      *
      * @return string
      */
     protected function handleAddProfiles($currTeam, $baseInfo)
     {
         $out = '';
-        $profile2team = strlen(Tx_Rnbase_Utility_T3General::_GP('profile2team')) > 0; // Wurde der Submit-Button gedrückt?
+        $profile2team = strlen(T3General::_GP('profile2team')) > 0; // Wurde der Submit-Button gedrückt?
         if ($profile2team) {
-            $entryUids = Tx_Rnbase_Utility_T3General::_GP('checkEntry');
+            $entryUids = T3General::_GP('checkEntry');
             if (!is_array($entryUids) || !count($entryUids)) {
                 $out = $GLOBALS['LANG']->getLL('msg_no_profile_selected').'<br/><br/>';
             } else {
@@ -160,12 +175,12 @@ class Tx_Cfcleague_Controller_Team_TeamNotes
                     $out = $GLOBALS['LANG']->getLL('msg_maxPlayers').'<br/><br/>';
                 } else {
                     // Die Spieler hinzufügen
-                    $playerUids = implode(',', tx_cfcleague_profile_create::mergeArrays(Tx_Rnbase_Utility_Strings::intExplode(',', $currTeam->getProperty('players')), $entryUids));
+                    $playerUids = implode(',', Misc::mergeArrays(Strings::intExplode(',', $currTeam->getProperty('players')), $entryUids));
                     $data['tx_cfcleague_teams'][$currTeam->getUid()]['players'] = $playerUids;
 
                     reset($data);
 
-                    $tce = Tx_Rnbase_Database_Connection::getInstance()->getTCEmain($data);
+                    $tce = Connection::getInstance()->getTCEmain($data);
                     $tce->process_datamap();
                     $out .= $GLOBALS['LANG']->getLL('msg_profiles_joined').'<br/><br/>';
                     $currTeam->getProperty('players', $playerUids);
@@ -181,7 +196,7 @@ class Tx_Cfcleague_Controller_Team_TeamNotes
      *
      * @param array $options
      *
-     * @return tx_cfcleague_mod1_profilesearcher
+     * @return \tx_cfcleague_mod1_profilesearcher
      */
     protected function getProfileSearcher(&$options)
     {

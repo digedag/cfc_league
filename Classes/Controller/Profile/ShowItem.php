@@ -1,5 +1,7 @@
 <?php
 
+namespace System25\T3sports\Controller\Profile;
+
 use Sys25\RnBase\Utility\TYPO3;
 use TYPO3\CMS\Backend\Controller\ContentElement\ElementInformationController;
 use TYPO3\CMS\Backend\Template\ModuleTemplate;
@@ -7,11 +9,12 @@ use TYPO3\CMS\Core\Http\NormalizedParams;
 use TYPO3\CMS\Core\Http\ServerRequestFactory;
 use TYPO3\CMS\Core\Imaging\IconFactory;
 use TYPO3\CMS\Core\Type\Bitmask\Permission;
+use tx_rnbase;
 
 /*
  *  Copyright notice
  *
- *  (c) 2007-2020 Rene Nitzsche (rene@system25.de)
+ *  (c) 2007-2021 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -31,7 +34,7 @@ use TYPO3\CMS\Core\Type\Bitmask\Permission;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-class Tx_Cfcleague_Controller_Profile_ShowItem extends ElementInformationController
+class ShowItem extends ElementInformationController
 {
     /**
      * Constructor.
@@ -69,10 +72,10 @@ class Tx_Cfcleague_Controller_Profile_ShowItem extends ElementInformationControl
         $this->table = $table;
         $this->uid = $uid;
         $this->permsClause = $this->getBackendUser()->getPagePermsClause(Permission::PAGE_SHOW);
-        $this->moduleTemplate = \tx_rnbase::makeInstance(ModuleTemplate::class);
+        $this->moduleTemplate = tx_rnbase::makeInstance(ModuleTemplate::class);
         $this->moduleTemplate->getDocHeaderComponent()->disable();
         if (!TYPO3::isTYPO87OrHigher()) {
-            $this->doc = \tx_rnbase::makeInstance(\TYPO3\CMS\Backend\Template\DocumentTemplate::class);
+            $this->doc = tx_rnbase::makeInstance(\TYPO3\CMS\Backend\Template\DocumentTemplate::class);
             $this->doc->divClass = 'container';
         }
 

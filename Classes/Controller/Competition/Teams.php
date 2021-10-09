@@ -1,8 +1,22 @@
 <?php
+
+namespace System25\T3sports\Controller\Competition;
+
+use Sys25\RnBase\Backend\Form\ToolBox;
+use Sys25\RnBase\Backend\Utility\Tables;
+use Sys25\RnBase\Database\Connection;
+use Sys25\RnBase\Frontend\Request\Parameters;
+use tx_cfcleague_models_Competition as Competition;
+use tx_cfcleague_util_ServiceRegistry as ServiceRegistry;
+use tx_rnbase;
+use Sys25\RnBase\Utility\Strings;
+use Sys25\RnBase\Backend\Module\IModFunc;
+use Sys25\RnBase\Backend\Module\IModule;
+
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2008-2017 Rene Nitzsche (rene@system25.de)
+ *  (c) 2008-2021 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -21,23 +35,19 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-tx_rnbase::load('tx_rnbase_parameters');
-tx_rnbase::load('Tx_Rnbase_Database_Connection');
-tx_rnbase::load('Tx_Rnbase_Utility_Strings');
-tx_rnbase::load('tx_cfcleague_mod1_decorator');
 
 /**
  * Die Klasse verwaltet die Erstellung Teams für Wettbewerbe.
  */
-class Tx_Cfcleague_Controller_Competition_Teams
+class Teams
 {
     public $doc;
 
     /**
      * Verwaltet die Erstellung von Spielplänen von Ligen.
      *
-     * @param tx_rnbase_mod_IModule $module
-     * @param tx_cfcleague_league $competition
+     * @param IModule $module
+     * @param Competition $competition
      */
     public function main($module, $competition)
     {
@@ -63,7 +73,7 @@ class Tx_Cfcleague_Controller_Competition_Teams
     /**
      * Returns the formtool.
      *
-     * @return tx_rnbase_util_FormTool
+     * @return ToolBox
      */
     protected function getFormTool()
     {
@@ -74,7 +84,7 @@ class Tx_Cfcleague_Controller_Competition_Teams
      * Show all teams from current page and not part of current competition.
      *
      * @param int $pid
-     * @param tx_cfcleague_models_Competition $competition
+     * @param Competition $competition
      *
      * @return string
      */
@@ -82,16 +92,17 @@ class Tx_Cfcleague_Controller_Competition_Teams
     {
         global $LANG;
         // Liegen Daten im Request
-        $teamIds = tx_rnbase_parameters::getPostOrGetParameter('checkEntry');
-        if (tx_rnbase_parameters::getPostOrGetParameter('addteams') && is_array($teamIds) && count($teamIds)) {
-            $tcaData['tx_cfcleague_competition'][$competition->getUid()]['teams'] = implode(',', $this->mergeArrays(Tx_Rnbase_Utility_Strings::intExplode(',', $competition->getProperty('teams')), $teamIds));
+        $teamIds = Parameters::getPostOrGetParameter('checkEntry');
+        if (Parameters::getPostOrGetParameter('addteams') && is_array($teamIds) && count($teamIds)) {
+            $tcaData = [];
+            $tcaData['tx_cfcleague_competition'][$competition->getUid()]['teams'] = implode(',', $this->mergeArrays(Strings::intExplode(',', $competition->getProperty('teams')), $teamIds));
 
-            $tce = Tx_Rnbase_Database_Connection::getInstance()->getTCEmain($tcaData, []);
+            $tce = Connection::getInstance()->getTCEmain($tcaData, []);
             $tce->process_datamap();
             $competition->refresh();
         }
 
-        $srv = tx_cfcleague_util_ServiceRegistry::getTeamService();
+        $srv = ServiceRegistry::getTeamService();
         // Team-IDs im aktuellen Wettbewerb
         $teamIds = $competition->getProperty('teams');
         // Teams der Seite laden
@@ -119,7 +130,7 @@ class Tx_Cfcleague_Controller_Competition_Teams
                 'method' => 'getName',
             ],
         ];
-        $arr = tx_cfcleague_mod1_decorator::prepareTable($teams, $columns, $this->getFormTool(), $options);
+        $arr = \tx_cfcleague_mod1_decorator::prepareTable($teams, $columns, $this->getFormTool(), $options);
 
         $content = '<h2>'.$LANG->getLL('label_add_teams_from_page').'</h2>';
 
@@ -133,12 +144,13 @@ class Tx_Cfcleague_Controller_Competition_Teams
     /**
      * Darstellung einer Tabelle mit den Teams auf der Seite und der Option diese hinzuzufügen.
      *
-     * @param tx_cfcleague_league $competition
+     * @param int $pid
+     * @param Competition $competition
      */
-    protected function showNewTeamForm($pid, &$competition)
+    protected function showNewTeamForm($pid, $competition)
     {
         global $LANG;
-        $show = intval(tx_rnbase_parameters::getPostOrGetParameter('check_newcompteam'));
+        $show = intval(Parameters::getPostOrGetParameter('check_newcompteam'));
         $content = '<h2>
 		<input type="checkbox" name="check_newcompteam" value="1" '.($show ? 'checked="checked"' : '').' onClick="this.form.submit()">
 		'.$LANG->getLL('label_create_teams').'</h2>
@@ -147,7 +159,7 @@ class Tx_Cfcleague_Controller_Competition_Teams
         if (!$show) {
             return $content;
         }
-        $content .= $this->createTeams(tx_rnbase_parameters::getPostOrGetParameter('data'), $competition);
+        $content .= $this->createTeams(Parameters::getPostOrGetParameter('data'), $competition);
 
         // Jetzt 6 Boxen mit Name und Kurzname
         $arr = [
@@ -165,8 +177,8 @@ class Tx_Cfcleague_Controller_Competition_Teams
             $row[] = $this->getFormTool()->createTxtInput('data[tx_cfcleague_teams][NEW'.$i.'][short_name]', '', 10);
             $arr[] = $row;
         }
-        /* @var $tables Tx_Rnbase_Backend_Utility_Tables */
-        $tables = tx_rnbase::makeInstance('Tx_Rnbase_Backend_Utility_Tables');
+        /* @var $tables Tables */
+        $tables = tx_rnbase::makeInstance(Tables::class);
         $content .= $tables->buildTable($arr, $this->getTableLayout());
         $content .= $this->getFormTool()->createSubmit('update', $LANG->getLL('btn_create'), $GLOBALS['LANG']->getLL('msg_create_teams'));
 
@@ -176,9 +188,8 @@ class Tx_Cfcleague_Controller_Competition_Teams
     /**
      * Creates new teams and adds to current competition.
      *
-     * @param array $data
-     *            request data
-     * @param tx_cfcleague_models_Competition $competition
+     * @param array $data request data
+     * @param Competition $competition
      *
      * @return string
      */
@@ -199,13 +210,13 @@ class Tx_Cfcleague_Controller_Competition_Teams
         if (!count($uids)) {
             return '';
         }
-        $tcaData['tx_cfcleague_competition'][$competition->getUid()]['teams'] = implode(',', $this->mergeArrays(Tx_Rnbase_Utility_Strings::intExplode(',', $competition->getProperty('teams')), $uids));
+        $tcaData['tx_cfcleague_competition'][$competition->getUid()]['teams'] = implode(',', $this->mergeArrays(Strings::intExplode(',', $competition->getProperty('teams')), $uids));
         reset($tcaData);
 
-        $tce = Tx_Rnbase_Database_Connection::getInstance()->getTCEmain($tcaData);
+        $tce = Connection::getInstance()->getTCEmain($tcaData);
         $tce->process_datamap();
         $competition->refresh();
-        $content .= $this->doc->section('Message:', $LANG->getLL('msg_teams_created'), 0, 1, \tx_rnbase_mod_IModFunc::ICON_INFO);
+        $content .= $this->doc->section('Message:', $LANG->getLL('msg_teams_created'), 0, 1, IModFunc::ICON_INFO);
 
         return $content;
     }
@@ -213,7 +224,7 @@ class Tx_Cfcleague_Controller_Competition_Teams
     /**
      * Darstellung einer Tabelle mit den aktuellen Teams.
      *
-     * @param tx_cfcleague_models_Competition $competition
+     * @param Competition $competition
      */
     protected function showCurrentTeams($competition)
     {
@@ -226,7 +237,7 @@ class Tx_Cfcleague_Controller_Competition_Teams
         ];
         $teams = $competition->getTeamNames(1);
         if (!count($teams)) {
-            return $content.$this->doc->section('Message:', $LANG->getLL('msg_noteams_in_comp'), 0, 1, \tx_rnbase_mod_IModFunc::ICON_INFO);
+            return $content.$this->doc->section('Message:', $LANG->getLL('msg_noteams_in_comp'), 0, 1, IModFunc::ICON_INFO);
         }
         foreach ($teams as $teamArr) {
             $row = [];
@@ -239,7 +250,7 @@ class Tx_Cfcleague_Controller_Competition_Teams
             $row[] = $buttons;
             $arr[] = $row;
         }
-        $tables = tx_rnbase::makeInstance('Tx_Rnbase_Backend_Utility_Tables');
+        $tables = tx_rnbase::makeInstance(Tables::class);
         $content .= $tables->buildTable($arr);
 
         return $content;

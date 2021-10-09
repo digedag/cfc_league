@@ -4,11 +4,17 @@ namespace System25\T3sports\Controller;
 
 use Sys25\RnBase\Backend\Utility\BackendUtility;
 use Sys25\RnBase\Utility\TYPO3;
+use Sys25\RnBase\Backend\Module\BaseModFunc;
+use tx_cfcleague_util_ServiceRegistry as ServiceRegistry;
+use tx_rnbase;
+use Sys25\RnBase\Backend\Utility\Tables;
+use Sys25\RnBase\Utility\T3General;
+use Sys25\RnBase\Database\Connection;
 
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2007-2020 Rene Nitzsche (rene@system25.de)
+ *  (c) 2007-2021 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -31,7 +37,7 @@ use Sys25\RnBase\Utility\TYPO3;
 /**
  * Die Klasse stellt den MatchTicker bereit.
  */
-class MatchTicker extends \tx_rnbase_mod_BaseModFunc
+class MatchTicker extends BaseModFunc
 {
     public const TABLE_NOTES = 'tx_cfcleague_match_notes';
 
@@ -62,7 +68,7 @@ class MatchTicker extends \tx_rnbase_mod_BaseModFunc
         $this->doc = $this->getModule()->getDoc();
 
         // Selector-Instanz bereitstellen
-        $this->selector = \tx_rnbase::makeInstance('tx_cfcleague_selector');
+        $this->selector = tx_rnbase::makeInstance('tx_cfcleague_selector');
         $this->selector->init($this->getModule()
             ->getDoc(), $this->getModule());
 
@@ -89,14 +95,14 @@ class MatchTicker extends \tx_rnbase_mod_BaseModFunc
             ->getPid(), $current_league);
 
         // Und nun das Spiel wählen
-        $matchData = \tx_cfcleague_util_ServiceRegistry::getMatchService()->searchMatchesByRound($current_league, $current_round, true);
+        $matchData = ServiceRegistry::getMatchService()->searchMatchesByRound($current_league, $current_round, true);
         $match = $this->getSelector()->showMatchSelector($selector, $this->getModule()
             ->getPid(), $matchData);
         $this->setSelectorMenu($selector);
 
         $modContent = '<div id="editform">';
-        $update = \Tx_Rnbase_Utility_T3General::_GP('update');
-        $data = \Tx_Rnbase_Utility_T3General::_GP('data');
+        $update = T3General::_GP('update');
+        $data = T3General::_GP('data');
         // Haben wir Daten im Request?
         if ($update && is_array($data['tx_cfcleague_match_notes'])) {
             $this->insertNotes($data);
@@ -112,7 +118,7 @@ class MatchTicker extends \tx_rnbase_mod_BaseModFunc
         $arr = $this->createFormArray($match);
 
         /* @var $tables \Tx_Rnbase_Backend_Utility_Tables */
-        $tables = \tx_rnbase::makeInstance('Tx_Rnbase_Backend_Utility_Tables');
+        $tables = tx_rnbase::makeInstance(Tables::class);
         $modContent .= $tables->buildTable($arr, $this->_getTableLayoutForm());
         $modContent .= '<br />';
 
@@ -125,7 +131,7 @@ class MatchTicker extends \tx_rnbase_mod_BaseModFunc
             ->createSubmit('update', $LANG->getLL('btn_save'));
         // Jetzt listen wir noch die zum Spiel vorhandenen Tickermeldungen auf
         $modContent .= $this->doc->divider(5);
-        $arr = $this->createTickerArray($match, \Tx_Rnbase_Utility_T3General::_GP('showAll'));
+        $arr = $this->createTickerArray($match, T3General::_GP('showAll'));
         if ($arr) {
             $tickerContent = $formTool->createModuleLink(
                 ['showAll' => '1'],
@@ -188,12 +194,12 @@ class MatchTicker extends \tx_rnbase_mod_BaseModFunc
 
     protected function getFormHeadline()
     {
-        $stop = \Tx_Rnbase_Utility_T3General::_GP('btn_watch_stop');
-        $pause = \Tx_Rnbase_Utility_T3General::_GP('btn_watch_pause');
-        $start = \Tx_Rnbase_Utility_T3General::_GP('btn_watch_start');
-        $pauseTime = (int) \Tx_Rnbase_Utility_T3General::_GP('watch_pausetime');
-        $startTime = (int) \Tx_Rnbase_Utility_T3General::_GP('watch_starttime');
-        $clickTime = (int) \Tx_Rnbase_Utility_T3General::_GP('watch_localtime');
+        $stop = T3General::_GP('btn_watch_stop');
+        $pause = T3General::_GP('btn_watch_pause');
+        $start = T3General::_GP('btn_watch_start');
+        $pauseTime = (int) T3General::_GP('watch_pausetime');
+        $startTime = (int) T3General::_GP('watch_starttime');
+        $clickTime = (int) T3General::_GP('watch_localtime');
 
         // Daten: Startuhrzeit auf dem Client und gewünschtes offset
         $currentValues = [];
@@ -224,7 +230,7 @@ class MatchTicker extends \tx_rnbase_mod_BaseModFunc
 
         // Der übergebene Offset wird immer gespeichert
         $offset = [
-            'watch_offset' => (int) \Tx_Rnbase_Utility_T3General::_GP('watch_offset'),
+            'watch_offset' => (int) T3General::_GP('watch_offset'),
         ];
         $modValues = BackendUtility::getModuleData(
             ['watch_offset' => 0],
@@ -433,7 +439,7 @@ class MatchTicker extends \tx_rnbase_mod_BaseModFunc
 
     protected function getTickerTypes()
     {
-        $srv = \tx_cfcleague_util_ServiceRegistry::getMatchService();
+        $srv = ServiceRegistry::getMatchService();
         $tcaTypes = $srv->getMatchNoteTypes4TCA();
         $types = [];
         foreach ($tcaTypes as $typeDef) {
@@ -453,7 +459,7 @@ class MatchTicker extends \tx_rnbase_mod_BaseModFunc
             return $this->playerNames[$team];
         }
 
-        $profileSrv = \tx_cfcleague_util_ServiceRegistry::getProfileService();
+        $profileSrv = ServiceRegistry::getProfileService();
         if ('home' == $team) {
             $players = $profileSrv->loadProfiles($match->getPlayersHome(true));
         } else {
@@ -498,12 +504,12 @@ class MatchTicker extends \tx_rnbase_mod_BaseModFunc
         $playersHome = $playersGuest = [
             0 => '',
         ]; // Erster Eintrag bleibt leer
-        $players = \tx_cfcleague_util_ServiceRegistry::getProfileService()->loadProfiles($match->getPlayersHome(true));
+        $players = ServiceRegistry::getProfileService()->loadProfiles($match->getPlayersHome(true));
         foreach ($players as $player) {
             $playersHome[$player->getUid()] = $player->getName(true);
         }
         asort($playersHome);
-        $players = \tx_cfcleague_util_ServiceRegistry::getProfileService()->loadProfiles($match->getPlayersGuest(true));
+        $players = ServiceRegistry::getProfileService()->loadProfiles($match->getPlayersGuest(true));
         foreach ($players as $player) {
             $playersGuest[$player->getUid()] = $player->getName(true);
         }
@@ -581,7 +587,7 @@ class MatchTicker extends \tx_rnbase_mod_BaseModFunc
         }
         // Die neuen Notes werden jetzt gespeichert
         reset($data);
-        $tce = \Tx_Rnbase_Database_Connection::getInstance()->getTCEmain($data);
+        $tce = Connection::getInstance()->getTCEmain($data);
         $tce->process_datamap();
     }
 

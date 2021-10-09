@@ -2,10 +2,14 @@
 
 namespace System25\T3sports\Controller\Club;
 
+use Sys25\RnBase\Backend\Module\IModule;
+use Sys25\RnBase\Backend\Module\IModFunc;
+use tx_rnbase;
+
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2010-2020 Rene Nitzsche (rene@system25.de)
+ *  (c) 2010-2021 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -41,7 +45,7 @@ class ClubStadiumHandler
         return '###LABEL_TAB_STADIUMS###';
     }
 
-    public function handleRequest(\tx_rnbase_mod_IModule $mod)
+    public function handleRequest(IModule $mod)
     {
     }
 
@@ -49,11 +53,11 @@ class ClubStadiumHandler
      * @param \tx_cfcleague_models_Club $club
      * @param \tx_rnbase_mod_IModule $mod
      */
-    public function showScreen($club, \tx_rnbase_mod_IModule $mod)
+    public function showScreen($club, IModule $mod)
     {
         global $LANG;
 
-        $searcher = \tx_rnbase::makeInstance('tx_cfcleague_mod1_searcher_Stadium', $mod);
+        $searcher = tx_rnbase::makeInstance('tx_cfcleague_mod1_searcher_Stadium', $mod);
         $searcher->setClub($club->getUid());
 
         $result = $searcher->getResultList();
@@ -62,7 +66,7 @@ class ClubStadiumHandler
             $content .= $result['table'];
             $content .= $result['pager'];
         } else {
-            $content .= $mod->getDoc()->section($LANG->getLL('label_msg_nostadiumsfound'), '', 0, 1, \tx_rnbase_mod_IModFunc::ICON_INFO);
+            $content .= $mod->getDoc()->section($LANG->getLL('label_msg_nostadiumsfound'), '', 0, 1, IModFunc::ICON_INFO);
         }
 
         $options = [
@@ -73,7 +77,7 @@ class ClubStadiumHandler
         return $content;
     }
 
-    public function makeLink(\tx_rnbase_mod_IModule $mod)
+    public function makeLink(IModule $mod)
     {
     }
 }

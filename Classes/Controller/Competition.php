@@ -1,8 +1,21 @@
 <?php
+
+namespace System25\T3sports\Controller;
+
+use System25\T3sports\Controller\Competition\Teams;
+use System25\T3sports\Controller\Competition\MatchTable;
+use Sys25\RnBase\Frontend\Marker\Templates;
+use System25\T3sports\Controller\Competition\DfbSync;
+use System25\T3sports\Controller\Competition\MatchEdit;
+use Sys25\RnBase\Backend\Module\BaseModFunc;
+use tx_rnbase;
+use Sys25\RnBase\Backend\Form\ToolBox;
+
+
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2008-2019 Rene Nitzsche (rene@system25.de)
+ *  (c) 2008-2021 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -21,16 +34,11 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-tx_rnbase::load('tx_rnbase_mod_BaseModFunc');
-
-tx_rnbase::load('tx_rnbase_util_Templates');
-tx_rnbase::load('tx_rnbase_util_BaseMarker');
-tx_rnbase::load('tx_rnbase_util_TYPO3');
 
 /**
  * Die Klasse ist die Einstiegsklasse für das Modul "Wettbewerbe verwalten".
  */
-class Tx_Cfcleague_Controller_Competition extends tx_rnbase_mod_BaseModFunc
+class Competition extends BaseModFunc
 {
     public $doc;
 
@@ -50,9 +58,9 @@ class Tx_Cfcleague_Controller_Competition extends tx_rnbase_mod_BaseModFunc
      * Verwaltet die Erstellung von Spielplänen von Ligen.
      *
      * @param string $template
-     * @param tx_rnbase_configurations $configurations
-     * @param tx_rnbase_util_FormatUtil $formatter
-     * @param tx_rnbase_util_FormTool $formTool
+     * @param \tx_rnbase_configurations $configurations
+     * @param \tx_rnbase_util_FormatUtil $formatter
+     * @param ToolBox $formTool
      *
      * @return string
      */
@@ -102,18 +110,18 @@ class Tx_Cfcleague_Controller_Competition extends tx_rnbase_mod_BaseModFunc
 
                 break;
             case 1:
-                $mod = tx_rnbase::makeInstance('Tx_Cfcleague_Controller_Competition_Teams');
+                $mod = tx_rnbase::makeInstance(Teams::class);
                 $funcContent = $mod->main($this->getModule(), $current_league);
 
                 break;
             case 2:
-                $mod = tx_rnbase::makeInstance('Tx_Cfcleague_Controller_Competition_MatchTable');
+                $mod = tx_rnbase::makeInstance(MatchTable::class);
                 $funcContent = $mod->main($this->getModule(), $current_league);
 
                 break;
             case 3:
-                $funcTemplate = tx_rnbase_util_Templates::getSubpart($template, '###FUNC_DFBSYNC###');
-                $mod = tx_rnbase::makeInstance('Tx_Cfcleague_Controller_Competition_DfbSync');
+                $funcTemplate = Templates::getSubpart($template, '###FUNC_DFBSYNC###');
+                $mod = tx_rnbase::makeInstance(DfbSync::class);
                 $funcContent = $mod->main($this->getModule(), $current_league, $funcTemplate);
 
                 break;
@@ -123,8 +131,8 @@ class Tx_Cfcleague_Controller_Competition extends tx_rnbase_mod_BaseModFunc
         // Den JS-Code für Validierung einbinden
         $content .= $formTool->form->printNeededJSFunctions();
 
-        $modContent = tx_rnbase_util_Templates::getSubpart($template, '###MAIN###');
-        $modContent = tx_rnbase_util_Templates::substituteMarkerArrayCached($modContent, [
+        $modContent = Templates::getSubpart($template, '###MAIN###');
+        $modContent = Templates::substituteMarkerArrayCached($modContent, [
             '###CONTENT###' => $content,
         ]);
 
@@ -134,7 +142,7 @@ class Tx_Cfcleague_Controller_Competition extends tx_rnbase_mod_BaseModFunc
 
     private function showEditMatches($current_league, $module)
     {
-        $subMod = tx_rnbase::makeInstance('Tx_Cfcleague_Controller_Competition_MatchEdit');
+        $subMod = tx_rnbase::makeInstance(MatchEdit::class);
         $content = $subMod->main($module, $current_league);
 
         return $content;
