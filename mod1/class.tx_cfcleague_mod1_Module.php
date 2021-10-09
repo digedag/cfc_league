@@ -1,4 +1,6 @@
 <?php
+use Sys25\RnBase\Backend\Module\BaseModule;
+
 /*
  * *************************************************************
  * Copyright notice
@@ -23,16 +25,13 @@
  * This copyright notice MUST APPEAR in all copies of the script!
  * *************************************************************
  */
-require_once tx_rnbase_util_Extensions::extPath('cfc_league').'mod1/class.tx_cfcleague_selector.php';
-tx_rnbase::load('tx_rnbase_mod_BaseModule');
-tx_rnbase::load('Tx_Rnbase_Backend_Utility');
 
 /**
  * Module 'T3sports'.
  *
  * @author René Nitzsche rene@system25.de
  */
-class tx_cfcleague_mod1_Module extends tx_rnbase_mod_BaseModule
+class tx_cfcleague_mod1_Module extends BaseModule
 {
     public $pageinfo;
 

@@ -1,4 +1,6 @@
 <?php
+use Sys25\RnBase\Domain\Model\BaseModel;
+
 /***************************************************************
  *  Copyright notice
  *
@@ -21,12 +23,11 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-tx_rnbase::load('tx_rnbase_model_base');
 
 /**
  * Model for a team note.
  */
-class tx_cfcleague_models_TeamNote extends tx_rnbase_model_base
+class tx_cfcleague_models_TeamNote extends BaseModel
 {
     protected $profile;
 
@@ -58,8 +59,6 @@ class tx_cfcleague_models_TeamNote extends tx_rnbase_model_base
      */
     public function getType()
     {
-        tx_rnbase::load('tx_cfcleague_models_TeamNoteType');
-
         return tx_cfcleague_models_TeamNoteType::getInstance($this->getProperty('type'));
     }
 

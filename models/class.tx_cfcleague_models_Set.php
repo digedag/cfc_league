@@ -1,4 +1,6 @@
 <?php
+use Sys25\RnBase\Domain\Model\BaseModel;
+
 /***************************************************************
  *  Copyright notice
  *
@@ -21,13 +23,11 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-tx_rnbase::load('tx_rnbase_model_base');
-tx_rnbase::load('Tx_Rnbase_Utility_Strings');
 
 /**
  * Model for a match set.
  */
-class tx_cfcleague_models_Set extends tx_rnbase_model_base
+class tx_cfcleague_models_Set extends BaseModel
 {
     protected $p1;
 

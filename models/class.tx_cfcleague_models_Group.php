@@ -1,4 +1,8 @@
 <?php
+
+use Sys25\RnBase\Database\Connection;
+use Sys25\RnBase\Domain\Model\BaseModel;
+
 /***************************************************************
  *  Copyright notice
  *
@@ -21,12 +25,11 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-tx_rnbase::load('tx_rnbase_model_base');
 
 /**
  * Model for age group.
  */
-class tx_cfcleague_models_Group extends tx_rnbase_model_base
+class tx_cfcleague_models_Group extends BaseModel
 {
     public function getTableName()
     {
@@ -71,6 +74,6 @@ class tx_cfcleague_models_Group extends tx_rnbase_model_base
         $options['orderby'] = 'sorting asc';
         $options['wrapperclass'] = 'tx_cfcleague_models_Group';
 
-        return Tx_Rnbase_Database_Connection::getInstance()->doSelect('*', 'tx_cfcleague_group', $options);
+        return Connection::getInstance()->doSelect('*', 'tx_cfcleague_group', $options);
     }
 }

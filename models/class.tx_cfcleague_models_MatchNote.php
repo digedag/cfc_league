@@ -1,8 +1,11 @@
 <?php
+
+use Sys25\RnBase\Domain\Model\BaseModel;
+
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2007-2017 Rene Nitzsche (rene@system25.de)
+ *  (c) 2007-2021 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -21,12 +24,11 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-tx_rnbase::load('tx_rnbase_model_base');
 
 /**
  * Model for a match note/event.
  */
-class tx_cfcleague_models_MatchNote extends tx_rnbase_model_base
+class tx_cfcleague_models_MatchNote extends BaseModel
 {
     public const TYPE_TICKER = 100;
 

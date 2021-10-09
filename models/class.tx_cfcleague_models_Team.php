@@ -1,4 +1,9 @@
 <?php
+
+use Sys25\RnBase\Database\Connection;
+use Sys25\RnBase\Domain\Model\BaseModel;
+use Sys25\RnBase\Utility\Strings;
+
 /***************************************************************
 *  Copyright notice
 *
@@ -22,13 +27,10 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-tx_rnbase::load('Tx_Rnbase_Domain_Model_Base');
-tx_rnbase::load('Tx_Rnbase_Utility_Strings');
-
 /**
  * Model für ein Team.
  */
-class tx_cfcleague_models_Team extends Tx_Rnbase_Domain_Model_Base
+class tx_cfcleague_models_Team extends BaseModel
 {
     private static $instances = [];
 
@@ -165,7 +167,7 @@ class tx_cfcleague_models_Team extends Tx_Rnbase_Domain_Model_Base
             $options['where'] = 'uid IN ('.$this->getProperty($column).')';
             $options['wrapperclass'] = 'tx_cfcleague_models_Profile';
 
-            $rows = Tx_Rnbase_Database_Connection::getInstance()->doSelect($what, $from, $options, 0);
+            $rows = Connection::getInstance()->doSelect($what, $from, $options, 0);
 
             return $this->sortProfiles($rows, $column);
         }
@@ -185,7 +187,7 @@ class tx_cfcleague_models_Team extends Tx_Rnbase_Domain_Model_Base
         if (strlen(trim($this->getProperty($recordKey))) > 0) {
             if (count($profiles)) {
                 // Jetzt die Spieler in die richtige Reihenfolge bringen
-                $uids = Tx_Rnbase_Utility_Strings::intExplode(',', $this->getProperty($recordKey));
+                $uids = Strings::intExplode(',', $this->getProperty($recordKey));
                 $uids = array_flip($uids);
                 foreach ($profiles as $player) {
                     $ret[(int) $uids[$player->getUid()]] = $player;

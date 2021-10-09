@@ -1,4 +1,8 @@
 <?php
+
+use Sys25\RnBase\Database\Connection;
+use Sys25\RnBase\Domain\Model\BaseModel;
+
 /***************************************************************
  *  Copyright notice
  *
@@ -21,12 +25,11 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-tx_rnbase::load('tx_rnbase_model_base');
 
 /**
  * Model for a note type.
  */
-class tx_cfcleague_models_TeamNoteType extends tx_rnbase_model_base
+class tx_cfcleague_models_TeamNoteType extends BaseModel
 {
     private static $instances = [];
 
@@ -104,7 +107,7 @@ class tx_cfcleague_models_TeamNoteType extends tx_rnbase_model_base
         $options = [
             'wrapperclass' => 'tx_cfcleague_models_TeamNoteType',
         ];
-        $result = Tx_Rnbase_Database_Connection::getInstance()->doSelect('*', 'tx_cfcleague_note_types', $options, 0);
+        $result = Connection::getInstance()->doSelect('*', 'tx_cfcleague_note_types', $options, 0);
 
         foreach ($result as $type) {
             self::$instances[$type->getUid()] = $type;

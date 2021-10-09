@@ -1,4 +1,6 @@
 <?php
+use Sys25\RnBase\Domain\Model\BaseModel;
+
 /***************************************************************
  *  Copyright notice
  *
@@ -21,12 +23,11 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-tx_rnbase::load('tx_rnbase_model_base');
 
 /**
  * Model for a stadium.
  */
-class tx_cfcleague_models_Stadium extends tx_rnbase_model_base
+class tx_cfcleague_models_Stadium extends BaseModel
 {
     private static $instances = [];
 

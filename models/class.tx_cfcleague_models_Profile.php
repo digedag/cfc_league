@@ -1,4 +1,7 @@
 <?php
+
+use Sys25\RnBase\Domain\Model\BaseModel;
+
 /***************************************************************
  *  Copyright notice
  *
@@ -21,12 +24,11 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-tx_rnbase::load('tx_rnbase_model_base');
 
 /**
  * Model für eine Person.
  */
-class tx_cfcleague_models_Profile extends tx_rnbase_model_base
+class tx_cfcleague_models_Profile extends BaseModel
 {
     private static $instances = [];
 
@@ -69,7 +71,7 @@ class tx_cfcleague_models_Profile extends tx_rnbase_model_base
      *
      * @param int $uid
      *
-     * @return tx_netfewo_models_Objekt
+     * @return tx_cfcleague_models_Profile
      */
     public static function getProfileInstance($uid)
     {

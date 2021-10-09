@@ -1,4 +1,8 @@
 <?php
+
+use Sys25\RnBase\Database\Connection;
+use Sys25\RnBase\Domain\Model\BaseModel;
+
 /***************************************************************
  *  Copyright notice
  *
@@ -25,7 +29,7 @@
 /**
  * Model for a match.
  */
-class tx_cfcleague_models_Match extends tx_rnbase_model_base
+class tx_cfcleague_models_Match extends BaseModel
 {
     public const MATCH_STATUS_INVALID = -1;
     public const MATCH_STATUS_RESCHEDULED = -10;
@@ -183,7 +187,6 @@ class tx_cfcleague_models_Match extends tx_rnbase_model_base
     public function getSets()
     {
         if (!is_array($this->sets)) {
-            tx_rnbase::load('tx_cfcleague_models_Set');
             $this->sets = tx_cfcleague_models_Set::buildFromString($this->getProperty('sets'));
             $this->sets = $this->sets ? $this->sets : [];
         }
@@ -432,7 +435,6 @@ class tx_cfcleague_models_Match extends tx_rnbase_model_base
         if (!intval($this->getProperty('arena'))) {
             return null;
         }
-        tx_rnbase::load('tx_cfcleague_models_Stadium');
 
         return tx_cfcleague_models_Stadium::getStadiumInstance($this->getProperty('arena'));
     }
@@ -456,7 +458,6 @@ class tx_cfcleague_models_Match extends tx_rnbase_model_base
     {
         if ($this->getProperty('referee')) {
             try {
-                tx_rnbase::load('tx_cfcleague_models_Profile');
                 $profile = tx_cfcleague_models_Profile::getProfileInstance($this->getProperty('referee'));
 
                 return $profile->isValid() ? $profile : null;
@@ -528,7 +529,7 @@ class tx_cfcleague_models_Match extends tx_rnbase_model_base
             $options['wrapperclass'] = 'tx_cfcleague_models_MatchNote';
             // HINT: Die Sortierung nach dem Typ ist für die Auswechslungen wichtig.
             $options['orderby'] = 'minute asc, extra_time asc, uid asc';
-            $this->matchNotes = Tx_Rnbase_Database_Connection::getInstance()->doSelect($what, $from, $options, 0);
+            $this->matchNotes = Connection::getInstance()->doSelect($what, $from, $options, 0);
             // Das Match setzen (foreach geht hier nicht weil es nicht mit Referenzen arbeitet...)
             $anz = count($this->matchNotes);
             for ($i = 0; $i < $anz; ++$i) {
