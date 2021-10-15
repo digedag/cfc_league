@@ -11,6 +11,7 @@ use Sys25\RnBase\Configuration\Processor;
 use Sys25\RnBase\Database\Connection;
 use Sys25\RnBase\Utility\Strings;
 use Sys25\RnBase\Utility\T3General;
+use System25\T3sports\Model\Team;
 use System25\T3sports\Utility\Misc;
 use tx_rnbase;
 
@@ -50,9 +51,9 @@ class ProfileCreate
      * Verwaltet die Erstellung von Spielplänen von Ligen.
      *
      * @param IModule $module
-     * @param \tx_cfcleague_models_Team $team
+     * @param Team $team
      */
-    public function handleRequest($module, $team, $teamInfo)
+    public function handleRequest($module, Team $team, $teamInfo)
     {
         // Zuerst mal müssen wir die passende Liga auswählen lassen:
         // Entweder global über die Datenbank oder die Ligen der aktuellen Seite
@@ -88,12 +89,12 @@ class ProfileCreate
 
     /**
      * @param array $data
-     * @param \tx_cfcleague_models_Team $team
+     * @param Team $team
      * @param \tx_cfcleague_util_TeamInfo $teamInfo
      *
      * @return string
      */
-    private function showCreateProfiles(&$data, $team, $teamInfo)
+    private function showCreateProfiles(&$data, Team $team, $teamInfo)
     {
         global $LANG;
 
@@ -126,7 +127,7 @@ class ProfileCreate
      * Personen.
      * Wenn keine Personen da sind, gibt es 15 Eingabefelder, sonst nur 5.
      *
-     * @param \tx_cfcleague_models_Team $team
+     * @param Team $team
      * @param \tx_cfcleague_util_TeamInfo $teamInfo
      */
     protected function prepareInputTable($team, $teamInfo)
@@ -193,10 +194,10 @@ class ProfileCreate
      *
      * @param array $profiles
      *            Array mit den Daten aus dem Request
-     * @param \tx_cfcleague_models_Team $team das aktuelle Team, dem die Personen zugeordnet werden
+     * @param Team $team das aktuelle Team, dem die Personen zugeordnet werden
      * @param \tx_cfcleague_util_TeamInfo $teamInfo
      */
-    public static function createProfiles($profiles, $team, $teamInfo)
+    public static function createProfiles($profiles, Team $team, $teamInfo)
     {
         global $LANG;
 

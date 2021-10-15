@@ -8,7 +8,7 @@ use Sys25\RnBase\Frontend\Marker\Templates;
 use Sys25\RnBase\Frontend\Request\Parameters;
 use Sys25\RnBase\Utility\TYPO3;
 use System25\T3sports\Dfb\Synchronizer;
-use tx_cfcleague_models_Competition as Competition;
+use System25\T3sports\Model\Competition;
 use tx_rnbase;
 
 /***************************************************************
@@ -62,7 +62,6 @@ class DfbSync
     {
         // Zuerst mal müssen wir die passende Liga auswählen lassen:
         // Entweder global über die Datenbank oder die Ligen der aktuellen Seite
-        $pid = $module->getPid();
         $this->doc = $module->getDoc();
 
         $this->formTool = $module->getFormTool();

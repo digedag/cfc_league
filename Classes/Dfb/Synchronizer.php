@@ -5,8 +5,8 @@ namespace System25\T3sports\Dfb;
 use Sys25\RnBase\Database\Connection;
 use Sys25\RnBase\Utility\Logger;
 use Sys25\RnBase\Utility\Strings;
-use tx_cfcleague_models_Competition as Competition;
-use tx_cfcleague_util_ServiceRegistry as ServiceRegistry;
+use System25\T3sports\Model\Competition;
+use System25\T3sports\Utility\ServiceRegistry;
 use tx_rnbase;
 
 /***************************************************************
@@ -120,7 +120,7 @@ class Synchronizer
 
     /**
      * @param array $data
-     * @param \tx_cfcleague_models_Competition $competition
+     * @param Competition $competition
      * @param array $matchData
      * @param CsvStructure $structure
      * @param array $info
@@ -222,7 +222,7 @@ class Synchronizer
      *
      * @param mixed $teamUid
      * @param array $data
-     * @param \tx_cfcleague_models_Competition $competition
+     * @param Competition $competition
      */
     protected function addTeamToCompetition($teamUid, &$data, $competition)
     {
@@ -317,7 +317,7 @@ class Synchronizer
     /**
      * Lädt die vorhandenen Spiele des Wettbewerbs in die matchMap.
      *
-     * @param \tx_cfcleague_models_Competition $competition
+     * @param Competition $competition
      */
     protected function initMatches(Competition $competition)
     {

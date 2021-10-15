@@ -5,6 +5,7 @@ namespace System25\T3sports\Search;
 use Sys25\RnBase\Database\Query\Join;
 use Sys25\RnBase\Search\SearchBase;
 use Sys25\RnBase\Utility\Misc;
+use System25\T3sports\Model\Match;
 
 /***************************************************************
  *  Copyright notice
@@ -62,7 +63,7 @@ class MatchSearch extends SearchBase
 
     public function getWrapperClass()
     {
-        return 'tx_cfcleague_models_Match';
+        return Match::class;
     }
 
     protected function getJoins($tableAliases)

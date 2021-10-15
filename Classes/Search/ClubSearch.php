@@ -4,6 +4,7 @@ namespace System25\T3sports\Search;
 
 use Sys25\RnBase\Search\SearchBase;
 use Sys25\RnBase\Utility\Misc;
+use System25\T3sports\Model\Club;
 
 /***************************************************************
  *  Copyright notice
@@ -63,7 +64,7 @@ class ClubSearch extends SearchBase
 
     public function getWrapperClass()
     {
-        return 'tx_cfcleague_models_Club';
+        return Club::class;
     }
 
     protected function getJoins($tableAliases)

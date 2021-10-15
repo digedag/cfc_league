@@ -2,10 +2,8 @@
 
 namespace System25\T3sports\Model\Repository;
 
-use Sys25\RnBase\Domain\Model\RecordInterface;
-use Sys25\RnBase\Search\SearchBase;
+use Sys25\RnBase\Domain\Repository\PersistenceRepository;
 use System25\T3sports\Search\MatchNoteSearch;
-use tx_rnbase;
 
 /***************************************************************
  *  Copyright notice
@@ -30,58 +28,13 @@ use tx_rnbase;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-// FIXME: Nach Umstellung MatchNote auf Sys25\RnBase\Domain\Model\BaseModel das
-// Sys25\RnBase\Domain\Repository\PersistenceRepositoryeinsetzen!!
-
 /**
  * @author Rene Nitzsche
  */
-class MatchNoteRepository extends \Sys25\RnBase\Typo3Wrapper\Service\AbstractService
+class MatchNoteRepository extends PersistenceRepository
 {
     public function getSearchClass()
     {
         return MatchNoteSearch::class;
-    }
-
-    /**
-     * FIXME: Methode nach Umstellung auf Repo entfernen!
-     *
-     * @param array $record
-     */
-    public function createNewModel(array $record = [])
-    {
-        return $this->getDomainModel()->setProperty($record);
-    }
-
-    /**
-     * FIXME: Methode nach Umstellung auf Repo entfernen!
-     *
-     * @param object $model
-     * @param array $options
-     */
-    public function persist($model, $options = null)
-    {
-        if ($model->isPersisted()) {
-            $this->handleUpdate($model, $model->getProperty());
-        } else {
-            $this->create($model->getProperty());
-        }
-    }
-
-    private $dummyModel;
-
-    /**
-     * FIXME: Methode nach Umstellung auf Repo entfernen!
-     *
-     * @return RecordInterface
-     */
-    protected function getDomainModel()
-    {
-        if (!$this->dummyModel) {
-            $searcher = SearchBase::getInstance($this->getSearchClass());
-            $this->dummyModel = tx_rnbase::makeInstance($searcher->getWrapperClass(), ['uid' => 0]);
-        }
-
-        return $this->dummyModel;
     }
 }

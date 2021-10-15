@@ -5,6 +5,7 @@ namespace System25\T3sports\Search;
 use Sys25\RnBase\Database\Query\Join;
 use Sys25\RnBase\Search\SearchBase;
 use Sys25\RnBase\Utility\Misc;
+use System25\T3sports\Model\CompetitionRound;
 
 /***************************************************************
  *  Copyright notice
@@ -33,12 +34,12 @@ use Sys25\RnBase\Utility\Misc;
  *
  * @author Rene Nitzsche
  */
-class MatchRoundSearch extends SearchBase
+class CompetitionRoundSearch extends SearchBase
 {
     protected function getTableMappings()
     {
         $tableMapping = [];
-        $tableMapping['MATCHROUND'] = 'tx_cfcleague_games';
+        $tableMapping['COMPROUND'] = 'tx_cfcleague_games';
         $tableMapping['COMPETITION'] = 'tx_cfcleague_competition';
 
         // Hook to append other tables
@@ -56,7 +57,7 @@ class MatchRoundSearch extends SearchBase
 
     protected function getBaseTableAlias()
     {
-        return 'MATCHROUND';
+        return 'COMPROUND';
     }
 
     protected function useAlias()
@@ -66,7 +67,7 @@ class MatchRoundSearch extends SearchBase
 
     public function getWrapperClass()
     {
-        return 'tx_cfcleague_models_MatchRound';
+        return CompetitionRound::class;
     }
 
     protected function getJoins($tableAliases)
@@ -74,7 +75,7 @@ class MatchRoundSearch extends SearchBase
         $join = [];
 
         if (isset($tableAliases['COMPETITION'])) {
-            $join[] = new Join('MATCHROUND', 'tx_cfcleague_competition', 'MATCHROUND.competition = COMPETITION.uid', 'COMPETITION');
+            $join[] = new Join('COMPROUND', 'tx_cfcleague_competition', 'COMPROUND.competition = COMPETITION.uid', 'COMPETITION');
         }
 
         // Hook to append other tables

@@ -9,6 +9,7 @@ use Sys25\RnBase\Backend\Utility\Tables;
 use Sys25\RnBase\Database\Connection;
 use Sys25\RnBase\Utility\Strings;
 use Sys25\RnBase\Utility\T3General;
+use System25\T3sports\Model\Team;
 use System25\T3sports\Utility\Misc;
 use tx_rnbase;
 
@@ -47,7 +48,7 @@ class ProfileAdd
      * Das Team muss bekannt sein.
      *
      * @param IModule $module
-     * @param \tx_cfcleague_models_Team $currTeam
+     * @param Team $currTeam
      * @param \tx_cfcleague_util_TeamInfo $teamInfo
      *
      * @return string
@@ -85,7 +86,7 @@ class ProfileAdd
     /**
      * Darstellung der gefundenen Personen.
      *
-     * @param \tx_cfcleague_models_Team $currTeam
+     * @param Team $currTeam
      * @param \tx_cfcleague_util_TeamInfo $teamInfo
      *
      * @return string
@@ -169,7 +170,7 @@ class ProfileAdd
     /**
      * Add profiles to a team.
      *
-     * @param \tx_cfcleague_models_Team $currTeam
+     * @param Team $currTeam
      * @param \tx_cfcleague_util_TeamInfo $teamInfo
      *
      * @return string
@@ -208,7 +209,7 @@ class ProfileAdd
     /**
      * Add profiles to a team.
      *
-     * @param \tx_cfcleague_models_Team $currTeam
+     * @param Team $currTeam
      * @param \tx_cfcleague_util_TeamInfo $teamInfo
      *
      * @return string
@@ -250,7 +251,7 @@ class ProfileAdd
     /**
      * Fügt Personen einem Team hinzu.
      *
-     * @param \tx_cfcleague_models_Team $currTeam
+     * @param Team $currTeam
      * @param string $profileCol
      * @param array $entryUids
      */

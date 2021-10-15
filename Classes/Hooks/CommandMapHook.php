@@ -2,7 +2,10 @@
 
 namespace System25\T3sports\Hooks;
 
+use System25\T3sports\Model\Competition;
+use System25\T3sports\Model\Profile;
 use System25\T3sports\Utility\Misc;
+use System25\T3sports\Utility\ServiceRegistry;
 use tx_rnbase;
 
 /**
@@ -48,8 +51,8 @@ class CommandMapHook
     {
         if ('delete' == $command && 'tx_cfcleague_profiles' == $table) {
             // TODO: Check references
-            $profile = tx_rnbase::makeInstance('tx_cfcleague_models_Profile', $id);
-            $refArr = \tx_cfcleague_util_ServiceRegistry::getProfileService()->checkReferences($profile);
+            $profile = tx_rnbase::makeInstance(Profile::class, $id);
+            $refArr = ServiceRegistry::getProfileService()->checkReferences($profile);
             if (count($refArr) > 0) {
                 // Abbruch
                 $addInfo = '<p>';
@@ -60,8 +63,8 @@ class CommandMapHook
                 Misc::tceError('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:label_msg_refError', $addInfo);
             }
         } elseif ('delete' == $command && 'tx_cfcleague_competition' == $table) {
-            $competition = \tx_rnbase::makeInstance('tx_cfcleague_models_Competition', $id);
-            $refArr = \tx_cfcleague_util_ServiceRegistry::getCompetitionService()->checkReferences($competition);
+            $competition = tx_rnbase::makeInstance(Competition::class, $id);
+            $refArr = ServiceRegistry::getCompetitionService()->checkReferences($competition);
             if (count($refArr) > 0) {
                 // Abbruch
                 $addInfo = '<p>';

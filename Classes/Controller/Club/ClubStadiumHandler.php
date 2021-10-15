@@ -4,6 +4,7 @@ namespace System25\T3sports\Controller\Club;
 
 use Sys25\RnBase\Backend\Module\IModFunc;
 use Sys25\RnBase\Backend\Module\IModule;
+use System25\T3sports\Model\Club;
 use tx_rnbase;
 
 /***************************************************************
@@ -50,7 +51,7 @@ class ClubStadiumHandler
     }
 
     /**
-     * @param \tx_cfcleague_models_Club $club
+     * @param Club $club
      * @param IModule $mod
      */
     public function showScreen($club, IModule $mod)

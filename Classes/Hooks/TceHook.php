@@ -6,6 +6,7 @@ use Sys25\RnBase\Backend\Utility\BackendUtility;
 use Sys25\RnBase\Database\Connection;
 use Sys25\RnBase\Utility\Dates;
 use Sys25\RnBase\Utility\Strings;
+use System25\T3sports\Model\Stadium;
 use System25\T3sports\Utility\TcaLookup;
 
 /***************************************************************
@@ -97,7 +98,7 @@ class TceHook
         }
         if ('tx_cfcleague_games' == $table) {
             if ($incomingFieldArray['arena'] > 0 && !$incomingFieldArray['stadium']) {
-                $stadium = \tx_rnbase::makeInstance('tx_cfcleague_models_Stadium', $incomingFieldArray['arena']);
+                $stadium = \tx_rnbase::makeInstance(Stadium::class, $incomingFieldArray['arena']);
                 $incomingFieldArray['stadium'] = $stadium->getName();
             }
             if (strstr($incomingFieldArray['home'], 'NEW')) {

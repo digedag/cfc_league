@@ -8,6 +8,7 @@ use Sys25\RnBase\Backend\Module\IModule;
 use Sys25\RnBase\Backend\Utility\Tables;
 use Sys25\RnBase\Database\Connection;
 use Sys25\RnBase\Utility\T3General;
+use System25\T3sports\Model\Competition;
 use tx_rnbase;
 
 /***************************************************************
@@ -70,10 +71,10 @@ class MatchCreator
     }
 
     /**
-     * @param \tx_cfcleague_models_Competition $competition
+     * @param Competition $competition
      * @param IModule $mod
      */
-    public function showScreen($competition, IModule $mod)
+    public function showScreen(Competition $competition, IModule $mod)
     {
         global $LANG;
         $LANG->includeLLFile('EXT:cfc_league/Resources/Private/Language/locallang_db.xml');

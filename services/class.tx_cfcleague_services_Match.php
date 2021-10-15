@@ -1,8 +1,8 @@
 <?php
 
 use Sys25\RnBase\Search\SearchBase;
+use System25\T3sports\Search\CompetitionRoundSearch;
 use System25\T3sports\Search\MatchNoteSearch;
-use System25\T3sports\Search\MatchRoundSearch;
 use System25\T3sports\Search\MatchSearch;
 
 /***************************************************************
@@ -171,7 +171,7 @@ class tx_cfcleague_services_Match extends tx_cfcleague_services_Base
      */
     public function searchMatchRound($fields, $options)
     {
-        $searcher = SearchBase::getInstance(MatchRoundSearch::class);
+        $searcher = SearchBase::getInstance(CompetitionRoundSearch::class);
 
         return $searcher->search($fields, $options);
     }

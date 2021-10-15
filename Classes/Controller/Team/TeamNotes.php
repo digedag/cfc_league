@@ -9,11 +9,11 @@ use Sys25\RnBase\Backend\Utility\Tables;
 use Sys25\RnBase\Database\Connection;
 use Sys25\RnBase\Utility\Strings;
 use Sys25\RnBase\Utility\T3General;
+use System25\T3sports\Model\Team;
+use System25\T3sports\Model\TeamNoteType;
 use System25\T3sports\Utility\Misc;
+use System25\T3sports\Utility\ServiceRegistry;
 use tx_cfcleague_mod1_decorator;
-use tx_cfcleague_models_Team as Team;
-use tx_cfcleague_models_TeamNoteType as TeamNoteType;
-use tx_cfcleague_util_ServiceRegistry as ServiceRegistry;
 use tx_rnbase;
 
 /***************************************************************
@@ -51,11 +51,11 @@ class TeamNotes
      * Das Team muss bekannt sein.
      *
      * @param IModule $module
-     * @param \tx_cfcleague_models_team $currTeam
+     * @param Team $currTeam
      *
      * @return string
      */
-    public function handleRequest($module, $currTeam, $teamInfo)
+    public function handleRequest($module, Team $currTeam, $teamInfo)
     {
         $this->mod = $module;
         $this->pid = $module->getPid();
@@ -161,7 +161,7 @@ class TeamNotes
      *
      * @return string
      */
-    protected function handleAddProfiles($currTeam, $baseInfo)
+    protected function handleAddProfiles(Team $currTeam, $baseInfo)
     {
         $out = '';
         $profile2team = strlen(T3General::_GP('profile2team')) > 0; // Wurde der Submit-Button gedrückt?

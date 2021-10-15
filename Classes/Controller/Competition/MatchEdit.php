@@ -9,9 +9,11 @@ use Sys25\RnBase\Backend\Utility\Tables;
 use Sys25\RnBase\Database\Connection;
 use Sys25\RnBase\Utility\T3General;
 use Sys25\RnBase\Utility\TYPO3;
+use System25\T3sports\Model\Competition;
+use System25\T3sports\Model\Match;
+use System25\T3sports\Model\Team;
 use System25\T3sports\Sports\ServiceLocator;
-use tx_cfcleague_models_Competition as Competition;
-use tx_cfcleague_util_ServiceRegistry as ServiceRegistry;
+use System25\T3sports\Utility\ServiceRegistry;
 use tx_rnbase;
 
 /***************************************************************
@@ -56,7 +58,7 @@ class MatchEdit
      *
      * @param IModule $module
      */
-    public function main(IModule $module, $current_league)
+    public function main(IModule $module, Competition $current_league)
     {
         global $LANG;
 
@@ -71,7 +73,6 @@ class MatchEdit
 
         // Zuerst mal müssen wir die passende Liga auswählen lassen:
         $content = '';
-
         if (!count($current_league->getRounds())) {
             $content .= $LANG->getLL('no_round_in_league');
             $content .= '<br /><br />';
@@ -127,7 +128,7 @@ class MatchEdit
     }
 
     /**
-     * @param \tx_cfcleague_models_Team $currentTeam
+     * @param Team $currentTeam
      * @param int $current_round
      * @param Competition $current_league
      */
@@ -289,7 +290,7 @@ class MatchEdit
     /**
      * Erstellt das Datenarray zur Erstellung der HTML-Tabelle mit den Spielen des Spieltages.
      *
-     * @param \tx_cfcleague_models_Match[] $matches
+     * @param Match[] $matches
      * @param Competition $competition
      *
      * @return array mit zwei Elementen: Idx 0 enthält Array für Darstellung als Tabelle, Idx 1

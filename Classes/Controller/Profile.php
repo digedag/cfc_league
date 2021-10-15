@@ -150,7 +150,7 @@ class Profile extends BaseModFunc
         global $LANG;
         $out .= '<div class="row">';
 
-        /* @var $info \Tx_Cfcleague_Controller_Profile_ShowItem */
+        /* @var $info ShowItem */
         $info = tx_rnbase::makeInstance(ShowItem::class);
 
         $out .= '<div class="col-xs-6">';

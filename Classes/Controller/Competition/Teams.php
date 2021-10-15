@@ -9,8 +9,8 @@ use Sys25\RnBase\Backend\Utility\Tables;
 use Sys25\RnBase\Database\Connection;
 use Sys25\RnBase\Frontend\Request\Parameters;
 use Sys25\RnBase\Utility\Strings;
-use tx_cfcleague_models_Competition as Competition;
-use tx_cfcleague_util_ServiceRegistry as ServiceRegistry;
+use System25\T3sports\Model\Competition;
+use System25\T3sports\Utility\ServiceRegistry;
 use tx_rnbase;
 
 /***************************************************************
@@ -49,7 +49,7 @@ class Teams
      * @param IModule $module
      * @param Competition $competition
      */
-    public function main($module, $competition)
+    public function main($module, Competition $competition)
     {
         // Zuerst mal müssen wir die passende Liga auswählen lassen:
         // Entweder global über die Datenbank oder die Ligen der aktuellen Seite
@@ -88,7 +88,7 @@ class Teams
      *
      * @return string
      */
-    protected function showTeamsFromPage($pid, $competition)
+    protected function showTeamsFromPage($pid, Competition $competition)
     {
         global $LANG;
         // Liegen Daten im Request
@@ -226,7 +226,7 @@ class Teams
      *
      * @param Competition $competition
      */
-    protected function showCurrentTeams($competition)
+    protected function showCurrentTeams(Competition $competition)
     {
         global $LANG;
         $content = '<h2>'.$LANG->getLL('label_current_teams').'</h2>';

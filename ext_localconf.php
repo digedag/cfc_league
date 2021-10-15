@@ -1,5 +1,8 @@
 <?php
 
+use Sys25\RnBase\Utility\Extensions;
+use System25\T3sports\Utility\Misc;
+
 if (!defined('TYPO3_MODE')) {
     exit('Access denied.');
 }
@@ -38,7 +41,7 @@ $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['proc
 
 if (TYPO3_MODE == 'BE') {
     // Einbindung einer PageTSConfig
-    tx_rnbase_util_Extensions::addPageTSConfig('<INCLUDE_TYPOSCRIPT: source="FILE:EXT:cfc_league/mod1/pageTSconfig.txt">');
+    Extensions::addPageTSConfig('<INCLUDE_TYPOSCRIPT: source="FILE:EXT:cfc_league/mod1/pageTSconfig.txt">');
 
     $GLOBALS['TYPO3_CONF_VARS']['SYS']['formEngine']['nodeRegistry']['t3sports_logoSelect'] = [
         'nodeName' => 't3sLogoSelect',
@@ -47,35 +50,35 @@ if (TYPO3_MODE == 'BE') {
     ];
 }
 
-tx_cfcleague_util_Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_match_notes.type.ticker', '100');
-tx_cfcleague_util_Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_match_notes.type.goal', '10');
-tx_cfcleague_util_Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_match_notes.type.goal.header', '11');
-tx_cfcleague_util_Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_match_notes.type.goal.penalty', '12');
-tx_cfcleague_util_Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_match_notes.type.goal.own', '30');
-tx_cfcleague_util_Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_match_notes.type.goal.assist', '31');
-tx_cfcleague_util_Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_match_notes.type.penalty.forgiven', '32');
-tx_cfcleague_util_Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_match_notes.type.corner', '33');
-tx_cfcleague_util_Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_match_notes.type.yellow', '70');
-tx_cfcleague_util_Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_match_notes.type.yellowred', '71');
-tx_cfcleague_util_Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_match_notes.type.red', '72');
-tx_cfcleague_util_Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_match_notes.type.changeout', '80');
-tx_cfcleague_util_Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_match_notes.type.changein', '81');
-tx_cfcleague_util_Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_match_notes.type.captain', '200');
+Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_match_notes.type.ticker', '100');
+Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_match_notes.type.goal', '10');
+Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_match_notes.type.goal.header', '11');
+Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_match_notes.type.goal.penalty', '12');
+Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_match_notes.type.goal.own', '30');
+Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_match_notes.type.goal.assist', '31');
+Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_match_notes.type.penalty.forgiven', '32');
+Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_match_notes.type.corner', '33');
+Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_match_notes.type.yellow', '70');
+Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_match_notes.type.yellowred', '71');
+Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_match_notes.type.red', '72');
+Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_match_notes.type.changeout', '80');
+Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_match_notes.type.changein', '81');
+Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_match_notes.type.captain', '200');
 
-tx_cfcleague_util_Misc::registerFormation('', '0');
-tx_cfcleague_util_Misc::registerFormation('3-5-2', '1-3-5-2');
-tx_cfcleague_util_Misc::registerFormation('3-4-3', '1-3-4-3');
-tx_cfcleague_util_Misc::registerFormation('4-2-3-1', '1-4-2-3-1');
-tx_cfcleague_util_Misc::registerFormation('4-3-3', '1-4-3-3');
-tx_cfcleague_util_Misc::registerFormation('4-4-2', '1-4-4-2');
-tx_cfcleague_util_Misc::registerFormation('4-5-1', '1-4-5-1');
-tx_cfcleague_util_Misc::registerFormation('5-3-2', '1-5-3-2');
-tx_cfcleague_util_Misc::registerFormation('5-4-1', '1-5-4-1');
+Misc::registerFormation('', '0');
+Misc::registerFormation('3-5-2', '1-3-5-2');
+Misc::registerFormation('3-4-3', '1-3-4-3');
+Misc::registerFormation('4-2-3-1', '1-4-2-3-1');
+Misc::registerFormation('4-3-3', '1-4-3-3');
+Misc::registerFormation('4-4-2', '1-4-4-2');
+Misc::registerFormation('4-5-1', '1-4-5-1');
+Misc::registerFormation('5-3-2', '1-5-3-2');
+Misc::registerFormation('5-4-1', '1-5-4-1');
 
-tx_cfcleague_util_Misc::registerTableStrategy('default', 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_competition_tablestrategy_default', '');
+Misc::registerTableStrategy('default', 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_competition_tablestrategy_default', '');
 
 // Include services
-tx_rnbase_util_Extensions::addService(
+Extensions::addService(
     $_EXTKEY,
     't3sports_srv' /* sv type */ ,
     'tx_cfcleague_services_Stadiums' /* sv key */ ,
@@ -83,12 +86,11 @@ tx_rnbase_util_Extensions::addService(
         'title' => 'T3sports stadium service', 'description' => 'Operations for stadiums', 'subtype' => 'stadiums',
         'available' => true, 'priority' => 50, 'quality' => 50,
         'os' => '', 'exec' => '',
-        'classFile' => tx_rnbase_util_Extensions::extPath($_EXTKEY).'services/class.tx_cfcleague_services_Stadiums.php',
         'className' => 'tx_cfcleague_services_Stadiums',
     ]
 );
 
-tx_rnbase_util_Extensions::addService(
+Extensions::addService(
     $_EXTKEY,
     't3sports_srv' /* sv type */ ,
     'tx_cfcleague_services_Saison' /* sv key */ ,
@@ -96,12 +98,11 @@ tx_rnbase_util_Extensions::addService(
         'title' => 'T3sports saison service', 'description' => 'Operations for saisons', 'subtype' => 'saison',
         'available' => true, 'priority' => 50, 'quality' => 50,
         'os' => '', 'exec' => '',
-        'classFile' => tx_rnbase_util_Extensions::extPath($_EXTKEY).'services/class.tx_cfcleague_services_Saison.php',
         'className' => 'tx_cfcleague_services_Saison',
     ]
 );
 
-tx_rnbase_util_Extensions::addService(
+Extensions::addService(
     $_EXTKEY,
     't3sports_srv' /* sv type */ ,
     'tx_cfcleague_services_Competition' /* sv key */ ,
@@ -109,12 +110,11 @@ tx_rnbase_util_Extensions::addService(
         'title' => 'T3sports stadium service', 'description' => 'Operations for competitions', 'subtype' => 'competition',
         'available' => true, 'priority' => 50, 'quality' => 50,
         'os' => '', 'exec' => '',
-        'classFile' => tx_rnbase_util_Extensions::extPath($_EXTKEY).'services/class.tx_cfcleague_services_Competition.php',
         'className' => 'tx_cfcleague_services_Competition',
     ]
 );
 
-tx_rnbase_util_Extensions::addService(
+Extensions::addService(
     $_EXTKEY,
     't3sports_srv' /* sv type */ ,
     'tx_cfcleague_services_Match' /* sv key */ ,
@@ -122,12 +122,11 @@ tx_rnbase_util_Extensions::addService(
         'title' => 'T3sports match service', 'description' => 'Operations for matches', 'subtype' => 'match',
         'available' => true, 'priority' => 50, 'quality' => 50,
         'os' => '', 'exec' => '',
-        'classFile' => tx_rnbase_util_Extensions::extPath($_EXTKEY).'services/class.tx_cfcleague_services_Match.php',
         'className' => 'tx_cfcleague_services_Match',
     ]
 );
 
-tx_rnbase_util_Extensions::addService(
+Extensions::addService(
     $_EXTKEY,
     't3sports_srv' /* sv type */ ,
     'tx_cfcleague_services_Group' /* sv key */ ,
@@ -135,12 +134,11 @@ tx_rnbase_util_Extensions::addService(
         'title' => 'T3sports group service', 'description' => 'Operations for groups', 'subtype' => 'group',
         'available' => true, 'priority' => 50, 'quality' => 50,
         'os' => '', 'exec' => '',
-        'classFile' => tx_rnbase_util_Extensions::extPath($_EXTKEY).'services/class.tx_cfcleague_services_Group.php',
         'className' => 'tx_cfcleague_services_Group',
     ]
 );
 
-tx_rnbase_util_Extensions::addService(
+Extensions::addService(
     $_EXTKEY,
     't3sports_srv' /* sv type */ ,
     'tx_cfcleague_services_Teams' /* sv key */ ,
@@ -148,12 +146,11 @@ tx_rnbase_util_Extensions::addService(
         'title' => 'T3sports team service', 'description' => 'Operations for teams', 'subtype' => 'teams',
         'available' => true, 'priority' => 50, 'quality' => 50,
         'os' => '', 'exec' => '',
-        'classFile' => tx_rnbase_util_Extensions::extPath($_EXTKEY).'services/class.tx_cfcleague_services_Teams.php',
         'className' => 'tx_cfcleague_services_Teams',
     ]
 );
 
-tx_rnbase_util_Extensions::addService(
+Extensions::addService(
     $_EXTKEY,
     't3sports_srv' /* sv type */ ,
     'tx_cfcleague_services_Profiles' /* sv key */ ,
@@ -161,12 +158,11 @@ tx_rnbase_util_Extensions::addService(
         'title' => 'T3sports profile service', 'description' => 'Operations for profiles', 'subtype' => 'profiles',
         'available' => true, 'priority' => 50, 'quality' => 50,
         'os' => '', 'exec' => '',
-        'classFile' => tx_rnbase_util_Extensions::extPath($_EXTKEY).'services/class.tx_cfcleague_services_Profiles.php',
         'className' => 'tx_cfcleague_services_Profiles',
     ]
 );
 
-tx_rnbase_util_Extensions::addService(
+Extensions::addService(
     $_EXTKEY,
     't3sports_profiletype' /* sv type */ ,
     'tx_cfcleague_services_ProfileTypes' /* sv key */ ,
@@ -174,7 +170,6 @@ tx_rnbase_util_Extensions::addService(
         'title' => 'Base profile types', 'description' => 'Defines the base types for profiles like players, coaches...', 'subtype' => 'basetypes',
         'available' => true, 'priority' => 50, 'quality' => 50,
         'os' => '', 'exec' => '',
-        'classFile' => tx_rnbase_util_Extensions::extPath($_EXTKEY).'services/class.tx_cfcleague_services_ProfileTypes.php',
         'className' => 'tx_cfcleague_services_ProfileTypes',
     ]
 );
@@ -183,7 +178,7 @@ tx_rnbase_util_Extensions::addService(
 // Services for kind of sports
 // ---------------
 
-tx_rnbase_util_Extensions::addService(
+Extensions::addService(
     $_EXTKEY,
     't3sports_sports' /* sv type */ ,
     'tx_cfcleague_sports_Football' /* sv key */ ,
@@ -196,7 +191,7 @@ tx_rnbase_util_Extensions::addService(
     ]
 );
 
-tx_rnbase_util_Extensions::addService(
+Extensions::addService(
     $_EXTKEY,
     't3sports_sports' /* sv type */ ,
     'tx_cfcleague_sports_Handball' /* sv key */ ,
@@ -209,7 +204,7 @@ tx_rnbase_util_Extensions::addService(
     ]
 );
 
-tx_rnbase_util_Extensions::addService(
+Extensions::addService(
     $_EXTKEY,
     't3sports_sports' /* sv type */ ,
     'tx_cfcleague_sports_IceHockey' /* sv key */ ,
@@ -222,7 +217,7 @@ tx_rnbase_util_Extensions::addService(
     ]
 );
 
-tx_rnbase_util_Extensions::addService(
+Extensions::addService(
     $_EXTKEY,
     't3sports_sports' /* sv type */ ,
     'tx_cfcleague_sports_Volleyball' /* sv key */ ,

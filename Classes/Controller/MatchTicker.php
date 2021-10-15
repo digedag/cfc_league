@@ -8,7 +8,9 @@ use Sys25\RnBase\Backend\Utility\Tables;
 use Sys25\RnBase\Database\Connection;
 use Sys25\RnBase\Utility\T3General;
 use Sys25\RnBase\Utility\TYPO3;
-use tx_cfcleague_util_ServiceRegistry as ServiceRegistry;
+use System25\T3sports\Model\Competition;
+use System25\T3sports\Model\Match;
+use System25\T3sports\Utility\ServiceRegistry;
 use tx_rnbase;
 
 /***************************************************************
@@ -77,7 +79,7 @@ class MatchTicker extends BaseModFunc
 
         $selector = '';
         // Anzeige der vorhandenen Ligen
-        /* @var $current_league \tx_cfcleague_models_Competition */
+        /* @var $current_league Competition */
         $current_league = $this->getSelector()->showLeagueSelector($selector, $this->getModule()
             ->getPid());
         if (!$current_league) {
@@ -293,10 +295,10 @@ class MatchTicker extends BaseModFunc
     /**
      * Erstellt die Eingabemaske für den Spielstand.
      *
-     * @param \tx_cfcleague_models_Match $match
-     * @param \tx_cfcleague_models_Competition $competition
+     * @param Match $match
+     * @param Competition $competition
      */
-    private function createStandingForm($match, $competition)
+    private function createStandingForm(Match $match, Competition $competition)
     {
         global $LANG;
 
@@ -386,7 +388,7 @@ class MatchTicker extends BaseModFunc
     /**
      * Wir listen die Tickermeldungen des Spiels auf.
      *
-     * @param \tx_cfcleague_models_Match $match
+     * @param Match $match
      */
     protected function createTickerArray($match, $showAll)
     {
@@ -450,10 +452,10 @@ class MatchTicker extends BaseModFunc
     }
 
     /**
-     * @param \tx_cfcleague_models_Match $match
+     * @param Match $match
      * @param string $team
      */
-    protected function getPlayerNames($match, $team)
+    protected function getPlayerNames(Match $match, $team)
     {
         if (isset($this->playerNames[$team])) {
             return $this->playerNames[$team];
@@ -478,9 +480,9 @@ class MatchTicker extends BaseModFunc
     /**
      * Erstellt das Formular für die Eingabe der Tickermeldungen.
      *
-     * @param \tx_cfcleague_models_Match $match
+     * @param Match $match
      */
-    protected function createFormArray($match)
+    protected function createFormArray(Match $match)
     {
         global $LANG;
 

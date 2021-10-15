@@ -6,7 +6,7 @@ use Sys25\RnBase\Database\Connection;
 use Sys25\RnBase\Utility\Misc;
 use Sys25\RnBase\Utility\Strings;
 use Sys25\RnBase\Utility\T3General;
-use tx_cfcleague_util_ServiceRegistry as ServiceRegistry;
+use System25\T3sports\Utility\ServiceRegistry;
 
 /***************************************************************
 *  Copyright notice

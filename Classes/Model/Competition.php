@@ -86,7 +86,7 @@ class Competition extends BaseModel
      * @param int $status - 0,1,2 für alle, Hin-, Rückrunde
      * @param int $scope - 0,1,2 für alle, Hin-, Rückrunde
      *
-     * @return tx_cfcleague_models_match[]
+     * @return Match[]
      */
     public function getMatches($status, $scope = 0)
     {
@@ -129,7 +129,7 @@ class Competition extends BaseModel
                 }
                 $options = [
                     'where' => $where,
-                    'wrapperclass' => 'tx_cfcleague_models_match',
+                    'wrapperclass' => Match::class,
                 ];
                 // Issue 1880237: Return matches sorted by round
                 $options['orderby'] = 'round, date';
@@ -243,9 +243,9 @@ class Competition extends BaseModel
             // TODO: Die vielen Spaltennamen haben historische Gründe. Da müsste bei den Clients aufgeräumt werden...
             $options['what'] = 'distinct round as uid,round AS number,round,round_name,round_name As name, max(status) As finished, max(status) As max_status';
             $options['groupby'] = 'round,round_name';
-            $options['orderby']['MATCHROUND.ROUND'] = 'asc';
+            $options['orderby']['COMPROUND.ROUND'] = 'asc';
             $fields = [];
-            $fields['MATCHROUND.COMPETITION'][OP_EQ_INT] = $this->getUid();
+            $fields['COMPROUND.COMPETITION'][OP_EQ_INT] = $this->getUid();
             $this->cache['rounds'] = $srv->searchMatchRound($fields, $options);
         }
 
@@ -431,7 +431,7 @@ class Competition extends BaseModel
     /**
      * Returns all team participating this competition.
      *
-     * @return array[tx_cfcleaguefe_models_team]
+     * @return Team[]
      */
     public function getTeams($ignoreDummies = true)
     {
@@ -553,7 +553,7 @@ class Competition extends BaseModel
         return Connection::getInstance()->doSelect('*', 'tx_cfcleague_competition', [
             'where' => $where,
             'orderby' => 'sorting',
-            'wrapperclass' => 'tx_cfcleaguefe_models_competition',
+            'wrapperclass' => Competition::class,
         ]);
     }
 
@@ -596,7 +596,7 @@ class Competition extends BaseModel
             // Die UID der Liga setzen
             $options = [
                 'where' => 'competition="'.$this->getUid().'" ',
-                'wrapperclass' => 'tx_cfcleague_models_CompetitionPenalty',
+                'wrapperclass' => CompetitionPenalty::class,
             ];
 
             $this->penalties = Connection::getInstance()->

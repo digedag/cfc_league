@@ -10,7 +10,7 @@ use Sys25\RnBase\Database\Connection;
 use Sys25\RnBase\Utility\T3General;
 use Sys25\RnBase\Utility\TYPO3;
 use System25\T3sports\Handler\MatchCreator;
-use tx_cfcleague_models_Competition as Competition;
+use System25\T3sports\Model\Competition;
 use tx_rnbase;
 
 /***************************************************************
@@ -114,7 +114,7 @@ class MatchTable
      *
      * @return string
      */
-    private function showMatchTable($comp)
+    private function showMatchTable(Competition $comp)
     {
         global $LANG;
 
@@ -151,7 +151,7 @@ class MatchTable
      *
      * @return string
      */
-    private function showMatchTableAuto($comp)
+    private function showMatchTableAuto(Competition $comp)
     {
         global $LANG;
         $content = '';

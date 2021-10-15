@@ -5,6 +5,7 @@ namespace System25\T3sports\Search;
 use Sys25\RnBase\Database\Query\Join;
 use Sys25\RnBase\Search\SearchBase;
 use Sys25\RnBase\Utility\Misc;
+use System25\T3sports\Model\MatchNote;
 
 /***************************************************************
  *  Copyright notice
@@ -58,14 +59,9 @@ class MatchNoteSearch extends SearchBase
         return 'MATCHNOTE';
     }
 
-    protected function useAlias()
-    {
-        return true;
-    }
-
     public function getWrapperClass()
     {
-        return 'tx_cfcleague_models_MatchNote';
+        return MatchNote::class;
     }
 
     protected function getJoins($tableAliases)
