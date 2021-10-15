@@ -1,6 +1,5 @@
 <?php
 
-
 declare(strict_types=1);
 
 return [
@@ -14,4 +13,3 @@ return [
     'tx_cfcleague_sports_Volleyball' => \System25\T3sports\Sports\Volleyball::class,
     'tx_cfcleague_sports_MatchInfo' => \System25\T3sports\Sports\MatchInfo::class,
 ];
-
