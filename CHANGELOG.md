@@ -5,6 +5,7 @@
 ## v1.8.0 (??.??.2021)
  * all deprecated rn_base classes replaced
  * #59 all classes moves to PSR-4 namespaces
+ * BC: class `tx_cfcleaguefe_util_Memento` removed
 
 ## v1.7.1 (13.05.2021)
  * Integrate Github actions

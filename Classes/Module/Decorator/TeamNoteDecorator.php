@@ -1,8 +1,15 @@
 <?php
+
+namespace System25\T3sports\Module\Decorator;
+
+use Sys25\RnBase\Backend\Form\ToolBox;
+use Sys25\RnBase\Utility\TSFAL;
+use System25\T3sports\Model\TeamNote;
+
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2007-2013 Rene Nitzsche (rene@system25.de)
+ *  (c) 2007-2021 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -25,11 +32,11 @@
 /**
  * Diese Klasse ist für die Darstellung von TeamNotes im Backend verantwortlich.
  */
-class tx_cfcleague_util_TeamNoteDecorator
+class TeamNoteDecorator
 {
     public $formTool;
 
-    public function __construct($formTool)
+    public function __construct(ToolBox $formTool)
     {
         $this->formTool = $formTool;
     }
@@ -40,11 +47,11 @@ class tx_cfcleague_util_TeamNoteDecorator
      * @param mixed $value
      * @param string $colName
      * @param array $record
-     * @param tx_cfcleague_models_TeamNote $item
+     * @param TeamNote $item
      *
      * @return string
      */
-    public function format($value, $colName, $record = [], $item = false)
+    public function format($value, $colName, $record = [], TeamNote $item = null)
     {
         $ret = $value;
         if (!$item) {
@@ -84,35 +91,13 @@ class tx_cfcleague_util_TeamNoteDecorator
 
     private function showMediaFAL($item)
     {
-        tx_rnbase::load('tx_rnbase_util_TSFAL');
-        $fileReference = tx_rnbase_util_TSFAL::getFirstReference('tx_cfcleague_team_notes', $item->getUid(), 'media');
+        $fileReference = TSFAL::getFirstReference('tx_cfcleague_team_notes', $item->getUid(), 'media');
         if ($fileReference) {
-            $thumbs = tx_rnbase_util_TSFAL::createThumbnails([$fileReference], ['width' => 50, 'height' => 50]);
+            $thumbs = TSFAL::createThumbnails([$fileReference], ['width' => 50, 'height' => 50]);
 
             return ''.$thumbs[0];
         }
 
         return '';
     }
-
-    private function showMediaDAM($item)
-    {
-        tx_rnbase::load('tx_cfcleague_util_DAM');
-        $size = '50x50';
-        $damFiles = tx_cfcleague_util_DAM::fetchFiles('tx_cfcleague_team_notes', $item->getUid(), 'media');
-        $data = $damFiles['rows'];
-        if (count($data)) {
-            $thumbs = tx_cfcleague_util_DAM::createThumbnails($damFiles, $size, $addAttr);
-            $ret = $thumbs[0];
-            list($key, $file) = each($data);
-            $ret .= ' '.$file['file_name'];
-            $ret .= $this->formTool->createEditLink('tx_dam', $file['uid']);
-        }
-
-        return $ret;
-    }
-}
-
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/util/class.tx_cfcleague_util_TeamNoteDecorator.php']) {
-    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/util/class.tx_cfcleague_util_TeamNoteDecorator.php'];
 }

@@ -1,8 +1,14 @@
 <?php
+
+namespace System25\T3sports\Utility;
+
+use System25\T3sports\Model\Match;
+use System25\T3sports\Model\Set;
+
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2009-2013 Rene Nitzsche (rene@system25.de)
+ *  (c) 2009-2021 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -25,18 +31,18 @@
 /**
  * Util methods for match sets.
  */
-class tx_cfcleague_util_MatchSets
+class MatchSets
 {
     /**
      * returns sum of all set points of home team.
      *
-     * @param tx_cfcleague_models_Match $match
+     * @param Match $match
      */
     public static function countSetPointsHome($match)
     {
         $result = 0;
         $sets = $match->getSets();
-        /* @var $set tx_cfcleague_models_Set */
+        /* @var $set Set */
         foreach ($sets as $set) {
             $result += $set->getPointsHome();
         }
@@ -47,21 +53,17 @@ class tx_cfcleague_util_MatchSets
     /**
      * returns sum of all set points of guest team.
      *
-     * @param tx_cfcleague_models_Match $match
+     * @param Match $match
      */
     public static function countSetPointsGuest($match)
     {
         $result = 0;
         $sets = $match->getSets();
-        /* @var $set tx_cfcleague_models_Set */
+        /* @var $set Set */
         foreach ($sets as $set) {
             $result += $set->getPointsGuest();
         }
 
         return $result;
     }
-}
-
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/util/class.tx_cfcleague_util_MatchSets.php']) {
-    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/util/class.tx_cfcleague_util_MatchSets.php'];
 }

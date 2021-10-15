@@ -1,8 +1,11 @@
 <?php
+
+namespace System25\T3sports\Utility;
+
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2010 Rene Nitzsche (rene@system25.de)
+*  (c) 2010-2021 Rene Nitzsche (rene@system25.de)
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -25,7 +28,7 @@
 /**
  * Kleine Hilfsmethoden für MatchNotes.
  */
-class tx_cfcleague_util_MatchNote
+class MatchNotes
 {
     public static function isChangeIn($note)
     {
@@ -56,8 +59,4 @@ class tx_cfcleague_util_MatchNote
     {
         return $note->getType() == $type;
     }
-}
-
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/util/class.tx_cfcleague_util_MatchNote.php']) {
-    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/util/class.tx_cfcleague_util_MatchNote.php'];
 }

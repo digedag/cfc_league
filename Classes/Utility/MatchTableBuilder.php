@@ -1,12 +1,15 @@
 <?php
 
+namespace System25\T3sports\Utility;
+
 use Sys25\RnBase\Utility\Strings;
 use System25\T3sports\Search\SearchBuilder;
+use tx_rnbase;
 
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2008-2010 Rene Nitzsche (rene@system25.de)
+*  (c) 2008-2021 Rene Nitzsche (rene@system25.de)
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -26,60 +29,58 @@ use System25\T3sports\Search\SearchBuilder;
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-tx_rnbase::load('Tx_Rnbase_Utility_Strings');
-
 /**
  * This is a facade to build search queries for matches from database.
  */
-class tx_cfcleague_util_MatchTableBuilder
+class MatchTableBuilder
 {
-    public $_saisonIds;
+    private $_saisonIds;
 
-    public $_groupIds;
+    private $_groupIds;
 
-    public $_teamgroupIds;
+    private $_teamgroupIds;
 
-    public $_compIds;
+    private $_compIds;
 
-    public $_roundIds;
+    private $_roundIds;
 
-    public $_clubIds;
+    private $_clubIds;
 
-    public $_homeClubIds;
+    private $_homeClubIds;
 
-    public $_guestClubIds;
+    private $_guestClubIds;
 
-    public $_refereeIds;
+    private $_refereeIds;
 
-    public $_teamIds;
+    private $_teamIds;
 
-    public $_daysPast;
+    private $_daysPast;
 
-    public $_daysAhead;
+    private $_daysAhead;
 
-    public $_dateStart; // bestimmter Starttermin
+    private $_dateStart; // bestimmter Starttermin
 
-    public $_dateEnd; // bestimmter Endtermin
+    private $_dateEnd; // bestimmter Endtermin
 
-    public $_limit; // Anzahl Spiele limitieren
+    private $_limit; // Anzahl Spiele limitieren
 
-    public $_orderbyDate = false;
+    private $_orderbyDate = false;
 
-    public $_orderbyDateDesc = false;
+    private $_orderbyDateDesc = false;
 
-    public $_status;
+    private $_status;
 
-    public $_ticker;
+    private $_ticker;
 
-    public $_report;
+    private $_report;
 
-    public $_ignoreDummy;
+    private $_ignoreDummy;
 
-    public $_compTypes; // Wettbewerbstypen
+    private $_compTypes; // Wettbewerbstypen
 
-    public $_compObligation; // Pflichtwettbewerbe
+    private $_compObligation; // Pflichtwettbewerbe
 
-    public $_pidList;
+    private $_pidList;
 
     public function __construct()
     {
@@ -421,7 +422,7 @@ class tx_cfcleague_util_MatchTableBuilder
     /**
      * Whether or not matches belong to obligate competitions.
      *
-     * @param $value 0 - all, 1 - obligate only, 2 - no obligates
+     * @param int $value 0 - all, 1 - obligate only, 2 - no obligates
      */
     public function setCompetitionObligation($value)
     {
@@ -431,7 +432,7 @@ class tx_cfcleague_util_MatchTableBuilder
     /**
      * Whether or not matches belong to specific competitions types.
      *
-     * @param $value comma separated competition types
+     * @param string $value comma separated competition types
      */
     public function setCompetitionTypes($value)
     {
@@ -445,8 +446,4 @@ class tx_cfcleague_util_MatchTableBuilder
     {
         $this->_pidList = $pidList;
     }
-}
-
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/util/class.tx_cfcleague_util_MatchTableBuilder.php']) {
-    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/util/class.tx_cfcleague_util_MatchTableBuilder.php'];
 }

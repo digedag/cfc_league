@@ -12,6 +12,18 @@ namespace {
     {
     }
     /** @deprecated */
+    class tx_cfcleague_util_MatchNote
+    {
+    }
+    /** @deprecated */
+    class tx_cfcleague_util_MatchSets
+    {
+    }
+    /** @deprecated */
+    class MatchTableBuilder
+    {
+    }
+    /** @deprecated */
     class tx_cfcleague_tca_Lookup
     {
     }

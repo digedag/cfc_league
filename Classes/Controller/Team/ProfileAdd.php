@@ -10,9 +10,9 @@ use Sys25\RnBase\Database\Connection;
 use Sys25\RnBase\Utility\Strings;
 use Sys25\RnBase\Utility\T3General;
 use System25\T3sports\Model\Team;
+use System25\T3sports\Module\Utility\TeamInfo;
 use System25\T3sports\Utility\Misc;
 use tx_rnbase;
-use System25\T3sports\Module\Utility\TeamInfo;
 
 /***************************************************************
  *  Copyright notice

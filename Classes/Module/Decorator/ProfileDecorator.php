@@ -1,8 +1,13 @@
 <?php
+
+namespace System25\T3sports\Module\Decorator;
+
+use Sys25\RnBase\Backend\Form\ToolBox;
+
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2007-2008 Rene Nitzsche (rene@system25.de)
+*  (c) 2007-2021 Rene Nitzsche (rene@system25.de)
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -25,11 +30,11 @@
 /**
  * Diese Klasse ist für die Darstellung von Spielen im Backend verantwortlich.
  */
-class tx_cfcleague_util_ProfileDecorator
+class ProfileDecorator
 {
     public $formTool;
 
-    public function __construct($formTool)
+    public function __construct(ToolBox $formTool)
     {
         $this->formTool = $formTool;
     }
@@ -46,8 +51,4 @@ class tx_cfcleague_util_ProfileDecorator
 
         return $ret;
     }
-}
-
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/util/class.tx_cfcleague_util_ProfileDecorator.php']) {
-    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/util/class.tx_cfcleague_util_ProfileDecorator.php'];
 }

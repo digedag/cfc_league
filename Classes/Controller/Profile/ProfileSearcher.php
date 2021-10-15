@@ -1,4 +1,10 @@
 <?php
+
+namespace System25\T3sports\Controller\Profile;
+
+use Sys25\RnBase\Backend\Utility\BackendUtility;
+use Sys25\RnBase\Utility\T3General;
+
 /***************************************************************
 *  Copyright notice
 *
@@ -22,12 +28,10 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-tx_rnbase::load('Tx_Rnbase_Utility_T3General');
-
 /**
  * TODO: Suche von Personen im BE. Wird wohl noch nicht verwendet...
  */
-class tx_cfcleague_util_ProfileSearcher
+class ProfileSearcher
 {
     private $mod;
 
@@ -46,10 +50,10 @@ class tx_cfcleague_util_ProfileSearcher
         $this->mod = $mod;
         $this->formTool = $this->mod->formTool;
         $this->resultSize = 0;
-        $this->data = Tx_Rnbase_Utility_T3General::_GP('searchdata');
+        $this->data = T3General::_GP('searchdata');
 
         if (!isset($options['nopersist'])) {
-            $this->SEARCH_SETTINGS = Tx_Rnbase_Backend_Utility::getModuleData(['searchtermProfile' => ''], $this->data, $this->mod->MCONF['name']);
+            $this->SEARCH_SETTINGS = BackendUtility::getModuleData(['searchtermProfile' => ''], $this->data, $this->mod->MCONF['name']);
         } else {
             $this->SEARCH_SETTINGS = $this->data;
         }
@@ -111,8 +115,4 @@ class tx_cfcleague_util_ProfileSearcher
     {
         // TODO
     }
-}
-
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/util/class.tx_cfcleague_util_ProfileSearcher.php']) {
-    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/util/class.tx_cfcleague_util_ProfileSearcher.php'];
 }

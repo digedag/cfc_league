@@ -30,6 +30,11 @@ return [
     'tx_cfcleague_models_TeamNoteType' => \System25\T3sports\Model\TeamNoteType::class,
     'tx_cfcleague_util_ServiceRegistry' => \System25\T3sports\Utility\ServiceRegistry::class,
     'tx_cfcleague_util_Generator' => System25\T3sports\MatchGeneration\Generator::class,
+    'tx_cfcleague_util_MatchNote' => System25\T3sports\Utility\MatchNotes::class,
+    'tx_cfcleague_util_MatchSets' => System25\T3sports\Utility\MatchSets::class,
+    'tx_cfcleague_util_MatchTableBuilder' => System25\T3sports\Utility\MatchTableBuilder::class,
     'tx_cfcleague_util_TeamInfo' => System25\T3sports\Module\Utility\TeamInfo::class,
+    'tx_cfcleague_util_ProfileDecorator' => System25\T3sports\Module\Decorator\ProfileDecorator::class,
+    'tx_cfcleague_util_TeamNoteDecorator' => System25\T3sports\Module\Decorator\TeamNoteDecorator::class,
     'Tx_Cfcleague_Model_Repository_MatchNote' => \System25\T3sports\Model\Repository\MatchNoteRepository::class,
 ];

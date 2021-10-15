@@ -1,9 +1,16 @@
 <?php
 
+use Sys25\RnBase\Database\Connection;
 use Sys25\RnBase\Search\SearchBase;
+use System25\T3sports\Model\Competition;
+use System25\T3sports\Model\CompetitionRound;
+use System25\T3sports\Model\Match;
+use System25\T3sports\Model\MatchNote;
 use System25\T3sports\Search\CompetitionRoundSearch;
 use System25\T3sports\Search\MatchNoteSearch;
 use System25\T3sports\Search\MatchSearch;
+use System25\T3sports\Utility\MatchTableBuilder;
+use tx_rnbase_util_Misc as Misc;
 
 /***************************************************************
  *  Copyright notice
@@ -48,15 +55,15 @@ class tx_cfcleague_services_Match extends tx_cfcleague_services_Base
 
         // Jetzt schauen, ob noch weitere Typpen per Service geliefert werden
         $baseType = 't3sports_matchnotetype';
-        $services = tx_rnbase_util_Misc::lookupServices($baseType);
+        $services = Misc::lookupServices($baseType);
         foreach ($services as $subtype => $info) {
-            $srv = tx_rnbase_util_Misc::getService($baseType, $subtype);
+            $srv = Misc::getService($baseType, $subtype);
             $types = array_merge($types, $srv->getMatchNoteTypes());
         }
         $items = [];
         foreach ($types as $typedef) {
             $items[] = [
-                tx_rnbase_util_Misc::translateLLL($typedef[0]),
+                Misc::translateLLL($typedef[0]),
                 $typedef[1],
             ];
         }
@@ -67,11 +74,11 @@ class tx_cfcleague_services_Match extends tx_cfcleague_services_Base
     /**
      * Spiele des/der Teams in einem Wettbewerb.
      *
-     * @param tx_cfcleague_models_Competition $comp
+     * @param Competition $comp
      * @param string $teamIds
      * @param string $status
      *
-     * @return array[tx_cfcleague_models_Match]
+     * @return Match[]
      */
     public function getMatches4Competition($comp, $teamIds = '', $status = '0,1,2')
     {
@@ -89,11 +96,11 @@ class tx_cfcleague_services_Match extends tx_cfcleague_services_Base
     }
 
     /**
-     * @return tx_cfcleague_util_MatchTableBuilder
+     * @return MatchTableBuilder
      */
     public function getMatchTableBuilder()
     {
-        return tx_rnbase::makeInstance('tx_cfcleague_util_MatchTableBuilder');
+        return tx_rnbase::makeInstance(MatchTableBuilder::class);
     }
 
     /**
@@ -131,7 +138,7 @@ class tx_cfcleague_services_Match extends tx_cfcleague_services_Base
      *
      * @param int $profileUid
      *
-     * @return [tx_cfcleague_models_MatchNote]
+     * @return MatchNote[]
      */
     public function searchMatchNotesByProfile($profileUid)
     {
@@ -167,7 +174,7 @@ class tx_cfcleague_services_Match extends tx_cfcleague_services_Base
      * @param array $fields
      * @param array $options
      *
-     * @return array of tx_cfcleague_models_MatchRound
+     * @return CompetitionRound
      */
     public function searchMatchRound($fields, $options)
     {
@@ -180,7 +187,7 @@ class tx_cfcleague_services_Match extends tx_cfcleague_services_Base
      * Diese Funktion ermittelt die Spiele eines Spieltags.
      * Die Namen der Teams werden aufgelöst.
      *
-     * @param tx_cfcleague_models_Competition $competition
+     * @param Competition $competition
      * @param int $round
      * @param bool $ignoreFreeOfPlay
      *
@@ -201,7 +208,7 @@ class tx_cfcleague_services_Match extends tx_cfcleague_services_Base
             $where .= ' AND t1.dummy <> 1 AND t2.dummy <> 1 ';
         }
 
-        return Tx_Rnbase_Database_Connection::getInstance()->doSelect($what, $from, [
+        return Connection::getInstance()->doSelect($what, $from, [
             'where' => $where,
         ]);
     }
@@ -211,10 +218,10 @@ class tx_cfcleague_services_Match extends tx_cfcleague_services_Base
      * Wenn $types = 1 dann
      * werden nur die Notes mit dem Typ != 100 geliefert.
      *
-     * @param tx_cfcleague_models_Match $match
+     * @param Match $match
      * @param bool $excludeTicker
      *
-     * @return array[tx_cfcleague_models_MatchNote]
+     * @return MatchNote[]
      */
     public function retrieveMatchNotes($match, $excludeTicker = true)
     {
@@ -224,9 +231,9 @@ class tx_cfcleague_services_Match extends tx_cfcleague_services_Base
             $options['where'] .= ' AND type != 100';
         }
         $options['orderby'] = 'minute asc';
-        $options['wrapperclass'] = 'tx_cfcleague_models_MatchNote';
+        $options['wrapperclass'] = MatchNote::class;
 
-        $matchNotes = Tx_Rnbase_Database_Connection::getInstance()->doSelect('*', 'tx_cfcleague_match_notes', $options);
+        $matchNotes = Connection::getInstance()->doSelect('*', 'tx_cfcleague_match_notes', $options);
 
         return $matchNotes;
     }
