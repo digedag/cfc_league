@@ -12,6 +12,7 @@ use Sys25\RnBase\Utility\T3General;
 use System25\T3sports\Model\Team;
 use System25\T3sports\Utility\Misc;
 use tx_rnbase;
+use System25\T3sports\Module\Utility\TeamInfo;
 
 /***************************************************************
  *  Copyright notice
@@ -49,11 +50,11 @@ class ProfileAdd
      *
      * @param IModule $module
      * @param Team $currTeam
-     * @param \tx_cfcleague_util_TeamInfo $teamInfo
+     * @param TeamInfo $teamInfo
      *
      * @return string
      */
-    public function handleRequest($module, $currTeam, $teamInfo)
+    public function handleRequest($module, team $currTeam, TeamInfo $teamInfo)
     {
         $this->mod = $module;
 
@@ -87,11 +88,11 @@ class ProfileAdd
      * Darstellung der gefundenen Personen.
      *
      * @param Team $currTeam
-     * @param \tx_cfcleague_util_TeamInfo $teamInfo
+     * @param TeamInfo $teamInfo
      *
      * @return string
      */
-    protected function showAddProfiles($currTeam, $teamInfo)
+    protected function showAddProfiles(Team $currTeam, TeamInfo $teamInfo)
     {
         $options = [
             'checkbox' => 1,
@@ -171,11 +172,11 @@ class ProfileAdd
      * Add profiles to a team.
      *
      * @param Team $currTeam
-     * @param \tx_cfcleague_util_TeamInfo $teamInfo
+     * @param TeamInfo $teamInfo
      *
      * @return string
      */
-    protected function handleNewProfiles($currTeam, $teamInfo)
+    protected function handleNewProfiles(Team $currTeam, TeamInfo $teamInfo)
     {
         $profile2team = strlen(T3General::_GP('newprofile2team')) > 0; // Wurde der Submit-Button gedrückt?
         $out = '';
@@ -196,8 +197,7 @@ class ProfileAdd
     /**
      * Name is required.
      *
-     * @param
-     *            $profileArr
+     * @param $profileArr
      *
      * @return bool
      */
@@ -210,11 +210,11 @@ class ProfileAdd
      * Add profiles to a team.
      *
      * @param Team $currTeam
-     * @param \tx_cfcleague_util_TeamInfo $teamInfo
+     * @param TeamInfo $teamInfo
      *
      * @return string
      */
-    protected function handleAddProfiles(&$currTeam, $teamInfo)
+    protected function handleAddProfiles(Team $currTeam, TeamInfo $teamInfo)
     {
         $out = '';
         $profile2team = strlen(T3General::_GP('profile2team')) > 0; // Wurde der Submit-Button gedrückt?
@@ -255,7 +255,7 @@ class ProfileAdd
      * @param string $profileCol
      * @param array $entryUids
      */
-    protected function addProfiles2Team(&$currTeam, $profileCol, $entryUids)
+    protected function addProfiles2Team(Team $currTeam, $profileCol, $entryUids)
     {
         $playerUids = implode(',', Misc::mergeArrays(Strings::intExplode(',', $currTeam->getProperty($profileCol)), $entryUids));
         $data = [];
@@ -274,7 +274,7 @@ class ProfileAdd
      *
      * @return \tx_cfcleague_mod1_profilesearcher
      */
-    protected function getProfileSearcher(&$options)
+    protected function getProfileSearcher($options)
     {
         $searcher = tx_rnbase::makeInstance('tx_cfcleague_mod1_profilesearcher', $this->mod, $options);
 

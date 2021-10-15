@@ -14,6 +14,7 @@ use Sys25\RnBase\Utility\T3General;
 use System25\T3sports\Model\Team;
 use System25\T3sports\Utility\Misc;
 use tx_rnbase;
+use System25\T3sports\Module\Utility\TeamInfo;
 
 /***************************************************************
  *  Copyright notice
@@ -90,11 +91,11 @@ class ProfileCreate
     /**
      * @param array $data
      * @param Team $team
-     * @param \tx_cfcleague_util_TeamInfo $teamInfo
+     * @param TeamInfo $teamInfo
      *
      * @return string
      */
-    private function showCreateProfiles(&$data, Team $team, $teamInfo)
+    private function showCreateProfiles(&$data, Team $team, TeamInfo $teamInfo)
     {
         global $LANG;
 
@@ -128,9 +129,9 @@ class ProfileCreate
      * Wenn keine Personen da sind, gibt es 15 Eingabefelder, sonst nur 5.
      *
      * @param Team $team
-     * @param \tx_cfcleague_util_TeamInfo $teamInfo
+     * @param TeamInfo $teamInfo
      */
-    protected function prepareInputTable($team, $teamInfo)
+    protected function prepareInputTable(Team $team, TeamInfo $teamInfo)
     {
         // Es werden zwei Tabellen erstellt
         $tableProfiles = $teamInfo->getTeamTable($this->doc);
@@ -192,12 +193,11 @@ class ProfileCreate
     /**
      * Erstellt die angeforderten Profile.
      *
-     * @param array $profiles
-     *            Array mit den Daten aus dem Request
+     * @param array $profiles Array mit den Daten aus dem Request
      * @param Team $team das aktuelle Team, dem die Personen zugeordnet werden
-     * @param \tx_cfcleague_util_TeamInfo $teamInfo
+     * @param TeamInfo $teamInfo
      */
-    public static function createProfiles($profiles, Team $team, $teamInfo)
+    public static function createProfiles($profiles, Team $team, TeamInfo $teamInfo)
     {
         global $LANG;
 

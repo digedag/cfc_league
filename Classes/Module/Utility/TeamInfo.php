@@ -9,7 +9,6 @@ use Sys25\RnBase\Database\Connection;
 use Sys25\RnBase\Frontend\Request\Parameters;
 use Sys25\RnBase\Utility\Strings;
 use Sys25\RnBase\Utility\T3General;
-use Sys25\RnBase\Utility\TYPO3;
 use System25\T3sports\Model\Team;
 use tx_rnbase;
 
@@ -56,16 +55,13 @@ class TeamInfo
     {
         $this->formTool = $formTool;
         $this->init($team);
-        \tx_rnbase_util_Debug::debug($team, __FILE__.':'.__LINE__); // TODO: remove me
     }
 
     private function init($team)
     {
         global $TCA;
         $this->team = $team;
-        if (!TYPO3::isTYPO76OrHigher()) {
-            T3General::loadTCA('tx_cfcleague_teams');
-        }
+
         $this->baseInfo['maxCoaches'] = intval($TCA['tx_cfcleague_teams']['columns']['coaches']['config']['maxitems']);
         $this->baseInfo['maxPlayers'] = intval($TCA['tx_cfcleague_teams']['columns']['players']['config']['maxitems']);
         $this->baseInfo['maxSupporters'] = intval($TCA['tx_cfcleague_teams']['columns']['supporters']['config']['maxitems']);

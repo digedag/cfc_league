@@ -6,8 +6,8 @@ use Sys25\RnBase\Backend\Module\BaseModFunc;
 use System25\T3sports\Controller\Team\ProfileAdd;
 use System25\T3sports\Controller\Team\ProfileCreate;
 use System25\T3sports\Controller\Team\TeamNotes;
+use System25\T3sports\Module\Utility\TeamInfo;
 use System25\T3sports\Utility\ServiceRegistry;
-use tx_cfcleague_util_TeamInfo as TeamInfo;
 use tx_rnbase;
 
 /***************************************************************
