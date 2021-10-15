@@ -3,17 +3,17 @@
 namespace System25\T3sports\Utility;
 
 use Exception;
+use Sys25\RnBase\Utility\Debug;
+use Sys25\RnBase\Utility\Strings;
+use Sys25\RnBase\Utility\TSFAL;
+use Sys25\RnBase\Utility\TYPO3;
 use tx_cfcleague_util_ServiceRegistry;
 use tx_rnbase;
-use tx_rnbase_util_Debug;
-use tx_rnbase_util_TSFAL;
-use tx_rnbase_util_TYPO3;
-use Tx_Rnbase_Utility_Strings;
 
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2007-2020 Rene Nitzsche (rene@system25.de)
+ *  (c) 2007-2021 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -113,11 +113,6 @@ class TcaLookup
             $srv = tx_cfcleague_util_ServiceRegistry::getCompetitionService();
             $config['items'] = $srv->getPointSystems($sports);
         }
-
-        // $config['items'] = array(
-        // Array(tx_rnbase_util_Misc::translateLLL('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_competition.point_system_2'), 1),
-        // Array(tx_rnbase_util_Misc::translateLLL('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_competition.point_system_3'), 0)
-        // );
     }
 
     /**
@@ -201,7 +196,7 @@ class TcaLookup
      */
     public static function getTeamLogoField()
     {
-        $ret = tx_rnbase_util_TSFAL::getMediaTCA('logo', [
+        $ret = TSFAL::getMediaTCA('logo', [
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_teams.logo',
             'config' => [
                 'size' => 1,
@@ -257,8 +252,8 @@ class TcaLookup
             try {
                 // Im Logo wird die UID der Referenz zwischen Verein und dem Logo gespeichert
                 // Damit können die zusätzlichen Metadaten der Referenz genutzt werden
-                $fileObject = tx_rnbase_util_TSFAL::getFileReferenceById($row['logo']);
-                $thumbs = tx_rnbase_util_TSFAL::createThumbnails([
+                $fileObject = TSFAL::getFileReferenceById($row['logo']);
+                $thumbs = TSFAL::createThumbnails([
                     $fileObject,
                 ]);
                 $item .= '<tr><td>'.$thumbs[0].'</td>
@@ -311,7 +306,6 @@ class TcaLookup
         global $LANG;
         $LANG->includeLLFile('EXT:cfc_league/Resources/Private/Language/locallang_db.xml');
 
-        // tx_rnbase_util_Debug::debug(count($PA[items]), 'items cfcleague');
         $teamId = (int) $this->getPAValue($PA['row']['home']);
         $matchValue = $this->getPAValue($PA['row']['game']);
         if ($teamId) {
@@ -404,8 +398,8 @@ class TcaLookup
         if (is_array($value)) {
             return (int) $value['uid'];
         }
-        $ret = Tx_Rnbase_Utility_Strings::trimExplode('|', $value);
-        $ret = Tx_Rnbase_Utility_Strings::trimExplode('_', $ret[0]);
+        $ret = Strings::trimExplode('|', $value);
+        $ret = Strings::trimExplode('_', $ret[0]);
 
         return intval($ret[count($ret) - 1]);
     }
@@ -426,12 +420,12 @@ class TcaLookup
             $tablename = 'tx_cfcleague_team_notes';
             $tcaFieldConf = $GLOBALS['TCA'][$tablename]['columns'][$column]['config'];
             $fieldValue = $PA['row'][$column];
-            $team = is_array($fieldValue) ? $fieldValue : Tx_Rnbase_Utility_Strings::trimExplode('|', $fieldValue);
+            $team = is_array($fieldValue) ? $fieldValue : Strings::trimExplode('|', $fieldValue);
             $team = $team[0];
             if ('db' == $tcaFieldConf['type']) {
                 // FIXME: funktioniert nicht in 7.6!
-                if (tx_rnbase_util_TYPO3::isTYPO76OrHigher()) {
-                    throw new Exception("not implemented in 7.6\n".tx_rnbase_util_Debug::getDebugTrail());
+                if (TYPO3::isTYPO76OrHigher()) {
+                    throw new Exception("not implemented in 7.6\n".Debug::getDebugTrail());
                 }
                 $dbAnalysis = tx_rnbase::makeInstance('t3lib_loadDBGroup');
                 $dbAnalysis->registerNonTableValues = 0;

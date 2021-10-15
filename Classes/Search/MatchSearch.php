@@ -4,7 +4,7 @@ namespace System25\T3sports\Search;
 
 use Sys25\RnBase\Database\Query\Join;
 use Sys25\RnBase\Search\SearchBase;
-use tx_rnbase_util_Misc;
+use Sys25\RnBase\Utility\Misc;
 
 /***************************************************************
  *  Copyright notice
@@ -43,7 +43,7 @@ class MatchSearch extends SearchBase
         $tableMapping['TEAM1'] = 'TEAM1';
         $tableMapping['TEAM2'] = 'TEAM2';
         // Hook to append other tables
-        tx_rnbase_util_Misc::callHook('cfc_league', 'search_Match_getTableMapping_hook', [
+        Misc::callHook('cfc_league', 'search_Match_getTableMapping_hook', [
             'tableMapping' => &$tableMapping,
         ], $this);
 
@@ -58,11 +58,6 @@ class MatchSearch extends SearchBase
     protected function getBaseTableAlias()
     {
         return 'MATCH';
-    }
-
-    protected function useAlias()
-    {
-        return true;
     }
 
     public function getWrapperClass()
@@ -83,7 +78,7 @@ class MatchSearch extends SearchBase
             $join[] = new Join('MATCH', 'tx_cfcleague_teams', 'MATCH.guest = TEAM2.uid', 'TEAM2');
         }
         // Hook to append other tables
-        tx_rnbase_util_Misc::callHook('cfc_league', 'search_Match_getJoins_hook', [
+        Misc::callHook('cfc_league', 'search_Match_getJoins_hook', [
             'join' => &$join,
             'tableAliases' => $tableAliases,
         ], $this);

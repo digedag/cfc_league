@@ -244,7 +244,7 @@ class ProfileAdd
             }
         }
 
-        return (strlen($out)) ? $this->mod->getDoc()->section($GLOBALS['LANG']->getLL('message').':', $out, 0, 1, \tx_rnbase_mod_IModFunc::ICON_INFO) : '';
+        return (strlen($out)) ? $this->mod->getDoc()->section($GLOBALS['LANG']->getLL('message').':', $out, 0, 1, IModFunc::ICON_INFO) : '';
     }
 
     /**

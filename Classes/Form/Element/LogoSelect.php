@@ -2,6 +2,8 @@
 
 namespace System25\T3sports\Form\Element;
 
+use Sys25\RnBase\Utility\Math;
+use Sys25\RnBase\Utility\TSFAL;
 use TYPO3\CMS\Backend\Form\Element\SelectSingleElement;
 use TYPO3\CMS\Backend\Form\NodeFactory;
 use TYPO3\CMS\Core\Resource\Exception\FileDoesNotExistException;
@@ -95,9 +97,9 @@ class LogoSelect extends SelectSingleElement
         if (is_array($fileRefUid) && isset($fileRefUid[0])) {
             $fileRefUid = $fileRefUid[0];
         }
-        if (\tx_rnbase_util_Math::isInteger($fileRefUid) && $fileRefUid) {
+        if (Math::isInteger($fileRefUid) && $fileRefUid) {
             try {
-                $ref = \tx_rnbase_util_TSFAL::getFileReferenceById($fileRefUid);
+                $ref = TSFAL::getFileReferenceById($fileRefUid);
                 if ($ref) {
                     $file = $ref->getOriginalFile();
                 }

@@ -56,7 +56,7 @@ class MatchEdit
      *
      * @param IModule $module
      */
-    public function main($module, $current_league)
+    public function main(IModule $module, $current_league)
     {
         global $LANG;
 

@@ -3,12 +3,13 @@
 namespace System25\T3sports\Controller\Competition;
 
 use Sys25\RnBase\Backend\Form\ToolBox;
+use Sys25\RnBase\Backend\Module\IModFunc;
 use Sys25\RnBase\Backend\Module\IModule;
 use Sys25\RnBase\Backend\Utility\Tables;
 use Sys25\RnBase\Database\Connection;
 use Sys25\RnBase\Utility\T3General;
 use Sys25\RnBase\Utility\TYPO3;
-use Tx_Cfcleague_Handler_MatchCreator as MatchCreator;
+use System25\T3sports\Handler\MatchCreator;
 use tx_cfcleague_models_Competition as Competition;
 use tx_rnbase;
 
@@ -100,7 +101,7 @@ class MatchTable
         $data = T3General::_GP('data');
         if (is_array($data['rounds']) && T3General::_GP('update')) {
             $result = $this->createMatches($data['rounds'], $comp);
-            $content .= $this->doc->section($LANG->getLL('message').':', $result, 0, 1, \tx_rnbase_mod_IModFunc::ICON_INFO);
+            $content .= $this->doc->section($LANG->getLL('message').':', $result, 0, 1, IModFunc::ICON_INFO);
 
             return $content;
         }
@@ -119,7 +120,7 @@ class MatchTable
 
         $matchCnt = $comp->getNumberOfMatches(false);
         if ($matchCnt > 0) {
-            $content .= $this->doc->section($LANG->getLL('warning').':', $LANG->getLL('msg_league_generation_hasmatches'), 0, 1, \tx_rnbase_mod_IModFunc::ICON_WARN);
+            $content .= $this->doc->section($LANG->getLL('warning').':', $LANG->getLL('msg_league_generation_hasmatches'), 0, 1, IModFunc::ICON_WARN);
             $content .= '<br/><br/>';
         }
 
@@ -168,11 +169,11 @@ class MatchTable
 
         if (count($gen->errors)) {
             // Da gibt es wohl ein Problem bei der Erzeugung der Spiele...
-            $content .= $this->doc->section($LANG->getLL('error').':', '<ul><li>'.implode('<li>', $gen->errors).'</ul>', 0, 1, \tx_rnbase_mod_IModFunc::ICON_FATAL);
+            $content .= $this->doc->section($LANG->getLL('error').':', '<ul><li>'.implode('<li>', $gen->errors).'</ul>', 0, 1, IModFunc::ICON_FATAL);
         }
         if (count($gen->warnings)) {
             // Da gibt es wohl ein Problem bei der Erzeugung der Spiele...
-            $content .= $this->doc->section($LANG->getLL('warning').':', '<ul><li>'.implode('<li>', $gen->warnings).'</ul>', 0, 1, \tx_rnbase_mod_IModFunc::ICON_WARN);
+            $content .= $this->doc->section($LANG->getLL('warning').':', '<ul><li>'.implode('<li>', $gen->warnings).'</ul>', 0, 1, IModFunc::ICON_WARN);
         }
         if (count($table)) {
             // Wir zeigen alle Spieltage und fragen nach dem Termin

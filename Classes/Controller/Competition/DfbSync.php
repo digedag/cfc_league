@@ -58,7 +58,7 @@ class DfbSync
      * @param IModule $module
      * @param Competition $competition
      */
-    public function main($module, $competition, $template)
+    public function main(IModule $module, $competition, $template)
     {
         // Zuerst mal müssen wir die passende Liga auswählen lassen:
         // Entweder global über die Datenbank oder die Ligen der aktuellen Seite

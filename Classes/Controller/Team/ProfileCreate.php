@@ -113,7 +113,7 @@ class ProfileCreate
             // Kann nix mehr angelegt werden
             $content .= $this->doc->section('Message:', $LANG->getLL('msg_maxPlayers'), 0, 1, IModFunc::ICON_WARN);
         } else {
-            $content .= $this->doc->section('Info:', $LANG->getLL('msg_checkPage').': <b>'.BackendUtility::getRecordPath($this->pid, '', 0).'</b>', 0, 1, \tx_rnbase_mod_IModFunc::ICON_INFO);
+            $content .= $this->doc->section('Info:', $LANG->getLL('msg_checkPage').': <b>'.BackendUtility::getRecordPath($this->pid, '', 0).'</b>', 0, 1, IModFunc::ICON_INFO);
             $content .= $teamInfo->getInfoTable($this->doc);
             // Wir zeigen 15 Zeilen mit Eingabefeldern
             $content .= $this->prepareInputTable($team, $teamInfo);

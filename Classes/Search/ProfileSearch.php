@@ -4,7 +4,7 @@ namespace System25\T3sports\Search;
 
 use Sys25\RnBase\Database\Query\Join;
 use Sys25\RnBase\Search\SearchBase;
-use tx_rnbase_util_Misc;
+use Sys25\RnBase\Utility\Misc;
 
 /***************************************************************
  *  Copyright notice
@@ -43,7 +43,7 @@ class ProfileSearch extends SearchBase
             'TEAMNOTE' => 'tx_cfcleague_team_notes',
         ];
         // Hook to append other tables
-        tx_rnbase_util_Misc::callHook('cfc_league', 'search_Profile_getTableMapping_hook', [
+        Misc::callHook('cfc_league', 'search_Profile_getTableMapping_hook', [
             'tableMapping' => &$tableMapping,
         ], $this);
 
@@ -53,11 +53,6 @@ class ProfileSearch extends SearchBase
     protected function getBaseTable()
     {
         return 'tx_cfcleague_profiles';
-    }
-
-    protected function useAlias()
-    {
-        return true;
     }
 
     protected function getBaseTableAlias()
@@ -81,7 +76,7 @@ class ProfileSearch extends SearchBase
         }
 
         // Hook to append other tables
-        tx_rnbase_util_Misc::callHook('cfc_league', 'search_Profile_getJoins_hook', [
+        Misc::callHook('cfc_league', 'search_Profile_getJoins_hook', [
             'join' => &$join,
             'tableAliases' => $tableAliases,
         ], $this);

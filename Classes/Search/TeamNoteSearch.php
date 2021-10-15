@@ -4,7 +4,7 @@ namespace System25\T3sports\Search;
 
 use Sys25\RnBase\Database\Query\Join;
 use Sys25\RnBase\Search\SearchBase;
-use tx_rnbase_util_Misc;
+use Sys25\RnBase\Utility\Misc;
 
 /***************************************************************
  *  Copyright notice
@@ -42,7 +42,7 @@ class TeamNoteSearch extends SearchBase
         $tableMapping['NOTETYPE'] = 'tx_cfcleague_note_types';
         $tableMapping['TEAM'] = 'tx_cfcleague_teams';
         // Hook to append other tables
-        tx_rnbase_util_Misc::callHook('cfc_league', 'search_TeamNote_getTableMapping_hook', [
+        Misc::callHook('cfc_league', 'search_TeamNote_getTableMapping_hook', [
             'tableMapping' => &$tableMapping,
         ], $this);
 
@@ -57,11 +57,6 @@ class TeamNoteSearch extends SearchBase
     protected function getBaseTableAlias()
     {
         return 'TEAMNOTE';
-    }
-
-    protected function useAlias()
-    {
-        return true;
     }
 
     public function getWrapperClass()
@@ -80,7 +75,7 @@ class TeamNoteSearch extends SearchBase
         }
 
         // Hook to append other tables
-        tx_rnbase_util_Misc::callHook('cfc_league', 'search_TeamNote_getJoins_hook', [
+        Misc::callHook('cfc_league', 'search_TeamNote_getJoins_hook', [
             'join' => &$join,
             'tableAliases' => $tableAliases,
         ], $this);

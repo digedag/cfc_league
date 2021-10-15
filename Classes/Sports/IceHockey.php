@@ -3,6 +3,8 @@
 namespace System25\T3sports\Sports;
 
 use Sys25\RnBase\Typo3Wrapper\Service\AbstractService;
+use Sys25\RnBase\Utility\Misc;
+use tx_rnbase;
 
 /***************************************************************
  *  Copyright notice
@@ -35,8 +37,8 @@ class IceHockey extends AbstractService implements ISports
     public function getTCAPointSystems()
     {
         return [
-            [\tx_rnbase_util_Misc::translateLLL('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_competition.point_system_2_icehockey'), 1],
-            [\tx_rnbase_util_Misc::translateLLL('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_competition.point_system_3_icehockey'), 0],
+            [Misc::translateLLL('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_competition.point_system_2_icehockey'), 1],
+            [Misc::translateLLL('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_competition.point_system_3_icehockey'), 0],
         ];
     }
 
@@ -59,7 +61,7 @@ class IceHockey extends AbstractService implements ISports
     {
         if (null == $this->matchInfo) {
             // TODO: Beim Eishockey ist die Overtime variabel
-            $this->matchInfo = \tx_rnbase::makeInstance(MatchInfo::class, [
+            $this->matchInfo = tx_rnbase::makeInstance(MatchInfo::class, [
                     MatchInfo::MATCH_TIME => 60,
                     MatchInfo::MATCH_PARTS => 3,
                     MatchInfo::MATCH_EXTRA_TIME => 20,

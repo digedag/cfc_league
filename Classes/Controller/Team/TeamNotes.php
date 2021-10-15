@@ -5,6 +5,7 @@ namespace System25\T3sports\Controller\Team;
 use Sys25\RnBase\Backend\Form\ToolBox;
 use Sys25\RnBase\Backend\Module\IModFunc;
 use Sys25\RnBase\Backend\Module\IModule;
+use Sys25\RnBase\Backend\Utility\Tables;
 use Sys25\RnBase\Database\Connection;
 use Sys25\RnBase\Utility\Strings;
 use Sys25\RnBase\Utility\T3General;
@@ -79,7 +80,7 @@ class TeamNotes
         // 2. Neue Notiz für einen Spiele anlegen lassen
         // ggf. Daten im Request verarbeiten
         // $entries = $currTeam->getPlayerNames(0,1);
-        // $menu = tx_rnbase_util_FormTool::showMenu($this->pid, 'player', $this->modName, $entries);
+        // $menu = ToolBox::showMenu($this->pid, 'player', $this->modName, $entries);
         // $content .= $menu['menu'];
         // $player = $menu['value'];
         return $content;
@@ -134,7 +135,7 @@ class TeamNotes
         ];
         $rows = tx_cfcleague_mod1_decorator::prepareTable($notes, $columns, $this->getFormTool(), $options);
 
-        $tables = tx_rnbase::makeInstance('Tx_Rnbase_Backend_Utility_Tables');
+        $tables = tx_rnbase::makeInstance(Tables::class);
         $out .= $tables->buildTable($rows[0]);
 
         $options[ToolBox::OPTION_DEFVALS] = [
@@ -187,7 +188,7 @@ class TeamNotes
             }
         }
 
-        return (strlen($out)) ? $this->mod->getDoc()->section($GLOBALS['LANG']->getLL('message').':', $out, 0, 1, \tx_rnbase_mod_IModFunc::ICON_INFO) : '';
+        return (strlen($out)) ? $this->mod->getDoc()->section($GLOBALS['LANG']->getLL('message').':', $out, 0, 1, IModFunc::ICON_INFO) : '';
     }
 
     /**

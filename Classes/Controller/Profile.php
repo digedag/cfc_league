@@ -90,7 +90,7 @@ class Profile extends BaseModFunc
         if (!$this->hideResults) {
             $searchterm = trim($this->SEARCH_SETTINGS['searchterm']);
             if (strlen($searchterm) && strlen($searchterm) < 3) {
-                $content .= $this->doc->section($LANG->getLL('message').':', $LANG->getLL('msg_string_too_short'), 0, 1, \tx_rnbase_mod_IModFunc::ICON_INFO);
+                $content .= $this->doc->section($LANG->getLL('message').':', $LANG->getLL('msg_string_too_short'), 0, 1, IModFunc::ICON_INFO);
             } elseif (strlen($searchterm) >= 3) {
                 $profiles = $this->searchProfiles($searchterm);
                 if (!empty($profiles)) {
@@ -188,7 +188,7 @@ class Profile extends BaseModFunc
 
             $profiles = $this->searchProfiles($data, $uids[0]);
             if (empty($profiles)) {
-                $out .= $this->doc->section($LANG->getLL('msg_edit_person'), 'Internal error. Sorry no profile found!', 0, 1, \tx_rnbase_mod_IModFunc::ICON_FATAL);
+                $out .= $this->doc->section($LANG->getLL('msg_edit_person'), 'Internal error. Sorry no profile found!', 0, 1, IModFunc::ICON_FATAL);
             } else {
                 $out .= $this->doc->section($LANG->getLL('msg_edit_person'), $this->showProfileForm($profiles[0]), 0, 1);
             }
@@ -213,14 +213,14 @@ class Profile extends BaseModFunc
             $date = $profile['birthday'];
             list($day, $month, $year) = explode('.', $date);
             if (!checkdate($month, $day, $year)) {
-                $out .= $this->doc->section($LANG->getLL('msg_person_saved'), ' Invalid date -'.$date.'- für UID: '.$uid, 0, 1, \tx_rnbase_mod_IModFunc::ICON_FATAL);
+                $out .= $this->doc->section($LANG->getLL('msg_person_saved'), ' Invalid date -'.$date.'- für UID: '.$uid, 0, 1, IModFunc::ICON_FATAL);
             } else {
                 // Das ist eher problematisch. Das Datum sollte in GMT gespeichert werden
                 $values = [
                     'birthday' => mktime(0, 0, 0, $month, $day, $year),
                 ];
                 Connection::getInstance()->doUpdate('tx_cfcleague_profiles', 'uid='.intval($uid), $values);
-                $out .= $this->doc->section($LANG->getLL('msg_person_saved'), $LANG->getLL('msg_date_saved').': '.$date, 0, 1, \tx_rnbase_mod_IModFunc::ICON_OK);
+                $out .= $this->doc->section($LANG->getLL('msg_person_saved'), $LANG->getLL('msg_date_saved').': '.$date, 0, 1, IModFunc::ICON_OK);
             }
         }
 

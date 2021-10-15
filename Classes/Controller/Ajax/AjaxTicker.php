@@ -5,6 +5,7 @@ namespace System25\T3sports\Controller\Ajax;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Sys25\RnBase\Backend\Utility\BackendUtility;
+use Sys25\RnBase\Database\Connection;
 use Sys25\RnBase\Utility\T3General;
 use Sys25\RnBase\Utility\TYPO3;
 use TYPO3\CMS\Core\Http\Response;
@@ -41,7 +42,7 @@ class AjaxTicker
                 'NEW1' => $record,
             ],
         ];
-        $tce = \Tx_Rnbase_Database_Connection::getInstance()->getTCEmain($data);
+        $tce = Connection::getInstance()->getTCEmain($data);
         $tce->process_datamap();
 
         $GLOBALS['LANG']->includeLLFile('EXT:cfc_league/mod1/locallang.xml');

@@ -1,4 +1,8 @@
 <?php
+
+use Sys25\RnBase\Backend\Utility\BackendUtility;
+use Sys25\RnBase\Database\Connection;
+
 /***************************************************************
 *  Copyright notice
 *
@@ -22,8 +26,6 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-tx_rnbase::load('tx_rnbase_parameters');
-
 class Tx_Cfcleague_Utility_TYPO3
 {
     /**
@@ -43,13 +45,13 @@ class Tx_Cfcleague_Utility_TYPO3
             --$loopCheck;
 
             //'uid,pid,title,t3ver_oid,t3ver_wsid,t3ver_swapmode',
-            $rows = Tx_Rnbase_Database_Connection::getInstance()->doSelect('*', 'pages', [
+            $rows = Connection::getInstance()->doSelect('*', 'pages', [
                     'where' => 'uid='.intval($uid).(strlen(trim($clause)) ? ' AND '.$clause : ''),
             ]);
             if (!empty($rows)) {
                 $row = reset($rows);
-                Tx_Rnbase_Backend_Utility::workspaceOL('pages', $row);
-                Tx_Rnbase_Backend_Utility::fixVersioningPid('pages', $row);
+                BackendUtility::workspaceOL('pages', $row);
+                BackendUtility::fixVersioningPid('pages', $row);
 
                 $uid = $row['pid'];
                 $output[] = $uid;

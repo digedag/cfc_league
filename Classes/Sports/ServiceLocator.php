@@ -2,6 +2,8 @@
 
 namespace System25\T3sports\Sports;
 
+use Sys25\RnBase\Utility\Misc;
+
 /***************************************************************
  *  Copyright notice
  *
@@ -34,6 +36,6 @@ class ServiceLocator
      */
     public function getSportsService($sports)
     {
-        return \tx_rnbase_util_Misc::getService('t3sports_sports', $sports);
+        return Misc::getService('t3sports_sports', $sports);
     }
 }

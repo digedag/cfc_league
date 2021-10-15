@@ -2,6 +2,9 @@
 
 namespace System25\T3sports\Hooks;
 
+use Sys25\RnBase\Database\Connection;
+use Sys25\RnBase\Utility\Strings;
+
 /**
  * *************************************************************
  * Copyright notice.
@@ -41,13 +44,13 @@ class AfterDBHook
     {
         if ('tx_cfcleague_profiles' == $table) {
             if (array_key_exists('types', $fieldArray)) {
-                $db = \Tx_Rnbase_Database_Connection::getInstance();
+                $db = Connection::getInstance();
                 // Die Types werden zusätzlich in einer MM-Tabelle gespeichert
                 $id = ('new' == $status) ? $tcemain->substNEWwithIDs[$id] : $id;
                 if ('new' != $status) {
                     $db->doDelete('tx_cfcleague_profiletypes_mm', 'uid_foreign='.$id, 0);
                 }
-                $types = \Tx_Rnbase_Utility_Strings::intExplode(',', $fieldArray['types']);
+                $types = Strings::intExplode(',', $fieldArray['types']);
                 $i = 0;
                 foreach ($types as $type) {
                     if (!intval($type)) {

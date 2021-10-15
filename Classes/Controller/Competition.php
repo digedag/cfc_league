@@ -4,6 +4,8 @@ namespace System25\T3sports\Controller;
 
 use Sys25\RnBase\Backend\Form\ToolBox;
 use Sys25\RnBase\Backend\Module\BaseModFunc;
+use Sys25\RnBase\Configuration\ConfigurationInterface;
+use Sys25\RnBase\Frontend\Marker\FormatUtil;
 use Sys25\RnBase\Frontend\Marker\Templates;
 use System25\T3sports\Controller\Competition\DfbSync;
 use System25\T3sports\Controller\Competition\MatchEdit;
@@ -57,8 +59,8 @@ class Competition extends BaseModFunc
      * Verwaltet die Erstellung von Spielplänen von Ligen.
      *
      * @param string $template
-     * @param \tx_rnbase_configurations $configurations
-     * @param \tx_rnbase_util_FormatUtil $formatter
+     * @param ConfigurationInterface$configurations
+     * @param FormatUtil $formatter
      * @param ToolBox $formTool
      *
      * @return string

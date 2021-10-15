@@ -3,6 +3,7 @@
 namespace System25\T3sports\Sports;
 
 use Sys25\RnBase\Typo3Wrapper\Service\AbstractService;
+use Sys25\RnBase\Utility\Misc;
 
 /***************************************************************
  *  Copyright notice
@@ -36,7 +37,7 @@ class Handball extends AbstractService implements ISports
     {
         return [
             [
-                \tx_rnbase_util_Misc::translateLLL('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_competition.point_system_2'),
+                Misc::translateLLL('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_competition.point_system_2'),
                 0,
             ],
         ];

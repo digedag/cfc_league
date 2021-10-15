@@ -1,8 +1,19 @@
 <?php
+
+namespace System25\T3sports\Handler;
+
+use Sys25\RnBase\Backend\Form\FormBuilder;
+use Sys25\RnBase\Backend\Module\IModFunc;
+use Sys25\RnBase\Backend\Module\IModule;
+use Sys25\RnBase\Backend\Utility\Tables;
+use Sys25\RnBase\Database\Connection;
+use Sys25\RnBase\Utility\T3General;
+use tx_rnbase;
+
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2010-2020 Rene Nitzsche (rene@system25.de)
+ *  (c) 2010-2021 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -21,17 +32,16 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-tx_rnbase::load('tx_rnbase_parameters');
 
 /**
  * Die Klasse ermöglicht die manuelle Erstellung von Spielplänen.
  */
-class Tx_Cfcleague_Handler_MatchCreator
+class MatchCreator
 {
     /**
      * Returns an instance.
      *
-     * @return Tx_Cfcleague_Handler_MatchCreator
+     * @return MatchCreator
      */
     public static function getInstance()
     {
@@ -41,30 +51,29 @@ class Tx_Cfcleague_Handler_MatchCreator
     /**
      * Neuanlage von Spielen über die TCE.
      *
-     * @param tx_rnbase_mod_IModule $mod
+     * @param IModule $mod
      *
      * @return string
      */
-    public function handleRequest(tx_rnbase_mod_IModule $mod)
+    public function handleRequest(IModule $mod)
     {
-        $submitted = tx_rnbase_parameters::getPostOrGetParameter('doCreateMatches');
+        $submitted = T3General::_GP('doCreateMatches');
         if (!$submitted) {
             return '';
         }
-        $tcaData = tx_rnbase_parameters::getPostOrGetParameter('data');
-        tx_rnbase::load('Tx_Rnbase_Database_Connection');
-        $tce = Tx_Rnbase_Database_Connection::getInstance()->getTCEmain($tcaData);
+        $tcaData = T3General::_GP('data');
+        $tce = Connection::getInstance()->getTCEmain($tcaData);
         $tce->process_datamap();
-        $content = $mod->getDoc()->section('Message:', $GLOBALS['LANG']->getLL('msg_matches_created'), 0, 1, \tx_rnbase_mod_IModFunc::ICON_INFO);
+        $content = $mod->getDoc()->section('Message:', $GLOBALS['LANG']->getLL('msg_matches_created'), 0, 1, IModFunc::ICON_INFO);
 
         return $content;
     }
 
     /**
-     * @param tx_cfcleague_models_Competition $competition
-     * @param tx_rnbase_mod_IModule $mod
+     * @param \tx_cfcleague_models_Competition $competition
+     * @param IModule $mod
      */
-    public function showScreen($competition, tx_rnbase_mod_IModule $mod)
+    public function showScreen($competition, IModule $mod)
     {
         global $LANG;
         $LANG->includeLLFile('EXT:cfc_league/Resources/Private/Language/locallang_db.xml');
@@ -97,7 +106,7 @@ class Tx_Cfcleague_Handler_MatchCreator
             'round_name' => $competition->getNumberOfRounds().$LANG->getLL('createGameTable_round'),
         ];
 
-        /* @var $formBuilder Tx_Rnbase_Backend_Form_FormBuilder */
+        /* @var $formBuilder FormBuilder */
         $formBuilder = $mod->getFormTool()->getTCEForm();
         for ($i = 0; $i < $maxMatches; ++$i) {
             $row = [];
@@ -115,14 +124,14 @@ class Tx_Cfcleague_Handler_MatchCreator
             // $row[] = $mod->getFormTool()->create('data[tx_cfcleague_teams][NEW'.$i.'][pid]', $mod->getPid());
             $arr[] = $row;
         }
-        $tables = tx_rnbase::makeInstance('Tx_Rnbase_Backend_Utility_Tables');
+        $tables = tx_rnbase::makeInstance(Tables::class);
         $content .= $tables->buildTable($arr);
         $content .= $mod->getFormTool()->createSubmit('doCreateMatches', $LANG->getLL('btn_create'), $GLOBALS['LANG']->getLL('msg_CreateGameTable'));
 
         return $content;
     }
 
-    public function makeLink(tx_rnbase_mod_IModule $mod)
+    public function makeLink(IModule $mod)
     {
     }
 }

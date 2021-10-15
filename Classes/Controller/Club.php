@@ -4,6 +4,8 @@ namespace System25\T3sports\Controller;
 
 use Sys25\RnBase\Backend\Form\ToolBox;
 use Sys25\RnBase\Backend\Module\BaseModFunc;
+use Sys25\RnBase\Configuration\ConfigurationInterface;
+use Sys25\RnBase\Frontend\Marker\FormatUtil;
 use Sys25\RnBase\Utility\Misc;
 use System25\T3sports\Controller\Club\ClubStadiumHandler;
 use tx_rnbase;
@@ -48,8 +50,8 @@ class Club extends BaseModFunc
 
     /**
      * @param string $template
-     * @param \tx_rnbase_configurations $configurations
-     * @param \tx_rnbase_util_FormatUtil $formatter
+     * @param ConfigurationInterface $configurations
+     * @param FormatUtil $formatter
      * @param ToolBox $formTool
      */
     protected function getContent($template, &$configurations, &$formatter, $formTool)

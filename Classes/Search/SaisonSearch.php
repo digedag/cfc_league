@@ -3,7 +3,7 @@
 namespace System25\T3sports\Search;
 
 use Sys25\RnBase\Search\SearchBase;
-use tx_rnbase_util_Misc;
+use Sys25\RnBase\Utility\Misc;
 
 /***************************************************************
  *  Copyright notice
@@ -40,7 +40,7 @@ class SaisonSearch extends SearchBase
         $tableMapping['SAISON'] = 'tx_cfcleague_stadiums';
 
         // Hook to append other tables
-        tx_rnbase_util_Misc::callHook('cfc_league', 'search_Saison_getTableMapping_hook', [
+        Misc::callHook('cfc_league', 'search_Saison_getTableMapping_hook', [
             'tableMapping' => &$tableMapping,
         ], $this);
 
@@ -52,22 +52,12 @@ class SaisonSearch extends SearchBase
         $join = [];
 
         // Hook to append other tables
-        tx_rnbase_util_Misc::callHook('cfc_league', 'search_Saison_getJoins_hook', [
+        Misc::callHook('cfc_league', 'search_Saison_getJoins_hook', [
             'join' => &$join,
             'tableAliases' => $tableAliases,
         ], $this);
 
         return $join;
-    }
-
-    /**
-     * (non-PHPdoc).
-     *
-     * @see SearchBase::useAlias()
-     */
-    protected function useAlias()
-    {
-        return true;
     }
 
     /**

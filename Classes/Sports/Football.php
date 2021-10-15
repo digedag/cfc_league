@@ -3,11 +3,13 @@
 namespace System25\T3sports\Sports;
 
 use Sys25\RnBase\Typo3Wrapper\Service\AbstractService;
+use Sys25\RnBase\Utility\Misc;
+use tx_rnbase;
 
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2008-2020 Rene Nitzsche (rene@system25.de)
+ *  (c) 2008-2021 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -35,8 +37,8 @@ class Football extends AbstractService implements ISports
     public function getTCAPointSystems()
     {
         return [
-            [\tx_rnbase_util_Misc::translateLLL('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_competition.point_system_2'), 1],
-            [\tx_rnbase_util_Misc::translateLLL('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_competition.point_system_3'), 0],
+            [Misc::translateLLL('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_competition.point_system_2'), 1],
+            [Misc::translateLLL('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_competition.point_system_3'), 0],
         ];
     }
 
@@ -58,7 +60,7 @@ class Football extends AbstractService implements ISports
     public function getMatchInfo()
     {
         if (null == $this->matchInfo) {
-            $this->matchInfo = \tx_rnbase::makeInstance(MatchInfo::class, [
+            $this->matchInfo = tx_rnbase::makeInstance(MatchInfo::class, [
                     MatchInfo::MATCH_TIME => 90,
                     MatchInfo::MATCH_PARTS => 2,
                     MatchInfo::MATCH_EXTRA_TIME => 30,

@@ -1,4 +1,7 @@
 <?php
+
+use Sys25\RnBase\Search\SearchBase;
+
 /***************************************************************
  *  Copyright notice
  *
@@ -22,8 +25,8 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-// FIXME: Nach Umstellung MatchNote auf Tx_Rnbase_Domain_Model_Base das Repo einsetzen!!
-//tx_rnbase::load('Tx_Rnbase_Domain_Repository_PersistenceRepository');
+// FIXME: Nach Umstellung MatchNote auf Sys25\RnBase\Domain\Model\BaseModel das
+// Sys25\RnBase\Domain\Repository\PersistenceRepositoryeinsetzen!!
 
 /**
  * @author Rene Nitzsche
@@ -70,7 +73,7 @@ class Tx_Cfcleague_Model_Repository_MatchNote extends \Sys25\RnBase\Typo3Wrapper
     protected function getDomainModel()
     {
         if (!$this->dummyModel) {
-            $searcher = tx_rnbase_util_SearchBase::getInstance($this->getSearchClass());
+            $searcher = SearchBase::getInstance($this->getSearchClass());
             $this->dummyModel = tx_rnbase::makeInstance($searcher->getWrapperClass(), ['uid' => 0]);
         }
 

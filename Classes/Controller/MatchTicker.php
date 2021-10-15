@@ -117,7 +117,7 @@ class MatchTicker extends BaseModFunc
         $modContent .= $this->getFormHeadline();
         $arr = $this->createFormArray($match);
 
-        /* @var $tables \Tx_Rnbase_Backend_Utility_Tables */
+        /* @var $tables Tables */
         $tables = tx_rnbase::makeInstance(Tables::class);
         $modContent .= $tables->buildTable($arr, $this->_getTableLayoutForm());
         $modContent .= '<br />';

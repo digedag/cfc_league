@@ -134,7 +134,7 @@ class Teams
 
         $content = '<h2>'.$LANG->getLL('label_add_teams_from_page').'</h2>';
 
-        $tables = tx_rnbase::makeInstance('Tx_Rnbase_Backend_Utility_Tables');
+        $tables = tx_rnbase::makeInstance(Tables::class);
         $content .= $tables->buildTable($arr[0]);
         $content .= $this->formTool->createSubmit('addteams', $LANG->getLL('label_add_teams'), $GLOBALS['LANG']->getLL('msg_add_teams'));
 

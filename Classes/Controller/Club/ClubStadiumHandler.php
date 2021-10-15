@@ -51,7 +51,7 @@ class ClubStadiumHandler
 
     /**
      * @param \tx_cfcleague_models_Club $club
-     * @param \tx_rnbase_mod_IModule $mod
+     * @param IModule $mod
      */
     public function showScreen($club, IModule $mod)
     {

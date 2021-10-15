@@ -3,7 +3,7 @@
 namespace System25\T3sports\Search;
 
 use Sys25\RnBase\Search\SearchBase;
-use tx_rnbase_util_Misc;
+use Sys25\RnBase\Utility\Misc;
 
 /***************************************************************
  *  Copyright notice
@@ -39,7 +39,7 @@ class ClubSearch extends SearchBase
         $tableMapping = [];
         $tableMapping['CLUB'] = 'tx_cfcleague_club';
         // Hook to append other tables
-        tx_rnbase_util_Misc::callHook('cfc_league', 'search_Club_getTableMapping_hook', [
+        Misc::callHook('cfc_league', 'search_Club_getTableMapping_hook', [
             'tableMapping' => &$tableMapping,
         ], $this);
 
@@ -71,7 +71,7 @@ class ClubSearch extends SearchBase
         $join = [];
 
         // Hook to append other tables
-        tx_rnbase_util_Misc::callHook('cfc_league', 'search_Club_getJoins_hook', [
+        Misc::callHook('cfc_league', 'search_Club_getJoins_hook', [
             'join' => &$join,
             'tableAliases' => $tableAliases,
         ], $this);
