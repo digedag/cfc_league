@@ -47,14 +47,10 @@
 	"autoload": {
 		"classmap": [
 			"Classes/",
-			"Deprecations/",
 			"mod1/",
 			"models/",
 			"services/",
 			"util/"
-		],
-		"files": [
-			"Deprecations/classes.php"
 		],
         "psr-4": {"System25\\T3sports\\" : "Classes"}
 	},
@@ -123,6 +119,11 @@
 			"cms-package-dir": "{$vendor-dir}/typo3/cms",
 			"extension-key": "cfc_league",
 			"web-dir": ".Build/Web"
+		},
+		"typo3/class-alias-loader": {
+			"class-alias-maps": [
+				"Migrations/Code/ClassAliasMap.php"
+			]
 		},
 		"branch-alias": {
 			"dev-master": "1.x-dev"
