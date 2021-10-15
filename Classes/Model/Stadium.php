@@ -1,11 +1,17 @@
 <?php
 
+namespace System25\T3sports\Model;
+
+use Exception;
 use Sys25\RnBase\Domain\Model\BaseModel;
+use Sys25\RnBase\Maps\Coord;
+use Sys25\RnBase\Maps\ICoord;
+use tx_rnbase;
 
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2007-2017 Rene Nitzsche (rene@system25.de)
+ *  (c) 2007-2021 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -28,7 +34,7 @@ use Sys25\RnBase\Domain\Model\BaseModel;
 /**
  * Model for a stadium.
  */
-class tx_cfcleague_models_Stadium extends BaseModel
+class Stadium extends BaseModel
 {
     private static $instances = [];
 
@@ -95,13 +101,13 @@ class tx_cfcleague_models_Stadium extends BaseModel
     /**
      * Returns coords.
      *
-     * @return tx_rnbase_maps_ICoord or false
+     * @return ICoord or false
      */
     public function getCoords()
     {
         $coords = false;
         if ($this->getLongitute() || $this->getLatitute()) {
-            $coords = tx_rnbase::makeInstance('tx_rnbase_maps_Coord');
+            $coords = tx_rnbase::makeInstance(Coord::class);
             $coords->setLatitude($this->getLatitute());
             $coords->setLongitude($this->getLongitute());
         }
@@ -112,14 +118,14 @@ class tx_cfcleague_models_Stadium extends BaseModel
     /**
      * Returns address dataset or null.
      *
-     * @return tx_cfcleague_models_Address or null
+     * @return Address or null
      */
     public function getAddress()
     {
         if (!$this->getProperty('address')) {
             return null;
         }
-        $address = tx_rnbase::makeInstance('tx_cfcleague_models_Address', $this->getProperty('address'));
+        $address = tx_rnbase::makeInstance(Address::class, $this->getProperty('address'));
 
         return $address->isValid() ? $address : null;
     }
@@ -131,11 +137,11 @@ class tx_cfcleague_models_Stadium extends BaseModel
      *
      * @param int $uid
      *
-     * @return tx_cfcleague_models_Stadium
+     * @return Stadium
      */
     public static function getStadiumInstance($uid = null)
     {
-        $uid = intval($uid);
+        $uid = (int) $uid;
         if (!$uid) {
             throw new Exception('No uid for '.self::getTableName().' given!');
         }

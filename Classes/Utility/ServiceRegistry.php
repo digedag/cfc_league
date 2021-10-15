@@ -1,8 +1,13 @@
 <?php
+
+namespace System25\T3sports\Utility;
+
+use Sys25\RnBase\Utility\Misc;
+
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2009-2015 Rene Nitzsche (rene@system25.de)
+*  (c) 2009-2021 Rene Nitzsche (rene@system25.de)
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -22,9 +27,7 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-tx_rnbase::load('tx_rnbase_util_Misc');
-
-class tx_cfcleague_util_ServiceRegistry
+class ServiceRegistry
 {
     /**
      * Liefert den Competition-Service.
@@ -33,7 +36,7 @@ class tx_cfcleague_util_ServiceRegistry
      */
     public static function getCompetitionService()
     {
-        return tx_rnbase_util_Misc::getService('t3sports_srv', 'competition');
+        return Misc::getService('t3sports_srv', 'competition');
     }
 
     /**
@@ -43,7 +46,7 @@ class tx_cfcleague_util_ServiceRegistry
      */
     public static function getMatchService()
     {
-        return tx_rnbase_util_Misc::getService('t3sports_srv', 'match');
+        return Misc::getService('t3sports_srv', 'match');
     }
 
     /**
@@ -53,7 +56,7 @@ class tx_cfcleague_util_ServiceRegistry
      */
     public static function getStadiumService()
     {
-        return tx_rnbase_util_Misc::getService('t3sports_srv', 'stadiums');
+        return Misc::getService('t3sports_srv', 'stadiums');
     }
 
     /**
@@ -63,7 +66,7 @@ class tx_cfcleague_util_ServiceRegistry
      */
     public static function getSaisonService()
     {
-        return tx_rnbase_util_Misc::getService('t3sports_srv', 'saison');
+        return Misc::getService('t3sports_srv', 'saison');
     }
 
     /**
@@ -73,7 +76,7 @@ class tx_cfcleague_util_ServiceRegistry
      */
     public static function getProfileService()
     {
-        return tx_rnbase_util_Misc::getService('t3sports_srv', 'profiles');
+        return Misc::getService('t3sports_srv', 'profiles');
     }
 
     /**
@@ -83,7 +86,7 @@ class tx_cfcleague_util_ServiceRegistry
      */
     public static function getTeamService()
     {
-        return tx_rnbase_util_Misc::getService('t3sports_srv', 'teams');
+        return Misc::getService('t3sports_srv', 'teams');
     }
 
     /**
@@ -93,9 +96,6 @@ class tx_cfcleague_util_ServiceRegistry
      */
     public static function getGroupService()
     {
-        return tx_rnbase_util_Misc::getService('t3sports_srv', 'group');
+        return Misc::getService('t3sports_srv', 'group');
     }
-}
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/util/class.tx_cfcleague_util_ServiceRegistry.php']) {
-    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/util/class.tx_cfcleague_util_ServiceRegistry.php'];
 }

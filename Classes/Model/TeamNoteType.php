@@ -1,12 +1,14 @@
 <?php
 
+namespace System25\T3sports\Model;
+
 use Sys25\RnBase\Database\Connection;
 use Sys25\RnBase\Domain\Model\BaseModel;
 
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2009 Rene Nitzsche (rene@system25.de)
+ *  (c) 2009-2021 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -29,7 +31,7 @@ use Sys25\RnBase\Domain\Model\BaseModel;
 /**
  * Model for a note type.
  */
-class tx_cfcleague_models_TeamNoteType extends BaseModel
+class TeamNoteType extends BaseModel
 {
     private static $instances = [];
 
@@ -73,7 +75,7 @@ class tx_cfcleague_models_TeamNoteType extends BaseModel
      *
      * @param int $uid
      *
-     * @return tx_cfcleague_models_TeamNoteType
+     * @return TeamNoteType
      */
     public static function getInstance($uid = null)
     {

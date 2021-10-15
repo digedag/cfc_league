@@ -1,11 +1,14 @@
 <?php
 
+namespace System25\T3sports\Model;
+
 use Sys25\RnBase\Domain\Model\BaseModel;
+use tx_rnbase;
 
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2009-2017 Rene Nitzsche (rene@system25.de)
+ *  (c) 2009-2021 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -28,7 +31,7 @@ use Sys25\RnBase\Domain\Model\BaseModel;
 /**
  * Model for a team note.
  */
-class tx_cfcleague_models_TeamNote extends BaseModel
+class TeamNote extends BaseModel
 {
     protected $profile;
 
@@ -56,11 +59,11 @@ class tx_cfcleague_models_TeamNote extends BaseModel
     /**
      * Returns the NoteType.
      *
-     * @return tx_cfcleaguefe_models_teamNoteType
+     * @return TeamNoteType
      */
     public function getType()
     {
-        return tx_cfcleague_models_TeamNoteType::getInstance($this->getProperty('type'));
+        return TeamNoteType::getInstance($this->getProperty('type'));
     }
 
     /**
@@ -76,12 +79,12 @@ class tx_cfcleague_models_TeamNote extends BaseModel
     /**
      * Returns the player.
      *
-     * @return tx_cfcleague_models_Profile
+     * @return Profile
      */
     public function getProfile()
     {
         if (!$this->profile) {
-            $this->profile = tx_rnbase::makeInstance('tx_cfcleague_models_Profile', $this->getProperty('player'));
+            $this->profile = tx_rnbase::makeInstance(Profile::class, $this->getProperty('player'));
         }
 
         return $this->profile;

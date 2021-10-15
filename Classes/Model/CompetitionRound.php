@@ -1,11 +1,13 @@
 <?php
 
-use Sys25\RnBase\Domain\Model\BaseModel;
+namespace System25\T3sports\Model;
+
+use Sys25\RnBase\Domain\Model\DataModel;
 
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2011-2017 Rene Nitzsche (rene@system25.de)
+ *  (c) 2009-2021 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -26,17 +28,8 @@ use Sys25\RnBase\Domain\Model\BaseModel;
  ***************************************************************/
 
 /**
- * Model für eine Wettbewerbsstrafe.
+ * Model für einen Spieltag.
  */
-class tx_cfcleague_models_CompetitionPenalty extends BaseModel
+class CompetitionRound extends DataModel
 {
-    public function getTableName()
-    {
-        return 'tx_cfcleague_competition_penalty';
-    }
-
-    public function isCorrection()
-    {
-        return $this->getProperty('correction') > 0;
-    }
 }

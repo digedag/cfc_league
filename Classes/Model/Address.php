@@ -1,11 +1,13 @@
 <?php
 
+namespace System25\T3sports\Model;
+
 use Sys25\RnBase\Domain\Model\BaseModel;
 
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2009-2017 Rene Nitzsche (rene@system25.de)
+ *  (c) 2009-2021 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -26,8 +28,12 @@ use Sys25\RnBase\Domain\Model\BaseModel;
  ***************************************************************/
 
 /**
- * Model für einen Spieltag.
+ * Model für einen tt_address Datensatz.
  */
-class tx_cfcleague_models_CompetitionRound extends BaseModel
+class Address extends BaseModel
 {
+    public function getTableName()
+    {
+        return 'tt_address';
+    }
 }

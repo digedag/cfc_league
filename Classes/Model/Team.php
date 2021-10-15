@@ -1,13 +1,17 @@
 <?php
 
+namespace System25\T3sports\Model;
+
 use Sys25\RnBase\Database\Connection;
 use Sys25\RnBase\Domain\Model\BaseModel;
+use Sys25\RnBase\Domain\Model\MediaModel;
 use Sys25\RnBase\Utility\Strings;
+use tx_rnbase;
 
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2007-2017 Rene Nitzsche (rene@system25.de)
+*  (c) 2007-2021 Rene Nitzsche (rene@system25.de)
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -30,7 +34,7 @@ use Sys25\RnBase\Utility\Strings;
 /**
  * Model für ein Team.
  */
-class tx_cfcleague_models_Team extends BaseModel
+class Team extends BaseModel
 {
     private static $instances = [];
 
@@ -62,11 +66,11 @@ class tx_cfcleague_models_Team extends BaseModel
     {
         if ($this->getProperty('logo')) {
             // LogoFeld
-            $media = tx_rnbase::makeInstance('tx_rnbase_model_media', $this->getProperty('logo'));
+            $media = tx_rnbase::makeInstance(MediaModel::class, $this->getProperty('logo'));
 
             return $media->getProperty('file');
         } elseif ($this->getProperty('club')) {
-            $club = tx_rnbase::makeInstance('tx_cfcleague_models_Club', $this->getProperty('club'));
+            $club = tx_rnbase::makeInstance(Club::class, $this->getProperty('club'));
 
             return $club->getFirstLogo();
         }
@@ -82,7 +86,7 @@ class tx_cfcleague_models_Team extends BaseModel
     /**
      * Liefert den Verein des Teams als Objekt.
      *
-     * @return tx_cfcleague_models_Club Verein als Objekt oder null
+     * @return Club Verein als Objekt oder null
      */
     public function getClub()
     {
@@ -90,7 +94,7 @@ class tx_cfcleague_models_Team extends BaseModel
             return null;
         }
 
-        return tx_rnbase::makeInstance('tx_cfcleague_models_Club', $this->getProperty('club'));
+        return tx_rnbase::makeInstance(Club::class, $this->getProperty('club'));
     }
 
     public function getClubUid()
@@ -122,7 +126,7 @@ class tx_cfcleague_models_Team extends BaseModel
      * Liefert die Spieler des Teams in der vorgegebenen Reihenfolge als Profile. Der
      * Key ist die laufende Nummer und nicht die UID!
      *
-     * @return array[tx_cfcleague_models_Profile]
+     * @return Profile[]
      */
     public function getPlayers()
     {
@@ -133,7 +137,7 @@ class tx_cfcleague_models_Team extends BaseModel
      * Liefert die Trainer des Teams in der vorgegebenen Reihenfolge als Profile. Der
      * Key ist die laufende Nummer und nicht die UID!
      *
-     * @return array[tx_cfcleague_models_Profile]
+     * @return Profile[]
      */
     public function getCoaches()
     {
@@ -144,7 +148,7 @@ class tx_cfcleague_models_Team extends BaseModel
      * Liefert die Betreuer des Teams in der vorgegebenen Reihenfolge als Profile. Der
      * Key ist die laufende Nummer und nicht die UID!
      *
-     * @return array[tx_cfcleague_models_Profile]
+     * @return Profile[]
      */
     public function getSupporters()
     {
@@ -157,7 +161,7 @@ class tx_cfcleague_models_Team extends BaseModel
      *
      * @column Name der DB-Spalte mit den gesuchten Team-Mitgliedern
      *
-     * @return array[tx_cfcleague_models_Profile]
+     * @return Profile[]
      */
     private function getTeamMember($column)
     {
@@ -165,7 +169,7 @@ class tx_cfcleague_models_Team extends BaseModel
             $what = '*';
             $from = 'tx_cfcleague_profiles';
             $options['where'] = 'uid IN ('.$this->getProperty($column).')';
-            $options['wrapperclass'] = 'tx_cfcleague_models_Profile';
+            $options['wrapperclass'] = Profile::class;
 
             $rows = Connection::getInstance()->doSelect($what, $from, $options, 0);
 
@@ -178,7 +182,7 @@ class tx_cfcleague_models_Team extends BaseModel
     /**
      * Sortiert die Personen (Spieler/Trainer) entsprechend der Reihenfolge im Team.
      *
-     * @param $profiles array[tx_cfcleague_models_Profile]
+     * @param Profile[] $profiles
      */
     private function sortProfiles($profiles, $recordKey = 'players')
     {

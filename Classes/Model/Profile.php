@@ -1,11 +1,14 @@
 <?php
 
+namespace System25\T3sports\Model;
+
+use Exception;
 use Sys25\RnBase\Domain\Model\BaseModel;
 
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2007-2017 Rene Nitzsche (rene@system25.de)
+ *  (c) 2007-2021 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -28,7 +31,7 @@ use Sys25\RnBase\Domain\Model\BaseModel;
 /**
  * Model für eine Person.
  */
-class tx_cfcleague_models_Profile extends BaseModel
+class Profile extends BaseModel
 {
     private static $instances = [];
 
@@ -71,7 +74,7 @@ class tx_cfcleague_models_Profile extends BaseModel
      *
      * @param int $uid
      *
-     * @return tx_cfcleague_models_Profile
+     * @return Profile
      */
     public static function getProfileInstance($uid)
     {

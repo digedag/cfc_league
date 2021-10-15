@@ -1,11 +1,15 @@
 <?php
 
-use Sys25\RnBase\Domain\Model\BaseModel;
+namespace System25\T3sports\Model;
+
+use Sys25\RnBase\Domain\Model\DataModel;
+use Sys25\RnBase\Utility\Strings;
+use tx_rnbase;
 
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2010-2017 Rene Nitzsche (rene@system25.de)
+ *  (c) 2010-2021 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -28,7 +32,7 @@ use Sys25\RnBase\Domain\Model\BaseModel;
 /**
  * Model for a match set.
  */
-class tx_cfcleague_models_Set extends BaseModel
+class Set extends DataModel
 {
     protected $p1;
 
@@ -74,11 +78,10 @@ class tx_cfcleague_models_Set extends BaseModel
             return false;
         }
         $sets = preg_split("/[\s]*[;,|][\s]*/", $sets);
-        // $sets = Tx_Rnbase_Utility_Strings::trimExplode(';', $sets);
         $ret = [];
         foreach ($sets as $idx => $setStr) {
-            list($p1, $p2) = Tx_Rnbase_Utility_Strings::intExplode(':', $setStr);
-            $ret[] = tx_rnbase::makeInstance('tx_cfcleague_models_Set', $idx + 1, $p1, $p2);
+            list($p1, $p2) = Strings::intExplode(':', $setStr);
+            $ret[] = tx_rnbase::makeInstance(Set::class, $idx + 1, $p1, $p2);
         }
 
         return $ret;

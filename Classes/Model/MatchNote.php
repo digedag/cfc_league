@@ -1,5 +1,7 @@
 <?php
 
+namespace System25\T3sports\Model;
+
 use Sys25\RnBase\Domain\Model\BaseModel;
 
 /***************************************************************
@@ -28,7 +30,7 @@ use Sys25\RnBase\Domain\Model\BaseModel;
 /**
  * Model for a match note/event.
  */
-class tx_cfcleague_models_MatchNote extends BaseModel
+class MatchNote extends BaseModel
 {
     public const TYPE_TICKER = 100;
 

@@ -1,12 +1,16 @@
 <?php
 
+namespace System25\T3sports\Model;
+
+use Exception;
 use Sys25\RnBase\Database\Connection;
 use Sys25\RnBase\Domain\Model\BaseModel;
+use System25\T3sports\Utility\ServiceRegistry;
 
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2007-2020 Rene Nitzsche (rene@system25.de)
+ *  (c) 2007-2021 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -29,7 +33,7 @@ use Sys25\RnBase\Domain\Model\BaseModel;
 /**
  * Model for a match.
  */
-class tx_cfcleague_models_Match extends BaseModel
+class Match extends BaseModel
 {
     public const MATCH_STATUS_INVALID = -1;
     public const MATCH_STATUS_RESCHEDULED = -10;
@@ -123,7 +127,7 @@ class tx_cfcleague_models_Match extends BaseModel
     /**
      * Init result and expect the endresult in last match part.
      *
-     * @param tx_cfcleague_models_Competition $comp
+     * @param Competition $comp
      * @param int $matchParts
      */
     private function initResultSimple($comp, $matchParts)
@@ -145,7 +149,7 @@ class tx_cfcleague_models_Match extends BaseModel
     /**
      * Init result and add all matchpart results.
      *
-     * @param tx_cfcleague_models_Competition $comp
+     * @param Competition $comp
      * @param int $matchParts
      */
     private function initResultAdded($comp, $matchParts)
@@ -182,12 +186,12 @@ class tx_cfcleague_models_Match extends BaseModel
     /**
      * Return sets if available.
      *
-     * @return array[tx_cfcleague_models_Set]
+     * @return Set[]
      */
     public function getSets()
     {
         if (!is_array($this->sets)) {
-            $this->sets = tx_cfcleague_models_Set::buildFromString($this->getProperty('sets'));
+            $this->sets = Set::buildFromString($this->getProperty('sets'));
             $this->sets = $this->sets ? $this->sets : [];
         }
 
@@ -262,12 +266,12 @@ class tx_cfcleague_models_Match extends BaseModel
     /**
      * Returns the competition.
      *
-     * @return \tx_cfcleague_models_Competition
+     * @return Competition
      */
     public function getCompetition()
     {
         if (!$this->competition) {
-            $this->competition = tx_cfcleague_models_Competition::getCompetitionInstance($this->getProperty('competition'));
+            $this->competition = Competition::getCompetitionInstance($this->getProperty('competition'));
         }
 
         return $this->competition;
@@ -281,7 +285,7 @@ class tx_cfcleague_models_Match extends BaseModel
     /**
      * Liefert das Heim-Team als Objekt.
      *
-     * @return tx_cfcleague_models_Team
+     * @return Team
      */
     public function getHome()
     {
@@ -303,7 +307,7 @@ class tx_cfcleague_models_Match extends BaseModel
     /**
      * Liefert das Gast-Team als Objekt.
      *
-     * @return tx_cfcleague_models_Team
+     * @return Team
      */
     public function getGuest()
     {
@@ -325,14 +329,14 @@ class tx_cfcleague_models_Match extends BaseModel
     /**
      * Liefert das Team als Objekt.
      *
-     * @return tx_cfcleague_models_Team
+     * @return Team
      */
     private function getTeam($uid)
     {
         if (!$uid) {
             throw new Exception('Invalid match with uid '.$this->getUid().': At least one team is not set.');
         }
-        $team = tx_cfcleague_util_ServiceRegistry::getTeamService()->getTeam($uid);
+        $team = ServiceRegistry::getTeamService()->getTeam($uid);
 
         return $team;
     }
@@ -428,7 +432,7 @@ class tx_cfcleague_models_Match extends BaseModel
     /**
      * Liefert das Stadion.
      *
-     * @return tx_cfcleague_models_Stadium|null
+     * @return Stadium|null
      */
     public function getArena()
     {
@@ -436,7 +440,7 @@ class tx_cfcleague_models_Match extends BaseModel
             return null;
         }
 
-        return tx_cfcleague_models_Stadium::getStadiumInstance($this->getProperty('arena'));
+        return Stadium::getStadiumInstance($this->getProperty('arena'));
     }
 
     /**
@@ -452,13 +456,13 @@ class tx_cfcleague_models_Match extends BaseModel
     /**
      * Liefert den Referee als Datenobjekt.
      *
-     * @return tx_cfcleague_models_Profile
+     * @return Profile
      */
     public function getReferee()
     {
         if ($this->getProperty('referee')) {
             try {
-                $profile = tx_cfcleague_models_Profile::getProfileInstance($this->getProperty('referee'));
+                $profile = Profile::getProfileInstance($this->getProperty('referee'));
 
                 return $profile->isValid() ? $profile : null;
             } catch (Exception $e) {
@@ -500,7 +504,7 @@ class tx_cfcleague_models_Match extends BaseModel
      * @param int $limit
      *            maximum number of note to retrieve
      *
-     * @return array[tx_cfcleague_models_MatchNote]
+     * @return MatchNote[]
      */
     public function getMatchNotes($orderBy = 'asc', $limit = false)
     {

@@ -1,12 +1,15 @@
 <?php
 
+namespace System25\T3sports\Model;
+
 use Sys25\RnBase\Database\Connection;
 use Sys25\RnBase\Domain\Model\BaseModel;
+use System25\T3sports\Utility\ServiceRegistry;
 
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2007-2017 Rene Nitzsche (rene@system25.de)
+ *  (c) 2007-2021 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -29,7 +32,7 @@ use Sys25\RnBase\Domain\Model\BaseModel;
 /**
  * Model for age group.
  */
-class tx_cfcleague_models_Group extends BaseModel
+class Group extends BaseModel
 {
     public function getTableName()
     {
@@ -51,11 +54,11 @@ class tx_cfcleague_models_Group extends BaseModel
      *
      * @param int $uid
      *
-     * @return tx_cfcleague_models_Group
+     * @return Group
      */
     public static function getGroupInstance($uid)
     {
-        return tx_cfcleague_util_ServiceRegistry::getGroupService()->getGroupByUid($uid);
+        return ServiceRegistry::getGroupService()->getGroupByUid($uid);
     }
 
     /**
@@ -64,7 +67,7 @@ class tx_cfcleague_models_Group extends BaseModel
      * Parameter leer, dann werden alle Datensätze aus der Datenbank geliefert. Ansonsten
      * wird ein String mit der uids der gesuchten Saisons erwartet ('2,4,10,...').
      *
-     * @return tx_cfcleague_models_Group[]
+     * @return Group[]
      */
     public static function findAll($uids)
     {

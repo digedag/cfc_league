@@ -47,7 +47,6 @@
 	"autoload": {
 		"classmap": [
 			"mod1/",
-			"models/",
 			"services/",
 			"util/"
 		],

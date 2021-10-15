@@ -1,11 +1,19 @@
 <?php
 
+namespace System25\T3sports\Model;
+
+use Sys25\RnBase\Database\Connection;
 use Sys25\RnBase\Domain\Model\BaseModel;
+use Sys25\RnBase\Utility\Math;
+use Sys25\RnBase\Utility\Misc;
+use Sys25\RnBase\Utility\Strings;
+use System25\T3sports\Sports\ISports;
+use System25\T3sports\Utility\ServiceRegistry;
 
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2009-2018 Rene Nitzsche (rene@system25.de)
+ *  (c) 2009-2021 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -28,7 +36,7 @@ use Sys25\RnBase\Domain\Model\BaseModel;
 /**
  * Model für einen Wettbewerb.
  */
-class tx_cfcleague_models_Competition extends BaseModel
+class Competition extends BaseModel
 {
     private static $instances = [];
 
@@ -83,7 +91,7 @@ class tx_cfcleague_models_Competition extends BaseModel
     public function getMatches($status, $scope = 0)
     {
         // Sicherstellen, dass wir eine Zahl bekommen
-        if ((isset($status) && tx_rnbase_util_Math::isInteger($status))) {
+        if ((isset($status) && Math::isInteger($status))) {
             $status = (int) $status;
             // Wir laden die Spieldaten zunächst ohne die Teams
             // Um die Datenmenge in Grenzen zu halten
@@ -91,7 +99,7 @@ class tx_cfcleague_models_Competition extends BaseModel
             $scope = (int) $scope;
             if ($scope) {
                 // Feststellen wann die Hinrunde endet: Anz Teams - 1
-                $round = count(Tx_Rnbase_Utility_Strings::intExplode(',', $this->getProperty('teams')));
+                $round = count(Strings::intExplode(',', $this->getProperty('teams')));
                 $round = ($round) ? $round - 1 : $round;
             }
             // Check if data is already cached
@@ -125,7 +133,7 @@ class tx_cfcleague_models_Competition extends BaseModel
                 ];
                 // Issue 1880237: Return matches sorted by round
                 $options['orderby'] = 'round, date';
-                $this->matchesByState[$status.'_'.$scope] = Tx_Rnbase_Database_Connection::getInstance()->doSelect($what, 'tx_cfcleague_games', $options, 0);
+                $this->matchesByState[$status.'_'.$scope] = Connection::getInstance()->doSelect($what, 'tx_cfcleague_games', $options, 0);
             }
 
             return $this->matchesByState[$status.'_'.$scope];
@@ -229,7 +237,7 @@ class tx_cfcleague_models_Competition extends BaseModel
     public function getRounds()
     {
         if (!array_key_exists('rounds', $this->cache)) {
-            $srv = tx_cfcleague_util_ServiceRegistry::getMatchService();
+            $srv = ServiceRegistry::getMatchService();
             // build SQL for select
             $options = [];
             // TODO: Die vielen Spaltennamen haben historische Gründe. Da müsste bei den Clients aufgeräumt werden...
@@ -252,7 +260,7 @@ class tx_cfcleague_models_Competition extends BaseModel
         if ($round) {
             return $this->getMatchesByRound(round);
         }
-        $srv = tx_cfcleague_util_ServiceRegistry::getMatchService();
+        $srv = ServiceRegistry::getMatchService();
 
         return $srv->getMatches4Competition($this);
     }
@@ -268,7 +276,7 @@ class tx_cfcleague_models_Competition extends BaseModel
         $options = [];
         $fields['MATCH.ROUND'][OP_EQ_INT] = $roundId;
         $fields['MATCH.COMPETITION'][OP_EQ_INT] = $this->getUid();
-        $service = tx_cfcleague_util_ServiceRegistry::getMatchService();
+        $service = ServiceRegistry::getMatchService();
         $matches = $service->search($fields, $options);
 
         return $matches;
@@ -286,7 +294,7 @@ class tx_cfcleague_models_Competition extends BaseModel
         $options = [];
         // $options['debug'] =1;
         $options['what'] = 'max(convert(match_no,signed)) AS max_no';
-        $srv = tx_cfcleague_util_ServiceRegistry::getMatchService();
+        $srv = ServiceRegistry::getMatchService();
         $arr = $srv->search($fields, $options);
 
         return count($arr) ? $arr[0]['max_no'] : 0;
@@ -318,7 +326,7 @@ class tx_cfcleague_models_Competition extends BaseModel
     public function getDummyTeamIds()
     {
         if (!array_key_exists('dummyteamids', $this->cache)) {
-            $srv = tx_cfcleague_util_ServiceRegistry::getCompetitionService();
+            $srv = ServiceRegistry::getCompetitionService();
             $this->cache['dummyteamids'] = $srv->getDummyTeamIds($this);
         }
 
@@ -338,7 +346,7 @@ class tx_cfcleague_models_Competition extends BaseModel
     {
         $key = 'teamnames'.$asArray;
         if (!array_key_exists($key, $this->cache)) {
-            $srv = tx_cfcleague_util_ServiceRegistry::getTeamService();
+            $srv = ServiceRegistry::getTeamService();
             $this->cache[$key] = $srv->getTeamNames($this, $asArray);
         }
 
@@ -351,7 +359,7 @@ class tx_cfcleague_models_Competition extends BaseModel
     public function getNumberOfMatches($teamIds, $status = '0,1,2')
     {
         if (!array_key_exists('numofmatches', $this->cache)) {
-            $srv = tx_cfcleague_util_ServiceRegistry::getCompetitionService();
+            $srv = ServiceRegistry::getCompetitionService();
             $this->cache['numofmatches'] = $srv->getNumberOfMatches($this, $teamIds, $status);
         }
 
@@ -373,21 +381,20 @@ class tx_cfcleague_models_Competition extends BaseModel
      * Since version 0.6.0 there are multiple agegroups possible. For backward compatibility this
      * method returns the first competition per default.
      *
-     * @return tx_cfcleague_models_Group
+     * @return Group
      */
     public function getGroup($all = false)
     {
-        tx_rnbase::load('tx_cfcleague_models_Group');
-        $groupIds = Tx_Rnbase_Utility_Strings::intExplode(',', $this->getProperty('agegroup'));
+        $groupIds = Strings::intExplode(',', $this->getProperty('agegroup'));
         if (!count($groupIds)) {
             return null;
         }
         if (!$all) {
-            return tx_cfcleague_models_Group::getGroupInstance($groupIds[0]);
+            return Group::getGroupInstance($groupIds[0]);
         }
         $ret = [];
         foreach ($groupIds as $groupId) {
-            $ret[] = tx_cfcleague_models_Group::getGroupInstance($groupId);
+            $ret[] = Group::getGroupInstance($groupId);
         }
 
         return $ret;
@@ -400,8 +407,7 @@ class tx_cfcleague_models_Competition extends BaseModel
      */
     public function getFirstGroupUid()
     {
-        tx_rnbase::load('tx_cfcleague_models_Group');
-        $groupIds = Tx_Rnbase_Utility_Strings::intExplode(',', $this->getProperty('agegroup'));
+        $groupIds = Strings::intExplode(',', $this->getProperty('agegroup'));
 
         return count($groupIds) ? $groupIds[0] : 0;
     }
@@ -409,15 +415,14 @@ class tx_cfcleague_models_Competition extends BaseModel
     /**
      * Returns the agegroups of this competition.
      *
-     * @return tx_cfcleague_models_Group[]
+     * @return Group[]
      */
     public function getGroups()
     {
-        tx_rnbase::load('tx_cfcleague_models_Group');
-        $groupIds = Tx_Rnbase_Utility_Strings::intExplode(',', $this->getProperty('agegroup'));
+        $groupIds = Strings::intExplode(',', $this->getProperty('agegroup'));
         $ret = [];
         foreach ($groupIds as $groupId) {
-            $ret[] = tx_cfcleague_models_Group::getGroupInstance($groupId);
+            $ret[] = Group::getGroupInstance($groupId);
         }
 
         return $ret;
@@ -443,7 +448,7 @@ class tx_cfcleague_models_Competition extends BaseModel
             }
             $options['wrapperclass'] = 'tx_cfcleaguefe_models_team';
             $options['orderby'] = 'sorting';
-            $this->teams = Tx_Rnbase_Database_Connection::getInstance()->doSelect('*', 'tx_cfcleague_teams', $options, 0);
+            $this->teams = Connection::getInstance()->doSelect('*', 'tx_cfcleague_teams', $options, 0);
         }
 
         return $this->teams;
@@ -456,7 +461,7 @@ class tx_cfcleague_models_Competition extends BaseModel
      */
     public function getTeamIds()
     {
-        return Tx_Rnbase_Utility_Strings::intExplode(',', $this->getProperty('teams'));
+        return Strings::intExplode(',', $this->getProperty('teams'));
     }
 
     /**
@@ -493,11 +498,11 @@ class tx_cfcleague_models_Competition extends BaseModel
      *
      * @param int $uid
      *
-     * @return tx_cfcleague_models_competition or null
+     * @return Competition or null
      */
-    public static function &getCompetitionInstance($uid, $record = 0)
+    public static function getCompetitionInstance($uid, $record = 0)
     {
-        $uid = intval($uid);
+        $uid = (int) $uid;
         if (!array_key_exists($uid, self::$instances)) {
             $comp = new self(is_array($record) ? $record : $uid);
             self::$instances[$uid] = $comp->isValid() ? $comp : null;
@@ -538,14 +543,14 @@ class tx_cfcleague_models_Competition extends BaseModel
         }
 
         if (strlen($compTypes)) {
-            $where .= ' AND type IN ('.implode(Tx_Rnbase_Utility_Strings::intExplode(',', $compTypes), ',').')';
+            $where .= ' AND type IN ('.implode(Strings::intExplode(',', $compTypes), ',').')';
         }
 
         /*
          * SELECT * FROM tx_cfcleague_competition WHERE uid IN ($uid)
          */
 
-        return Tx_Rnbase_Database_Connection::getInstance()->doSelect('*', 'tx_cfcleague_competition', [
+        return Connection::getInstance()->doSelect('*', 'tx_cfcleague_competition', [
             'where' => $where,
             'orderby' => 'sorting',
             'wrapperclass' => 'tx_cfcleaguefe_models_competition',
@@ -564,12 +569,12 @@ class tx_cfcleague_models_Competition extends BaseModel
         }
 
         $ret = [];
-        $arr = Tx_Rnbase_Utility_Strings::trimExplode('|', $str);
+        $arr = Strings::trimExplode('|', $str);
         foreach ($arr as $item) {
             // Jedes Item splitten
-            $mark = Tx_Rnbase_Utility_Strings::trimExplode(';', $item);
-            $positions = Tx_Rnbase_Utility_Strings::intExplode(',', $mark[0]);
-            $comments = Tx_Rnbase_Utility_Strings::trimExplode(',', $mark[1]);
+            $mark = Strings::trimExplode(';', $item);
+            $positions = Strings::intExplode(',', $mark[0]);
+            $comments = Strings::trimExplode(',', $mark[1]);
             // Jetzt das Ergebnisarray aufbauen
             foreach ($positions as $position) {
                 $ret[$position] = [
@@ -594,7 +599,7 @@ class tx_cfcleague_models_Competition extends BaseModel
                 'wrapperclass' => 'tx_cfcleague_models_CompetitionPenalty',
             ];
 
-            $this->penalties = Tx_Rnbase_Database_Connection::getInstance()->
+            $this->penalties = Connection::getInstance()->
                             doSelect('*', 'tx_cfcleague_competition_penalty', $options);
         }
 
@@ -623,14 +628,12 @@ class tx_cfcleague_models_Competition extends BaseModel
     }
 
     /**
-     * @return tx_cfcleague_sports_ISports
+     * @return ISports
      *
      * @deprecated use System25\T3sports\Sports\ServiceLocator
      */
     public function getSportsService()
     {
-        tx_rnbase::load('tx_rnbase_util_Misc');
-
-        return tx_rnbase_util_Misc::getService('t3sports_sports', $this->getSports());
+        return Misc::getService('t3sports_sports', $this->getSports());
     }
 }
