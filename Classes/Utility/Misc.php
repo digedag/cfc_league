@@ -2,7 +2,9 @@
 
 namespace System25\T3sports\Utility;
 
+use Sys25\RnBase\Backend\Utility\BackendUtility;
 use Sys25\RnBase\Backend\Utility\Icons;
+use Sys25\RnBase\Database\Connection;
 use Sys25\RnBase\Utility\Typo3Classes;
 use tx_rnbase;
 
@@ -175,5 +177,40 @@ class Misc
         $content .= $error_doc->endPage();
         echo $content;
         exit();
+    }
+
+    /**
+     * Backend method to determine if a page is below another page.
+     *
+     * @param int $uid
+     * @param string $clause
+     *
+     * @return array[int]
+     */
+    public static function getPagePath($uid, $clause = '')
+    {
+        $loopCheck = 100;
+        $output = []; // We return an array of uids
+        $output[] = $uid;
+        while (0 != $uid && $loopCheck > 0) {
+            --$loopCheck;
+
+            //'uid,pid,title,t3ver_oid,t3ver_wsid,t3ver_swapmode',
+            $rows = Connection::getInstance()->doSelect('*', 'pages', [
+                'where' => 'uid='.intval($uid).(strlen(trim($clause)) ? ' AND '.$clause : ''),
+            ]);
+            if (!empty($rows)) {
+                $row = reset($rows);
+                BackendUtility::workspaceOL('pages', $row);
+                BackendUtility::fixVersioningPid('pages', $row);
+
+                $uid = $row['pid'];
+                $output[] = $uid;
+            } else {
+                break;
+            }
+        }
+
+        return $output;
     }
 }

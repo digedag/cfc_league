@@ -12,4 +12,6 @@ return [
     'tx_cfcleague_sports_IceHockey' => \System25\T3sports\Sports\IceHockey::class,
     'tx_cfcleague_sports_Volleyball' => \System25\T3sports\Sports\Volleyball::class,
     'tx_cfcleague_sports_MatchInfo' => \System25\T3sports\Sports\MatchInfo::class,
+
+    'Tx_Cfcleague_Model_Repository_MatchNote' => \System25\T3sports\Model\Repository\MatchNoteRepository::class,
 ];

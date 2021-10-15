@@ -39,4 +39,8 @@ namespace {
     class tx_cfcleague_sports_MatchInfo
     {
     }
+    /** @deprecated */
+    class Tx_Cfcleague_Model_Repository_MatchNote
+    {
+    }
 }

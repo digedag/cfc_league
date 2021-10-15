@@ -1,11 +1,16 @@
 <?php
 
+namespace System25\T3sports\Model\Repository;
+
+use Sys25\RnBase\Domain\Model\RecordInterface;
 use Sys25\RnBase\Search\SearchBase;
+use System25\T3sports\Search\MatchNoteSearch;
+use tx_rnbase;
 
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2017 Rene Nitzsche (rene@system25.de)
+ *  (c) 2017-2021 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -31,11 +36,11 @@ use Sys25\RnBase\Search\SearchBase;
 /**
  * @author Rene Nitzsche
  */
-class Tx_Cfcleague_Model_Repository_MatchNote extends \Sys25\RnBase\Typo3Wrapper\Service\AbstractService
+class MatchNoteRepository extends \Sys25\RnBase\Typo3Wrapper\Service\AbstractService
 {
     public function getSearchClass()
     {
-        return 'tx_cfcleague_search_MatchNote';
+        return MatchNoteSearch::class;
     }
 
     /**
@@ -68,7 +73,7 @@ class Tx_Cfcleague_Model_Repository_MatchNote extends \Sys25\RnBase\Typo3Wrapper
     /**
      * FIXME: Methode nach Umstellung auf Repo entfernen!
      *
-     * @return Tx_Rnbase_Domain_Model_RecordInterface
+     * @return RecordInterface
      */
     protected function getDomainModel()
     {

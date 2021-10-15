@@ -81,8 +81,7 @@ class ProfileCreate
     public static function isProfilePage($pid)
     {
         $rootPage = Processor::getExtensionCfgValue('cfc_league', 'profileRootPageId');
-        $t3util = tx_rnbase::makeInstance('Tx_Cfcleague_Utility_TYPO3');
-        $goodPages = $t3util->getPagePath($pid);
+        $goodPages = Misc::getPagePath($pid);
 
         return in_array($rootPage, $goodPages);
     }
