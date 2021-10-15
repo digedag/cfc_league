@@ -1,8 +1,11 @@
 <?php
+
+namespace System25\T3sports\MatchGeneration;
+
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2009 Rene Nitzsche (rene@system25.de)
+*  (c) 2009-2021 Rene Nitzsche (rene@system25.de)
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -22,7 +25,7 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-class tx_cfcleague_util_GeneratorMatch
+class Fixture
 {
     public $home;
 
@@ -47,8 +50,4 @@ class tx_cfcleague_util_GeneratorMatch
     {
         return 'SNr '.$this->nr.': '.$this->home.' - '.$this->guest."\n";
     }
-}
-
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/util/class.tx_cfcleague_util_GeneratorMatch.php']) {
-    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/util/class.tx_cfcleague_util_GeneratorMatch.php'];
 }

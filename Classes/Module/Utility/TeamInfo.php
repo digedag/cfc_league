@@ -1,11 +1,22 @@
 <?php
 
+namespace System25\T3sports\Module\Utility;
+
+use Sys25\RnBase\Backend\Form\ToolBox;
+use Sys25\RnBase\Backend\Module\IModFunc;
+use Sys25\RnBase\Backend\Utility\Tables;
+use Sys25\RnBase\Database\Connection;
 use Sys25\RnBase\Frontend\Request\Parameters;
+use Sys25\RnBase\Utility\Strings;
+use Sys25\RnBase\Utility\T3General;
+use Sys25\RnBase\Utility\TYPO3;
+use System25\T3sports\Model\Team;
+use tx_rnbase;
 
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2009-2019 Rene Nitzsche (rene@system25.de)
+ *  (c) 2009-2021 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -24,38 +35,36 @@ use Sys25\RnBase\Frontend\Request\Parameters;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-tx_rnbase::load('tx_rnbase_parameters');
-tx_rnbase::load('Tx_Rnbase_Utility_T3General');
-tx_rnbase::load('Tx_Rnbase_Database_Connection');
 
 /**
  * Die Klasse wird im BE verwendet und liefert Informationen über ein Team.
  */
-class tx_cfcleague_util_TeamInfo
+class TeamInfo
 {
     private $baseInfo = [];
 
     private $team = null;
 
-    /* @var $formTool tx_rnbase_util_FormTool */
+    /** @var ToolBox */
     private $formTool;
 
     /**
-     * @param tx_cfcleague_models_Team $team
-     * @param tx_rnbase_util_FormTool $formTool
+     * @param Team $team
+     * @param ToolBox $formTool
      */
-    public function __construct($team, $formTool)
+    public function __construct(Team $team, ToolBox $formTool)
     {
         $this->formTool = $formTool;
         $this->init($team);
+        \tx_rnbase_util_Debug::debug($team, __FILE__.':'.__LINE__); // TODO: remove me
     }
 
     private function init($team)
     {
         global $TCA;
         $this->team = $team;
-        if (!tx_rnbase_util_TYPO3::isTYPO76OrHigher()) {
-            Tx_Rnbase_Utility_T3General::loadTCA('tx_cfcleague_teams');
+        if (!TYPO3::isTYPO76OrHigher()) {
+            T3General::loadTCA('tx_cfcleague_teams');
         }
         $this->baseInfo['maxCoaches'] = intval($TCA['tx_cfcleague_teams']['columns']['coaches']['config']['maxitems']);
         $this->baseInfo['maxPlayers'] = intval($TCA['tx_cfcleague_teams']['columns']['players']['config']['maxitems']);
@@ -77,7 +86,7 @@ class tx_cfcleague_util_TeamInfo
     }
 
     /**
-     * @return tx_rnbase_util_FormTool
+     * @return ToolBox
      */
     public function getFormTool()
     {
@@ -102,7 +111,6 @@ class tx_cfcleague_util_TeamInfo
     public function getInfoTable(&$doc)
     {
         global $LANG;
-        tx_rnbase::load('tx_rnbase_util_TYPO3');
         $tableLayout = [
             'table' => ['<table class="table table-striped table-hover table-condensed">', '</table>'],
             'defRow' => [ // Format für 1. Zeile
@@ -128,8 +136,8 @@ class tx_cfcleague_util_TeamInfo
             $this->baseInfo['freeSupporters'],
         ];
 
-        /* @var $tables Tx_Rnbase_Backend_Utility_Tables */
-        $tables = tx_rnbase::makeInstance('Tx_Rnbase_Backend_Utility_Tables');
+        /* @var $tables Tables */
+        $tables = tx_rnbase::makeInstance(Tables::class);
 
         return $tables->buildTable($arr, $tableLayout);
     }
@@ -158,7 +166,7 @@ class tx_cfcleague_util_TeamInfo
         $this->addProfiles($arr, $this->getPlayerNames($this->getTeam()), $LANG->getLL('label_profile_player'), 'player');
         $this->addProfiles($arr, $this->getSupporterNames($this->getTeam()), $LANG->getLL('label_profile_supporter'), 'supporter');
 
-        $tables = tx_rnbase::makeInstance('Tx_Rnbase_Backend_Utility_Tables');
+        $tables = tx_rnbase::makeInstance(Tables::class);
         $tableProfiles = count($arr) > 1 ? $tables->buildTable($arr) : '';
 
         return $tableProfiles;
@@ -188,19 +196,19 @@ class tx_cfcleague_util_TeamInfo
                 continue;
             }
 
-            if (Tx_Rnbase_Utility_T3General::inList($profileUids, $uid)) {
-                $profileUids = Tx_Rnbase_Utility_T3General::rmFromList($uid, $profileUids);
+            if (T3General::inList($profileUids, $uid)) {
+                $profileUids = T3General::rmFromList($uid, $profileUids);
                 $tceData['tx_cfcleague_teams'][$team->getUid()][$fields[$type]] = $profileUids;
                 $team->setProperty($fields[$type], $profileUids);
             }
         }
 
-        $tce = Tx_Rnbase_Database_Connection::getInstance()->getTCEmain($tceData);
+        $tce = Connection::getInstance()->getTCEmain($tceData);
         $tce->process_datamap();
 
         return $this->getFormTool()
             ->getDoc()
-            ->section('Info:', $LANG->getLL('msg_removedProfileFromTeam'), 0, 1, \tx_rnbase_mod_IModFunc::ICON_INFO);
+            ->section('Info:', $LANG->getLL('msg_removedProfileFromTeam'), 0, 1, IModFunc::ICON_INFO);
     }
 
     /**
@@ -245,7 +253,7 @@ class tx_cfcleague_util_TeamInfo
     }
 
     /**
-     * @return tx_cfcleague_models_Team
+     * @return Team
      */
     private function getTeam()
     {
@@ -259,7 +267,7 @@ class tx_cfcleague_util_TeamInfo
     {
         $value = $this->team->getProperty('players');
 
-        return $value ? count(Tx_Rnbase_Utility_Strings::intExplode(',', $value)) : 0;
+        return $value ? count(Strings::intExplode(',', $value)) : 0;
     }
 
     /**
@@ -269,7 +277,7 @@ class tx_cfcleague_util_TeamInfo
     {
         $value = $this->team->getProperty('coaches');
 
-        return $value ? count(Tx_Rnbase_Utility_Strings::intExplode(',', $value)) : 0;
+        return $value ? count(Strings::intExplode(',', $value)) : 0;
     }
 
     /**
@@ -281,14 +289,14 @@ class tx_cfcleague_util_TeamInfo
     {
         $value = $this->team->getProperty('supporters');
 
-        return $value ? count(Tx_Rnbase_Utility_Strings::intExplode(',', $value)) : 0;
+        return $value ? count(Strings::intExplode(',', $value)) : 0;
     }
 
     /**
      * Liefert die Namen alle Spieler des Teams als Array.
      * Key ist die ID des Profils.
      *
-     * @param tx_cfcleague_models_Team $team
+     * @param Team $team
      *
      * @return array
      */
@@ -306,7 +314,7 @@ class tx_cfcleague_util_TeamInfo
      * Liefert die Namen der Trainer des Teams als Array.
      * Key ist die ID des Profils.
      *
-     * @param tx_cfcleague_models_Team $team
+     * @param Team $team
      *
      * @return array
      */
@@ -324,7 +332,7 @@ class tx_cfcleague_util_TeamInfo
      * Liefert die Namen der Betreuer des Teams als Array.
      * Key ist die ID des Profils.
      *
-     * @param tx_cfcleague_models_Team $team
+     * @param Team $team
      *
      * @return array
      */

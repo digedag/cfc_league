@@ -1,8 +1,11 @@
 <?php
+
+namespace System25\T3sports\MatchGeneration;
+
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2009 Rene Nitzsche (rene@system25.de)
+ *  (c) 2009-2021 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -21,9 +24,8 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-tx_rnbase::load('tx_cfcleague_util_GeneratorMatch');
 
-class tx_cfcleague_util_Generator
+class Generator
 {
     public $errorMsg;
 
@@ -128,7 +130,7 @@ class tx_cfcleague_util_Generator
                     $teamIds = explode('-', $match);
                     // Ist es ein spielfreies Spiel
                     $isNoMatch = $teams[$teamIds[0]] == $option_nomatch || $teams[$teamIds[1]] == $option_nomatch;
-                    $dayArr[] = new tx_cfcleague_util_GeneratorMatch(++$matchCnt, $isNoMatch ? '' : ++$matchCnt2, $teams[$teamIds[0]], $teams[$teamIds[1]], $isNoMatch);
+                    $dayArr[] = new Fixture(++$matchCnt, $isNoMatch ? '' : ++$matchCnt2, $teams[$teamIds[0]], $teams[$teamIds[1]], $isNoMatch);
                 }
                 $ret[++$dayCnt] = $dayArr;
             }
@@ -140,7 +142,7 @@ class tx_cfcleague_util_Generator
                 foreach ($matches as $k => $match) {
                     $teamIds = explode('-', $match);
                     $isNoMatch = $teams[$teamIds[0]] == $option_nomatch || $teams[$teamIds[1]] == $option_nomatch;
-                    $dayArr[] = new tx_cfcleague_util_GeneratorMatch(++$matchCnt, $isNoMatch ? '' : ++$matchCnt2, $teams[$teamIds[1]], $teams[$teamIds[0]], $isNoMatch);
+                    $dayArr[] = new Fixture(++$matchCnt, $isNoMatch ? '' : ++$matchCnt2, $teams[$teamIds[1]], $teams[$teamIds[0]], $isNoMatch);
                     // $dayArr[] = new Match(++$matchCnt, $teams[$teamIds[1]], $teams[$teamIds[0]]);
                 }
                 $ret[++$dayCnt] = $dayArr;

@@ -10,6 +10,7 @@ use Sys25\RnBase\Database\Connection;
 use Sys25\RnBase\Utility\T3General;
 use Sys25\RnBase\Utility\TYPO3;
 use System25\T3sports\Handler\MatchCreator;
+use System25\T3sports\MatchGeneration\Generator;
 use System25\T3sports\Model\Competition;
 use tx_rnbase;
 
@@ -163,8 +164,8 @@ class MatchTable
         $options['firstmatchday'] = $comp->getNumberOfRounds();
         $options['firstmatchnumber'] = $comp->getLastMatchNumber();
         // Zunächst mal Anzeige der Daten
-        /* @var $gen \tx_cfcleague_util_Generator */
-        $gen = tx_rnbase::makeInstance('tx_cfcleague_util_Generator');
+        /* @var $gen Generator */
+        $gen = tx_rnbase::makeInstance(Generator::class);
         $table = $gen->main($comp->getTeamIds(), $comp->getGenerationKey(), $options);
 
         if (count($gen->errors)) {
