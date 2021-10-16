@@ -3,6 +3,7 @@
 namespace System25\T3sports\Tests\Model;
 
 use Sys25\RnBase\Tests\BaseTestCase;
+use System25\T3sports\Model\Set;
 
 /***************************************************************
 *  Copyright notice
@@ -34,7 +35,7 @@ class SetTest extends BaseTestCase
      */
     public function testBuildFromStringEmpty()
     {
-        $sets = \tx_cfcleague_models_Set::buildFromString('');
+        $sets = Set::buildFromString('');
         $this->assertFalse($sets);
     }
 
@@ -44,7 +45,7 @@ class SetTest extends BaseTestCase
      */
     public function testBuildFromString($setString, $setCnt, $setResult)
     {
-        $sets = \tx_cfcleague_models_Set::buildFromString($setString);
+        $sets = Set::buildFromString($setString);
 
         $this->assertEquals($setCnt, count($sets));
         $i = 0;

@@ -42,7 +42,7 @@ use tx_rnbase;
  */
 class MatchTable
 {
-    /* @var $doc \TYPO3\CMS\Backend\Template\BigDocumentTemplate */
+    /* @var \Sys25\RnBase\Backend\Template\Override\DocumentTemplate */
     private $doc;
 
     private $module;
@@ -206,6 +206,12 @@ class MatchTable
         $content .= '<br />';
 
         // Führende 0 für Spieltag im einstelligen Bereich
+        /* @var $pageRenderer TYPO3\CMS\Core\Page\PageRenderer */
+        $pageRenderer = $this->doc->getPageRenderer();
+        $pageRenderer->loadRequireJsModule(
+            'TYPO3/CMS/CfcLeague/MatchCreate',
+            'function (matchCreator) {matchCreator.init("test");}'
+        );
         $content .= $this->formTool->createCheckbox('option_leadingZero', '1', false, 't3sMatchCreator.prependZero(this);');
         $content .= '###LABEL_LEADING_ZERO###';
         $content .= '<br />';

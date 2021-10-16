@@ -1,0 +1,22 @@
+
+##############################
+# Achtung: im BE können keine Referenzen verwendet werden. Die Werte also immmer kopieren!!				
+##############################
+
+
+mod {
+	cfc_league {
+		funccompetitions {
+			template = EXT:cfc_league/Resources/Private/Templates/funccompetitions.html
+		}
+		functicker {
+			template = EXT:cfc_league/Resources/Private/Templates/funccompetitions.html
+		}
+		functeams {
+			template = EXT:cfc_league/Resources/Private/Templates/funccompetitions.html
+		}
+		funcclubs {
+			template = EXT:cfc_league/Resources/Private/Templates/funccompetitions.html
+		}
+	}
+}

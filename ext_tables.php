@@ -25,13 +25,13 @@ if (TYPO3_MODE == 'BE') {
         'access' => 'user,group',
         'routeTarget' => T3sportsModule::class,
         'icon' => 'EXT:cfc_league/Resources/Public/Icons/module-t3sports.svg',
-        'labels' => 'LLL:EXT:cfc_league/mod1/locallang_mod.xml',
+        'labels' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_mod.xml',
     ]);
-    Extensions::insertModuleFunction($modName, System25\T3sports\Controller\Competition::class, '', 'LLL:EXT:cfc_league/mod1/locallang.xml:mod_competition');
-    Extensions::insertModuleFunction($modName, System25\T3sports\Controller\MatchTicker::class, '', 'LLL:EXT:cfc_league/mod1/locallang.xml:match_ticker');
-    Extensions::insertModuleFunction($modName, System25\T3sports\Controller\Team::class, '', 'LLL:EXT:cfc_league/mod1/locallang.xml:mod_team');
-    Extensions::insertModuleFunction($modName, System25\T3sports\Controller\Club::class, '', 'LLL:EXT:cfc_league/mod1/locallang.xml:mod_club');
-    Extensions::insertModuleFunction($modName, System25\T3sports\Controller\Profile::class, '', 'LLL:EXT:cfc_league/mod1/locallang.xml:search_profiles');
+    Extensions::insertModuleFunction($modName, System25\T3sports\Controller\Competition::class, '', 'LLL:EXT:cfc_league/Resources/Private/Language/locallang.xml:mod_competition');
+    Extensions::insertModuleFunction($modName, System25\T3sports\Controller\MatchTicker::class, '', 'LLL:EXT:cfc_league/Resources/Private/Language/locallang.xml:match_ticker');
+    Extensions::insertModuleFunction($modName, System25\T3sports\Controller\Team::class, '', 'LLL:EXT:cfc_league/Resources/Private/Language/locallang.xml:mod_team');
+    Extensions::insertModuleFunction($modName, System25\T3sports\Controller\Club::class, '', 'LLL:EXT:cfc_league/Resources/Private/Language/locallang.xml:mod_club');
+    Extensions::insertModuleFunction($modName, System25\T3sports\Controller\Profile::class, '', 'LLL:EXT:cfc_league/Resources/Private/Language/locallang.xml:search_profiles');
 
     $iconRegistry = tx_rnbase::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
     $icons = [
