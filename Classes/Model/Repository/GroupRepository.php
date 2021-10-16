@@ -1,11 +1,14 @@
 <?php
 
-use Sys25\RnBase\Typo3Wrapper\Service\AbstractService;
+namespace System25\T3sports\Model\Repository;
+
+use Sys25\RnBase\Domain\Repository\PersistenceRepository;
+use System25\T3sports\Search\GroupSearch;
 
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2010-2017 Rene Nitzsche (rene@system25.de)
+ *  (c) 2017-2021 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -26,28 +29,12 @@ use Sys25\RnBase\Typo3Wrapper\Service\AbstractService;
  ***************************************************************/
 
 /**
- * Service for accessing age groups.
- *
  * @author Rene Nitzsche
  */
-class tx_cfcleague_services_Group extends AbstractService
+class GroupRepository extends PersistenceRepository
 {
-    /**
-     * Returns a group instance by its uid.
-     *
-     * @param int $uid
-     *
-     * @return tx_cfcleague_models_Group
-     */
-    public function getGroupByUid($uid)
+    public function getSearchClass()
     {
-        $cache = tx_rnbase_cache_Manager::getCache('t3sports');
-        $group = $cache->get('group_'.$uid);
-        if (!$group) {
-            $group = tx_rnbase::makeInstance('tx_cfcleague_models_Group', $uid);
-            $cache->set('group_'.$uid, $group, 3600);
-        }
-
-        return $group;
+        return GroupSearch::class;
     }
 }

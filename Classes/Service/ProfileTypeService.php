@@ -1,5 +1,7 @@
 <?php
 
+namespace System25\T3sports\Service;
+
 use Sys25\RnBase\Typo3Wrapper\Service\AbstractService;
 
 /***************************************************************
@@ -30,7 +32,7 @@ use Sys25\RnBase\Typo3Wrapper\Service\AbstractService;
  *
  * @author Rene Nitzsche
  */
-class tx_cfcleague_services_ProfileTypes extends AbstractService
+class ProfileTypeService extends AbstractService
 {
     public static $types = [
         1 => [

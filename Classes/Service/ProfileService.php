@@ -1,7 +1,15 @@
 <?php
 
-use Sys25\RnBase\Search\SearchBase;
-use System25\T3sports\Search\ProfileSearch;
+namespace System25\T3sports\Service;
+
+use Sys25\RnBase\Database\Connection;
+use Sys25\RnBase\Domain\Model\RecordInterface;
+use Sys25\RnBase\Typo3Wrapper\Service\AbstractService;
+use Sys25\RnBase\Utility\Misc;
+use Sys25\RnBase\Utility\Strings;
+use System25\T3sports\Model\Profile;
+use System25\T3sports\Model\Repository\ProfileRepository;
+use System25\T3sports\Utility\ServiceRegistry;
 
 /***************************************************************
  *  Copyright notice
@@ -31,21 +39,27 @@ use System25\T3sports\Search\ProfileSearch;
  *
  * @author Rene Nitzsche
  */
-class tx_cfcleague_services_Profiles extends tx_cfcleague_services_Base
+class ProfileService extends AbstractService
 {
     private $profiles = [];
+
+    private $repo;
+
+    public function __construct(ProfileRepository $repo = null)
+    {
+        $this->repo = $repo ?: new ProfileRepository();
+    }
 
     /**
      * Return all instances of all requested profiles.
      *
-     * @param string $uids
-     *            commaseparated uids
+     * @param string $uids commaseparated uids
      *
-     * @return array[tx_cfcleague_models_Profile]
+     * @return Profile[]
      */
     public function loadProfiles($uids)
     {
-        $uids = is_array($uids) ? $uids : Tx_Rnbase_Utility_Strings::intExplode(',', $uids);
+        $uids = is_array($uids) ? $uids : Strings::intExplode(',', $uids);
         $ret = [];
         $toLoad = [];
         foreach ($uids as $key => $uid) {
@@ -74,11 +88,11 @@ class tx_cfcleague_services_Profiles extends tx_cfcleague_services_Base
     /**
      * Returns all team notes for a given profile.
      *
-     * @param tx_cfcleague_models_Profile $profile
+     * @param Profile $profile
      *
      * @return array An array with all references by table
      */
-    public function checkReferences($profile)
+    public function checkReferences(Profile $profile)
     {
         $ret = [];
         // Zuerst die Teams
@@ -95,14 +109,14 @@ class tx_cfcleague_services_Profiles extends tx_cfcleague_services_Base
             ],
             'operator' => OP_INSET_INT,
         ];
-        $result = tx_cfcleague_util_ServiceRegistry::getTeamService()->searchTeams($fields, $options);
+        $result = ServiceRegistry::getTeamService()->searchTeams($fields, $options);
         if (count($result)) {
             $ret['tx_cfcleague_teams'] = $result;
         }
 
         $fields = [];
         $fields['TEAMNOTE.PLAYER'][OP_EQ_INT] = $profile->getUid();
-        $result = tx_cfcleague_util_ServiceRegistry::getTeamService()->searchTeamNotes($fields, $options);
+        $result = ServiceRegistry::getTeamService()->searchTeamNotes($fields, $options);
         if (count($result)) {
             $ret['tx_cfcleague_team_notes'] = $result;
         }
@@ -122,7 +136,7 @@ class tx_cfcleague_services_Profiles extends tx_cfcleague_services_Base
             ],
             'operator' => OP_INSET_INT,
         ];
-        $result = tx_cfcleague_util_ServiceRegistry::getMatchService()->search($fields, $options);
+        $result = ServiceRegistry::getMatchService()->search($fields, $options);
         if (count($result)) {
             $ret['tx_cfcleague_games'] = $result;
         }
@@ -136,7 +150,7 @@ class tx_cfcleague_services_Profiles extends tx_cfcleague_services_Base
             ],
             'operator' => OP_EQ_INT,
         ];
-        $result = tx_cfcleague_util_ServiceRegistry::getMatchService()->searchMatchNotes($fields, $options);
+        $result = ServiceRegistry::getMatchService()->searchMatchNotes($fields, $options);
         if (count($result)) {
             $ret['tx_cfcleague_match_notes'] = $result;
         }
@@ -153,7 +167,7 @@ class tx_cfcleague_services_Profiles extends tx_cfcleague_services_Base
     {
         $options = ['where' => 'player = '.$profileUID];
 
-        return Tx_Rnbase_Database_Connection::getInstance()->doSelect('*', 'tx_cfcleague_team_notes', $options);
+        return Connection::getInstance()->doSelect('*', 'tx_cfcleague_team_notes', $options);
     }
 
     /**
@@ -165,14 +179,14 @@ class tx_cfcleague_services_Profiles extends tx_cfcleague_services_Base
     {
         $items = [];
         $baseType = 't3sports_profiletype';
-        $services = tx_rnbase_util_Misc::lookupServices($baseType);
+        $services = Misc::lookupServices($baseType);
         foreach ($services as $subtype => $info) {
-            $srv = tx_rnbase_util_Misc::getService($baseType, $subtype);
+            $srv = Misc::getService($baseType, $subtype);
             $types = array_merge($items, $srv->getProfileTypes());
         }
         foreach ($types as $typedef) {
             $items[] = [
-                tx_rnbase_util_Misc::translateLLL($typedef[0]),
+                Misc::translateLLL($typedef[0]),
                 $typedef[1],
             ];
         }
@@ -195,14 +209,14 @@ class tx_cfcleague_services_Profiles extends tx_cfcleague_services_Base
         }
 
         $baseType = 't3sports_profiletype';
-        $services = tx_rnbase_util_Misc::lookupServices($baseType);
+        $services = Misc::lookupServices($baseType);
         foreach ($services as $subtype => $info) {
-            $srv = tx_rnbase_util_Misc::getService($baseType, $subtype);
+            $srv = Misc::getService($baseType, $subtype);
             $srv->setProfileTypeItems($uidArr);
         }
         $items = [];
         foreach ($uidArr as $uid => $label) {
-            $items[] = $uid.'|'.tx_rnbase_util_Misc::translateLLL($label);
+            $items[] = $uid.'|'.Misc::translateLLL($label);
         }
 
         return implode(',', $items);
@@ -214,12 +228,20 @@ class tx_cfcleague_services_Profiles extends tx_cfcleague_services_Base
      * @param array $fields
      * @param array $options
      *
-     * @return array[tx_cfcleague_models_Profile]
+     * @return Profile[]
      */
     public function search($fields, $options)
     {
-        $searcher = SearchBase::getInstance(ProfileSearch::class);
+        return $this->repo->search($fields, $options);
+    }
 
-        return $searcher->search($fields, $options);
+    /**
+     * Create or update model.
+     *
+     * @param RecordInterface $model
+     */
+    public function persist(RecordInterface $model)
+    {
+        return $this->repo->persist($model);
     }
 }

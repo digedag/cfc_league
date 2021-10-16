@@ -1,13 +1,15 @@
 <?php
 
-use Sys25\RnBase\Search\SearchBase;
+namespace System25\T3sports\Service;
+
+use Sys25\RnBase\Cache\CacheManager;
 use Sys25\RnBase\Typo3Wrapper\Service\AbstractService;
-use System25\T3sports\Search\SaisonSearch;
+use System25\T3sports\Model\Repository\GroupRepository;
 
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2009-2021 Rene Nitzsche (rene@system25.de)
+ *  (c) 2010-2021 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -28,24 +30,35 @@ use System25\T3sports\Search\SaisonSearch;
  ***************************************************************/
 
 /**
- * Service for accessing saisons.
+ * Service for accessing age groups.
  *
  * @author Rene Nitzsche
  */
-class tx_cfcleague_services_Saison extends AbstractService
+class GroupService extends AbstractService
 {
-    /**
-     * Search database for trades.
-     *
-     * @param array $fields
-     * @param array $options
-     *
-     * @return array of tx_cfcleague_models_Saison
-     */
-    public function search($fields, $options)
-    {
-        $searcher = SearchBase::getInstance(SaisonSearch::class);
+    private $repo;
 
-        return $searcher->search($fields, $options);
+    public function __construct(GroupRepository $repo = null)
+    {
+        $this->repo = $repo ?: new GroupRepository();
+    }
+
+    /**
+     * Returns a group instance by its uid.
+     *
+     * @param int $uid
+     *
+     * @return GroupService
+     */
+    public function getGroupByUid($uid)
+    {
+        $cache = CacheManager::getCache('t3sports');
+        $group = $cache->get('group_'.$uid);
+        if (!$group) {
+            $group = $this->repo->findByUid($uid);
+            $cache->set('group_'.$uid, $group, 3600);
+        }
+
+        return $group;
     }
 }

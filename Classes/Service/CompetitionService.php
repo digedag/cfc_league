@@ -1,7 +1,15 @@
 <?php
 
-use Sys25\RnBase\Search\SearchBase;
-use System25\T3sports\Search\CompetitionSearch;
+namespace System25\T3sports\Service;
+
+use Sys25\RnBase\Database\Connection;
+use Sys25\RnBase\Domain\Model\RecordInterface;
+use Sys25\RnBase\Typo3Wrapper\Service\AbstractService;
+use Sys25\RnBase\Utility\Misc;
+use System25\T3sports\Model\Competition;
+use System25\T3sports\Model\Repository\CompetitionRepository;
+use System25\T3sports\Model\Saison;
+use System25\T3sports\Utility\ServiceRegistry;
 
 /***************************************************************
  *  Copyright notice
@@ -31,18 +39,25 @@ use System25\T3sports\Search\CompetitionSearch;
  *
  * @author Rene Nitzsche
  */
-class tx_cfcleague_services_Competition extends tx_cfcleague_services_Base
+class CompetitionService extends AbstractService
 {
+    private $repo;
+
+    public function __construct(CompetitionRepository $repo = null)
+    {
+        $this->repo = $repo ?: new CompetitionRepository();
+    }
+
     /**
      * Returns uids of dummy teams.
      *
-     * @param tx_cfcleague_models_Competition $comp
+     * @param Competition $comp
      *
-     * @return array[int]
+     * @return int[]
      */
     public function getDummyTeamIds($comp)
     {
-        $srv = tx_cfcleague_util_ServiceRegistry::getTeamService();
+        $srv = ServiceRegistry::getTeamService();
         $fields = [];
         $fields['TEAM.DUMMY'][OP_EQ_INT] = 1;
         $fields['TEAM.UID'][OP_IN_INT] = $comp->getProperty('teams');
@@ -61,7 +76,7 @@ class tx_cfcleague_services_Competition extends tx_cfcleague_services_Base
     /**
      * Anzahl der Spiele des/der Teams in diesem Wettbewerb.
      *
-     * @param tx_cfcleague_models_Competition $comp
+     * @param Competition $comp
      * @param string $teamIds
      * @param string $status
      *
@@ -78,7 +93,7 @@ class tx_cfcleague_services_Competition extends tx_cfcleague_services_Base
             $options['where'] .= 'guest IN('.$teamIds.')) AND ';
         }
         $options['where'] .= 'competition = '.$comp->getUid().' ';
-        $rows = Tx_Rnbase_Database_Connection::getInstance()->doSelect($what, $from, $options, 0);
+        $rows = Connection::getInstance()->doSelect($what, $from, $options, 0);
         $ret = 0;
         if (count($rows)) {
             $ret = (int) $rows[0]['matches'];
@@ -97,14 +112,12 @@ class tx_cfcleague_services_Competition extends tx_cfcleague_services_Base
      */
     public function search($fields, $options)
     {
-        $searcher = SearchBase::getInstance(CompetitionSearch::class);
-
-        return $searcher->search($fields, $options);
+        return $this->repo->search($fields, $options);
     }
 
     public function getPointSystems($sports)
     {
-        $srv = tx_rnbase_util_Misc::getService('t3sports_sports', $sports);
+        $srv = Misc::getService('t3sports_sports', $sports);
 
         return $srv->getTCAPointSystems();
     }
@@ -120,9 +133,9 @@ class tx_cfcleague_services_Competition extends tx_cfcleague_services_Base
 
         // Jetzt schauen, ob noch weitere Sportarten per Service geliefert werden
         $baseType = 't3sports_sports';
-        $services = tx_rnbase_util_Misc::lookupServices($baseType);
+        $services = Misc::lookupServices($baseType);
         foreach ($services as $subtype => $info) {
-            $srv = tx_rnbase_util_Misc::getService($baseType, $subtype);
+            $srv = Misc::getService($baseType, $subtype);
             $types[] = [
                 $srv->getTCALabel(),
                 $subtype,
@@ -131,7 +144,7 @@ class tx_cfcleague_services_Competition extends tx_cfcleague_services_Base
 
         foreach ($types as $typedef) {
             $items[] = [
-                tx_rnbase_util_Misc::translateLLL($typedef[0]),
+                Misc::translateLLL($typedef[0]),
                 $typedef[1],
             ];
         }
@@ -140,14 +153,14 @@ class tx_cfcleague_services_Competition extends tx_cfcleague_services_Base
     }
 
     /**
-     * @param tx_cfcleague_models_Competition $competition
+     * @param Competition $competition
      */
     public function checkReferences($competition)
     {
         $ret = [];
         $fields = [];
         $fields['MATCH.COMPETITION'][OP_EQ_INT] = $competition->getUid();
-        $result = tx_cfcleague_util_ServiceRegistry::getMatchService()->search($fields, [
+        $result = ServiceRegistry::getMatchService()->search($fields, [
             'count' => 1,
         ]);
         if ($result > 0) {
@@ -158,11 +171,11 @@ class tx_cfcleague_services_Competition extends tx_cfcleague_services_Base
     }
 
     /**
-     * @param tx_cfcleague_models_Saison $saison
+     * @param Saison $saison
      *
-     * @return array[tx_cfcleague_models_Competition]
+     * @return Competition[]
      */
-    public function getCompetitionsBySaison(tx_cfcleague_models_Saison $saison)
+    public function getCompetitionsBySaison(Saison $saison)
     {
         $fields = [];
         $fields['COMPETITION.SAISON'][OP_EQ_INT] = $saison->getUid();
@@ -188,11 +201,21 @@ class tx_cfcleague_services_Competition extends tx_cfcleague_services_Base
         $items = [];
         foreach ($types as $key => $data) {
             $items[] = [
-                tx_rnbase_util_Misc::translateLLL($data['label']),
+                Misc::translateLLL($data['label']),
                 $key,
             ];
         }
 
         return $items;
+    }
+
+    /**
+     * Create or update model.
+     *
+     * @param RecordInterface $model
+     */
+    public function persist(RecordInterface $model)
+    {
+        return $this->repo->persist($model);
     }
 }

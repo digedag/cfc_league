@@ -46,8 +46,7 @@
 	},
 	"autoload": {
 		"classmap": [
-			"mod1/",
-			"services/"
+			"mod1/"
 		],
         "psr-4": {"System25\\T3sports\\" : "Classes"}
 	},

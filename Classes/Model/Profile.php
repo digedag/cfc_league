@@ -103,14 +103,4 @@ class Profile extends BaseModel
     {
         return ((int) $this->getProperty('link_report')) > 0;
     }
-
-    /**
-     * Liefert das Sternzeichen der Person.
-     */
-    public function getSign()
-    {
-        return 'TODO';
-        // $signs = Signs::getInstance();
-        // return intval($this->getProperty('birthday')) != 0 ? $signs->getSign($this->getProperty('birthday')) : '';
-    }
 }

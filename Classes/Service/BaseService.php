@@ -1,5 +1,9 @@
 <?php
 
+namespace System25\T3sports\Service;
+
+use Sys25\RnBase\Database\Connection;
+use Sys25\RnBase\Domain\Model\RecordInterface;
 use Sys25\RnBase\Typo3Wrapper\Service\AbstractService;
 
 /***************************************************************
@@ -30,13 +34,15 @@ use Sys25\RnBase\Typo3Wrapper\Service\AbstractService;
  * Can be removed after refactoring to repository structure.
  *
  * @author Rene Nitzsche
+ *
+ * @deprecated
  */
-class tx_cfcleague_services_Base extends AbstractService
+class BaseService extends AbstractService
 {
     /**
      * Create or update model.
      *
-     * @param Tx_Rnbase_Domain_Model_RecordInterface $model
+     * @param RecordInterface $model
      */
     public function persist($model)
     {
@@ -48,9 +54,9 @@ class tx_cfcleague_services_Base extends AbstractService
     }
 
     /**
-     * @param Tx_Rnbase_Domain_Model_RecordInterface $model
+     * @param RecordInterface $model
      *
-     * @return Tx_Rnbase_Domain_Model_RecordInterface
+     * @return RecordInterface
      */
     protected function update($model)
     {
@@ -66,7 +72,7 @@ class tx_cfcleague_services_Base extends AbstractService
             unset($data['uid']);
         }
 
-        Tx_Rnbase_Database_Connection::getInstance()->doUpdate($table, $where, $data);
+        Connection::getInstance()->doUpdate($table, $where, $data);
 
         return $model;
     }
@@ -75,7 +81,7 @@ class tx_cfcleague_services_Base extends AbstractService
      * Create a new record
      * TODO: remove after migration to repository.
      *
-     * @param Tx_Rnbase_Domain_Model_RecordInterface $model
+     * @param RecordInterface $model
      * @param string $table
      *
      * @return int UID of just created record
@@ -84,7 +90,7 @@ class tx_cfcleague_services_Base extends AbstractService
     {
         $model->setProperty('crdate', time());
         $model->setProperty('tstamp', time());
-        $newUid = Tx_Rnbase_Database_Connection::getInstance()->doInsert($model->getTableName(), $model->getProperty());
+        $newUid = Connection::getInstance()->doInsert($model->getTableName(), $model->getProperty());
         $model->uid = $newUid;
         $model->setUid($newUid);
 

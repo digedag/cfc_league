@@ -28,6 +28,17 @@ return [
     'tx_cfcleague_models_Team' => \System25\T3sports\Model\Team::class,
     'tx_cfcleague_models_TeamNote' => \System25\T3sports\Model\TeamNote::class,
     'tx_cfcleague_models_TeamNoteType' => \System25\T3sports\Model\TeamNoteType::class,
+
+    'tx_cfcleague_services_Base' => \System25\T3sports\Service\BaseService::class,
+    'tx_cfcleague_services_Group' => \System25\T3sports\Service\GroupService::class,
+    'tx_cfcleague_services_Competition' => \System25\T3sports\Service\CompetitionService::class,
+    'tx_cfcleague_services_Match' => \System25\T3sports\Service\MatchService::class,
+    'tx_cfcleague_services_Profiles' => \System25\T3sports\Service\ProfileService::class,
+    'tx_cfcleague_services_ProfileTypes' => \System25\T3sports\Service\ProfileTypeService::class,
+    'tx_cfcleague_services_Saison' => \System25\T3sports\Service\SaisonService::class,
+    'tx_cfcleague_services_Stadiums' => \System25\T3sports\Service\StadiumService::class,
+    'tx_cfcleague_services_Teams' => \System25\T3sports\Service\TeamService::class,
+
     'tx_cfcleague_util_ServiceRegistry' => \System25\T3sports\Utility\ServiceRegistry::class,
     'tx_cfcleague_util_Generator' => System25\T3sports\MatchGeneration\Generator::class,
     'tx_cfcleague_util_MatchNote' => System25\T3sports\Utility\MatchNotes::class,

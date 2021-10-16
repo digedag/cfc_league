@@ -1,10 +1,24 @@
 <?php
 
+namespace System25\T3sports\Service;
+
+use Sys25\RnBase\Cache\CacheManager;
+use Sys25\RnBase\Domain\Model\MediaModel;
 use Sys25\RnBase\Search\SearchBase;
+use Sys25\RnBase\Typo3Wrapper\Service\AbstractService;
+use Sys25\RnBase\Utility\TSFAL;
+use System25\T3sports\Model\Club;
+use System25\T3sports\Model\Competition;
+use System25\T3sports\Model\Group;
+use System25\T3sports\Model\Repository\TeamRepository;
+use System25\T3sports\Model\Stadium;
+use System25\T3sports\Model\Team;
+use System25\T3sports\Model\TeamNote;
+use System25\T3sports\Model\TeamNoteType;
 use System25\T3sports\Search\ClubSearch;
 use System25\T3sports\Search\SearchBuilder;
 use System25\T3sports\Search\TeamNoteSearch;
-use System25\T3sports\Search\TeamSearch;
+use System25\T3sports\Utility\ServiceRegistry;
 
 /***************************************************************
  *  Copyright notice
@@ -34,22 +48,29 @@ use System25\T3sports\Search\TeamSearch;
  *
  * @author Rene Nitzsche
  */
-class tx_cfcleague_services_Teams extends tx_cfcleague_services_Base
+class TeamService extends AbstractService
 {
+    private $repo;
+
+    public function __construct(TeamRepository $repo = null)
+    {
+        $this->repo = $repo ?: new TeamRepository();
+    }
+
     /**
      * Returns all stadiums for a team.
      * This works only if a club is referenced by this team.
      *
      * @param int $teamUid
      *
-     * @return array[tx_cfcleague_models_stadium]
+     * @return Stadium[]
      */
     public function getStadiums($teamUid)
     {
         $fields = $options = [];
         $fields['TEAM.UID'][OP_EQ_INT] = $teamUid;
         $options['orderby']['STADIUM.NAME'] = 'asc';
-        $srv = tx_cfcleague_util_ServiceRegistry::getStadiumService();
+        $srv = ServiceRegistry::getStadiumService();
 
         return $srv->search($fields, $options);
     }
@@ -59,46 +80,44 @@ class tx_cfcleague_services_Teams extends tx_cfcleague_services_Base
      *
      * @param int $teamUid
      *
-     * @return tx_cfcleague_models_team
+     * @return Team
      */
     public function getTeam($teamUid)
     {
         if (!$teamUid) {
             return false;
         }
-        $team = tx_rnbase::makeInstance('tx_cfcleague_models_Team', $teamUid);
 
-        return $team;
+        return $this->repo->findByUid($teamUid);
     }
 
     /**
      * Find all logos for a club.
-     * FIXME: update for FAL.
      *
-     * @return array[tx_rnbase_model_media]
+     * @return MediaModel[]
      */
     public function getLogos($clubUid)
     {
-        return tx_rnbase_util_TSFAL::fetchFiles('tx_cfcleague_club', $clubUid, 'logo');
+        return TSFAL::fetchFiles('tx_cfcleague_club', $clubUid, 'logo');
     }
 
     /**
      * Returns all team note types.
      *
-     * @return array[tx_cfcleague_models_TeamNoteType]
+     * @return TeamNoteType[]
      */
     public function getNoteTypes()
     {
-        return tx_cfcleague_models_TeamNoteType::getAll();
+        return TeamNoteType::getAll();
     }
 
     /**
      * Returns all teamnotes for with team with specific type.
      *
-     * @param tx_cfcleague_models_Team $team
-     * @param tx_cfcleague_models_TeamNoteType $type
+     * @param Team $team
+     * @param TeamNoteType $type
      */
-    public function getTeamNotes($team, $type = false)
+    public function getTeamNotes(Team $team, $type = false)
     {
         $fields = $options = [];
         $fields['TEAMNOTE.TEAM'][OP_EQ_INT] = $team->getUid();
@@ -114,12 +133,12 @@ class tx_cfcleague_services_Teams extends tx_cfcleague_services_Base
      * Liefert die Namen der zugeordneten Teams als Array.
      * Key ist die ID des Teams.
      *
-     * @param tx_cfcleague_models_Competition $comp
+     * @param Competition $comp
      * @param bool $asArray Wenn 1 wird pro Team ein Array mit Name, Kurzname und Flag spielfrei geliefert
      *
      * @return array
      */
-    public function getTeamNames($comp, $asArray = false)
+    public function getTeamNames(Competition $comp, $asArray = false)
     {
         $teamNames = [];
         // Ohne zugeordnete Team, muss nicht gefragt werden
@@ -144,22 +163,21 @@ class tx_cfcleague_services_Teams extends tx_cfcleague_services_Base
      * This value is retrieved from the teams competitions. So
      * the first competition found, decides about the age group.
      *
-     * @param
-     *            tx_cfcleague_models_Team
+     * @param Team $team
      *
-     * @return tx_cfcleague_models_Group or null
+     * @return Group|null
      */
-    public function getAgeGroup($team)
+    public function getAgeGroup(Team $team)
     {
         if (!is_object($team) || !$team->isValid()) {
             return null;
         }
 
-        $cache = tx_rnbase_cache_Manager::getCache('t3sports');
+        $cache = CacheManager::getCache('t3sports');
         $agegroup = $cache->get('team_'.$team->getUid());
         if (!$agegroup) {
             if (intval($team->getProperty('agegroup'))) {
-                $agegroup = tx_cfcleague_models_Group::getGroupInstance($team->getProperty('agegroup'));
+                $agegroup = Group::getGroupInstance($team->getProperty('agegroup'));
             }
             if (!$agegroup) {
                 $comps = $this->getCompetitions4Team($team, true);
@@ -185,13 +203,13 @@ class tx_cfcleague_services_Teams extends tx_cfcleague_services_Base
      * @param bool $obligateOnly
      *            if true, only obligate competitions are returned
      *
-     * @return array of tx_cfcleaguefe_models_competition
+     * @return Competition[]
      */
     public function getCompetitions4Team($team, $obligateOnly = false)
     {
         $fields = $options = [];
         SearchBuilder::buildCompetitionByTeam($fields, $team->getUid(), $obligateOnly);
-        $srv = tx_cfcleague_util_ServiceRegistry::getCompetitionService();
+        $srv = ServiceRegistry::getCompetitionService();
 
         return $srv->search($fields, $options);
     }
@@ -202,7 +220,7 @@ class tx_cfcleague_services_Teams extends tx_cfcleague_services_Base
      * @param array $fields
      * @param array $options
      *
-     * @return array[tx_cfcleague_models_TeamNote]
+     * @return TeamNote[]
      */
     public function searchTeamNotes($fields, $options)
     {
@@ -217,13 +235,11 @@ class tx_cfcleague_services_Teams extends tx_cfcleague_services_Base
      * @param array $fields
      * @param array $options
      *
-     * @return tx_cfcleague_models_Team[]
+     * @return Team[]
      */
     public function searchTeams($fields, $options)
     {
-        $searcher = SearchBase::getInstance(TeamSearch::class);
-
-        return $searcher->search($fields, $options);
+        return $this->repo->search($fields, $options);
     }
 
     /**
@@ -232,7 +248,7 @@ class tx_cfcleague_services_Teams extends tx_cfcleague_services_Base
      * @param array $fields
      * @param array $options
      *
-     * @return tx_cfcleague_models_Club[]
+     * @return Club[]
      */
     public function searchClubs($fields, $options)
     {
@@ -246,7 +262,7 @@ class tx_cfcleague_services_Teams extends tx_cfcleague_services_Base
      *
      * @param int $profileUid
      *
-     * @return [tx_cfcleague_models_Team]
+     * @return Team[]
      */
     public function searchTeamsByProfile($profileUid)
     {

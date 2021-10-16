@@ -1,13 +1,14 @@
 <?php
 
-use Sys25\RnBase\Search\SearchBase;
-use Sys25\RnBase\Typo3Wrapper\Service\AbstractService;
-use System25\T3sports\Search\StadiumSearch;
+namespace System25\T3sports\Model\Repository;
+
+use Sys25\RnBase\Domain\Repository\PersistenceRepository;
+use System25\T3sports\Search\MatchSearch;
 
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2009-2021 Rene Nitzsche (rene@system25.de)
+ *  (c) 2017-2021 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -28,24 +29,12 @@ use System25\T3sports\Search\StadiumSearch;
  ***************************************************************/
 
 /**
- * Service for accessing stadiums.
- *
  * @author Rene Nitzsche
  */
-class tx_cfcleague_services_Stadiums extends AbstractService
+class MatchRepository extends PersistenceRepository
 {
-    /**
-     * Search database for stadiums.
-     *
-     * @param array $fields
-     * @param array $options
-     *
-     * @return tx_cfcleague_models_Stadium[]
-     */
-    public function search($fields, $options)
+    public function getSearchClass()
     {
-        $searcher = SearchBase::getInstance(StadiumSearch::class);
-
-        return $searcher->search($fields, $options);
+        return MatchSearch::class;
     }
 }

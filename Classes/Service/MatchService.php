@@ -1,15 +1,20 @@
 <?php
 
+namespace System25\T3sports\Service;
+
 use Sys25\RnBase\Database\Connection;
+use Sys25\RnBase\Domain\Model\RecordInterface;
 use Sys25\RnBase\Search\SearchBase;
+use Sys25\RnBase\Typo3Wrapper\Service\AbstractService;
 use System25\T3sports\Model\Competition;
 use System25\T3sports\Model\CompetitionRound;
 use System25\T3sports\Model\Match;
 use System25\T3sports\Model\MatchNote;
+use System25\T3sports\Model\Repository\MatchNoteRepository;
+use System25\T3sports\Model\Repository\MatchRepository;
 use System25\T3sports\Search\CompetitionRoundSearch;
-use System25\T3sports\Search\MatchNoteSearch;
-use System25\T3sports\Search\MatchSearch;
 use System25\T3sports\Utility\MatchTableBuilder;
+use tx_rnbase;
 use tx_rnbase_util_Misc as Misc;
 
 /***************************************************************
@@ -40,8 +45,17 @@ use tx_rnbase_util_Misc as Misc;
  *
  * @author Rene Nitzsche
  */
-class tx_cfcleague_services_Match extends tx_cfcleague_services_Base
+class MatchService extends AbstractService
 {
+    private $repo;
+    private $mnRepo;
+
+    public function __construct(MatchRepository $repo = null, MatchNoteRepository $mnRepo)
+    {
+        $this->repo = $repo ?: new MatchRepository();
+        $this->mnRepo = $mnRepo ?: new MatchNoteRepository();
+    }
+
     /**
      * Returns all available profile types for a TCA select item.
      *
@@ -113,9 +127,7 @@ class tx_cfcleague_services_Match extends tx_cfcleague_services_Base
      */
     public function search($fields, $options)
     {
-        $searcher = SearchBase::getInstance(MatchSearch::class);
-
-        return $searcher->search($fields, $options);
+        return $this->repo->search($fields, $options);
     }
 
     /**
@@ -128,9 +140,7 @@ class tx_cfcleague_services_Match extends tx_cfcleague_services_Base
      */
     public function searchMatchNotes($fields, $options)
     {
-        $searcher = SearchBase::getInstance(MatchNoteSearch::class);
-
-        return $searcher->search($fields, $options);
+        return $this->mnRepo->search($fields, $options);
     }
 
     /**
@@ -236,5 +246,15 @@ class tx_cfcleague_services_Match extends tx_cfcleague_services_Base
         $matchNotes = Connection::getInstance()->doSelect('*', 'tx_cfcleague_match_notes', $options);
 
         return $matchNotes;
+    }
+
+    /**
+     * Create or update model.
+     *
+     * @param RecordInterface $model
+     */
+    public function persist(RecordInterface $model)
+    {
+        return $this->repo->persist($model);
     }
 }
