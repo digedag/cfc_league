@@ -5,6 +5,7 @@ namespace System25\T3sports\Controller\Club;
 use Sys25\RnBase\Backend\Module\IModFunc;
 use Sys25\RnBase\Backend\Module\IModule;
 use System25\T3sports\Model\Club;
+use System25\T3sports\Module\Searcher\StadiumSearcher;
 use tx_rnbase;
 
 /***************************************************************
@@ -58,7 +59,7 @@ class ClubStadiumHandler
     {
         global $LANG;
 
-        $searcher = tx_rnbase::makeInstance('tx_cfcleague_mod1_searcher_Stadium', $mod);
+        $searcher = tx_rnbase::makeInstance(StadiumSearcher::class, $mod);
         $searcher->setClub($club->getUid());
 
         $result = $searcher->getResultList();

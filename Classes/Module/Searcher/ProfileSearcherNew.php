@@ -1,14 +1,16 @@
 <?php
 
-namespace System25\T3sports\Controller\Profile;
+namespace System25\T3sports\Module\Searcher;
 
+use Sys25\RnBase\Backend\Form\ToolBox;
+use Sys25\RnBase\Backend\Module\IModule;
 use Sys25\RnBase\Backend\Utility\BackendUtility;
 use Sys25\RnBase\Utility\T3General;
 
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2008 Rene Nitzsche (rene@system25.de)
+*  (c) 2008-2021 Rene Nitzsche (rene@system25.de)
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -31,11 +33,12 @@ use Sys25\RnBase\Utility\T3General;
 /**
  * TODO: Suche von Personen im BE. Wird wohl noch nicht verwendet...
  */
-class ProfileSearcher
+class ProfileSearcherNew
 {
     private $mod;
 
     private $data;
+    private $formTool;
 
     private $SEARCH_SETTINGS;
 
@@ -44,16 +47,24 @@ class ProfileSearcher
         $this->init($mod, $options);
     }
 
-    private function init($mod, $options)
+    /**
+     * @param IModule $mod
+     * @param array $options
+     */
+    private function init(IModule $mod, $options)
     {
         $this->options = $options;
-        $this->mod = $mod;
-        $this->formTool = $this->mod->formTool;
+        $this->doc = $mod->getDoc();
+        $this->pid = $mod->getPid();
+        $this->options['pid'] = $mod->getPid();
+        $this->formTool = $mod->getFormTool();
         $this->resultSize = 0;
         $this->data = T3General::_GP('searchdata');
 
         if (!isset($options['nopersist'])) {
-            $this->SEARCH_SETTINGS = BackendUtility::getModuleData(['searchtermProfile' => ''], $this->data, $this->mod->MCONF['name']);
+            $this->SEARCH_SETTINGS = BackendUtility::getModuleData([
+                'searchtermProfile' => '', ],
+                $this->data, $mod->getName());
         } else {
             $this->SEARCH_SETTINGS = $this->data;
         }
@@ -70,12 +81,15 @@ class ProfileSearcher
     {
         global $LANG;
         $out = '';
-        $out .= (strlen($label) ? $label : $LANG->getLL('label_searchterm')).': ';
-        $out .= $this->formTool->createTxtInput('searchdata[searchterm]', $this->SEARCH_SETTINGS['searchterm'], 20);
+        $out .= '###LABEL_SEARCHTERM###: ';
+//        $out .= (strlen($label) ? $label : $LANG->getLL('label_searchterm')).': ';
+        $out .= $this->getFormTool()->createTxtInput('data[searchterm]', $this->SEARCH_SETTINGS['searchterm'], 20);
+        //$out .= $this->formTool->createTxtInput('searchdata[searchterm]', $this->SEARCH_SETTINGS['searchterm'], 20);
         // Den Update-Button einfügen
-        $out .= '<input type="submit" name="search" value="'.$LANG->getLL('btn_search').'" />';
+        $out .= $this->getFormTool()->createSubmit('searchProfile', $GLOBALS['LANG']->getLL('btn_search'));
+//        $out .= '<input type="submit" name="search" value="'.$LANG->getLL('btn_search').'" />';
         // Jetzt noch zusätzlichen JavaScriptcode für Buttons auf der Seite
-        $out .= $this->formTool->getJSCode($this->mod->getPid());
+//        $out .= $this->formTool->getJSCode($this->mod->getPid());
 
         return $out;
     }
@@ -114,5 +128,15 @@ class ProfileSearcher
     public function searchProfiles($searchterm)
     {
         // TODO
+    }
+
+    /**
+     * Returns the formTool.
+     *
+     * @return ToolBox
+     */
+    private function getFormTool()
+    {
+        return $this->formTool;
     }
 }

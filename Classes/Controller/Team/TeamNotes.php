@@ -11,9 +11,9 @@ use Sys25\RnBase\Utility\Strings;
 use Sys25\RnBase\Utility\T3General;
 use System25\T3sports\Model\Team;
 use System25\T3sports\Model\TeamNoteType;
+use System25\T3sports\Module\Searcher\ProfileSearcher;
 use System25\T3sports\Utility\Misc;
 use System25\T3sports\Utility\ServiceRegistry;
-use tx_cfcleague_mod1_decorator;
 use tx_rnbase;
 
 /***************************************************************
@@ -133,9 +133,10 @@ class TeamNotes
                 'title' => 'tx_cfcleague_team_notes.mediatype',
             ],
         ];
-        $rows = tx_cfcleague_mod1_decorator::prepareTable($notes, $columns, $this->getFormTool(), $options);
 
+        /* @var $tables Tables */
         $tables = tx_rnbase::makeInstance(Tables::class);
+        $rows = $tables->prepareTable($notes, $columns, $this->getFormTool(), $options);
         $out .= $tables->buildTable($rows[0]);
 
         $options[ToolBox::OPTION_DEFVALS] = [
@@ -196,11 +197,11 @@ class TeamNotes
      *
      * @param array $options
      *
-     * @return \tx_cfcleague_mod1_profilesearcher
+     * @return ProfileSearcher
      */
     protected function getProfileSearcher(&$options)
     {
-        $searcher = tx_rnbase::makeInstance('tx_cfcleague_mod1_profilesearcher', $this->mod, $options);
+        $searcher = tx_rnbase::makeInstance(ProfileSearcher::class, $this->mod, $options);
 
         return $searcher;
     }

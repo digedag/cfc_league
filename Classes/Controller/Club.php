@@ -8,6 +8,7 @@ use Sys25\RnBase\Configuration\ConfigurationInterface;
 use Sys25\RnBase\Frontend\Marker\FormatUtil;
 use Sys25\RnBase\Utility\Misc;
 use System25\T3sports\Controller\Club\ClubStadiumHandler;
+use System25\T3sports\Module\Linker\NewClubLinker;
 use tx_rnbase;
 
 /***************************************************************
@@ -79,7 +80,7 @@ class Club extends BaseModFunc
 
         if (!$club) {
             $addInfo = '###LABEL_MSG_CREATENEWCLUBNOW###';
-            $linker = tx_rnbase::makeInstance('tx_cfcleague_mod1_linker_NewClub');
+            $linker = tx_rnbase::makeInstance(NewClubLinker::class);
             $addInfo .= $linker->makeLink(null, $formTool, $this->getModule()
                 ->getPid(), []);
 

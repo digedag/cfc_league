@@ -13,6 +13,8 @@ return [
     'tx_cfcleague_sports_Volleyball' => \System25\T3sports\Sports\Volleyball::class,
     'tx_cfcleague_sports_MatchInfo' => \System25\T3sports\Sports\MatchInfo::class,
 
+    'tx_cfcleague_selector' => System25\T3sports\Module\Utility\Selector::class,
+
     'tx_cfcleague_models_Address' => \System25\T3sports\Model\Address::class,
     'tx_cfcleague_models_Club' => \System25\T3sports\Model\Club::class,
     'tx_cfcleague_models_Competition' => \System25\T3sports\Model\Competition::class,

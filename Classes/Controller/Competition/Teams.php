@@ -130,11 +130,11 @@ class Teams
                 'method' => 'getName',
             ],
         ];
-        $arr = \tx_cfcleague_mod1_decorator::prepareTable($teams, $columns, $this->getFormTool(), $options);
 
         $content = '<h2>'.$LANG->getLL('label_add_teams_from_page').'</h2>';
-
+        /* @var $tables Tables */
         $tables = tx_rnbase::makeInstance(Tables::class);
+        $arr = $tables->prepareTable($teams, $columns, $this->getFormTool(), $options);
         $content .= $tables->buildTable($arr[0]);
         $content .= $this->formTool->createSubmit('addteams', $LANG->getLL('label_add_teams'), $GLOBALS['LANG']->getLL('msg_add_teams'));
 

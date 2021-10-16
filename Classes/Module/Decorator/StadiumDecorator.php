@@ -1,4 +1,10 @@
 <?php
+
+namespace System25\T3sports\Module\Decorator;
+
+use Sys25\RnBase\Backend\Module\IModule;
+use System25\T3sports\Model\Stadium;
+
 /***************************************************************
  *  Copyright notice
  *
@@ -25,9 +31,9 @@
 /**
  * Diese Klasse ist für die Darstellung von Stadien im Backend verantwortlich.
  */
-class tx_cfcleague_mod1_decorator_Stadium
+class StadiumDecorator
 {
-    public function __construct(tx_rnbase_mod_IModule $mod)
+    public function __construct(IModule $mod)
     {
         $this->mod = $mod;
     }
@@ -35,7 +41,7 @@ class tx_cfcleague_mod1_decorator_Stadium
     /**
      * Returns the module.
      *
-     * @return tx_rnbase_mod_IModule
+     * @return IModule
      */
     private function getModule()
     {
@@ -46,7 +52,7 @@ class tx_cfcleague_mod1_decorator_Stadium
      * @param string $value
      * @param string $colName
      * @param array $record
-     * @param tx_cfcleague_models_Stadium $item
+     * @param Stadium $item
      */
     public function format($value, $colName, $record, $item)
     {
@@ -65,7 +71,7 @@ class tx_cfcleague_mod1_decorator_Stadium
         return $ret;
     }
 
-    private static function getAddress(tx_cfcleague_models_Stadium $item)
+    private static function getAddress(Stadium $item)
     {
         $ret = '';
         if ($item->getStreet()) {
@@ -83,8 +89,4 @@ class tx_cfcleague_mod1_decorator_Stadium
 
         return $ret;
     }
-}
-
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/mod1/decorator/class.tx_cfcleague_mod1_decorator_Stadium.php']) {
-    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/mod1/decorator/class.tx_cfcleague_mod1_decorator_Stadium.php'];
 }

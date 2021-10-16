@@ -1,8 +1,15 @@
 <?php
+
+namespace System25\T3sports\Module\Linker;
+
+use Sys25\RnBase\Backend\Form\ToolBox;
+use Sys25\RnBase\Domain\Model\RecordInterface;
+use System25\T3sports\Utility\ServiceRegistry;
+
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2010 Rene Nitzsche (rene@system25.de)
+ *  (c) 2010-2021 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -25,22 +32,23 @@
 /**
  * Neuen Verein anlegen.
  */
-class tx_cfcleague_mod1_linker_NewClub
+class NewClubLinker
 {
     /**
-     * @param tx_mkhoga_models_Company $item
-     * @param tx_rnbase_util_FormTool $formTool
+     * @param RecordInterface $item
+     * @param ToolBox $formTool
      * @param int $currentPid
      * @param array $options
      *
      * @return string
      */
-    public function makeLink($item, $formTool, $currentPid, $options)
+    public function makeLink($item, ToolBox $formTool, $currentPid, $options)
     {
         $ret = '';
+        $fields = [];
         // Gibt es auf der Seite schon Vereine?
         $fields['CLUB.PID'][OP_EQ_INT] = $currentPid;
-        $cnt = tx_cfcleague_util_ServiceRegistry::getTeamService()->searchClubs($fields, ['count' => 1]);
+        $cnt = ServiceRegistry::getTeamService()->searchClubs($fields, ['count' => 1]);
         $options = [];
         $options['confirm'] = 0 == $cnt ? $GLOBALS['LANG']->getLL('label_msg_confirmNewClubPage') : $GLOBALS['LANG']->getLL('label_msg_confirmNewClub');
         $options['title'] = $GLOBALS['LANG']->getLL('label_addclub');
@@ -48,8 +56,4 @@ class tx_cfcleague_mod1_linker_NewClub
 
         return $ret;
     }
-}
-
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/mod1/linker/class.tx_cfcleague_mod1_linker_NewClub.php']) {
-    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/cfc_league/mod1/linker/class.tx_cfcleague_mod1_linker_NewClub.php'];
 }

@@ -10,6 +10,7 @@ use Sys25\RnBase\Database\Connection;
 use Sys25\RnBase\Utility\Strings;
 use Sys25\RnBase\Utility\T3General;
 use System25\T3sports\Model\Team;
+use System25\T3sports\Module\Searcher\ProfileSearcher;
 use System25\T3sports\Module\Utility\TeamInfo;
 use System25\T3sports\Utility\Misc;
 use tx_rnbase;
@@ -268,15 +269,15 @@ class ProfileAdd
     }
 
     /**
-     * Get a match searcher.
+     * Get a profile searcher.
      *
      * @param array $options
      *
-     * @return \tx_cfcleague_mod1_profilesearcher
+     * @return ProfileSearcher
      */
     protected function getProfileSearcher($options)
     {
-        $searcher = tx_rnbase::makeInstance('tx_cfcleague_mod1_profilesearcher', $this->mod, $options);
+        $searcher = tx_rnbase::makeInstance(ProfileSearcher::class, $this->mod, $options);
 
         return $searcher;
     }

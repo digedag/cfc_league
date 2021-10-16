@@ -55,4 +55,8 @@ namespace {
     class Tx_Cfcleague_Model_Repository_MatchNote
     {
     }
+    /** @deprecated */
+    class tx_cfcleague_selector
+    {
+    }
 }

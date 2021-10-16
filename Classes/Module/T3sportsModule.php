@@ -1,12 +1,14 @@
 <?php
 
+namespace System25\T3sports\Module;
+
 use Sys25\RnBase\Backend\Module\BaseModule;
 
 /*
  * *************************************************************
  * Copyright notice
  *
- * (c) 2008-2018 Rene Nitzsche (rene@system25.de)
+ * (c) 2008-2021 Rene Nitzsche (rene@system25.de)
  * All rights reserved
  *
  * This script is part of the TYPO3 project. The TYPO3 project is
@@ -31,8 +33,9 @@ use Sys25\RnBase\Backend\Module\BaseModule;
  * Module 'T3sports'.
  *
  * @author René Nitzsche rene@system25.de
+ * tx_cfcleague_mod1_Module
  */
-class tx_cfcleague_mod1_Module extends BaseModule
+class T3sportsModule extends BaseModule
 {
     public $pageinfo;
 

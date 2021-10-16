@@ -1,6 +1,7 @@
 <?php
 
 use Sys25\RnBase\Utility\Extensions;
+use System25\T3sports\Module\T3sportsModule;
 
 if (!defined('TYPO3_MODE')) {
     exit('Access denied.');
@@ -22,7 +23,7 @@ if (TYPO3_MODE == 'BE') {
     $modName = 'web_CfcLeagueM1';
     Extensions::registerModule('cfc_league', 'web', 'M1', 'bottom', [], [
         'access' => 'user,group',
-        'routeTarget' => 'tx_cfcleague_mod1_Module',
+        'routeTarget' => T3sportsModule::class,
         'icon' => 'EXT:cfc_league/Resources/Public/Icons/module-t3sports.svg',
         'labels' => 'LLL:EXT:cfc_league/mod1/locallang_mod.xml',
     ]);

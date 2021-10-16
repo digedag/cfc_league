@@ -1,8 +1,20 @@
 <?php
+
+namespace System25\T3sports\Module\Searcher;
+
+use Sys25\RnBase\Backend\Module\IModule;
+use Sys25\RnBase\Backend\Utility\BackendUtility;
+use Sys25\RnBase\Backend\Utility\BEPager;
+use Sys25\RnBase\Backend\Utility\Tables;
+use Sys25\RnBase\Utility\T3General;
+use System25\T3sports\Module\Decorator\StadiumDecorator;
+use System25\T3sports\Utility\ServiceRegistry;
+use tx_rnbase;
+
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2010 Rene Nitzsche (rene@system25.de)
+ *  (c) 2010-2021 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -21,13 +33,11 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-tx_rnbase::load('tx_rnbase_mod_IModule');
-tx_rnbase::load('Tx_Rnbase_Utility_T3General');
 
 /**
  * Search stadiums.
  */
-class tx_cfcleague_mod1_searcher_Stadium
+class StadiumSearcher
 {
     private $mod;
 
@@ -40,12 +50,10 @@ class tx_cfcleague_mod1_searcher_Stadium
     /**
      * Constructor.
      *
-     * @param tx_rnbase_mod_IModule $mod
-     * @param unknown_type $options
-     *
-     * @return unknown_type
+     * @param IModule $mod
+     * @param array $options
      */
-    public function __construct(tx_rnbase_mod_IModule $mod, $options = [])
+    public function __construct(IModule $mod, $options = [])
     {
         $this->init($mod, $options);
     }
@@ -53,19 +61,19 @@ class tx_cfcleague_mod1_searcher_Stadium
     /**
      * Init object.
      *
-     * @param tx_rnbase_mod_IModule $mod
+     * @param IModule $mod
      * @param array $options
      */
-    private function init(tx_rnbase_mod_IModule $mod, $options)
+    private function init(IModule $mod, $options)
     {
         $this->options = $options;
         $this->mod = $mod;
         $this->formTool = $mod->getFormTool();
         $this->resultSize = 0;
-        $this->data = Tx_Rnbase_Utility_T3General::_GP('searchdata');
+        $this->data = T3General::_GP('searchdata');
 
         if (!isset($options['nopersist'])) {
-            $this->SEARCH_SETTINGS = Tx_Rnbase_Backend_Utility::getModuleData([
+            $this->SEARCH_SETTINGS = BackendUtility::getModuleData([
                 'searchterm' => '',
             ], $this->data, $mod->getName());
         } else {
@@ -84,7 +92,7 @@ class tx_cfcleague_mod1_searcher_Stadium
     }
 
     /**
-     * @return tx_rnbase_mod_IModule
+     * @return IModule
      */
     private function getModule()
     {
@@ -93,9 +101,9 @@ class tx_cfcleague_mod1_searcher_Stadium
 
     public function getResultList()
     {
-        $pager = tx_rnbase::makeInstance('tx_rnbase_util_BEPager', 'stadiumPager', $this->getModule()->getName(), 0);
+        $pager = tx_rnbase::makeInstance(BEPager::class, 'stadiumPager', $this->getModule()->getName(), 0);
         // Get stadium service
-        $srv = tx_cfcleague_util_ServiceRegistry::getStadiumService();
+        $srv = ServiceRegistry::getStadiumService();
 
         // Set options
         $options = [
@@ -147,7 +155,7 @@ class tx_cfcleague_mod1_searcher_Stadium
      */
     private function showStadiums(&$content, $items)
     {
-        $decor = tx_rnbase::makeInstance('tx_cfcleague_mod1_decorator_Stadium', $this->getModule());
+        $decor = tx_rnbase::makeInstance(StadiumDecorator::class, $this->getModule());
         $columns = [
             'uid' => [
                 'title' => 'label_uid',
@@ -170,10 +178,10 @@ class tx_cfcleague_mod1_searcher_Stadium
         ];
 
         if ($items) {
-            $tables = tx_rnbase::makeInstance('Tx_Rnbase_Backend_Utility_Tables');
+            $tables = tx_rnbase::makeInstance(Tables::class);
             $arr = $tables->prepareTable($items, $columns, $this->getModule()->getFormTool(), $this->options);
 
-            $tables = tx_rnbase::makeInstance('Tx_Rnbase_Backend_Utility_Tables');
+            $tables = tx_rnbase::makeInstance(Tables::class);
             $out = $tables->buildTable($arr[0]);
         } else {
             $out = '<p><strong>###LABEL_MSG_NOSTADIUMSFOUND###</strong></p><br/>';
