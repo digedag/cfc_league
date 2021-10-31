@@ -49,6 +49,14 @@ class Match extends BaseModel
     private $resultInited = false;
     private $competition;
 
+    public function __construct($rowOrUid = null)
+    {
+        parent::__construct($rowOrUid);
+        if ($rowOrUid) {
+            $this->initResult();
+        }
+    }
+
     public function getTableName()
     {
         return 'tx_cfcleague_games';

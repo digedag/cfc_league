@@ -257,4 +257,12 @@ class MatchService extends AbstractService
     {
         return $this->repo->persist($model);
     }
+
+    /**
+     * @return MatchTableBuilder
+     */
+    public function getMatchTable()
+    {
+        return \tx_rnbase::makeInstance(MatchTableBuilder::class);
+    }
 }

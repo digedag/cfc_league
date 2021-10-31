@@ -3,6 +3,13 @@
 namespace System25\T3sports\Utility;
 
 use Sys25\RnBase\Utility\Misc;
+use System25\T3sports\Service\CompetitionService;
+use System25\T3sports\Service\MatchService;
+use System25\T3sports\Service\StadiumService;
+use System25\T3sports\Service\SaisonService;
+use System25\T3sports\Service\ProfileService;
+use System25\T3sports\Service\GroupService;
+use System25\T3sports\Service\TeamService;
 
 /***************************************************************
 *  Copyright notice
@@ -32,7 +39,7 @@ class ServiceRegistry
     /**
      * Liefert den Competition-Service.
      *
-     * @return tx_cfcleague_services_Competition
+     * @return CompetitionService
      */
     public static function getCompetitionService()
     {
@@ -42,7 +49,7 @@ class ServiceRegistry
     /**
      * Liefert den Match-Service.
      *
-     * @return tx_cfcleague_services_Match
+     * @return MatchService
      */
     public static function getMatchService()
     {
@@ -52,7 +59,7 @@ class ServiceRegistry
     /**
      * Liefert den Stadium-Service.
      *
-     * @return tx_cfcleague_services_Stadiums
+     * @return StadiumService
      */
     public static function getStadiumService()
     {
@@ -60,9 +67,9 @@ class ServiceRegistry
     }
 
     /**
-     * Liefert den Stadium-Service.
+     * Liefert den Saison-Service.
      *
-     * @return tx_cfcleague_services_Stadiums
+     * @return SaisonService
      */
     public static function getSaisonService()
     {
@@ -72,7 +79,7 @@ class ServiceRegistry
     /**
      * Liefert den Profile-Service.
      *
-     * @return tx_cfcleague_services_Profiles
+     * @return ProfileService
      */
     public static function getProfileService()
     {
@@ -82,7 +89,7 @@ class ServiceRegistry
     /**
      * Return den Team-Service.
      *
-     * @return tx_cfcleague_services_Teams
+     * @return TeamService
      */
     public static function getTeamService()
     {
@@ -92,7 +99,7 @@ class ServiceRegistry
     /**
      * Returns Group-Service.
      *
-     * @return tx_cfcleague_services_Group
+     * @return GroupService
      */
     public static function getGroupService()
     {
