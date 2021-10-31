@@ -52,10 +52,7 @@
 			"System25\\T3sports\\Tests\\" : "Tests/Unit/PHP",
 			"TYPO3\\CMS\\Core\\Tests\\":".Build/vendor/typo3/cms/typo3/sysext/core/Tests/",
 			"TYPO3\\CMS\\Fluid\\Tests\\": ".Build/vendor/typo3/cms/typo3/sysext/fluid/Tests/"
-		},
-		"files": [
-			".Build/Web/typo3conf/ext/rn_base/tests/Classes/Tests/BaseTestCase.php"
-		]
+		}
 	},
 	"config": {
 		"vendor-dir": ".Build/vendor",
