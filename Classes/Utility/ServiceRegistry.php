@@ -4,11 +4,11 @@ namespace System25\T3sports\Utility;
 
 use Sys25\RnBase\Utility\Misc;
 use System25\T3sports\Service\CompetitionService;
-use System25\T3sports\Service\MatchService;
-use System25\T3sports\Service\StadiumService;
-use System25\T3sports\Service\SaisonService;
-use System25\T3sports\Service\ProfileService;
 use System25\T3sports\Service\GroupService;
+use System25\T3sports\Service\MatchService;
+use System25\T3sports\Service\ProfileService;
+use System25\T3sports\Service\SaisonService;
+use System25\T3sports\Service\StadiumService;
 use System25\T3sports\Service\TeamService;
 
 /***************************************************************
