@@ -2,7 +2,7 @@
 
 namespace System25\T3sports\Tests\Model;
 
-use Sys25\RnBase\Tests\BaseTestCase;
+use Sys25\RnBase\Testing\BaseTestCase;
 use System25\T3sports\Model\Set;
 
 /***************************************************************

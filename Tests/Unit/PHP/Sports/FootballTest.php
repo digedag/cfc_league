@@ -2,13 +2,13 @@
 
 namespace System25\T3sports\Tests\Sports;
 
-use Sys25\RnBase\Tests\BaseTestCase;
+use Sys25\RnBase\Testing\BaseTestCase;
 use System25\T3sports\Sports\Football;
 
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2012-2020 Rene Nitzsche (rene@system25.de)
+*  (c) 2012-2021 Rene Nitzsche (rene@system25.de)
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
