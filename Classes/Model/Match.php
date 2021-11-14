@@ -44,10 +44,16 @@ class Match extends BaseModel
 
     public const MATCH_STATUS_FINISHED = 2;
 
-    private $sets;
+    protected $sets;
 
     private $resultInited = false;
-    private $competition;
+    protected $competition;
+    protected $matchNotes = [];
+    protected $matchNoteTypes = [];
+    protected $_teamHome;
+    protected $_teamGuest;
+    protected $_profiles;
+
 
     public function __construct($rowOrUid = null)
     {
@@ -511,41 +517,27 @@ class Match extends BaseModel
      */
     public function getMatchNotes($orderBy = 'asc', $limit = false)
     {
-        $notes = $this->resolveMatchNotes($orderBy);
+        $notes = $this->matchNotes;
         if ($limit) {
-            return array_slice($notes, 0, (int) $limit);
+            $notes = array_slice($notes, 0, (int) $limit);
         }
-
-        return $notes;
+        return 'asc' == $orderBy ? $notes : array_reverse($notes);
+    }
+    /**
+     * Set matchnotes
+     * @param array $matchNotes
+     */
+    public function setMatchNotes(array $matchNotes)
+    {
+        foreach ($matchNotes as $matchNote) {
+            // Zusätzlich die Notes nach ihrem Typ sortieren
+            $this->matchNoteTypes[(int) $matchNote->getProperty('type')][] = $matchNote;
+        }
+        $this->matchNotes = $matchNotes;
     }
 
-    /**
-     * Lädt die MatchNotes dieses Spiels.
-     * Sollten sie schon geladen sein, dann
-     * wird nix gemacht.
-     *
-     * @param string $orderBy
-     */
-    private function resolveMatchNotes($orderBy = 'asc')
+    public function getColumnNames()
     {
-        if (!isset($this->matchNotes)) {
-            $what = '*';
-            $from = 'tx_cfcleague_match_notes';
-            $options = [];
-            $options['where'] = 'game = '.$this->getUid();
-            $options['wrapperclass'] = 'tx_cfcleague_models_MatchNote';
-            // HINT: Die Sortierung nach dem Typ ist für die Auswechslungen wichtig.
-            $options['orderby'] = 'minute asc, extra_time asc, uid asc';
-            $this->matchNotes = Connection::getInstance()->doSelect($what, $from, $options, 0);
-            // Das Match setzen (foreach geht hier nicht weil es nicht mit Referenzen arbeitet...)
-            $anz = count($this->matchNotes);
-            for ($i = 0; $i < $anz; ++$i) {
-                $this->matchNotes[$i]->setMatch($this);
-                // Zusätzlich die Notes nach ihrem Typ sortieren
-                $this->matchNoteTypes[intval($this->matchNotes[$i]->getProperty('type'))][] = $this->matchNotes[$i];
-            }
-        }
-
-        return 'asc' == $orderBy ? $this->matchNotes : array_reverse($this->matchNotes);
+        return array_merge(['goals_home', 'goals_guest'], parent::getColumnNames());
     }
 }

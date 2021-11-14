@@ -232,7 +232,7 @@ class Competition extends BaseModel
     /**
      * Liefert ein Array mit allen Spielrunden der Liga.
      *
-     * @return array
+     * @return CompetitionRound[]
      */
     public function getRounds()
     {
@@ -244,6 +244,7 @@ class Competition extends BaseModel
             $options['what'] = 'distinct round as uid,round AS number,round,round_name,round_name As name, max(status) As finished, max(status) As max_status';
             $options['groupby'] = 'round,round_name';
             $options['orderby']['COMPROUND.ROUND'] = 'asc';
+            $options['forcewrapper'] = true;
             $fields = [];
             $fields['COMPROUND.COMPETITION'][OP_EQ_INT] = $this->getUid();
             $this->cache['rounds'] = $srv->searchMatchRound($fields, $options);
@@ -269,6 +270,7 @@ class Competition extends BaseModel
      * Liefert die Spiele einer bestimmten Spielrunde.
      *
      * @param int $roundId
+     * @return Match[]
      */
     public function getMatchesByRound($roundId)
     {
@@ -446,7 +448,7 @@ class Competition extends BaseModel
             if ($ignoreDummies) {
                 $options['where'] .= ' AND dummy <> 1  ';
             }
-            $options['wrapperclass'] = 'tx_cfcleaguefe_models_team';
+            $options['wrapperclass'] = Team::class;
             $options['orderby'] = 'sorting';
             $this->teams = Connection::getInstance()->doSelect('*', 'tx_cfcleague_teams', $options, 0);
         }
@@ -524,7 +526,7 @@ class Competition extends BaseModel
      * @param string $compTypes
      *            String kommaseparierte Liste von Wettkampftypen (1-Liga;2-Pokal;0-Sonstige)
      *
-     * @return array der gefundenen Wettkämpfe
+     * @return Competition[] die gefundenen Wettkämpfe
      */
     public static function findAll($saisonUid = '', $groupUid = '', $uids = '', $compTypes = '')
     {

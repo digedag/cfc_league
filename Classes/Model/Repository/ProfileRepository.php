@@ -4,6 +4,7 @@ namespace System25\T3sports\Model\Repository;
 
 use Sys25\RnBase\Domain\Repository\PersistenceRepository;
 use System25\T3sports\Search\ProfileSearch;
+use System25\T3sports\Model\Profile;
 
 /***************************************************************
  *  Copyright notice
@@ -36,5 +37,17 @@ class ProfileRepository extends PersistenceRepository
     public function getSearchClass()
     {
         return ProfileSearch::class;
+    }
+
+    /**
+     *
+     * @param string $uids
+     * @return Profile[]
+     */
+    public function findByUids($uids)
+    {
+        $fields = $options = [];
+        $fields['PROFILE.UID'][OP_IN_INT] = $uids;
+        return $this->search($fields, $options);
     }
 }

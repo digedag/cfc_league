@@ -60,11 +60,6 @@ class CompetitionRoundSearch extends SearchBase
         return 'COMPROUND';
     }
 
-    protected function useAlias()
-    {
-        return true;
-    }
-
     public function getWrapperClass()
     {
         return CompetitionRound::class;
