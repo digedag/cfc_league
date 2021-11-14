@@ -3,7 +3,6 @@
 namespace System25\T3sports\Model;
 
 use Exception;
-use Sys25\RnBase\Database\Connection;
 use Sys25\RnBase\Domain\Model\BaseModel;
 use System25\T3sports\Utility\ServiceRegistry;
 
@@ -53,7 +52,6 @@ class Match extends BaseModel
     protected $_teamHome;
     protected $_teamGuest;
     protected $_profiles;
-
 
     public function __construct($rowOrUid = null)
     {
@@ -521,10 +519,13 @@ class Match extends BaseModel
         if ($limit) {
             $notes = array_slice($notes, 0, (int) $limit);
         }
+
         return 'asc' == $orderBy ? $notes : array_reverse($notes);
     }
+
     /**
-     * Set matchnotes
+     * Set matchnotes.
+     *
      * @param array $matchNotes
      */
     public function setMatchNotes(array $matchNotes)

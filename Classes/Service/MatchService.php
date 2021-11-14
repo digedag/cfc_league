@@ -189,6 +189,7 @@ class MatchService extends AbstractService
     public function searchMatchRound($fields, $options)
     {
         $searcher = SearchBase::getInstance(CompetitionRoundSearch::class);
+
         return $searcher->search($fields, $options);
     }
 

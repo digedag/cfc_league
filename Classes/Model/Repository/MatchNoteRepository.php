@@ -3,10 +3,9 @@
 namespace System25\T3sports\Model\Repository;
 
 use Sys25\RnBase\Domain\Repository\PersistenceRepository;
-use System25\T3sports\Search\MatchNoteSearch;
 use System25\T3sports\Model\Match;
-use Sys25\RnBase\Database\Connection;
 use System25\T3sports\Model\MatchNote;
+use System25\T3sports\Search\MatchNoteSearch;
 
 /***************************************************************
  *  Copyright notice
@@ -95,6 +94,7 @@ class MatchNoteRepository extends PersistenceRepository
      *
      * @param Match $match
      * @param string $orderBy
+     *
      * @return MatchNote[]
      */
     public function loadMatchNotesByMatch(Match $match, $orderBy = 'asc')

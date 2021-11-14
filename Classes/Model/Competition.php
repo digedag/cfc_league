@@ -270,6 +270,7 @@ class Competition extends BaseModel
      * Liefert die Spiele einer bestimmten Spielrunde.
      *
      * @param int $roundId
+     *
      * @return Match[]
      */
     public function getMatchesByRound($roundId)

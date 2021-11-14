@@ -150,6 +150,7 @@ class Profile extends BaseModel
                 }
             }
         }
+
         return false;
     }
 
