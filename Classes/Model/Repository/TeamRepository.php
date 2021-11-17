@@ -37,4 +37,40 @@ class TeamRepository extends PersistenceRepository
     {
         return TeamSearch::class;
     }
+
+    /**
+     * Liefert die Teams dieses Vereins
+     * TODO: In Service auslagern.
+     *
+     * @param int $clubUid
+     * @param string $saisonIds commaseperated saison-uids
+     * @param string $agegroups commaseperated agegroup-uids
+     */
+    public function findByClubAndSaison($clubUid, $saisonIds, $agegroups)
+    {
+        $what = 'distinct tx_cfcleague_teams.uid, tx_cfcleague_teams.comment, '.
+                'tx_cfcleague_teams.name, tx_cfcleague_teams.short_name, '.
+                'tx_cfcleague_teams.coaches, tx_cfcleague_teams.players, tx_cfcleague_teams.supporters, '.
+                'tx_cfcleague_teams.coaches_comment, tx_cfcleague_teams.players_comment, tx_cfcleague_teams.supporters_comment, '.
+                'tx_cfcleague_teams.t3images';
+        $from = [
+            'tx_cfcleague_teams INNER JOIN tx_cfcleague_competition c ON FIND_IN_SET(tx_cfcleague_teams.uid, c.teams) AND c.hidden=0 AND c.deleted=0 ',
+            'tx_cfcleague_teams',
+        ];
+        $options = [];
+        // FIXME: Umstellen auf SearchClass
+        $options['where'] = 'tx_cfcleague_teams.club = '.$clubUid.' AND c.saison IN ('.$saisonIds.')'.' AND c.agegroup IN ('.$agegroups.')';
+        $options['wrapperclass'] = $this->getSearcher()->getWrapperClass();
+
+        return $this->getConnection()->doSelect($what, $from, $options);
+
+        /*
+         * SELECT distinct t.uid, t.name FROM tx_cfcleague_teams
+         * INNER JOIN tx_cfcleague_competition c
+         * ON FIND_IN_SET(t.uid, c.teams)
+         * WHERE t.club = 1
+         * AND c.saison = 1
+         * AND c.agegroup = 1
+         */
+    }
 }

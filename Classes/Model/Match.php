@@ -524,7 +524,7 @@ class Match extends BaseModel
     }
 
     /**
-     * Set matchnotes.
+     * Set matchnotes. will replace all existing notes.
      *
      * @param array $matchNotes
      */
@@ -535,6 +535,24 @@ class Match extends BaseModel
             $this->matchNoteTypes[(int) $matchNote->getProperty('type')][] = $matchNote;
         }
         $this->matchNotes = $matchNotes;
+    }
+
+    /**
+     * Fügt diesem Match eine neue Note hinzu.
+     * Die Notes werden mit diesem Spiel verlinkt.
+     */
+    public function addMatchNote(MatchNote $note)
+    {
+        if (!isset($this->matchNotes)) {
+            // Neues TickerArray erstellen
+            $this->matchNotes = [];
+        }
+
+        // Ist das notwendig?
+        // $note->setMatch($this);
+        $this->matchNotes[] = $note;
+        // Zusätzlich die Notes nach ihrem Typ sortieren
+        $this->matchNoteTypes[(int) $note->getProperty('type')][] = $note;
     }
 
     public function getColumnNames()
