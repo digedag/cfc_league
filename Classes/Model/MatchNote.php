@@ -243,6 +243,74 @@ class MatchNote extends BaseModel
         return '80' == $this->getType() || '81' == $this->getType();
     }
 
+    /**
+     * Liefert true wenn die Meldung eine Strafe ist (Karten).
+     */
+    public function isPenalty()
+    {
+        $type = (int) $this->getProperty('type');
+
+        return $type >= self::TYPE_CARD_YELLOW && $type < self::TYPE_CHANGEOUT;
+    }
+
+    /**
+     * Liefert true, wenn die Aktion eine Ein- oder Auswechslung ist.
+     *
+     * @return bool
+     */
+    public function isType(int $type)
+    {
+        return $type === $this->getType();
+    }
+
+    /**
+     * Liefert bei einem Wechsel die UID des eingewechselten Spielers.
+     */
+    public function getPlayerUidChangeIn(): ?int
+    {
+        return $this->getPlayerChange(0);
+    }
+
+    /**
+     * Liefert bei einem Wechsel die UIDs des ausgewechselten Spielers.
+     *
+     * @return int|null
+     */
+    public function getPlayerUidChangeOut(): ?int
+    {
+        return $this->getPlayerChange(1);
+    }
+
+    /**
+     * Liefert den ausgewechselten Spieler, wenn der Tickertyp ein Wechsel ist.
+     *
+     * @param int $type 0 liefert den eingewechselten Spieler, 1 den ausgewechselten
+     *
+     * @return int die UID des Spielers
+     */
+    protected function getPlayerChange($type): ?int
+    {
+        // Ist es ein Wechsel?
+        if ($this->isChange() && ($this->getProperty('player_home') || $this->getProperty('player_guest'))) {
+            // Heim oder Gast?
+            if ($this->getProperty('player_home')) {
+//                $players = $this->match->getPlayersHome(1);
+                $playerField = '80' == $this->getProperty('type') ? ($type ? 'player_home' : 'player_home_2') : ($type ? 'player_home_2' : 'player_home');
+            } else {
+//                $players = $this->match->getPlayersGuest(1);
+                $playerField = '80' == $this->getProperty('type') ? ($type ? 'player_guest' : 'player_guest_2') : ($type ? 'player_guest_2' : 'player_guest');
+            }
+            if ($this->getProperty($playerField) < 0) {
+                return $this->getUnknownPlayer();
+            }
+
+            return $this->getProperty($playerField);
+//            return $players[$this->getProperty($playerField)];
+        }
+
+        return null;
+    }
+
     public function __toString()
     {
         return get_class($this).'( uid['.$this->getUid().

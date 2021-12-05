@@ -121,7 +121,7 @@ class Profile extends BaseModel
 
     private function check4Captain(MatchNote $note)
     {
-        if ($note->isType(200)) {
+        if ($note->isType(MatchNote::TYPE_CAPTAIN)) {
             // Wenn das im Record liegt, kann es auch per TS ausgewertet werden!
             $this->setProperty('teamCaptain', '1');
         }
@@ -139,8 +139,10 @@ class Profile extends BaseModel
     /**
      * Returns a match_note if player was changed out during a match.
      * Works if match_notes set.
+     *
+     * @return MatchNote|false
      */
-    public function isChangedOut()
+    public function isChangedOut(): ?MatchNote
     {
         if (is_array($this->matchNotes)) {
             for ($i = 0; $i < count($this->matchNotes); ++$i) {
@@ -151,7 +153,7 @@ class Profile extends BaseModel
             }
         }
 
-        return false;
+        return null;
     }
 
     /**
@@ -160,7 +162,7 @@ class Profile extends BaseModel
      *
      * @return
      */
-    public function isPenalty()
+    public function isPenalty(): ?MatchNote
     {
         // Die Matchnotes müssen absteigend durchsucht werden, da die letzte Strafe entscheidend ist
         if (is_array($this->matchNotes)) {
@@ -173,6 +175,6 @@ class Profile extends BaseModel
             }
         }
 
-        return false;
+        return null;
     }
 }
