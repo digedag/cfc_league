@@ -555,6 +555,23 @@ class Match extends BaseModel
         $this->matchNoteTypes[(int) $note->getProperty('type')][] = $note;
     }
 
+    public function getMatchNotesByType($type)
+    {
+        if (is_array($type)) {
+            $ret = [];
+            for ($i = 0, $size = count($type); $i < $size; ++$i) {
+                $notes = $this->matchNoteTypes[intval($type[$i])];
+                if (is_array($notes)) {
+                    $ret = array_merge($ret, $notes);
+                }
+            }
+
+            return $ret;
+        } else {
+            return $this->matchNoteTypes[intval($type)];
+        }
+    }
+
     public function getColumnNames()
     {
         return array_merge(['goals_home', 'goals_guest'], parent::getColumnNames());
