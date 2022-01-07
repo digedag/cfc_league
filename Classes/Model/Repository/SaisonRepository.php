@@ -3,6 +3,7 @@
 namespace System25\T3sports\Model\Repository;
 
 use Sys25\RnBase\Domain\Repository\PersistenceRepository;
+use System25\T3sports\Model\Saison;
 use System25\T3sports\Search\SaisonSearch;
 
 /***************************************************************
@@ -36,5 +37,20 @@ class SaisonRepository extends PersistenceRepository
     public function getSearchClass()
     {
         return SaisonSearch::class;
+    }
+
+    public function findByUids($uids)
+    {
+        $options = [];
+        if (is_string($uids) && strlen($uids) > 0) {
+            $options['where'] = 'uid IN ('.$uids.')';
+        } else {
+            $options['where'] = '1';
+        }
+        $options['orderby'] = 'sorting';
+        $options['wrapperclass'] = Saison::class;
+        // SELECT * FROM tx_cfcleague_saison WHERE uid IN ($uid)
+
+        return $this->getConnection()->doSelect('*', 'tx_cfcleague_saison', $options);
     }
 }
