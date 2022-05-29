@@ -2,11 +2,12 @@
 Änderungen
 ==========
 
-## v1.8.0 (??.??.2021)
+## v1.8.0 (29.05.2022)
  * all deprecated rn_base classes replaced
  * #59 all classes moves to PSR-4 namespaces
  * BC: class `tx_cfcleaguefe_util_Memento` removed
  * Fix #9: prepend zero for round in matchtable creation
+ * Support for TYPO3 7.6 removed
 
 ## v1.7.1 (13.05.2021)
  * Integrate Github actions

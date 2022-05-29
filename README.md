@@ -5,7 +5,6 @@ T3sports Backend
 <a href="https://github.com/digedag/cfc_league"><img src="ext_icon.svg" width="20"></a>
 [![Latest Stable Version](https://img.shields.io/packagist/v/digedag/cfc-league.svg?maxAge=3600)](https://packagist.org/packages/digedag/cfc-league)
 [![Total Downloads](https://img.shields.io/packagist/dt/digedag/cfc-league.svg?maxAge=3600)](https://packagist.org/packages/digedag/cfc-league)
-[![Build Status](https://api.travis-ci.org/digedag/cfc_league.png)](https://travis-ci.org/digedag/cfc_league)
 [![Code Style](https://github.com/digedag/cfc_league/actions/workflows/php.yaml/badge.svg)](https://github.com/digedag/cfc_league/actions/workflows/php.yaml)
 [![License](https://img.shields.io/packagist/l/digedag/cfc-league.svg?maxAge=3600)](https://packagist.org/packages/digedag/cfc-league)
 <a href="https://twitter.com/intent/follow?screen_name=T3sports1"><img src="https://img.shields.io/twitter/follow/T3sports1.svg?label=Follow%20@T3sports1" alt="Follow @T3sports1" /></a>
