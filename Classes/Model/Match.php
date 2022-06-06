@@ -516,11 +516,12 @@ class Match extends BaseModel
     public function getMatchNotes($orderBy = 'asc', $limit = false)
     {
         $notes = $this->matchNotes;
+        $notes = 'asc' == $orderBy ? $notes : array_reverse($notes);
         if ($limit) {
             $notes = array_slice($notes, 0, (int) $limit);
         }
 
-        return 'asc' == $orderBy ? $notes : array_reverse($notes);
+        return $notes;
     }
 
     /**

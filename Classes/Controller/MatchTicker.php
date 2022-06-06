@@ -10,6 +10,7 @@ use Sys25\RnBase\Utility\T3General;
 use Sys25\RnBase\Utility\TYPO3;
 use System25\T3sports\Model\Competition;
 use System25\T3sports\Model\Match;
+use System25\T3sports\Model\Repository\MatchNoteRepository;
 use System25\T3sports\Utility\ServiceRegistry;
 use tx_rnbase;
 
@@ -117,11 +118,11 @@ class MatchTicker extends BaseModFunc
         // Dann zeigen wir die FORM für die nächste Meldung
         $modContent .= $this->getInstantMessageField();
         $modContent .= $this->getFormHeadline();
-        $arr = $this->createFormArray($match);
+        $tickerArr = $this->createFormArray($match);
 
         /* @var $tables Tables */
         $tables = tx_rnbase::makeInstance(Tables::class);
-        $modContent .= $tables->buildTable($arr, $this->_getTableLayoutForm());
+        $modContent .= $tables->buildTable($tickerArr, $this->_getTableLayoutForm());
         $modContent .= '<br />';
 
         // Das Form für den aktuellen Spielstand
@@ -133,8 +134,8 @@ class MatchTicker extends BaseModFunc
             ->createSubmit('update', $LANG->getLL('btn_save'));
         // Jetzt listen wir noch die zum Spiel vorhandenen Tickermeldungen auf
         $modContent .= $this->doc->divider(5);
-        $arr = $this->createTickerArray($match, T3General::_GP('showAll'));
-        if ($arr) {
+        $tickerArr = $this->createTickerArray($match, T3General::_GP('showAll'));
+        if ($tickerArr) {
             $tickerContent = $formTool->createModuleLink(
                 ['showAll' => '1'],
                 $this->getModule()->getPid(),
@@ -142,7 +143,7 @@ class MatchTicker extends BaseModFunc
             );
             $tableLayout = $this->_getTableLayoutForm();
             $tableLayout['defRowEven']['defCol'] = $tableLayout['defRowOdd']['defCol']; // Array('<td valign="top" style="padding:5px 5px;">', '</td>');
-            $tickerContent .= $tables->buildTable($arr, $tableLayout);
+            $tickerContent .= $tables->buildTable($tickerArr, $tableLayout);
         } else {
             $tickerContent .= $LANG->getLL('msg_NoTicker');
         }
@@ -393,6 +394,8 @@ class MatchTicker extends BaseModFunc
     protected function createTickerArray($match, $showAll)
     {
         global $LANG;
+        $repo = new MatchNoteRepository();
+        $repo->retrieveMatchNotes([$match], false);
         $notes = $match->getMatchNotes('desc', $showAll ? false : 5);
         if (!count($notes)) {
             return 0;

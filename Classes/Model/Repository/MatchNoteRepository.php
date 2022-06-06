@@ -75,7 +75,7 @@ class MatchNoteRepository extends PersistenceRepository
             $options['where'] .= ' AND type < 100';
         }
         $options['orderby'] = 'game asc, minute asc';
-        $options['wrapperclass'] = 'tx_cfcleaguefe_models_match_note';
+        $options['wrapperclass'] = MatchNote::class;
 
         $matchNotes = $this->getConnection()->doSelect($what, $from, $options);
 
