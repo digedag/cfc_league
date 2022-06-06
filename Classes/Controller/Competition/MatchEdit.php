@@ -10,6 +10,7 @@ use Sys25\RnBase\Database\Connection;
 use Sys25\RnBase\Utility\T3General;
 use Sys25\RnBase\Utility\TYPO3;
 use System25\T3sports\Model\Competition;
+use System25\T3sports\Model\CompetitionRound;
 use System25\T3sports\Model\Match;
 use System25\T3sports\Model\Team;
 use System25\T3sports\Sports\ServiceLocator;
@@ -19,7 +20,7 @@ use tx_rnbase;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2007-2021 Rene Nitzsche (rene@system25.de)
+ *  (c) 2007-2022 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -82,7 +83,7 @@ class MatchEdit
         }
         $currentTeam = $this->makeTeamSelector($content, $pid, $current_league);
         // Jetzt den Spieltag wählen lassen
-        $current_round = 0;
+        $current_round = null;
         if (null == $currentTeam) {
             $current_round = $this->getSelector()->showRoundSelector($content, $pid, $current_league);
         }
@@ -112,7 +113,7 @@ class MatchEdit
         $content .= $tables->buildTable($arr[0]);
 
         // Den Update-Button einfügen
-        $content .= $formTool->createSubmit('update', $LANG->getLL('btn_update'), $GLOBALS['LANG']->getLL('btn_update_msgEditGames'));
+        $content .= $formTool->createSubmit('update', $LANG->getLL('btn_update'), $LANG->getLL('btn_update_msgEditGames'));
         // $content .= '<input type="submit" name="update" value="'.$LANG->getLL('btn_update').'" onclick="return confirm('.$GLOBALS['LANG']->JScharCode($GLOBALS['LANG']->getLL('btn_update_msgEditGames')).')">';
         if ($arr[1]) { // Hat ein Team spielfrei?
             $content .= '<h3 style="margin-top:10px">'.$LANG->getLL('msg_free_of_play').'</h3><ul>';
@@ -129,10 +130,10 @@ class MatchEdit
 
     /**
      * @param Team $currentTeam
-     * @param int $current_round
+     * @param CompetitionRound $current_round
      * @param Competition $current_league
      */
-    private function findMatches($currentTeam, $current_round, $current_league)
+    private function findMatches($currentTeam, ?CompetitionRound $currentRound, $current_league)
     {
         // Mit Matchtable nach Spielen suchen
         $service = ServiceRegistry::getMatchService();
@@ -142,7 +143,7 @@ class MatchEdit
         $matches = [];
         if (null == $currentTeam) {
             // Nun zeigen wir die Spiele des Spieltags
-            $matchTable->setRounds($current_round);
+            $matchTable->setRounds($currentRound->getUid());
         } else {
             $matchTable->setTeams($currentTeam->getUid());
         }
@@ -196,26 +197,26 @@ class MatchEdit
 
     /**
      * @param Competition $currentLeague
-     * @param int $current_round
+     * @param CompetitionRound $currentRound
      * @param mixed $pid
      * @param ToolBox $formTool
      *
      * @return string
      */
-    protected function getFooter(Competition $currentCompetition, $current_round, $pid, ToolBox $formTool)
+    protected function getFooter(Competition $currentCompetition, ?CompetitionRound $currentRound, $pid, ToolBox $formTool)
     {
         $rounds = $currentCompetition->getRounds();
         $roundName = '';
         foreach ($rounds as $round) {
-            if ($round['round'] == $current_round) {
-                $roundName = $round['round_name'];
+            if ($currentRound && $round->getUid() == $currentRound->getUid()) {
+                $roundName = $round->getProperty('round');
             }
         }
         $params = [];
         $params[ToolBox::OPTION_DEFVALS] = [
             'tx_cfcleague_games' => [
                 'competition' => $currentCompetition->getUid(),
-                'round' => $current_round,
+                'round' => $currentRound ? $currentRound->getUid() : 0,
                 'round_name' => $roundName,
             ],
         ];
