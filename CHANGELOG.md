@@ -2,7 +2,7 @@
 Änderungen
 ==========
 
-## v1.8.0 (29.05.2022)
+## v1.8.0 (19.06.2022)
  * all deprecated rn_base classes replaced
  * #59 all classes moves to PSR-4 namespaces
  * BC: class `tx_cfcleaguefe_util_Memento` removed
