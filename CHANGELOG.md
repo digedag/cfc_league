@@ -2,6 +2,9 @@
 Änderungen
 ==========
 
+## v1.8.1 (26.06.2022)
+ * Enable automatic TER release
+
 ## v1.8.0 (19.06.2022)
  * all deprecated rn_base classes replaced
  * #59 all classes moves to PSR-4 namespaces
