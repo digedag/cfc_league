@@ -77,7 +77,7 @@ class MatchEdit
         if (!count($current_league->getRounds())) {
             $content .= $LANG->getLL('no_round_in_league');
             $content .= '<br /><br />';
-            $content .= $this->getFooter($current_league, 0, $pid, $formTool);
+            $content .= $this->getFooter($current_league, null, $pid, $formTool);
 
             return $content;
         }

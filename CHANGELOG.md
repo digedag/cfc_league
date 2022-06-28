@@ -2,6 +2,9 @@
 Änderungen
 ==========
 
+## v1.8.2 (28.06.2022)
+ * Fix backend module crash in empty competition
+
 ## v1.8.1 (26.06.2022)
  * Enable automatic TER release
 
