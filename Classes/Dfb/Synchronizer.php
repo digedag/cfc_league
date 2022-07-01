@@ -327,12 +327,9 @@ class Synchronizer
         $fields['MATCH.COMPETITION'][OP_EQ_INT] = $competition->getUid();
         $options['what'] = 'uid,extid';
         $options['orderby'] = 'uid asc';
-        $options['callback'] = [
-            $this,
-            function ($record) {
-                $this->matchMap[$record['extid']] = $record['uid'];
-            },
-        ];
+        $options['callback'] = function ($record) {
+            $this->matchMap[$record['extid']] = $record['uid'];
+        };
         $matchSrv->search($fields, $options);
     }
 }
