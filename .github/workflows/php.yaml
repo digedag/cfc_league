@@ -9,7 +9,7 @@ jobs:
     php-lint:
         name: "PHP Lint"
 
-        runs-on: "ubuntu-latest"
+        runs-on: ubuntu-20.04
 
         strategy:
             matrix:
@@ -35,9 +35,7 @@ jobs:
                 run: "composer tests:phplint"
     php-qs:
         name: "PHP QS"
-
-        runs-on: ubuntu-latest
-        
+        runs-on: ubuntu-20.04
         needs: php-lint
 
         strategy:
@@ -81,27 +79,13 @@ jobs:
 
     php-unit:
         name: "PHP Unit"
-
-        runs-on: "ubuntu-latest"
-
+        runs-on: "ubuntu-20.04"
         needs: ["php-lint", "php-qs"]
 
         strategy:
             fail-fast: false
             matrix:
                 include:
-#                    -
-#                        typo3-version: "typo3/minimal:^8.7"
-#                        php-version: "7.1"
-#                    -
-#                        typo3-version: "typo3/minimal:^8.7"
-#                        php-version: "7.2"
-#                    -
-#                        typo3-version: "typo3/minimal:^8.7"
-#                        php-version: "7.3"
-#                    -
-#                        typo3-version: "typo3/minimal:^8.7"
-#                        php-version: "7.4"
                     -
                         typo3-version: "typo3/minimal:^9.5"
                         php-version: "7.2"
@@ -134,6 +118,9 @@ jobs:
 #            -
 #                name: "Validate composer.json and composer.lock"
 #                run: "composer validate --strict"
+            -
+                 name: "Show Composer version"
+                 run: composer --version
             -
                 name: "Determine composer cache directory"
                 id: "determine-composer-cache-directory"
