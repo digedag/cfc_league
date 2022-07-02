@@ -4,6 +4,7 @@ namespace System25\T3sports\Controller\Competition;
 
 use Sys25\RnBase\Backend\Form\ToolBox;
 use Sys25\RnBase\Backend\Module\BaseModule;
+use Sys25\RnBase\Backend\Module\IModFunc;
 use Sys25\RnBase\Backend\Module\IModule;
 use Sys25\RnBase\Backend\Utility\Tables;
 use Sys25\RnBase\Database\Connection;
@@ -107,20 +108,24 @@ class MatchEdit
         }
 
         $matches = $this->findMatches($currentTeam, $current_round, $current_league);
-        $arr = $this->createTableArray($matches, $current_league);
+        try {
+            $arr = $this->createTableArray($matches, $current_league);
 
-        $tables = tx_rnbase::makeInstance(Tables::class);
-        $content .= $tables->buildTable($arr[0]);
+            $tables = tx_rnbase::makeInstance(Tables::class);
+            $content .= $tables->buildTable($arr[0]);
 
-        // Den Update-Button einfügen
-        $content .= $formTool->createSubmit('update', $LANG->getLL('btn_update'), $LANG->getLL('btn_update_msgEditGames'));
-        // $content .= '<input type="submit" name="update" value="'.$LANG->getLL('btn_update').'" onclick="return confirm('.$GLOBALS['LANG']->JScharCode($GLOBALS['LANG']->getLL('btn_update_msgEditGames')).')">';
-        if ($arr[1]) { // Hat ein Team spielfrei?
-            $content .= '<h3 style="margin-top:10px">'.$LANG->getLL('msg_free_of_play').'</h3><ul>';
-            foreach ($arr[1] as $freeOfPlay) {
-                $content .= '<li>'.$freeOfPlay['team'].$freeOfPlay['match_edit'].'</li>';
+            // Den Update-Button einfügen
+            $content .= $formTool->createSubmit('update', $LANG->getLL('btn_update'), $LANG->getLL('btn_update_msgEditGames'));
+            // $content .= '<input type="submit" name="update" value="'.$LANG->getLL('btn_update').'" onclick="return confirm('.$GLOBALS['LANG']->JScharCode($GLOBALS['LANG']->getLL('btn_update_msgEditGames')).')">';
+            if ($arr[1]) { // Hat ein Team spielfrei?
+                $content .= '<h3 style="margin-top:10px">'.$LANG->getLL('msg_free_of_play').'</h3><ul>';
+                foreach ($arr[1] as $freeOfPlay) {
+                    $content .= '<li>'.$freeOfPlay['team'].$freeOfPlay['match_edit'].'</li>';
+                }
+                $content .= '</ul>';
             }
-            $content .= '</ul>';
+        } catch (\Exception $e) {
+            $content .= $this->getModule()->getDoc()->section('Error:', $e->getMessage(), 0, 1, IModFunc::ICON_FATAL);
         }
         $content .= '<br /><br />';
         $content .= $this->getFooter($current_league, $current_round, $pid, $formTool);
