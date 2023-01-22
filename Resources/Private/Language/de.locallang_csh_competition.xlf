@@ -1,21 +1,25 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<T3locallang>
-	<meta type="array">
-		<type>CSH</type>
-		<csh_table>tx_cfcleague_competition</csh_table>
-		<description>csh for 'club'</description>
-		<keep_original_text>1</keep_original_text>
-	</meta>
-	<data type="array">
-		<languageKey index="default" type="array">
-			<label index=".description"><![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.0">
+	<file source-language="en" target-language="de" datatype="plaintext" original="messages" data="2023-01-22T17-17-16" product-name="zsb">
+		<header/>
+		<body>
+			<trans-unit id=".description" xml:space="preserve">
+				<source>
 A competition collects a number of matches. You can define a competition as 
 league, cup or friendly matches. Most details are used for leagues only.
-			]]></label>
-			<label index="match_keys.description"><![CDATA[See details for some example keysets used in Germany.]]></label>
-			<label index="match_keys.details"><![CDATA[
-<h2>Some match keysets used in Germany</h2>
-<pre>
+				</source>
+				<target>
+      Ein Wettbewerb ist eine Sammlung von zusammengehörenden Spielen.
+      Es gibt drei Arten: Liga, Pokal und Freundschaftspiele. Die meisten
+      Angaben in diesem Wettbewerb sind nur bei Ligen notwendig.
+				</target>
+			</trans-unit>
+			<trans-unit id="match_keys.description" xml:space="preserve">
+				<source>See details for some example keysets used in Germany.</source>
+				<target>In der Detailhilfe sind einige Spielplanschlüssel des DFB aufgeführt.</target>
+			</trans-unit>
+			<trans-unit id="match_keys.details" xml:space="preserve">
+				<source>Some match keysets used in Germany
 4 Teams:
 --------
 1-3,4-2|1-2,3-4|2-3,4-1
@@ -51,117 +55,123 @@ league, cup or friendly matches. Most details are used for leagues only.
 20 Teams:
 ---------
 1-19,3-16,5-14,7-12,9-10,11-8,13-6,15-4,17-2,20-18|2-15,4-13,6-11,8-9,10-7,12-5,14-3,16-20,18-1,19-17|1-17,3-12,5-10,7-8,9-6,11-4,13-2,15-19,18-16,20-14|2-11,4-9,6-7,8-5,10-3,12-20,14-18,16-1,17-15,19-13|1-15,3-8,5-6,7-4,9-2,11-19,13-17,16-14,18-12,20-10|2-7,4-5,6-3,8-20,10-18,12-16,14-1,15-13,17-11,19-9|1-13,3-4,5-2,7-19,9-17,11-15,14-12,16-10,18-8,20-6|2-3,4-20,6-18,8-16,10-14,12-1,13-11,15-9,17-7,19-5|1-11,3-19,5-17,7-15,9-13,12-10,14-8,16-6,18-4,20-2|2-18,4-16,6-14,8-12,10-1,11-9,13-7,15-5,17-3,19-20|1-9,3-15,5-13,7-11,10-8,12-6,14-4,16-2,18-19,20-17|2-14,4-12,6-10,8-1,9-7,11-5,13-3,15-20,17-18,19-16|1-7,3-11,5-9,8-6,10-4,12-2,14-19,16-17,18-15,20-13|2-10,4-8,6-1,7-5,9-3,11-20,13-18,15-16,17-14,19-12|1-5,3-7,6-4,8-2,10-19,12-17,14-15,16-13,18-11,20-9|2-6,4-1,5-3,7-20,9-18,11-16,13-14,15-12,17-10,19-8|1-3,4-2,6-19,8-17,10-15,12-13,14-11,16-9,18-7,20-5|1-2,3-20,5-18,7-16,9-14,11-12,13-10,15-8,17-6,19-4|2-19,4-17,6-15,8-13,10-11,12-9,14-7,16-5,18-3,20-1
+				</source>
+				<target>Einige fertige Spielplanschlüssel des DFB
+4 Teams:
+--------
+1-3,4-2|1-2,3-4|2-3,4-1
 
-</pre>
-			]]></label>
-			<label index="addparts.description"><![CDATA[Add results of match parts for end result.]]></label>
-			<label index="addparts.details"><![CDATA[
+6 Teams:
+--------
+1-5,3-2,6-4|2-6,4-1,5-3|1-3,4-2,6-5|1-2,3-6,5-4|2-5,4-3,6-1
+
+8 Teams:
+--------
+1-7,3-4,5-2,8-6|2-3,4-8,6-1,7-5|1-5,3-7,6-4,8-2|2-6,4-1,5-3,7-8|1-3,4-2,6-7,8-5|1-2,3-8,5-6,7-4|2-7,4-5,6-3,8-1
+
+10 Teams:
+---------
+1-9,3-6,5-4,7-2,10-8|2-5,4-3,6-10,8-1,9-7|1-7,3-2,5-9,8-6,10-4|2-10,4-8,6-1,7-5,9-3|1-5,3-7,6-4,8-2,10-9|2-6,4-1,5-3,7-10,9-8|1-3,4-2,6-9,8-7,10-5|1-2,3-10,5-8,7-6,9-4|2-9,4-7,6-5,8-3,10-1
+
+12 Teams:
+---------
+1-11,3-8,5-6,7-4,9-2,12-10|2-7,4-5,6-3,8-12,10-1,11-9|1-9,3-4,5-2,7-11,10-8,12-6|2-3,4-12,6-10,8-1,9-7,11-5|1-7,3-11,5-9,8-6,10-4,12-2|2-10,4-8,6-1,7-5,9-3,11-12|1-5,3-7,6-4,8-2,10-11,12-9|2-6,4-1,5-3,7-12,9-10,11-8|1-3,4-2,6-11,8-9,10-7,12-5|1-2,3-12,5-10,7-8,9-6,11-4|2-11,4-9,6-7,8-5,10-3,12-1
+
+14 Teams:
+---------
+1-13,3-10,5-8,7-6,9-4,11-2,14-12|2-9,4-7,6-5,8-3,10-14,12-1,13-11|1-11,3-6,5-4,7-2,9-13,12-10,14-8|2-5,4-3,6-14,8-12,10-1,11-9,13-7|1-9,3-2,5-13,7-11,10-8,12-6,14-4|2-14,4-12,6-10,8-1,9-7,11-5,13-3|1-7,3-11,5-9,8-6,10-4,12-2,14-13|2-10,4-8,6-1,7-5,9-3,11-14,13-12|1-5,3-7,6-4,8-2,10-13,12-11,14-9|2-6,4-1,5-3,7-14,9-12,11-10,13-8|1-3,4-2,6-13,8-11,10-9,12-7,14-5|1-2,3-14,5-12,7-10,9-8,11-6,13-4|2-13,4-11,6-9,8-7,10-5,12-3,14-1
+
+16 Teams:
+---------
+1-15,3-12,5-10,7-8,9-6,11-4,13-2,16-14|2-11,4-9,6-7,8-5,10-3,12-16,14-1,15-13|1-13,3-8,5-6,7-4,9-2,11-15,14-12,16-10|2-7,4-5,6-3,8-16,10-14,12-1,13-11,15-9|1-11,3-4,5-2,7-15,9-13,12-10,14-8,16-6|2-3,4-16,6-14,8-12,10-1,11-9,13-7,15-5|1-9,3-15,5-13,7-11,10-8,12-6,14-4,16-2|2-14,4-12,6-10,8-1,9-7,11-5,13-3,15-16|1-7,3-11,5-9,8-6,10-4,12-2,14-15,16-13|2-10,4-8,6-1,7-5,9-3,11-16,13-14,15-12|1-5,3-7,6-4,8-2,10-15,12-13,14-11,16-9|2-6,4-1,5-3,7-16,9-14,11-12,13-10,15-8|1-3,4-2,6-15,8-13,10-11,12-9,14-7,16-5|1-2,3-16,5-14,7-12,9-10,11-8,13-6,15-4|2-15,4-13,6-11,8-9,10-7,12-5,14-3,16-1
+
+18 Teams:
+---------
+1-17,3-14,5-12,7-10,9-8,11-6,13-4,15-2,18-16|2-13,4-11,6-9,8-7,10-5,12-3,14-18,16-1,17-15|1-15,3-10,5-8,7-6,9-4,11-2,13-17,16-14,18-12|2-9,4-7,6-5,8-3,10-18,12-16,14-1,15-13,17-11|1-13,3-6,5-4,7-2,9-17,11-15,14-12,16-10,18-8|2-5,4-3,6-18,8-16,10-14,12-1,13-11,15-9,17-7|1-11,3-2,5-17,7-15,9-13,12-10,14-8,16-6,18-4|2-18,4-16,6-14,8-12,10-1,11-9,13-7,15-5,17-3|1-9,3-15,5-13,7-11,10-8,12-6,14-4,16-2,18-17|2-14,4-12,6-10,8-1,9-7,11-5,13-3,15-18,17-16|1-7,3-11,5-9,8-6,10-4,12-2,14-17,16-15,18-13|2-10,4-8,6-1,7-5,9-3,11-18,13-16,15-14,17-12|1-5,3-7,6-4,8-2,10-17,12-15,14-13,16-11,18-9|2-6,4-1,5-3,7-18,9-16,11-14,13-12,15-10,17-8|1-3,4-2,6-17,8-15,10-13,12-11,14-9,16-7,18-5|1-2,3-18,5-16,7-14,9-12,11-10,13-8,15-6,17-4|2-17,4-15,6-13,8-11,10-9,12-7,14-5,16-3,18-1
+
+20 Teams:
+---------
+1-19,3-16,5-14,7-12,9-10,11-8,13-6,15-4,17-2,20-18|2-15,4-13,6-11,8-9,10-7,12-5,14-3,16-20,18-1,19-17|1-17,3-12,5-10,7-8,9-6,11-4,13-2,15-19,18-16,20-14|2-11,4-9,6-7,8-5,10-3,12-20,14-18,16-1,17-15,19-13|1-15,3-8,5-6,7-4,9-2,11-19,13-17,16-14,18-12,20-10|2-7,4-5,6-3,8-20,10-18,12-16,14-1,15-13,17-11,19-9|1-13,3-4,5-2,7-19,9-17,11-15,14-12,16-10,18-8,20-6|2-3,4-20,6-18,8-16,10-14,12-1,13-11,15-9,17-7,19-5|1-11,3-19,5-17,7-15,9-13,12-10,14-8,16-6,18-4,20-2|2-18,4-16,6-14,8-12,10-1,11-9,13-7,15-5,17-3,19-20|1-9,3-15,5-13,7-11,10-8,12-6,14-4,16-2,18-19,20-17|2-14,4-12,6-10,8-1,9-7,11-5,13-3,15-20,17-18,19-16|1-7,3-11,5-9,8-6,10-4,12-2,14-19,16-17,18-15,20-13|2-10,4-8,6-1,7-5,9-3,11-20,13-18,15-16,17-14,19-12|1-5,3-7,6-4,8-2,10-19,12-17,14-15,16-13,18-11,20-9|2-6,4-1,5-3,7-20,9-18,11-16,13-14,15-12,17-10,19-8|1-3,4-2,6-19,8-17,10-15,12-13,14-11,16-9,18-7,20-5|1-2,3-20,5-18,7-16,9-14,11-12,13-10,15-8,17-6,19-4|2-19,4-17,6-15,8-13,10-11,12-9,14-7,16-5,18-3,20-1
+				</target>
+			</trans-unit>
+			<trans-unit id="addparts.description" xml:space="preserve">
+				<source>Add results of match parts for end result.</source>
+				<target>Addiere Teilergebnisse zum Endergebnis.</target>
+			</trans-unit>
+			<trans-unit id="addparts.details" xml:space="preserve">
+				<source>
 This is useful if you want to show results of match parts in Frontend.
 For an icehockey match you can input 0:2, 1:1, 2:1. The end result would be 3:4.
-			]]></label>
-			<label index="teams.description"><![CDATA[Select all teams that belong to this competition.]]></label>
-			<label index="teams.details"><![CDATA[
-<p><b>Note:</b> You can only create matches for this competition if there are at least
-two teams selected!</p>
-<p>If you want to create a matchplan by keystring, ensure the right order of teams starting
-by team number 1.</p>
-			]]></label>
-			<label index="internal_name.description"><![CDATA[This name is shown in backend only.]]></label>
-			<label index="table_marks.description"><![CDATA[Mark positions in league tables.]]></label>
-			<label index="table_marks.details"><![CDATA[
-This is a simple way to include specific CSS-Markers in league tables.
-
-<b>Format:</b>
-position[,position];marker,description[|position;marker,description]
-
-<b>Example:</b>
-1;green,Champion|14,15,16;red,Relegation
-
-The example marks position <b>1</b> with marker <b style="color:green">green</b> and positions <b>14 to 16</b> with marker <b style="color:red">red</b>. The description is optional.
-In your FE HTML-Template is a marker ###ROW_MARK###. Each time a defined position is rendered, this marker will be filled with the string you defined. The description is accessible by marker ###ROW_MARKLABEL###.
-The default template uses this marker to create a predefined CSS-Class. Have a look at the template <b>leaguetable.html</b> in <b>cfc_league_fe</b> to understand the principle.
-			]]></label>
-			<label index="extid.description"><![CDATA[Identifier on external system.]]></label>
-			<label index="extid.details"><![CDATA[<p>Used for automatically synchronizations with external data providers.</p>]]></label>
-		</languageKey>
-		<languageKey index="de" type="array">
-			<label index=".description"><![CDATA[
-      Ein Wettbewerb ist eine Sammlung von zusammengehörenden Spielen.
-      Es gibt drei Arten: Liga, Pokal und Freunschaftspiele. Die meisten
-      Angaben in diesem Wettbewerb sind nur bei Ligen notwendig.
-			]]></label>
-			<label index="match_keys.description"><![CDATA[In der Detailhilfe sind einige Spielplanschlüssel des DFB aufgeführt.]]></label>
-			<label index="match_keys.details"><![CDATA[
-<h2>Einige fertige Spielplanschlüssel des DFB</h2>
-<pre>
-4 Teams:
---------
-1-3,4-2|1-2,3-4|2-3,4-1
-
-6 Teams:
---------
-1-5,3-2,6-4|2-6,4-1,5-3|1-3,4-2,6-5|1-2,3-6,5-4|2-5,4-3,6-1
-
-8 Teams:
---------
-1-7,3-4,5-2,8-6|2-3,4-8,6-1,7-5|1-5,3-7,6-4,8-2|2-6,4-1,5-3,7-8|1-3,4-2,6-7,8-5|1-2,3-8,5-6,7-4|2-7,4-5,6-3,8-1
-
-10 Teams:
----------
-1-9,3-6,5-4,7-2,10-8|2-5,4-3,6-10,8-1,9-7|1-7,3-2,5-9,8-6,10-4|2-10,4-8,6-1,7-5,9-3|1-5,3-7,6-4,8-2,10-9|2-6,4-1,5-3,7-10,9-8|1-3,4-2,6-9,8-7,10-5|1-2,3-10,5-8,7-6,9-4|2-9,4-7,6-5,8-3,10-1
-
-12 Teams:
----------
-1-11,3-8,5-6,7-4,9-2,12-10|2-7,4-5,6-3,8-12,10-1,11-9|1-9,3-4,5-2,7-11,10-8,12-6|2-3,4-12,6-10,8-1,9-7,11-5|1-7,3-11,5-9,8-6,10-4,12-2|2-10,4-8,6-1,7-5,9-3,11-12|1-5,3-7,6-4,8-2,10-11,12-9|2-6,4-1,5-3,7-12,9-10,11-8|1-3,4-2,6-11,8-9,10-7,12-5|1-2,3-12,5-10,7-8,9-6,11-4|2-11,4-9,6-7,8-5,10-3,12-1
-
-14 Teams:
----------
-1-13,3-10,5-8,7-6,9-4,11-2,14-12|2-9,4-7,6-5,8-3,10-14,12-1,13-11|1-11,3-6,5-4,7-2,9-13,12-10,14-8|2-5,4-3,6-14,8-12,10-1,11-9,13-7|1-9,3-2,5-13,7-11,10-8,12-6,14-4|2-14,4-12,6-10,8-1,9-7,11-5,13-3|1-7,3-11,5-9,8-6,10-4,12-2,14-13|2-10,4-8,6-1,7-5,9-3,11-14,13-12|1-5,3-7,6-4,8-2,10-13,12-11,14-9|2-6,4-1,5-3,7-14,9-12,11-10,13-8|1-3,4-2,6-13,8-11,10-9,12-7,14-5|1-2,3-14,5-12,7-10,9-8,11-6,13-4|2-13,4-11,6-9,8-7,10-5,12-3,14-1
-
-16 Teams:
----------
-1-15,3-12,5-10,7-8,9-6,11-4,13-2,16-14|2-11,4-9,6-7,8-5,10-3,12-16,14-1,15-13|1-13,3-8,5-6,7-4,9-2,11-15,14-12,16-10|2-7,4-5,6-3,8-16,10-14,12-1,13-11,15-9|1-11,3-4,5-2,7-15,9-13,12-10,14-8,16-6|2-3,4-16,6-14,8-12,10-1,11-9,13-7,15-5|1-9,3-15,5-13,7-11,10-8,12-6,14-4,16-2|2-14,4-12,6-10,8-1,9-7,11-5,13-3,15-16|1-7,3-11,5-9,8-6,10-4,12-2,14-15,16-13|2-10,4-8,6-1,7-5,9-3,11-16,13-14,15-12|1-5,3-7,6-4,8-2,10-15,12-13,14-11,16-9|2-6,4-1,5-3,7-16,9-14,11-12,13-10,15-8|1-3,4-2,6-15,8-13,10-11,12-9,14-7,16-5|1-2,3-16,5-14,7-12,9-10,11-8,13-6,15-4|2-15,4-13,6-11,8-9,10-7,12-5,14-3,16-1
-
-18 Teams:
----------
-1-17,3-14,5-12,7-10,9-8,11-6,13-4,15-2,18-16|2-13,4-11,6-9,8-7,10-5,12-3,14-18,16-1,17-15|1-15,3-10,5-8,7-6,9-4,11-2,13-17,16-14,18-12|2-9,4-7,6-5,8-3,10-18,12-16,14-1,15-13,17-11|1-13,3-6,5-4,7-2,9-17,11-15,14-12,16-10,18-8|2-5,4-3,6-18,8-16,10-14,12-1,13-11,15-9,17-7|1-11,3-2,5-17,7-15,9-13,12-10,14-8,16-6,18-4|2-18,4-16,6-14,8-12,10-1,11-9,13-7,15-5,17-3|1-9,3-15,5-13,7-11,10-8,12-6,14-4,16-2,18-17|2-14,4-12,6-10,8-1,9-7,11-5,13-3,15-18,17-16|1-7,3-11,5-9,8-6,10-4,12-2,14-17,16-15,18-13|2-10,4-8,6-1,7-5,9-3,11-18,13-16,15-14,17-12|1-5,3-7,6-4,8-2,10-17,12-15,14-13,16-11,18-9|2-6,4-1,5-3,7-18,9-16,11-14,13-12,15-10,17-8|1-3,4-2,6-17,8-15,10-13,12-11,14-9,16-7,18-5|1-2,3-18,5-16,7-14,9-12,11-10,13-8,15-6,17-4|2-17,4-15,6-13,8-11,10-9,12-7,14-5,16-3,18-1
-
-20 Teams:
----------
-1-19,3-16,5-14,7-12,9-10,11-8,13-6,15-4,17-2,20-18|2-15,4-13,6-11,8-9,10-7,12-5,14-3,16-20,18-1,19-17|1-17,3-12,5-10,7-8,9-6,11-4,13-2,15-19,18-16,20-14|2-11,4-9,6-7,8-5,10-3,12-20,14-18,16-1,17-15,19-13|1-15,3-8,5-6,7-4,9-2,11-19,13-17,16-14,18-12,20-10|2-7,4-5,6-3,8-20,10-18,12-16,14-1,15-13,17-11,19-9|1-13,3-4,5-2,7-19,9-17,11-15,14-12,16-10,18-8,20-6|2-3,4-20,6-18,8-16,10-14,12-1,13-11,15-9,17-7,19-5|1-11,3-19,5-17,7-15,9-13,12-10,14-8,16-6,18-4,20-2|2-18,4-16,6-14,8-12,10-1,11-9,13-7,15-5,17-3,19-20|1-9,3-15,5-13,7-11,10-8,12-6,14-4,16-2,18-19,20-17|2-14,4-12,6-10,8-1,9-7,11-5,13-3,15-20,17-18,19-16|1-7,3-11,5-9,8-6,10-4,12-2,14-19,16-17,18-15,20-13|2-10,4-8,6-1,7-5,9-3,11-20,13-18,15-16,17-14,19-12|1-5,3-7,6-4,8-2,10-19,12-17,14-15,16-13,18-11,20-9|2-6,4-1,5-3,7-20,9-18,11-16,13-14,15-12,17-10,19-8|1-3,4-2,6-19,8-17,10-15,12-13,14-11,16-9,18-7,20-5|1-2,3-20,5-18,7-16,9-14,11-12,13-10,15-8,17-6,19-4|2-19,4-17,6-15,8-13,10-11,12-9,14-7,16-5,18-3,20-1
-
-</pre>
-			]]></label>
-			<label index="addparts.description"><![CDATA[Addiere Teilergebnisse zum Endergebnis.]]></label>
-			<label index="addparts.details"><![CDATA[
+				</source>
+				<target>
 Das ist sinnvoll, wenn man die Teilergebnisse der einzelnen Spielabschnitte im FE anzeigen
 will. Dies ist in einigen Sportarten üblich. Bei einem Eishockeyspiel
 gibt man 0:2, 1:1, 2:1 ein. Das Endergebnis wäre dann 3:4.
-			]]></label>
-			<label index="teams.description"><![CDATA[Geben Sie alle Teams zu diesem Wettbewerb an.]]></label>
-			<label index="teams.details"><![CDATA[
-<p><b>Hinweis:</b> Für einen Wettbewerb können nur Spiele angelegt werden, wenn mindestens
-zwei Teams zugeordnet sind!</p>
-<p>Wenn ein Spielplan über den Schlüssel angelegt werden soll, dann ist die Reihenfolge der
-Teams entscheiden. Team 1 steht ganz oben, dann Team 2, 3 usw.</p>
-			]]></label>
-			<label index="internal_name.description"><![CDATA[Dieser Name wird nur im Backend verwendet.]]></label>
-			<label index="table_marks.description"><![CDATA[Markierung Plazierungen in der Ligatabelle.]]></label>
-			<label index="table_marks.details"><![CDATA[
+				</target>
+			</trans-unit>
+			<trans-unit id="teams.description" xml:space="preserve">
+				<source>Select all teams that belong to this competition.</source>
+				<target>Geben Sie alle Teams zu diesem Wettbewerb an.</target>
+			</trans-unit>
+			<trans-unit id="teams.details" xml:space="preserve">
+				<source>
+&lt;b&gt;Note:&lt;/b&gt; You can only create matches for this competition if there are at least
+two teams selected!
+If you want to create a matchplan by keystring, ensure the right order of teams starting
+by team number 1.
+				</source>
+				<target>
+&lt;b&gt;Hinweis:&lt;/b&gt; Für einen Wettbewerb können nur Spiele angelegt werden, wenn mindestens
+zwei Teams zugeordnet sind!
+Wenn ein Spielplan über den Schlüssel angelegt werden soll, dann ist die Reihenfolge der
+Teams entscheiden. Team 1 steht ganz oben, dann Team 2, 3 usw.
+				</target>
+			</trans-unit>
+			<trans-unit id="internal_name.description" xml:space="preserve">
+				<source>This name is shown in backend only.</source>
+				<target>Dieser Name wird nur im Backend verwendet.</target>
+			</trans-unit>
+			<trans-unit id="table_marks.description" xml:space="preserve">
+				<source>Mark positions in league tables.</source>
+				<target>Markierung Plazierungen in der Ligatabelle.</target>
+			</trans-unit>
+			<trans-unit id="table_marks.details" xml:space="preserve">
+				<source>
+This is a simple way to include specific CSS-Markers in league tables.
+
+&lt;b&gt;Format:&lt;/b&gt;
+position[,position];marker,description[|position;marker,description]
+
+&lt;b&gt;Example:&lt;/b&gt;
+1;green,Champion|14,15,16;red,Relegation
+
+The example marks position &lt;b&gt;1&lt;/b&gt; with marker &lt;b style="color:green"&gt;green&lt;/b&gt; and positions &lt;b&gt;14 to 16&lt;/b&gt; with marker &lt;b style="color:red"&gt;red&lt;/b&gt;. The description is optional.
+In your FE HTML-Template is a marker ###ROW_MARK###. Each time a defined position is rendered, this marker will be filled with the string you defined. The description is accessible by marker ###ROW_MARKLABEL###.
+The default template uses this marker to create a predefined CSS-Class. Have a look at the template &lt;b&gt;leaguetable.html&lt;/b&gt; in &lt;b&gt;cfc_league_fe&lt;/b&gt; to understand the principle.
+				</source>
+				<target>
 Dieses Feld bietet eine einfache Möglichkeit bestimmte Tabellenplätze in der Ligatabelle hervorzuheben.
 
-<b>Format:</b>
+&lt;b&gt;Format:&lt;/b&gt;
 position[,position];marker,beschreibung[|position;marker,beschreibung]
 
-<b>Beispiel:</b>
+&lt;b&gt;Beispiel:&lt;/b&gt;
 1;gruen,Meister|14,15,16;rot,Abstieg
 
-Im Beispiel wird also Tabellenplatz <b>1</b> als <b style="color:green">grün</b> und die Plätze <b>14 bis 16</b> <b style="color:red">rot</b> markiert.
+Im Beispiel wird also Tabellenplatz &lt;b&gt;1&lt;/b&gt; als &lt;b style="color:green"&gt;grün&lt;/b&gt; und die Plätze &lt;b&gt;14 bis 16&lt;/b&gt; &lt;b style="color:red"&gt;rot&lt;/b&gt; markiert.
 Dafür steht im HTML-Template der Marker ###ROW_MARK### bereit. Wird eine hier angegebene Tabellenplatzierung ausgegeben, dann wird der Marker mit dem entsprechenden String gefüllt. Die Beschreibung ist über den Marker ###ROW_MARKLABEL### erreichbar.
 Im mitgelieferten Template wird der Marker verwendet, um eine bestimmte CSS-Klasse anzusprechen. Diese muss dann natürlich auch vorhanden sein, damit die Formatierung gelingt.
-			]]></label>
-			<label index="extid.description"><![CDATA[Unique ID aus Fremdsystem.]]></label>
-			<label index="extid.details"><![CDATA[<p>Wird für den automatisch Import von Daten durch externe Datenanbieter verwendet.<br/>Mögliche Extensions sind <strong>dflsync</strong> und <strong>dfbsync</strong>.</p>]]></label>
-		</languageKey>
-	</data>
-</T3locallang>
+				</target>
+			</trans-unit>
+			<trans-unit id="extid.description" xml:space="preserve">
+				<source>Identifier on external system.</source>
+				<target>Unique ID aus Fremdsystem.</target>
+			</trans-unit>
+			<trans-unit id="extid.details" xml:space="preserve">
+				<source>Used for automatically synchronizations with external data providers.</source>
+				<target>Wird für den automatisch Import von Daten durch externe Datenanbieter verwendet.
+				Mögliche Extensions sind &lt;strong&gt;dflsync&lt;/strong&gt; und &lt;strong&gt;dfbsync&lt;/strong&gt;.</target>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" data="2023-01-22T17-18-26" product-name="zsb">
+		<header/>
+		<body>
+			<trans-unit id=".description" xml:space="preserve">
+				<source>This is the match record of T3sports. First select a competition. In the next step you can define the opponent teams.</source>
+			</trans-unit>
+			<trans-unit id="competition.description" xml:space="preserve">
+				<source>The competition this match belongs to.</source>
+			</trans-unit>
+			<trans-unit id="competition.details" xml:space="preserve">
+				<source>After selecting the competition it is possible to select the two teams. You can select teams from the selected competition only.
+				</source>
+			</trans-unit>
+			<trans-unit id="addinfo.description" xml:space="preserve">
+				<source>Short additional info about the match.</source>
+			</trans-unit>
+			<trans-unit id="addinfo.details" xml:space="preserve">
+				<source>This can be used in matchtable to output some short details.</source>
+			</trans-unit>
+			<trans-unit id="sets.description" xml:space="preserve">
+				<source>Set results. Example: 15:11;13:15;15:9</source>
+			</trans-unit>
+			<trans-unit id="sets.details" xml:space="preserve">
+				<source>Input set results.</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

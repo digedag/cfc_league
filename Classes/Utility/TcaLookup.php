@@ -197,7 +197,7 @@ class TcaLookup
     public static function getTeamLogoField()
     {
         $ret = TSFAL::getMediaTCA('logo', [
-            'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_teams.logo',
+            'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_teams.logo',
             'config' => [
                 'size' => 1,
                 'maxitems' => 1,
@@ -240,7 +240,7 @@ class TcaLookup
         $row = $PA['row'];
 
         if (!$row['club']) {
-            return $tceforms->sL('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_tca_noclubselected');
+            return $tceforms->sL('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_tca_noclubselected');
         }
         $config = $PA['fieldConf']['config'];
 
@@ -275,7 +275,7 @@ class TcaLookup
     {
         return [
             'exclude' => 0,
-            'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_common_country',
+            'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_common_country',
             'config' => [
                 'type' => 'select',
                 'items' => [
@@ -304,7 +304,7 @@ class TcaLookup
     public function getPlayersHome4Match($PA, $fobj)
     {
         global $LANG;
-        $LANG->includeLLFile('EXT:cfc_league/Resources/Private/Language/locallang_db.xml');
+        $LANG->includeLLFile('EXT:cfc_league/Resources/Private/Language/locallang_db.xlf');
 
         $teamId = (int) $this->getPAValue($PA['row']['home']);
         $matchValue = $this->getPAValue($PA['row']['game']);
@@ -353,7 +353,7 @@ class TcaLookup
     public function getPlayersGuest4Match($PA, $fobj)
     {
         global $LANG;
-        $LANG->includeLLFile('EXT:cfc_league/Resources/Private/Language/locallang_db.xml');
+        $LANG->includeLLFile('EXT:cfc_league/Resources/Private/Language/locallang_db.xlf');
 
         $teamId = (int) $this->getPAValue($PA['row']['guest']);
         $matchValue = $this->getPAValue($PA['row']['game']);
@@ -414,7 +414,7 @@ class TcaLookup
     public function getPlayers4Team(&$PA, $fobj)
     {
         global $LANG;
-        $LANG->includeLLFile('EXT:cfc_league/Resources/Private/Language/locallang_db.xml');
+        $LANG->includeLLFile('EXT:cfc_league/Resources/Private/Language/locallang_db.xlf');
         $column = 'team';
         if ($PA['row'][$column]) {
             $tablename = 'tx_cfcleague_team_notes';

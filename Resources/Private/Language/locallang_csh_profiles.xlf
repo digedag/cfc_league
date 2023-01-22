@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" data="2023-01-22T17-19-30" product-name="zsb">
+		<header/>
+		<body>
+			<trans-unit id=".description" xml:space="preserve">
+				<source>
+A profile is the datatype for persons. It can be a player, coach or supporter. Avoid multiple records for a single person.
+				</source>
+			</trans-unit>
+			<trans-unit id="stage_name.description" xml:space="preserve">
+				<source>Stage name (for brasilian players).</source>
+			</trans-unit>
+			<trans-unit id="stage_name.details" xml:space="preserve">
+				<source>Don't mix this with nickname. The stage name is used instead of last and firstname!</source>
+			</trans-unit>
+			<trans-unit id="extid.description" xml:space="preserve">
+				<source>Identifier on external system.</source>
+			</trans-unit>
+			<trans-unit id="extid.details" xml:space="preserve">
+				<source>Used for automatically synchronizations with external data providers.</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" data="2023-01-22T17-23-19" product-name="zsb">
+		<header/>
+		<body>
+			<trans-unit id=".description" xml:space="preserve">
+				<source>A team is a collection of players and coaches taking part in competitions.</source>
+			</trans-unit>
+			<trans-unit id="dummy.description" xml:space="preserve">
+				<source>Special function of team in competition.</source>
+			</trans-unit>
+			<trans-unit id="dummy.details" xml:space="preserve">
+				<source>Assign a special function for team: 
+			&lt;strong&gt;Free of play&lt;/strong&gt; - a match against this team means "free of play" for opponent team.
+			&lt;strong&gt;Out of competition&lt;/strong&gt; - matches against this teams will not be scored in league table.</source>
+			</trans-unit>
+			<trans-unit id="extid.description" xml:space="preserve">
+				<source>Identifier on external system.</source>
+			</trans-unit>
+			<trans-unit id="extid.details" xml:space="preserve">
+				<source>Used for automatically synchronizations with external data providers.</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

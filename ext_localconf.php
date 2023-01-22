@@ -46,20 +46,20 @@ if (TYPO3_MODE == 'BE') {
     ];
 }
 
-Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_match_notes.type.ticker', '100');
-Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_match_notes.type.goal', '10');
-Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_match_notes.type.goal.header', '11');
-Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_match_notes.type.goal.penalty', '12');
-Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_match_notes.type.goal.own', '30');
-Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_match_notes.type.goal.assist', '31');
-Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_match_notes.type.penalty.forgiven', '32');
-Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_match_notes.type.corner', '33');
-Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_match_notes.type.yellow', '70');
-Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_match_notes.type.yellowred', '71');
-Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_match_notes.type.red', '72');
-Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_match_notes.type.changeout', '80');
-Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_match_notes.type.changein', '81');
-Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_match_notes.type.captain', '200');
+Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_match_notes.type.ticker', '100');
+Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_match_notes.type.goal', '10');
+Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_match_notes.type.goal.header', '11');
+Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_match_notes.type.goal.penalty', '12');
+Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_match_notes.type.goal.own', '30');
+Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_match_notes.type.goal.assist', '31');
+Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_match_notes.type.penalty.forgiven', '32');
+Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_match_notes.type.corner', '33');
+Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_match_notes.type.yellow', '70');
+Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_match_notes.type.yellowred', '71');
+Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_match_notes.type.red', '72');
+Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_match_notes.type.changeout', '80');
+Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_match_notes.type.changein', '81');
+Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_match_notes.type.captain', '200');
 
 Misc::registerFormation('', '0');
 Misc::registerFormation('3-5-2', '1-3-5-2');
@@ -71,7 +71,7 @@ Misc::registerFormation('4-5-1', '1-4-5-1');
 Misc::registerFormation('5-3-2', '1-5-3-2');
 Misc::registerFormation('5-4-1', '1-5-4-1');
 
-Misc::registerTableStrategy('default', 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_competition_tablestrategy_default', '');
+Misc::registerTableStrategy('default', 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_competition_tablestrategy_default', '');
 
 // Include services
 Extensions::addService(

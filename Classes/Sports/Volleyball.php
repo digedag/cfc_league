@@ -37,8 +37,8 @@ class Volleyball extends AbstractService implements ISports
     public function getTCAPointSystems()
     {
         return [
-            [Misc::translateLLL('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_competition.point_system_2'), 0],
-            [Misc::translateLLL('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_competition.point_system_3'), 1],
+            [Misc::translateLLL('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_competition.point_system_2'), 0],
+            [Misc::translateLLL('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_competition.point_system_3'), 1],
         ];
     }
 

@@ -45,7 +45,7 @@ class AjaxTicker
         $tce = Connection::getInstance()->getTCEmain($data);
         $tce->process_datamap();
 
-        $GLOBALS['LANG']->includeLLFile('EXT:cfc_league/Resources/Private/Language/locallang.xml');
+        $GLOBALS['LANG']->includeLLFile('EXT:cfc_league/Resources/Private/Language/locallang.xlf');
 
         return $this->createResponse($GLOBALS['LANG']->getLL('msg_sendInstant'), 200);
     }

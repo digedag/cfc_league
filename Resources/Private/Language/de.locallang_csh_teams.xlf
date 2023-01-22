@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.0">
+	<file source-language="en" target-language="de" datatype="plaintext" original="messages" data="2023-01-22T17-23-19" product-name="zsb">
+		<header/>
+		<body>
+			<trans-unit id=".description" xml:space="preserve">
+				<source>A team is a collection of players and coaches taking part in competitions.</source>
+				<target>Eine Mannschaft besteht aus Spielern und Trainern und nimmt an Wettbewerben teil.</target>
+			</trans-unit>
+			<trans-unit id="dummy.description" xml:space="preserve">
+				<source>Special function of team in competition.</source>
+				<target>Sonderfunktion des Teams im Wettbewerb.</target>
+			</trans-unit>
+			<trans-unit id="dummy.details" xml:space="preserve">
+				<source>Assign a special function for team: 
+			&lt;strong&gt;Free of play&lt;/strong&gt; - a match against this team means "free of play" for opponent team.
+			&lt;strong&gt;Out of competition&lt;/strong&gt; - matches against this teams will not be scored in league table.</source>
+				<target>Zuweisung einer Sonderfunktion für das Team:
+			&lt;strong&gt;Spielfrei&lt;/strong&gt;Ein Spiel gegen dieses Team bedeutet "spielfrei" für das gegnerische Team.
+			&lt;strong&gt;Außer Wertung&lt;/strong&gt;Spiele gegen dieses Team werden in der Ligatabelle ignoriert.</target>
+			</trans-unit>
+			<trans-unit id="extid.description" xml:space="preserve">
+				<source>Identifier on external system.</source>
+				<target>Unique ID aus Fremdsystem.</target>
+			</trans-unit>
+			<trans-unit id="extid.details" xml:space="preserve">
+				<source>Used for automatically synchronizations with external data providers.</source>
+				<target>Wird für den automatisch Import von Daten durch externe Datenanbieter verwendet.
+				Mögliche Extensions sind &lt;strong&gt;dflsync&lt;/strong&gt; und &lt;strong&gt;dfbsync&lt;/strong&gt;.</target>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

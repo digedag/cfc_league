@@ -6,7 +6,7 @@ if (!defined('TYPO3_MODE')) {
 
 $tx_cfcleague_group = [
     'ctrl' => [
-        'title' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_group',
+        'title' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_group',
         'label' => 'name',
         'searchFields' => 'uid,name,shortname',
         'tstamp' => 'tstamp',
@@ -51,7 +51,7 @@ $tx_cfcleague_group = [
         ],
         'name' => [
             'exclude' => 1,
-            'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_group.name',
+            'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_group.name',
             'config' => [
                 'type' => 'input',
                 'size' => '30',
@@ -60,7 +60,7 @@ $tx_cfcleague_group = [
         ],
         'shortname' => [
             'exclude' => 1,
-            'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_group.shortname',
+            'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_group.shortname',
             'config' => [
                 'type' => 'input',
                 'size' => '10',
@@ -86,7 +86,7 @@ if (\Sys25\RnBase\Utility\TYPO3::isTYPO104OrHigher()) {
 }
 
 $tx_cfcleague_group['columns']['logo'] = tx_rnbase_util_TSFAL::getMediaTCA('logo', [
-    'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_club.logo',
+    'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_club.logo',
     'size' => 1,
     'maxitems' => 1,
 ]);

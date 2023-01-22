@@ -1,0 +1,1008 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.0">
+	<file source-language="en" target-language="de" datatype="plaintext" original="messages" data="2023-01-22T17-38-02" product-name="zsb">
+		<header/>
+		<body>
+			<trans-unit id="tx_cfcleague_folder" xml:space="preserve">
+				<source>League</source>
+				<target>Liga</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_group" xml:space="preserve">
+				<source>Age group</source>
+				<target>Altersgruppe</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_group.name" xml:space="preserve">
+				<source>Name</source>
+				<target>Name</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_group.shortname" xml:space="preserve">
+				<source>Short name</source>
+				<target>Kurzname</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_saison" xml:space="preserve">
+				<source>Saison</source>
+				<target>Saison</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_saison.name" xml:space="preserve">
+				<source>Name</source>
+				<target>Name</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_saison.halftime" xml:space="preserve">
+				<source>Winters break</source>
+				<target>Winterpause</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_competition" xml:space="preserve">
+				<source>Competition</source>
+				<target>Wettbewerb</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_competition_tournament" xml:space="preserve">
+				<source>Tournament</source>
+				<target>Turnier</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_competition.name" xml:space="preserve">
+				<source>Name</source>
+				<target>Name</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_competition.internal_name" xml:space="preserve">
+				<source>Internal name</source>
+				<target>Interner Name</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_competition.short_name" xml:space="preserve">
+				<source>Short name</source>
+				<target>Kurzname</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_competition.match_keys" xml:space="preserve">
+				<source>Keystring for matches</source>
+				<target>Spielplanschlüssel</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_competition.table_marks" xml:space="preserve">
+				<source>Keystring to mark league table</source>
+				<target>Markierung von Ligatabellen</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_competition.agegroup" xml:space="preserve">
+				<source>Age group</source>
+				<target>Altersgruppe</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_competition.saison" xml:space="preserve">
+				<source>Saison</source>
+				<target>Saison</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_competition.parent" xml:space="preserve">
+				<source>Parent Competition</source>
+				<target>Übergeordneter Wettbewerb</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_competition.type" xml:space="preserve">
+				<source>Competition Type</source>
+				<target>Wettbewerbstyp</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_competition.sports" xml:space="preserve">
+				<source>Kind of sports</source>
+				<target>Sportart</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_competition.obligation" xml:space="preserve">
+				<source>Obligation</source>
+				<target>Pflichtwettbewerb</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_competition.type_league" xml:space="preserve">
+				<source>League</source>
+				<target>Liga</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_competition.type_ko" xml:space="preserve">
+				<source>Cup</source>
+				<target>Pokal</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_competition.type_other" xml:space="preserve">
+				<source>Single Matches</source>
+				<target>Einzelspiele</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_competition.type_combined" xml:space="preserve">
+				<source>Combined</source>
+				<target>Kombiniert</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_competition_addparts" xml:space="preserve">
+				<source>Add part results</source>
+				<target>Addiere Spielabschnitte für Endergebnis</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_competition.match_parts" xml:space="preserve">
+				<source>Match parts</source>
+				<target>Spielabschnitte</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_competition.match_parts_0" xml:space="preserve">
+				<source>Default 2</source>
+				<target>Standard 2</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_competition.match_parts_1" xml:space="preserve">
+				<source>1</source>
+				<target/>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_competition.match_parts_2" xml:space="preserve">
+				<source>2</source>
+				<target/>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_competition.match_parts_3" xml:space="preserve">
+				<source>3</source>
+				<target/>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_competition.match_parts_4" xml:space="preserve">
+				<source>4</source>
+				<target/>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_competition.point_system" xml:space="preserve">
+				<source>Point System</source>
+				<target>Punkte System</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_competition.point_system_2" xml:space="preserve">
+				<source>2 Point-Rule</source>
+				<target>2 Punkte-Regel</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_competition.point_system_3" xml:space="preserve">
+				<source>3 Point-Rule</source>
+				<target>3 Punkte-Regel</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_competition.point_system_2_icehockey" xml:space="preserve">
+				<source>2 Point-Rule (Icehockey)</source>
+				<target>2 Punkte-Regel (Eishockey)</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_competition.point_system_3_icehockey" xml:space="preserve">
+				<source>3 Point-Rule (Icehockey)</source>
+				<target>3 Punkte-Regel (Eishockey)</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_competition_tablestrategy" xml:space="preserve">
+				<source>Strategy for score board calculation</source>
+				<target>Strategie zur Berechnung der Tabelle</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_competition_tablestrategy_default" xml:space="preserve">
+				<source>Standard</source>
+				<target>Standard</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_competition.teams" xml:space="preserve">
+				<source>Teams</source>
+				<target>Mannschaften</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_competition_extid" xml:space="preserve">
+				<source>External ID</source>
+				<target/>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_competition_create_team" xml:space="preserve">
+				<source>Create new team</source>
+				<target>Eine neue Mannschaft anlegen</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_competition_penalty" xml:space="preserve">
+				<source>Competition penalty</source>
+				<target>Wettbewerbsstrafe</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_competition_penalty.team" xml:space="preserve">
+				<source>Team</source>
+				<target/>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_competition_penalty.comment" xml:space="preserve">
+				<source>Comment</source>
+				<target>Kommentar</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_competition_penalty.game" xml:space="preserve">
+				<source>Match (optional)</source>
+				<target>Spiel (optional)</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_competition_penalty.matches" xml:space="preserve">
+				<source>Matches</source>
+				<target>Korrektur Anzahl Spiele</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_competition_penalty.wins" xml:space="preserve">
+				<source>Matches</source>
+				<target>Korrektur Anzahl Siege</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_competition_penalty.loses" xml:space="preserve">
+				<source>Loses</source>
+				<target>Korrektur Anzahl Niederlagen</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_competition_penalty.draws" xml:space="preserve">
+				<source>Draws</source>
+				<target>Korrektur Anzahl Unentschieden</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_competition_penalty.goals_pos" xml:space="preserve">
+				<source>Penalty goals own</source>
+				<target>Strafe Torabzug</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_competition_penalty.goals_neg" xml:space="preserve">
+				<source>Penalty goals against</source>
+				<target>Strafe Gegentore</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_competition_penalty.points_pos" xml:space="preserve">
+				<source>Penalty points</source>
+				<target>Punktabzug</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_competition_penalty.points_neg" xml:space="preserve">
+				<source>Penalty points negative</source>
+				<target>Punktabzug negativ</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_competition_penalty.static_position" xml:space="preserve">
+				<source>Penalty static table position</source>
+				<target>Feste Position</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_competition_penalty.correction" xml:space="preserve">
+				<source>Is correction</source>
+				<target>Tabellenkorrektur, keine Strafe</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_club" xml:space="preserve">
+				<source>Club</source>
+				<target>Verein</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_club.tab_contact" xml:space="preserve">
+				<source>Contact</source>
+				<target/>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_club.tab_info" xml:space="preserve">
+				<source>Description</source>
+				<target/>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_club.name" xml:space="preserve">
+				<source>Name</source>
+				<target>Name</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_club.short_name" xml:space="preserve">
+				<source>Shortname</source>
+				<target>Kurzname</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_club.logo" xml:space="preserve">
+				<source>Logo</source>
+				<target>Logo</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_club.address" xml:space="preserve">
+				<source>Address</source>
+				<target>Adresse</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_club.favorite" xml:space="preserve">
+				<source>Favorite</source>
+				<target>Lieblingsverein</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_club.email" xml:space="preserve">
+				<source>Email</source>
+				<target>Email</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_club.www" xml:space="preserve">
+				<source>WWW</source>
+				<target>WWW</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_club.street" xml:space="preserve">
+				<source>Street</source>
+				<target>Strasse</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_club.zip" xml:space="preserve">
+				<source>Zip</source>
+				<target>PLZ</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_club.city" xml:space="preserve">
+				<source>City</source>
+				<target>Stadt</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_club.shortinfo" xml:space="preserve">
+				<source>Short info</source>
+				<target>Kurzinfo</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_club_info" xml:space="preserve">
+				<source>Information</source>
+				<target>Information</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_club_info2" xml:space="preserve">
+				<source>Approach</source>
+				<target>Anreise</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_club_established" xml:space="preserve">
+				<source>Established</source>
+				<target>Gründungsdatum</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_club_yearestablished" xml:space="preserve">
+				<source>Year established</source>
+				<target>Gründungsjahr</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_club_colors" xml:space="preserve">
+				<source>Club colors</source>
+				<target>Vereinsfarben</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_club_members" xml:space="preserve">
+				<source>Members</source>
+				<target>Mitglieder</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_teams" xml:space="preserve">
+				<source>Team</source>
+				<target>Mannschaft</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_teams_tab_members" xml:space="preserve">
+				<source>Members</source>
+				<target>Mitglieder</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_teams.club" xml:space="preserve">
+				<source>Club</source>
+				<target>Verein</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_teams.name" xml:space="preserve">
+				<source>Name</source>
+				<target>Name</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_teams.short_name" xml:space="preserve">
+				<source>Shortname</source>
+				<target>Kurzname</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_teams.coaches" xml:space="preserve">
+				<source>Coaches</source>
+				<target>Trainer</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_teams.players" xml:space="preserve">
+				<source>Players</source>
+				<target>Spieler</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_teams.supporters" xml:space="preserve">
+				<source>Support team</source>
+				<target>Betreuer</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_teams.pictures" xml:space="preserve">
+				<source>Pictures</source>
+				<target>Bilder</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_teams.comment" xml:space="preserve">
+				<source>Comment</source>
+				<target>Bemerkung</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_teams.coaches_comment" xml:space="preserve">
+				<source>Comment on coaches</source>
+				<target>Bemerkung zu Trainern</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_teams.supporters_comment" xml:space="preserve">
+				<source>Comment on Supporter</source>
+				<target>Bemerkung zu Betreuern</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_teams.players_comment" xml:space="preserve">
+				<source>Comment on players</source>
+				<target>Bemerkung zu Spielern</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_teams.logo" xml:space="preserve">
+				<source>Team logo</source>
+				<target>Vereinswappen des Teams</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_teams.altlogo" xml:space="preserve">
+				<source>Alternative team logo</source>
+				<target>Alternatives Vereinswappen des Teams</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_teams.link_report" xml:space="preserve">
+				<source>Enable link to team page</source>
+				<target>Link auf Team-Seite möglich</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_teams.dummy" xml:space="preserve">
+				<source>Specials</source>
+				<target>Sonderfunktion</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_teams_dummy_none" xml:space="preserve">
+				<source>No specials</source>
+				<target>keine</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_teams_dummy_simple" xml:space="preserve">
+				<source>Free of play</source>
+				<target>Spielfrei</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_teams_dummy_outofcompetition" xml:space="preserve">
+				<source>Out of competition</source>
+				<target>Außer Wertung</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_teams_tlc" xml:space="preserve">
+				<source>Three letter code</source>
+				<target>3-Zeichen-Kürzel</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_teams_extid" xml:space="preserve">
+				<source>External ID</source>
+				<target>Externe ID</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_games" xml:space="preserve">
+				<source>Match</source>
+				<target>Spiel</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_games.tab_lineup" xml:space="preserve">
+				<source>Line-up</source>
+				<target>Aufstellung</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_games.tab_lineup_stat" xml:space="preserve">
+				<source>Line-up (static)</source>
+				<target>Aufstellung (statisch)</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_games.tab_score" xml:space="preserve">
+				<source>Score</source>
+				<target>Ergebnis</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_games.match_no" xml:space="preserve">
+				<source>Match number</source>
+				<target>Spielnummer</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_games.home" xml:space="preserve">
+				<source>Hometeam</source>
+				<target>Heim</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_games.guest" xml:space="preserve">
+				<source>Guestteam</source>
+				<target>Gast</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_games.competition" xml:space="preserve">
+				<source>Competition</source>
+				<target>Wettbewerb</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_games.round" xml:space="preserve">
+				<source>Round</source>
+				<target>Spielrunde</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_games.round_name" xml:space="preserve">
+				<source>Round Name</source>
+				<target>Spieltagname</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_games.stadium" xml:space="preserve">
+				<source>Stadium name</source>
+				<target>Stadionname</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_games.addinfo" xml:space="preserve">
+				<source>Additional information</source>
+				<target>Zusatzinformation</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_games.status" xml:space="preserve">
+				<source>State</source>
+				<target>Status</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_games.status_scheduled" xml:space="preserve">
+				<source>Scheduled</source>
+				<target>Angesetzt</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_games.status_rescheduled" xml:space="preserve">
+				<source>Re-Scheduled</source>
+				<target>Verlegt</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_games.status_running" xml:space="preserve">
+				<source>Running</source>
+				<target>Läuft</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_games.status_finished" xml:space="preserve">
+				<source>Finished</source>
+				<target>Beendet</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_games.status_invalid" xml:space="preserve">
+				<source>Cancelled</source>
+				<target>Abgesagt</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_games.coach_home" xml:space="preserve">
+				<source>Coach Home</source>
+				<target>Heimtrainer</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_games.coach_guest" xml:space="preserve">
+				<source>Coach Guest</source>
+				<target>Gasttrainer</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_games.players_home" xml:space="preserve">
+				<source>Players Home</source>
+				<target>Aufstellung Heim</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_games.players_guest" xml:space="preserve">
+				<source>Players Guest</source>
+				<target>Aufstellung Gast</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_games.substitutes_home" xml:space="preserve">
+				<source>Substitutes Home</source>
+				<target>Ersatz Heim</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_games.substitutes_guest" xml:space="preserve">
+				<source>Substitutes Guest</source>
+				<target>Ersatz Gast</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_games.scorer_home_stat" xml:space="preserve">
+				<source>Scorer Home</source>
+				<target>Torschützen Heim</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_games.scorer_guest_stat" xml:space="preserve">
+				<source>Scorer Guest</source>
+				<target>Torschützen Gast</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_games.system_home" xml:space="preserve">
+				<source>System Home</source>
+				<target>Spielsystem Heim</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_games.system_guest" xml:space="preserve">
+				<source>System Guest</source>
+				<target>Spielsystem Gast</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_games.referee" xml:space="preserve">
+				<source>Referee</source>
+				<target>Schiedsrichter</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_games.assists" xml:space="preserve">
+				<source>Assists</source>
+				<target>Linienrichter</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_games.parts_4_default" xml:space="preserve">
+				<source>Quarter</source>
+				<target>Viertel</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_games.endresult" xml:space="preserve">
+				<source>Result</source>
+				<target>Endstand</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_games.parts_3_default" xml:space="preserve">
+				<source>Thirt</source>
+				<target>Drittel</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_games.parts_2_2" xml:space="preserve">
+				<source>Result</source>
+				<target>Endstand</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_games.parts_2_1" xml:space="preserve">
+				<source>Halftime</source>
+				<target>Halbzeit</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_games.goals_1" xml:space="preserve">
+				<source>Halftime</source>
+				<target>Halbzeit</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_games.goals_2" xml:space="preserve">
+				<source>Result</source>
+				<target>Endstand</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_games_sets" xml:space="preserve">
+				<source>Set results</source>
+				<target>Satz Ergebnisse</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_games.goals_home_1" xml:space="preserve">
+				<source>Goals Home Part 1</source>
+				<target>Tore Heim Halbzeit</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_games.goals_guest_1" xml:space="preserve">
+				<source>Goals Guest Part 1</source>
+				<target>Tore Gast Halbzeit</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_games.goals_home_2" xml:space="preserve">
+				<source>Goals Home Part 2</source>
+				<target>Tore Heim</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_games.goals_guest_2" xml:space="preserve">
+				<source>Goals Guest Part 2</source>
+				<target>Tore Gast</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_games.goals_home_3" xml:space="preserve">
+				<source>Goals Home Part 3</source>
+				<target/>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_games.goals_guest_3" xml:space="preserve">
+				<source>Goals Guest Part 3</source>
+				<target/>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_games.goals_home_4" xml:space="preserve">
+				<source>Goals Home Part 4</source>
+				<target/>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_games.goals_guest_4" xml:space="preserve">
+				<source>Goals Guest Part 4</source>
+				<target/>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_games.date" xml:space="preserve">
+				<source>Date</source>
+				<target>Datum</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_games.link_report" xml:space="preserve">
+				<source>Link match report</source>
+				<target>Spielbericht verlinken</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_games.link_ticker" xml:space="preserve">
+				<source>Link Live-Ticker</source>
+				<target>Live-Ticker verlinken</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_games.liveticker_author" xml:space="preserve">
+				<source>Liveticker author</source>
+				<target>Autor des Livetickers</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_games.game_report_author" xml:space="preserve">
+				<source>Report author</source>
+				<target>Autor des Spielberichts</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_games.game_report" xml:space="preserve">
+				<source>Match report</source>
+				<target>Spielbericht</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_games.visitors" xml:space="preserve">
+				<source>Visitors</source>
+				<target>Zuschauer</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_games.pictures" xml:space="preserve">
+				<source>Pictures</source>
+				<target>Bilder</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_games.extratime" xml:space="preserve">
+				<source>Extratime</source>
+				<target>Verlängerung</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_games.penalty" xml:space="preserve">
+				<source>Penalty</source>
+				<target>Elfmeterschiessen</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_games.goals_home_et" xml:space="preserve">
+				<source>Goals Home Extratime</source>
+				<target>Tore Heim n.V.</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_games.goals_guest_et" xml:space="preserve">
+				<source>Goals Guest Extratime</source>
+				<target>Tore Gast n.V.</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_games.goals_home_ap" xml:space="preserve">
+				<source>Goals Home after Penalty</source>
+				<target>Tore Heim n.E.</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_games.goals_guest_ap" xml:space="preserve">
+				<source>Goals Guest after Penalty</source>
+				<target>Tore Gast n.E.</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_games_video" xml:space="preserve">
+				<source>Video</source>
+				<target>Video</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_games_videoimg" xml:space="preserve">
+				<source>Preview image for video</source>
+				<target>Vorschaubild für Video</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_games_extid" xml:space="preserve">
+				<source>External ID</source>
+				<target>Externe ID</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_profiles" xml:space="preserve">
+				<source>Profile</source>
+				<target>Person</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_profiles_tab_description" xml:space="preserve">
+				<source>Description</source>
+				<target>Beschreibung</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_profiles.first_name" xml:space="preserve">
+				<source>First name</source>
+				<target>Vorname</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_profiles.last_name" xml:space="preserve">
+				<source>Last name</source>
+				<target>Nachname</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_profiles.stage_name" xml:space="preserve">
+				<source>Stage name</source>
+				<target>Künstlername</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_profiles.image" xml:space="preserve">
+				<source>Images</source>
+				<target>Bilder</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_profiles.native_town" xml:space="preserve">
+				<source>Native town</source>
+				<target>Geburtsstadt</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_profiles.home_town" xml:space="preserve">
+				<source>Home town</source>
+				<target>Wohnort</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_profiles.birthday" xml:space="preserve">
+				<source>Birthday</source>
+				<target>Geburtstag</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_profiles.dayofdeath" xml:space="preserve">
+				<source>Day of death</source>
+				<target>Day of death</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_profiles.died" xml:space="preserve">
+				<source>Died</source>
+				<target>Died</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_profiles.nationality" xml:space="preserve">
+				<source>Nationality</source>
+				<target>Nationalität</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_profiles.gender" xml:space="preserve">
+				<source>Gender</source>
+				<target>Geschlecht</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_profiles.gender_male" xml:space="preserve">
+				<source>Male</source>
+				<target>männlich</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_profiles.gender_female" xml:space="preserve">
+				<source>Female</source>
+				<target>weiblich</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_profiles.gender_unspecified" xml:space="preserve">
+				<source>unspecified</source>
+				<target>divers</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_profiles.height" xml:space="preserve">
+				<source>Height</source>
+				<target>Größe</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_profiles.weight" xml:space="preserve">
+				<source>Weight</source>
+				<target>Gewicht</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_profiles.position" xml:space="preserve">
+				<source>Position</source>
+				<target>Position</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_profiles.duration_of_contract" xml:space="preserve">
+				<source>Duration of contract</source>
+				<target>Vertragsdauer</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_profiles.gdpr" xml:space="preserve">
+				<source>GDPR</source>
+				<target>DSGVO</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_profiles.gdpr_ok" xml:space="preserve">
+				<source>Allowed</source>
+				<target>Erlaubt</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_profiles.gdpr_nameonly" xml:space="preserve">
+				<source>Name only</source>
+				<target>Nur Name anzeigen</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_profiles.gdpr_anonymize" xml:space="preserve">
+				<source>Anonymize</source>
+				<target>Anonymisieren</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_profiles.link_report" xml:space="preserve">
+				<source>Link profile page</source>
+				<target>Link auf Einzelansicht</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_profiles.start_of_contract" xml:space="preserve">
+				<source>Start of contract</source>
+				<target>Vertragsbeginn</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_profiles.email" xml:space="preserve">
+				<source>Email</source>
+				<target>Email</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_profiles.nickname" xml:space="preserve">
+				<source>Nickname</source>
+				<target>Spitzname</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_profiles.summary" xml:space="preserve">
+				<source>Summary</source>
+				<target>Kurzbeschreibung</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_profiles.description" xml:space="preserve">
+				<source>Description</source>
+				<target>Beschreibung</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_profiles_extid" xml:space="preserve">
+				<source>External ID</source>
+				<target/>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_profiles.type" xml:space="preserve">
+				<source>Type of profile</source>
+				<target>Typ der Person</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_profiles_type_player" xml:space="preserve">
+				<source>Player</source>
+				<target>Spieler</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_profiles_type_coach" xml:space="preserve">
+				<source>Coach</source>
+				<target>Trainer</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_profiles_type_referee" xml:space="preserve">
+				<source>Referee</source>
+				<target>Schiedsrichter</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_profiles_type_supporter" xml:space="preserve">
+				<source>Supporter</source>
+				<target>Betreuer</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_match_notes" xml:space="preserve">
+				<source>Match note</source>
+				<target>Spielnotiz</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_match_notes.match" xml:space="preserve">
+				<source>Match</source>
+				<target>Spiel</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_match_notes.minute" xml:space="preserve">
+				<source>Minute</source>
+				<target>Minute</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_match_notes.second" xml:space="preserve">
+				<source>Second</source>
+				<target>Second</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_match_notes.extra_time" xml:space="preserve">
+				<source>Extratime</source>
+				<target>Nachspielminute</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_match_notes.type" xml:space="preserve">
+				<source>Type</source>
+				<target>Typ</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_match_notes.type.goal" xml:space="preserve">
+				<source>Goal</source>
+				<target>Tor</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_match_notes.type.goal.header" xml:space="preserve">
+				<source>Header goal</source>
+				<target>Kopfballtor</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_match_notes.type.goal.penalty" xml:space="preserve">
+				<source>Penalty goal</source>
+				<target>Elfmetertor</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_match_notes.type.goal.assist" xml:space="preserve">
+				<source>Goal assist</source>
+				<target>Torvorlage</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_match_notes.type.goal.own" xml:space="preserve">
+				<source>Own Goal</source>
+				<target>Eigentor</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_match_notes.type.penalty.forgiven" xml:space="preserve">
+				<source>Forgiven penalty</source>
+				<target>Elfmeter vergeben</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_match_notes.type.corner" xml:space="preserve">
+				<source>Corner ball</source>
+				<target>Eckball</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_match_notes.type.ticker" xml:space="preserve">
+				<source>Ticker</source>
+				<target>Ticker</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_match_notes.type.changeout" xml:space="preserve">
+				<source>Change out</source>
+				<target>Auswechslung</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_match_notes.type.changein" xml:space="preserve">
+				<source>Change in</source>
+				<target>Einwechslung</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_match_notes.type.yellow" xml:space="preserve">
+				<source>Yellow card</source>
+				<target>Gelbe Karte</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_match_notes.type.yellowred" xml:space="preserve">
+				<source>Yellow-red card</source>
+				<target>Gelb-Rote Karte</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_match_notes.type.red" xml:space="preserve">
+				<source>Red card</source>
+				<target>Rote Karte</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_match_notes.type.captain" xml:space="preserve">
+				<source>Team captain</source>
+				<target>Mannschaftskapitän</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_match_notes.player_home" xml:space="preserve">
+				<source>Player Home</source>
+				<target>Spieler Heim</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_match_notes.player_guest" xml:space="preserve">
+				<source>Player Guest</source>
+				<target>Spieler Gast</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_match_notes.comment" xml:space="preserve">
+				<source>Comment</source>
+				<target>Bemerkung</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_team_notes" xml:space="preserve">
+				<source>Team note</source>
+				<target>Teamnotiz</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_note_types" xml:space="preserve">
+				<source>Note type</source>
+				<target>Notiz-Typ</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_note_types.label" xml:space="preserve">
+				<source>Label</source>
+				<target>Name</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_note_types.marker" xml:space="preserve">
+				<source>HTML-Marker</source>
+				<target>HTML-Marker</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_note_types.description" xml:space="preserve">
+				<source>Description</source>
+				<target>Beschreibung</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_team_notes.media" xml:space="preserve">
+				<source>Media file</source>
+				<target>Mediendatei</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_team_notes.mediatype" xml:space="preserve">
+				<source>Value Type</source>
+				<target>Typ des Werts</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_team_notes.mediatype.text" xml:space="preserve">
+				<source>Text</source>
+				<target>Text</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_team_notes.mediatype.media" xml:space="preserve">
+				<source>Media</source>
+				<target>Media</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_team_notes.mediatype.number" xml:space="preserve">
+				<source>Number</source>
+				<target>Ganzzahl</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_team_notes.number" xml:space="preserve">
+				<source>Value</source>
+				<target>Wert</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_stadiums" xml:space="preserve">
+				<source>Stadium</source>
+				<target>Stadion</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_stadiums_tab_location" xml:space="preserve">
+				<source>Location</source>
+				<target>Adresse</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_stadiums_tab_description" xml:space="preserve">
+				<source>Description</source>
+				<target>Beschreibung</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_stadiums_name" xml:space="preserve">
+				<source>Name</source>
+				<target>Name</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_stadiums_altname" xml:space="preserve">
+				<source>Alternative name</source>
+				<target>Alternativer Name</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_stadiums_capacity" xml:space="preserve">
+				<source>Capacity</source>
+				<target>Zuschauerkapazität</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_stadiums_description" xml:space="preserve">
+				<source>Description</source>
+				<target>Beschreibung 1</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_stadiums_description2" xml:space="preserve">
+				<source>Description 2</source>
+				<target>Beschreibung 2</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_stadiums_street" xml:space="preserve">
+				<source>Street</source>
+				<target>Strasse</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_stadiums_city" xml:space="preserve">
+				<source>City</source>
+				<target>Ort</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_stadiums_zip" xml:space="preserve">
+				<source>Zip</source>
+				<target>PLZ</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_stadiums_logo" xml:space="preserve">
+				<source>Logo</source>
+				<target>Logo</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_stadiums_pictures" xml:space="preserve">
+				<source>Pictures</source>
+				<target>Bilder</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_common_lng" xml:space="preserve">
+				<source>Longitude</source>
+				<target>Längengrad</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_common_lat" xml:space="preserve">
+				<source>Latitude</source>
+				<target>Breitengrad</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_common_country" xml:space="preserve">
+				<source>Country</source>
+				<target>Land</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_common_countrycode" xml:space="preserve">
+				<source>Country code</source>
+				<target>Landeskürzel</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague.unknown" xml:space="preserve">
+				<source>Unknown</source>
+				<target>Unbekannt</target>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_tca_noclubselected" xml:space="preserve">
+				<source>Select a club and save record.</source>
+				<target>Zuerst einen Verein auswählen und den Datensatz speichern.</target>
+			</trans-unit>
+			<trans-unit id="label_msg_refError" xml:space="preserve">
+				<source>The record cannot be deleted. It still has references to other records.</source>
+				<target>Der Datensatz kann nicht gelöscht werden. Es existieren noch Referenzen zu anderen Datensätzen.</target>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

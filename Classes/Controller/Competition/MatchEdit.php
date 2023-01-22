@@ -71,7 +71,7 @@ class MatchEdit
 
         $formTool = $module->getFormTool();
         $this->formTool = $formTool;
-        $LANG->includeLLFile('EXT:cfc_league/Resources/Private/Language/locallang_db.xml');
+        $LANG->includeLLFile('EXT:cfc_league/Resources/Private/Language/locallang_db.xlf');
 
         // Zuerst mal müssen wir die passende Liga auswählen lassen:
         $content = '';
