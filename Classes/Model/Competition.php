@@ -91,7 +91,7 @@ class Competition extends BaseModel
     public function getMatches($status, $scope = 0)
     {
         // Sicherstellen, dass wir eine Zahl bekommen
-        if ((isset($status) && Math::isInteger($status))) {
+        if (isset($status) && Math::isInteger($status)) {
             $status = (int) $status;
             // Wir laden die Spieldaten zunächst ohne die Teams
             // Um die Datenmenge in Grenzen zu halten

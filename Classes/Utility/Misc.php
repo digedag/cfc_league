@@ -176,7 +176,7 @@ class Misc
 
         $content .= $error_doc->endPage();
         echo $content;
-        exit();
+        exit;
     }
 
     /**
