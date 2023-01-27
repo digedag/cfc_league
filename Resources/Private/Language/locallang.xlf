@@ -1,0 +1,481 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.0">
+    <file source-language="en" datatype="plaintext" original="messages" data="2023-01-22T15-39-13" product-name="zsb">
+        <header/>
+        <body>
+            <trans-unit id="message" xml:space="preserve">
+                <source>Message</source>
+            </trans-unit>
+            <trans-unit id="warning" xml:space="preserve">
+                <source>Warning</source>
+            </trans-unit>
+            <trans-unit id="error" xml:space="preserve">
+                <source>Error</source>
+            </trans-unit>
+            <trans-unit id="label_t3sports_modname" xml:space="preserve">
+                <source>T3sports - League Management</source>
+            </trans-unit>
+            <trans-unit id="title" xml:space="preserve">
+                <source>T3sports - League Management</source>
+            </trans-unit>
+            <trans-unit id="title_recent_tickers" xml:space="preserve">
+                <source>Recent ticker messages</source>
+            </trans-unit>
+            <trans-unit id="label_value" xml:space="preserve">
+                <source>Value</source>
+            </trans-unit>
+            <trans-unit id="msg_tce_errors" xml:space="preserve">
+                <source>Some unexpected errors occured. See TYPO3 Log for more information.</source>
+            </trans-unit>
+            <trans-unit id="label_msg_noclubonpage" xml:space="preserve">
+                <source>No club found at current page.</source>
+            </trans-unit>
+            <trans-unit id="label_msg_createnewclubnow" xml:space="preserve">
+                <source>You can create a new club now.</source>
+            </trans-unit>
+            <trans-unit id="mod_competition" xml:space="preserve">
+                <source>Competition management</source>
+            </trans-unit>
+            <trans-unit id="mod_compteams" xml:space="preserve">
+                <source>Teams</source>
+            </trans-unit>
+            <trans-unit id="mod_club" xml:space="preserve">
+                <source>Club management</source>
+            </trans-unit>
+            <trans-unit id="label_clear_stats_cache" xml:space="preserve">
+                <source>Clear statistics cache</source>
+            </trans-unit>
+            <trans-unit id="label_current_teams" xml:space="preserve">
+                <source>Teams in competition</source>
+            </trans-unit>
+            <trans-unit id="label_create_teams" xml:space="preserve">
+                <source>Create teams for competition</source>
+            </trans-unit>
+            <trans-unit id="label_teamname" xml:space="preserve">
+                <source>Team name</source>
+            </trans-unit>
+            <trans-unit id="label_teamshortname" xml:space="preserve">
+                <source>Team short name</source>
+            </trans-unit>
+            <trans-unit id="label_edit_club" xml:space="preserve">
+                <source>Club</source>
+            </trans-unit>
+            <trans-unit id="label_uid" xml:space="preserve">
+                <source>UID</source>
+            </trans-unit>
+            <trans-unit id="label_home" xml:space="preserve">
+                <source>Home</source>
+            </trans-unit>
+            <trans-unit id="label_guest" xml:space="preserve">
+                <source>Guest</source>
+            </trans-unit>
+            <trans-unit id="label_match" xml:space="preserve">
+                <source>Match</source>
+            </trans-unit>
+            <trans-unit id="label_matches" xml:space="preserve">
+                <source>Matches</source>
+            </trans-unit>
+            <trans-unit id="label_match_no" xml:space="preserve">
+                <source>Match-No.</source>
+            </trans-unit>
+            <trans-unit id="label_roundmode" xml:space="preserve">
+                <source>Round mode</source>
+            </trans-unit>
+            <trans-unit id="label_leading_zero" xml:space="preserve">
+                <source>Add leeding Zero on matchday</source>
+            </trans-unit>
+            <trans-unit id="msg_create_teams" xml:space="preserve">
+                <source>Create all teams on current page?</source>
+            </trans-unit>
+            <trans-unit id="msg_teams_created" xml:space="preserve">
+                <source>Teams created on current page</source>
+            </trans-unit>
+            <trans-unit id="label_add_teams_from_page" xml:space="preserve">
+                <source>Add teams from current page</source>
+            </trans-unit>
+            <trans-unit id="msg_noteams_in_comp" xml:space="preserve">
+                <source>No teams in competition found.</source>
+            </trans-unit>
+            <trans-unit id="label_add_teams" xml:space="preserve">
+                <source>Add teams to competition</source>
+            </trans-unit>
+            <trans-unit id="msg_add_teams" xml:space="preserve">
+                <source>Add selected teams to current competition?</source>
+            </trans-unit>
+            <trans-unit id="mod_compdfbsync" xml:space="preserve">
+                <source>DFB synchronization</source>
+            </trans-unit>
+            <trans-unit id="label_dfbsync_whatdoesitdo" xml:space="preserve">
+                <source>What does it do?</source>
+            </trans-unit>
+            <trans-unit id="label_dfbsync_info" xml:space="preserve">
+                <source>This function creates and updates match fixtures for a competition based on exports files (CSV) of DFB.</source>
+            </trans-unit>
+            <trans-unit id="label_dfbsync_nokeyfound" xml:space="preserve">
+                <source>Current competition has no external key configured. 
+ If you upload a file, the competition of first match (column "Staffelkennung") will be assigned to this competition.</source>
+            </trans-unit>
+            <trans-unit id="label_dfbsync_keyfound" xml:space="preserve">
+                <source>Current competition has external key "%s" configured. 
+ If you upload a file all match fixtures of this competition (column "Staffelkennung") will be updated or created for this competition.</source>
+            </trans-unit>
+            <trans-unit id="label_upload_csvfile" xml:space="preserve">
+                <source>Upload CSV-File</source>
+            </trans-unit>
+            <trans-unit id="label_upload_status" xml:space="preserve">
+                <source>Status</source>
+            </trans-unit>
+            <trans-unit id="label_upload_failurenofile" xml:space="preserve">
+                <source>No file uploaded.</source>
+            </trans-unit>
+            <trans-unit id="label_upload_file" xml:space="preserve">
+                <source>File</source>
+            </trans-unit>
+            <trans-unit id="label_upload_match_new" xml:space="preserve">
+                <source>New matches</source>
+            </trans-unit>
+            <trans-unit id="label_upload_match_updated" xml:space="preserve">
+                <source>Updated matches</source>
+            </trans-unit>
+            <trans-unit id="label_upload_match_skipped" xml:space="preserve">
+                <source>Skipped matches</source>
+            </trans-unit>
+            <trans-unit id="label_upload_team_new" xml:space="preserve">
+                <source>New teams</source>
+            </trans-unit>
+            <trans-unit id="label_upload_time" xml:space="preserve">
+                <source>Process time</source>
+            </trans-unit>
+            <trans-unit id="label_create_new" xml:space="preserve">
+                <source>Create new</source>
+            </trans-unit>
+            <trans-unit id="create_games" xml:space="preserve">
+                <source>Create matches</source>
+            </trans-unit>
+            <trans-unit id="edit_games" xml:space="preserve">
+                <source>Edit matches</source>
+            </trans-unit>
+            <trans-unit id="label_create_match" xml:space="preserve">
+                <source>Create new match</source>
+            </trans-unit>
+            <trans-unit id="label_msg_matches_created" xml:space="preserve">
+                <source>Matches created successfully!</source>
+            </trans-unit>
+            <trans-unit id="label_create_saison" xml:space="preserve">
+                <source>Complete saison</source>
+            </trans-unit>
+            <trans-unit id="label_create_firsthalf" xml:space="preserve">
+                <source>First half of saison only</source>
+            </trans-unit>
+            <trans-unit id="label_create_secondhalf" xml:space="preserve">
+                <source>Second half of saison only</source>
+            </trans-unit>
+            <trans-unit id="mod_team" xml:space="preserve">
+                <source>Manage Teams</source>
+            </trans-unit>
+            <trans-unit id="create_players" xml:space="preserve">
+                <source>Create players</source>
+            </trans-unit>
+            <trans-unit id="add_players" xml:space="preserve">
+                <source>Add players</source>
+            </trans-unit>
+            <trans-unit id="msg_remove_team_player" xml:space="preserve">
+                <source>Remove player from team?</source>
+            </trans-unit>
+            <trans-unit id="msg_remove_team_coach" xml:space="preserve">
+                <source>Remove coach from team?</source>
+            </trans-unit>
+            <trans-unit id="msg_remove_team_supporter" xml:space="preserve">
+                <source>Remove supporter from team?</source>
+            </trans-unit>
+            <trans-unit id="msg_removedProfileFromTeam" xml:space="preserve">
+                <source>Profile removed from team.</source>
+            </trans-unit>
+            <trans-unit id="manage_teamnotes" xml:space="preserve">
+                <source>Team notes</source>
+            </trans-unit>
+            <trans-unit id="label_club" xml:space="preserve">
+                <source>Club</source>
+            </trans-unit>
+            <trans-unit id="msg_create_notetypes" xml:space="preserve">
+                <source>To use this module, you have to create one or more records of type "Note type".</source>
+            </trans-unit>
+            <trans-unit id="search_profiles" xml:space="preserve">
+                <source>Search profiles</source>
+            </trans-unit>
+            <trans-unit id="match_ticker" xml:space="preserve">
+                <source>Match ticker/Statistics</source>
+            </trans-unit>
+            <trans-unit id="no_league_in_page" xml:space="preserve">
+                <source>No competitions found on current page.</source>
+            </trans-unit>
+            <trans-unit id="no_round_in_league" xml:space="preserve">
+                <source>This Competition containes no matches.</source>
+            </trans-unit>
+            <trans-unit id="btn_statusToFinished" xml:space="preserve">
+                <source>All games 'Finished'</source>
+            </trans-unit>
+            <trans-unit id="btn_update_msgEditGames" xml:space="preserve">
+                <source>Save changes?</source>
+            </trans-unit>
+            <trans-unit id="btn_update" xml:space="preserve">
+                <source>Update</source>
+            </trans-unit>
+            <trans-unit id="label_btn_watchstart" xml:space="preserve">
+                <source>Start watch</source>
+            </trans-unit>
+            <trans-unit id="label_btn_watchpause" xml:space="preserve">
+                <source>Pause watch</source>
+            </trans-unit>
+            <trans-unit id="label_btn_watchstop" xml:space="preserve">
+                <source>Stop watch</source>
+            </trans-unit>
+            <trans-unit id="label_tickerminute" xml:space="preserve">
+                <source>Match minute</source>
+            </trans-unit>
+            <trans-unit id="label_tickeroffset" xml:space="preserve">
+                <source>Offset</source>
+            </trans-unit>
+            <trans-unit id="label_showAllTickers" xml:space="preserve">
+                <source>Show all events</source>
+            </trans-unit>
+            <trans-unit id="msg_sendInstant" xml:space="preserve">
+                <source>Click here to send an instant message.</source>
+            </trans-unit>
+            <trans-unit id="msg_league_generation_hasmatches" xml:space="preserve">
+                <source>Current league has already matches. Please ensure that you really want to create additional matches!</source>
+            </trans-unit>
+            <trans-unit id="btn_create" xml:space="preserve">
+                <source>Create</source>
+            </trans-unit>
+            <trans-unit id="btn_edit" xml:space="preserve">
+                <source>Edit</source>
+            </trans-unit>
+            <trans-unit id="btn_save" xml:space="preserve">
+                <source>Save</source>
+            </trans-unit>
+            <trans-unit id="btn_search" xml:space="preserve">
+                <source>Search</source>
+            </trans-unit>
+            <trans-unit id="msg_CreateGameTable" xml:space="preserve">
+                <source>Create all matches for this league?</source>
+            </trans-unit>
+            <trans-unit id="msg_CreateProfiles" xml:space="preserve">
+                <source>Create all profiles in current page?</source>
+            </trans-unit>
+            <trans-unit id="msg_NoCompetitonsFound" xml:space="preserve">
+                <source>No competitions found!</source>
+            </trans-unit>
+            <trans-unit id="msg_NoSaisonFound" xml:space="preserve">
+                <source>No saison found!</source>
+            </trans-unit>
+            <trans-unit id="msg_NoTicker" xml:space="preserve">
+                <source>No ticker messages found!</source>
+            </trans-unit>
+            <trans-unit id="msg_data_saved" xml:space="preserve">
+                <source>Data saved!</source>
+            </trans-unit>
+            <trans-unit id="msg_matches_created" xml:space="preserve">
+                <source>All matches were successfully created!</source>
+            </trans-unit>
+            <trans-unit id="msg_checkPage" xml:space="preserve">
+                <source>Profiles will be created on page: </source>
+            </trans-unit>
+            <trans-unit id="msg_maxPlayers" xml:space="preserve">
+                <source>Team contains maximum number of players!</source>
+            </trans-unit>
+            <trans-unit id="msg_pageNotAllowed" xml:space="preserve">
+                <source>Page is not allowed for profiles. Select another page!</source>
+            </trans-unit>
+            <trans-unit id="msg_free_of_play" xml:space="preserve">
+                <source>Free of play</source>
+            </trans-unit>
+            <trans-unit id="msg_no_matchkeys" xml:space="preserve">
+                <source>For current competition is no match key set.</source>
+            </trans-unit>
+            <trans-unit id="msg_wrongmatchdays" xml:space="preserve">
+                <source>Number of matchdays to be created is wrong. It should be %d but it is %d.</source>
+            </trans-unit>
+            <trans-unit id="msg_wrongmatches4matchday" xml:space="preserve">
+                <source>Matchday %d: %d matches found. It should be %d.</source>
+            </trans-unit>
+            <trans-unit id="msg_wrongmatch_syntax" xml:space="preserve">
+                <source>Matchday %d: Match is wrong. Check syntax: '%s'.</source>
+            </trans-unit>
+            <trans-unit id="msg_wrongmatch_homeidx" xml:space="preserve">
+                <source>Matchday %d: Team index (home) out of range: '%d'.</source>
+            </trans-unit>
+            <trans-unit id="msg_wrongmatch_guestidx" xml:space="preserve">
+                <source>Matchday %d: Team index (guest) out of range: '%d'.</source>
+            </trans-unit>
+            <trans-unit id="label_round" xml:space="preserve">
+                <source>Round</source>
+            </trans-unit>
+            <trans-unit id="label_roundname" xml:space="preserve">
+                <source>Name</source>
+            </trans-unit>
+            <trans-unit id="label_rounddate" xml:space="preserve">
+                <source>Date</source>
+            </trans-unit>
+            <trans-unit id="label_roundset" xml:space="preserve">
+                <source>Fixtures</source>
+            </trans-unit>
+            <trans-unit id="msg_no_team_found" xml:space="preserve">
+                <source>No team found!</source>
+            </trans-unit>
+            <trans-unit id="msg_no_person_found" xml:space="preserve">
+                <source>No person found!</source>
+            </trans-unit>
+            <trans-unit id="msg_string_too_short" xml:space="preserve">
+                <source>Search string is too short. It should be at least 3 letters!</source>
+            </trans-unit>
+            <trans-unit id="msg_found_person" xml:space="preserve">
+                <source>Found person</source>
+            </trans-unit>
+            <trans-unit id="msg_search_person" xml:space="preserve">
+                <source>Search for person in database</source>
+            </trans-unit>
+            <trans-unit id="msg_edit_person" xml:space="preserve">
+                <source>Edit person</source>
+            </trans-unit>
+            <trans-unit id="msg_person_saved" xml:space="preserve">
+                <source>Person updated</source>
+            </trans-unit>
+            <trans-unit id="msg_date_saved" xml:space="preserve">
+                <source>Date has been updated</source>
+            </trans-unit>
+            <trans-unit id="msg_profiles_joined" xml:space="preserve">
+                <source>Profiles were joined to team!</source>
+            </trans-unit>
+            <trans-unit id="msg_profiles_created" xml:space="preserve">
+                <source>Profiles were created!</source>
+            </trans-unit>
+            <trans-unit id="msg_profiles_warnings" xml:space="preserve">
+                <source>Could not create the following profiles:</source>
+            </trans-unit>
+            <trans-unit id="msg_profile_already_joined" xml:space="preserve">
+                <source>This profile is already part of the team!</source>
+            </trans-unit>
+            <trans-unit id="label_join_profiles" xml:space="preserve">
+                <source>Join profile(s)</source>
+            </trans-unit>
+            <trans-unit id="label_create_profile4team" xml:space="preserve">
+                <source>Create a new team member</source>
+            </trans-unit>
+            <trans-unit id="msg_no_profile_selected" xml:space="preserve">
+                <source>Sorry, no selected profiles found. Please try again!</source>
+            </trans-unit>
+            <trans-unit id="msg_create_new_competition" xml:space="preserve">
+                <source>Create a new competition at this page.</source>
+            </trans-unit>
+            <trans-unit id="msg_number_of_players" xml:space="preserve">
+                <source>Number of players to add:</source>
+            </trans-unit>
+            <trans-unit id="msg_number_of_coaches" xml:space="preserve">
+                <source>Number of coaches to add:</source>
+            </trans-unit>
+            <trans-unit id="msg_number_of_supporters" xml:space="preserve">
+                <source>Number of supporters to add:</source>
+            </trans-unit>
+            <trans-unit id="msg_searchhelp" xml:space="preserve">
+                <source>The search term should contain at least 3 characters.</source>
+            </trans-unit>
+            <trans-unit id="label_mergehead" xml:space="preserve">
+                <source>Merge two Profiles</source>
+            </trans-unit>
+            <trans-unit id="msg_merge_selectprofiles" xml:space="preserve">
+                <source>Please select two profiles you want to merge.</source>
+            </trans-unit>
+            <trans-unit id="msg_merge_selectprofile" xml:space="preserve">
+                <source>Please select the leading profile. This profile will receive all data (matches, goals...) from the other one.</source>
+            </trans-unit>
+            <trans-unit id="msg_merge_confirm" xml:space="preserve">
+                <source>Are you sure? It is not possible to revoke this action!</source>
+            </trans-unit>
+            <trans-unit id="msg_merge_done" xml:space="preserve">
+                <source>Profiles were merged! The leading profile has now all references. After a manual data check you can delete the obsolete profile.</source>
+            </trans-unit>
+            <trans-unit id="createGameTable_round" xml:space="preserve">
+                <source>. Round</source>
+            </trans-unit>
+            <trans-unit id="label_firstname" xml:space="preserve">
+                <source>Firstname</source>
+            </trans-unit>
+            <trans-unit id="label_lastname" xml:space="preserve">
+                <source>Lastname</source>
+            </trans-unit>
+            <trans-unit id="label_birthday" xml:space="preserve">
+                <source>Birthday</source>
+            </trans-unit>
+            <trans-unit id="label_current_standings" xml:space="preserve">
+                <source>Current standings</source>
+            </trans-unit>
+            <trans-unit id="label_matchpart_1" xml:space="preserve">
+                <source>Halftime</source>
+            </trans-unit>
+            <trans-unit id="label_information" xml:space="preserve">
+                <source>Information</source>
+            </trans-unit>
+            <trans-unit id="label_searchterm" xml:space="preserve">
+                <source>Search for</source>
+            </trans-unit>
+            <trans-unit id="label_merge" xml:space="preserve">
+                <source>Merge</source>
+            </trans-unit>
+            <trans-unit id="label_page" xml:space="preserve">
+                <source>Page</source>
+            </trans-unit>
+            <trans-unit id="label_profile1" xml:space="preserve">
+                <source>Profile 1</source>
+            </trans-unit>
+            <trans-unit id="label_profile2" xml:space="preserve">
+                <source>Profile 2</source>
+            </trans-unit>
+            <trans-unit id="label_name" xml:space="preserve">
+                <source>Name</source>
+            </trans-unit>
+            <trans-unit id="label_profile_coach" xml:space="preserve">
+                <source>Coach</source>
+            </trans-unit>
+            <trans-unit id="label_profile_player" xml:space="preserve">
+                <source>Player</source>
+            </trans-unit>
+            <trans-unit id="label_profile_supporter" xml:space="preserve">
+                <source>Supporter</source>
+            </trans-unit>
+            <trans-unit id="label_action" xml:space="preserve">
+                <source>Action</source>
+            </trans-unit>
+            <trans-unit id="label_searchresults" xml:space="preserve">
+                <source>Search results</source>
+            </trans-unit>
+            <trans-unit id="label_tab_stadiums" xml:space="preserve">
+                <source>Stadiums</source>
+            </trans-unit>
+            <trans-unit id="label_msg_nostadiumsfound" xml:space="preserve">
+                <source>No stadium found.</source>
+            </trans-unit>
+            <trans-unit id="label_capacity" xml:space="preserve">
+                <source>Capacity</source>
+            </trans-unit>
+            <trans-unit id="label_address" xml:space="preserve">
+                <source>Address</source>
+            </trans-unit>
+            <trans-unit id="label_longlat" xml:space="preserve">
+                <source>Long/Lat</source>
+            </trans-unit>
+            <trans-unit id="label_btn_addstadium" xml:space="preserve">
+                <source>Add stadium</source>
+            </trans-unit>
+            <trans-unit id="label_addclub" xml:space="preserve">
+                <source>Create a new club record.</source>
+            </trans-unit>
+            <trans-unit id="label_msg_confirmNewClub" xml:space="preserve">
+                <source>Do you really want to create a new club record?</source>
+            </trans-unit>
+            <trans-unit id="label_msg_confirmNewClubPage" xml:space="preserve">
+                <source>ATTENTION: There is no other club record at this page! Do you really want to create a new club record here?</source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

@@ -1,0 +1,640 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.0">
+    <file source-language="en" target-language="de" datatype="plaintext" original="messages" data="2023-01-22T15-39-13" product-name="zsb">
+        <header/>
+        <body>
+            <trans-unit id="message" xml:space="preserve">
+                <source>Message</source>
+                <target>Hinweis</target>
+            </trans-unit>
+            <trans-unit id="warning" xml:space="preserve">
+                <source>Warning</source>
+                <target>Warnung</target>
+            </trans-unit>
+            <trans-unit id="error" xml:space="preserve">
+                <source>Error</source>
+                <target>Fehler</target>
+            </trans-unit>
+            <trans-unit id="label_t3sports_modname" xml:space="preserve">
+                <source>T3sports - League Management</source>
+                <target/>
+            </trans-unit>
+            <trans-unit id="title" xml:space="preserve">
+                <source>T3sports - League Management</source>
+                <target>T3sports - Ligaverwaltung</target>
+            </trans-unit>
+            <trans-unit id="title_recent_tickers" xml:space="preserve">
+                <source>Recent ticker messages</source>
+                <target>Letzte Tickermeldungen</target>
+            </trans-unit>
+            <trans-unit id="label_value" xml:space="preserve">
+                <source>Value</source>
+                <target>Wert</target>
+            </trans-unit>
+            <trans-unit id="msg_tce_errors" xml:space="preserve">
+                <source>Some unexpected errors occured. See TYPO3 Log for more information.</source>
+                <target>Bei der Verarbeitung sind unerwartete Fehler aufgetreten. Nähere Informationen befinden sich im TYPO3 Log.</target>
+            </trans-unit>
+            <trans-unit id="label_msg_noclubonpage" xml:space="preserve">
+                <source>No club found at current page.</source>
+                <target>Auf der aktuellen Seite wurde kein Verein gefunden.</target>
+            </trans-unit>
+            <trans-unit id="label_msg_createnewclubnow" xml:space="preserve">
+                <source>You can create a new club now.</source>
+                <target>Sie können jetzt einen neuen Verein auf dieser Seite anlegen.</target>
+            </trans-unit>
+            <trans-unit id="mod_competition" xml:space="preserve">
+                <source>Competition management</source>
+                <target>Wettbewerbe verwalten</target>
+            </trans-unit>
+            <trans-unit id="mod_compteams" xml:space="preserve">
+                <source>Teams</source>
+                <target>Mannschaften</target>
+            </trans-unit>
+            <trans-unit id="mod_club" xml:space="preserve">
+                <source>Club management</source>
+                <target>Vereine verwalten</target>
+            </trans-unit>
+            <trans-unit id="label_clear_stats_cache" xml:space="preserve">
+                <source>Clear statistics cache</source>
+                <target>Statistik Cache leeren</target>
+            </trans-unit>
+            <trans-unit id="label_current_teams" xml:space="preserve">
+                <source>Teams in competition</source>
+                <target>Mannschaften im Wettbewerb</target>
+            </trans-unit>
+            <trans-unit id="label_create_teams" xml:space="preserve">
+                <source>Create teams for competition</source>
+                <target>Mannschaften für diesen Wettbewerb erstellen</target>
+            </trans-unit>
+            <trans-unit id="label_teamname" xml:space="preserve">
+                <source>Team name</source>
+                <target>Name</target>
+            </trans-unit>
+            <trans-unit id="label_teamshortname" xml:space="preserve">
+                <source>Team short name</source>
+                <target>Kurzname</target>
+            </trans-unit>
+            <trans-unit id="label_edit_club" xml:space="preserve">
+                <source>Club</source>
+                <target>Verein</target>
+            </trans-unit>
+            <trans-unit id="label_uid" xml:space="preserve">
+                <source>UID</source>
+                <target/>
+            </trans-unit>
+            <trans-unit id="label_home" xml:space="preserve">
+                <source>Home</source>
+                <target>Heim</target>
+            </trans-unit>
+            <trans-unit id="label_guest" xml:space="preserve">
+                <source>Guest</source>
+                <target>Gast</target>
+            </trans-unit>
+            <trans-unit id="label_match" xml:space="preserve">
+                <source>Match</source>
+                <target>Spiel</target>
+            </trans-unit>
+            <trans-unit id="label_matches" xml:space="preserve">
+                <source>Matches</source>
+                <target>Spiele</target>
+            </trans-unit>
+            <trans-unit id="label_match_no" xml:space="preserve">
+                <source>Match-No.</source>
+                <target>Spiel-Nr.</target>
+            </trans-unit>
+            <trans-unit id="label_roundmode" xml:space="preserve">
+                <source>Round mode</source>
+                <target>Spieltagsmodus</target>
+            </trans-unit>
+            <trans-unit id="label_leading_zero" xml:space="preserve">
+                <source>Add leeding Zero on matchday</source>
+                <target>Führende 0 für Spieltag</target>
+            </trans-unit>
+            <trans-unit id="msg_create_teams" xml:space="preserve">
+                <source>Create all teams on current page?</source>
+                <target>Sollen alle Teams in der aktuellen Seite erstellt werden?</target>
+            </trans-unit>
+            <trans-unit id="msg_teams_created" xml:space="preserve">
+                <source>Teams created on current page</source>
+                <target>Die Mannschaften wurden auf der aktuellen Seite erstellt.</target>
+            </trans-unit>
+            <trans-unit id="label_add_teams_from_page" xml:space="preserve">
+                <source>Add teams from current page</source>
+                <target>Mannschaften der aktuellen Seite hinzufügen</target>
+            </trans-unit>
+            <trans-unit id="msg_noteams_in_comp" xml:space="preserve">
+                <source>No teams in competition found.</source>
+                <target>In diesem Wettbewerb wurden keine Mannschaften gefunden.</target>
+            </trans-unit>
+            <trans-unit id="label_add_teams" xml:space="preserve">
+                <source>Add teams to competition</source>
+                <target/>
+            </trans-unit>
+            <trans-unit id="msg_add_teams" xml:space="preserve">
+                <source>Add selected teams to current competition?</source>
+                <target/>
+            </trans-unit>
+            <trans-unit id="mod_compdfbsync" xml:space="preserve">
+                <source>DFB synchronization</source>
+                <target>DFB Synchronisation</target>
+            </trans-unit>
+            <trans-unit id="label_dfbsync_whatdoesitdo" xml:space="preserve">
+                <source>What does it do?</source>
+                <target>Funktionsweise</target>
+            </trans-unit>
+            <trans-unit id="label_dfbsync_info" xml:space="preserve">
+                <source>This function creates and updates match fixtures for a competition based on exports files (CSV) of DFB.</source>
+                <target>Dieses Modul erstellt und aktualisiert Spielpläne auf Basis von CSV-Dateien aus dem DFBnet.</target>
+            </trans-unit>
+            <trans-unit id="label_dfbsync_nokeyfound" xml:space="preserve">
+                <source>Current competition has no external key configured. 
+ If you upload a file, the competition of first match (column "Staffelkennung") will be assigned to this competition.</source>
+                <target>Der aktuelle Wettbewerb hat keinen externen Key gesetzt. 
+ Wenn eine Datei hochgeladen wird, das wird der Wettbewerb des ersten Spiels in der Datei (Spalte "Staffelkennung") automatisch dem ausgewählten Wettbewerb zugeordnet.</target>
+            </trans-unit>
+            <trans-unit id="label_dfbsync_keyfound" xml:space="preserve">
+                <source>Current competition has external key "%s" configured. 
+ If you upload a file all match fixtures of this competition (column "Staffelkennung") will be updated or created for this competition.</source>
+                <target>Der aktuelle Wettbewerb hat den externen Schlüssel "%s" gesetzt. 
+ Wenn eine Datei hochgeladen wird, dann werden alle Spiele mit diesem Schlüssel (Spalte "Staffelkennung") erstellt bzw. aktualisiert.</target>
+            </trans-unit>
+            <trans-unit id="label_upload_csvfile" xml:space="preserve">
+                <source>Upload CSV-File</source>
+                <target>CSV-Datei hochladen</target>
+            </trans-unit>
+            <trans-unit id="label_upload_status" xml:space="preserve">
+                <source>Status</source>
+                <target>Status</target>
+            </trans-unit>
+            <trans-unit id="label_upload_failurenofile" xml:space="preserve">
+                <source>No file uploaded.</source>
+                <target>Es wurde keine Datei hochgeladen.</target>
+            </trans-unit>
+            <trans-unit id="label_upload_file" xml:space="preserve">
+                <source>File</source>
+                <target>Datei</target>
+            </trans-unit>
+            <trans-unit id="label_upload_match_new" xml:space="preserve">
+                <source>New matches</source>
+                <target>Neue Spiele</target>
+            </trans-unit>
+            <trans-unit id="label_upload_match_updated" xml:space="preserve">
+                <source>Updated matches</source>
+                <target>Aktualisierte Spiele</target>
+            </trans-unit>
+            <trans-unit id="label_upload_match_skipped" xml:space="preserve">
+                <source>Skipped matches</source>
+                <target>Ignorierte Spiele</target>
+            </trans-unit>
+            <trans-unit id="label_upload_team_new" xml:space="preserve">
+                <source>New teams</source>
+                <target>Neue Teams</target>
+            </trans-unit>
+            <trans-unit id="label_upload_time" xml:space="preserve">
+                <source>Process time</source>
+                <target>Ausführungszeit</target>
+            </trans-unit>
+            <trans-unit id="label_create_new" xml:space="preserve">
+                <source>Create new</source>
+                <target>Neu anlegen</target>
+            </trans-unit>
+            <trans-unit id="create_games" xml:space="preserve">
+                <source>Create matches</source>
+                <target>Spielplan erstellen</target>
+            </trans-unit>
+            <trans-unit id="edit_games" xml:space="preserve">
+                <source>Edit matches</source>
+                <target>Spiele bearbeiten</target>
+            </trans-unit>
+            <trans-unit id="label_create_match" xml:space="preserve">
+                <source>Create new match</source>
+                <target>Ein neues Spiel anlegen</target>
+            </trans-unit>
+            <trans-unit id="label_msg_matches_created" xml:space="preserve">
+                <source>Matches created successfully!</source>
+                <target>Die Spiele wurden angelegt!</target>
+            </trans-unit>
+            <trans-unit id="label_create_saison" xml:space="preserve">
+                <source>Complete saison</source>
+                <target>Komplette Saison</target>
+            </trans-unit>
+            <trans-unit id="label_create_firsthalf" xml:space="preserve">
+                <source>First half of saison only</source>
+                <target>Nur Hinrunde</target>
+            </trans-unit>
+            <trans-unit id="label_create_secondhalf" xml:space="preserve">
+                <source>Second half of saison only</source>
+                <target>Nur Rückrunde</target>
+            </trans-unit>
+            <trans-unit id="mod_team" xml:space="preserve">
+                <source>Manage Teams</source>
+                <target>Teams verwalten</target>
+            </trans-unit>
+            <trans-unit id="create_players" xml:space="preserve">
+                <source>Create players</source>
+                <target>Spieler anlegen</target>
+            </trans-unit>
+            <trans-unit id="add_players" xml:space="preserve">
+                <source>Add players</source>
+                <target>Spieler hinzufügen</target>
+            </trans-unit>
+            <trans-unit id="msg_remove_team_player" xml:space="preserve">
+                <source>Remove player from team?</source>
+                <target>Spieler aus Team entfernen?</target>
+            </trans-unit>
+            <trans-unit id="msg_remove_team_coach" xml:space="preserve">
+                <source>Remove coach from team?</source>
+                <target>Trainer aus Team entfernen?</target>
+            </trans-unit>
+            <trans-unit id="msg_remove_team_supporter" xml:space="preserve">
+                <source>Remove supporter from team?</source>
+                <target>Betreuer aus Team entfernen?</target>
+            </trans-unit>
+            <trans-unit id="msg_removedProfileFromTeam" xml:space="preserve">
+                <source>Profile removed from team.</source>
+                <target>Die Person wurde aus dem Team entfernt.</target>
+            </trans-unit>
+            <trans-unit id="manage_teamnotes" xml:space="preserve">
+                <source>Team notes</source>
+                <target>Team-Notizen</target>
+            </trans-unit>
+            <trans-unit id="label_club" xml:space="preserve">
+                <source>Club</source>
+                <target>Verein</target>
+            </trans-unit>
+            <trans-unit id="msg_create_notetypes" xml:space="preserve">
+                <source>To use this module, you have to create one or more records of type "Note type".</source>
+                <target>Damit dieses Modul verwendet werden kann, müssen zunächst ein oder mehrere Datensätze vom Typ "Notiz-Typ" angelegt werden.</target>
+            </trans-unit>
+            <trans-unit id="search_profiles" xml:space="preserve">
+                <source>Search profiles</source>
+                <target>Personen suchen</target>
+            </trans-unit>
+            <trans-unit id="match_ticker" xml:space="preserve">
+                <source>Match ticker/Statistics</source>
+                <target>Spielticker/Statistik</target>
+            </trans-unit>
+            <trans-unit id="no_league_in_page" xml:space="preserve">
+                <source>No competitions found on current page.</source>
+                <target>Die aktuelle Seite enth&auml;lt keine Wettbewerbe.</target>
+            </trans-unit>
+            <trans-unit id="no_round_in_league" xml:space="preserve">
+                <source>This Competition containes no matches.</source>
+                <target>Dieser Wettbewerb enth&auml;lt keine Spiele.</target>
+            </trans-unit>
+            <trans-unit id="btn_statusToFinished" xml:space="preserve">
+                <source>All games 'Finished'</source>
+                <target>Alle Spiele 'Beendet'</target>
+            </trans-unit>
+            <trans-unit id="btn_update_msgEditGames" xml:space="preserve">
+                <source>Save changes?</source>
+                <target>Sollen die Ergebnisse gespeichert werden?</target>
+            </trans-unit>
+            <trans-unit id="btn_update" xml:space="preserve">
+                <source>Update</source>
+                <target>Aktualisieren</target>
+            </trans-unit>
+            <trans-unit id="label_btn_watchstart" xml:space="preserve">
+                <source>Start watch</source>
+                <target>Uhr starten</target>
+            </trans-unit>
+            <trans-unit id="label_btn_watchpause" xml:space="preserve">
+                <source>Pause watch</source>
+                <target>Uhr pausieren</target>
+            </trans-unit>
+            <trans-unit id="label_btn_watchstop" xml:space="preserve">
+                <source>Stop watch</source>
+                <target>Uhr stoppen</target>
+            </trans-unit>
+            <trans-unit id="label_tickerminute" xml:space="preserve">
+                <source>Match minute</source>
+                <target>Spielminute</target>
+            </trans-unit>
+            <trans-unit id="label_tickeroffset" xml:space="preserve">
+                <source>Offset</source>
+                <target>Offset</target>
+            </trans-unit>
+            <trans-unit id="label_showAllTickers" xml:space="preserve">
+                <source>Show all events</source>
+                <target>Alle Meldungen anzeigen</target>
+            </trans-unit>
+            <trans-unit id="msg_sendInstant" xml:space="preserve">
+                <source>Click here to send an instant message.</source>
+                <target>Klicken Sie hier, um eine Sofortmeldung abzusetzen.</target>
+            </trans-unit>
+            <trans-unit id="msg_league_generation_hasmatches" xml:space="preserve">
+                <source>Current league has already matches. Please ensure that you really want to create additional matches!</source>
+                <target>Für diese Liga wurden bereits Spiele angelegt. Bitte prüfen Sie genau, ob Sie wirklich zusätzliche Paarungen anlegen möchten!</target>
+            </trans-unit>
+            <trans-unit id="btn_create" xml:space="preserve">
+                <source>Create</source>
+                <target>Erstellen</target>
+            </trans-unit>
+            <trans-unit id="btn_edit" xml:space="preserve">
+                <source>Edit</source>
+                <target>Ändern</target>
+            </trans-unit>
+            <trans-unit id="btn_save" xml:space="preserve">
+                <source>Save</source>
+                <target>Speichern</target>
+            </trans-unit>
+            <trans-unit id="btn_search" xml:space="preserve">
+                <source>Search</source>
+                <target>Suchen</target>
+            </trans-unit>
+            <trans-unit id="msg_CreateGameTable" xml:space="preserve">
+                <source>Create all matches for this league?</source>
+                <target>Sollen alle Spiele für diese Liga erstellt werden?</target>
+            </trans-unit>
+            <trans-unit id="msg_CreateProfiles" xml:space="preserve">
+                <source>Create all profiles in current page?</source>
+                <target>Sollen alle Profile in der aktuellen Seite erstellt werden?</target>
+            </trans-unit>
+            <trans-unit id="msg_NoCompetitonsFound" xml:space="preserve">
+                <source>No competitions found!</source>
+                <target>Es wurden keine Wettbewerbe gefunden!</target>
+            </trans-unit>
+            <trans-unit id="msg_NoSaisonFound" xml:space="preserve">
+                <source>No saison found!</source>
+                <target>Bitte legen Sie zuerst eine Saison an und ordnen dieser Wettbewerbe mit Mannschaften zu.</target>
+            </trans-unit>
+            <trans-unit id="msg_NoTicker" xml:space="preserve">
+                <source>No ticker messages found!</source>
+                <target>Keine Tickermeldungen vorhanden!</target>
+            </trans-unit>
+            <trans-unit id="msg_data_saved" xml:space="preserve">
+                <source>Data saved!</source>
+                <target>Die Daten wurden gespeichert!</target>
+            </trans-unit>
+            <trans-unit id="msg_matches_created" xml:space="preserve">
+                <source>All matches were successfully created!</source>
+                <target>Die Spiele wurden erstellt!</target>
+            </trans-unit>
+            <trans-unit id="msg_checkPage" xml:space="preserve">
+                <source>Profiles will be created on page: </source>
+                <target>Alle Spieler werden auf folgender Seite angelegt: </target>
+            </trans-unit>
+            <trans-unit id="msg_maxPlayers" xml:space="preserve">
+                <source>Team contains maximum number of players!</source>
+                <target>Es können keine Profile mehr angelegt werden, da die maximale Anzahl erreicht ist!</target>
+            </trans-unit>
+            <trans-unit id="msg_pageNotAllowed" xml:space="preserve">
+                <source>Page is not allowed for profiles. Select another page!</source>
+                <target>Auf der aktuellen Seite können keine Spieler angelegt werden!</target>
+            </trans-unit>
+            <trans-unit id="msg_free_of_play" xml:space="preserve">
+                <source>Free of play</source>
+                <target>Spielfrei</target>
+            </trans-unit>
+            <trans-unit id="msg_no_matchkeys" xml:space="preserve">
+                <source>For current competition is no match key set.</source>
+                <target>Für den aktuellen Wettbewerb ist kein Spielplanschlüssel gesetzt.</target>
+            </trans-unit>
+            <trans-unit id="msg_wrongmatchdays" xml:space="preserve">
+                <source>Number of matchdays to be created is wrong. It should be %d but it is %d.</source>
+                <target>Die Anzahl der Spieltage ist falsch. Es sollten %d sein, aber es sind %d.</target>
+            </trans-unit>
+            <trans-unit id="msg_wrongmatches4matchday" xml:space="preserve">
+                <source>Matchday %d: %d matches found. It should be %d.</source>
+                <target>Spieltag %d: %d Spiele gefunden. Es sollten %d sein.</target>
+            </trans-unit>
+            <trans-unit id="msg_wrongmatch_syntax" xml:space="preserve">
+                <source>Matchday %d: Match is wrong. Check syntax: '%s'.</source>
+                <target>Spieltag %d: Das Spiel wurde falsch eingetragen: '%s' Bitte Syntax prüfen!</target>
+            </trans-unit>
+            <trans-unit id="msg_wrongmatch_homeidx" xml:space="preserve">
+                <source>Matchday %d: Team index (home) out of range: '%d'.</source>
+                <target>Spieltag %d: Nummer des Heimteams ist außerhalb des gültigen Bereichs: '%d'.</target>
+            </trans-unit>
+            <trans-unit id="msg_wrongmatch_guestidx" xml:space="preserve">
+                <source>Matchday %d: Team index (guest) out of range: '%d'.</source>
+                <target>Spieltag %d: Nummer des Gastteams ist außerhalb des gültigen Bereichs: '%d'.</target>
+            </trans-unit>
+            <trans-unit id="label_round" xml:space="preserve">
+                <source>Round</source>
+                <target>Spieltag</target>
+            </trans-unit>
+            <trans-unit id="label_roundname" xml:space="preserve">
+                <source>Name</source>
+                <target>Name</target>
+            </trans-unit>
+            <trans-unit id="label_rounddate" xml:space="preserve">
+                <source>Date</source>
+                <target>Termin</target>
+            </trans-unit>
+            <trans-unit id="label_roundset" xml:space="preserve">
+                <source>Fixtures</source>
+                <target>Ansetzungen</target>
+            </trans-unit>
+            <trans-unit id="msg_no_team_found" xml:space="preserve">
+                <source>No team found!</source>
+                <target>Keine Personen gefunden!</target>
+            </trans-unit>
+            <trans-unit id="msg_no_person_found" xml:space="preserve">
+                <source>No person found!</source>
+                <target>Keine Personen gefunden!</target>
+            </trans-unit>
+            <trans-unit id="msg_string_too_short" xml:space="preserve">
+                <source>Search string is too short. It should be at least 3 letters!</source>
+                <target>Der Suchbegriff sollte mindestens drei Zeichen lang sein!</target>
+            </trans-unit>
+            <trans-unit id="msg_found_person" xml:space="preserve">
+                <source>Found person</source>
+                <target>Gefundene Personen</target>
+            </trans-unit>
+            <trans-unit id="msg_search_person" xml:space="preserve">
+                <source>Search for person in database</source>
+                <target>Suche nach Personen in der Datenbank</target>
+            </trans-unit>
+            <trans-unit id="msg_edit_person" xml:space="preserve">
+                <source>Edit person</source>
+                <target>Person bearbeiten</target>
+            </trans-unit>
+            <trans-unit id="msg_person_saved" xml:space="preserve">
+                <source>Person updated</source>
+                <target>Person aktualisiert</target>
+            </trans-unit>
+            <trans-unit id="msg_date_saved" xml:space="preserve">
+                <source>Date has been updated</source>
+                <target>Das Datum wurde aktualisiert</target>
+            </trans-unit>
+            <trans-unit id="msg_profiles_joined" xml:space="preserve">
+                <source>Profiles were joined to team!</source>
+                <target>Die Spieler wurden der Mannschaft zugeordnet!</target>
+            </trans-unit>
+            <trans-unit id="msg_profiles_created" xml:space="preserve">
+                <source>Profiles were created!</source>
+                <target>Die Profile wurden erstellt!</target>
+            </trans-unit>
+            <trans-unit id="msg_profiles_warnings" xml:space="preserve">
+                <source>Could not create the following profiles:</source>
+                <target>Die folgenden Profile konnten nicht angelegt werden:</target>
+            </trans-unit>
+            <trans-unit id="msg_profile_already_joined" xml:space="preserve">
+                <source>This profile is already part of the team!</source>
+                <target>Diese Person ist schon Teil des Teams!</target>
+            </trans-unit>
+            <trans-unit id="label_join_profiles" xml:space="preserve">
+                <source>Join profile(s)</source>
+                <target>Personen hinzufügen</target>
+            </trans-unit>
+            <trans-unit id="label_create_profile4team" xml:space="preserve">
+                <source>Create a new team member</source>
+                <target>Neues Teammitglied anlegen</target>
+            </trans-unit>
+            <trans-unit id="msg_no_profile_selected" xml:space="preserve">
+                <source>Sorry, no selected profiles found. Please try again!</source>
+                <target/>
+            </trans-unit>
+            <trans-unit id="msg_create_new_competition" xml:space="preserve">
+                <source>Create a new competition at this page.</source>
+                <target>Jetzt einen neuen Wettbewerb auf dieser Seite anlegen.</target>
+            </trans-unit>
+            <trans-unit id="msg_number_of_players" xml:space="preserve">
+                <source>Number of players to add:</source>
+                <target>Anzahl Spieler, die zugeordnet werden k&ouml;nnen:</target>
+            </trans-unit>
+            <trans-unit id="msg_number_of_coaches" xml:space="preserve">
+                <source>Number of coaches to add:</source>
+                <target>Anzahl Trainer, die zugeordnet werden k&ouml;nnen:</target>
+            </trans-unit>
+            <trans-unit id="msg_number_of_supporters" xml:space="preserve">
+                <source>Number of supporters to add:</source>
+                <target>Anzahl Betreuer, die zugeordnet werden k&ouml;nnen:</target>
+            </trans-unit>
+            <trans-unit id="msg_searchhelp" xml:space="preserve">
+                <source>The search term should contain at least 3 characters.</source>
+                <target>Der Suchbegriff sollte mindestens drei Buchstaben enthalten.</target>
+            </trans-unit>
+            <trans-unit id="label_mergehead" xml:space="preserve">
+                <source>Merge two Profiles</source>
+                <target>Zusammenführung zweier Profile</target>
+            </trans-unit>
+            <trans-unit id="msg_merge_selectprofiles" xml:space="preserve">
+                <source>Please select two profiles you want to merge.</source>
+                <target>Bitte wählen Sie die beiden Profile aus, die zusammengeführt werden sollen.</target>
+            </trans-unit>
+            <trans-unit id="msg_merge_selectprofile" xml:space="preserve">
+                <source>Please select the leading profile. This profile will receive all data (matches, goals...) from the other one.</source>
+                <target>Bitte markieren Sie das führende Profil. Dieses wird alle Daten (Spiele, Tore usw.) des anderen Profils übernehmen.</target>
+            </trans-unit>
+            <trans-unit id="msg_merge_confirm" xml:space="preserve">
+                <source>Are you sure? It is not possible to revoke this action!</source>
+                <target>Sind Sie sicher? Diese Aktion kann nicht rückgängig gemacht werden!</target>
+            </trans-unit>
+            <trans-unit id="msg_merge_done" xml:space="preserve">
+                <source>Profiles were merged! The leading profile has now all references. After a manual data check you can delete the obsolete profile.</source>
+                <target>Die Profile wurden zusammengeführt. Das führende Profil hält jetzt alle Referenzen. Nach einer Prüfung der Daten können Sie das überflüssige Profil löschen.</target>
+            </trans-unit>
+            <trans-unit id="createGameTable_round" xml:space="preserve">
+                <source>. Round</source>
+                <target>. Spieltag</target>
+            </trans-unit>
+            <trans-unit id="label_firstname" xml:space="preserve">
+                <source>Firstname</source>
+                <target>Vorname</target>
+            </trans-unit>
+            <trans-unit id="label_lastname" xml:space="preserve">
+                <source>Lastname</source>
+                <target>Nachname</target>
+            </trans-unit>
+            <trans-unit id="label_birthday" xml:space="preserve">
+                <source>Birthday</source>
+                <target>Geburtstag</target>
+            </trans-unit>
+            <trans-unit id="label_current_standings" xml:space="preserve">
+                <source>Current standings</source>
+                <target>Aktueller Spielstand</target>
+            </trans-unit>
+            <trans-unit id="label_matchpart_1" xml:space="preserve">
+                <source>Halftime</source>
+                <target>Halbzeit</target>
+            </trans-unit>
+            <trans-unit id="label_information" xml:space="preserve">
+                <source>Information</source>
+                <target>Informationen</target>
+            </trans-unit>
+            <trans-unit id="label_searchterm" xml:space="preserve">
+                <source>Search for</source>
+                <target>Suchbegriff</target>
+            </trans-unit>
+            <trans-unit id="label_merge" xml:space="preserve">
+                <source>Merge</source>
+                <target>Vereinen</target>
+            </trans-unit>
+            <trans-unit id="label_page" xml:space="preserve">
+                <source>Page</source>
+                <target>Seite</target>
+            </trans-unit>
+            <trans-unit id="label_profile1" xml:space="preserve">
+                <source>Profile 1</source>
+                <target>Person 1</target>
+            </trans-unit>
+            <trans-unit id="label_profile2" xml:space="preserve">
+                <source>Profile 2</source>
+                <target>Person 2</target>
+            </trans-unit>
+            <trans-unit id="label_name" xml:space="preserve">
+                <source>Name</source>
+                <target/>
+            </trans-unit>
+            <trans-unit id="label_profile_coach" xml:space="preserve">
+                <source>Coach</source>
+                <target>Trainer</target>
+            </trans-unit>
+            <trans-unit id="label_profile_player" xml:space="preserve">
+                <source>Player</source>
+                <target>Spieler</target>
+            </trans-unit>
+            <trans-unit id="label_profile_supporter" xml:space="preserve">
+                <source>Supporter</source>
+                <target>Betreuer</target>
+            </trans-unit>
+            <trans-unit id="label_action" xml:space="preserve">
+                <source>Action</source>
+                <target>Aktion</target>
+            </trans-unit>
+            <trans-unit id="label_searchresults" xml:space="preserve">
+                <source>Search results</source>
+                <target>Suchergebnisse</target>
+            </trans-unit>
+            <trans-unit id="label_tab_stadiums" xml:space="preserve">
+                <source>Stadiums</source>
+                <target>Stadien</target>
+            </trans-unit>
+            <trans-unit id="label_msg_nostadiumsfound" xml:space="preserve">
+                <source>No stadium found.</source>
+                <target>Es wurde kein Stadion gefunden.</target>
+            </trans-unit>
+            <trans-unit id="label_capacity" xml:space="preserve">
+                <source>Capacity</source>
+                <target>Kapazität</target>
+            </trans-unit>
+            <trans-unit id="label_address" xml:space="preserve">
+                <source>Address</source>
+                <target>Adresse</target>
+            </trans-unit>
+            <trans-unit id="label_longlat" xml:space="preserve">
+                <source>Long/Lat</source>
+                <target>Geodaten</target>
+            </trans-unit>
+            <trans-unit id="label_btn_addstadium" xml:space="preserve">
+                <source>Add stadium</source>
+                <target>Stadion anlegen</target>
+            </trans-unit>
+            <trans-unit id="label_addclub" xml:space="preserve">
+                <source>Create a new club record.</source>
+                <target>Einen neuen Verein anlegen.</target>
+            </trans-unit>
+            <trans-unit id="label_msg_confirmNewClub" xml:space="preserve">
+                <source>Do you really want to create a new club record?</source>
+                <target>Soll wirklich ein neuer Verein angelegt werden?</target>
+            </trans-unit>
+            <trans-unit id="label_msg_confirmNewClubPage" xml:space="preserve">
+                <source>ATTENTION: There is no other club record at this page! Do you really want to create a new club record here?</source>
+                <target>ACHTUNG: Auf dieser Seite befinden sich noch keine Vereinsdatensätze. Wollen Sie wirklich auf dieser Seite einen Verein anlegen?</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

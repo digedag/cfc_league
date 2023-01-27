@@ -6,7 +6,7 @@ if (!defined('TYPO3_MODE')) {
 
 $tx_cfcleague_saison = [
     'ctrl' => [
-        'title' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_saison',
+        'title' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_saison',
         'label' => 'name',
         'searchFields' => 'uid,name',
         'tstamp' => 'tstamp',
@@ -39,7 +39,7 @@ $tx_cfcleague_saison = [
         ],
         'name' => [
             'exclude' => 1,
-            'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_saison.name',
+            'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_saison.name',
             'config' => [
                 'type' => 'input',
                 'size' => '30',
@@ -48,7 +48,7 @@ $tx_cfcleague_saison = [
         ],
         'halftime' => [
             'exclude' => 1,
-            'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_saison.halftime',
+            'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_saison.halftime',
             'config' => [
                 'type' => 'input',
                 'renderType' => (\Sys25\RnBase\Utility\TYPO3::isTYPO86OrHigher() ? 'inputDateTime' : ''),

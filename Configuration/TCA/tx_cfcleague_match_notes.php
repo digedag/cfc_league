@@ -6,7 +6,7 @@ if (!defined('TYPO3_MODE')) {
 
 $tx_cfcleague_match_notes = [
     'ctrl' => [
-        'title' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_match_notes',
+        'title' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_match_notes',
         'label' => 'uid',
         'label_alt' => 'minute,comment',
         'label_alt_force' => 1,
@@ -42,7 +42,7 @@ $tx_cfcleague_match_notes = [
         ],
         'game' => [
             'exclude' => 1,
-            'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_match_notes.match',
+            'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_match_notes.match',
             'config' => [
                 'type' => 'group',
                 'internal_type' => 'db',
@@ -54,7 +54,7 @@ $tx_cfcleague_match_notes = [
         ],
         'minute' => [
             'exclude' => 1,
-            'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_match_notes.minute',
+            'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_match_notes.minute',
             'config' => [
                 'type' => 'input',
                 'size' => '4',
@@ -70,7 +70,7 @@ $tx_cfcleague_match_notes = [
         ],
         'extra_time' => [
             'exclude' => 1,
-            'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_match_notes.extra_time',
+            'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_match_notes.extra_time',
             'config' => [
                 'type' => 'input',
                 'size' => '4',
@@ -86,7 +86,7 @@ $tx_cfcleague_match_notes = [
         ],
         'second' => [
             'exclude' => 1,
-            'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_match_notes.second',
+            'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_match_notes.second',
             'config' => [
                 'type' => 'input',
                 'size' => '4',
@@ -102,7 +102,7 @@ $tx_cfcleague_match_notes = [
         ],
         'type' => [
             'exclude' => 1,
-            'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_match_notes.type',
+            'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_match_notes.type',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
@@ -115,7 +115,7 @@ $tx_cfcleague_match_notes = [
 
         'player_home' => [
             'exclude' => 1,
-            'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_match_notes.player_home',
+            'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_match_notes.player_home',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
@@ -130,7 +130,7 @@ $tx_cfcleague_match_notes = [
         ],
         'player_guest' => [
             'exclude' => 1,
-            'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_match_notes.player_guest',
+            'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_match_notes.player_guest',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
@@ -145,7 +145,7 @@ $tx_cfcleague_match_notes = [
         ],
         'comment' => [
             'exclude' => 1,
-            'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:tx_cfcleague_match_notes.comment',
+            'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_match_notes.comment',
             'config' => [
                 'type' => 'text',
                 'cols' => '30',

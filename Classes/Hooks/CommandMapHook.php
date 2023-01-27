@@ -60,7 +60,7 @@ class CommandMapHook
                     $addInfo .= '<b>'.$table.':</b> '.count($data).'<br />';
                 }
                 $addInfo .= '</p>';
-                Misc::tceError('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:label_msg_refError', $addInfo);
+                Misc::tceError('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:label_msg_refError', $addInfo);
             }
         } elseif ('delete' == $command && 'tx_cfcleague_competition' == $table) {
             $competition = tx_rnbase::makeInstance(Competition::class, $id);
@@ -72,7 +72,7 @@ class CommandMapHook
                     $addInfo .= '<b>'.$table.':</b> '.$data.'<br />';
                 }
                 $addInfo .= '</p>';
-                Misc::tceError('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xml:label_msg_refError', $addInfo);
+                Misc::tceError('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:label_msg_refError', $addInfo);
             }
         }
     }

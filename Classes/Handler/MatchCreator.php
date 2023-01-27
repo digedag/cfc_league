@@ -77,7 +77,7 @@ class MatchCreator
     public function showScreen(Competition $competition, IModule $mod)
     {
         global $LANG;
-        $LANG->includeLLFile('EXT:cfc_league/Resources/Private/Language/locallang_db.xml');
+        $LANG->includeLLFile('EXT:cfc_league/Resources/Private/Language/locallang_db.xlf');
 
         $items = [];
         for ($i = 1; $i < 33; ++$i) {

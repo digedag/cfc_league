@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" data="2023-01-22T17-10-50" product-name="zsb">
+		<header/>
+		<body>
+			<trans-unit id=".description" xml:space="preserve">
+				<source>A club is a parent organisation for teams.</source>
+			</trans-unit>
+			<trans-unit id="address.description" xml:space="preserve">
+				<source>Address data. Extension tt_address must be installed.</source>
+			</trans-unit>
+			<trans-unit id="address.details" xml:space="preserve">
+				<source>You can add an address dataset from extension tt_address.</source>
+			</trans-unit>
+			<trans-unit id="extid.description" xml:space="preserve">
+				<source>Identifier on external system.</source>
+			</trans-unit>
+			<trans-unit id="extid.details" xml:space="preserve">
+				<source>Used for automatically synchronizations with external data providers.</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

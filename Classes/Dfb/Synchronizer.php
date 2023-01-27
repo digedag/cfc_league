@@ -229,7 +229,7 @@ class Synchronizer
         $add = true;
         if ($competition->getProperty('teams')) {
             $teamUids = array_flip(Strings::trimExplode(',', $competition->getProperty('teams')));
-            $add = !(array_key_exists($teamUid, $teamUids));
+            $add = !array_key_exists($teamUid, $teamUids);
         }
         if (!$add) {
             return;

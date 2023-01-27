@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.0">
+	<file source-language="en" target-language="de" datatype="plaintext" original="messages" data="2023-01-22T17-11-53" product-name="zsb">
+		<header/>
+		<body>
+			<trans-unit id=".description" xml:space="preserve">
+				<source>A competition penalty is a record to perform corrections on a league table.</source>
+				<target>Mit der Wettbewerbsstrafe können Korrekturen an der Ligatabelle durchgeführt werden.</target>
+			</trans-unit>
+			<trans-unit id=".details" xml:space="preserve">
+				<source/>
+				<target/>
+			</trans-unit>
+			<trans-unit id="correction.description" xml:space="preserve">
+				<source>Mark this record as a table correction. Not handled as penalty</source>
+				<target>Tabellenkorrektur, keine Strafe.</target>
+			</trans-unit>
+			<trans-unit id="correction.details" xml:space="preserve">
+				<source>When to set this marker? Use it, if you do not want to mark this penalty record as a penalty in FE. Sometimes you simply want to
+correct a league table. Maybe some teams start with a predefined number of points.
+				</source>
+				<target>Was ist der Unterschied? Bei einer Strafe wird im Frontend üblicherweise das Team markiert und es wird ein entsprechender Hinweis
+angezeigt. Wenn man dies vermeiden will, weil z.B. die Teams mit einem bestimmten Startpunktzahl in die Liga
+starten, dann muss man dieses Flag setzen.
+				</target>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

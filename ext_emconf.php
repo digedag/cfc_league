@@ -15,7 +15,7 @@ $EM_CONF[$_EXTKEY] = [
     'description' => 'Umfangreiche Extension zur Verwaltung von Sportvereinen und -wettbewerben. Extensive extension to manage sports clubs and competitions. https://github.com/digedag/cfc_league',
     'category' => 'module',
     'shy' => 0,
-    'version' => '1.8.2',
+    'version' => '1.9.0',
     'dependencies' => 'rn_base',
     'module' => 'mod1',
     'state' => 'stable',
@@ -27,7 +27,7 @@ $EM_CONF[$_EXTKEY] = [
     'author_company' => 'System 25',
     'constraints' => [
         'depends' => [
-            'typo3' => '8.7.0-10.4.99',
+            'typo3' => '8.7.0-11.5.99',
             'php' => '7.1.0-8.9.99',
             'rn_base' => '1.15.3-0.0.0',
         ],

@@ -54,13 +54,13 @@ class T3sportsModule extends BaseModule
                     'tabs_images' => [
                         'tab' => 'Resources/Public/Icons/module-t3sports.svg',
                     ],
-                    'll_ref' => 'LLL:EXT:cfcleague/mod1/locallang_mod.xml',
+                    'll_ref' => 'LLL:EXT:cfcleague/mod1/locallang_mod.xlf',
                 ],
             ]);
         }
 
-        $GLOBALS['LANG']->includeLLFile('EXT:cfc_league/Resources/Private/Language/locallang.xml');
-        $GLOBALS['LANG']->includeLLFile('EXT:cfc_league/Resources/Private/Language/locallang_db.xml');
+        $GLOBALS['LANG']->includeLLFile('EXT:cfc_league/Resources/Private/Language/locallang.xlf');
+        $GLOBALS['LANG']->includeLLFile('EXT:cfc_league/Resources/Private/Language/locallang_db.xlf');
 
         // $GLOBALS['BE_USER']->modAccess($GLOBALS['MCONF'], 1); // This checks permissions and exits if the users has no permission for entry.
         $GLOBALS['BE_USER']->modAccess($this->MCONF, 1);

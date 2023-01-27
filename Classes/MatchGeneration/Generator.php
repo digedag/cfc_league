@@ -166,7 +166,7 @@ class Generator
         $teamCnt = count($teams);
         // Anzahl Spieltage prüfen
         if ($teamCnt - 1 != count($table)) {
-            $warnings[] = sprintf($LANG->getLL('msg_wrongmatchdays'), ($teamCnt - 1), count($table));
+            $warnings[] = sprintf($LANG->getLL('msg_wrongmatchdays'), $teamCnt - 1, count($table));
         }
         // Anzahl Spiele pro Spieltag prüfen
         $matchCnt = intval($teamCnt / 2);

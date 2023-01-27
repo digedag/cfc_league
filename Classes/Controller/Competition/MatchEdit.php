@@ -71,7 +71,7 @@ class MatchEdit
 
         $formTool = $module->getFormTool();
         $this->formTool = $formTool;
-        $LANG->includeLLFile('EXT:cfc_league/Resources/Private/Language/locallang_db.xml');
+        $LANG->includeLLFile('EXT:cfc_league/Resources/Private/Language/locallang_db.xlf');
 
         // Zuerst mal müssen wir die passende Liga auswählen lassen:
         $content = '';
@@ -346,9 +346,9 @@ class MatchEdit
                 $row = [];
                 $isHomeDummy = $match->getHome()->isDummy();
                 $row['team'] = $isHomeDummy ? $match->getGuest()->getName() : $match->getHome()->getName();
-                $row['team_edit'] = $this->formTool->createEditLink('tx_cfcleague_teams', ($isHomeDummy ? $match->getProperty('guest') : $match->getProperty('home')), ($isHomeDummy ? $match->getGuest()
+                $row['team_edit'] = $this->formTool->createEditLink('tx_cfcleague_teams', $isHomeDummy ? $match->getProperty('guest') : $match->getProperty('home'), $isHomeDummy ? $match->getGuest()
                     ->getNameShort() : $match->getHome()
-                    ->getNameShort()));
+                    ->getNameShort());
                 $row['match_edit'] = $this->formTool->createEditLink('tx_cfcleague_games', $matchUid);
                 $arr[1][] = $row;
             }
