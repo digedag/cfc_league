@@ -120,8 +120,7 @@
 			]
 		},
 		"branch-alias": {
-			"dev-master": "1.8.x-dev",
-			"dev-upgrade/t311": "1.9.x-dev"
+			"dev-master": "1.9.x-dev"
 		}
 	}
 }

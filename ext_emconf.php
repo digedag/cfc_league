@@ -29,7 +29,7 @@ $EM_CONF[$_EXTKEY] = [
         'depends' => [
             'typo3' => '8.7.0-11.5.99',
             'php' => '7.1.0-8.9.99',
-            'rn_base' => '1.15.3-0.0.0',
+            'rn_base' => '1.16.0-0.0.0',
         ],
         'conflicts' => [],
         'suggests' => [],

@@ -2,6 +2,10 @@
 Änderungen
 ==========
 
+## v1.9.0 (27.01.2023)
+ * Add support for TYPO3 11.5
+ * Some fixes in backend module
+
 ## v1.8.2 (28.06.2022)
  * Fix backend module crash in empty competition
 
