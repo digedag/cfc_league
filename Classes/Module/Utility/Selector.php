@@ -12,7 +12,7 @@ use Sys25\RnBase\Utility\T3General;
 use Sys25\RnBase\Utility\TYPO3;
 use System25\T3sports\Model\Club;
 use System25\T3sports\Model\Competition;
-use System25\T3sports\Model\Match;
+use System25\T3sports\Model\Fixture;
 use System25\T3sports\Model\Saison;
 use System25\T3sports\Model\Team;
 use System25\T3sports\Module\Linker\NewClubLinker;
@@ -311,7 +311,7 @@ class Selector
      * Darstellung der Select-Box mit allen übergebenen Spielen.
      * Es wird auf das aktuelle Spiel eingestellt.
      *
-     * @return Match current match
+     * @return Fixture current match
      */
     public function showMatchSelector(&$content, $pid, $matches)
     {
@@ -329,7 +329,7 @@ class Selector
         }
 
         // Aktuellen Wert als Match-Objekt zurückgeben
-        return tx_rnbase::makeInstance(Match::class, $data['value']);
+        return tx_rnbase::makeInstance(Fixture::class, $data['value']);
     }
 
     /**

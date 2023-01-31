@@ -9,7 +9,7 @@ use Sys25\RnBase\Database\Connection;
 use Sys25\RnBase\Utility\T3General;
 use Sys25\RnBase\Utility\TYPO3;
 use System25\T3sports\Model\Competition;
-use System25\T3sports\Model\Match;
+use System25\T3sports\Model\Fixture;
 use System25\T3sports\Model\Repository\MatchNoteRepository;
 use System25\T3sports\Utility\ServiceRegistry;
 use tx_rnbase;
@@ -17,7 +17,7 @@ use tx_rnbase;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2007-2021 Rene Nitzsche (rene@system25.de)
+ *  (c) 2007-2023 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -296,10 +296,10 @@ class MatchTicker extends BaseModFunc
     /**
      * Erstellt die Eingabemaske für den Spielstand.
      *
-     * @param Match $match
+     * @param Fixture $match
      * @param Competition $competition
      */
-    private function createStandingForm(Match $match, Competition $competition)
+    private function createStandingForm(Fixture $match, Competition $competition)
     {
         global $LANG;
 
@@ -389,7 +389,7 @@ class MatchTicker extends BaseModFunc
     /**
      * Wir listen die Tickermeldungen des Spiels auf.
      *
-     * @param Match $match
+     * @param Fixture $match
      */
     protected function createTickerArray($match, $showAll)
     {
@@ -455,10 +455,10 @@ class MatchTicker extends BaseModFunc
     }
 
     /**
-     * @param Match $match
+     * @param Fixture $match
      * @param string $team
      */
-    protected function getPlayerNames(Match $match, $team)
+    protected function getPlayerNames(Fixture $match, $team)
     {
         if (isset($this->playerNames[$team])) {
             return $this->playerNames[$team];
@@ -483,9 +483,9 @@ class MatchTicker extends BaseModFunc
     /**
      * Erstellt das Formular für die Eingabe der Tickermeldungen.
      *
-     * @param Match $match
+     * @param Fixture $match
      */
-    protected function createFormArray(Match $match)
+    protected function createFormArray(Fixture $match)
     {
         global $LANG;
 

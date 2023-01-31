@@ -12,7 +12,7 @@ use Sys25\RnBase\Utility\T3General;
 use Sys25\RnBase\Utility\TYPO3;
 use System25\T3sports\Model\Competition;
 use System25\T3sports\Model\CompetitionRound;
-use System25\T3sports\Model\Match;
+use System25\T3sports\Model\Fixture;
 use System25\T3sports\Model\Team;
 use System25\T3sports\Sports\ServiceLocator;
 use System25\T3sports\Utility\ServiceRegistry;
@@ -296,7 +296,7 @@ class MatchEdit
     /**
      * Erstellt das Datenarray zur Erstellung der HTML-Tabelle mit den Spielen des Spieltages.
      *
-     * @param Match[] $matches
+     * @param Fixture[] $matches
      * @param Competition $competition
      *
      * @return array mit zwei Elementen: Idx 0 enthält Array für Darstellung als Tabelle, Idx 1

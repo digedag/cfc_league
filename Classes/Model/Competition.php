@@ -86,7 +86,7 @@ class Competition extends BaseModel
      * @param int $status - 0,1,2 für alle, Hin-, Rückrunde
      * @param int $scope - 0,1,2 für alle, Hin-, Rückrunde
      *
-     * @return Match[]
+     * @return Fixture[]
      */
     public function getMatches($status, $scope = 0)
     {
@@ -129,7 +129,7 @@ class Competition extends BaseModel
                 }
                 $options = [
                     'where' => $where,
-                    'wrapperclass' => Match::class,
+                    'wrapperclass' => Fixture::class,
                 ];
                 // Issue 1880237: Return matches sorted by round
                 $options['orderby'] = 'round, date';
@@ -138,6 +138,8 @@ class Competition extends BaseModel
 
             return $this->matchesByState[$status.'_'.$scope];
         }
+
+        return [];
     }
 
     public function getName()
@@ -271,7 +273,7 @@ class Competition extends BaseModel
      *
      * @param int $roundId
      *
-     * @return Match[]
+     * @return Fixture[]
      */
     public function getMatchesByRound($roundId)
     {
