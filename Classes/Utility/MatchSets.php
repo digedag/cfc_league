@@ -2,7 +2,7 @@
 
 namespace System25\T3sports\Utility;
 
-use System25\T3sports\Model\Match;
+use System25\T3sports\Model\Fixture;
 use System25\T3sports\Model\Set;
 
 /***************************************************************
@@ -36,7 +36,7 @@ class MatchSets
     /**
      * returns sum of all set points of home team.
      *
-     * @param Match $match
+     * @param Fixture $match
      */
     public static function countSetPointsHome($match)
     {
@@ -53,7 +53,7 @@ class MatchSets
     /**
      * returns sum of all set points of guest team.
      *
-     * @param Match $match
+     * @param Fixture $match
      */
     public static function countSetPointsGuest($match)
     {

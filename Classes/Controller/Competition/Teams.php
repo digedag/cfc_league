@@ -16,7 +16,7 @@ use tx_rnbase;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2008-2021 Rene Nitzsche (rene@system25.de)
+ *  (c) 2008-2023 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -151,10 +151,11 @@ class Teams
     {
         global $LANG;
         $show = intval(Parameters::getPostOrGetParameter('check_newcompteam'));
-        $content = '<h2>
-		<input type="checkbox" name="check_newcompteam" value="1" '.($show ? 'checked="checked"' : '').' onClick="this.form.submit()">
-		'.$LANG->getLL('label_create_teams').'</h2>
-		';
+        $content = sprintf(
+            '<h2><input type="checkbox" name="check_newcompteam" value="1" %s onClick="this.form.submit()">%s</h2>',
+            $show ? 'checked="checked"' : '',
+            $LANG->getLL('label_create_teams')
+        );
 
         if (!$show) {
             return $content;

@@ -3,7 +3,7 @@
 namespace System25\T3sports\Model\Repository;
 
 use Sys25\RnBase\Domain\Repository\PersistenceRepository;
-use System25\T3sports\Model\Match;
+use System25\T3sports\Model\Fixture;
 use System25\T3sports\Model\MatchNote;
 use System25\T3sports\Search\MatchNoteSearch;
 
@@ -47,7 +47,7 @@ class MatchNoteRepository extends PersistenceRepository
      * in den übergebenen Matches gesetzt.
      * Die ermittelten MatchNotes haben keine Referenz auf das zugehörige Match!
      *
-     * @param Match[] $matches
+     * @param Fixture[] $matches
      * @param int $types
      *
      * @return
@@ -92,12 +92,12 @@ class MatchNoteRepository extends PersistenceRepository
     /**
      * Lädt die MatchNotes eines Spiels.
      *
-     * @param Match $match
+     * @param Fixture $match
      * @param string $orderBy
      *
      * @return MatchNote[]
      */
-    public function loadMatchNotesByMatch(Match $match, $orderBy = 'asc')
+    public function loadMatchNotesByMatch(Fixture $match, $orderBy = 'asc')
     {
         $what = '*';
         $from = 'tx_cfcleague_match_notes';

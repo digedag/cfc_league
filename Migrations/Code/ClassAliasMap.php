@@ -21,7 +21,7 @@ return [
     'tx_cfcleague_models_CompetitionPenalty' => \System25\T3sports\Model\CompetitionPenalty::class,
     'tx_cfcleague_models_CompetitionRound' => \System25\T3sports\Model\CompetitionRound::class,
     'tx_cfcleague_models_Group' => \System25\T3sports\Model\Group::class,
-    'tx_cfcleague_models_Match' => \System25\T3sports\Model\Match::class,
+    'tx_cfcleague_models_Match' => \System25\T3sports\Model\Fixture::class,
     'tx_cfcleague_models_MatchNote' => \System25\T3sports\Model\MatchNote::class,
     'tx_cfcleague_models_Profile' => \System25\T3sports\Model\Profile::class,
     'tx_cfcleague_models_Saison' => \System25\T3sports\Model\Saison::class,

@@ -2,6 +2,11 @@
 Änderungen
 ==========
 
+## v1.10.0 (04.02.2023)
+ * Add support for PHP 8.x
+ * BC: class `System25\T3sports\Model\Match` renamed to `System25\T3sports\Model\Fixture`
+ * New pipeline check for PHP version compatibility
+
 ## v1.9.0 (27.01.2023)
  * Add support for TYPO3 11.5
  * Some fixes in backend module

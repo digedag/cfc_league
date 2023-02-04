@@ -12,7 +12,7 @@ use System25\T3sports\Utility\TcaLookup;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2007-2020 Rene Nitzsche <rene@system25.de>
+ *  (c) 2007-2023 Rene Nitzsche <rene@system25.de>
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -93,7 +93,7 @@ class TceHook
                     }
                 }
                 $itemUids = array_unique($itemUids);
-                $incomingFieldArray['teams'] = implode($itemUids, ',');
+                $incomingFieldArray['teams'] = implode(',', $itemUids);
             }
         }
         if ('tx_cfcleague_games' == $table) {
@@ -165,7 +165,7 @@ class TceHook
                     $profileUids[] = $profileUid;
                 }
             }
-            $incomingFieldArray[$profileType] = implode($profileUids, ',');
+            $incomingFieldArray[$profileType] = implode(',', $profileUids);
         }
     }
 }
