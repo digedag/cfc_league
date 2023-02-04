@@ -45,9 +45,9 @@ jobs:
             - name: "Install PHP"
                 uses: shivammathur/setup-php@v2
                 with:
-                php-version: "8.1"
-                coverage: none
-                tools: composer:v2
+                    php-version: "8.1"
+                    coverage: none
+                    tools: composer:v2
             - name: "Run PHP CS with PHPCompatibility rule"
                 run: "composer test:phpcompat ${{ matrix.php-version }}"
         strategy:
