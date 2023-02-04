@@ -23,7 +23,7 @@ use System25\T3sports\Utility\ServiceRegistry;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2009-2021 Rene Nitzsche (rene@system25.de)
+ *  (c) 2009-2023 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -80,7 +80,7 @@ class TeamService extends AbstractService
      *
      * @param int $teamUid
      *
-     * @return Team
+     * @return Team|bool
      */
     public function getTeam($teamUid)
     {
@@ -268,9 +268,10 @@ class TeamService extends AbstractService
     {
         $fields = $options = [];
         // FIXME: Umstellen https://github.com/digedag/rn_base/issues/47
-        $fields[SEARCH_FIELD_CUSTOM] = '( FIND_IN_SET('.$profileUid.', players)
-				 OR FIND_IN_SET('.$profileUid.', coaches)
-				 OR FIND_IN_SET('.$profileUid.', supporters) )';
+        $fields[SEARCH_FIELD_CUSTOM] = sprintf(
+            '( FIND_IN_SET(%d, players) OR FIND_IN_SET(%d, coaches) OR FIND_IN_SET(%d, supporters) )',
+            $profileUid, $profileUid, $profileUid
+        );
 
         return $this->searchTeams($fields, $options);
     }

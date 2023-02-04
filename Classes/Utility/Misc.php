@@ -11,7 +11,7 @@ use tx_rnbase;
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2009-2021 Rene Nitzsche (rene@system25.de)
+*  (c) 2009-2023 Rene Nitzsche (rene@system25.de)
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -144,33 +144,33 @@ class Misc
 
         $content .= $error_doc->startPage('T3sports error Output');
         $content .= '
-			<br/><br/>
-			<table border="0" cellpadding="1" cellspacing="1" width="300" align="center">';
-
-        $content .= '	<tr class="bgColor5">
-					<td colspan="2" align="center"><strong>Fehler</strong></td>
-				</tr>';
+            <br/><br/>
+            <table border="0" cellpadding="1" cellspacing="1" width="300" align="center">';
 
         $content .= '
-				<tr class="bgColor4">
-					<td valign="top"><img'.Icons::skinImg('', 'gfx/icon_fatalerror.gif', 'width="18" height="16"').' alt="" /></td>
-					<td>'.$GLOBALS['LANG']->sL($error, 0).'</td>
-				</tr>';
+            <tr class="bgColor5">
+                <td colspan="2" align="center"><strong>Fehler</strong></td>
+            </tr>';
+
+        $content .= '
+            <tr class="bgColor4">
+                <td valign="top"><img'.Icons::skinImg('', 'gfx/icon_fatalerror.gif', 'width="18" height="16"').' alt="" /></td>
+                <td>'.$GLOBALS['LANG']->sL($error, 0).'</td>
+            </tr>';
         if ($addinfo) {
             $content .= '
-					<tr class="bgColor4">
-						<td valign="top"></td>
-						<td>'.$addinfo.'</td>
-					</tr>';
+            <tr class="bgColor4">
+                <td valign="top"></td>
+                <td>'.$addinfo.'</td>
+            </tr>';
         }
 
         $content .= '
-				<tr>
-					<td colspan="2" align="center"><br />'.
-
+            <tr>
+                <td colspan="2" align="center"><br />'.
                     '<form action="'.htmlspecialchars($_SERVER['HTTP_REFERER']).'"><input type="submit" value="Weiter" onclick="document.location='.htmlspecialchars($_SERVER['HTTP_REFERER']).'return false;" /></form>'.
-                    '</td>
-				</tr>';
+                '</td>
+            </tr>';
 
         $content .= '</table>';
 

@@ -548,7 +548,7 @@ class Competition extends BaseModel
         }
 
         if (strlen($compTypes)) {
-            $where .= ' AND type IN ('.implode(Strings::intExplode(',', $compTypes), ',').')';
+            $where .= ' AND type IN ('.implode(',', Strings::intExplode(',', $compTypes)).')';
         }
 
         /*

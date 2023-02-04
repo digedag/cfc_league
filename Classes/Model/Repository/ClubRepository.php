@@ -11,7 +11,7 @@ use System25\T3sports\Search\ClubSearch;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2017-2021 Rene Nitzsche (rene@system25.de)
+ *  (c) 2017-2023 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -64,12 +64,12 @@ class ClubRepository extends PersistenceRepository
         $options['wrapperclass'] = Club::class;
         $options['orderby'] = 'name';
 
-        $saison = (strlen($saisonUids)) ? implode(Strings::intExplode(',', $saisonUids), ',') : '';
+        $saison = (strlen($saisonUids)) ? implode(',', Strings::intExplode(',', $saisonUids)) : '';
         if (strlen($saison) > 0) {
             $where .= ' tx_cfcleague_competition.saison IN ('.$saison.')';
         }
 
-        $groups = (strlen($groupUids)) ? implode(Strings::intExplode(',', $groupUids), ',') : '';
+        $groups = (strlen($groupUids)) ? implode(',', Strings::intExplode(',', $groupUids)) : '';
         if (strlen($groups) > 0) {
             if (strlen($where) > 0) {
                 $where .= ' AND ';
@@ -77,7 +77,7 @@ class ClubRepository extends PersistenceRepository
             $where .= ' tx_cfcleague_competition.agegroup IN ('.$groups.')';
         }
 
-        $comps = (strlen($compUids)) ? implode(Strings::intExplode(',', $compUids), ',') : '';
+        $comps = (strlen($compUids)) ? implode(',', Strings::intExplode(',', $compUids)) : '';
         if (strlen($comps) > 0) {
             if (strlen($where) > 0) {
                 $where .= ' AND ';
@@ -85,7 +85,7 @@ class ClubRepository extends PersistenceRepository
             $where .= ' tx_cfcleague_competition.uid IN ('.$comps.')';
         }
 
-        $clubs = (strlen($clubUids)) ? implode(Strings::intExplode(',', $clubUids), ',') : '';
+        $clubs = (strlen($clubUids)) ? implode(',', Strings::intExplode(',', $clubUids)) : '';
         if (strlen($clubs) > 0) {
             if (strlen($where) > 0) {
                 $where .= ' AND ';
