@@ -146,13 +146,17 @@ jobs:
             -
                  name: "Show Composer version"
                  run: composer --version
-
             -
-                name: Prepare TYPO3
-                uses: ./.github/actions/t3prepare
+                name: "Determine composer cache directory"
+                id: "determine-composer-cache-directory"
+                run: echo "directory={$(composer config cache-dir)}" >> $GITHUB_OUTPUT
+            -
+                name: "Cache dependencies installed with composer"
+                uses: "actions/cache@v2.0.0"
                 with:
-                    php-version: ${{ matrix.php-version }}
-
+                    path: "${{ steps.determine-composer-cache-directory.outputs.directory }}"
+                    key: "php-${{ matrix.php-version }}-composer-${{ hashFiles('composer.lock') }}"
+                    restore-keys: "php-${{ matrix.php-version }}-composer-"
             -
                 name: "Install composer dependencies"
                 run: |
