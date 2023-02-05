@@ -11,7 +11,6 @@ runs:
     -
         name: "Determine composer cache directory"
         id: "determine-composer-cache-directory"
-#        run: "echo \"::set-output name=directory::$(composer config cache-dir)\""
         run: echo "directory={$(composer config cache-dir)}" >> $GITHUB_OUTPUT
         shell: bash
     -

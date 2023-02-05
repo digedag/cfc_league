@@ -52,21 +52,6 @@ jobs:
                 uses: ./.github/actions/t3prepare
                 with:
                     php-version: ${{ matrix.php-version }}
-#            -
-#                name: "Determine composer cache directory"
-#                id: "determine-composer-cache-directory"
-#                run: "echo \"::set-output name=directory::$(composer config cache-dir)\""
-#            -
-#                name: "Cache dependencies installed with composer"
-#                uses: "actions/cache@v2.0.0"
-#                with:
-#                    path: "${{ steps.determine-composer-cache-directory.outputs.directory }}"
-#                    key: "php-${{ matrix.php-version }}-composer-${{ hashFiles('composer.lock') }}"
-#                    restore-keys: "php-${{ matrix.php-version }}-composer-"
-#            -
-#                name: "Install composer dependencies"
-#                run: "composer install --no-interaction --no-progress --no-suggest"
-
             -
                 name: "Run PHP CS with PHPCompatibility rule"
                 run: "composer test:phpcompat ${{ matrix.php-version }}"
@@ -105,19 +90,10 @@ jobs:
                   php-version: "${{ matrix.php-version }}"
                   extensions: "${{ env.PHP_EXTENSIONS }}"
             -
-                name: "Determine composer cache directory"
-                id: "determine-composer-cache-directory"
-                run: "echo \"::set-output name=directory::$(composer config cache-dir)\""
-            -
-                name: "Cache dependencies installed with composer"
-                uses: "actions/cache@v2.0.0"
+                name: Prepare TYPO3
+                uses: ./.github/actions/t3prepare
                 with:
-                    path: "${{ steps.determine-composer-cache-directory.outputs.directory }}"
-                    key: "php-${{ matrix.php-version }}-composer-${{ hashFiles('composer.lock') }}"
-                    restore-keys: "php-${{ matrix.php-version }}-composer-"
-            -
-                name: "Install composer dependencies"
-                run: "composer install --no-interaction --no-progress --no-suggest"
+                    php-version: ${{ matrix.php-version }}
             -
                 name: "Run command"
                 run: "composer ${{ matrix.command }}"
@@ -170,17 +146,13 @@ jobs:
             -
                  name: "Show Composer version"
                  run: composer --version
+
             -
-                name: "Determine composer cache directory"
-                id: "determine-composer-cache-directory"
-                run: "echo \"::set-output name=directory::$(composer config cache-dir)\""
-            -
-                name: "Cache dependencies installed with composer"
-                uses: "actions/cache@v2.0.0"
+                name: Prepare TYPO3
+                uses: ./.github/actions/t3prepare
                 with:
-                    path: "${{ steps.determine-composer-cache-directory.outputs.directory }}"
-                    key: "php-${{ matrix.php-version }}-composer-${{ hashFiles('composer.lock') }}"
-                    restore-keys: "php-${{ matrix.php-version }}-composer-"
+                    php-version: ${{ matrix.php-version }}
+
             -
                 name: "Install composer dependencies"
                 run: |
