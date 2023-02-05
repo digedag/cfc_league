@@ -12,6 +12,7 @@ runs:
         name: "Determine composer cache directory"
         id: "determine-composer-cache-directory"
         run: "echo \"::set-output name=directory::$(composer config cache-dir)\""
+        shell: bash
     -
         name: "Cache dependencies installed with composer"
         uses: "actions/cache@v2.0.0"
@@ -22,3 +23,4 @@ runs:
     -
         name: "Install composer dependencies"
         run: "composer install --no-interaction --no-progress --no-suggest"
+        shell: bash
