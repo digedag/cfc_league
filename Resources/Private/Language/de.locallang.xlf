@@ -277,11 +277,11 @@
             </trans-unit>
             <trans-unit id="no_league_in_page" xml:space="preserve">
                 <source>No competitions found on current page.</source>
-                <target>Die aktuelle Seite enth&auml;lt keine Wettbewerbe.</target>
+                <target>Die aktuelle Seite enthält keine Wettbewerbe.</target>
             </trans-unit>
             <trans-unit id="no_round_in_league" xml:space="preserve">
                 <source>This Competition containes no matches.</source>
-                <target>Dieser Wettbewerb enth&auml;lt keine Spiele.</target>
+                <target>Dieser Wettbewerb enthält keine Spiele.</target>
             </trans-unit>
             <trans-unit id="btn_statusToFinished" xml:space="preserve">
                 <source>All games 'Finished'</source>
@@ -493,15 +493,15 @@
             </trans-unit>
             <trans-unit id="msg_number_of_players" xml:space="preserve">
                 <source>Number of players to add:</source>
-                <target>Anzahl Spieler, die zugeordnet werden k&ouml;nnen:</target>
+                <target>Anzahl Spieler, die zugeordnet werden können:</target>
             </trans-unit>
             <trans-unit id="msg_number_of_coaches" xml:space="preserve">
                 <source>Number of coaches to add:</source>
-                <target>Anzahl Trainer, die zugeordnet werden k&ouml;nnen:</target>
+                <target>Anzahl Trainer, die zugeordnet werden können:</target>
             </trans-unit>
             <trans-unit id="msg_number_of_supporters" xml:space="preserve">
                 <source>Number of supporters to add:</source>
-                <target>Anzahl Betreuer, die zugeordnet werden k&ouml;nnen:</target>
+                <target>Anzahl Betreuer, die zugeordnet werden können:</target>
             </trans-unit>
             <trans-unit id="msg_searchhelp" xml:space="preserve">
                 <source>The search term should contain at least 3 characters.</source>
