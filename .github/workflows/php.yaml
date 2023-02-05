@@ -50,7 +50,7 @@ jobs:
             -
                 name: Prepare TYPO3
                 uses: ./.github/actions/t3prepare
-                width:
+                with:
                     php-version: ${{ matrix.php-version }}
 #            -
 #                name: "Determine composer cache directory"
