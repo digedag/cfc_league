@@ -60,7 +60,7 @@ class Misc
      */
     public static function registerMatchNote($label, $typeId)
     {
-        if (!is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['matchnotetypes'])) {
+        if (!isset($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['matchnotetypes'])) {
             $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['matchnotetypes'] = [];
         }
         $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['matchnotetypes'][] = [$label, $typeId];
@@ -73,7 +73,7 @@ class Misc
      */
     public static function removeMatchNote($typeId)
     {
-        if (!is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['matchnotetypes'])) {
+        if (!isset($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['matchnotetypes'])) {
             return;
         }
         foreach ($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['matchnotetypes'] as $idx => $note) {
@@ -94,7 +94,7 @@ class Misc
      */
     public static function registerTableStrategy(string $id, string $label, string $comparator)
     {
-        if (!is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['tablestrategy'])) {
+        if (!isset($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['tablestrategy'])) {
             $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['tablestrategy'] = [];
         }
         $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['tablestrategy'][$id] = [
@@ -126,7 +126,7 @@ class Misc
      */
     public static function registerFormation($label, $formationString)
     {
-        if (!is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['formations'])) {
+        if (!isset($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['formations'])) {
             $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['formations'] = [];
         }
         $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['formations'][] = [$label, $formationString];
