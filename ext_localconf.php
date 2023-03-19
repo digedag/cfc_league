@@ -1,32 +1,30 @@
 <?php
 
-use Sys25\RnBase\Utility\Extensions;
-use System25\T3sports\Utility\Misc;
-
-if (!defined('TYPO3_MODE')) {
+if (!(defined('TYPO3') || defined('TYPO3_MODE'))) {
     exit('Access denied.');
 }
+
 $_EXTKEY = 'cfc_league';
 
-tx_rnbase_util_Extensions::addUserTSConfig('
+\Sys25\RnBase\Utility\Extensions::addUserTSConfig('
     options.saveDocNew.tx_cfcleague_group=1
 ');
-tx_rnbase_util_Extensions::addUserTSConfig('
+\Sys25\RnBase\Utility\Extensions::addUserTSConfig('
     options.saveDocNew.tx_cfcleague_saison=1
 ');
-tx_rnbase_util_Extensions::addUserTSConfig('
+\Sys25\RnBase\Utility\Extensions::addUserTSConfig('
     options.saveDocNew.tx_cfcleague_competition=1
 ');
-tx_rnbase_util_Extensions::addUserTSConfig('
+\Sys25\RnBase\Utility\Extensions::addUserTSConfig('
     options.saveDocNew.tx_cfcleague_club=1
 ');
-tx_rnbase_util_Extensions::addUserTSConfig('
+\Sys25\RnBase\Utility\Extensions::addUserTSConfig('
     options.saveDocNew.tx_cfcleague_teams=1
 ');
-tx_rnbase_util_Extensions::addUserTSConfig('
+\Sys25\RnBase\Utility\Extensions::addUserTSConfig('
     options.saveDocNew.tx_cfcleague_profiles=1
 ');
-tx_rnbase_util_Extensions::addUserTSConfig('
+\Sys25\RnBase\Utility\Extensions::addUserTSConfig('
     options.saveDocNew.tx_cfcleague_team_notes=1
 ');
 
@@ -35,9 +33,9 @@ $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['proc
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass'][] = 'System25\T3sports\Hooks\TceHook';
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processCmdmapClass'][] = 'System25\T3sports\Hooks\CommandMapHook';
 
-if (TYPO3_MODE == 'BE') {
+if (\Sys25\RnBase\Utility\Environment::isBackend()) {
     // Einbindung einer PageTSConfig
-    Extensions::addPageTSConfig('<INCLUDE_TYPOSCRIPT: source="FILE:EXT:cfc_league/Configuration/TypoScript/TSconfig/pageTSconfig.txt">');
+    \Sys25\RnBase\Utility\Extensions::addPageTSConfig('<INCLUDE_TYPOSCRIPT: source="FILE:EXT:cfc_league/Configuration/TypoScript/TSconfig/pageTSconfig.txt">');
 
     $GLOBALS['TYPO3_CONF_VARS']['SYS']['formEngine']['nodeRegistry']['t3sports_logoSelect'] = [
         'nodeName' => 't3sLogoSelect',
@@ -46,35 +44,35 @@ if (TYPO3_MODE == 'BE') {
     ];
 }
 
-Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_match_notes.type.ticker', '100');
-Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_match_notes.type.goal', '10');
-Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_match_notes.type.goal.header', '11');
-Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_match_notes.type.goal.penalty', '12');
-Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_match_notes.type.goal.own', '30');
-Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_match_notes.type.goal.assist', '31');
-Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_match_notes.type.penalty.forgiven', '32');
-Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_match_notes.type.corner', '33');
-Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_match_notes.type.yellow', '70');
-Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_match_notes.type.yellowred', '71');
-Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_match_notes.type.red', '72');
-Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_match_notes.type.changeout', '80');
-Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_match_notes.type.changein', '81');
-Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_match_notes.type.captain', '200');
+\System25\T3sports\Utility\Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_match_notes.type.ticker', '100');
+\System25\T3sports\Utility\Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_match_notes.type.goal', '10');
+\System25\T3sports\Utility\Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_match_notes.type.goal.header', '11');
+\System25\T3sports\Utility\Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_match_notes.type.goal.penalty', '12');
+\System25\T3sports\Utility\Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_match_notes.type.goal.own', '30');
+\System25\T3sports\Utility\Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_match_notes.type.goal.assist', '31');
+\System25\T3sports\Utility\Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_match_notes.type.penalty.forgiven', '32');
+\System25\T3sports\Utility\Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_match_notes.type.corner', '33');
+\System25\T3sports\Utility\Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_match_notes.type.yellow', '70');
+\System25\T3sports\Utility\Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_match_notes.type.yellowred', '71');
+\System25\T3sports\Utility\Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_match_notes.type.red', '72');
+\System25\T3sports\Utility\Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_match_notes.type.changeout', '80');
+\System25\T3sports\Utility\Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_match_notes.type.changein', '81');
+\System25\T3sports\Utility\Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_match_notes.type.captain', '200');
 
-Misc::registerFormation('', '0');
-Misc::registerFormation('3-5-2', '1-3-5-2');
-Misc::registerFormation('3-4-3', '1-3-4-3');
-Misc::registerFormation('4-2-3-1', '1-4-2-3-1');
-Misc::registerFormation('4-3-3', '1-4-3-3');
-Misc::registerFormation('4-4-2', '1-4-4-2');
-Misc::registerFormation('4-5-1', '1-4-5-1');
-Misc::registerFormation('5-3-2', '1-5-3-2');
-Misc::registerFormation('5-4-1', '1-5-4-1');
+\System25\T3sports\Utility\Misc::registerFormation('', '0');
+\System25\T3sports\Utility\Misc::registerFormation('3-5-2', '1-3-5-2');
+\System25\T3sports\Utility\Misc::registerFormation('3-4-3', '1-3-4-3');
+\System25\T3sports\Utility\Misc::registerFormation('4-2-3-1', '1-4-2-3-1');
+\System25\T3sports\Utility\Misc::registerFormation('4-3-3', '1-4-3-3');
+\System25\T3sports\Utility\Misc::registerFormation('4-4-2', '1-4-4-2');
+\System25\T3sports\Utility\Misc::registerFormation('4-5-1', '1-4-5-1');
+\System25\T3sports\Utility\Misc::registerFormation('5-3-2', '1-5-3-2');
+\System25\T3sports\Utility\Misc::registerFormation('5-4-1', '1-5-4-1');
 
-Misc::registerTableStrategy('default', 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_competition_tablestrategy_default', '');
+\System25\T3sports\Utility\Misc::registerTableStrategy('default', 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_competition_tablestrategy_default', '');
 
 // Include services
-Extensions::addService(
+\Sys25\RnBase\Utility\Extensions::addService(
     $_EXTKEY,
     't3sports_srv' /* sv type */ ,
     'tx_cfcleague_services_Stadiums' /* sv key */ ,
@@ -86,7 +84,7 @@ Extensions::addService(
     ]
 );
 
-Extensions::addService(
+\Sys25\RnBase\Utility\Extensions::addService(
     $_EXTKEY,
     't3sports_srv' /* sv type */ ,
     'tx_cfcleague_services_Saison' /* sv key */ ,
@@ -98,7 +96,7 @@ Extensions::addService(
     ]
 );
 
-Extensions::addService(
+\Sys25\RnBase\Utility\Extensions::addService(
     $_EXTKEY,
     't3sports_srv' /* sv type */ ,
     'tx_cfcleague_services_Competition' /* sv key */ ,
@@ -110,7 +108,7 @@ Extensions::addService(
     ]
 );
 
-Extensions::addService(
+\Sys25\RnBase\Utility\Extensions::addService(
     $_EXTKEY,
     't3sports_srv' /* sv type */ ,
     'tx_cfcleague_services_Match' /* sv key */ ,
@@ -122,7 +120,7 @@ Extensions::addService(
     ]
 );
 
-Extensions::addService(
+\Sys25\RnBase\Utility\Extensions::addService(
     $_EXTKEY,
     't3sports_srv' /* sv type */ ,
     'tx_cfcleague_services_Group' /* sv key */ ,
@@ -134,7 +132,7 @@ Extensions::addService(
     ]
 );
 
-Extensions::addService(
+\Sys25\RnBase\Utility\Extensions::addService(
     $_EXTKEY,
     't3sports_srv' /* sv type */ ,
     'tx_cfcleague_services_Teams' /* sv key */ ,
@@ -146,7 +144,7 @@ Extensions::addService(
     ]
 );
 
-Extensions::addService(
+\Sys25\RnBase\Utility\Extensions::addService(
     $_EXTKEY,
     't3sports_srv' /* sv type */ ,
     'tx_cfcleague_services_Profiles' /* sv key */ ,
@@ -158,7 +156,7 @@ Extensions::addService(
     ]
 );
 
-Extensions::addService(
+\Sys25\RnBase\Utility\Extensions::addService(
     $_EXTKEY,
     't3sports_profiletype' /* sv type */ ,
     'tx_cfcleague_services_ProfileTypes' /* sv key */ ,
@@ -174,7 +172,7 @@ Extensions::addService(
 // Services for kind of sports
 // ---------------
 
-Extensions::addService(
+\Sys25\RnBase\Utility\Extensions::addService(
     $_EXTKEY,
     't3sports_sports' /* sv type */ ,
     'tx_cfcleague_sports_Football' /* sv key */ ,
@@ -187,7 +185,7 @@ Extensions::addService(
     ]
 );
 
-Extensions::addService(
+\Sys25\RnBase\Utility\Extensions::addService(
     $_EXTKEY,
     't3sports_sports' /* sv type */ ,
     'tx_cfcleague_sports_Handball' /* sv key */ ,
@@ -200,7 +198,7 @@ Extensions::addService(
     ]
 );
 
-Extensions::addService(
+\Sys25\RnBase\Utility\Extensions::addService(
     $_EXTKEY,
     't3sports_sports' /* sv type */ ,
     'tx_cfcleague_sports_IceHockey' /* sv key */ ,
@@ -213,7 +211,7 @@ Extensions::addService(
     ]
 );
 
-Extensions::addService(
+\Sys25\RnBase\Utility\Extensions::addService(
     $_EXTKEY,
     't3sports_sports' /* sv type */ ,
     'tx_cfcleague_sports_Volleyball' /* sv key */ ,
