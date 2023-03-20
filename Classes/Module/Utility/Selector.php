@@ -55,6 +55,9 @@ class Selector
 
     private $module;
 
+    /** @var ToolBox */
+    private $formTool;
+
     /** @var \TYPO3\CMS\Core\Imaging\IconFactory */
     protected $iconFactory;
 

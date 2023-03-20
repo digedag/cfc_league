@@ -46,7 +46,7 @@ class T3sportsModule extends BaseModule
      */
     public function init()
     {
-        if (!$this->MCONF['name']) {
+        if (!isset($this->MCONF['name'])) {
             $this->MCONF = array_merge((array) $GLOBALS['MCONF'], [
                 'name' => 'web_CfcLeagueM1',
                 'access' => 'user,group',
