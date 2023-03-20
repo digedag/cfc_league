@@ -7,13 +7,16 @@ use Sys25\RnBase\Utility\Debug;
 use Sys25\RnBase\Utility\Strings;
 use Sys25\RnBase\Utility\TSFAL;
 use Sys25\RnBase\Utility\TYPO3;
-use tx_cfcleague_util_ServiceRegistry;
+use System25\T3sports\Model\Competition;
+use System25\T3sports\Model\Fixture;
+use System25\T3sports\Model\Stadium;
+use System25\T3sports\Model\Team;
 use tx_rnbase;
 
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2007-2021 Rene Nitzsche (rene@system25.de)
+ *  (c) 2007-2023 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -42,13 +45,13 @@ class TcaLookup
      */
     public function getProfileTypes(&$config)
     {
-        $srv = tx_cfcleague_util_ServiceRegistry::getProfileService();
+        $srv = ServiceRegistry::getProfileService();
         $config['items'] = $srv->getProfileTypes4TCA();
     }
 
     public function getProfileTypeItems($uids)
     {
-        $srv = tx_cfcleague_util_ServiceRegistry::getProfileService();
+        $srv = ServiceRegistry::getProfileService();
 
         return $srv->getProfileTypeItems4TCA($uids);
     }
@@ -59,17 +62,17 @@ class TcaLookup
      * @param
      *            $config
      *
-     * @return array
+     * @return void
      */
     public function getMatchNoteTypes(&$config)
     {
-        $srv = tx_cfcleague_util_ServiceRegistry::getMatchService();
+        $srv = ServiceRegistry::getMatchService();
         $config['items'] = $srv->getMatchNoteTypes4TCA();
     }
 
     public function getTableStrategies(&$config)
     {
-        $srv = tx_cfcleague_util_ServiceRegistry::getCompetitionService();
+        $srv = ServiceRegistry::getCompetitionService();
         $config['items'] = $srv->getTableStrategies4TCA();
     }
 
@@ -79,11 +82,11 @@ class TcaLookup
      * @param
      *            $config
      *
-     * @return array
+     * @return void
      */
     public function getSportsTypes(&$config)
     {
-        $srv = tx_cfcleague_util_ServiceRegistry::getCompetitionService();
+        $srv = ServiceRegistry::getCompetitionService();
         $config['items'] = $srv->getSports4TCA();
     }
 
@@ -96,7 +99,7 @@ class TcaLookup
      * @param
      *            $config
      *
-     * @return array
+     * @return void
      */
     public function getFormations(&$config)
     {
@@ -110,7 +113,7 @@ class TcaLookup
         // In der 7.6 ist immer ein Array im Wert
         $sports = is_array($sports) ? (count($sports) ? reset($sports) : false) : $sports;
         if ($sports) {
-            $srv = tx_cfcleague_util_ServiceRegistry::getCompetitionService();
+            $srv = ServiceRegistry::getCompetitionService();
             $config['items'] = $srv->getPointSystems($sports);
         }
     }
@@ -128,7 +131,7 @@ class TcaLookup
         $currentAvailable = false;
         $teamId = is_array($PA['row']['home']) ? reset($PA['row']['home']) : $PA['row']['home'];
         if ($teamId) {
-            $srv = tx_cfcleague_util_ServiceRegistry::getTeamService();
+            $srv = ServiceRegistry::getTeamService();
             $stadiums = $srv->getStadiums($teamId);
             foreach ($stadiums as $stadium) {
                 $currentAvailable = $currentAvailable ? $currentAvailable : ($current == $stadium->getUid() || 0 == $current);
@@ -140,7 +143,8 @@ class TcaLookup
         }
         if (!$currentAvailable) {
             // Das aktuelle Stadium ist nicht mehr im Verein gefunden worden. Es wird daher nachgeladen
-            $stadium = tx_rnbase::makeInstance('tx_cfcleague_models_Stadium', $current);
+            /** @var Stadium $stadium */
+            $stadium = tx_rnbase::makeInstance(Stadium::class, $current);
             if ($stadium->isValid()) {
                 $PA['items'][] = [
                     $stadium->getName(),
@@ -161,7 +165,7 @@ class TcaLookup
     {
         $clubId = is_array($PA['row']['club']) ? reset($PA['row']['club']) : $PA['row']['club'];
         if ($clubId) {
-            $srv = tx_cfcleague_util_ServiceRegistry::getTeamService();
+            $srv = ServiceRegistry::getTeamService();
             // FIXME: Wenn Teams nicht global verwaltet werden, dann kommt der Verein nicht als UID
             // tx_cfcleague_club_1|M%C3%BCnchen%2C%20FC%20Bayern%20M%C3%BCnchen
             // Hier werden bei FAL Referenzen geliefert.
@@ -306,8 +310,8 @@ class TcaLookup
         global $LANG;
         $LANG->includeLLFile('EXT:cfc_league/Resources/Private/Language/locallang_db.xlf');
 
-        $teamId = (int) $this->getPAValue($PA['row']['home']);
-        $matchValue = $this->getPAValue($PA['row']['game']);
+        $teamId = (int) $this->getPAValue($PA['row']['home'] ?? '');
+        $matchValue = $this->getPAValue($PA['row']['game'] ?? '');
         if ($teamId) {
             // Abfrage aus Spieldatensatz
             // Es werden alle Spieler des Teams benötigt
@@ -317,10 +321,10 @@ class TcaLookup
             // Abfrage aus MatchNote-Datensatz
             // Wenn wir die Match ID haben, können wir die Spieler auch so ermitteln
             // Es werden alle aufgestellten Spieler des Matches benötigt
-            /* @var $match \tx_cfcleague_models_Match */
-            $match = tx_rnbase::makeInstance('tx_cfcleague_models_Match', $this->getRowId($matchValue));
+            /** @var Fixture $match */
+            $match = tx_rnbase::makeInstance(Fixture::class, $this->getRowId($matchValue));
 
-            $players = tx_cfcleague_util_ServiceRegistry::getProfileService()->loadProfiles($match->getPlayersHome(true));
+            $players = ServiceRegistry::getProfileService()->loadProfiles($match->getPlayersHome(true));
             // $players = $match->getPlayerNamesHome();
             $playerArr = [
                 ['', 0],
@@ -355,18 +359,18 @@ class TcaLookup
         global $LANG;
         $LANG->includeLLFile('EXT:cfc_league/Resources/Private/Language/locallang_db.xlf');
 
-        $teamId = (int) $this->getPAValue($PA['row']['guest']);
-        $matchValue = $this->getPAValue($PA['row']['game']);
+        $teamId = (int) $this->getPAValue($PA['row']['guest'] ?? '');
+        $matchValue = $this->getPAValue($PA['row']['game'] ?? '');
 
         if ($teamId) {
             $players = $this->findProfiles($teamId, 'getPlayers');
             $PA['items'] = $players;
         } elseif ($matchValue) {
             // Wenn wir die Match ID haben könne wir die Spieler auch so ermitteln
-            /* @var $match \tx_cfcleague_models_Match */
-            $match = tx_rnbase::makeInstance('tx_cfcleague_models_Match', $this->getRowId($matchValue));
+            /** @var Fixture $match */
+            $match = tx_rnbase::makeInstance(Fixture::class, $this->getRowId($matchValue));
             // $players = $match->getPlayerNamesGuest();
-            $players = tx_cfcleague_util_ServiceRegistry::getProfileService()->loadProfiles($match->getPlayersGuest(true));
+            $players = ServiceRegistry::getProfileService()->loadProfiles($match->getPlayersGuest(true));
 
             $playerArr = [
                 ['', 0],
@@ -457,8 +461,8 @@ class TcaLookup
             return $rows;
         }
 
-        $team = tx_rnbase::makeInstance('tx_cfcleague_models_Team', $teamId);
-        /* @var $profile \tx_cfcleague_models_Profile */
+        $team = tx_rnbase::makeInstance(Team::class, $teamId);
+        /** @var \System25\T3sports\Model\Profile $profile */
         $profiles = $team->$getter();
         foreach ($profiles as $profile) {
             $rows[] = [
@@ -507,9 +511,9 @@ class TcaLookup
             return $rows;
         }
 
-        /* @var $team \tx_cfcleague_models_Team */
-        $team = tx_rnbase::makeInstance('tx_cfcleague_models_Team', $teamId);
-        /* @var $profile \tx_cfcleague_models_Profile */
+        /** @var Team $team */
+        $team = tx_rnbase::makeInstance(Team::class, $teamId);
+        /** @var \System25\T3sports\Model\Profile $profile */
         $profiles = $team->getCoaches();
         $rows[] = [
             '',
@@ -536,7 +540,7 @@ class TcaLookup
     public function getTeams4Competition($PA, $fobj)
     {
         // Aktuellen Wettbewerb ermitteln, wenn 0 bleiben die Felder leer
-        $compId = (int) $this->getPAValue($PA['row']['competition']);
+        $compId = (int) $this->getPAValue($PA['row']['competition'] ?? 0);
         if ($compId) {
             $PA['items'] = $this->findTeams($compId);
         } else {
@@ -552,8 +556,8 @@ class TcaLookup
      */
     private function findTeams($competitionId, $complete_row = '0')
     {
-        /* @var $competition \tx_cfcleague_models_Competition */
-        $competition = tx_rnbase::makeInstance('tx_cfcleague_models_Competition', $competitionId);
+        /** @var Competition $competition */
+        $competition = tx_rnbase::makeInstance(Competition::class, $competitionId);
         $teamNames = $competition->getTeamNames();
         $rows = [];
         foreach ($teamNames as $uid => $name) {
