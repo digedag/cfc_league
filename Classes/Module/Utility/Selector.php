@@ -93,7 +93,7 @@ class Selector
      * Darstellung der Select-Box mit allen Ligen der übergebenen Seite.
      * Es wird auf die aktuelle Liga eingestellt.
      *
-     * @return Competition aktuellen Wettbewerb als Objekt oder 0
+     * @return Competition|int aktuellen Wettbewerb als Objekt oder 0
      */
     public function showLeagueSelector(&$content, $pid, $leagues = 0)
     {
@@ -153,7 +153,7 @@ class Selector
      * Darstellung der Select-Box mit allen Teams des übergebenen Wettbewerbs.
      * Es wird auf das aktuelle Team eingestellt.
      *
-     * @return Team aktuelle Team als Objekt
+     * @return Team|int aktuelle Team als Objekt
      */
     public function showTeamSelector(&$content, $pid, Competition $league, $options = [])
     {
@@ -161,9 +161,9 @@ class Selector
             return 0;
         }
 
-        $selectorId = $options['selectorId'] ? $options['selectorId'] : 'team';
+        $selectorId = $options['selectorId'] ?? 'team';
         $entries = [];
-        if ($options['firstItem']) {
+        if (isset($options['firstItem'])) {
             $entries[$options['firstItem']['id']] = $options['firstItem']['label'];
         }
 
@@ -181,7 +181,7 @@ class Selector
         // Zusätzlich noch einen Edit-Link setzen
         $menu = $menuData['menu'];
         $links = [];
-        $noLinks = $options['noLinks'] ? true : false;
+        $noLinks = isset($options['noLinks']) && $options['noLinks'] ? true : false;
         if (!$noLinks && $menu) {
             $links[] = $this->getFormTool()->createEditLink('tx_cfcleague_teams', $menuData['value']);
             if ($teamObj->getProperty('club')) {
@@ -226,7 +226,7 @@ class Selector
         $clubs = $this->lookupClubs($pid);
 
         $objClubs = $entries = [];
-        if ($options['firstItem']) {
+        if (isset($options['firstItem'])) {
             $entries[$options['firstItem']['id']] = $options['firstItem']['label'];
         }
 
@@ -237,7 +237,7 @@ class Selector
             $entries[$club->getUid()] = $label;
         }
 
-        $selectorId = $options['selectorId'] ? $options['selectorId'] : 'club';
+        $selectorId = $options['selectorId'] ?? 'club';
         $menuData = $this->getFormTool()->showMenu($pid, $selectorId, $this->modName, $entries);
 
         $currItem = null;
@@ -248,7 +248,7 @@ class Selector
         // Zusätzlich noch einen Edit-Link setzen
         $menu = $menuData['menu'];
         $links = [];
-        $noLinks = $options['noLinks'] ? true : false;
+        $noLinks = isset($options['noLinks']) && $options['noLinks'] ? true : false;
         if (!$noLinks && $menu) {
             $links[] = $this->getFormTool()->createEditLink('tx_cfcleague_club', $menuData['value']);
             $links[] = $this->createNewClubLink($pid);

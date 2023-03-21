@@ -11,6 +11,7 @@ use Sys25\RnBase\Utility\TYPO3;
 use System25\T3sports\Model\Competition;
 use System25\T3sports\Model\Fixture;
 use System25\T3sports\Model\Repository\MatchNoteRepository;
+use System25\T3sports\Module\Utility\Selector;
 use System25\T3sports\Utility\ServiceRegistry;
 use tx_rnbase;
 
@@ -49,6 +50,7 @@ class MatchTicker extends BaseModFunc
     public $MCONF;
 
     public $playerNames = [];
+    private $selector;
 
     /**
      * Method getFuncId.
@@ -71,7 +73,7 @@ class MatchTicker extends BaseModFunc
         $this->doc = $this->getModule()->getDoc();
 
         // Selector-Instanz bereitstellen
-        $this->selector = tx_rnbase::makeInstance('tx_cfcleague_selector');
+        $this->selector = tx_rnbase::makeInstance(Selector::class);
         $this->selector->init($this->getModule()
             ->getDoc(), $this->getModule());
 
@@ -502,9 +504,9 @@ class MatchTicker extends BaseModFunc
 
         // TS-Config der aktuellen Seite laden, um die Anzahl der Felder zu ermitteln
         $pageTSconfig = BackendUtility::getPagesTSconfig($this->getModule()->getPid());
-        $inputFields = (is_array($pageTSconfig) && is_array($pageTSconfig['tx_cfcleague.']['matchTickerCfg.'])) ? intval($pageTSconfig['tx_cfcleague.']['matchTickerCfg.']['numberOfInputFields']) : 4;
-        $cols = (is_array($pageTSconfig) && is_array($pageTSconfig['tx_cfcleague.']['matchTickerCfg.'])) ? intval($pageTSconfig['tx_cfcleague.']['matchTickerCfg.']['commentFieldCols']) : 35;
-        $rows = (is_array($pageTSconfig) && is_array($pageTSconfig['tx_cfcleague.']['matchTickerCfg.'])) ? intval($pageTSconfig['tx_cfcleague.']['matchTickerCfg.']['commentFieldRows']) : 3;
+        $inputFields = (is_array($pageTSconfig) && isset($pageTSconfig['tx_cfcleague.']['matchTickerCfg.'])) ? intval($pageTSconfig['tx_cfcleague.']['matchTickerCfg.']['numberOfInputFields']) : 4;
+        $cols = (is_array($pageTSconfig) && isset($pageTSconfig['tx_cfcleague.']['matchTickerCfg.'])) ? intval($pageTSconfig['tx_cfcleague.']['matchTickerCfg.']['commentFieldCols']) : 35;
+        $rows = (is_array($pageTSconfig) && isset($pageTSconfig['tx_cfcleague.']['matchTickerCfg.'])) ? intval($pageTSconfig['tx_cfcleague.']['matchTickerCfg.']['commentFieldRows']) : 3;
 
         $playersHome = $playersGuest = [
             0 => '',

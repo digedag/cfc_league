@@ -19,7 +19,7 @@ use tx_rnbase;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2008-2021 Rene Nitzsche (rene@system25.de)
+ *  (c) 2008-2023 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -45,6 +45,8 @@ use tx_rnbase;
 class TeamNotes
 {
     protected $mod;
+    private $pid;
+    private $modName;
 
     /**
      * Ausführung des Requests.
@@ -61,6 +63,7 @@ class TeamNotes
         $this->pid = $module->getPid();
         $this->modName = $module->getName();
 
+        $content = '';
         // Tasks:
         // 1. Alle Team-Notizen des Teams anzeigen
         // SELECT * FROM notizen where team=123
@@ -134,9 +137,9 @@ class TeamNotes
             ],
         ];
 
-        /* @var $tables Tables */
+        /** @var Tables $tables */
         $tables = tx_rnbase::makeInstance(Tables::class);
-        $rows = $tables->prepareTable($notes, $columns, $this->getFormTool(), $options);
+        $rows = $tables->prepareTable($notes, $columns, $this->getFormTool(), []);
         $out .= $tables->buildTable($rows[0]);
 
         $options[ToolBox::OPTION_DEFVALS] = [
@@ -184,7 +187,7 @@ class TeamNotes
                     $tce = Connection::getInstance()->getTCEmain($data);
                     $tce->process_datamap();
                     $out .= $GLOBALS['LANG']->getLL('msg_profiles_joined').'<br/><br/>';
-                    $currTeam->getProperty('players', $playerUids);
+                    $currTeam->setProperty('players', $playerUids);
                 }
             }
         }

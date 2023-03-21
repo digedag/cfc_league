@@ -17,7 +17,7 @@ use tx_rnbase;
  * *************************************************************
  * Copyright notice
  *
- * (c) 2008-2021 Rene Nitzsche (rene@system25.de)
+ * (c) 2008-2023 Rene Nitzsche (rene@system25.de)
  * All rights reserved
  *
  * This script is part of the TYPO3 project. The TYPO3 project is
@@ -92,7 +92,7 @@ class ProfileSearcher
     {
         $out = '';
         $out .= '###LABEL_SEARCHTERM###: ';
-        $out .= $this->getFormTool()->createTxtInput('data[searchterm]', $this->SEARCH_SETTINGS['searchterm'], 20);
+        $out .= $this->getFormTool()->createTxtInput('data[searchterm]', $this->SEARCH_SETTINGS['searchterm'] ?? '', 20);
         // Jetzt noch zusätzlichen JavaScriptcode für Buttons auf der Seite
         // $out .= $this->getFormTool()->getJSCode($this->id);
         // Den Update-Button einfügen
@@ -104,7 +104,7 @@ class ProfileSearcher
     public function getResultList()
     {
         $content = '';
-        $searchTerm = Misc::validateSearchString($this->SEARCH_SETTINGS['searchterm']);
+        $searchTerm = Misc::validateSearchString($this->SEARCH_SETTINGS['searchterm'] ?? '');
         if (!$searchTerm) {
             return $this->doc->section($GLOBALS['LANG']->getLL('message').':', $GLOBALS['LANG']->getLL('msg_searchhelp'), 0, 1, \tx_rnbase_mod_IModFunc::ICON_INFO);
         }

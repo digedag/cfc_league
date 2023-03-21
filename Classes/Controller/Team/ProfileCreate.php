@@ -19,7 +19,7 @@ use tx_rnbase;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2008-2021 Rene Nitzsche (rene@system25.de)
+ *  (c) 2008-2023 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -47,6 +47,8 @@ class ProfileCreate
     private $doc;
 
     private $modName;
+    private $pid;
+    private $formTool;
 
     /**
      * Verwaltet die Erstellung von Spielplänen von Ligen.
@@ -99,13 +101,14 @@ class ProfileCreate
     {
         global $LANG;
 
+        $content = '';
         if (!self::isProfilePage($this->pid)) {
-            $content = $this->doc->section('Message:', $LANG->getLL('msg_pageNotAllowed'), 0, 1, IModFunc::ICON_WARN);
+            $content .= $this->doc->section('Message:', $LANG->getLL('msg_pageNotAllowed'), 0, 1, IModFunc::ICON_WARN);
 
             return $content;
         }
 
-        if (is_array($data['tx_cfcleague_profiles'])) {
+        if (isset($data['tx_cfcleague_profiles'])) {
             $content .= $this->createProfiles($data, $team, $teamInfo);
             $team->reset();
         }
