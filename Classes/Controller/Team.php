@@ -6,6 +6,7 @@ use Sys25\RnBase\Backend\Module\BaseModFunc;
 use System25\T3sports\Controller\Team\ProfileAdd;
 use System25\T3sports\Controller\Team\ProfileCreate;
 use System25\T3sports\Controller\Team\TeamNotes;
+use System25\T3sports\Module\Utility\Selector;
 use System25\T3sports\Module\Utility\TeamInfo;
 use System25\T3sports\Utility\ServiceRegistry;
 use tx_rnbase;
@@ -13,7 +14,7 @@ use tx_rnbase;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2009-2021 Rene Nitzsche (rene@system25.de)
+ *  (c) 2009-2023 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -41,6 +42,7 @@ class Team extends BaseModFunc
     public $doc;
 
     public $MCONF;
+    private $selector;
 
     /**
      * Method getFuncId.
@@ -58,7 +60,7 @@ class Team extends BaseModFunc
     private function getSelector()
     {
         if (!$this->selector) {
-            $this->selector = tx_rnbase::makeInstance('tx_cfcleague_selector');
+            $this->selector = tx_rnbase::makeInstance(Selector::class);
             $this->selector->init($this->doc, $this->getModule());
         }
 
@@ -122,7 +124,7 @@ class Team extends BaseModFunc
             '2' => $LANG->getLL('manage_teamnotes'),
         ]);
 
-        $tabs .= $menu['menu'];
+        $tabs = $menu['menu'];
         $tabs .= '<div style="display: block; border: 1px solid #a2aab8;" ></div>';
 
         $this->pObj->tabs = $tabs;

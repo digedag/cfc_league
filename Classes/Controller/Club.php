@@ -14,7 +14,7 @@ use tx_rnbase;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2010-2021 Rene Nitzsche (rene@system25.de)
+ *  (c) 2010-2023 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -39,6 +39,8 @@ use tx_rnbase;
  */
 class Club extends BaseModFunc
 {
+    public $doc;
+
     /**
      * Method getFuncId.
      *
@@ -96,17 +98,18 @@ class Club extends BaseModFunc
             ->getPid(), 'clubtools', $this->getModule()
             ->getName(), $menuItems);
 
-        $tabs .= $menu['menu'];
+        $tabs = $menu['menu'];
         $tabs .= '<div style="display: block; border: 1px solid #a2aab8;" ></div>';
 
         $this->pObj->tabs = $tabs;
 
         $handler = $tabItems[$menu['value']];
+        $modContent = '';
         if (is_object($handler)) {
             $modContent .= $handler->showScreen($club, $this->getModule());
         }
 
-        $content .= $formTool->getTCEForm()->printNeededJSFunctions_top();
+        $content = $formTool->getTCEForm()->printNeededJSFunctions_top();
         $content .= $modContent;
         // Den JS-Code für Validierung einbinden
         $content .= $formTool->getTCEForm()->printNeededJSFunctions();

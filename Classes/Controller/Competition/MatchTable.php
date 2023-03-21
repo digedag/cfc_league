@@ -17,7 +17,7 @@ use tx_rnbase;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2009-2021 Rene Nitzsche (rene@system25.de)
+ *  (c) 2009-2023 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -78,7 +78,7 @@ class MatchTable
         // $start = microtime(true);
 
         // Die Neuanlage der manuellen Spiele erledigt der MatchCreator
-        $content .= MatchCreator::getInstance()->handleRequest($this->getModule());
+        $content = MatchCreator::getInstance()->handleRequest($this->getModule());
 
         // Die Neuanlage der "automatischen" Spiele übernimmt diese Klasse
         $content .= $this->handleCreateMatchTable($competition);
@@ -100,12 +100,14 @@ class MatchTable
         global $LANG;
         // Haben wir Daten im Request?
         $data = T3General::_GP('data');
-        if (is_array($data['rounds']) && T3General::_GP('update')) {
+        if (isset($data['rounds']) && T3General::_GP('update')) {
             $result = $this->createMatches($data['rounds'], $comp);
             $content .= $this->doc->section($LANG->getLL('message').':', $result, 0, 1, IModFunc::ICON_INFO);
 
             return $content;
         }
+
+        return '';
     }
 
     /**
@@ -119,6 +121,7 @@ class MatchTable
     {
         global $LANG;
 
+        $content = '';
         $matchCnt = $comp->getNumberOfMatches(false);
         if ($matchCnt > 0) {
             $content .= $this->doc->section($LANG->getLL('warning').':', $LANG->getLL('msg_league_generation_hasmatches'), 0, 1, IModFunc::ICON_WARN);
