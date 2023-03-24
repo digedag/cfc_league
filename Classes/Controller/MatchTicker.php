@@ -122,7 +122,7 @@ class MatchTicker extends BaseModFunc
         $modContent .= $this->getFormHeadline();
         $tickerArr = $this->createFormArray($match);
 
-        /* @var $tables Tables */
+        /** @var Tables $tables */
         $tables = tx_rnbase::makeInstance(Tables::class);
         $modContent .= $tables->buildTable($tickerArr, $this->_getTableLayoutForm());
         $modContent .= '<br />';
@@ -137,8 +137,9 @@ class MatchTicker extends BaseModFunc
         // Jetzt listen wir noch die zum Spiel vorhandenen Tickermeldungen auf
         $modContent .= $this->doc->divider(5);
         $tickerArr = $this->createTickerArray($match, T3General::_GP('showAll'));
+        $tickerContent = '';
         if ($tickerArr) {
-            $tickerContent = $formTool->createModuleLink(
+            $tickerContent .= $formTool->createModuleLink(
                 ['showAll' => '1'],
                 $this->getModule()->getPid(),
                 $LANG->getLL('label_showAllTickers')
@@ -428,8 +429,11 @@ class MatchTicker extends BaseModFunc
             $row[] = $min;
             $row[] = $types[$note['type']];
 
-            $row[] = -1 == intval($note['player_home']) ? $LANG->getLL('tx_cfcleague.unknown') : $playersHome[$note['player_home']];
-            $row[] = -1 == intval($note['player_guest']) ? $LANG->getLL('tx_cfcleague.unknown') : $playersGuest[$note['player_guest']];
+            $row[] = -1 == intval($note['player_home'] ?? '-1') ?
+                $LANG->getLL('tx_cfcleague.unknown') : ($playersHome[$note['player_home']] ?? '');
+
+            $row[] = -1 == intval($note['player_guest'] ?? '-1') ?
+                $LANG->getLL('tx_cfcleague.unknown') : ($playersGuest[$note['player_guest']] ?? '');
 
             $row[] = $note['comment'];
             $row[] = $this->getModule()

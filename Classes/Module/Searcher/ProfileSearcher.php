@@ -50,6 +50,7 @@ class ProfileSearcher
     private $data;
 
     private $SEARCH_SETTINGS;
+    private $options;
 
     public function __construct(IModule $mod, $options = [])
     {
@@ -154,6 +155,7 @@ class ProfileSearcher
     {
         $this->options['tablename'] = 'tx_cfcleague_profiles';
         $decor = tx_rnbase::makeInstance(ProfileDecorator::class, $this->formTool);
+        $out = '';
         $columns = [
             'uid' => [],
             'last_name' => [
@@ -171,7 +173,7 @@ class ProfileSearcher
             $arr = $tables->prepareTable($profiles, $columns, $this->formTool, $this->options);
             $out .= $tables->buildTable($arr[0]);
         } else {
-            $out = '<p><strong>'.$GLOBALS['LANG']->getLL('msg_no_matches_in_betset').'</strong></p><br/>';
+            $out .= '<p><strong>'.$GLOBALS['LANG']->getLL('msg_no_matches_in_betset').'</strong></p><br/>';
         }
 
         return $this->doc->section($headline.':', $out, 0, 1, IModFunc::ICON_INFO);
