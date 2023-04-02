@@ -55,6 +55,11 @@ class Competition extends BaseModFunc
         return 'funccompetitions';
     }
 
+    public function getModuleIdentifier()
+    {
+        return 'cfc_league';
+    }
+
     /**
      * Verwaltet die Erstellung von Spielplänen von Ligen.
      *
