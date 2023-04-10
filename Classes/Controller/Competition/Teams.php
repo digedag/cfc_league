@@ -197,7 +197,7 @@ class Teams
     protected function createTeams($data, $competition)
     {
         global $LANG;
-        if (!is_array($data['tx_cfcleague_teams'])) {
+        if (!isset($data['tx_cfcleague_teams'])) {
             return '';
         }
         $tcaData = [];

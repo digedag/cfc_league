@@ -9,12 +9,13 @@ use Sys25\RnBase\Frontend\Marker\FormatUtil;
 use Sys25\RnBase\Utility\Misc;
 use System25\T3sports\Controller\Club\ClubStadiumHandler;
 use System25\T3sports\Module\Linker\NewClubLinker;
+use System25\T3sports\Module\Utility\Selector;
 use tx_rnbase;
 
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2010-2021 Rene Nitzsche (rene@system25.de)
+ *  (c) 2010-2023 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -39,6 +40,8 @@ use tx_rnbase;
  */
 class Club extends BaseModFunc
 {
+    public $doc;
+
     /**
      * Method getFuncId.
      *
@@ -49,6 +52,11 @@ class Club extends BaseModFunc
         return 'funcclubs';
     }
 
+    public function getModuleIdentifier()
+    {
+        return 'cfc_league';
+    }
+
     /**
      * @param string $template
      * @param ConfigurationInterface $configurations
@@ -57,7 +65,7 @@ class Club extends BaseModFunc
      */
     protected function getContent($template, &$configurations, &$formatter, $formTool)
     {
-        $selector = tx_rnbase::makeInstance('tx_cfcleague_selector');
+        $selector = tx_rnbase::makeInstance(Selector::class);
         $selector->init($this->doc, $this->getModule());
 
         // Zuerst holen wir alle Tabs, erstellen die MenuItems und werten den Request aus
@@ -76,8 +84,9 @@ class Club extends BaseModFunc
         $selectorStr = '';
         $club = $selector->showClubSelector($selectorStr, $this->getModule()
             ->getPid());
-        $this->getModule()->selector = $selectorStr;
+        $this->getModule()->setSelector($selectorStr);
 
+        $content = '';
         if (!$club) {
             $addInfo = '###LABEL_MSG_CREATENEWCLUBNOW###';
             $linker = tx_rnbase::makeInstance(NewClubLinker::class);

@@ -41,7 +41,7 @@ return [
         'access' => 'user,group',
         'workspaces' => '*',
         'iconIdentifier' => 'ext-cfcleague-ext-default',
-        'path' => '/module/web/t3sports/competition',
+        'path' => '/module/web/t3sports/club',
         'labels' => [
             'title' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang.xlf:mod_club',
         ],

@@ -217,7 +217,7 @@ class Selector
         $clubs = $this->lookupClubs($pid);
 
         $objClubs = $entries = [];
-        if ($options['firstItem']) {
+        if (isset($options['firstItem'])) {
             $entries[$options['firstItem']['id']] = $options['firstItem']['label'];
         }
 
@@ -228,7 +228,7 @@ class Selector
             $entries[$club->getUid()] = $label;
         }
 
-        $selectorId = $options['selectorId'] ? $options['selectorId'] : 'club';
+        $selectorId = isset($options['selectorId']) ? $options['selectorId'] : 'club';
         $menuData = $this->getFormTool()->showMenu($pid, $selectorId, $this->modName, $entries);
 
         $currItem = null;
@@ -239,7 +239,7 @@ class Selector
         // Zusätzlich noch einen Edit-Link setzen
         $menu = $menuData['menu'];
         $links = [];
-        $noLinks = $options['noLinks'] ? true : false;
+        $noLinks = isset($options['noLinks']) && $options['noLinks'];
         if (!$noLinks && $menu) {
             $links[] = $this->getFormTool()->createEditLink('tx_cfcleague_club', $menuData['value']);
             $links[] = $this->createNewClubLink($pid);
