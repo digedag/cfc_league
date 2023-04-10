@@ -14,7 +14,7 @@ use System25\T3sports\Utility\ServiceRegistry;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2009-2021 Rene Nitzsche (rene@system25.de)
+ *  (c) 2009-2023 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -41,6 +41,9 @@ use System25\T3sports\Utility\ServiceRegistry;
  */
 class CompetitionService extends AbstractService
 {
+    /**
+     * @var CompetitionRepository
+     */
     private $repo;
 
     public function __construct(CompetitionRepository $repo = null)
@@ -108,7 +111,7 @@ class CompetitionService extends AbstractService
      * @param array $fields
      * @param array $options
      *
-     * @return array of tx_cfcleague_models_Competition
+     * @return \Sys25\RnBase\Domain\Collection\BaseCollection
      */
     public function search($fields, $options)
     {
@@ -117,7 +120,7 @@ class CompetitionService extends AbstractService
 
     public function getPointSystems($sports)
     {
-        $srv = Misc::getService('t3sports_sports', $sports);
+        $srv = \System25\T3sports\Utility\Misc::getSports($sports);
 
         return $srv->getTCAPointSystems();
     }
@@ -129,23 +132,14 @@ class CompetitionService extends AbstractService
      */
     public function getSports4TCA()
     {
-        $items = $types = [];
+        $items = [];
 
         // Jetzt schauen, ob noch weitere Sportarten per Service geliefert werden
-        $baseType = 't3sports_sports';
-        $services = Misc::lookupServices($baseType);
-        foreach ($services as $subtype => $info) {
-            $srv = Misc::getService($baseType, $subtype);
-            $types[] = [
-                $srv->getTCALabel(),
-                $subtype,
-            ];
-        }
-
-        foreach ($types as $typedef) {
+        $sportsData = \System25\T3sports\Utility\Misc::lookupSports();
+        foreach ($sportsData as $data) {
             $items[] = [
-                Misc::translateLLL($typedef[0]),
-                $typedef[1],
+                Misc::translateLLL($data['sports']->getTCALabel()),
+                $data['type'],
             ];
         }
 

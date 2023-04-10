@@ -2,7 +2,6 @@
 
 namespace System25\T3sports\Utility;
 
-use Sys25\RnBase\Utility\Misc;
 use System25\T3sports\Service\CompetitionService;
 use System25\T3sports\Service\GroupService;
 use System25\T3sports\Service\MatchService;
@@ -10,11 +9,12 @@ use System25\T3sports\Service\ProfileService;
 use System25\T3sports\Service\SaisonService;
 use System25\T3sports\Service\StadiumService;
 use System25\T3sports\Service\TeamService;
+use tx_rnbase;
 
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2009-2021 Rene Nitzsche (rene@system25.de)
+*  (c) 2009-2023 Rene Nitzsche (rene@system25.de)
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -34,8 +34,41 @@ use System25\T3sports\Service\TeamService;
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-class ServiceRegistry
+class ServiceRegistry implements \TYPO3\CMS\Core\SingletonInterface
 {
+    private $competitionSrv;
+    private $groupSrv;
+    private $profileSrv;
+    private $matchSrv;
+    private $saisonSrv;
+    private $stadiumSrv;
+    private $teamSrv;
+
+    public function __construct(
+        CompetitionService $competitionService = null,
+        GroupService $groupService = null,
+        MatchService $matchService = null,
+        ProfileService $profileService = null,
+        SaisonService $saisonService = null,
+        StadiumService $stadiumService = null,
+        TeamService $teamService = null
+    ) {
+        $this->competitionSrv = $competitionService ?: new CompetitionService();
+        $this->groupSrv = $groupService ?: new GroupService();
+        $this->matchSrv = $matchService ?: new MatchService();
+        $this->profileSrv = $profileService ?: new ProfileService();
+        $this->saisonSrv = $saisonService ?: new SaisonService();
+        $this->teamSrv = $teamService ?: new TeamService();
+    }
+
+    /**
+     * @return self
+     */
+    private static function getInstance()
+    {
+        return tx_rnbase::makeInstance(ServiceRegistry::class);
+    }
+
     /**
      * Liefert den Competition-Service.
      *
@@ -43,17 +76,17 @@ class ServiceRegistry
      */
     public static function getCompetitionService()
     {
-        return Misc::getService('t3sports_srv', 'competition');
+        return self::getInstance()->competitionSrv;
     }
 
     /**
-     * Liefert den Match-Service.
+     * Liefert den Match/Fixture-Service.
      *
      * @return MatchService
      */
     public static function getMatchService()
     {
-        return Misc::getService('t3sports_srv', 'match');
+        return self::getInstance()->matchSrv;
     }
 
     /**
@@ -63,7 +96,7 @@ class ServiceRegistry
      */
     public static function getStadiumService()
     {
-        return Misc::getService('t3sports_srv', 'stadiums');
+        return self::getInstance()->stadiumSrv;
     }
 
     /**
@@ -73,7 +106,7 @@ class ServiceRegistry
      */
     public static function getSaisonService()
     {
-        return Misc::getService('t3sports_srv', 'saison');
+        return self::getInstance()->saisonSrv;
     }
 
     /**
@@ -83,7 +116,7 @@ class ServiceRegistry
      */
     public static function getProfileService()
     {
-        return Misc::getService('t3sports_srv', 'profiles');
+        return self::getInstance()->profileSrv;
     }
 
     /**
@@ -93,7 +126,7 @@ class ServiceRegistry
      */
     public static function getTeamService()
     {
-        return Misc::getService('t3sports_srv', 'teams');
+        return self::getInstance()->teamSrv;
     }
 
     /**
@@ -103,6 +136,6 @@ class ServiceRegistry
      */
     public static function getGroupService()
     {
-        return Misc::getService('t3sports_srv', 'group');
+        return self::getInstance()->groupSrv;
     }
 }

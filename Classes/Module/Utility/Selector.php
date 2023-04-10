@@ -77,13 +77,7 @@ class Selector
      */
     protected function getFormTool()
     {
-        if (!$this->formTool) {
-            // TODO: use formtool from module
-            $this->formTool = tx_rnbase::makeInstance(ToolBox::class);
-            $this->formTool->init($this->doc, $this->module);
-        }
-
-        return $this->formTool;
+        return $this->module->getFormTool();
     }
 
     /**

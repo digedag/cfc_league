@@ -72,89 +72,6 @@ if (\Sys25\RnBase\Utility\Environment::isBackend()) {
 \System25\T3sports\Utility\Misc::registerTableStrategy('default', 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_competition_tablestrategy_default', '');
 
 // Include services
-\Sys25\RnBase\Utility\Extensions::addService(
-    $_EXTKEY,
-    't3sports_srv' /* sv type */ ,
-    'tx_cfcleague_services_Stadiums' /* sv key */ ,
-    [
-        'title' => 'T3sports stadium service', 'description' => 'Operations for stadiums', 'subtype' => 'stadiums',
-        'available' => true, 'priority' => 50, 'quality' => 50,
-        'os' => '', 'exec' => '',
-        'className' => 'tx_cfcleague_services_Stadiums',
-    ]
-);
-
-\Sys25\RnBase\Utility\Extensions::addService(
-    $_EXTKEY,
-    't3sports_srv' /* sv type */ ,
-    'tx_cfcleague_services_Saison' /* sv key */ ,
-    [
-        'title' => 'T3sports saison service', 'description' => 'Operations for saisons', 'subtype' => 'saison',
-        'available' => true, 'priority' => 50, 'quality' => 50,
-        'os' => '', 'exec' => '',
-        'className' => 'tx_cfcleague_services_Saison',
-    ]
-);
-
-\Sys25\RnBase\Utility\Extensions::addService(
-    $_EXTKEY,
-    't3sports_srv' /* sv type */ ,
-    'tx_cfcleague_services_Competition' /* sv key */ ,
-    [
-        'title' => 'T3sports stadium service', 'description' => 'Operations for competitions', 'subtype' => 'competition',
-        'available' => true, 'priority' => 50, 'quality' => 50,
-        'os' => '', 'exec' => '',
-        'className' => 'tx_cfcleague_services_Competition',
-    ]
-);
-
-\Sys25\RnBase\Utility\Extensions::addService(
-    $_EXTKEY,
-    't3sports_srv' /* sv type */ ,
-    'tx_cfcleague_services_Match' /* sv key */ ,
-    [
-        'title' => 'T3sports match service', 'description' => 'Operations for matches', 'subtype' => 'match',
-        'available' => true, 'priority' => 50, 'quality' => 50,
-        'os' => '', 'exec' => '',
-        'className' => 'tx_cfcleague_services_Match',
-    ]
-);
-
-\Sys25\RnBase\Utility\Extensions::addService(
-    $_EXTKEY,
-    't3sports_srv' /* sv type */ ,
-    'tx_cfcleague_services_Group' /* sv key */ ,
-    [
-        'title' => 'T3sports group service', 'description' => 'Operations for groups', 'subtype' => 'group',
-        'available' => true, 'priority' => 50, 'quality' => 50,
-        'os' => '', 'exec' => '',
-        'className' => 'tx_cfcleague_services_Group',
-    ]
-);
-
-\Sys25\RnBase\Utility\Extensions::addService(
-    $_EXTKEY,
-    't3sports_srv' /* sv type */ ,
-    'tx_cfcleague_services_Teams' /* sv key */ ,
-    [
-        'title' => 'T3sports team service', 'description' => 'Operations for teams', 'subtype' => 'teams',
-        'available' => true, 'priority' => 50, 'quality' => 50,
-        'os' => '', 'exec' => '',
-        'className' => 'tx_cfcleague_services_Teams',
-    ]
-);
-
-\Sys25\RnBase\Utility\Extensions::addService(
-    $_EXTKEY,
-    't3sports_srv' /* sv type */ ,
-    'tx_cfcleague_services_Profiles' /* sv key */ ,
-    [
-        'title' => 'T3sports profile service', 'description' => 'Operations for profiles', 'subtype' => 'profiles',
-        'available' => true, 'priority' => 50, 'quality' => 50,
-        'os' => '', 'exec' => '',
-        'className' => 'tx_cfcleague_services_Profiles',
-    ]
-);
 
 \Sys25\RnBase\Utility\Extensions::addService(
     $_EXTKEY,
@@ -171,55 +88,7 @@ if (\Sys25\RnBase\Utility\Environment::isBackend()) {
 // ---------------
 // Services for kind of sports
 // ---------------
-
-\Sys25\RnBase\Utility\Extensions::addService(
-    $_EXTKEY,
-    't3sports_sports' /* sv type */ ,
-    'tx_cfcleague_sports_Football' /* sv key */ ,
-    [
-        'title' => 'T3sports Football', 'description' => 'Special configurations for football.',
-        'subtype' => 'football',
-        'available' => true, 'priority' => 50, 'quality' => 50,
-        'os' => '', 'exec' => '',
-        'className' => System25\T3sports\Sports\Football::class,
-    ]
-);
-
-\Sys25\RnBase\Utility\Extensions::addService(
-    $_EXTKEY,
-    't3sports_sports' /* sv type */ ,
-    'tx_cfcleague_sports_Handball' /* sv key */ ,
-    [
-        'title' => 'T3sports Handball', 'description' => 'Special configurations for handball.',
-        'subtype' => 'handball',
-        'available' => true, 'priority' => 50, 'quality' => 50,
-        'os' => '', 'exec' => '',
-        'className' => System25\T3sports\Sports\Handball::class,
-    ]
-);
-
-\Sys25\RnBase\Utility\Extensions::addService(
-    $_EXTKEY,
-    't3sports_sports' /* sv type */ ,
-    'tx_cfcleague_sports_IceHockey' /* sv key */ ,
-    [
-        'title' => 'T3sports IceHockey', 'description' => 'Special configurations for IceHockey.',
-        'subtype' => 'icehockey',
-        'available' => true, 'priority' => 50, 'quality' => 50,
-        'os' => '', 'exec' => '',
-        'className' => System25\T3sports\Sports\IceHockey::class,
-    ]
-);
-
-\Sys25\RnBase\Utility\Extensions::addService(
-    $_EXTKEY,
-    't3sports_sports' /* sv type */ ,
-    'tx_cfcleague_sports_Volleyball' /* sv key */ ,
-    [
-        'title' => 'T3sports Volleyball', 'description' => 'Special configurations for Volleyball.',
-        'subtype' => 'volleyball',
-        'available' => true, 'priority' => 50, 'quality' => 50,
-        'os' => '', 'exec' => '',
-        'className' => System25\T3sports\Sports\Volleyball::class,
-    ]
-);
+\System25\T3sports\Utility\Misc::registerSports('football', System25\T3sports\Sports\Football::class);
+\System25\T3sports\Utility\Misc::registerSports('handball', System25\T3sports\Sports\Handball::class);
+\System25\T3sports\Utility\Misc::registerSports('icehockey', System25\T3sports\Sports\IceHockey::class);
+\System25\T3sports\Utility\Misc::registerSports('volleyball', System25\T3sports\Sports\Volleyball::class);

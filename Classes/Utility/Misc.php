@@ -6,6 +6,7 @@ use Sys25\RnBase\Backend\Utility\BackendUtility;
 use Sys25\RnBase\Backend\Utility\Icons;
 use Sys25\RnBase\Database\Connection;
 use Sys25\RnBase\Utility\Typo3Classes;
+use System25\T3sports\Sports\ISports;
 use tx_rnbase;
 
 /***************************************************************
@@ -84,6 +85,48 @@ class Misc
                 break;
             }
         }
+    }
+
+    /**
+     * Register a new kind of sports.
+     *
+     * @param string $typeId
+     * @param string $class
+     */
+    public static function registerSports($typeId, $class)
+    {
+        if (!isset($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['sports'])) {
+            $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['sports'] = [];
+        }
+        $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['sports'][$typeId] = [
+            'class' => $class,
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public static function lookupSports(): array
+    {
+        $ret = [];
+        if (isset($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['sports'])) {
+            foreach ($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['sports'] as $type => $data) {
+                $ret[] = ['type' => $type, 'sports' => tx_rnbase::makeInstance($data['class'])];
+            }
+        }
+
+        return $ret;
+    }
+
+    public static function getSports($sportsId): ?ISports
+    {
+        if (isset($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['sports'][$sportsId])) {
+            $data = $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league']['sports'][$sportsId];
+
+            return tx_rnbase::makeInstance($data['class']);
+        }
+
+        return null;
     }
 
     /**

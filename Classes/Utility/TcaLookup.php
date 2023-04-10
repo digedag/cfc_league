@@ -13,7 +13,7 @@ use tx_rnbase;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2007-2021 Rene Nitzsche (rene@system25.de)
+ *  (c) 2007-2023 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -63,13 +63,13 @@ class TcaLookup
      */
     public function getMatchNoteTypes(&$config)
     {
-        $srv = tx_cfcleague_util_ServiceRegistry::getMatchService();
+        $srv = ServiceRegistry::getMatchService();
         $config['items'] = $srv->getMatchNoteTypes4TCA();
     }
 
     public function getTableStrategies(&$config)
     {
-        $srv = tx_cfcleague_util_ServiceRegistry::getCompetitionService();
+        $srv = ServiceRegistry::getCompetitionService();
         $config['items'] = $srv->getTableStrategies4TCA();
     }
 
@@ -83,7 +83,7 @@ class TcaLookup
      */
     public function getSportsTypes(&$config)
     {
-        $srv = tx_cfcleague_util_ServiceRegistry::getCompetitionService();
+        $srv = ServiceRegistry::getCompetitionService();
         $config['items'] = $srv->getSports4TCA();
     }
 
@@ -110,7 +110,7 @@ class TcaLookup
         // In der 7.6 ist immer ein Array im Wert
         $sports = is_array($sports) ? (count($sports) ? reset($sports) : false) : $sports;
         if ($sports) {
-            $srv = tx_cfcleague_util_ServiceRegistry::getCompetitionService();
+            $srv = ServiceRegistry::getCompetitionService();
             $config['items'] = $srv->getPointSystems($sports);
         }
     }
