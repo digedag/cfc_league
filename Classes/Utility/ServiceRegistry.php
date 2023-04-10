@@ -58,6 +58,7 @@ class ServiceRegistry implements \TYPO3\CMS\Core\SingletonInterface
         $this->matchSrv = $matchService ?: new MatchService();
         $this->profileSrv = $profileService ?: new ProfileService();
         $this->saisonSrv = $saisonService ?: new SaisonService();
+        $this->stadiumSrv = $stadiumService ?: new StadiumService();
         $this->teamSrv = $teamService ?: new TeamService();
     }
 

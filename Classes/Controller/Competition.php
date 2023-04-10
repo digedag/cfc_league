@@ -91,8 +91,6 @@ class Competition extends BaseModFunc
         $current_league = $this->selector->showLeagueSelector($selector, $this->getModule()
             ->getPid());
         $content = '';
-        // FIXME: check in older versions
-//        $this->getModule()->selector = $selector;
         $this->getModule()->setSelector($selector);
 
         if (!$current_league) {
@@ -118,7 +116,6 @@ class Competition extends BaseModFunc
 
         // FIXME: check in older versions
         $this->getModule()->setSubMenu($tabs);
-        //$this->pObj->tabs = $tabs;
 
         switch ($menu['value']) {
             case 0:

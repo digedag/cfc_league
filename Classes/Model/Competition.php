@@ -5,15 +5,15 @@ namespace System25\T3sports\Model;
 use Sys25\RnBase\Database\Connection;
 use Sys25\RnBase\Domain\Model\BaseModel;
 use Sys25\RnBase\Utility\Math;
-use Sys25\RnBase\Utility\Misc;
 use Sys25\RnBase\Utility\Strings;
 use System25\T3sports\Sports\ISports;
+use System25\T3sports\Utility\Misc;
 use System25\T3sports\Utility\ServiceRegistry;
 
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2009-2021 Rene Nitzsche (rene@system25.de)
+ *  (c) 2009-2023 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -639,6 +639,6 @@ class Competition extends BaseModel
      */
     public function getSportsService()
     {
-        return Misc::getService('t3sports_sports', $this->getSports());
+        return Misc::getSports($this->getSports());
     }
 }
