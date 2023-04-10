@@ -18,22 +18,24 @@ if (\Sys25\RnBase\Utility\Extensions::isLoaded('rgmediaimages')) {
 }
 
 if (\Sys25\RnBase\Utility\Environment::isBackend()) {
-    $modName = 'web_CfcLeagueM1';
-    \Sys25\RnBase\Utility\Extensions::registerModule(
-        'cfc_league',
-        'web',
-        'M1',
-        'bottom', [], [
-            'access' => 'user,group',
-            'routeTarget' => System25\T3sports\Module\T3sportsModule::class,
-            'icon' => 'EXT:cfc_league/Resources/Public/Icons/module-t3sports.svg',
-            'labels' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_mod.xlf',
-    ]);
-    \Sys25\RnBase\Utility\Extensions::insertModuleFunction($modName, System25\T3sports\Controller\Competition::class, '', 'LLL:EXT:cfc_league/Resources/Private/Language/locallang.xlf:mod_competition');
-    \Sys25\RnBase\Utility\Extensions::insertModuleFunction($modName, System25\T3sports\Controller\MatchTicker::class, '', 'LLL:EXT:cfc_league/Resources/Private/Language/locallang.xlf:match_ticker');
-    \Sys25\RnBase\Utility\Extensions::insertModuleFunction($modName, System25\T3sports\Controller\Team::class, '', 'LLL:EXT:cfc_league/Resources/Private/Language/locallang.xlf:mod_team');
-    \Sys25\RnBase\Utility\Extensions::insertModuleFunction($modName, System25\T3sports\Controller\Club::class, '', 'LLL:EXT:cfc_league/Resources/Private/Language/locallang.xlf:mod_club');
-    \Sys25\RnBase\Utility\Extensions::insertModuleFunction($modName, System25\T3sports\Controller\Profile::class, '', 'LLL:EXT:cfc_league/Resources/Private/Language/locallang.xlf:search_profiles');
+    if (!\Sys25\RnBase\Utility\TYPO3::isTYPO121OrHigher()) {
+        $modName = 'web_CfcLeagueM1';
+        \Sys25\RnBase\Utility\Extensions::registerModule(
+            'cfc_league',
+            'web',
+            'M1',
+            'bottom', [], [
+                'access' => 'user,group',
+                'routeTarget' => System25\T3sports\Module\T3sportsModule::class,
+                'icon' => 'EXT:cfc_league/Resources/Public/Icons/module-t3sports.svg',
+                'labels' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_mod.xlf',
+        ]);
+        \Sys25\RnBase\Utility\Extensions::insertModuleFunction($modName, System25\T3sports\Controller\Competition::class, '', 'LLL:EXT:cfc_league/Resources/Private/Language/locallang.xlf:mod_competition');
+        \Sys25\RnBase\Utility\Extensions::insertModuleFunction($modName, System25\T3sports\Controller\MatchTicker::class, '', 'LLL:EXT:cfc_league/Resources/Private/Language/locallang.xlf:match_ticker');
+        \Sys25\RnBase\Utility\Extensions::insertModuleFunction($modName, System25\T3sports\Controller\Team::class, '', 'LLL:EXT:cfc_league/Resources/Private/Language/locallang.xlf:mod_team');
+        \Sys25\RnBase\Utility\Extensions::insertModuleFunction($modName, System25\T3sports\Controller\Club::class, '', 'LLL:EXT:cfc_league/Resources/Private/Language/locallang.xlf:mod_club');
+        \Sys25\RnBase\Utility\Extensions::insertModuleFunction($modName, System25\T3sports\Controller\Profile::class, '', 'LLL:EXT:cfc_league/Resources/Private/Language/locallang.xlf:search_profiles');
+    }
 
     $iconRegistry = tx_rnbase::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
     $icons = [
