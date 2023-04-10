@@ -306,8 +306,8 @@ class TcaLookup
         global $LANG;
         $LANG->includeLLFile('EXT:cfc_league/Resources/Private/Language/locallang_db.xlf');
 
-        $teamId = (int) $this->getPAValue($PA['row']['home']);
-        $matchValue = $this->getPAValue($PA['row']['game']);
+        $teamId = (int) $this->getPAValue($PA['row']['home'] ?? 0);
+        $matchValue = $this->getPAValue($PA['row']['game'] ?? false);
         if ($teamId) {
             // Abfrage aus Spieldatensatz
             // Es werden alle Spieler des Teams benötigt
@@ -355,8 +355,8 @@ class TcaLookup
         global $LANG;
         $LANG->includeLLFile('EXT:cfc_league/Resources/Private/Language/locallang_db.xlf');
 
-        $teamId = (int) $this->getPAValue($PA['row']['guest']);
-        $matchValue = $this->getPAValue($PA['row']['game']);
+        $teamId = (int) $this->getPAValue($PA['row']['guest'] ?? 0);
+        $matchValue = $this->getPAValue($PA['row']['game'] ?? false);
 
         if ($teamId) {
             $players = $this->findProfiles($teamId, 'getPlayers');
