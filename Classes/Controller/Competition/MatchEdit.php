@@ -14,6 +14,7 @@ use System25\T3sports\Model\Competition;
 use System25\T3sports\Model\CompetitionRound;
 use System25\T3sports\Model\Fixture;
 use System25\T3sports\Model\Team;
+use System25\T3sports\Module\Utility\Selector;
 use System25\T3sports\Sports\ServiceLocator;
 use System25\T3sports\Utility\ServiceRegistry;
 use tx_rnbase;
@@ -21,7 +22,7 @@ use tx_rnbase;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2007-2022 Rene Nitzsche (rene@system25.de)
+ *  (c) 2007-2023 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -48,6 +49,16 @@ class MatchEdit
 {
     private $sportsServiceLocator;
     protected $formTool;
+
+    /**
+     * @var Selector
+     */
+    private $selector;
+
+    /**
+     * @var IModule
+     */
+    private $module;
 
     public function __construct()
     {
@@ -103,7 +114,7 @@ class MatchEdit
         $content .= '<div class="cleardiv"/>';
         $data = T3General::_GP('data');
         // Haben wir Daten im Request?
-        if (is_array($data['tx_cfcleague_games'])) {
+        if (isset($data['tx_cfcleague_games'])) {
             $this->updateMatches($data);
         }
 
@@ -117,7 +128,7 @@ class MatchEdit
             // Den Update-Button einfügen
             $content .= $formTool->createSubmit('update', $LANG->getLL('btn_update'), $LANG->getLL('btn_update_msgEditGames'));
             // $content .= '<input type="submit" name="update" value="'.$LANG->getLL('btn_update').'" onclick="return confirm('.$GLOBALS['LANG']->JScharCode($GLOBALS['LANG']->getLL('btn_update_msgEditGames')).')">';
-            if ($arr[1]) { // Hat ein Team spielfrei?
+            if (isset($arr[1])) { // Hat ein Team spielfrei?
                 $content .= '<h3 style="margin-top:10px">'.$LANG->getLL('msg_free_of_play').'</h3><ul>';
                 foreach ($arr[1] as $freeOfPlay) {
                     $content .= '<li>'.$freeOfPlay['team'].$freeOfPlay['match_edit'].'</li>';
@@ -178,8 +189,8 @@ class MatchEdit
      */
     private function getSelector()
     {
-        if (!is_object($this->selector)) {
-            $this->selector = tx_rnbase::makeInstance('tx_cfcleague_selector');
+        if (!isset($this->selector)) {
+            $this->selector = tx_rnbase::makeInstance(Selector::class);
             $this->selector->init($this->getModule()
                 ->getDoc(), $this->getModule());
         }

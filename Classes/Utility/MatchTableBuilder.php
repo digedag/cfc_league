@@ -81,6 +81,8 @@ class MatchTableBuilder
     private $_compObligation; // Pflichtwettbewerbe
 
     private $_pidList;
+    private $_maxRound;
+    private $_minRound;
 
     public function __construct()
     {

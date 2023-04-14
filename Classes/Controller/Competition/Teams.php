@@ -42,6 +42,10 @@ use tx_rnbase;
 class Teams
 {
     public $doc;
+    /**
+     * @var IModule
+     */
+    private $module;
 
     /**
      * Verwaltet die Erstellung von Spielplänen von Ligen.
@@ -53,10 +57,9 @@ class Teams
     {
         // Zuerst mal müssen wir die passende Liga auswählen lassen:
         // Entweder global über die Datenbank oder die Ligen der aktuellen Seite
+        $this->module = $module;
         $pid = $module->getPid();
         $this->doc = $module->getDoc();
-
-        $this->formTool = $module->getFormTool();
 
         $content = '';
         // Zuerst auf neue Teams prüfen, damit sie direkt in der Teamliste angezeigt werden
@@ -77,7 +80,7 @@ class Teams
      */
     protected function getFormTool()
     {
-        return $this->formTool;
+        return $this->module->getFormTool();
     }
 
     /**
@@ -136,7 +139,7 @@ class Teams
         $tables = tx_rnbase::makeInstance(Tables::class);
         $arr = $tables->prepareTable($teams, $columns, $this->getFormTool(), $options);
         $content .= $tables->buildTable($arr[0]);
-        $content .= $this->formTool->createSubmit('addteams', $LANG->getLL('label_add_teams'), $GLOBALS['LANG']->getLL('msg_add_teams'));
+        $content .= $this->getFormTool()->createSubmit('addteams', $LANG->getLL('label_add_teams'), $GLOBALS['LANG']->getLL('msg_add_teams'));
 
         return $content;
     }
@@ -217,7 +220,7 @@ class Teams
         $tce = Connection::getInstance()->getTCEmain($tcaData);
         $tce->process_datamap();
         $competition->refresh();
-        $content .= $this->doc->section('Message:', $LANG->getLL('msg_teams_created'), 0, 1, IModFunc::ICON_INFO);
+        $content = $this->doc->section('Message:', $LANG->getLL('msg_teams_created'), 0, 1, IModFunc::ICON_INFO);
 
         return $content;
     }
@@ -244,9 +247,9 @@ class Teams
             $row = [];
             $row[] = $teamArr['uid'];
             $row[] = $teamArr['name'];
-            $buttons = $this->formTool->createEditLink('tx_cfcleague_teams', $teamArr['uid']).$this->formTool->createInfoLink('tx_cfcleague_teams', $teamArr['uid']);
+            $buttons = $this->getFormTool()->createEditLink('tx_cfcleague_teams', $teamArr['uid']).$this->getFormTool()->createInfoLink('tx_cfcleague_teams', $teamArr['uid']);
             if (intval($teamArr['club'])) {
-                $buttons .= $this->formTool->createEditLink('tx_cfcleague_club', $teamArr['club'], $LANG->getLL('label_edit_club'));
+                $buttons .= $this->getFormTool()->createEditLink('tx_cfcleague_club', $teamArr['club'], $LANG->getLL('label_edit_club'));
             }
             $row[] = $buttons;
             $arr[] = $row;

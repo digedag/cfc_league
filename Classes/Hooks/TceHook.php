@@ -151,7 +151,7 @@ class TceHook
      */
     protected function checkProfiles(&$incomingFieldArray, $profileType, $tcemain)
     {
-        if (strstr($incomingFieldArray[$profileType], 'NEW')) {
+        if (isset($incomingFieldArray[$profileType]) && strstr($incomingFieldArray[$profileType], 'NEW')) {
             $newProfileIds = Strings::trimExplode(',', $incomingFieldArray[$profileType]);
             $profileUids = [];
             for ($i = 0; $i < count($newProfileIds); ++$i) {
