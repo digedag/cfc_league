@@ -35,14 +35,6 @@ if (\Sys25\RnBase\Utility\Environment::isBackend()) {
         \Sys25\RnBase\Utility\Extensions::insertModuleFunction($modName, System25\T3sports\Controller\Team::class, '', 'LLL:EXT:cfc_league/Resources/Private/Language/locallang.xlf:mod_team');
         \Sys25\RnBase\Utility\Extensions::insertModuleFunction($modName, System25\T3sports\Controller\Club::class, '', 'LLL:EXT:cfc_league/Resources/Private/Language/locallang.xlf:mod_club');
         \Sys25\RnBase\Utility\Extensions::insertModuleFunction($modName, System25\T3sports\Controller\Profile::class, '', 'LLL:EXT:cfc_league/Resources/Private/Language/locallang.xlf:search_profiles');
-
-        // Folder contains T3sports
-        $GLOBALS['TCA']['pages']['ctrl']['typeicon_classes']['contains-cfcleague'] = 'ext-cfcleague-folder-default';
-        $GLOBALS['TCA']['pages']['columns']['module']['config']['items'][] = [
-            'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_folder',
-            'cfcleague',
-            'ext-cfcleague-ext-default',
-        ];
     }
 
     $iconRegistry = tx_rnbase::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);

@@ -1,6 +1,8 @@
 <?php
 
-defined('TYPO3') or exit;
+if (!(defined('TYPO3') || defined('TYPO3_MODE'))) {
+    exit('Access denied.');
+}
 
 // Folder contains
 $GLOBALS['TCA']['pages']['columns']['module']['config']['items'][] = [

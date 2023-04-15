@@ -1,7 +1,5 @@
 <?php
 
-use Sys25\RnBase\Utility\TYPO3;
-
 if (!(defined('TYPO3') || defined('TYPO3_MODE'))) {
     exit('Access denied.');
 }
@@ -37,7 +35,7 @@ $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['proc
 
 if (\Sys25\RnBase\Utility\Environment::isBackend()) {
     // Einbindung einer PageTSConfig
-    if (!TYPO3::isTYPO121OrHigher()) {
+    if (!\Sys25\RnBase\Utility\TYPO3::isTYPO121OrHigher()) {
         \Sys25\RnBase\Utility\Extensions::addPageTSConfig('<INCLUDE_TYPOSCRIPT: source="FILE:EXT:cfc_league/Configuration/page.tsconfig">');
     }
 
