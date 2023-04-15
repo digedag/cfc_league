@@ -97,19 +97,19 @@ class TceHook
             }
         }
         if ('tx_cfcleague_games' == $table) {
-            if ($incomingFieldArray['arena'] > 0 && !$incomingFieldArray['stadium']) {
+            if ($incomingFieldArray['arena'] ?? 0 > 0 && empty($incomingFieldArray['stadium'] ?? '')) {
                 $stadium = \tx_rnbase::makeInstance(Stadium::class, $incomingFieldArray['arena']);
                 $incomingFieldArray['stadium'] = $stadium->getName();
             }
-            if (strstr($incomingFieldArray['home'], 'NEW')) {
+            if (strstr($incomingFieldArray['home'] ?? '', 'NEW')) {
                 $incomingFieldArray['home'] = $tcemain->substNEWwithIDs[$incomingFieldArray['home']];
             }
-            if (strstr($incomingFieldArray['guest'], 'NEW')) {
+            if (strstr($incomingFieldArray['guest'] ?? '', 'NEW')) {
                 $incomingFieldArray['guest'] = $tcemain->substNEWwithIDs[$incomingFieldArray['guest']];
             }
         }
         if ('tx_cfcleague_stadiums' == $table || 'tx_cfcleague_club' == $table) {
-            if ($incomingFieldArray['country'] > 0 && !$incomingFieldArray['countrycode']) {
+            if ($incomingFieldArray['country'] ?? 0 > 0 && empty($incomingFieldArray['countrycode'] ?? '')) {
                 $country = BackendUtility::getRecord('static_countries', intval($incomingFieldArray['country']));
                 $incomingFieldArray['countrycode'] = $country['cn_iso_2'];
             }
