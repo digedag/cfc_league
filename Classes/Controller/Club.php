@@ -105,11 +105,12 @@ class Club extends BaseModFunc
             ->getPid(), 'clubtools', $this->getModule()
             ->getName(), $menuItems);
 
-        $tabs .= $menu['menu'];
+        $tabs = $menu['menu'];
         $tabs .= '<div style="display: block; border: 1px solid #a2aab8;" ></div>';
 
-        $this->pObj->tabs = $tabs;
+        $this->getModule()->setSubMenu($tabs);
 
+        $modContent = '';
         $handler = $tabItems[$menu['value']];
         if (is_object($handler)) {
             $modContent .= $handler->showScreen($club, $this->getModule());

@@ -14,7 +14,7 @@ use tx_rnbase;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2010-2021 Rene Nitzsche (rene@system25.de)
+ *  (c) 2010-2023 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -46,6 +46,7 @@ class StadiumSearcher
     private $SEARCH_SETTINGS;
 
     private $currentClub;
+    private $currentShowHidden;
 
     /**
      * Constructor.
@@ -142,7 +143,7 @@ class StadiumSearcher
         $ret['table'] = $content;
         $ret['totalsize'] = $cnt;
         $pagerData = $pager->render();
-        $ret['pager'] .= '<div class="pager">'.$pagerData['limits'].' - '.$pagerData['pages'].'</div>';
+        $ret['pager'] = '<div class="pager">'.$pagerData['limits'].' - '.$pagerData['pages'].'</div>';
 
         return $ret;
     }
