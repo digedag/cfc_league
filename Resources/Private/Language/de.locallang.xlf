@@ -315,7 +315,7 @@
                 <source>Offset</source>
                 <target>Offset</target>
             </trans-unit>
-            <trans-unit id="label_showAllTickers" xml:space="preserve">
+            <trans-unit id="label_showalltickers" xml:space="preserve">
                 <source>Show all events</source>
                 <target>Alle Meldungen anzeigen</target>
             </trans-unit>

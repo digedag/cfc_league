@@ -56,4 +56,24 @@ return [
             'depth' => 0,
         ],
     ],
+    'web_CfcLeagueM1_ticker' => [
+        'parent' => 'web_CfcLeagueM1',
+        'access' => 'user,group',
+        'workspaces' => '*',
+        'iconIdentifier' => 'ext-cfcleague-ext-default',
+        'path' => '/module/web/t3sports/ticker',
+        'labels' => [
+            'title' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang.xlf:match_ticker',
+        ],
+        'routes' => [
+            '_default' => [
+                'target' => System25\T3sports\Controller\MatchTicker::class.'::main',
+            ],
+        ],
+        'moduleData' => [
+            'langFiles' => [],
+            'pages' => '0',
+            'depth' => 0,
+        ],
+    ],
 ];
