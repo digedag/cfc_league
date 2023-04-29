@@ -22,7 +22,7 @@ use tx_rnbase;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2007-2021 Rene Nitzsche (rene@system25.de)
+ *  (c) 2007-2023 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -152,9 +152,9 @@ class Selector
             return 0;
         }
 
-        $selectorId = $options['selectorId'] ? $options['selectorId'] : 'team';
+        $selectorId = $options['selectorId'] ?? 'team';
         $entries = [];
-        if ($options['firstItem']) {
+        if (isset($options['firstItem'])) {
             $entries[$options['firstItem']['id']] = $options['firstItem']['label'];
         }
 
@@ -172,7 +172,7 @@ class Selector
         // Zusätzlich noch einen Edit-Link setzen
         $menu = $menuData['menu'];
         $links = [];
-        $noLinks = $options['noLinks'] ? true : false;
+        $noLinks = isset($options['noLinks']) ? true : false;
         if (!$noLinks && $menu) {
             $links[] = $this->getFormTool()->createEditLink('tx_cfcleague_teams', $menuData['value']);
             if ($teamObj->getProperty('club')) {

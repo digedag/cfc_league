@@ -19,7 +19,7 @@ use tx_rnbase;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2008-2021 Rene Nitzsche (rene@system25.de)
+ *  (c) 2008-2023 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -46,7 +46,7 @@ class ProfileCreate
 {
     private $doc;
 
-    private $modName;
+    private $module;
 
     /**
      * Verwaltet die Erstellung von Spielplänen von Ligen.
@@ -60,6 +60,7 @@ class ProfileCreate
         // Entweder global über die Datenbank oder die Ligen der aktuellen Seite
         // $pid, &$doc, &$formTool
 
+        $this->module = $module;
         $pid = $module->getPid();
         $doc = $module->getDoc();
         $formTool = $module->getFormTool();
@@ -83,6 +84,11 @@ class ProfileCreate
     public static function isProfilePage($pid)
     {
         $rootPage = Processor::getExtensionCfgValue('cfc_league', 'profileRootPageId');
+        if (!$rootPage) {
+            return true;
+        }
+
+        // FIXME!
         $goodPages = Misc::getPagePath($pid);
 
         return in_array($rootPage, $goodPages);
@@ -99,13 +105,14 @@ class ProfileCreate
     {
         global $LANG;
 
+        $content = '';
         if (!self::isProfilePage($this->pid)) {
             $content = $this->doc->section('Message:', $LANG->getLL('msg_pageNotAllowed'), 0, 1, IModFunc::ICON_WARN);
 
             return $content;
         }
 
-        if (is_array($data['tx_cfcleague_profiles'])) {
+        if (isset($data['tx_cfcleague_profiles'])) {
             $content .= $this->createProfiles($data, $team, $teamInfo);
             $team->reset();
         }
@@ -115,7 +122,7 @@ class ProfileCreate
             $content .= $this->doc->section('Message:', $LANG->getLL('msg_maxPlayers'), 0, 1, IModFunc::ICON_WARN);
         } else {
             $content .= $this->doc->section('Info:', $LANG->getLL('msg_checkPage').': <b>'.BackendUtility::getRecordPath($this->pid, '', 0).'</b>', 0, 1, IModFunc::ICON_INFO);
-            $content .= $teamInfo->getInfoTable($this->doc);
+            $content .= $teamInfo->getInfoTable($this->module);
             // Wir zeigen 15 Zeilen mit Eingabefeldern
             $content .= $this->prepareInputTable($team, $teamInfo);
         }
@@ -134,7 +141,7 @@ class ProfileCreate
     protected function prepareInputTable(Team $team, TeamInfo $teamInfo)
     {
         // Es werden zwei Tabellen erstellt
-        $tableProfiles = $teamInfo->getTeamTable($this->doc);
+        $tableProfiles = $teamInfo->getTeamTable($this->module);
 
         $arr = [
             [

@@ -18,7 +18,7 @@ use tx_rnbase;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2008-2021 Rene Nitzsche (rene@system25.de)
+ *  (c) 2008-2023 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -43,6 +43,9 @@ use tx_rnbase;
  */
 class ProfileAdd
 {
+    /**
+     * @var IModule
+     */
     public $mod;
 
     /**
@@ -61,15 +64,16 @@ class ProfileAdd
 
         if ($teamInfo->isTeamFull()) {
             // Kann nix mehr angelegt werden
-            return $this->mod->doc->section('Message:', $GLOBALS['LANG']->getLL('msg_maxPlayers'), 0, 1, IModFunc::ICON_WARN);
+            return $module->getDoc()->section('Message:', $GLOBALS['LANG']->getLL('msg_maxPlayers'), 0, 1, IModFunc::ICON_WARN);
         }
 
+        $out = '';
         // ggf. Daten im Request verarbeiten
         $out .= $this->handleAddProfiles($currTeam, $teamInfo);
         $out .= $this->handleNewProfiles($currTeam, $teamInfo);
         $currTeam->reset();
         $teamInfo->refresh();
-        $out .= $teamInfo->getInfoTable($this->mod->doc);
+        $out .= $teamInfo->getInfoTable($module);
         $out .= $this->showAddProfiles($currTeam, $teamInfo);
 
         return $out;
@@ -121,7 +125,7 @@ class ProfileAdd
         // Ein Formular für die Neuanlage
         $tableForm .= $this->getCreateForm();
         // Jetzt noch die Team-Liste
-        $teamTable = $teamInfo->getTeamTable($this->mod->getDoc());
+        $teamTable = $teamInfo->getTeamTable($this->mod);
 
         $content = '<div class="row">
 <div class="col-sm-6">'.$tableForm.'</div>

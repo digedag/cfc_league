@@ -6,6 +6,7 @@ use Sys25\RnBase\Backend\Module\BaseModFunc;
 use System25\T3sports\Controller\Team\ProfileAdd;
 use System25\T3sports\Controller\Team\ProfileCreate;
 use System25\T3sports\Controller\Team\TeamNotes;
+use System25\T3sports\Module\Utility\Selector;
 use System25\T3sports\Module\Utility\TeamInfo;
 use System25\T3sports\Utility\ServiceRegistry;
 use tx_rnbase;
@@ -38,9 +39,18 @@ use tx_rnbase;
  */
 class Team extends BaseModFunc
 {
-    public $doc;
+    private $doc;
 
-    public $MCONF;
+    private $MCONF;
+
+    /**
+     * @var Selector
+     */
+    private $selector;
+    /**
+     * @var \Sys25\RnBase\Backend\Form\ToolBox
+     */
+    private $formTool;
 
     /**
      * Method getFuncId.
@@ -52,13 +62,18 @@ class Team extends BaseModFunc
         return 'functeams';
     }
 
+    public function getModuleIdentifier()
+    {
+        return 'cfc_league';
+    }
+
     /**
-     * @return \tx_cfcleague_selector
+     * @return Selector
      */
     private function getSelector()
     {
         if (!$this->selector) {
-            $this->selector = tx_rnbase::makeInstance('tx_cfcleague_selector');
+            $this->selector = tx_rnbase::makeInstance(Selector::class);
             $this->selector->init($this->doc, $this->getModule());
         }
 
@@ -96,7 +111,7 @@ class Team extends BaseModFunc
         $content = '';
 
         if (!($saison && count($competitions))) {
-            $this->getModule()->selector = $selector;
+            $this->getModule()->setSelector($selector);
             $content .= $this->doc->section('Info:', $saison ? $LANG->getLL('msg_NoCompetitonsFound') : $LANG->getLL('msg_NoSaisonFound'), 0, 1, self::ICON_WARN);
 
             return $content;
@@ -107,7 +122,7 @@ class Team extends BaseModFunc
             ->getPid(), $competitions);
         $team = $this->getSelector()->showTeamSelector($selector, $this->getModule()
             ->getPid(), $league);
-        $this->getModule()->selector = $selector;
+        $this->getModule()->setSelector($selector);
 
         if (!$team) { // Kein Team gefunden
             $content .= $this->doc->section('Info:', $LANG->getLL('msg_no_team_found'), 0, 1, self::ICON_WARN);
@@ -122,10 +137,10 @@ class Team extends BaseModFunc
             '2' => $LANG->getLL('manage_teamnotes'),
         ]);
 
-        $tabs .= $menu['menu'];
+        $tabs = $menu['menu'];
         $tabs .= '<div style="display: block; border: 1px solid #a2aab8;" ></div>';
 
-        $this->pObj->tabs = $tabs;
+        $this->getModule()->setSubMenu($tabs);
 
         $teamInfo = new TeamInfo($team, $this->formTool);
         $content .= $teamInfo->handleRequest();

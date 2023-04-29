@@ -11,6 +11,7 @@ use Sys25\RnBase\Utility\Strings;
 use Sys25\RnBase\Utility\T3General;
 use System25\T3sports\Model\Team;
 use System25\T3sports\Model\TeamNoteType;
+use System25\T3sports\Module\Decorator\TeamNoteDecorator;
 use System25\T3sports\Module\Searcher\ProfileSearcher;
 use System25\T3sports\Utility\Misc;
 use System25\T3sports\Utility\ServiceRegistry;
@@ -19,7 +20,7 @@ use tx_rnbase;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2008-2021 Rene Nitzsche (rene@system25.de)
+ *  (c) 2008-2023 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -44,7 +45,10 @@ use tx_rnbase;
  */
 class TeamNotes
 {
-    protected $mod;
+    /**
+     * @var IModule
+     */
+    private $mod;
 
     /**
      * Ausführung des Requests.
@@ -55,11 +59,10 @@ class TeamNotes
      *
      * @return string
      */
-    public function handleRequest($module, Team $currTeam, $teamInfo)
+    public function handleRequest(IModule $module, Team $currTeam, $teamInfo)
     {
         $this->mod = $module;
-        $this->pid = $module->getPid();
-        $this->modName = $module->getName();
+        $lang = $module->getLanguageService();
 
         // Tasks:
         // 1. Alle Team-Notizen des Teams anzeigen
@@ -68,11 +71,12 @@ class TeamNotes
         $srv = ServiceRegistry::getTeamService();
         $types = $srv->getNoteTypes();
         if (!count($types)) {
-            $content .= $this->mod->doc->section($GLOBALS['LANG']->getLL('message').':',
-                $GLOBALS['LANG']->getLL('msg_create_notetypes'), 0, 1, IModFunc::ICON_INFO);
+            $content .= $this->mod->getDoc()->section($lang->getLL('message').':',
+                $lang->getLL('msg_create_notetypes'), 0, 1, IModFunc::ICON_INFO);
 
             return $content;
         }
+        $content = '';
         // Für jeden Typ einen Block anzeigen
         foreach ($types as $type) {
             $content .= $this->showTeamNotes($currTeam, $type);
@@ -115,7 +119,7 @@ class TeamNotes
         $srv = ServiceRegistry::getTeamService();
         $notes = $srv->getTeamNotes($currTeam, $type);
 
-        $decor = tx_rnbase::makeInstance('tx_cfcleague_util_TeamNoteDecorator', $this->getFormTool());
+        $decor = tx_rnbase::makeInstance(TeamNoteDecorator::class, $this->getFormTool());
         $columns = [
             'uid' => [
                 'decorator' => $decor,
@@ -134,9 +138,9 @@ class TeamNotes
             ],
         ];
 
-        /* @var $tables Tables */
+        /** @var Tables $tables */
         $tables = tx_rnbase::makeInstance(Tables::class);
-        $rows = $tables->prepareTable($notes, $columns, $this->getFormTool(), $options);
+        $rows = $tables->prepareTable($notes, $columns, $this->getFormTool(), []);
         $out .= $tables->buildTable($rows[0]);
 
         $options[ToolBox::OPTION_DEFVALS] = [
@@ -164,16 +168,17 @@ class TeamNotes
      */
     protected function handleAddProfiles(Team $currTeam, $baseInfo)
     {
+        $lang = $this->mod->getLanguageService();
         $out = '';
         $profile2team = strlen(T3General::_GP('profile2team')) > 0; // Wurde der Submit-Button gedrückt?
         if ($profile2team) {
             $entryUids = T3General::_GP('checkEntry');
             if (!is_array($entryUids) || !count($entryUids)) {
-                $out = $GLOBALS['LANG']->getLL('msg_no_profile_selected').'<br/><br/>';
+                $out = $lang->getLL('msg_no_profile_selected').'<br/><br/>';
             } else {
                 if ($baseInfo['freePlayers'] < count($entryUids)) {
                     // Team ist schon voll
-                    $out = $GLOBALS['LANG']->getLL('msg_maxPlayers').'<br/><br/>';
+                    $out = $lang->getLL('msg_maxPlayers').'<br/><br/>';
                 } else {
                     // Die Spieler hinzufügen
                     $playerUids = implode(',', Misc::mergeArrays(Strings::intExplode(',', $currTeam->getProperty('players')), $entryUids));
@@ -183,13 +188,15 @@ class TeamNotes
 
                     $tce = Connection::getInstance()->getTCEmain($data);
                     $tce->process_datamap();
-                    $out .= $GLOBALS['LANG']->getLL('msg_profiles_joined').'<br/><br/>';
-                    $currTeam->getProperty('players', $playerUids);
+                    $out .= $lang->getLL('msg_profiles_joined').'<br/><br/>';
+                    $currTeam->setProperty('players', $playerUids);
                 }
             }
         }
 
-        return (strlen($out)) ? $this->mod->getDoc()->section($GLOBALS['LANG']->getLL('message').':', $out, 0, 1, IModFunc::ICON_INFO) : '';
+        return (strlen($out)) ? $this->mod->getDoc()->section(
+            $lang->getLL('message'
+            ).':', $out, 0, 1, IModFunc::ICON_INFO) : '';
     }
 
     /**

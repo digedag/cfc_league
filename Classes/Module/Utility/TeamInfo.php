@@ -4,6 +4,7 @@ namespace System25\T3sports\Module\Utility;
 
 use Sys25\RnBase\Backend\Form\ToolBox;
 use Sys25\RnBase\Backend\Module\IModFunc;
+use Sys25\RnBase\Backend\Module\IModule;
 use Sys25\RnBase\Backend\Utility\Tables;
 use Sys25\RnBase\Database\Connection;
 use Sys25\RnBase\Frontend\Request\Parameters;
@@ -104,9 +105,9 @@ class TeamInfo
      *
      * @return string
      */
-    public function getInfoTable(&$doc)
+    public function getInfoTable(IModule $module)
     {
-        global $LANG;
+        $lang = $module->getLanguageService();
         $tableLayout = [
             'table' => ['<table class="table table-striped table-hover table-condensed">', '</table>'],
             'defRow' => [ // Format für 1. Zeile
@@ -120,19 +121,19 @@ class TeamInfo
         ];
         $arr = [];
         $arr[] = [
-            $LANG->getLL('msg_number_of_players'),
+            $lang->getLL('msg_number_of_players'),
             $this->baseInfo['freePlayers'],
         ];
         $arr[] = [
-            $LANG->getLL('msg_number_of_coaches'),
+            $lang->getLL('msg_number_of_coaches'),
             $this->baseInfo['freeCoaches'],
         ];
         $arr[] = [
-            $LANG->getLL('msg_number_of_supporters'),
+            $lang->getLL('msg_number_of_supporters'),
             $this->baseInfo['freeSupporters'],
         ];
 
-        /* @var $tables Tables */
+        /** @var Tables $tables */
         $tables = tx_rnbase::makeInstance(Tables::class);
 
         return $tables->buildTable($arr, $tableLayout);
@@ -145,22 +146,21 @@ class TeamInfo
      *
      * @return string
      */
-    public function getTeamTable(&$doc)
+    public function getTeamTable(IModule $module)
     {
-        global $LANG;
         $arr = [
             [
                 '&nbsp;',
-                $LANG->getLL('label_firstname'),
-                $LANG->getLL('label_lastname'),
+                '###LABEL_FIRSTNAME###',
+                '###LABEL_LASTNAME###',
                 '&nbsp;',
                 '&nbsp;',
             ],
         ];
 
-        $this->addProfiles($arr, $this->getCoachNames($this->getTeam()), $LANG->getLL('label_profile_coach'), 'coach');
-        $this->addProfiles($arr, $this->getPlayerNames($this->getTeam()), $LANG->getLL('label_profile_player'), 'player');
-        $this->addProfiles($arr, $this->getSupporterNames($this->getTeam()), $LANG->getLL('label_profile_supporter'), 'supporter');
+        $this->addProfiles($arr, $this->getCoachNames($this->getTeam()), '###LABEL_PROFILE_COACH###', 'coach');
+        $this->addProfiles($arr, $this->getPlayerNames($this->getTeam()), '###LABEL_PROFILE_PLAYER###', 'player');
+        $this->addProfiles($arr, $this->getSupporterNames($this->getTeam()), '###LABEL_PROFILE_SUPPORTER###', 'supporter');
 
         $tables = tx_rnbase::makeInstance(Tables::class);
         $tableProfiles = count($arr) > 1 ? $tables->buildTable($arr) : '';
