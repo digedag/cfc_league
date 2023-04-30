@@ -73,20 +73,6 @@ if (\Sys25\RnBase\Utility\Environment::isBackend()) {
 
 \System25\T3sports\Utility\Misc::registerTableStrategy('default', 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_competition_tablestrategy_default', '');
 
-// Include services
-
-\Sys25\RnBase\Utility\Extensions::addService(
-    $_EXTKEY,
-    't3sports_profiletype' /* sv type */ ,
-    'tx_cfcleague_services_ProfileTypes' /* sv key */ ,
-    [
-        'title' => 'Base profile types', 'description' => 'Defines the base types for profiles like players, coaches...', 'subtype' => 'basetypes',
-        'available' => true, 'priority' => 50, 'quality' => 50,
-        'os' => '', 'exec' => '',
-        'className' => 'tx_cfcleague_services_ProfileTypes',
-    ]
-);
-
 // ---------------
 // Services for kind of sports
 // ---------------
