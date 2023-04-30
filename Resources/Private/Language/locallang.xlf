@@ -200,7 +200,7 @@
             <trans-unit id="msg_create_notetypes" xml:space="preserve">
                 <source>To use this module, you have to create one or more records of type "Note type".</source>
             </trans-unit>
-            <trans-unit id="search_profiles" xml:space="preserve">
+            <trans-unit id="mod_profiles" xml:space="preserve">
                 <source>Search profiles</source>
             </trans-unit>
             <trans-unit id="match_ticker" xml:space="preserve">

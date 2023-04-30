@@ -8,8 +8,11 @@ use Sys25\RnBase\Backend\Utility\BackendUtility;
 use Sys25\RnBase\Backend\Utility\Tables;
 use Sys25\RnBase\Database\Connection;
 use Sys25\RnBase\Utility\T3General;
+use Sys25\RnBase\Utility\TYPO3;
 use System25\T3sports\Controller\Profile\ProfileMerger;
 use System25\T3sports\Controller\Profile\ShowItem;
+use System25\T3sports\Controller\Profile\ShowItem87;
+use System25\T3sports\Module\Utility\Selector;
 use tx_rnbase;
 
 /***************************************************************
@@ -42,14 +45,21 @@ use tx_rnbase;
  */
 class Profile extends BaseModFunc
 {
-    public $doc;
-
-    public $MCONF;
+    private $doc;
 
     /**
      * Verstecken der Suchergebnisse.
      */
     public $hideResults = false;
+    /**
+     * @var \Sys25\RnBase\Backend\Form\ToolBox
+     */
+    private $formTool;
+
+    /**
+     * @var Selector
+     */
+    private $selector;
 
     /**
      * Method getFuncId.
@@ -61,24 +71,29 @@ class Profile extends BaseModFunc
         return 'functicker';
     }
 
+    public function getModuleIdentifier()
+    {
+        return 'cfc_league';
+    }
+
     protected function getContent($template, &$configurations, &$formatter, $formTool)
     {
-        global $LANG;
         $content = '';
 
         $this->doc = $this->getModule()->getDoc();
         $this->formTool = $this->getModule()->getFormTool();
+        $lang = $this->getModule()->getLanguageService();
 
         // Selector-Instanz bereitstellen
-        $this->selector = tx_rnbase::makeInstance('tx_cfcleague_selector');
+        $this->selector = tx_rnbase::makeInstance(Selector::class);
         $this->selector->init($this->getModule()->getDoc(), $this->getModule());
 
         $data = T3General::_GP('data');
-        $this->SEARCH_SETTINGS = BackendUtility::getModuleData([
+        $settings = BackendUtility::getModuleData([
             'searchterm' => '',
         ], $data, $this->getModule()->getName());
 
-        $content .= $this->doc->section($LANG->getLL('msg_search_person'), $this->createSearchForm($data), 0, 1);
+        $content .= $this->doc->section($lang->getLL('msg_search_person'), $this->createSearchForm($settings), 0, 1);
 
         // Haben wir Daten im Request?
         if (is_array($data)) {
@@ -88,16 +103,15 @@ class Profile extends BaseModFunc
         }
         // Wir zeigen die Liste an
         if (!$this->hideResults) {
-            $searchterm = trim($this->SEARCH_SETTINGS['searchterm']);
+            $searchterm = trim($settings['searchterm']);
             if (strlen($searchterm) && strlen($searchterm) < 3) {
-                $content .= $this->doc->section($LANG->getLL('message').':', $LANG->getLL('msg_string_too_short'), 0, 1, IModFunc::ICON_INFO);
+                $content .= $this->doc->section($lang->getLL('message').':', $lang->getLL('msg_string_too_short'), 0, 1, IModFunc::ICON_INFO);
             } elseif (strlen($searchterm) >= 3) {
                 $profiles = $this->searchProfiles($searchterm);
                 if (!empty($profiles)) {
-//                    $content .= $this->doc->section($LANG->getLL('msg_found_person'), $this->buildProfileTable($profiles), 0, 1);
-                    $content .= $this->buildProfileTable($profiles);
+                    $content .= $this->doc->section($lang->getLL('msg_found_person'), $this->buildProfileTable($profiles), 0, 1);
                 } else {
-                    $content .= $this->doc->section($LANG->getLL('msg_no_person_found'), '', 0, 1, IModFunc::ICON_WARN);
+                    $content .= $this->doc->section($lang->getLL('msg_no_person_found'), '', 0, 1, IModFunc::ICON_WARN);
                 }
             }
         }
@@ -113,9 +127,10 @@ class Profile extends BaseModFunc
     protected function handleProfileMerge(&$data)
     {
         global $LANG;
-        $profile1 = (int) $data['merge1'];
-        $profile2 = (int) $data['merge2'];
-        if ($data['merge_profiles']) { // Step 1
+        $profile1 = (int) ($data['merge1'] ?? 0);
+        $profile2 = (int) ($data['merge2'] ?? 0);
+        $out = '';
+        if (isset($data['merge_profiles'])) { // Step 1
             if (!($profile1 && $profile2) || ($profile1 == $profile2)) {
                 return $this->doc->section($LANG->getLL('msg_merge_selectprofiles'), '', 0, 1, IModFunc::ICON_FATAL);
             }
@@ -124,14 +139,14 @@ class Profile extends BaseModFunc
             // Das führende Profile muss ausgewählt werden
             $out .= $LANG->getLL('msg_merge_selectprofile');
             $out .= $this->createProfileMergeForm($profile1, $profile2);
-            $out = $this->doc->section($LANG->getLL('label_mergehead'), $out, 0, 1);
-        } elseif ($data['merge_profiles_do']) { // Step 2
+//            $out = $this->doc->section($LANG->getLL('label_mergehead'), $out, 0, 1);
+        } elseif (isset($data['merge_profiles_do'])) { // Step 2
             $leading = intval($data['merge']);
 
             $merger = tx_rnbase::makeInstance(ProfileMerger::class);
             $merger->merge($leading, $leading == $profile1 ? $profile2 : $profile1);
 
-            $out .= $this->doc->section($LANG->getLL('msg_merge_done'), '', 0, 1, IModFunc::ICON_OK);
+            $out .= $this->getModule()->getDoc()->section($LANG->getLL('msg_merge_done'), '', 0, 1, IModFunc::ICON_OK);
         }
 
         return $out;
@@ -148,25 +163,27 @@ class Profile extends BaseModFunc
     protected function createProfileMergeForm($uid1, $uid2)
     {
         global $LANG;
-        $out .= '<div class="row">';
+        $out = '<div class="container">';
+        $out = ' <div class="row">';
 
-        /* @var $info ShowItem */
-        $info = tx_rnbase::makeInstance(ShowItem::class);
+        /** @var ShowItem $info */
+        $info = tx_rnbase::makeInstance(TYPO3::isTYPO121OrHigher() ? ShowItem::class : ShowItem87::class);
 
-        $out .= '<div class="col-xs-6">';
-        $out .= $this->formTool->createRadio('data[merge]', $uid1, true);
+        $out .= sprintf('  <div class="col-sm">%s</div>', $this->formTool->createRadio('data[merge]', $uid1, true));
+        $out .= sprintf('  <div class="col-sm">%s</div>', $this->formTool->createRadio('data[merge]', $uid2, true));
+        $out .= ' </div>';
+
+        $out .= ' <div class="row">';
+        $out .= '  <div class="col-sm">';
         $out .= $info->getInfoScreen('tx_cfcleague_profiles', $uid1);
         $out .= $this->formTool->createHidden('data[merge1]', $uid1);
-
-        $out .= '</div>';
-
-        $out .= '<div class="col-xs-6">';
-        $out .= $this->formTool->createRadio('data[merge]', $uid2);
+        $out .= '  </div>';
+        $out .= '  <div class="col-sm">';
         $out .= $info->getInfoScreen('tx_cfcleague_profiles', $uid2);
         $out .= $this->formTool->createHidden('data[merge2]', $uid2);
-        $out .= '</div>';
+        $out .= '  </div>';
 
-        $out .= '</div>';
+        $out .= '</div></div>';
         $out .= $this->formTool->createSubmit('data[merge_profiles_do]', $LANG->getLL('label_merge'), $LANG->getLL('msg_merge_confirm'));
 
         return $out;
@@ -182,7 +199,7 @@ class Profile extends BaseModFunc
         global $LANG;
         $out = '';
         // Soll das Edit-Formular gezeigt werden?
-        if ($data['edit_profile']) {
+        if (isset($data['edit_profile'])) {
             $this->hideResults = true;
             $uids = array_keys($data['edit_profile']);
 
@@ -192,7 +209,7 @@ class Profile extends BaseModFunc
             } else {
                 $out .= $this->doc->section($LANG->getLL('msg_edit_person'), $this->showProfileForm($profiles[0]), 0, 1);
             }
-        } elseif ($data['update_profile_do']) { // Wurde der Speichern-Button gedrückt?
+        } elseif (isset($data['update_profile_do'])) { // Wurde der Speichern-Button gedrückt?
             // Das Datum prüfen
             $out .= $this->updateProfiles($data['update_profile']);
         }
@@ -337,7 +354,7 @@ class Profile extends BaseModFunc
             $row[] = date('j.n.Y', $profile['birthday']).' <input type="submit" name="data[edit_profile]['.$profile['uid'].']" value="'.$LANG->getLL('btn_edit').'"';
             // Die Zusatzinfos zusammenstellen
             $infos = $LANG->getLL('label_page').': '.BackendUtility::getRecordPath($profile['pid'], '', 0).'<br />';
-            if (is_array($profile['teams'])) {
+            if (isset($profile['teams'])) {
                 foreach ($profile['teams'] as $team) {
                     $infos .= '&nbsp;Team: '.$team['team_name'];
                     $infos .= $this->formTool->createEditLink('tx_cfcleague_teams', $team['team_uid'], '').'<br />';
@@ -364,12 +381,12 @@ class Profile extends BaseModFunc
         return $out;
     }
 
-    protected function createSearchForm(&$data)
+    protected function createSearchForm(array $settings)
     {
         global $LANG;
         $out = '<div class="form-inline">';
         $out .= $LANG->getLL('label_searchterm').': ';
-        $out .= $this->formTool->createTxtInput('data[searchterm]', $this->SEARCH_SETTINGS['searchterm'], 20, [
+        $out .= $this->formTool->createTxtInput('data[searchterm]', $settings['searchterm'], 20, [
             'class' => 'form-control input-sm',
         ]);
         // Den Update-Button einfügen
