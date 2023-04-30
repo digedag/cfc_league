@@ -18,7 +18,7 @@ use tx_rnbase;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2007-2021 Rene Nitzsche (rene@system25.de)
+ *  (c) 2007-2023 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -162,29 +162,34 @@ class Profile extends BaseModFunc
      */
     protected function createProfileMergeForm($uid1, $uid2)
     {
-        global $LANG;
+        $lang = $this->getModule()->getLanguageService();
+        $cssClass = TYPO3::isTYPO121OrHigher() ? 'col-sm' : 'col-xs-6';
         $out = '<div class="container">';
         $out = ' <div class="row">';
 
         /** @var ShowItem $info */
         $info = tx_rnbase::makeInstance(TYPO3::isTYPO121OrHigher() ? ShowItem::class : ShowItem87::class);
 
-        $out .= sprintf('  <div class="col-sm">%s</div>', $this->formTool->createRadio('data[merge]', $uid1, true));
-        $out .= sprintf('  <div class="col-sm">%s</div>', $this->formTool->createRadio('data[merge]', $uid2, true));
+        $out .= sprintf('  <div class="%s">%s</div>', $cssClass, $this->formTool->createRadio('data[merge]', $uid1, true));
+        $out .= sprintf('  <div class="%s">%s</div>', $cssClass, $this->formTool->createRadio('data[merge]', $uid2, true));
         $out .= ' </div>';
 
         $out .= ' <div class="row">';
-        $out .= '  <div class="col-sm">';
+        $out .= sprintf('  <div class="%s">', $cssClass);
         $out .= $info->getInfoScreen('tx_cfcleague_profiles', $uid1);
         $out .= $this->formTool->createHidden('data[merge1]', $uid1);
         $out .= '  </div>';
-        $out .= '  <div class="col-sm">';
+        $out .= sprintf('  <div class="%s">', $cssClass);
         $out .= $info->getInfoScreen('tx_cfcleague_profiles', $uid2);
         $out .= $this->formTool->createHidden('data[merge2]', $uid2);
         $out .= '  </div>';
+        $out .= ' </div>';
 
-        $out .= '</div></div>';
-        $out .= $this->formTool->createSubmit('data[merge_profiles_do]', $LANG->getLL('label_merge'), $LANG->getLL('msg_merge_confirm'));
+        $out .= ' <div class="row">';
+        $out .= sprintf('  <div class="%s">', $cssClass);
+        $out .= $this->formTool->createSubmit('data[merge_profiles_do]', '###LABEL_MERGE###', $lang->getLL('msg_merge_confirm'));
+        $out .= '  </div>';
+        $out .= '</div>';
 
         return $out;
     }
