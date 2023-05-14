@@ -41,6 +41,7 @@ class MatchTableBuilder
 
     private $_teamgroupIds;
 
+    private $_scopeArr;
     private $_compIds;
 
     private $_roundIds;
@@ -213,9 +214,9 @@ class MatchTableBuilder
         $this->setCompetitions($scope['COMP_UIDS']);
         $this->setRounds($scope['ROUND_UIDS']);
         $this->setClubs($scope['CLUB_UIDS']);
-        $this->setCompetitionObligation($scope['COMP_OBLIGATION']);
-        $this->setCompetitionTypes($scope['COMP_TYPES']);
-        $this->setTeamAgeGroups($scope['TEAMGROUP_UIDS']);
+        $this->setCompetitionObligation($scope['COMP_OBLIGATION'] ?? 0);
+        $this->setCompetitionTypes($scope['COMP_TYPES'] ?? '');
+        $this->setTeamAgeGroups($scope['TEAMGROUP_UIDS'] ?? '');
 
         // Maybe we need it later...
         $this->_scopeArr = $scope;
