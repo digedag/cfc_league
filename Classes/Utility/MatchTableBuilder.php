@@ -209,11 +209,11 @@ class MatchTableBuilder
      */
     public function setScope($scope)
     {
-        $this->setSaisons($scope['SAISON_UIDS']);
-        $this->setAgeGroups($scope['GROUP_UIDS']);
-        $this->setCompetitions($scope['COMP_UIDS']);
-        $this->setRounds($scope['ROUND_UIDS']);
-        $this->setClubs($scope['CLUB_UIDS']);
+        $this->setSaisons($scope['SAISON_UIDS'] ?? '');
+        $this->setAgeGroups($scope['GROUP_UIDS'] ?? '');
+        $this->setCompetitions($scope['COMP_UIDS'] ?? '');
+        $this->setRounds($scope['ROUND_UIDS'] ?? '');
+        $this->setClubs($scope['CLUB_UIDS'] ?? '');
         $this->setCompetitionObligation($scope['COMP_OBLIGATION'] ?? 0);
         $this->setCompetitionTypes($scope['COMP_TYPES'] ?? '');
         $this->setTeamAgeGroups($scope['TEAMGROUP_UIDS'] ?? '');

@@ -103,7 +103,7 @@ class Competition extends BaseModel
                 $round = ($round) ? $round - 1 : $round;
             }
             // Check if data is already cached
-            if (!is_array($this->matchesByState[$status.'_'.$scope])) {
+            if (!is_array($this->matchesByState[$status.'_'.$scope] ?? '')) {
                 $what = '*';
                 // Die UID der Liga setzen
                 $where = 'competition="'.$this->getUid().'" ';
