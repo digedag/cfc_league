@@ -312,11 +312,11 @@ if (\Sys25\RnBase\Utility\TYPO3::isTYPO104OrHigher()) {
     'info2' => ['RTE' => ['defaultExtras' => $rteConfig]],
 ]);
 
-if (tx_rnbase_util_Extensions::isLoaded('static_info_tables')) {
+if (\Sys25\RnBase\Utility\Extensions::isLoaded('static_info_tables')) {
     $tx_cfcleague_club['columns']['country'] = System25\T3sports\Utility\TcaLookup::getCountryField();
 }
 
-$tx_cfcleague_club['columns']['logo'] = tx_rnbase_util_TSFAL::getMediaTCA('logo', [
+$tx_cfcleague_club['columns']['logo'] = \Sys25\RnBase\Utility\TSFAL::getMediaTCA('logo', [
     'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_club.logo',
 ]);
 
