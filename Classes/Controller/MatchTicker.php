@@ -137,6 +137,7 @@ class MatchTicker extends BaseModFunc
         // Jetzt listen wir noch die zum Spiel vorhandenen Tickermeldungen auf
         $modContent .= $this->doc->divider(5);
         $tickerArr = $this->createTickerArray($match, T3General::_GP('showAll'));
+        $tickerContent = '';
         if ($tickerArr) {
             $tickerContent = $formTool->createModuleLink(
                 ['showAll' => '1'],
