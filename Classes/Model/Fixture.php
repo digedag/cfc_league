@@ -198,8 +198,13 @@ class Fixture extends BaseModel
     public function getSets()
     {
         if (!is_array($this->sets)) {
-            $this->sets = Set::buildFromString($this->getProperty('sets'));
-            $this->sets = $this->sets ? $this->sets : [];
+            $this->sets = [];
+            try {
+                $this->sets = Set::buildFromString($this->getProperty('sets'));
+                $this->sets = $this->sets ? $this->sets : [];
+            } catch (Exception $e) {
+                throw new Exception(sprintf('Invalid set string in match with uid %d given.', $this->getUid()));
+            }
         }
 
         return $this->sets;
