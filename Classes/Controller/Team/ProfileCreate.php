@@ -90,7 +90,6 @@ class ProfileCreate
             return true;
         }
 
-        // FIXME!
         $goodPages = Misc::getPagePath($pid);
 
         return in_array($rootPage, $goodPages);

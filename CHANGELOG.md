@@ -2,6 +2,9 @@
 Änderungen
 ==========
 
+## v1.11.1 (21.07.2023)
+ * fix check for profile page path
+
 ## v1.11.0 (21.07.2023)
  * Add support for TYPO3 12.4 LTS
 
