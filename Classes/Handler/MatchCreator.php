@@ -14,7 +14,7 @@ use tx_rnbase;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2010-2021 Rene Nitzsche (rene@system25.de)
+ *  (c) 2010-2023 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -84,7 +84,7 @@ class MatchCreator
             $items[$i] = $i.(1 == $i ? ' ###LABEL_MATCH###' : ' ###LABEL_MATCHES###');
         }
         $menu = $mod->getFormTool()->showMenu($mod->getPid(), 'matchs3create', $mod->getName(), $items);
-        $content .= $menu['menu'];
+        $content = $menu['menu'];
         $maxMatches = $menu['value'];
 
         $table = 'tx_cfcleague_games';

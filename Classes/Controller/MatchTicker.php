@@ -2,12 +2,12 @@
 
 namespace System25\T3sports\Controller;
 
+use Sys25\RnBase\Backend\Form\ToolBox;
 use Sys25\RnBase\Backend\Module\BaseModFunc;
 use Sys25\RnBase\Backend\Utility\BackendUtility;
 use Sys25\RnBase\Backend\Utility\Tables;
 use Sys25\RnBase\Database\Connection;
 use Sys25\RnBase\Utility\T3General;
-use Sys25\RnBase\Utility\TYPO3;
 use System25\T3sports\Model\Competition;
 use System25\T3sports\Model\Fixture;
 use System25\T3sports\Model\Repository\MatchNoteRepository;
@@ -50,6 +50,10 @@ class MatchTicker extends BaseModFunc
     public $MCONF;
 
     public $playerNames = [];
+
+    /**
+     * @var Selector
+     */
     private $selector;
 
     /**
@@ -62,9 +66,16 @@ class MatchTicker extends BaseModFunc
         return 'functicker';
     }
 
+    public function getModuleIdentifier()
+    {
+        return 'cfc_league';
+    }
+
     /**
      * Bearbeitung von Spielen.
      * Es werden die Paaren je Spieltag angezeigt.
+     *
+     * @param ToolBox $formTool
      */
     protected function getContent($template, &$configurations, &$formatter, $formTool)
     {
@@ -86,11 +97,11 @@ class MatchTicker extends BaseModFunc
         $current_league = $this->getSelector()->showLeagueSelector($selector, $this->getModule()
             ->getPid());
         if (!$current_league) {
-            return $this->doc->section('Info:', $LANG->getLL('no_league_in_page'), 0, 1, self::ICON_WARN);
+            return $this->getModule()->getDoc()->section('Info:', $LANG->getLL('no_league_in_page'), 0, 1, self::ICON_WARN);
         }
 
         if (!count($current_league->getRounds())) {
-            $this->setSelectorMenu($selector);
+            $this->getModule()->setSelector($selector);
             $content .= $LANG->getLL('no_round_in_league');
 
             return $content;
@@ -103,7 +114,7 @@ class MatchTicker extends BaseModFunc
         $matchData = ServiceRegistry::getMatchService()->searchMatchesByRound($current_league, $current_round, true);
         $match = $this->getSelector()->showMatchSelector($selector, $this->getModule()
             ->getPid(), $matchData);
-        $this->setSelectorMenu($selector);
+        $this->getModule()->setSelector($selector);
 
         $modContent = '<div id="editform">';
         $update = T3General::_GP('update');
@@ -142,7 +153,7 @@ class MatchTicker extends BaseModFunc
             $tickerContent = $formTool->createModuleLink(
                 ['showAll' => '1'],
                 $this->getModule()->getPid(),
-                $LANG->getLL('label_showAllTickers')
+                '###LABEL_SHOWALLTICKERS###'
             );
             $tableLayout = $this->_getTableLayoutForm();
             $tableLayout['defRowEven']['defCol'] = $tableLayout['defRowOdd']['defCol']; // Array('<td valign="top" style="padding:5px 5px;">', '</td>');
@@ -155,7 +166,7 @@ class MatchTicker extends BaseModFunc
         $content .= $formTool->form->printNeededJSFunctions_top();
         $content .= $modContent.'</div>';
         // $content .= $this->getModule()->getFormTool()->form->JSbottom('editform');
-        $content .= $this->doc->section($LANG->getLL('title_recent_tickers'), $tickerContent);
+        $content .= $this->getModule()->getDoc()->section($LANG->getLL('title_recent_tickers'), $tickerContent);
 
         $content .= $formTool->form->printNeededJSFunctions();
 
@@ -167,11 +178,6 @@ class MatchTicker extends BaseModFunc
         );
 
         return $content;
-    }
-
-    protected function setSelectorMenu($selector)
-    {
-        $this->getModule()->selector = '<div id="selector">'.$selector.'</div>';
     }
 
     /**
@@ -396,7 +402,7 @@ class MatchTicker extends BaseModFunc
      */
     protected function createTickerArray($match, $showAll)
     {
-        global $LANG;
+        $lang = $this->getModule()->getLanguageService();
         $repo = new MatchNoteRepository();
         $repo->retrieveMatchNotes([$match], false);
         $notes = $match->getMatchNotes('desc', $showAll ? false : 5);
@@ -406,11 +412,11 @@ class MatchTicker extends BaseModFunc
 
         $arr = [
             [
-                $LANG->getLL('tx_cfcleague_match_notes.minute'),
-                $LANG->getLL('tx_cfcleague_match_notes.type'),
-                $LANG->getLL('tx_cfcleague_match_notes.player_home'),
-                $LANG->getLL('tx_cfcleague_match_notes.player_guest'),
-                $LANG->getLL('tx_cfcleague_match_notes.comment'),
+                $lang->getLL('tx_cfcleague_match_notes.minute'),
+                $lang->getLL('tx_cfcleague_match_notes.type'),
+                $lang->getLL('tx_cfcleague_match_notes.player_home'),
+                $lang->getLL('tx_cfcleague_match_notes.player_guest'),
+                $lang->getLL('tx_cfcleague_match_notes.comment'),
                 '',
             ],
         ];
@@ -428,9 +434,8 @@ class MatchTicker extends BaseModFunc
             $min .= $note['hidden'] ? '*' : '';
             $row[] = $min;
             $row[] = $types[$note['type']];
-
-            $row[] = -1 == intval($note['player_home']) ? $LANG->getLL('tx_cfcleague.unknown') : $playersHome[$note['player_home']];
-            $row[] = -1 == intval($note['player_guest']) ? $LANG->getLL('tx_cfcleague.unknown') : $playersGuest[$note['player_guest']];
+            $row[] = -1 == intval($note['player_home']) ? $lang->getLL('tx_cfcleague.unknown') : $playersHome[$note['player_home']] ?? '';
+            $row[] = -1 == intval($note['player_guest']) ? $lang->getLL('tx_cfcleague.unknown') : $playersGuest[$note['player_guest']] ?? '';
 
             $row[] = $note['comment'];
             $row[] = $this->getModule()
@@ -505,13 +510,15 @@ class MatchTicker extends BaseModFunc
 
         // TS-Config der aktuellen Seite laden, um die Anzahl der Felder zu ermitteln
         $pageTSconfig = BackendUtility::getPagesTSconfig($this->getModule()->getPid());
-        $inputFields = (is_array($pageTSconfig) && isset($pageTSconfig['tx_cfcleague.']['matchTickerCfg.'])) ? intval($pageTSconfig['tx_cfcleague.']['matchTickerCfg.']['numberOfInputFields']) : 4;
-        $cols = (is_array($pageTSconfig) && isset($pageTSconfig['tx_cfcleague.']['matchTickerCfg.'])) ? intval($pageTSconfig['tx_cfcleague.']['matchTickerCfg.']['commentFieldCols']) : 35;
-        $rows = (is_array($pageTSconfig) && isset($pageTSconfig['tx_cfcleague.']['matchTickerCfg.'])) ? intval($pageTSconfig['tx_cfcleague.']['matchTickerCfg.']['commentFieldRows']) : 3;
+        $tickerConf = isset($pageTSconfig['tx_cfcleague.']['matchTickerCfg.']) ? $pageTSconfig['tx_cfcleague.']['matchTickerCfg.'] : [];
+        $inputFields = isset($tickerConf['numberOfInputFields']) ? intval($tickerConf['numberOfInputFields']) : 4;
+        $cols = isset($tickerConf['commentFieldCols']) ? intval($tickerConf['commentFieldCols']) : 35;
+        $rows = isset($tickerConf['commentFieldCols']) ? intval($tickerConf['commentFieldCols']) : 3;
 
         $playersHome = $playersGuest = [
             0 => '',
         ]; // Erster Eintrag bleibt leer
+
         $players = ServiceRegistry::getProfileService()->loadProfiles($match->getPlayersHome(true));
         foreach ($players as $player) {
             $playersHome[$player->getUid()] = $player->getName(true);
@@ -602,7 +609,7 @@ class MatchTicker extends BaseModFunc
     /**
      * Liefert die Selector Instanz.
      *
-     * @return \tx_cfcleague_selector
+     * @return Selector
      */
     private function getSelector()
     {

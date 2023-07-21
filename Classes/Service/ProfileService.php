@@ -14,7 +14,7 @@ use System25\T3sports\Utility\ServiceRegistry;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2009-2021 Rene Nitzsche (rene@system25.de)
+ *  (c) 2009-2023 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -43,11 +43,19 @@ class ProfileService extends AbstractService
 {
     private $profiles = [];
 
+    /**
+     * @var ProfileRepository
+     */
     private $repo;
+    /**
+     * @var ProfileTypeService
+     */
+    private $profileTypeService;
 
-    public function __construct(ProfileRepository $repo = null)
+    public function __construct(ProfileRepository $repo = null, ProfileTypeService $profileTypeSrv = null)
     {
         $this->repo = $repo ?: new ProfileRepository();
+        $this->profileTypeService = $profileTypeSrv ?: new ProfileTypeService();
     }
 
     /**
@@ -178,12 +186,7 @@ class ProfileService extends AbstractService
     public function getProfileTypes4TCA()
     {
         $items = [];
-        $baseType = 't3sports_profiletype';
-        $services = Misc::lookupServices($baseType);
-        foreach ($services as $subtype => $info) {
-            $srv = Misc::getService($baseType, $subtype);
-            $types = array_merge($items, $srv->getProfileTypes());
-        }
+        $types = $this->profileTypeService->getProfileTypes();
         foreach ($types as $typedef) {
             $items[] = [
                 Misc::translateLLL($typedef[0]),
@@ -208,12 +211,8 @@ class ProfileService extends AbstractService
             $uidArr[$uid] = '';
         }
 
-        $baseType = 't3sports_profiletype';
-        $services = Misc::lookupServices($baseType);
-        foreach ($services as $subtype => $info) {
-            $srv = Misc::getService($baseType, $subtype);
-            $srv->setProfileTypeItems($uidArr);
-        }
+        $this->profileTypeService->setProfileTypeItems($uidArr);
+
         $items = [];
         foreach ($uidArr as $uid => $label) {
             $items[] = $uid.'|'.Misc::translateLLL($label);

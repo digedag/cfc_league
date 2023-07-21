@@ -2,19 +2,14 @@
 
 namespace System25\T3sports\Controller\Profile;
 
+use Sys25\RnBase\Backend\Utility\BackendUtility;
+use Sys25\RnBase\Utility\T3General;
 use Sys25\RnBase\Utility\TYPO3;
-use tx_rnbase;
-use TYPO3\CMS\Backend\Controller\ContentElement\ElementInformationController;
-use TYPO3\CMS\Backend\Template\ModuleTemplate;
-use TYPO3\CMS\Core\Http\NormalizedParams;
-use TYPO3\CMS\Core\Http\ServerRequestFactory;
-use TYPO3\CMS\Core\Imaging\IconFactory;
-use TYPO3\CMS\Core\Type\Bitmask\Permission;
 
 /*
  *  Copyright notice
  *
- *  (c) 2007-2021 Rene Nitzsche (rene@system25.de)
+ *  (c) 2007-2023 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -34,55 +29,26 @@ use TYPO3\CMS\Core\Type\Bitmask\Permission;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-class ShowItem extends ElementInformationController
+class ShowItem
 {
     /**
      * Constructor.
      */
     public function __construct()
     {
-        // Der parent-Konstruktor darf nicht aufgerufen werden.
-        $this->iconFactory = tx_rnbase::makeInstance(IconFactory::class);
     }
 
     public function getInfoScreen($table, $uid)
     {
-        $this->initByParams($table, $uid);
-
-        if (TYPO3::isTYPO104OrHigher()) {
-            $request = ServerRequestFactory::fromGlobals();
-            $normalizedParams = NormalizedParams::createFromRequest($request);
-            $request = $request->withAttribute('normalizedParams', $normalizedParams);
-            $this->main($request);
-        } else {
-            $this->main();
+        $urlParams = ['uid' => $uid, 'table' => $table];
+        $routeIdent = 'show_item';
+        // typo3/record/info
+        $uriStr = BackendUtility::getModuleUrl($routeIdent, $urlParams);
+        if (0 === strpos($uriStr, '/typo3')) {
+            $uriStr = substr($uriStr, 7);
         }
+        $uriStr = T3General::getIndpEnv('TYPO3_REQUEST_DIR').$uriStr;
 
-        if (TYPO3::isTYPO87OrHigher()) {
-            $content = $this->moduleTemplate->getView()->getRenderingContext()->getVariableProvider()->get('content');
-        } else {
-            $content = $this->content;
-        }
-
-        return $content;
-    }
-
-    protected function initByParams($table, $uid)
-    {
-        $this->table = $table;
-        $this->uid = $uid;
-        $this->permsClause = $this->getBackendUser()->getPagePermsClause(Permission::PAGE_SHOW);
-        $this->moduleTemplate = tx_rnbase::makeInstance(ModuleTemplate::class);
-        $this->moduleTemplate->getDocHeaderComponent()->disable();
-        if (!TYPO3::isTYPO87OrHigher()) {
-            $this->doc = tx_rnbase::makeInstance(\TYPO3\CMS\Backend\Template\DocumentTemplate::class);
-            $this->doc->divClass = 'container';
-        }
-
-        if (isset($GLOBALS['TCA'][$this->table])) {
-            $this->initDatabaseRecord();
-        } elseif ('_FILE' == $this->table || '_FOLDER' == $this->table || 'sys_file' == $this->table) {
-            $this->initFileOrFolderRecord();
-        }
+        return sprintf('<iframe src="%s" width="100%%" height="800px"></iframe>', $uriStr);
     }
 }

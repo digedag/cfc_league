@@ -45,9 +45,15 @@ use tx_rnbase;
  */
 class ProfileSearcher
 {
-    private $mod;
+    /**
+     * @var IModule
+     */
+    private $module;
 
     private $data;
+    private $formTool;
+    private $options;
+    private $resultSize = 0;
 
     private $SEARCH_SETTINGS;
 
@@ -62,12 +68,10 @@ class ProfileSearcher
      */
     private function init(IModule $mod, $options)
     {
+        $this->module = $mod;
         $this->options = $options;
-        $this->doc = $mod->getDoc();
-        $this->pid = $mod->getPid();
         $this->options['pid'] = $mod->getPid();
         $this->formTool = $mod->getFormTool();
-        $this->resultSize = 0;
         $this->data = T3General::_GP('data');
 
         if (!isset($options['nopersist'])) {
@@ -90,13 +94,14 @@ class ProfileSearcher
      */
     public function getSearchForm($label = '')
     {
+        $lang = $this->module->getLanguageService();
         $out = '';
         $out .= '###LABEL_SEARCHTERM###: ';
         $out .= $this->getFormTool()->createTxtInput('data[searchterm]', $this->SEARCH_SETTINGS['searchterm'] ?? '', 20);
         // Jetzt noch zusätzlichen JavaScriptcode für Buttons auf der Seite
         // $out .= $this->getFormTool()->getJSCode($this->id);
         // Den Update-Button einfügen
-        $out .= $this->getFormTool()->createSubmit('searchProfile', $GLOBALS['LANG']->getLL('btn_search'));
+        $out .= $this->getFormTool()->createSubmit('searchProfile', $lang->getLL('btn_search'));
 
         return $out;
     }
@@ -104,13 +109,14 @@ class ProfileSearcher
     public function getResultList()
     {
         $content = '';
+        $lang = $this->module->getLanguageService();
         $searchTerm = Misc::validateSearchString($this->SEARCH_SETTINGS['searchterm'] ?? '');
         if (!$searchTerm) {
-            return $this->doc->section($GLOBALS['LANG']->getLL('message').':', $GLOBALS['LANG']->getLL('msg_searchhelp'), 0, 1, \tx_rnbase_mod_IModFunc::ICON_INFO);
+            return $this->module->getDoc()->section($lang->getLL('message').':', $lang->getLL('msg_searchhelp'), 0, 1, \tx_rnbase_mod_IModFunc::ICON_INFO);
         }
 
         $profiles = $this->searchProfiles($searchTerm);
-        $content .= $this->showProfiles($GLOBALS['LANG']->getLL('label_searchresults'), $profiles);
+        $content .= $this->showProfiles('###LABEL_SEARCHRESULTS###', $profiles);
 
         return $content;
     }
@@ -165,16 +171,17 @@ class ProfileSearcher
             ],
         ];
 
+        $out = '';
         if ($profiles) {
-            /* @var $tables Tables */
+            /** @var Tables $tables */
             $tables = tx_rnbase::makeInstance(Tables::class);
             $arr = $tables->prepareTable($profiles, $columns, $this->formTool, $this->options);
             $out .= $tables->buildTable($arr[0]);
         } else {
-            $out = '<p><strong>'.$GLOBALS['LANG']->getLL('msg_no_matches_in_betset').'</strong></p><br/>';
+            $out .= '<p><strong>'.$GLOBALS['LANG']->getLL('msg_no_matches_in_betset').'</strong></p><br/>';
         }
 
-        return $this->doc->section($headline.':', $out, 0, 1, IModFunc::ICON_INFO);
+        return $this->module->getDoc()->section($headline.':', $out, 0, 1, IModFunc::ICON_INFO);
     }
 
     /**

@@ -22,7 +22,7 @@ use tx_rnbase;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2007-2021 Rene Nitzsche (rene@system25.de)
+ *  (c) 2007-2023 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -80,13 +80,7 @@ class Selector
      */
     protected function getFormTool()
     {
-        if (!$this->formTool) {
-            // TODO: use formtool from module
-            $this->formTool = tx_rnbase::makeInstance(ToolBox::class);
-            $this->formTool->init($this->doc, $this->module);
-        }
-
-        return $this->formTool;
+        return $this->module->getFormTool();
     }
 
     /**
@@ -173,6 +167,7 @@ class Selector
 
         $menuData = $this->getFormTool()->showMenu($pid, $selectorId, $this->modName, $entries);
 
+        /** @var Team $teamObj */
         $teamObj = null;
         if ($menuData['value'] > 0) {
             $teamObj = tx_rnbase::makeInstance(Team::class, $menuData['value']);
@@ -181,7 +176,7 @@ class Selector
         // Zusätzlich noch einen Edit-Link setzen
         $menu = $menuData['menu'];
         $links = [];
-        $noLinks = isset($options['noLinks']) && $options['noLinks'] ? true : false;
+        $noLinks = isset($options['noLinks']) && $options['noLinks'];
         if (!$noLinks && $menu) {
             $links[] = $this->getFormTool()->createEditLink('tx_cfcleague_teams', $menuData['value']);
             if ($teamObj->getProperty('club')) {
@@ -248,7 +243,7 @@ class Selector
         // Zusätzlich noch einen Edit-Link setzen
         $menu = $menuData['menu'];
         $links = [];
-        $noLinks = isset($options['noLinks']) && $options['noLinks'] ? true : false;
+        $noLinks = isset($options['noLinks']) && $options['noLinks'];
         if (!$noLinks && $menu) {
             $links[] = $this->getFormTool()->createEditLink('tx_cfcleague_club', $menuData['value']);
             $links[] = $this->createNewClubLink($pid);

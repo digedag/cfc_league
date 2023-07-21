@@ -49,11 +49,18 @@ class MatchEdit
 {
     private $sportsServiceLocator;
     protected $formTool;
-    /** @var Selector */
-    protected $selector;
     protected $id;
     protected $doc;
-    protected $module;
+
+    /**
+     * @var Selector
+     */
+    private $selector;
+
+    /**
+     * @var IModule
+     */
+    private $module;
 
     public function __construct()
     {
@@ -185,7 +192,7 @@ class MatchEdit
      */
     private function getSelector()
     {
-        if (!is_object($this->selector)) {
+        if (!isset($this->selector)) {
             $this->selector = tx_rnbase::makeInstance(Selector::class);
             $this->selector->init($this->getModule()
                 ->getDoc(), $this->getModule());

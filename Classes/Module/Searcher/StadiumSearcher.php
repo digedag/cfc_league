@@ -105,6 +105,7 @@ class StadiumSearcher
 
     public function getResultList()
     {
+        /** @var BEPager $pager */
         $pager = tx_rnbase::makeInstance(BEPager::class, 'stadiumPager', $this->getModule()->getName(), 0);
         // Get stadium service
         $srv = ServiceRegistry::getStadiumService();
@@ -185,10 +186,10 @@ class StadiumSearcher
         ];
 
         if ($items) {
+            /** @var Tables $tables */
             $tables = tx_rnbase::makeInstance(Tables::class);
             $arr = $tables->prepareTable($items, $columns, $this->getModule()->getFormTool(), $this->options);
 
-            $tables = tx_rnbase::makeInstance(Tables::class);
             $out = $tables->buildTable($arr[0]);
         } else {
             $out = '<p><strong>###LABEL_MSG_NOSTADIUMSFOUND###</strong></p><br/>';

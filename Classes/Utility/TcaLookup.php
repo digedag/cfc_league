@@ -123,7 +123,7 @@ class TcaLookup
      * The stadiums are selected from home club.
      *
      * @param array $PA
-     * @param t3lib_TCEforms $fobj
+     * @param \TYPO3\CMS\Backend\Form\Element\UserElement $fobj
      */
     public function getStadium4Match($PA, $fobj)
     {
@@ -159,7 +159,7 @@ class TcaLookup
      * The logos are selected from club.
      *
      * @param array $PA
-     * @param t3lib_TCEforms $fobj
+     * @param \TYPO3\CMS\Backend\Form\Element\UserElement $fobj
      */
     public function getLogo4Team($PA, $fobj)
     {
@@ -311,8 +311,8 @@ class TcaLookup
         global $LANG;
         $LANG->includeLLFile('EXT:cfc_league/Resources/Private/Language/locallang_db.xlf');
 
-        $teamId = (int) $this->getPAValue($PA['row']['home'] ?? '');
-        $matchValue = $this->getPAValue($PA['row']['game'] ?? '');
+        $teamId = (int) $this->getPAValue($PA['row']['home'] ?? 0);
+        $matchValue = $this->getPAValue($PA['row']['game'] ?? false);
         if ($teamId) {
             // Abfrage aus Spieldatensatz
             // Es werden alle Spieler des Teams benötigt
@@ -360,8 +360,8 @@ class TcaLookup
         global $LANG;
         $LANG->includeLLFile('EXT:cfc_league/Resources/Private/Language/locallang_db.xlf');
 
-        $teamId = (int) $this->getPAValue($PA['row']['guest'] ?? '');
-        $matchValue = $this->getPAValue($PA['row']['game'] ?? '');
+        $teamId = (int) $this->getPAValue($PA['row']['guest'] ?? 0);
+        $matchValue = $this->getPAValue($PA['row']['game'] ?? false);
 
         if ($teamId) {
             $players = $this->findProfiles($teamId, 'getPlayers');

@@ -9,6 +9,7 @@ use Sys25\RnBase\Frontend\Marker\FormatUtil;
 use Sys25\RnBase\Utility\Misc;
 use System25\T3sports\Controller\Club\ClubStadiumHandler;
 use System25\T3sports\Module\Linker\NewClubLinker;
+use System25\T3sports\Module\Utility\Selector;
 use tx_rnbase;
 
 /***************************************************************
@@ -51,6 +52,11 @@ class Club extends BaseModFunc
         return 'funcclubs';
     }
 
+    public function getModuleIdentifier()
+    {
+        return 'cfc_league';
+    }
+
     /**
      * @param string $template
      * @param ConfigurationInterface $configurations
@@ -59,7 +65,7 @@ class Club extends BaseModFunc
      */
     protected function getContent($template, &$configurations, &$formatter, $formTool)
     {
-        $selector = tx_rnbase::makeInstance('tx_cfcleague_selector');
+        $selector = tx_rnbase::makeInstance(Selector::class);
         $selector->init($this->doc, $this->getModule());
 
         // Zuerst holen wir alle Tabs, erstellen die MenuItems und werten den Request aus
@@ -78,8 +84,9 @@ class Club extends BaseModFunc
         $selectorStr = '';
         $club = $selector->showClubSelector($selectorStr, $this->getModule()
             ->getPid());
-        $this->getModule()->selector = $selectorStr;
+        $this->getModule()->setSelector($selectorStr);
 
+        $content = '';
         if (!$club) {
             $addInfo = '###LABEL_MSG_CREATENEWCLUBNOW###';
             $linker = tx_rnbase::makeInstance(NewClubLinker::class);
@@ -101,8 +108,9 @@ class Club extends BaseModFunc
         $tabs = $menu['menu'];
         $tabs .= '<div style="display: block; border: 1px solid #a2aab8;" ></div>';
 
-        $this->pObj->tabs = $tabs;
+        $this->getModule()->setSubMenu($tabs);
 
+        $modContent = '';
         $handler = $tabItems[$menu['value']];
         $modContent = '';
         if (is_object($handler)) {

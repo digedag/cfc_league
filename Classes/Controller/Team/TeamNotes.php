@@ -11,6 +11,7 @@ use Sys25\RnBase\Utility\Strings;
 use Sys25\RnBase\Utility\T3General;
 use System25\T3sports\Model\Team;
 use System25\T3sports\Model\TeamNoteType;
+use System25\T3sports\Module\Decorator\TeamNoteDecorator;
 use System25\T3sports\Module\Searcher\ProfileSearcher;
 use System25\T3sports\Utility\Misc;
 use System25\T3sports\Utility\ServiceRegistry;
@@ -44,9 +45,10 @@ use tx_rnbase;
  */
 class TeamNotes
 {
-    protected $mod;
-    private $pid;
-    private $modName;
+    /**
+     * @var IModule
+     */
+    private $mod;
 
     /**
      * Ausführung des Requests.
@@ -57,11 +59,10 @@ class TeamNotes
      *
      * @return string
      */
-    public function handleRequest($module, Team $currTeam, $teamInfo)
+    public function handleRequest(IModule $module, Team $currTeam, $teamInfo)
     {
         $this->mod = $module;
-        $this->pid = $module->getPid();
-        $this->modName = $module->getName();
+        $lang = $module->getLanguageService();
 
         $content = '';
         // Tasks:
@@ -71,8 +72,8 @@ class TeamNotes
         $srv = ServiceRegistry::getTeamService();
         $types = $srv->getNoteTypes();
         if (!count($types)) {
-            $content .= $this->mod->doc->section($GLOBALS['LANG']->getLL('message').':',
-                $GLOBALS['LANG']->getLL('msg_create_notetypes'), 0, 1, IModFunc::ICON_INFO);
+            $content .= $this->mod->getDoc()->section($lang->getLL('message').':',
+                $lang->getLL('msg_create_notetypes'), 0, 1, IModFunc::ICON_INFO);
 
             return $content;
         }
@@ -80,12 +81,7 @@ class TeamNotes
         foreach ($types as $type) {
             $content .= $this->showTeamNotes($currTeam, $type);
         }
-        // 2. Neue Notiz für einen Spiele anlegen lassen
-        // ggf. Daten im Request verarbeiten
-        // $entries = $currTeam->getPlayerNames(0,1);
-        // $menu = ToolBox::showMenu($this->pid, 'player', $this->modName, $entries);
-        // $content .= $menu['menu'];
-        // $player = $menu['value'];
+
         return $content;
     }
 
@@ -118,7 +114,7 @@ class TeamNotes
         $srv = ServiceRegistry::getTeamService();
         $notes = $srv->getTeamNotes($currTeam, $type);
 
-        $decor = tx_rnbase::makeInstance('tx_cfcleague_util_TeamNoteDecorator', $this->getFormTool());
+        $decor = tx_rnbase::makeInstance(TeamNoteDecorator::class, $this->getFormTool());
         $columns = [
             'uid' => [
                 'decorator' => $decor,
@@ -167,16 +163,17 @@ class TeamNotes
      */
     protected function handleAddProfiles(Team $currTeam, $baseInfo)
     {
+        $lang = $this->mod->getLanguageService();
         $out = '';
         $profile2team = strlen(T3General::_GP('profile2team')) > 0; // Wurde der Submit-Button gedrückt?
         if ($profile2team) {
             $entryUids = T3General::_GP('checkEntry');
             if (!is_array($entryUids) || !count($entryUids)) {
-                $out = $GLOBALS['LANG']->getLL('msg_no_profile_selected').'<br/><br/>';
+                $out = $lang->getLL('msg_no_profile_selected').'<br/><br/>';
             } else {
                 if ($baseInfo['freePlayers'] < count($entryUids)) {
                     // Team ist schon voll
-                    $out = $GLOBALS['LANG']->getLL('msg_maxPlayers').'<br/><br/>';
+                    $out = $lang->getLL('msg_maxPlayers').'<br/><br/>';
                 } else {
                     // Die Spieler hinzufügen
                     $playerUids = implode(',', Misc::mergeArrays(Strings::intExplode(',', $currTeam->getProperty('players')), $entryUids));
@@ -186,13 +183,15 @@ class TeamNotes
 
                     $tce = Connection::getInstance()->getTCEmain($data);
                     $tce->process_datamap();
-                    $out .= $GLOBALS['LANG']->getLL('msg_profiles_joined').'<br/><br/>';
+                    $out .= $lang->getLL('msg_profiles_joined').'<br/><br/>';
                     $currTeam->setProperty('players', $playerUids);
                 }
             }
         }
 
-        return (strlen($out)) ? $this->mod->getDoc()->section($GLOBALS['LANG']->getLL('message').':', $out, 0, 1, IModFunc::ICON_INFO) : '';
+        return (strlen($out)) ? $this->mod->getDoc()->section(
+            $lang->getLL('message'
+            ).':', $out, 0, 1, IModFunc::ICON_INFO) : '';
     }
 
     /**

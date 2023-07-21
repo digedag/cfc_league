@@ -200,7 +200,7 @@
             <trans-unit id="msg_create_notetypes" xml:space="preserve">
                 <source>To use this module, you have to create one or more records of type "Note type".</source>
             </trans-unit>
-            <trans-unit id="search_profiles" xml:space="preserve">
+            <trans-unit id="mod_profiles" xml:space="preserve">
                 <source>Search profiles</source>
             </trans-unit>
             <trans-unit id="match_ticker" xml:space="preserve">
@@ -236,7 +236,7 @@
             <trans-unit id="label_tickeroffset" xml:space="preserve">
                 <source>Offset</source>
             </trans-unit>
-            <trans-unit id="label_showAllTickers" xml:space="preserve">
+            <trans-unit id="label_showalltickers" xml:space="preserve">
                 <source>Show all events</source>
             </trans-unit>
             <trans-unit id="msg_sendInstant" xml:space="preserve">

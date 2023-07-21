@@ -99,15 +99,14 @@ class MatchTable
     {
         global $LANG;
         // Haben wir Daten im Request?
+        $content = '';
         $data = T3General::_GP('data');
         if (isset($data['rounds']) && T3General::_GP('update')) {
             $result = $this->createMatches($data['rounds'], $comp);
             $content .= $this->doc->section($LANG->getLL('message').':', $result, 0, 1, IModFunc::ICON_INFO);
-
-            return $content;
         }
 
-        return '';
+        return $content;
     }
 
     /**
@@ -162,12 +161,12 @@ class MatchTable
         // Wir holen die Mannschaften und den GameString aus der Liga
         // Beides jagen wir durch den Generator
         $options = [];
-        $options['halfseries'] = intval(T3General::_GP('option_halfseries'));
+        $options['halfseries'] = (int) T3General::_GP('option_halfseries');
         $options['nomatch'] = $comp->getDummyTeamIds();
         $options['firstmatchday'] = $comp->getNumberOfRounds();
         $options['firstmatchnumber'] = $comp->getLastMatchNumber();
         // Zunächst mal Anzeige der Daten
-        /* @var $gen Generator */
+        /** @var Generator $gen */
         $gen = tx_rnbase::makeInstance(Generator::class);
         $table = $gen->main($comp->getTeamIds(), $comp->getGenerationKey(), $options);
 
@@ -228,6 +227,8 @@ class MatchTable
         // $LANG->getLL('label_rounddate'), $LANG->getLL('label_roundset')));
         $tables = tx_rnbase::makeInstance(Tables::class);
 
+        $matchDay = new \DateTime('next saturday 15:00:00');
+
         foreach ($table as $round => $matchArr) {
             $row = [];
 
@@ -235,11 +236,12 @@ class MatchTable
             // Ein Hidden-Field für die Runde
             $row[] = '<div>'.$this->formTool->createHidden('data[rounds][round_'.$round.'][round]', $round).$this->formTool->createTxtInput('data[rounds][round_'.$round.'][round_name]', $round.$LANG->getLL('createGameTable_round'), 10, [
                 'class' => 'roundname',
-            ]).$this->formTool->createDateInput('data[rounds][round_'.$round.'][date]', time()).'</div>'.
+            ]).$this->formTool->createDateInput('data[rounds][round_'.$round.'][date]', $matchDay->format('U')).'</div>'.
             // Anzeige der Paarungen
             $tables->buildTable($this->createMatchTableArray($matchArr, $league, 'data[rounds][round_'.$round.']'));
 
             $arr[] = $row;
+            $matchDay->modify('+1 week');
         }
         $content .= $tables->buildTable($arr);
 
@@ -251,7 +253,7 @@ class MatchTable
      *
      * @param Competition $league
      */
-    private function createMatchTableArray(&$matches, &$league, $namePrefix)
+    private function createMatchTableArray($matches, &$league, $namePrefix)
     {
         global $LANG;
         $teamNames = $league->getTeamNames();

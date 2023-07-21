@@ -39,10 +39,16 @@ use tx_rnbase;
  */
 class Team extends BaseModFunc
 {
-    public $doc;
+    private $doc;
 
-    public $MCONF;
+    /**
+     * @var Selector
+     */
     private $selector;
+    /**
+     * @var \Sys25\RnBase\Backend\Form\ToolBox
+     */
+    private $formTool;
 
     /**
      * Method getFuncId.
@@ -54,8 +60,13 @@ class Team extends BaseModFunc
         return 'functeams';
     }
 
+    public function getModuleIdentifier()
+    {
+        return 'cfc_league';
+    }
+
     /**
-     * @return \tx_cfcleague_selector
+     * @return Selector
      */
     private function getSelector()
     {
@@ -98,7 +109,7 @@ class Team extends BaseModFunc
         $content = '';
 
         if (!($saison && count($competitions))) {
-            $this->getModule()->selector = $selector;
+            $this->getModule()->setSelector($selector);
             $content .= $this->doc->section('Info:', $saison ? $LANG->getLL('msg_NoCompetitonsFound') : $LANG->getLL('msg_NoSaisonFound'), 0, 1, self::ICON_WARN);
 
             return $content;
@@ -109,7 +120,7 @@ class Team extends BaseModFunc
             ->getPid(), $competitions);
         $team = $this->getSelector()->showTeamSelector($selector, $this->getModule()
             ->getPid(), $league);
-        $this->getModule()->selector = $selector;
+        $this->getModule()->setSelector($selector);
 
         if (!$team) { // Kein Team gefunden
             $content .= $this->doc->section('Info:', $LANG->getLL('msg_no_team_found'), 0, 1, self::ICON_WARN);
@@ -127,7 +138,7 @@ class Team extends BaseModFunc
         $tabs = $menu['menu'];
         $tabs .= '<div style="display: block; border: 1px solid #a2aab8;" ></div>';
 
-        $this->pObj->tabs = $tabs;
+        $this->getModule()->setSubMenu($tabs);
 
         $teamInfo = new TeamInfo($team, $this->formTool);
         $content .= $teamInfo->handleRequest();

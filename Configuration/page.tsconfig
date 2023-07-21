@@ -18,5 +18,10 @@ mod {
 		funcclubs {
 			template = EXT:cfc_league/Resources/Private/Templates/funccompetitions.html
 		}
+		template = EXT:cfc_league/Resources/Private/Templates/module.html
+		languagefiles {
+			10 = EXT:cfc_league/Resources/Private/Language/locallang.xlf
+			20 = EXT:cfc_league/Resources/Private/Language/locallang_db.xlf
+		}
 	}
 }

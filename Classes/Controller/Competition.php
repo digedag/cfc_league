@@ -44,10 +44,12 @@ class Competition extends BaseModFunc
 {
     public $doc;
 
-    public $MCONF;
-
-    /** @var Selector */
+    /**
+     * @var Selector
+     */
     private $selector;
+
+    public $MCONF;
 
     /**
      * Method getFuncId.
@@ -57,6 +59,11 @@ class Competition extends BaseModFunc
     public function getFuncId()
     {
         return 'funccompetitions';
+    }
+
+    public function getModuleIdentifier()
+    {
+        return 'cfc_league';
     }
 
     /**
@@ -84,7 +91,7 @@ class Competition extends BaseModFunc
         $current_league = $this->selector->showLeagueSelector($selector, $this->getModule()
             ->getPid());
         $content = '';
-        $this->getModule()->selector = $selector;
+        $this->getModule()->setSelector($selector);
 
         if (!$current_league) {
             $content .= $this->getModule()
@@ -107,7 +114,8 @@ class Competition extends BaseModFunc
         $tabs = $menu['menu'];
         $tabs .= '<div style="display: block; border: 1px solid #a2aab8;" ></div>';
 
-        $this->pObj->tabs = $tabs;
+        // FIXME: check in older versions
+        $this->getModule()->setSubMenu($tabs);
 
         switch ($menu['value']) {
             case 0:
@@ -147,6 +155,7 @@ class Competition extends BaseModFunc
 
     private function showEditMatches($current_league, $module)
     {
+        /** @var MatchEdit $subMod */
         $subMod = tx_rnbase::makeInstance(MatchEdit::class);
         $content = $subMod->main($module, $current_league);
 

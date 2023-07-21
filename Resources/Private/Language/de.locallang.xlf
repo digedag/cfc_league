@@ -267,7 +267,7 @@
                 <source>To use this module, you have to create one or more records of type "Note type".</source>
                 <target>Damit dieses Modul verwendet werden kann, müssen zunächst ein oder mehrere Datensätze vom Typ "Notiz-Typ" angelegt werden.</target>
             </trans-unit>
-            <trans-unit id="search_profiles" xml:space="preserve">
+            <trans-unit id="mod_profiles" xml:space="preserve">
                 <source>Search profiles</source>
                 <target>Personen suchen</target>
             </trans-unit>
@@ -315,7 +315,7 @@
                 <source>Offset</source>
                 <target>Offset</target>
             </trans-unit>
-            <trans-unit id="label_showAllTickers" xml:space="preserve">
+            <trans-unit id="label_showalltickers" xml:space="preserve">
                 <source>Show all events</source>
                 <target>Alle Meldungen anzeigen</target>
             </trans-unit>

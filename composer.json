@@ -26,7 +26,7 @@
 		"typo3-ter/cfc-league": "self.version"
 	},
 	"require": {
-		"typo3/cms-core": "^8.7 || ^9.5 || ^10.4 || ^11.5",
+		"typo3/cms-core": "^8.7 || ^9.5 || ^10.4 || ^11.5 || ^12.1",
 		"digedag/rn-base": "~1.16.0"
 	},
 	"require-dev": {
@@ -121,7 +121,8 @@
 			]
 		},
 		"branch-alias": {
-			"dev-master": "1.10.x-dev"
+			"dev-master": "1.10.x-dev",
+			"dev-feature/t3_12": "1.10.x-dev"
 		}
 	}
 }
