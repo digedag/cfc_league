@@ -55,6 +55,9 @@ class Selector
 
     private $module;
 
+    /** @var ToolBox */
+    private $formTool;
+
     /** @var \TYPO3\CMS\Core\Imaging\IconFactory */
     protected $iconFactory;
 
@@ -84,7 +87,7 @@ class Selector
      * Darstellung der Select-Box mit allen Ligen der übergebenen Seite.
      * Es wird auf die aktuelle Liga eingestellt.
      *
-     * @return Competition aktuellen Wettbewerb als Objekt oder 0
+     * @return Competition|int aktuellen Wettbewerb als Objekt oder 0
      */
     public function showLeagueSelector(&$content, $pid, $leagues = 0)
     {
@@ -144,7 +147,7 @@ class Selector
      * Darstellung der Select-Box mit allen Teams des übergebenen Wettbewerbs.
      * Es wird auf das aktuelle Team eingestellt.
      *
-     * @return Team aktuelle Team als Objekt
+     * @return Team|int aktuelle Team als Objekt
      */
     public function showTeamSelector(&$content, $pid, Competition $league, $options = [])
     {
@@ -164,6 +167,7 @@ class Selector
 
         $menuData = $this->getFormTool()->showMenu($pid, $selectorId, $this->modName, $entries);
 
+        /** @var Team $teamObj */
         $teamObj = null;
         if ($menuData['value'] > 0) {
             $teamObj = tx_rnbase::makeInstance(Team::class, $menuData['value']);
@@ -172,7 +176,7 @@ class Selector
         // Zusätzlich noch einen Edit-Link setzen
         $menu = $menuData['menu'];
         $links = [];
-        $noLinks = isset($options['noLinks']) ? true : false;
+        $noLinks = isset($options['noLinks']) && $options['noLinks'];
         if (!$noLinks && $menu) {
             $links[] = $this->getFormTool()->createEditLink('tx_cfcleague_teams', $menuData['value']);
             if ($teamObj->getProperty('club')) {
@@ -228,7 +232,7 @@ class Selector
             $entries[$club->getUid()] = $label;
         }
 
-        $selectorId = isset($options['selectorId']) ? $options['selectorId'] : 'club';
+        $selectorId = $options['selectorId'] ?? 'club';
         $menuData = $this->getFormTool()->showMenu($pid, $selectorId, $this->modName, $entries);
 
         $currItem = null;

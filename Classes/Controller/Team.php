@@ -14,7 +14,7 @@ use tx_rnbase;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2009-2021 Rene Nitzsche (rene@system25.de)
+ *  (c) 2009-2023 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -40,8 +40,6 @@ use tx_rnbase;
 class Team extends BaseModFunc
 {
     private $doc;
-
-    private $MCONF;
 
     /**
      * @var Selector

@@ -13,6 +13,7 @@ use System25\T3sports\Controller\Profile\ProfileMerger;
 use System25\T3sports\Controller\Profile\ShowItem;
 use System25\T3sports\Controller\Profile\ShowItem87;
 use System25\T3sports\Module\Utility\Selector;
+use Throwable;
 use tx_rnbase;
 
 /***************************************************************
@@ -370,7 +371,11 @@ class Profile extends BaseModFunc
             $row[] = $this->formTool->createEditLink('tx_cfcleague_profiles', $profile['uid'], '');
             $row[] = $this->formTool->createInfoLink('tx_cfcleague_profiles', $profile['uid'], '');
             $row[] = $this->formTool->createHistoryLink('tx_cfcleague_profiles', $profile['uid']);
-            $row[] = $this->formTool->createMoveLink('tx_cfcleague_profiles', $profile['uid'], $profile['pid']);
+            try {
+                $row[] = $this->formTool->createMoveLink('tx_cfcleague_profiles', $profile['uid'], $profile['pid']);
+            } catch (Throwable $e) {
+                // FIXME
+            }
             $arr[] = $row;
         }
 
@@ -391,7 +396,7 @@ class Profile extends BaseModFunc
         global $LANG;
         $out = '<div class="form-inline">';
         $out .= $LANG->getLL('label_searchterm').': ';
-        $out .= $this->formTool->createTxtInput('data[searchterm]', $settings['searchterm'], 20, [
+        $out .= $this->formTool->createTxtInput('data[searchterm]', $settings['searchterm'] ?? '', 20, [
             'class' => 'form-control input-sm',
         ]);
         // Den Update-Button einfügen

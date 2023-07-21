@@ -64,6 +64,7 @@ class TeamNotes
         $this->mod = $module;
         $lang = $module->getLanguageService();
 
+        $content = '';
         // Tasks:
         // 1. Alle Team-Notizen des Teams anzeigen
         // SELECT * FROM notizen where team=123
@@ -76,17 +77,11 @@ class TeamNotes
 
             return $content;
         }
-        $content = '';
         // Für jeden Typ einen Block anzeigen
         foreach ($types as $type) {
             $content .= $this->showTeamNotes($currTeam, $type);
         }
-        // 2. Neue Notiz für einen Spiele anlegen lassen
-        // ggf. Daten im Request verarbeiten
-        // $entries = $currTeam->getPlayerNames(0,1);
-        // $menu = ToolBox::showMenu($this->pid, 'player', $this->modName, $entries);
-        // $content .= $menu['menu'];
-        // $player = $menu['value'];
+
         return $content;
     }
 

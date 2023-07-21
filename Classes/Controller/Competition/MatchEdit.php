@@ -49,6 +49,8 @@ class MatchEdit
 {
     private $sportsServiceLocator;
     protected $formTool;
+    protected $id;
+    protected $doc;
 
     /**
      * @var Selector
@@ -113,6 +115,7 @@ class MatchEdit
 
         $content .= '<div class="cleardiv"/>';
         $data = T3General::_GP('data');
+
         // Haben wir Daten im Request?
         if (isset($data['tx_cfcleague_games'])) {
             $this->updateMatches($data);
@@ -185,7 +188,7 @@ class MatchEdit
     }
 
     /**
-     * @return \tx_cfcleague_selector
+     * @return Selector
      */
     private function getSelector()
     {

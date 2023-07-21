@@ -2,6 +2,7 @@
 
 namespace System25\T3sports\Utility;
 
+use Sys25\RnBase\Utility\Calendar;
 use Sys25\RnBase\Utility\Strings;
 use System25\T3sports\Search\SearchBuilder;
 use tx_rnbase;
@@ -9,7 +10,7 @@ use tx_rnbase;
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2008-2021 Rene Nitzsche (rene@system25.de)
+*  (c) 2008-2023 Rene Nitzsche (rene@system25.de)
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -40,6 +41,7 @@ class MatchTableBuilder
 
     private $_teamgroupIds;
 
+    private $_scopeArr;
     private $_compIds;
 
     private $_roundIds;
@@ -64,6 +66,9 @@ class MatchTableBuilder
 
     private $_limit; // Anzahl Spiele limitieren
 
+    private $_maxRound;
+    private $_minRound;
+
     private $_orderbyDate = false;
 
     private $_orderbyDateDesc = false;
@@ -81,8 +86,6 @@ class MatchTableBuilder
     private $_compObligation; // Pflichtwettbewerbe
 
     private $_pidList;
-    private $_maxRound;
-    private $_minRound;
 
     public function __construct()
     {
@@ -116,7 +119,8 @@ class MatchTableBuilder
             // Wenn in eine Richtung eingegrenzt wird und in der anderen Richtung kein
             // Wert gesetzt wurde, dann wird dafür das aktuelle Datum verwendet.
             // Auf jeden Fall wird immer in beide Richtungen eingegrenzt
-            $cal = tx_rnbase::makeInstance('tx_rnbase_util_Calendar');
+            /** @var Calendar $cal */
+            $cal = tx_rnbase::makeInstance(Calendar::class);
             $cal->clear(CALENDAR_SECOND);
             $cal->clear(CALENDAR_HOUR);
             $cal->clear(CALENDAR_MINUTE);
@@ -124,7 +128,8 @@ class MatchTableBuilder
             $fields['MATCH.DATE'][OP_GTEQ_INT] = $cal->getTime();
             //			$where .= ' tx_cfcleague_games.date >= ' . $cal->getTime();
 
-            $cal = tx_rnbase::makeInstance('tx_rnbase_util_Calendar');
+            /** @var Calendar $cal */
+            $cal = tx_rnbase::makeInstance(Calendar::class);
             $cal->clear(CALENDAR_SECOND);
             $cal->clear(CALENDAR_HOUR);
             $cal->clear(CALENDAR_MINUTE);
@@ -204,14 +209,14 @@ class MatchTableBuilder
      */
     public function setScope($scope)
     {
-        $this->setSaisons($scope['SAISON_UIDS']);
-        $this->setAgeGroups($scope['GROUP_UIDS']);
-        $this->setCompetitions($scope['COMP_UIDS']);
-        $this->setRounds($scope['ROUND_UIDS']);
-        $this->setClubs($scope['CLUB_UIDS']);
-        $this->setCompetitionObligation($scope['COMP_OBLIGATION']);
-        $this->setCompetitionTypes($scope['COMP_TYPES']);
-        $this->setTeamAgeGroups($scope['TEAMGROUP_UIDS']);
+        $this->setSaisons($scope['SAISON_UIDS'] ?? '');
+        $this->setAgeGroups($scope['GROUP_UIDS'] ?? '');
+        $this->setCompetitions($scope['COMP_UIDS'] ?? '');
+        $this->setRounds($scope['ROUND_UIDS'] ?? '');
+        $this->setClubs($scope['CLUB_UIDS'] ?? '');
+        $this->setCompetitionObligation($scope['COMP_OBLIGATION'] ?? 0);
+        $this->setCompetitionTypes($scope['COMP_TYPES'] ?? '');
+        $this->setTeamAgeGroups($scope['TEAMGROUP_UIDS'] ?? '');
 
         // Maybe we need it later...
         $this->_scopeArr = $scope;

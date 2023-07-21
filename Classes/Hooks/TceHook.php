@@ -8,6 +8,7 @@ use Sys25\RnBase\Utility\Dates;
 use Sys25\RnBase\Utility\Strings;
 use System25\T3sports\Model\Stadium;
 use System25\T3sports\Utility\TcaLookup;
+use tx_rnbase;
 
 /***************************************************************
  *  Copyright notice
@@ -97,8 +98,9 @@ class TceHook
             }
         }
         if ('tx_cfcleague_games' == $table) {
-            if ($incomingFieldArray['arena'] ?? 0 > 0 && empty($incomingFieldArray['stadium'] ?? '')) {
-                $stadium = \tx_rnbase::makeInstance(Stadium::class, $incomingFieldArray['arena']);
+            if (($incomingFieldArray['arena'] ?? 0) > 0 && empty($incomingFieldArray['stadium'] ?? '')) {
+                /** @var Stadium $stadium */
+                $stadium = tx_rnbase::makeInstance(Stadium::class, $incomingFieldArray['arena']);
                 $incomingFieldArray['stadium'] = $stadium->getName();
             }
             if (strstr($incomingFieldArray['home'] ?? '', 'NEW')) {
@@ -109,7 +111,7 @@ class TceHook
             }
         }
         if ('tx_cfcleague_stadiums' == $table || 'tx_cfcleague_club' == $table) {
-            if ($incomingFieldArray['country'] ?? 0 > 0 && empty($incomingFieldArray['countrycode'] ?? '')) {
+            if (($incomingFieldArray['country'] ?? 0) > 0 && empty($incomingFieldArray['countrycode'] ?? '')) {
                 $country = BackendUtility::getRecord('static_countries', intval($incomingFieldArray['country']));
                 $incomingFieldArray['countrycode'] = $country['cn_iso_2'];
             }
@@ -121,14 +123,10 @@ class TceHook
      * Das POST bezieht sich
      * auf die Arbeit der TCE und nicht auf die Speicherung in der DB.
      *
-     * @param string $status
-     *            new oder update
-     * @param string $table
-     *            Name der Tabelle
-     * @param int $id
-     *            UID des Datensatzes
-     * @param array $fieldArray
-     *            Felder des Datensatzes, die sich ändern
+     * @param string $status new or update
+     * @param string $table Name der Tabelle
+     * @param int $id UID des Datensatzes
+     * @param array $fieldArray Felder des Datensatzes, die sich ändern
      * @param \TYPO3\CMS\Core\DataHandling\DataHandler $tcemain
      */
     public function processDatamap_postProcessFieldArray($status, $table, $id, &$fieldArray, &$tcemain)
@@ -151,7 +149,7 @@ class TceHook
      */
     protected function checkProfiles(&$incomingFieldArray, $profileType, $tcemain)
     {
-        if (isset($incomingFieldArray[$profileType]) && strstr($incomingFieldArray[$profileType], 'NEW')) {
+        if (strstr($incomingFieldArray[$profileType] ?? '', 'NEW')) {
             $newProfileIds = Strings::trimExplode(',', $incomingFieldArray[$profileType]);
             $profileUids = [];
             for ($i = 0; $i < count($newProfileIds); ++$i) {

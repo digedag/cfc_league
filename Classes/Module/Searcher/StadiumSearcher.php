@@ -46,7 +46,10 @@ class StadiumSearcher
     private $SEARCH_SETTINGS;
 
     private $currentClub;
-    private $currentShowHidden;
+    private $options;
+    private $formTool;
+    private $resultSize;
+    private $currentShowHidden = true;
 
     /**
      * Constructor.
@@ -102,6 +105,7 @@ class StadiumSearcher
 
     public function getResultList()
     {
+        /** @var BEPager $pager */
         $pager = tx_rnbase::makeInstance(BEPager::class, 'stadiumPager', $this->getModule()->getName(), 0);
         // Get stadium service
         $srv = ServiceRegistry::getStadiumService();
@@ -143,7 +147,10 @@ class StadiumSearcher
         $ret['table'] = $content;
         $ret['totalsize'] = $cnt;
         $pagerData = $pager->render();
-        $ret['pager'] = '<div class="pager">'.$pagerData['limits'].' - '.$pagerData['pages'].'</div>';
+        $ret['pager'] = sprintf('<div class="pager">%s - %s</div>',
+            $pagerData['limits'] ?? '',
+            $pagerData['pages'] ?? ''
+        );
 
         return $ret;
     }
@@ -179,10 +186,10 @@ class StadiumSearcher
         ];
 
         if ($items) {
+            /** @var Tables $tables */
             $tables = tx_rnbase::makeInstance(Tables::class);
             $arr = $tables->prepareTable($items, $columns, $this->getModule()->getFormTool(), $this->options);
 
-            $tables = tx_rnbase::makeInstance(Tables::class);
             $out = $tables->buildTable($arr[0]);
         } else {
             $out = '<p><strong>###LABEL_MSG_NOSTADIUMSFOUND###</strong></p><br/>';

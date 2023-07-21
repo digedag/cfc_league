@@ -2,6 +2,7 @@
 
 namespace System25\T3sports\Model;
 
+use Exception;
 use Sys25\RnBase\Domain\Model\DataModel;
 use Sys25\RnBase\Utility\Strings;
 use tx_rnbase;
@@ -77,10 +78,15 @@ class Set extends DataModel
         if (!$sets) {
             return false;
         }
+
         $sets = preg_split("/[\s]*[;,|][\s]*/", $sets);
         $ret = [];
         foreach ($sets as $idx => $setStr) {
-            list($p1, $p2) = Strings::intExplode(':', $setStr);
+            $parts = Strings::intExplode(':', $setStr);
+            if (2 != count($parts)) {
+                throw new Exception(sprintf('Invalid set string found: %s', $setStr));
+            }
+            list($p1, $p2) = $parts;
             $ret[] = tx_rnbase::makeInstance(Set::class, $idx + 1, $p1, $p2);
         }
 

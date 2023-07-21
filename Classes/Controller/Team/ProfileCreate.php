@@ -47,6 +47,8 @@ class ProfileCreate
     private $doc;
 
     private $module;
+    private $pid;
+    private $formTool;
 
     /**
      * Verwaltet die Erstellung von Spielplänen von Ligen.
@@ -107,7 +109,7 @@ class ProfileCreate
 
         $content = '';
         if (!self::isProfilePage($this->pid)) {
-            $content = $this->doc->section('Message:', $LANG->getLL('msg_pageNotAllowed'), 0, 1, IModFunc::ICON_WARN);
+            $content .= $this->doc->section('Message:', $LANG->getLL('msg_pageNotAllowed'), 0, 1, IModFunc::ICON_WARN);
 
             return $content;
         }

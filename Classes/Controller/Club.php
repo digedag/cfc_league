@@ -112,11 +112,12 @@ class Club extends BaseModFunc
 
         $modContent = '';
         $handler = $tabItems[$menu['value']];
+        $modContent = '';
         if (is_object($handler)) {
             $modContent .= $handler->showScreen($club, $this->getModule());
         }
 
-        $content .= $formTool->getTCEForm()->printNeededJSFunctions_top();
+        $content = $formTool->getTCEForm()->printNeededJSFunctions_top();
         $content .= $modContent;
         // Den JS-Code für Validierung einbinden
         $content .= $formTool->getTCEForm()->printNeededJSFunctions();

@@ -155,6 +155,7 @@ class Competition extends BaseModFunc
 
     private function showEditMatches($current_league, $module)
     {
+        /** @var MatchEdit $subMod */
         $subMod = tx_rnbase::makeInstance(MatchEdit::class);
         $content = $subMod->main($module, $current_league);
 
