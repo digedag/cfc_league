@@ -2,6 +2,9 @@
 Änderungen
 ==========
 
+## v1.11.2 (22.07.2023)
+ * fix warning in profile model used by t3sportstats
+
 ## v1.11.1 (21.07.2023)
  * fix check for profile page path
 
