@@ -7,7 +7,7 @@ use Sys25\RnBase\Utility\Dates;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2010-2020 Rene Nitzsche (rene@system25.de)
+ *  (c) 2010-2023 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -115,6 +115,8 @@ class CsvStructure
             self::COL_MATCH_ID => $this->createColData(),
             self::COL_STADIUM => $this->createColData(),
             self::COL_LEAGUE_IDENT => $this->createColData(),
+            self::COL_POSTPONE_DATE => $this->createColData(),
+            self::COL_POSTPONE_TIME => $this->createColData(),
         ];
         foreach ($this->structure as $field => $data) {
             if ($idx = array_search($field, $headers)) {

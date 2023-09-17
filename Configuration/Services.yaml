@@ -10,3 +10,6 @@ services:
 
   System25\T3sports\Service\ProfileService:
     public: true
+
+  System25\T3sports\Controller\Competition:
+    public: true

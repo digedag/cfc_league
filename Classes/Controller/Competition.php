@@ -49,6 +49,11 @@ class Competition extends BaseModFunc
      */
     private $selector;
 
+    /**
+     * @var DfbSync
+     */
+    private $dfbSync;
+
     public $MCONF;
 
     /**
@@ -64,6 +69,11 @@ class Competition extends BaseModFunc
     public function getModuleIdentifier()
     {
         return 'cfc_league';
+    }
+
+    public function __construct(DfbSync $dfbSync = null)
+    {
+        $this->dfbSync = $dfbSync ?: tx_rnbase::makeInstance(DfbSync::class);
     }
 
     /**
@@ -134,8 +144,7 @@ class Competition extends BaseModFunc
                 break;
             case 3:
                 $funcTemplate = Templates::getSubpart($template, '###FUNC_DFBSYNC###');
-                $mod = tx_rnbase::makeInstance(DfbSync::class);
-                $funcContent = $mod->main($this->getModule(), $current_league, $funcTemplate);
+                $funcContent = $this->dfbSync->main($this->getModule(), $current_league, $funcTemplate);
 
                 break;
         }

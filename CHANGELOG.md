@@ -2,6 +2,8 @@
 Änderungen
 ==========
 
+## v1.11.3 (17.09.2023)
+ * fix csv import
 ## v1.11.2 (22.07.2023)
  * fix warning in profile model used by t3sportstats
 
