@@ -118,7 +118,7 @@ class Teams
         $options['orderby']['TEAM.NAME'] = 'asc';
         // $options['debug']=1;
         $teams = $srv->searchTeams($fields, $options);
-        if (!count($teams)) {
+        if ($teams->isEmpty()) {
             return '';
         }
 

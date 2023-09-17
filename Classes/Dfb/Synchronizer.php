@@ -6,13 +6,14 @@ use Sys25\RnBase\Database\Connection;
 use Sys25\RnBase\Utility\Logger;
 use Sys25\RnBase\Utility\Strings;
 use System25\T3sports\Model\Competition;
+use System25\T3sports\Model\Repository\TeamRepository;
 use System25\T3sports\Utility\ServiceRegistry;
 use tx_rnbase;
 
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2010-2021 Rene Nitzsche (rene@system25.de)
+ *  (c) 2010-2023 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -56,6 +57,13 @@ class Synchronizer
 
     private $pageUid = 0;
 
+    private $teamRepo;
+
+    public function __construct(TeamRepository $teamRepo = null)
+    {
+        $this->teamRepo = $teamRepo ?: new TeamRepository();
+    }
+
     public function process(\TYPO3\CMS\Core\Resource\File $file, Competition $competition)
     {
         $fileContent = $this->removeBOM($file->getContents());
@@ -65,6 +73,7 @@ class Synchronizer
         $lines = explode("\n", $fileContent);
         $headers = array_shift($lines);
         $headers = str_getcsv($this->prepareHeaderLine($headers), "\t");
+        /** @var CsvStructure $structure */
         $structure = tx_rnbase::makeInstance(CsvStructure::class, $headers);
         $start = microtime(true);
 
@@ -185,16 +194,14 @@ class Synchronizer
         $uid = 'NEW_'.$extTeamId;
         if (!array_key_exists($extTeamId, $this->teamMap)) {
             // Das Team ist noch nicht im Cache, also in der DB suchen
-            /* @var $teamSrv \tx_cfcleague_services_Teams */
-            $teamSrv = ServiceRegistry::getTeamService();
             $fields = [];
             $fields['TEAM.EXTID'][OP_EQ_NOCASE] = $extTeamId;
             $fields['TEAM.PID'][OP_EQ_INT] = $competition->getPid();
 
             $options = ['what' => 'uid'];
-            $ret = $teamSrv->searchTeams($fields, $options);
-            if (!empty($ret)) {
-                $this->teamMap[$extTeamId] = $ret[0]['uid'];
+            $ret = $this->teamRepo->search($fields, $options);
+            if (!$ret->isEmpty()) {
+                $this->teamMap[$extTeamId] = $ret->first()['uid'];
                 $uid = $this->teamMap[$extTeamId];
             } else {
                 // In uid steht jetzt NEW_

@@ -3,6 +3,7 @@
 namespace System25\T3sports\Service;
 
 use Sys25\RnBase\Cache\CacheManager;
+use Sys25\RnBase\Domain\Collection\BaseCollection;
 use Sys25\RnBase\Domain\Model\MediaModel;
 use Sys25\RnBase\Search\SearchBase;
 use Sys25\RnBase\Typo3Wrapper\Service\AbstractService;
@@ -136,7 +137,7 @@ class TeamService extends AbstractService
      * @param Competition $comp
      * @param bool $asArray Wenn 1 wird pro Team ein Array mit Name, Kurzname und Flag spielfrei geliefert
      *
-     * @return array
+     * @return string[]
      */
     public function getTeamNames(Competition $comp, $asArray = false)
     {
@@ -235,7 +236,7 @@ class TeamService extends AbstractService
      * @param array $fields
      * @param array $options
      *
-     * @return Team[]
+     * @return BaseCollection<Team>
      */
     public function searchTeams($fields, $options)
     {

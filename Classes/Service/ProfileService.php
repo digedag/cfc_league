@@ -118,8 +118,8 @@ class ProfileService extends AbstractService
             'operator' => OP_INSET_INT,
         ];
         $result = ServiceRegistry::getTeamService()->searchTeams($fields, $options);
-        if (count($result)) {
-            $ret['tx_cfcleague_teams'] = $result;
+        if (!$result->isEmpty()) {
+            $ret['tx_cfcleague_teams'] = $result->toArray();
         }
 
         $fields = [];
