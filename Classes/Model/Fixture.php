@@ -47,6 +47,7 @@ class Fixture extends BaseModel
 
     private $resultInited = false;
     protected $competition;
+    /** @var MatchNote[] */
     protected $matchNotes = [];
     protected $matchNoteTypes = [];
     protected $_teamHome;
@@ -561,6 +562,11 @@ class Fixture extends BaseModel
         $this->matchNoteTypes[(int) $note->getProperty('type')][] = $note;
     }
 
+    /**
+     * @param int $type
+     *
+     * @return MatchNote[]
+     */
     public function getMatchNotesByType($type)
     {
         if (is_array($type)) {

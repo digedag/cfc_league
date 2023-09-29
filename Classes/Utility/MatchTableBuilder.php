@@ -101,7 +101,7 @@ class MatchTableBuilder
     {
         SearchBuilder::setField($fields, 'COMPETITION.SAISON', OP_IN_INT, $this->_saisonIds);
         SearchBuilder::setField($fields, 'COMPETITION.AGEGROUP', OP_INSET_INT, $this->_groupIds);
-        SearchBuilder::setField($fields, 'MATCH.COMPETITION', OP_IN_INT, $this->_compIds);
+        SearchBuilder::setField($fields, 'COMPETITION.UID', OP_IN_INT, $this->_compIds);
         SearchBuilder::setField($fields, 'MATCH.ROUND', OP_IN_INT, $this->_roundIds);
         SearchBuilder::setField($fields, 'TEAM1.CLUB', OP_IN_INT, $this->_homeClubIds);
         SearchBuilder::setField($fields, 'TEAM2.CLUB', OP_IN_INT, $this->_guestClubIds);

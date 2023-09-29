@@ -199,6 +199,7 @@ class Synchronizer
             $fields['TEAM.PID'][OP_EQ_INT] = $competition->getPid();
 
             $options = ['what' => 'uid'];
+            /** @var \Sys25\RnBase\Domain\Collection\BaseCollection $ret */
             $ret = $this->teamRepo->search($fields, $options);
             if (!$ret->isEmpty()) {
                 $this->teamMap[$extTeamId] = $ret->first()['uid'];
