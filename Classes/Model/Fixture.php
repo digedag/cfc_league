@@ -4,6 +4,7 @@ namespace System25\T3sports\Model;
 
 use Exception;
 use Sys25\RnBase\Domain\Model\BaseModel;
+use Sys25\RnBase\Utility\Strings;
 use System25\T3sports\Utility\ServiceRegistry;
 
 /***************************************************************
@@ -587,5 +588,47 @@ class Fixture extends BaseModel
     public function getColumnNames()
     {
         return array_merge(['goals_home', 'goals_guest'], parent::getColumnNames());
+    }
+
+    /**
+     * Ermittelt zu welchem Team die SpielerID gehört.
+     *
+     * @param $playerUid int UID eines Spielers
+     *
+     * @return int 1 - Heimteam, 2- Gastteam, 0 - unbekannt
+     */
+    public function getTeam4Player($playerUid)
+    {
+        $playerUid = intval($playerUid);
+        if (!$playerUid) {
+            return 0;
+        } // Keine ID vorhanden
+        $uids = [];
+        if ($this->getProperty('players_home')) {
+            $uids[] = $this->getProperty('players_home');
+        }
+        if ($this->getProperty('substitutes_home')) {
+            $uids[] = $this->getProperty('substitutes_home');
+        }
+        $uids = implode(',', $uids);
+        $uids = Strings::intExplode(',', $uids);
+        if (in_array($playerUid, $uids)) {
+            return 1;
+        }
+
+        $uids = [];
+        if ($this->getProperty('players_guest')) {
+            $uids[] = $this->getProperty('players_guest');
+        }
+        if ($this->getProperty('substitutes_guest')) {
+            $uids[] = $this->getProperty('substitutes_guest');
+        }
+        $uids = implode(',', $uids);
+        $uids = Strings::intExplode(',', $uids);
+        if (in_array($playerUid, $uids)) {
+            return 2;
+        }
+
+        return 0;
     }
 }

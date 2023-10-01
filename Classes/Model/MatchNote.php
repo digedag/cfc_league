@@ -254,6 +254,30 @@ class MatchNote extends BaseModel
     }
 
     /**
+     * Liefert true wenn die Meldung eine gelb/rote Karte ist.
+     */
+    public function isYellowRedCard()
+    {
+        return $this->isType(71);
+    }
+
+    /**
+     * Liefert true wenn die Meldung eine rote Karte ist.
+     */
+    public function isRedCard()
+    {
+        return $this->isType(72);
+    }
+
+    /**
+     * Liefert true wenn die Meldung eine gelbe Karte ist.
+     */
+    public function isYellowCard()
+    {
+        return $this->isType(70);
+    }
+
+    /**
      * Liefert true, wenn die Aktion eine Ein- oder Auswechslung ist.
      *
      * @return bool
