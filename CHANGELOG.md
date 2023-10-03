@@ -2,6 +2,10 @@
 Änderungen
 ==========
 
+## v1.11.4 (03.10.2023)
+ * Improve handling of hidden competitions #92
+ * Added some missing methods in fixture model
+
 ## v1.11.3 (17.09.2023)
  * fix csv import
 ## v1.11.2 (22.07.2023)

@@ -6,6 +6,7 @@ use Exception;
 use Sys25\RnBase\Domain\Model\BaseModel;
 use Sys25\RnBase\Utility\Strings;
 use System25\T3sports\Utility\ServiceRegistry;
+use UnexpectedValueException;
 
 /***************************************************************
  *  Copyright notice
@@ -124,6 +125,9 @@ class Fixture extends BaseModel
         // Um das Endergebnis zu ermitteln, muss bekannt sein, wieviele Spielabschnitte
         // es gibt. Dies steht im Wettbewerb
         $comp = $this->getCompetition();
+        if (null === $comp) {
+            throw new UnexpectedValueException(sprintf('Competition for match with uid %d not found.', $this->getUid()));
+        }
         $this->setProperty('matchparts', $comp->getMatchParts());
         if ($comp->isAddPartResults()) {
             $this->initResultAdded($comp, $comp->getMatchParts());
@@ -280,7 +284,7 @@ class Fixture extends BaseModel
     /**
      * Returns the competition.
      *
-     * @return Competition
+     * @return Competition|null
      */
     public function getCompetition()
     {
