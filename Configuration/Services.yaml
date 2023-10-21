@@ -6,7 +6,7 @@ services:
 
   System25\T3sports\:
     resource: '../Classes/*'
-    exclude: ['../Classes/Domain/Model/*']
+    exclude: ['../Classes/Model/*']
 
   System25\T3sports\Service\ProfileService:
     public: true

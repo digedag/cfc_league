@@ -512,8 +512,8 @@ class MatchTicker extends BaseModFunc
         $pageTSconfig = BackendUtility::getPagesTSconfig($this->getModule()->getPid());
         $tickerConf = isset($pageTSconfig['tx_cfcleague.']['matchTickerCfg.']) ? $pageTSconfig['tx_cfcleague.']['matchTickerCfg.'] : [];
         $inputFields = isset($tickerConf['numberOfInputFields']) ? intval($tickerConf['numberOfInputFields']) : 4;
-        $cols = isset($tickerConf['commentFieldCols']) ? intval($tickerConf['commentFieldCols']) : 35;
-        $rows = isset($tickerConf['commentFieldCols']) ? intval($tickerConf['commentFieldCols']) : 3;
+        $cols = (int) $tickerConf['commentFieldCols'] ?? 35;
+        $rows = (int) $tickerConf['commentFieldRows'] ?? 3;
 
         $playersHome = $playersGuest = [
             0 => '',
