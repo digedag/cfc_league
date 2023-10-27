@@ -2,6 +2,10 @@
 Änderungen
 ==========
 
+## v1.11.5 (??.10.2023)
+ * #94 fix module access for regular users
+ * #93 fix config for ticker text fields
+
 ## v1.11.4 (03.10.2023)
  * Improve handling of hidden competitions #92
  * Added some missing methods in fixture model

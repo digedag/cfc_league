@@ -18,7 +18,7 @@ return [
     ],
     'web_CfcLeagueM1_competition' => [
         'parent' => 'web_CfcLeagueM1',
-        'access' => 'user,group',
+        'access' => 'user',
         'workspaces' => '*',
         'iconIdentifier' => 'ext-cfcleague-ext-default',
         'path' => '/module/web/t3sports/competition',
@@ -38,7 +38,7 @@ return [
     ],
     'web_CfcLeagueM1_ticker' => [
         'parent' => 'web_CfcLeagueM1',
-        'access' => 'user,group',
+        'access' => 'user',
         'workspaces' => '*',
         'iconIdentifier' => 'ext-cfcleague-ext-default',
         'path' => '/module/web/t3sports/ticker',
@@ -58,7 +58,7 @@ return [
     ],
     'web_CfcLeagueM1_team' => [
         'parent' => 'web_CfcLeagueM1',
-        'access' => 'user,group',
+        'access' => 'user',
         'workspaces' => '*',
         'iconIdentifier' => 'ext-cfcleague-ext-default',
         'path' => '/module/web/t3sports/team',
@@ -78,7 +78,7 @@ return [
     ],
     'web_CfcLeagueM1_club' => [
         'parent' => 'web_CfcLeagueM1',
-        'access' => 'user,group',
+        'access' => 'user',
         'workspaces' => '*',
         'iconIdentifier' => 'ext-cfcleague-ext-default',
         'path' => '/module/web/t3sports/club',
@@ -98,7 +98,7 @@ return [
     ],
     'web_CfcLeagueM1_profiles' => [
         'parent' => 'web_CfcLeagueM1',
-        'access' => 'user,group',
+        'access' => 'user',
         'workspaces' => '*',
         'iconIdentifier' => 'ext-cfcleague-ext-default',
         'path' => '/module/web/t3sports/profile',
