@@ -2,7 +2,7 @@
 Änderungen
 ==========
 
-## v1.11.5 (??.10.2023)
+## v1.11.5 (03.11.2023)
  * #94 fix module access for regular users
  * #93 fix config for ticker text fields
 
