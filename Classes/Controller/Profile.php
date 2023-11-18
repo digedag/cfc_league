@@ -140,7 +140,7 @@ class Profile extends BaseModFunc
             // Das führende Profile muss ausgewählt werden
             $out .= $LANG->getLL('msg_merge_selectprofile');
             $out .= $this->createProfileMergeForm($profile1, $profile2);
-            //            $out = $this->doc->section($LANG->getLL('label_mergehead'), $out, 0, 1);
+        //            $out = $this->doc->section($LANG->getLL('label_mergehead'), $out, 0, 1);
         } elseif (isset($data['merge_profiles_do'])) { // Step 2
             $leading = intval($data['merge']);
 
