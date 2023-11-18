@@ -207,7 +207,7 @@ class MatchService extends AbstractService
     {
         // FIXME: dringend auf Repo umstellen!
         $what = 'tx_cfcleague_games.uid,home,guest, t1.name AS name_home, t2.name AS name_guest, '.
-            't1.short_name AS short_name_home, t1.dummy AS no_match_home, t2.short_name AS short_name_guest, t2.dummy AS no_match_guest, '.'goals_home_1,goals_guest_1,goals_home_2,goals_guest_2, '.'goals_home_3,goals_guest_3,goals_home_4,goals_guest_4, '.'goals_home_et,goals_guest_et,goals_home_ap,goals_guest_ap, visitors,date,status';
+            't1.short_name AS short_name_home, t1.dummy AS no_match_home, t2.short_name AS short_name_guest, t2.dummy AS no_match_guest, goals_home_1,goals_guest_1,goals_home_2,goals_guest_2, goals_home_3,goals_guest_3,goals_home_4,goals_guest_4, goals_home_et,goals_guest_et,goals_home_ap,goals_guest_ap, visitors,date,status';
         $from = [
             'tx_cfcleague_games INNER JOIN tx_cfcleague_teams t1 ON (home= t1.uid) INNER JOIN tx_cfcleague_teams t2 ON (guest= t2.uid) ',
             'tx_cfcleague_games',

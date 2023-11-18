@@ -52,7 +52,7 @@ class Football extends AbstractService implements ISports
         return false;
     }
 
-    private $matchInfo = null;
+    private $matchInfo;
 
     /* (non-PHPdoc)
      * @see ISports::getMatchInfo()

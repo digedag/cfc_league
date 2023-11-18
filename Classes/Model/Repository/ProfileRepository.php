@@ -36,8 +36,8 @@ use tx_rnbase;
  */
 class ProfileRepository extends PersistenceRepository
 {
-    private static $unknownPlayer = null;
-    private static $notfoundProfile = null;
+    private static $unknownPlayer;
+    private static $notfoundProfile;
 
     public function getSearchClass()
     {

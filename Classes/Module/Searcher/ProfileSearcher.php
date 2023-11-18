@@ -12,6 +12,7 @@ use Sys25\RnBase\Utility\T3General;
 use System25\T3sports\Module\Decorator\ProfileDecorator;
 use System25\T3sports\Utility\ServiceRegistry;
 use tx_rnbase;
+use tx_rnbase_mod_IModFunc;
 
 /*
  * *************************************************************
@@ -112,7 +113,7 @@ class ProfileSearcher
         $lang = $this->module->getLanguageService();
         $searchTerm = Misc::validateSearchString($this->SEARCH_SETTINGS['searchterm'] ?? '');
         if (!$searchTerm) {
-            return $this->module->getDoc()->section($lang->getLL('message').':', $lang->getLL('msg_searchhelp'), 0, 1, \tx_rnbase_mod_IModFunc::ICON_INFO);
+            return $this->module->getDoc()->section($lang->getLL('message').':', $lang->getLL('msg_searchhelp'), 0, 1, tx_rnbase_mod_IModFunc::ICON_INFO);
         }
 
         $profiles = $this->searchProfiles($searchTerm);

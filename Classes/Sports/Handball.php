@@ -4,6 +4,7 @@ namespace System25\T3sports\Sports;
 
 use Sys25\RnBase\Typo3Wrapper\Service\AbstractService;
 use Sys25\RnBase\Utility\Misc;
+use tx_rnbase;
 
 /***************************************************************
  *  Copyright notice
@@ -53,7 +54,7 @@ class Handball extends AbstractService implements ISports
         return false;
     }
 
-    private $matchInfo = null;
+    private $matchInfo;
 
     /*
      * (non-PHPdoc)
@@ -62,7 +63,7 @@ class Handball extends AbstractService implements ISports
     public function getMatchInfo()
     {
         if (null == $this->matchInfo) {
-            $this->matchInfo = \tx_rnbase::makeInstance(MatchInfo::class, [
+            $this->matchInfo = tx_rnbase::makeInstance(MatchInfo::class, [
                 MatchInfo::MATCH_TIME => 60,
                 MatchInfo::MATCH_PARTS => 2,
                 MatchInfo::MATCH_EXTRA_TIME => 10,

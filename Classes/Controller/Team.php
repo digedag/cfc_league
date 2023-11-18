@@ -163,6 +163,7 @@ class Team extends BaseModFunc
         $content .= $this->formTool->form->printNeededJSFunctions_top();
         // Den JS-Code für Validierung einbinden
         $content .= $this->formTool->form->printNeededJSFunctions();
+
         // $content .= $this->formTool->form->JSbottom('editform');
         return $content;
     }

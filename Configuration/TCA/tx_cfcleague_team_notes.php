@@ -135,13 +135,9 @@ if (\Sys25\RnBase\Utility\TYPO3::isTYPO104OrHigher()) {
     unset($tx_cfcleague_team_notes['interface']['showRecordFieldList']);
 }
 
-if (!\Sys25\RnBase\Utility\TYPO3::isTYPO86OrHigher()) {
-    $tx_cfcleague_team_notes['ctrl']['requestUpdate'] = 'team';
-}
-
 $tx_cfcleague_team_notes['columns']['mediatype']['config']['items'][] =
                 ['LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_team_notes.mediatype.media', '1'];
-$tx_cfcleague_team_notes['columns']['media'] = tx_rnbase_util_TSFAL::getMediaTCA('media', [
+$tx_cfcleague_team_notes['columns']['media'] = \Sys25\RnBase\Utility\TSFAL::getMediaTCA('media', [
     'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.images',
     'config' => ['size' => 1, 'maxitems' => 1],
 ]);

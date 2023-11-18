@@ -52,7 +52,7 @@ class IceHockey extends AbstractService implements ISports
         return false;
     }
 
-    private $matchInfo = null;
+    private $matchInfo;
 
     /* (non-PHPdoc)
      * @see ISports::getMatchInfo()

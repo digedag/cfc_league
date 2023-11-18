@@ -46,12 +46,13 @@ class NewClubLinker
     {
         $ret = '';
         $fields = [];
+        $lang = $formTool->getLanguageService();
         // Gibt es auf der Seite schon Vereine?
         $fields['CLUB.PID'][OP_EQ_INT] = $currentPid;
         $cnt = ServiceRegistry::getTeamService()->searchClubs($fields, ['count' => 1]);
         $options = [];
-        $options['confirm'] = 0 == $cnt ? $GLOBALS['LANG']->getLL('label_msg_confirmNewClubPage') : $GLOBALS['LANG']->getLL('label_msg_confirmNewClub');
-        $options['title'] = $GLOBALS['LANG']->getLL('label_addclub');
+        $options[ToolBox::OPTION_CONFIRM] = 0 == $cnt ? $lang->getLL('label_msg_confirmNewClubPage') : $GLOBALS['LANG']->getLL('label_msg_confirmNewClub');
+        $options['title'] = $lang->getLL('label_addclub');
         $ret .= $formTool->createNewLink('tx_cfcleague_club', $currentPid, '', $options);
 
         return $ret;

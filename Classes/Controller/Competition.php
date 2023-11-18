@@ -107,8 +107,12 @@ class Competition extends BaseModFunc
             $content .= $this->getModule()
                 ->getDoc()
                 ->section('Info:', $LANG->getLL('no_league_in_page'), 0, 1, self::ICON_WARN);
-            $content .= '<p style="margin-top:5px; font-weight:bold;">'.$formTool->createNewLink('tx_cfcleague_competition', $this->getModule()
-                ->getPid(), $LANG->getLL('msg_create_new_competition')).'</p>';
+            $newCompLink = $formTool->createNewLink(
+                'tx_cfcleague_competition',
+                $this->getModule()->getPid(),
+                $LANG->getLL('msg_create_new_competition')
+            );
+            $content .= '<p style="margin-top:5px; font-weight:bold;">'.$newCompLink.'</p>';
 
             return $content;
         }

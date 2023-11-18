@@ -140,7 +140,7 @@ class Profile extends BaseModFunc
             // Das führende Profile muss ausgewählt werden
             $out .= $LANG->getLL('msg_merge_selectprofile');
             $out .= $this->createProfileMergeForm($profile1, $profile2);
-//            $out = $this->doc->section($LANG->getLL('label_mergehead'), $out, 0, 1);
+            //            $out = $this->doc->section($LANG->getLL('label_mergehead'), $out, 0, 1);
         } elseif (isset($data['merge_profiles_do'])) { // Step 2
             $leading = intval($data['merge']);
 
@@ -278,10 +278,10 @@ class Profile extends BaseModFunc
      */
     protected function searchProfiles($searchterm, $uid = 0)
     {
-        $what = 'tx_cfcleague_profiles.uid,tx_cfcleague_profiles.pid,'.'last_name, first_name,birthday, '."t1.short_name as 'team_name', t1.uid as 'team_uid'";
+        $what = 'tx_cfcleague_profiles.uid,tx_cfcleague_profiles.pid,last_name, first_name,birthday, '."t1.short_name as 'team_name', t1.uid as 'team_uid'";
 
         $from = [
-            'tx_cfcleague_profiles '.'LEFT JOIN tx_cfcleague_teams AS t1 ON FIND_IN_SET(tx_cfcleague_profiles.uid, t1.players) ',
+            'tx_cfcleague_profiles LEFT JOIN tx_cfcleague_teams AS t1 ON FIND_IN_SET(tx_cfcleague_profiles.uid, t1.players) ',
             'tx_cfcleague_profiles',
         ];
 

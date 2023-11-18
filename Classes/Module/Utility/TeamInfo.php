@@ -43,7 +43,7 @@ class TeamInfo
 {
     private $baseInfo = [];
 
-    private $team = null;
+    private $team;
 
     /** @var ToolBox */
     private $formTool;

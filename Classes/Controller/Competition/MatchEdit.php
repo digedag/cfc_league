@@ -2,6 +2,7 @@
 
 namespace System25\T3sports\Controller\Competition;
 
+use Exception;
 use Sys25\RnBase\Backend\Form\ToolBox;
 use Sys25\RnBase\Backend\Module\BaseModule;
 use Sys25\RnBase\Backend\Module\IModFunc;
@@ -138,7 +139,7 @@ class MatchEdit
                 }
                 $content .= '</ul>';
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $content .= $this->getModule()->getDoc()->section('Error:', $e->getMessage(), 0, 1, IModFunc::ICON_FATAL);
         }
         $content .= '<br /><br />';

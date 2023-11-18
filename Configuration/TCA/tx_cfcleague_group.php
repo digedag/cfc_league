@@ -44,8 +44,8 @@ $tx_cfcleague_group = [
             'label' => \Sys25\RnBase\Backend\Utility\TcaTool::buildGeneralLabel('starttime'),
             'config' => [
                 'type' => 'input',
-                'renderType' => (tx_rnbase_util_TYPO3::isTYPO86OrHigher() ? 'inputDateTime' : ''),
-                'eval' => 'datetime'.(tx_rnbase_util_TYPO3::isTYPO104OrHigher() ? ',int' : ''),
+                'renderType' => 'inputDateTime',
+                'eval' => 'datetime'.(\Sys25\RnBase\Utility\TYPO3::isTYPO104OrHigher() ? ',int' : ''),
                 'default' => '0',
             ],
         ],
@@ -85,7 +85,7 @@ if (\Sys25\RnBase\Utility\TYPO3::isTYPO104OrHigher()) {
     unset($tx_cfcleague_group['interface']['showRecordFieldList']);
 }
 
-$tx_cfcleague_group['columns']['logo'] = tx_rnbase_util_TSFAL::getMediaTCA('logo', [
+$tx_cfcleague_group['columns']['logo'] = \Sys25\RnBase\Utility\TSFAL::getMediaTCA('logo', [
     'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_club.logo',
     'size' => 1,
     'maxitems' => 1,

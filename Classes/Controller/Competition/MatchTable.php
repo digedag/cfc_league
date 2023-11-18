@@ -2,6 +2,7 @@
 
 namespace System25\T3sports\Controller\Competition;
 
+use DateTime;
 use Sys25\RnBase\Backend\Form\ToolBox;
 use Sys25\RnBase\Backend\Module\IModFunc;
 use Sys25\RnBase\Backend\Module\IModule;
@@ -227,7 +228,7 @@ class MatchTable
         // $LANG->getLL('label_rounddate'), $LANG->getLL('label_roundset')));
         $tables = tx_rnbase::makeInstance(Tables::class);
 
-        $matchDay = new \DateTime('next saturday 15:00:00');
+        $matchDay = new DateTime('next saturday 15:00:00');
 
         foreach ($table as $round => $matchArr) {
             $row = [];

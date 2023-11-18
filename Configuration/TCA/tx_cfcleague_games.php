@@ -499,7 +499,7 @@ $tx_cfcleague_games = [
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_games.date',
             'config' => [
                 'type' => 'input',
-                'renderType' => (tx_rnbase_util_TYPO3::isTYPO86OrHigher() ? 'inputDateTime' : ''),
+                'renderType' => 'inputDateTime',
                 'size' => '8',
                 'eval' => 'datetime',
                 'checkbox' => '0',
@@ -690,10 +690,6 @@ $tx_cfcleague_games = [
     ],
 ];
 
-if (!\Sys25\RnBase\Utility\TYPO3::isTYPO86OrHigher()) {
-    $tx_cfcleague_games['ctrl']['requestUpdate'] = 'competition';
-}
-
 if (\Sys25\RnBase\Utility\TYPO3::isTYPO104OrHigher()) {
     unset($tx_cfcleague_games['interface']['showRecordFieldList']);
 }
@@ -704,14 +700,14 @@ if (\Sys25\RnBase\Utility\TYPO3::isTYPO104OrHigher()) {
     'assists' => ['targettable' => 'tx_cfcleague_profiles', 'suggest' => true],
 ]);
 
-$tx_cfcleague_games['columns']['t3images'] = tx_rnbase_util_TSFAL::getMediaTCA('t3images', [
+$tx_cfcleague_games['columns']['t3images'] = \Sys25\RnBase\Utility\TSFAL::getMediaTCA('t3images', [
     'label' => \Sys25\RnBase\Backend\Utility\TcaTool::buildGeneralLabel('images'),
 ]);
-$tx_cfcleague_games['columns']['dam_media'] = tx_rnbase_util_TSFAL::getMediaTCA('dam_media', [
+$tx_cfcleague_games['columns']['dam_media'] = \Sys25\RnBase\Utility\TSFAL::getMediaTCA('dam_media', [
     'type' => 'media',
     'label' => 'LLL:EXT:cms/locallang_ttc.xlf:media',
 ]);
-$tx_cfcleague_games['columns']['dam_media2'] = tx_rnbase_util_TSFAL::getMediaTCA('dam_media2', [
+$tx_cfcleague_games['columns']['dam_media2'] = \Sys25\RnBase\Utility\TSFAL::getMediaTCA('dam_media2', [
     'type' => 'media',
     'label' => 'LLL:EXT:cms/locallang_ttc.xlf:media',
 ]);
