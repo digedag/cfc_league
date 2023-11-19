@@ -188,7 +188,7 @@ class MatchTicker extends BaseModFunc
      */
     protected function getInstantMessageField()
     {
-        /* @var $pageRenderer TYPO3\CMS\Core\Page\PageRenderer */
+        /** @var $pageRenderer TYPO3\CMS\Core\Page\PageRenderer */
         $pageRenderer = $this->doc->getPageRenderer();
         $pageRenderer->loadRequireJsModule(
             'TYPO3/CMS/CfcLeague/InstantMessage',

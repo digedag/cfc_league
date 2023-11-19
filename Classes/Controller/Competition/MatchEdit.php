@@ -76,8 +76,6 @@ class MatchEdit
      */
     public function main(IModule $module, Competition $current_league)
     {
-        global $LANG;
-
         $this->setModule($module);
         $pid = $module->getPid();
         $this->id = $module->getPid();
@@ -85,12 +83,13 @@ class MatchEdit
 
         $formTool = $module->getFormTool();
         $this->formTool = $formTool;
-        $LANG->includeLLFile('EXT:cfc_league/Resources/Private/Language/locallang_db.xlf');
+        $lang = $formTool->getLanguageService();
+        $lang->includeLLFile('EXT:cfc_league/Resources/Private/Language/locallang_db.xlf');
 
         // Zuerst mal müssen wir die passende Liga auswählen lassen:
         $content = '';
         if (!count($current_league->getRounds())) {
-            $content .= $LANG->getLL('no_round_in_league');
+            $content .= $lang->getLL('no_round_in_league');
             $content .= '<br /><br />';
             $content .= $this->getFooter($current_league, null, $pid, $formTool);
 
@@ -112,7 +111,7 @@ class MatchEdit
                           }
                         }
                     </script>';
-        $content .= ' <input type="button" class="btn btn-default btn-sm" name="setStatus" value="'.$LANG->getLL('btn_statusToFinished').'" onclick="setStatusFinished()"><br><br>';
+        $content .= ' <input type="button" class="btn btn-default btn-sm" name="setStatus" value="'.$lang->getLL('btn_statusToFinished').'" onclick="setStatusFinished()"><br><br>';
 
         $content .= '<div class="cleardiv"/>';
         $data = T3General::_GP('data');
@@ -130,10 +129,9 @@ class MatchEdit
             $content .= $tables->buildTable($arr[0]);
 
             // Den Update-Button einfügen
-            $content .= $formTool->createSubmit('update', $LANG->getLL('btn_update'), $LANG->getLL('btn_update_msgEditGames'));
-            // $content .= '<input type="submit" name="update" value="'.$LANG->getLL('btn_update').'" onclick="return confirm('.$GLOBALS['LANG']->JScharCode($GLOBALS['LANG']->getLL('btn_update_msgEditGames')).')">';
+            $content .= $formTool->createSubmit('update', $lang->getLL('btn_update'), $lang->getLL('btn_update_msgEditGames'), [ToolBox::OPTION_ICON_NAME => 'actions-save']);
             if (isset($arr[1])) { // Hat ein Team spielfrei?
-                $content .= '<h3 style="margin-top:10px">'.$LANG->getLL('msg_free_of_play').'</h3><ul>';
+                $content .= '<h3 style="margin-top:10px">'.$lang->getLL('msg_free_of_play').'</h3><ul>';
                 foreach ($arr[1] as $freeOfPlay) {
                     $content .= '<li>'.$freeOfPlay['team'].$freeOfPlay['match_edit'].'</li>';
                 }
