@@ -9,6 +9,7 @@ use Sys25\RnBase\Backend\Utility\Tables;
 use Sys25\RnBase\Database\Connection;
 use Sys25\RnBase\Frontend\Request\Parameters;
 use Sys25\RnBase\Utility\Strings;
+use Sys25\RnBase\Utility\T3General;
 use System25\T3sports\Model\Competition;
 use System25\T3sports\Utility\ServiceRegistry;
 use tx_rnbase;
@@ -93,12 +94,16 @@ class Teams
      */
     protected function showTeamsFromPage($pid, Competition $competition)
     {
-        global $LANG;
+        $lang = $this->getFormTool()->getLanguageService();
         // Liegen Daten im Request
-        $teamIds = Parameters::getPostOrGetParameter('checkEntry');
-        if (Parameters::getPostOrGetParameter('addteams') && is_array($teamIds) && count($teamIds)) {
+        $teamIds = T3General::_GP('checkEntry');
+        if (T3General::_GP('addteams') && is_array($teamIds) && count($teamIds)) {
             $tcaData = [];
-            $tcaData['tx_cfcleague_competition'][$competition->getUid()]['teams'] = implode(',', $this->mergeArrays(Strings::intExplode(',', $competition->getProperty('teams')), $teamIds));
+            $tcaData['tx_cfcleague_competition'][$competition->getUid()]['teams'] =
+                implode(',', $this->mergeArrays(
+                    Strings::intExplode(',', $competition->getProperty('teams')),
+                    $teamIds
+                ));
 
             $tce = Connection::getInstance()->getTCEmain($tcaData, []);
             $tce->process_datamap();
@@ -134,12 +139,16 @@ class Teams
             ],
         ];
 
-        $content = '<h2>'.$LANG->getLL('label_add_teams_from_page').'</h2>';
+        $content = '<h2>'.$lang->getLL('label_add_teams_from_page').'</h2>';
         /* @var $tables Tables */
         $tables = tx_rnbase::makeInstance(Tables::class);
         $arr = $tables->prepareTable($teams, $columns, $this->getFormTool(), $options);
         $content .= $tables->buildTable($arr[0]);
-        $content .= $this->getFormTool()->createSubmit('addteams', $LANG->getLL('label_add_teams'), $GLOBALS['LANG']->getLL('msg_add_teams'));
+        $content .= $this->getFormTool()->createSubmit('addteams',
+            $lang->getLL('label_add_teams'),
+            $lang->getLL('msg_add_teams'),
+            [ToolBox::OPTION_ICON_NAME => 'actions-document-add']
+        );
 
         return $content;
     }
