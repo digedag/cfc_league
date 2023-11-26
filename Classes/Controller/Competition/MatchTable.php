@@ -43,21 +43,13 @@ use tx_rnbase;
  */
 class MatchTable
 {
-    /* @var \Sys25\RnBase\Backend\Template\Override\DocumentTemplate */
+    /** @var \Sys25\RnBase\Backend\Template\Override\DocumentTemplate */
     private $doc;
 
     private $module;
 
-    /* @var ToolBox */
+    /** @var ToolBox */
     private $formTool;
-
-    /**
-     * @return \TYPO3\CMS\Core\Page\PageRenderer
-     */
-    private function getPageRenderer()
-    {
-        return $this->doc->getPageRenderer();
-    }
 
     /**
      * Verwaltet die Erstellung von Spielplänen von Ligen.
@@ -69,11 +61,6 @@ class MatchTable
     {
         $this->module = $module;
         $this->doc = $module->getDoc();
-
-        if (!TYPO3::isTYPO70OrHigher()) {
-            // Das ist noch nicht auf jQuery umgestellt.
-            $this->getPageRenderer()->addJsFile('js/matchcreate.js', 'text/javascript', false, false, '', true);
-        }
 
         $this->formTool = $module->getFormTool();
         // $start = microtime(true);
@@ -96,15 +83,15 @@ class MatchTable
      *
      * @return string
      */
-    private function handleCreateMatchTable($comp)
+    private function handleCreateMatchTable(Competition $comp)
     {
-        global $LANG;
         // Haben wir Daten im Request?
         $content = '';
         $data = T3General::_GP('data');
         if (isset($data['rounds']) && T3General::_GP('update')) {
             $result = $this->createMatches($data['rounds'], $comp);
-            $content .= $this->doc->section($LANG->getLL('message').':', $result, 0, 1, IModFunc::ICON_INFO);
+
+            $content .= $this->doc->section($this->formTool->getLanguageService()->getLL('message').':', $result, 0, 1, IModFunc::ICON_INFO);
         }
 
         return $content;
@@ -209,13 +196,9 @@ class MatchTable
         $content .= '<br />';
 
         // Führende 0 für Spieltag im einstelligen Bereich
-        /* @var $pageRenderer TYPO3\CMS\Core\Page\PageRenderer */
-        $pageRenderer = $this->doc->getPageRenderer();
-        $pageRenderer->loadRequireJsModule(
-            'TYPO3/CMS/CfcLeague/MatchCreate',
-            'function (matchCreator) {matchCreator.init("test");}'
-        );
-        $content .= $this->formTool->createCheckbox('option_leadingZero', '1', false, 't3sMatchCreator.prependZero(this);');
+        $this->formTool->insertJsModule('@digedag/cfc_league/match-create.js');
+
+        $content .= $this->formTool->createCheckbox('option_leadingZero', '1', false);
         $content .= '###LABEL_LEADING_ZERO###';
         $content .= '<br />';
 
@@ -232,12 +215,19 @@ class MatchTable
 
         foreach ($table as $round => $matchArr) {
             $row = [];
+            $fields = [];
 
             // Die Formularfelder, die jetzt erstellt werden, wandern später direkt in die neuen Game-Records
             // Ein Hidden-Field für die Runde
-            $row[] = '<div>'.$this->formTool->createHidden('data[rounds][round_'.$round.'][round]', $round).$this->formTool->createTxtInput('data[rounds][round_'.$round.'][round_name]', $round.$LANG->getLL('createGameTable_round'), 10, [
+            $fields[] = $this->formTool->createHidden('data[rounds][round_'.$round.'][round]', $round);
+            $roundName = $round.$LANG->getLL('createGameTable_round');
+            $fields[] = $this->formTool->createTxtInput('data[rounds][round_'.$round.'][round_name]', $roundName, 10, [
                 'class' => 'roundname',
-            ]).$this->formTool->createDateInput('data[rounds][round_'.$round.'][date]', $matchDay->format('U')).'</div>'.
+            ]);
+            $fields[] = $this->formTool->createDateInput('data[rounds][round_'.$round.'][date]', $matchDay->format('U'), [
+                ToolBox::OPTION_HIDE_LABEL => true,
+            ]);
+            $row[] = '<div>'.implode('', $fields).'</div>'.
             // Anzeige der Paarungen
             $tables->buildTable($this->createMatchTableArray($matchArr, $league, 'data[rounds][round_'.$round.']'));
 

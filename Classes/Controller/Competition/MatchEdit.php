@@ -7,6 +7,7 @@ use Sys25\RnBase\Backend\Form\ToolBox;
 use Sys25\RnBase\Backend\Module\BaseModule;
 use Sys25\RnBase\Backend\Module\IModFunc;
 use Sys25\RnBase\Backend\Module\IModule;
+use Sys25\RnBase\Backend\Utility\Icons;
 use Sys25\RnBase\Backend\Utility\Tables;
 use Sys25\RnBase\Database\Connection;
 use Sys25\RnBase\Utility\T3General;
@@ -49,6 +50,7 @@ use tx_rnbase;
 class MatchEdit
 {
     private $sportsServiceLocator;
+    /** @var ToolBox */
     protected $formTool;
     protected $id;
     protected $doc;
@@ -85,6 +87,7 @@ class MatchEdit
         $this->formTool = $formTool;
         $lang = $formTool->getLanguageService();
         $lang->includeLLFile('EXT:cfc_league/Resources/Private/Language/locallang_db.xlf');
+        $formTool->insertJsModule('@digedag/cfc_league/match-edit.js');
 
         // Zuerst mal müssen wir die passende Liga auswählen lassen:
         $content = '';
@@ -102,16 +105,10 @@ class MatchEdit
             $current_round = $this->getSelector()->showRoundSelector($content, $pid, $current_league);
         }
         // Add button to set all games to "Finished"
-        $content .= '<script type="text/javascript">
-                        function setStatusFinished() {
-                          var x = document.querySelectorAll("select[name*=\'status\']");
-                          var i;
-                          for (i = 0; i < x.length; i++) {
-                            x[i].value = "2";
-                          }
-                        }
-                    </script>';
-        $content .= ' <input type="button" class="btn btn-default btn-sm" name="setStatus" value="'.$lang->getLL('btn_statusToFinished').'" onclick="setStatusFinished()"><br><br>';
+        $icon = Icons::getSpriteIcon('actions-check');
+
+        $content .= '<button type="button" class="btn btn-default btn-sm" id="btnSetStatus" name="setStatus">';
+        $content .= sprintf('%s</button><br><br>', $icon.$lang->getLL('btn_statusToFinished'));
 
         $content .= '<div class="cleardiv"/>';
         $data = T3General::_GP('data');
@@ -303,7 +300,11 @@ class MatchEdit
      */
     private function buildInputField($table, $record, $fieldName, $uid)
     {
-        return $this->formTool->getTCEForm()->getSoloField($table, $record, $fieldName);
+        $field = $this->formTool->getTCEForm()->getSoloField($table, $record, $fieldName);
+        // Das Label stört in der Tabelle
+        $field = preg_replace('/<label.*<\/label>/', '', $field);
+
+        return $field;
     }
 
     /**
@@ -331,7 +332,7 @@ class MatchEdit
 
             $table = 'tx_cfcleague_games';
             if (!$isNoMatch) {
-                $row[] = $matchUid.$this->formTool->createEditLink('tx_cfcleague_games', $matchUid, '');
+                $row[] = $this->formTool->createEditLink('tx_cfcleague_games', $matchUid, $matchUid);
                 $dataArr = TYPO3::isTYPO70OrHigher() ? $match->getProperty() : $this->formTool->getTCEFormArray($table, $matchUid);
                 $row[] = $this->buildInputField($table, $dataArr, 'date', $matchUid);
                 $row[] = $this->buildInputField($table, $dataArr, 'status', $matchUid);
