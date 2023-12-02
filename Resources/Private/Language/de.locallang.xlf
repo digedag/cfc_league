@@ -627,11 +627,11 @@
                 <source>Create a new club record.</source>
                 <target>Einen neuen Verein anlegen.</target>
             </trans-unit>
-            <trans-unit id="label_msg_confirmNewClub" xml:space="preserve">
+            <trans-unit id="label_msg_confirmnewclub" xml:space="preserve">
                 <source>Do you really want to create a new club record?</source>
                 <target>Soll wirklich ein neuer Verein angelegt werden?</target>
             </trans-unit>
-            <trans-unit id="label_msg_confirmNewClubPage" xml:space="preserve">
+            <trans-unit id="label_msg_confirmnewclubpage" xml:space="preserve">
                 <source>ATTENTION: There is no other club record at this page! Do you really want to create a new club record here?</source>
                 <target>ACHTUNG: Auf dieser Seite befinden sich noch keine Vereinsdatensätze. Wollen Sie wirklich auf dieser Seite einen Verein anlegen?</target>
             </trans-unit>

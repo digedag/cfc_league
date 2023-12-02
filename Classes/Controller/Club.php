@@ -40,7 +40,7 @@ use tx_rnbase;
  */
 class Club extends BaseModFunc
 {
-    public $doc;
+    private $doc;
 
     /**
      * Method getFuncId.
@@ -72,7 +72,7 @@ class Club extends BaseModFunc
         $tabItems = [];
         $tabItems[] = tx_rnbase::makeInstance(ClubStadiumHandler::class);
         Misc::callHook('cfc_league', 'modClub_tabItems', [
-            'tabItems' => &$tabItems,
+            'tabItems' => $tabItems,
         ], $this);
 
         $menuItems = [];

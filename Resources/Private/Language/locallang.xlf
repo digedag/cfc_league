@@ -470,10 +470,10 @@
             <trans-unit id="label_addclub" xml:space="preserve">
                 <source>Create a new club record.</source>
             </trans-unit>
-            <trans-unit id="label_msg_confirmNewClub" xml:space="preserve">
+            <trans-unit id="label_msg_confirmnewclub" xml:space="preserve">
                 <source>Do you really want to create a new club record?</source>
             </trans-unit>
-            <trans-unit id="label_msg_confirmNewClubPage" xml:space="preserve">
+            <trans-unit id="label_msg_confirmnewclubpage" xml:space="preserve">
                 <source>ATTENTION: There is no other club record at this page! Do you really want to create a new club record here?</source>
             </trans-unit>
         </body>
