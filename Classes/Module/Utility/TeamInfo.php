@@ -239,8 +239,8 @@ class TeamInfo
                     $uid,
                     $LANG->getLL('msg_remove_team_'.$type),
                     [
-                        'icon' => 'actions-delete',
-                        'infomsg' => 'Remove from Team',
+                        ToolBox::OPTION_ICON_NAME => 'actions-delete',
+                        ToolBox::OPTION_HOVER_TEXT => 'Remove from Team',
                     ]
                 );
                 $arr[] = $row;

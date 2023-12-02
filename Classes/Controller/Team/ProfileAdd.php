@@ -64,7 +64,7 @@ class ProfileAdd
 
         if ($teamInfo->isTeamFull()) {
             // Kann nix mehr angelegt werden
-            return $module->getDoc()->section('Message:', $GLOBALS['LANG']->getLL('msg_maxPlayers'), 0, 1, IModFunc::ICON_WARN);
+            return $module->getDoc()->section('Message:', $this->mod->getLanguageService()->getLL('msg_maxPlayers'), 0, 1, IModFunc::ICON_WARN);
         }
 
         $out = '';
@@ -117,9 +117,9 @@ class ProfileAdd
             // Button für Zuordnung
             $tableForm .= $this->getFormTool()->createSubmit(
                 'profile2team',
-                $GLOBALS['LANG']->getLL('label_join_profiles'),
+                $this->mod->getDoc()->getLangSrv()->getLL('label_join_profiles'),
                 '',
-                ['class' => 'btn btn-primary btn-sm']
+                ['class' => 'btn btn-primary btn-sm', 'icon' => 'actions-code-merge']
             );
         }
         // Ein Formular für die Neuanlage
@@ -194,7 +194,7 @@ class ProfileAdd
             'tx_cfcleague_profiles' => $request['tx_cfcleague_profiles'],
         ];
 
-        $out = ProfileCreate::createProfiles($profiles, $currTeam, $teamInfo);
+        $out = ProfileCreate::createProfiles($profiles, $currTeam, $teamInfo, $this->mod->getDoc());
 
         return $out;
     }

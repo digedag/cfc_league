@@ -59,23 +59,22 @@ class TeamNoteDecorator
         } elseif ('mediatype' == $colName) {
             switch ($item->getMediaType()) {
                 case 0:
-                    $ret = $GLOBALS['LANG']->getLL('tx_cfcleague_team_notes.mediatype.text');
+                    $ret = $this->formTool->getLanguageService()->getLL('tx_cfcleague_team_notes.mediatype.text');
 
                     break;
                 case 2:
-                    $ret = $GLOBALS['LANG']->getLL('tx_cfcleague_team_notes.mediatype.number');
+                    $ret = $this->formTool->getLanguageService()->getLL('tx_cfcleague_team_notes.mediatype.number');
 
                     break;
                 case 1:
-                    $ret = $GLOBALS['LANG']->getLL('tx_cfcleague_team_notes.mediatype.media');
+                    $ret = $this->formTool->getLanguageService()->getLL('tx_cfcleague_team_notes.mediatype.media');
 
                     break;
                 default:
                     $ret = 'unknown';
             }
         } elseif ('uid' == $colName) {
-            $ret = $item->getUid();
-            $ret .= $this->formTool->createEditLink('tx_cfcleague_team_notes', $item->getUid(), '');
+            $ret = $this->formTool->createEditLink('tx_cfcleague_team_notes', $item->getUid(), $item->getUid());
         } elseif ('value' == $colName) {
             $ret = $item->getValue();
             if (1 == $item->getMediaType()) {
