@@ -114,7 +114,9 @@ class Selector
         // Zusätzlich noch einen Edit-Link setzen
         if ($menuData['menu']) {
             $links = [];
-            $links[] = $this->getFormTool()->createEditLink('tx_cfcleague_competition', $menuData['value'], '');
+            $links[] = $this->getFormTool()->createEditLink('tx_cfcleague_competition', $menuData['value'], '', [
+                ToolBox::OPTION_HOVER_TEXT => 'Edit',
+            ]);
             // Jetzt noch den Cache-Link
             $links[] = $this->getFormTool()->createModuleLink(['clearCache' => 1], $pid, '', [
                 'params' => [
@@ -124,7 +126,9 @@ class Selector
                 ToolBox::OPTION_HOVER_TEXT => 'Clear statistics cache',
             ]);
 
-            $links[] = $this->getFormTool()->createNewLink('tx_cfcleague_competition', $pid, '');
+            $links[] = $this->getFormTool()->createNewLink('tx_cfcleague_competition', $pid, '', [
+                ToolBox::OPTION_HOVER_TEXT => 'msg_create_new_competition',
+            ]);
             $content .= $this->renderSelector($menuData['menu'], $links);
         }
 
