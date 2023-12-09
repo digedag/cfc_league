@@ -2,8 +2,10 @@
 
 namespace System25\T3sports\Form\Element;
 
+use InvalidArgumentException;
 use Sys25\RnBase\Utility\Math;
 use Sys25\RnBase\Utility\TSFAL;
+use tx_rnbase;
 use TYPO3\CMS\Backend\Form\Element\SelectSingleElement;
 use TYPO3\CMS\Backend\Form\NodeFactory;
 use TYPO3\CMS\Core\Resource\Exception\FileDoesNotExistException;
@@ -48,7 +50,7 @@ class LogoSelect extends SelectSingleElement
     public function __construct(NodeFactory $nodeFactory, array $data)
     {
         parent::__construct($nodeFactory, $data);
-        $this->templateView = \tx_rnbase::makeInstance(StandaloneView::class);
+        $this->templateView = tx_rnbase::makeInstance(StandaloneView::class);
         $this->templateView->setTemplateSource('
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
 	xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers">
@@ -104,7 +106,7 @@ class LogoSelect extends SelectSingleElement
                     $file = $ref->getOriginalFile();
                 }
             } catch (FileDoesNotExistException $e) {
-            } catch (\InvalidArgumentException $e) {
+            } catch (InvalidArgumentException $e) {
             }
         }
 

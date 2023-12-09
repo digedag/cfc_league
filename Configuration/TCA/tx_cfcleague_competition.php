@@ -255,15 +255,11 @@ if (\Sys25\RnBase\Utility\TYPO3::isTYPO104OrHigher()) {
     unset($tx_cfcleague_competition['interface']['showRecordFieldList']);
 }
 
-if (!\Sys25\RnBase\Utility\TYPO3::isTYPO86OrHigher()) {
-    $tx_cfcleague_competition['ctrl']['requestUpdate'] = 'sports';
-}
-
 \Sys25\RnBase\Backend\Utility\TcaTool::configureWizards($tx_cfcleague_competition, [
     'teams' => ['targettable' => 'tx_cfcleague_teams', 'add' => true],
 ]);
 
-$tx_cfcleague_competition['columns']['logo'] = tx_rnbase_util_TSFAL::getMediaTCA('logo', [
+$tx_cfcleague_competition['columns']['logo'] = \Sys25\RnBase\Utility\TSFAL::getMediaTCA('logo', [
     'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_club.logo',
     'config' => ['size' => 1, 'maxitems' => 1],
 ]);

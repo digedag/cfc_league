@@ -2,6 +2,7 @@
 
 namespace System25\T3sports\Controller;
 
+use DateTime;
 use Sys25\RnBase\Backend\Form\ToolBox;
 use Sys25\RnBase\Backend\Module\BaseModFunc;
 use Sys25\RnBase\Backend\Utility\BackendUtility;
@@ -129,7 +130,7 @@ class MatchTicker extends BaseModFunc
 
         // Wir zeigen die bisherigen Meldungen
         // Dann zeigen wir die FORM für die nächste Meldung
-        $modContent .= $this->getInstantMessageField();
+        $modContent .= $this->getInstantMessageField($formTool);
         $modContent .= $this->getFormHeadline();
         $tickerArr = $this->createFormArray($match);
 
@@ -170,12 +171,7 @@ class MatchTicker extends BaseModFunc
 
         $content .= $formTool->form->printNeededJSFunctions();
 
-        /* @var $pageRenderer TYPO3\CMS\Core\Page\PageRenderer */
-        $pageRenderer = $this->doc->getPageRenderer();
-        $pageRenderer->loadRequireJsModule(
-            'TYPO3/CMS/CfcLeague/TickerForm',
-            'function (mod) {mod.init("Ticker");}'
-        );
+        $formTool->insertJsModule('@digedag/cfc_league/ticker-form.js', 'function (mod) {mod.init("Ticker");}');
 
         return $content;
     }
@@ -185,14 +181,10 @@ class MatchTicker extends BaseModFunc
      *
      * @return string
      */
-    protected function getInstantMessageField()
+    protected function getInstantMessageField(ToolBox $formTool)
     {
-        /* @var $pageRenderer TYPO3\CMS\Core\Page\PageRenderer */
-        $pageRenderer = $this->doc->getPageRenderer();
-        $pageRenderer->loadRequireJsModule(
-            'TYPO3/CMS/CfcLeague/InstantMessage',
-            'function (instantMessage) {instantMessage.init("test");}'
-        );
+        $formTool->insertJsModule('@digedag/cfc_league/instant-message.js', 'function (instantMessage) {instantMessage.init("Instant message initialized");}');
+
         $ret = '';
         $ret .= '<p id="instant" style="background:yellow; margin-bottom:10px; padding:3px"></p>';
 
@@ -201,7 +193,7 @@ class MatchTicker extends BaseModFunc
 
     protected function toTime($time)
     {
-        return (new \DateTime('@'.((int) ($time / 1000))))->format('Y-m-d H:i:s').' - '.$time;
+        return (new DateTime('@'.((int) ($time / 1000))))->format('Y-m-d H:i:s').' - '.$time;
     }
 
     protected function getFormHeadline()
@@ -512,8 +504,8 @@ class MatchTicker extends BaseModFunc
         $pageTSconfig = BackendUtility::getPagesTSconfig($this->getModule()->getPid());
         $tickerConf = isset($pageTSconfig['tx_cfcleague.']['matchTickerCfg.']) ? $pageTSconfig['tx_cfcleague.']['matchTickerCfg.'] : [];
         $inputFields = isset($tickerConf['numberOfInputFields']) ? intval($tickerConf['numberOfInputFields']) : 4;
-        $cols = (int) $tickerConf['commentFieldCols'] ?? 35;
-        $rows = (int) $tickerConf['commentFieldRows'] ?? 3;
+        $cols = (int) ($tickerConf['commentFieldCols'] ?? 35);
+        $rows = (int) ($tickerConf['commentFieldRows'] ?? 3);
 
         $playersHome = $playersGuest = [
             0 => '',
@@ -548,17 +540,17 @@ class MatchTicker extends BaseModFunc
             $row[] = $this->getModule()
                 ->getFormTool()
                 ->createSelectByArray('data[tx_cfcleague_match_notes][NEW'.$i.'][type]', '0', $types, [
-                'onchange' => 'TickerForm.setMatchMinute(this);',
+                ToolBox::OPTION_CSS_CLASSES => 'tickerField',
             ]);
             $row[] = $this->getModule()
                 ->getFormTool()
                 ->createSelectByArray('data[tx_cfcleague_match_notes][NEW'.$i.'][player_home]', '0', $playersHome, [
-                'onchange' => 'TickerForm.setMatchMinute(this);',
+                ToolBox::OPTION_CSS_CLASSES => 'tickerField',
             ]);
             $row[] = $this->getModule()
                 ->getFormTool()
                 ->createSelectByArray('data[tx_cfcleague_match_notes][NEW'.$i.'][player_guest]', '0', $playersGuest, [
-                'onchange' => 'TickerForm.setMatchMinute(this);',
+                ToolBox::OPTION_CSS_CLASSES => 'tickerField',
             ]);
             $arr[] = $row;
 
@@ -567,7 +559,7 @@ class MatchTicker extends BaseModFunc
             $row[] = $this->getModule()
                 ->getFormTool()
                 ->createTextArea('data[tx_cfcleague_match_notes][NEW'.$i.'][comment]', '', $cols, $rows, [
-                'onchange' => 'TickerForm.setMatchMinute(this);',
+                ToolBox::OPTION_CSS_CLASSES => 'tickerField',
             ]);
             $arr[] = $row;
         }

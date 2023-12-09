@@ -318,10 +318,10 @@ class MatchNote extends BaseModel
         if ($this->isChange() && ($this->getProperty('player_home') || $this->getProperty('player_guest'))) {
             // Heim oder Gast?
             if ($this->getProperty('player_home')) {
-//                $players = $this->match->getPlayersHome(1);
+                //                $players = $this->match->getPlayersHome(1);
                 $playerField = '80' == $this->getProperty('type') ? ($type ? 'player_home' : 'player_home_2') : ($type ? 'player_home_2' : 'player_home');
             } else {
-//                $players = $this->match->getPlayersGuest(1);
+                //                $players = $this->match->getPlayersGuest(1);
                 $playerField = '80' == $this->getProperty('type') ? ($type ? 'player_guest' : 'player_guest_2') : ($type ? 'player_guest_2' : 'player_guest');
             }
             if ($this->getProperty($playerField) < 0) {
@@ -329,7 +329,7 @@ class MatchNote extends BaseModel
             }
 
             return $this->getProperty($playerField);
-//            return $players[$this->getProperty($playerField)];
+            //            return $players[$this->getProperty($playerField)];
         }
 
         return null;

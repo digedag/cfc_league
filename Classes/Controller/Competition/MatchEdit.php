@@ -2,10 +2,12 @@
 
 namespace System25\T3sports\Controller\Competition;
 
+use Exception;
 use Sys25\RnBase\Backend\Form\ToolBox;
 use Sys25\RnBase\Backend\Module\BaseModule;
 use Sys25\RnBase\Backend\Module\IModFunc;
 use Sys25\RnBase\Backend\Module\IModule;
+use Sys25\RnBase\Backend\Utility\Icons;
 use Sys25\RnBase\Backend\Utility\Tables;
 use Sys25\RnBase\Database\Connection;
 use Sys25\RnBase\Utility\T3General;
@@ -48,6 +50,7 @@ use tx_rnbase;
 class MatchEdit
 {
     private $sportsServiceLocator;
+    /** @var ToolBox */
     protected $formTool;
     protected $id;
     protected $doc;
@@ -75,8 +78,6 @@ class MatchEdit
      */
     public function main(IModule $module, Competition $current_league)
     {
-        global $LANG;
-
         $this->setModule($module);
         $pid = $module->getPid();
         $this->id = $module->getPid();
@@ -84,12 +85,14 @@ class MatchEdit
 
         $formTool = $module->getFormTool();
         $this->formTool = $formTool;
-        $LANG->includeLLFile('EXT:cfc_league/Resources/Private/Language/locallang_db.xlf');
+        $lang = $formTool->getLanguageService();
+        $lang->includeLLFile('EXT:cfc_league/Resources/Private/Language/locallang_db.xlf');
+        $formTool->insertJsModule('@digedag/cfc_league/match-edit.js');
 
         // Zuerst mal müssen wir die passende Liga auswählen lassen:
         $content = '';
         if (!count($current_league->getRounds())) {
-            $content .= $LANG->getLL('no_round_in_league');
+            $content .= $lang->getLL('no_round_in_league');
             $content .= '<br /><br />';
             $content .= $this->getFooter($current_league, null, $pid, $formTool);
 
@@ -102,16 +105,10 @@ class MatchEdit
             $current_round = $this->getSelector()->showRoundSelector($content, $pid, $current_league);
         }
         // Add button to set all games to "Finished"
-        $content .= '<script type="text/javascript">
-                        function setStatusFinished() {
-                          var x = document.querySelectorAll("select[name*=\'status\']");
-                          var i;
-                          for (i = 0; i < x.length; i++) {
-                            x[i].value = "2";
-                          }
-                        }
-                    </script>';
-        $content .= ' <input type="button" class="btn btn-default btn-sm" name="setStatus" value="'.$LANG->getLL('btn_statusToFinished').'" onclick="setStatusFinished()"><br><br>';
+        $icon = Icons::getSpriteIcon('actions-check');
+
+        $content .= '<button type="button" class="btn btn-default btn-sm" id="btnSetStatus" name="setStatus">';
+        $content .= sprintf('%s</button><br><br>', $icon.$lang->getLL('btn_statusToFinished'));
 
         $content .= '<div class="cleardiv"/>';
         $data = T3General::_GP('data');
@@ -129,16 +126,15 @@ class MatchEdit
             $content .= $tables->buildTable($arr[0]);
 
             // Den Update-Button einfügen
-            $content .= $formTool->createSubmit('update', $LANG->getLL('btn_update'), $LANG->getLL('btn_update_msgEditGames'));
-            // $content .= '<input type="submit" name="update" value="'.$LANG->getLL('btn_update').'" onclick="return confirm('.$GLOBALS['LANG']->JScharCode($GLOBALS['LANG']->getLL('btn_update_msgEditGames')).')">';
+            $content .= $formTool->createSubmit('update', $lang->getLL('btn_update'), $lang->getLL('btn_update_msgEditGames'), [ToolBox::OPTION_ICON_NAME => 'actions-save']);
             if (isset($arr[1])) { // Hat ein Team spielfrei?
-                $content .= '<h3 style="margin-top:10px">'.$LANG->getLL('msg_free_of_play').'</h3><ul>';
+                $content .= '<h3 style="margin-top:10px">'.$lang->getLL('msg_free_of_play').'</h3><ul>';
                 foreach ($arr[1] as $freeOfPlay) {
                     $content .= '<li>'.$freeOfPlay['team'].$freeOfPlay['match_edit'].'</li>';
                 }
                 $content .= '</ul>';
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $content .= $this->getModule()->getDoc()->section('Error:', $e->getMessage(), 0, 1, IModFunc::ICON_FATAL);
         }
         $content .= '<br /><br />';
@@ -304,7 +300,11 @@ class MatchEdit
      */
     private function buildInputField($table, $record, $fieldName, $uid)
     {
-        return $this->formTool->getTCEForm()->getSoloField($table, $record, $fieldName);
+        $field = $this->formTool->getTCEForm()->getSoloField($table, $record, $fieldName);
+        // Das Label stört in der Tabelle
+        $field = preg_replace('/<label.*<\/label>/', '', $field);
+
+        return $field;
     }
 
     /**
@@ -332,7 +332,7 @@ class MatchEdit
 
             $table = 'tx_cfcleague_games';
             if (!$isNoMatch) {
-                $row[] = $matchUid.$this->formTool->createEditLink('tx_cfcleague_games', $matchUid, '');
+                $row[] = $this->formTool->createEditLink('tx_cfcleague_games', $matchUid, $matchUid);
                 $dataArr = TYPO3::isTYPO70OrHigher() ? $match->getProperty() : $this->formTool->getTCEFormArray($table, $matchUid);
                 $row[] = $this->buildInputField($table, $dataArr, 'date', $matchUid);
                 $row[] = $this->buildInputField($table, $dataArr, 'status', $matchUid);

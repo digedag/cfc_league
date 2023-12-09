@@ -33,6 +33,8 @@ use System25\T3sports\Model\Stadium;
  */
 class StadiumDecorator
 {
+    private $mod;
+
     public function __construct(IModule $mod)
     {
         $this->mod = $mod;
@@ -59,7 +61,7 @@ class StadiumDecorator
         $ret = $value;
         $formTool = $this->getModule()->getFormTool();
         if ('uid' == $colName) {
-            $ret = $item->getUid().$formTool->createEditLink('tx_cfcleague_stadiums', $item->getUid(), 'Edit');
+            $ret = $formTool->createEditLink('tx_cfcleague_stadiums', $item->getUid(), 'Edit '.$item->getUid());
         } elseif ('address' == $colName) {
             $ret = self::getAddress($item);
         } elseif ('longlat' == $colName) {

@@ -59,7 +59,7 @@ class TeamRepository extends PersistenceRepository
         ];
         $options = [];
         // FIXME: Umstellen auf SearchClass
-        $options['where'] = 'tx_cfcleague_teams.club = '.$clubUid.' AND c.saison IN ('.$saisonIds.')'.' AND c.agegroup IN ('.$agegroups.')';
+        $options['where'] = 'tx_cfcleague_teams.club = '.$clubUid.' AND c.saison IN ('.$saisonIds.') AND c.agegroup IN ('.$agegroups.')';
         $options['wrapperclass'] = $this->getSearcher()->getWrapperClass();
 
         return $this->getConnection()->doSelect($what, $from, $options);

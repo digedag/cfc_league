@@ -5,6 +5,7 @@ namespace System25\T3sports\Controller\Team;
 use Sys25\RnBase\Backend\Form\ToolBox;
 use Sys25\RnBase\Backend\Module\IModFunc;
 use Sys25\RnBase\Backend\Module\IModule;
+use Sys25\RnBase\Backend\Template\Override\DocumentTemplate;
 use Sys25\RnBase\Backend\Utility\BackendUtility;
 use Sys25\RnBase\Backend\Utility\Tables;
 use Sys25\RnBase\Configuration\Processor;
@@ -44,6 +45,7 @@ use tx_rnbase;
  */
 class ProfileCreate
 {
+    /** @var DocumentTemplate */
     private $doc;
 
     private $module;
@@ -114,7 +116,7 @@ class ProfileCreate
         }
 
         if (isset($data['tx_cfcleague_profiles'])) {
-            $content .= $this->createProfiles($data, $team, $teamInfo);
+            $content .= $this->createProfiles($data, $team, $teamInfo, $this->doc);
             $team->reset();
         }
 
@@ -147,8 +149,8 @@ class ProfileCreate
         $arr = [
             [
                 '&nbsp;',
-                $GLOBALS['LANG']->getLL('label_firstname'),
-                $GLOBALS['LANG']->getLL('label_lastname'),
+                $this->doc->getLangSrv()->getLL('label_firstname'),
+                $this->doc->getLangSrv()->getLL('label_lastname'),
                 '&nbsp;',
             ],
         ];
@@ -170,9 +172,12 @@ class ProfileCreate
         // Den Update-Button einfügen
         $button = $this->getFormTool()->createSubmit(
             'update',
-            $GLOBALS['LANG']->getLL('btn_create'),
-            $GLOBALS['LANG']->getLL('msg_CreateProfiles'),
-            ['class' => 'btn btn-primary']
+            $this->doc->getLangSrv()->getLL('btn_create'),
+            $this->doc->getLangSrv()->getLL('msg_CreateProfiles'),
+            [
+                'class' => 'btn btn-primary',
+                'icon' => 'actions-user',
+            ]
         );
 
         $content = '<div class="row">
@@ -205,7 +210,7 @@ class ProfileCreate
      * @param Team $team das aktuelle Team, dem die Personen zugeordnet werden
      * @param TeamInfo $teamInfo
      */
-    public static function createProfiles($profiles, Team $team, TeamInfo $teamInfo)
+    public static function createProfiles($profiles, Team $team, TeamInfo $teamInfo, DocumentTemplate $doc)
     {
         global $LANG;
 
@@ -269,10 +274,13 @@ class ProfileCreate
             reset($data);
             $tce = Connection::getInstance()->getTCEmain($data);
             $tce->process_datamap();
-            $content .= count($tce->errorLog) ? $LANG->getLL('msg_tce_errors') : $LANG->getLL('msg_profiles_created');
-            $content .= '<br /><br />';
+            if (count($tce->errorLog)) {
+                $doc->showFlashMessage('msg_tce_errors', DocumentTemplate::STATE_ERROR, 'Error');
+            } else {
+                $doc->showFlashMessage('msg_profiles_created', DocumentTemplate::STATE_DEFAULT);
+            }
         } else {
-            $content .= $LANG->getLL('msg_no_person_found').'<br /><br />';
+            $doc->showFlashMessage('msg_no_person_found', DocumentTemplate::STATE_NOTICE);
         }
 
         if ($warnings) {

@@ -57,8 +57,6 @@ class ClubStadiumHandler
      */
     public function showScreen($club, IModule $mod)
     {
-        global $LANG;
-
         $searcher = tx_rnbase::makeInstance(StadiumSearcher::class, $mod);
         $searcher->setClub($club->getUid());
 
@@ -69,7 +67,7 @@ class ClubStadiumHandler
             $content .= $result['table'];
             $content .= $result['pager'];
         } else {
-            $content .= $mod->getDoc()->section($LANG->getLL('label_msg_nostadiumsfound'), '', 0, 1, IModFunc::ICON_INFO);
+            $content .= $mod->getDoc()->section('###LABEL_MSG_NOSTADIUMSFOUND###', '', 0, 1, IModFunc::ICON_INFO);
         }
 
         $options = [

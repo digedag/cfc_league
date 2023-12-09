@@ -1,10 +1,12 @@
-define([ 'TYPO3/CMS/CfcLeague/jeditable.min', 'jquery' ], function(jeditable, $) {
-    var InstantMessage = {
-        previewField : null
-    };
+import $ from 'jquery';
+import * as jeditable from '@digedag/cfc_league/jeditable.js';
 
-    InstantMessage.init = function(initMsg) {
-        $('#instant').editable(TYPO3.settings.ajaxUrls['t3sports_ticker'], {
+var InstantMessage = {
+    previewField : null
+};
+
+InstantMessage.init = function() {
+    $('#instant').editable(TYPO3.settings.ajaxUrls['t3sports_ticker'], {
             placeholder: 'Klicken Sie hier, um eine Sofortmeldung abzusetzen.',
             onblur: 'ignore',
             cancel: 'cancel',
@@ -17,10 +19,8 @@ define([ 'TYPO3/CMS/CfcLeague/jeditable.min', 'jquery' ], function(jeditable, $)
                 }
             },
             indicator: 'Speichern ....'
-        });
-        console.info(initMsg);
-    };
+    });
+    console.info('Instant message initialized.');
+};
 
-    // To let the module be a dependency of another module, we return our object
-    return InstantMessage;
-});
+InstantMessage.init();

@@ -9,6 +9,8 @@ use Sys25\RnBase\Backend\Utility\Tables;
 use Sys25\RnBase\Database\Connection;
 use Sys25\RnBase\Frontend\Request\Parameters;
 use Sys25\RnBase\Utility\Strings;
+use Sys25\RnBase\Utility\T3General;
+use Sys25\RnBase\Utility\TYPO3;
 use System25\T3sports\Model\Competition;
 use System25\T3sports\Utility\ServiceRegistry;
 use tx_rnbase;
@@ -93,12 +95,16 @@ class Teams
      */
     protected function showTeamsFromPage($pid, Competition $competition)
     {
-        global $LANG;
+        $lang = $this->getFormTool()->getLanguageService();
         // Liegen Daten im Request
-        $teamIds = Parameters::getPostOrGetParameter('checkEntry');
-        if (Parameters::getPostOrGetParameter('addteams') && is_array($teamIds) && count($teamIds)) {
+        $teamIds = T3General::_GP('checkEntry');
+        if (T3General::_GP('addteams') && is_array($teamIds) && count($teamIds)) {
             $tcaData = [];
-            $tcaData['tx_cfcleague_competition'][$competition->getUid()]['teams'] = implode(',', $this->mergeArrays(Strings::intExplode(',', $competition->getProperty('teams')), $teamIds));
+            $tcaData['tx_cfcleague_competition'][$competition->getUid()]['teams'] =
+                implode(',', $this->mergeArrays(
+                    Strings::intExplode(',', $competition->getProperty('teams')),
+                    $teamIds
+                ));
 
             $tce = Connection::getInstance()->getTCEmain($tcaData, []);
             $tce->process_datamap();
@@ -134,12 +140,16 @@ class Teams
             ],
         ];
 
-        $content = '<h2>'.$LANG->getLL('label_add_teams_from_page').'</h2>';
+        $content = '<h2>'.$lang->getLL('label_add_teams_from_page').'</h2>';
         /* @var $tables Tables */
         $tables = tx_rnbase::makeInstance(Tables::class);
         $arr = $tables->prepareTable($teams, $columns, $this->getFormTool(), $options);
         $content .= $tables->buildTable($arr[0]);
-        $content .= $this->getFormTool()->createSubmit('addteams', $LANG->getLL('label_add_teams'), $GLOBALS['LANG']->getLL('msg_add_teams'));
+        $content .= $this->getFormTool()->createSubmit('addteams',
+            $lang->getLL('label_add_teams'),
+            $lang->getLL('msg_add_teams'),
+            [ToolBox::OPTION_ICON_NAME => 'actions-document-add']
+        );
 
         return $content;
     }
@@ -153,24 +163,29 @@ class Teams
     protected function showNewTeamForm($pid, $competition)
     {
         global $LANG;
-        $show = intval(Parameters::getPostOrGetParameter('check_newcompteam'));
+        $show = intval(Parameters::_GP('check_newcompteam'));
+
+        $onClick = TYPO3::isTYPO121OrHigher() ?
+             'data-global-event="change" data-action-submit="$form"' : 'onClick="this.form.submit()"';
+
         $content = sprintf(
-            '<h2><input type="checkbox" name="check_newcompteam" value="1" %s onClick="this.form.submit()">%s</h2>',
+            '<h2><input type="checkbox" name="check_newcompteam" value="1" %s %s>%s</h2>',
             $show ? 'checked="checked"' : '',
-            $LANG->getLL('label_create_teams')
+            $onClick,
+            '###LABEL_CREATE_TEAMS###'
         );
 
         if (!$show) {
             return $content;
         }
-        $content .= $this->createTeams(Parameters::getPostOrGetParameter('data'), $competition);
+        $content .= $this->createTeams(Parameters::_GP('data'), $competition);
 
         // Jetzt 6 Boxen mit Name und Kurzname
         $arr = [
             [
                 '&nbsp;',
-                $LANG->getLL('label_teamname'),
-                $LANG->getLL('label_teamshortname'),
+                '###LABEL_TEAMNAME###',
+                '###LABEL_TEAMSHORTNAME###',
             ],
         ];
         $maxFields = 6;
@@ -199,7 +214,6 @@ class Teams
      */
     protected function createTeams($data, $competition)
     {
-        global $LANG;
         if (!isset($data['tx_cfcleague_teams'])) {
             return '';
         }
@@ -220,7 +234,9 @@ class Teams
         $tce = Connection::getInstance()->getTCEmain($tcaData);
         $tce->process_datamap();
         $competition->refresh();
-        $content = $this->doc->section('Message:', $LANG->getLL('msg_teams_created'), 0, 1, IModFunc::ICON_INFO);
+        $lang = $this->getFormTool()->getLanguageService();
+
+        $content = $this->doc->section('Message:', $lang->getLL('msg_teams_created'), 0, 1, IModFunc::ICON_INFO);
 
         return $content;
     }
@@ -232,8 +248,9 @@ class Teams
      */
     protected function showCurrentTeams(Competition $competition)
     {
-        global $LANG;
-        $content = '<h2>'.$LANG->getLL('label_current_teams').'</h2>';
+        $lang = $this->getFormTool()->getLanguageService();
+
+        $content = '<h2>###LABEL_CURRENT_TEAMS###</h2>';
         $arr[] = [
             'UID',
             'Team',
@@ -241,7 +258,7 @@ class Teams
         ];
         $teams = $competition->getTeamNames(1);
         if (!count($teams)) {
-            return $content.$this->doc->section('Message:', $LANG->getLL('msg_noteams_in_comp'), 0, 1, IModFunc::ICON_INFO);
+            return $content.$this->doc->section('Message:', $lang->getLL('msg_noteams_in_comp'), 0, 1, IModFunc::ICON_INFO);
         }
         foreach ($teams as $teamArr) {
             $row = [];
@@ -249,7 +266,7 @@ class Teams
             $row[] = $teamArr['name'];
             $buttons = $this->getFormTool()->createEditLink('tx_cfcleague_teams', $teamArr['uid']).$this->getFormTool()->createInfoLink('tx_cfcleague_teams', $teamArr['uid']);
             if (intval($teamArr['club'])) {
-                $buttons .= $this->getFormTool()->createEditLink('tx_cfcleague_club', $teamArr['club'], $LANG->getLL('label_edit_club'));
+                $buttons .= $this->getFormTool()->createEditLink('tx_cfcleague_club', $teamArr['club'], '###LABEL_EDIT_CLUB###');
             }
             $row[] = $buttons;
             $arr[] = $row;

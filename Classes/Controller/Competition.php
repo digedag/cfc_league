@@ -88,7 +88,7 @@ class Competition extends BaseModFunc
      */
     protected function getContent($template, &$configurations, &$formatter, $formTool)
     {
-        global $LANG;
+        $lang = $this->getModule()->getLanguageService();
         // Zuerst mal müssen wir die passende Liga auswählen lassen:
         // Entweder global über die Datenbank oder die Ligen der aktuellen Seite
         // Selector-Instanz bereitstellen
@@ -106,19 +106,23 @@ class Competition extends BaseModFunc
         if (!$current_league) {
             $content .= $this->getModule()
                 ->getDoc()
-                ->section('Info:', $LANG->getLL('no_league_in_page'), 0, 1, self::ICON_WARN);
-            $content .= '<p style="margin-top:5px; font-weight:bold;">'.$formTool->createNewLink('tx_cfcleague_competition', $this->getModule()
-                ->getPid(), $LANG->getLL('msg_create_new_competition')).'</p>';
+                ->section('Info:', $lang->getLL('no_league_in_page'), 0, 1, self::ICON_WARN);
+            $newCompLink = $formTool->createNewLink(
+                'tx_cfcleague_competition',
+                $this->getModule()->getPid(),
+                $lang->getLL('msg_create_new_competition')
+            );
+            $content .= '<p style="margin-top:5px; font-weight:bold;">'.$newCompLink.'</p>';
 
             return $content;
         }
 
         $menu = $this->selector->showTabMenu($this->getModule()
             ->getPid(), 'comptools', [
-            '0' => $LANG->getLL('edit_games'),
-            '1' => $LANG->getLL('mod_compteams'),
-            '2' => $LANG->getLL('create_games'),
-            '3' => $LANG->getLL('mod_compdfbsync'),
+            '0' => $lang->getLL('edit_games'),
+            '1' => $lang->getLL('mod_compteams'),
+            '2' => $lang->getLL('create_games'),
+            '3' => $lang->getLL('mod_compdfbsync'),
         ]);
 
         $tabs = $menu['menu'];

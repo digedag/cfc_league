@@ -4,9 +4,15 @@
 
 define([ 'jquery' ], function(jQuery) {
 	var T3SMatchCreator = {
-		init: function(info) {
-			window.t3sMatchCreator = this;
-			console.info({hello: info});
+		init: function() {
+			const self = this;
+	
+			const cb = document.querySelector('input[name="option_leadingZero"]');
+			cb.addEventListener('click', function(e) {
+				self.prependZero(this);
+			});
+	
+			console.info('MatchCreator initialized.');
 		},
 		prependZero: function(item) {
 			var checked = item.checked;
@@ -22,5 +28,5 @@ define([ 'jquery' ], function(jQuery) {
 			});
 		},
 	};
-	return T3SMatchCreator;
+	T3SMatchCreator.init();
 });

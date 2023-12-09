@@ -6,11 +6,12 @@ use Sys25\RnBase\Backend\Form\ToolBox;
 use Sys25\RnBase\Backend\Module\IModule;
 use Sys25\RnBase\Backend\Utility\BackendUtility;
 use Sys25\RnBase\Utility\T3General;
+use tx_rnbase_mod_IModFunc;
 
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2008-2021 Rene Nitzsche (rene@system25.de)
+*  (c) 2008-2023 Rene Nitzsche (rene@system25.de)
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -39,6 +40,10 @@ class ProfileSearcherNew
 
     private $data;
     private $formTool;
+    private $options;
+    private $doc;
+    private $pid;
+    private $resultSize;
 
     private $SEARCH_SETTINGS;
 
@@ -79,17 +84,16 @@ class ProfileSearcherNew
      */
     public function getSearchForm($label = '')
     {
-        global $LANG;
         $out = '';
         $out .= '###LABEL_SEARCHTERM###: ';
-//        $out .= (strlen($label) ? $label : $LANG->getLL('label_searchterm')).': ';
+        //        $out .= (strlen($label) ? $label : $LANG->getLL('label_searchterm')).': ';
         $out .= $this->getFormTool()->createTxtInput('data[searchterm]', $this->SEARCH_SETTINGS['searchterm'], 20);
         //$out .= $this->formTool->createTxtInput('searchdata[searchterm]', $this->SEARCH_SETTINGS['searchterm'], 20);
         // Den Update-Button einfügen
         $out .= $this->getFormTool()->createSubmit('searchProfile', $GLOBALS['LANG']->getLL('btn_search'));
-//        $out .= '<input type="submit" name="search" value="'.$LANG->getLL('btn_search').'" />';
+        //        $out .= '<input type="submit" name="search" value="'.$LANG->getLL('btn_search').'" />';
         // Jetzt noch zusätzlichen JavaScriptcode für Buttons auf der Seite
-//        $out .= $this->formTool->getJSCode($this->mod->getPid());
+        //        $out .= $this->formTool->getJSCode($this->mod->getPid());
 
         return $out;
     }
@@ -107,7 +111,7 @@ class ProfileSearcherNew
                 $this->showCompanies($content, $label, $companies);
             } else {
                 // Suchbefriff zu kurz
-                $content .= $this->mod->doc->section('Hinweis:', 'Der Suchbegriff sollte mindestens drei Zeichen lang sein', 0, 1, \tx_rnbase_mod_IModFunc::ICON_INFO);
+                $content .= $this->mod->getDoc()->section('Hinweis:', 'Der Suchbegriff sollte mindestens drei Zeichen lang sein', 0, 1, tx_rnbase_mod_IModFunc::ICON_INFO);
             }
         }
 

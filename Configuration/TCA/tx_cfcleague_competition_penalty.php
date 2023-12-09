@@ -269,10 +269,6 @@ if (\Sys25\RnBase\Utility\TYPO3::isTYPO104OrHigher()) {
     unset($tx_cfcleague_competition_penalty['interface']['showRecordFieldList']);
 }
 
-if (!\Sys25\RnBase\Utility\TYPO3::isTYPO86OrHigher()) {
-    $tx_cfcleague_competition_penalty['ctrl']['requestUpdate'] = 'competition';
-}
-
-$tx_cfcleague_competition_penalty['columns']['comment']['config']['wizards'] = Tx_Rnbase_Utility_TcaTool::getWizards('', ['RTE' => true]);
+$tx_cfcleague_competition_penalty['columns']['comment']['config']['wizards'] = \Sys25\RnBase\Backend\Utility\TcaTool::getWizards('', ['RTE' => true]);
 
 return $tx_cfcleague_competition_penalty;

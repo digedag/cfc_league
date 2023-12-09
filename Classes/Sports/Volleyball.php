@@ -52,7 +52,7 @@ class Volleyball extends AbstractService implements ISports
         return true;
     }
 
-    private $matchInfo = null;
+    private $matchInfo;
 
     /* (non-PHPdoc)
      * @see ISports::getMatchInfo()

@@ -114,17 +114,21 @@ class Selector
         // Zusätzlich noch einen Edit-Link setzen
         if ($menuData['menu']) {
             $links = [];
-            $links[] = $this->getFormTool()->createEditLink('tx_cfcleague_competition', $menuData['value'], '');
+            $links[] = $this->getFormTool()->createEditLink('tx_cfcleague_competition', $menuData['value'], '', [
+                ToolBox::OPTION_HOVER_TEXT => 'Edit',
+            ]);
             // Jetzt noch den Cache-Link
-            $cacheIcon = $this->iconFactory->getIcon('actions-system-cache-clear',
-                \TYPO3\CMS\Core\Imaging\Icon::SIZE_SMALL)->render();
-            $links[] = $this->getFormTool()->createModuleLink(['clearCache' => 1], $pid, $cacheIcon, [
+            $links[] = $this->getFormTool()->createModuleLink(['clearCache' => 1], $pid, '', [
                 'params' => [
                     'clearCache' => 1,
                 ],
+                ToolBox::OPTION_ICON_NAME => 'actions-system-cache-clear',
+                ToolBox::OPTION_HOVER_TEXT => 'Clear statistics cache',
             ]);
 
-            $links[] = $this->getFormTool()->createNewLink('tx_cfcleague_competition', $pid, '');
+            $links[] = $this->getFormTool()->createNewLink('tx_cfcleague_competition', $pid, '', [
+                ToolBox::OPTION_HOVER_TEXT => 'msg_create_new_competition',
+            ]);
             $content .= $this->renderSelector($menuData['menu'], $links);
         }
 
@@ -294,13 +298,17 @@ class Selector
             $prevIdx = ($currIdx > 0) ? $currIdx - 1 : count($entries) - 1;
             $nextIdx = ($currIdx < (count($entries) - 1)) ? $currIdx + 1 : 0;
 
-            $prev = $this->getFormTool()->createModuleLink(['SET[round]' => $keys[$prevIdx]], $pid, '&lt;');
-            $next = $this->getFormTool()->createModuleLink(['SET[round]' => $keys[$nextIdx]], $pid, '&gt;');
+            $prev = $this->getFormTool()->createModuleLink(['SET[round]' => $keys[$prevIdx]], $pid, '', [
+                ToolBox::OPTION_ICON_NAME => 'actions-chevron-left',
+            ]);
+            $next = $this->getFormTool()->createModuleLink(['SET[round]' => $keys[$nextIdx]], $pid, '', [
+                ToolBox::OPTION_ICON_NAME => 'actions-chevron-right',
+            ]);
 
             $links = [$prev, $next];
             $content .= $this->renderSelector($data['menu'], $links);
         }
-//        $content .= $menu;
+        //        $content .= $menu;
 
         return (int) count($objRounds) ? $objRounds[$data['value']] : $data['value'];
     }

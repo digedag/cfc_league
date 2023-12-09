@@ -2,8 +2,10 @@
 
 namespace System25\T3sports\Controller;
 
+use Sys25\RnBase\Backend\Form\ToolBox;
 use Sys25\RnBase\Backend\Module\BaseModFunc;
 use Sys25\RnBase\Backend\Module\IModFunc;
+use Sys25\RnBase\Backend\Template\Override\DocumentTemplate;
 use Sys25\RnBase\Backend\Utility\BackendUtility;
 use Sys25\RnBase\Backend\Utility\Tables;
 use Sys25\RnBase\Database\Connection;
@@ -127,27 +129,26 @@ class Profile extends BaseModFunc
      */
     protected function handleProfileMerge(&$data)
     {
-        global $LANG;
+        $lang = $this->getModule()->getLanguageService();
         $profile1 = (int) ($data['merge1'] ?? 0);
         $profile2 = (int) ($data['merge2'] ?? 0);
         $out = '';
         if (isset($data['merge_profiles'])) { // Step 1
             if (!($profile1 && $profile2) || ($profile1 == $profile2)) {
-                return $this->doc->section($LANG->getLL('msg_merge_selectprofiles'), '', 0, 1, IModFunc::ICON_FATAL);
+                return $this->doc->section($lang->getLL('msg_merge_selectprofiles'), '', 0, 1, IModFunc::ICON_FATAL);
             }
             $this->hideResults = true;
             // Beide Profile nochmal anzeigen
             // Das führende Profile muss ausgewählt werden
-            $out .= $LANG->getLL('msg_merge_selectprofile');
+            $out .= $lang->getLL('msg_merge_selectprofile');
             $out .= $this->createProfileMergeForm($profile1, $profile2);
-//            $out = $this->doc->section($LANG->getLL('label_mergehead'), $out, 0, 1);
         } elseif (isset($data['merge_profiles_do'])) { // Step 2
             $leading = intval($data['merge']);
 
             $merger = tx_rnbase::makeInstance(ProfileMerger::class);
             $merger->merge($leading, $leading == $profile1 ? $profile2 : $profile1);
 
-            $out .= $this->getModule()->getDoc()->section($LANG->getLL('msg_merge_done'), '', 0, 1, IModFunc::ICON_OK);
+            $this->getModule()->getDoc()->showFlashMessage('msg_merge_done', DocumentTemplate::STATE_SUCCESS);
         }
 
         return $out;
@@ -188,7 +189,9 @@ class Profile extends BaseModFunc
 
         $out .= ' <div class="row">';
         $out .= sprintf('  <div class="%s">', $cssClass);
-        $out .= $this->formTool->createSubmit('data[merge_profiles_do]', '###LABEL_MERGE###', $lang->getLL('msg_merge_confirm'));
+        $out .= $this->formTool->createSubmit('data[merge_profiles_do]', '###LABEL_MERGE###', $lang->getLL('msg_merge_confirm'), [
+            ToolBox::OPTION_ICON_NAME => 'actions-code-merge',
+        ]);
         $out .= '  </div>';
         $out .= '</div>';
 
@@ -202,7 +205,7 @@ class Profile extends BaseModFunc
      */
     protected function handleProfileUpdate(&$data)
     {
-        global $LANG;
+        $lang = $this->getModule()->getLanguageService();
         $out = '';
         // Soll das Edit-Formular gezeigt werden?
         if (isset($data['edit_profile'])) {
@@ -211,9 +214,9 @@ class Profile extends BaseModFunc
 
             $profiles = $this->searchProfiles($data, $uids[0]);
             if (empty($profiles)) {
-                $out .= $this->doc->section($LANG->getLL('msg_edit_person'), 'Internal error. Sorry no profile found!', 0, 1, IModFunc::ICON_FATAL);
+                $out .= $this->doc->section($lang->getLL('msg_edit_person'), 'Internal error. Sorry no profile found!', 0, 1, IModFunc::ICON_FATAL);
             } else {
-                $out .= $this->doc->section($LANG->getLL('msg_edit_person'), $this->showProfileForm($profiles[0]), 0, 1);
+                $out .= $this->doc->section($lang->getLL('msg_edit_person'), $this->showProfileForm($profiles[0]), 0, 1);
             }
         } elseif (isset($data['update_profile_do'])) { // Wurde der Speichern-Button gedrückt?
             // Das Datum prüfen
@@ -229,21 +232,22 @@ class Profile extends BaseModFunc
      */
     protected function updateProfiles($profiles)
     {
-        global $LANG;
+        $lang = $this->getModule()->getLanguageService();
         $out = '';
         foreach ($profiles as $uid => $profile) {
             // Zuerst das Datum prüfen und umwandeln
             $date = $profile['birthday'];
             list($day, $month, $year) = explode('.', $date);
             if (!checkdate($month, $day, $year)) {
-                $out .= $this->doc->section($LANG->getLL('msg_person_saved'), ' Invalid date -'.$date.'- für UID: '.$uid, 0, 1, IModFunc::ICON_FATAL);
+                $out .= $this->doc->section($lang->getLL('msg_person_saved'), ' Invalid date -'.$date.'- für UID: '.$uid, 0, 1, IModFunc::ICON_FATAL);
             } else {
                 // Das ist eher problematisch. Das Datum sollte in GMT gespeichert werden
                 $values = [
                     'birthday' => mktime(0, 0, 0, $month, $day, $year),
                 ];
                 Connection::getInstance()->doUpdate('tx_cfcleague_profiles', 'uid='.intval($uid), $values);
-                $out .= $this->doc->section($LANG->getLL('msg_person_saved'), $LANG->getLL('msg_date_saved').': '.$date, 0, 1, IModFunc::ICON_OK);
+                //                $out .= $this->doc->section($lang->getLL('msg_person_saved'), $lang->getLL('msg_date_saved').': '.$date, 0, 1, IModFunc::ICON_OK);
+                $this->getModule()->getDoc()->showFlashMessage($lang->getLL('msg_date_saved').': '.$date, DocumentTemplate::STATE_SUCCESS, 'msg_person_saved');
             }
         }
 
@@ -257,7 +261,7 @@ class Profile extends BaseModFunc
      */
     protected function showProfileForm($profile)
     {
-        global $LANG;
+        $lang = $this->getModule()->getLanguageService();
         $out = '';
         // Jetzt das Formular anzeigen
         $out .= $profile['last_name'];
@@ -266,7 +270,7 @@ class Profile extends BaseModFunc
         }
         $out .= ' [UID: '.$profile['uid'].'] ';
         $out .= $this->formTool->createTxtInput('data[update_profile]['.$profile['uid'].'][birthday]', date('j.n.Y', $profile['birthday']), 10);
-        $out .= ' <input type="submit" name="data[update_profile_do]" value="'.$LANG->getLL('btn_save').'"';
+        $out .= ' <input type="submit" name="data[update_profile_do]" value="'.$lang->getLL('btn_save').'"';
 
         return $out;
     }
@@ -278,10 +282,10 @@ class Profile extends BaseModFunc
      */
     protected function searchProfiles($searchterm, $uid = 0)
     {
-        $what = 'tx_cfcleague_profiles.uid,tx_cfcleague_profiles.pid,'.'last_name, first_name,birthday, '."t1.short_name as 'team_name', t1.uid as 'team_uid'";
+        $what = 'tx_cfcleague_profiles.uid,tx_cfcleague_profiles.pid,last_name, first_name,birthday, '."t1.short_name as 'team_name', t1.uid as 'team_uid'";
 
         $from = [
-            'tx_cfcleague_profiles '.'LEFT JOIN tx_cfcleague_teams AS t1 ON FIND_IN_SET(tx_cfcleague_profiles.uid, t1.players) ',
+            'tx_cfcleague_profiles LEFT JOIN tx_cfcleague_teams AS t1 ON FIND_IN_SET(tx_cfcleague_profiles.uid, t1.players) ',
             'tx_cfcleague_profiles',
         ];
 
@@ -334,17 +338,17 @@ class Profile extends BaseModFunc
      */
     protected function buildProfileTable(&$profiles)
     {
-        global $LANG;
+        $lang = $this->getModule()->getLanguageService();
 
         $out = '';
         $arr = [
             [
-                $LANG->getLL('label_merge'),
+                '###LABEL_MERGE###',
                 'UID',
-                $LANG->getLL('label_lastname'),
-                $LANG->getLL('label_firstname'),
-                $LANG->getLL('label_birthday'),
-                $LANG->getLL('label_information'),
+                '###LABEL_LASTNAME###',
+                '###LABEL_FIRSTNAME###',
+                '###LABEL_BIRTHDAY###',
+                '###LABEL_INFORMATION###',
                 '&nbsp;',
                 '&nbsp;',
                 '&nbsp;',
@@ -357,9 +361,9 @@ class Profile extends BaseModFunc
             $row[] = $profile['uid'];
             $row[] = $profile['last_name'];
             $row[] = $profile['first_name'] ? $profile['first_name'] : '&nbsp;';
-            $row[] = date('j.n.Y', $profile['birthday']).' <input type="submit" name="data[edit_profile]['.$profile['uid'].']" value="'.$LANG->getLL('btn_edit').'"';
+            $row[] = date('j.n.Y', $profile['birthday']).' <input type="submit" name="data[edit_profile]['.$profile['uid'].']" value="'.$lang->getLL('btn_edit').'"';
             // Die Zusatzinfos zusammenstellen
-            $infos = $LANG->getLL('label_page').': '.BackendUtility::getRecordPath($profile['pid'], '', 0).'<br />';
+            $infos = '###LABEL_PAGE###: '.BackendUtility::getRecordPath($profile['pid'], '', 0).'<br />';
             if (isset($profile['teams'])) {
                 foreach ($profile['teams'] as $team) {
                     $infos .= '&nbsp;Team: '.$team['team_name'];
@@ -385,7 +389,9 @@ class Profile extends BaseModFunc
             // Button für Merge einbauen
             $out .= $this->getModule()
                 ->getFormTool()
-                ->createSubmit('data[merge_profiles]', $LANG->getLL('label_merge'));
+                ->createSubmit('data[merge_profiles]', '###LABEL_MERGE###', '', [
+                    ToolBox::OPTION_ICON_NAME => 'actions-code-merge',
+                ]);
         }
 
         return $out;
@@ -393,14 +399,14 @@ class Profile extends BaseModFunc
 
     protected function createSearchForm(array $settings)
     {
-        global $LANG;
+        $lang = $this->getModule()->getLanguageService();
         $out = '<div class="form-inline">';
-        $out .= $LANG->getLL('label_searchterm').': ';
+        $out .= $lang->getLL('label_searchterm').': ';
         $out .= $this->formTool->createTxtInput('data[searchterm]', $settings['searchterm'] ?? '', 20, [
             'class' => 'form-control input-sm',
         ]);
         // Den Update-Button einfügen
-        $out .= $this->formTool->createSubmit('search', $LANG->getLL('btn_search'));
+        $out .= $this->formTool->createSubmit('search', $lang->getLL('btn_search'));
         $out .= '</div>';
 
         return $out;

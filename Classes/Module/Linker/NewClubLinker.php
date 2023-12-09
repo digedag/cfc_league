@@ -50,8 +50,8 @@ class NewClubLinker
         $fields['CLUB.PID'][OP_EQ_INT] = $currentPid;
         $cnt = ServiceRegistry::getTeamService()->searchClubs($fields, ['count' => 1]);
         $options = [];
-        $options['confirm'] = 0 == $cnt ? $GLOBALS['LANG']->getLL('label_msg_confirmNewClubPage') : $GLOBALS['LANG']->getLL('label_msg_confirmNewClub');
-        $options['title'] = $GLOBALS['LANG']->getLL('label_addclub');
+        $options[ToolBox::OPTION_CONFIRM] = 0 == $cnt ? '###LABEL_MSG_CONFIRMNEWCLUBPAGE###' : '###LABEL_MSG_CONFIRMNEWCLUB###';
+        $options[ToolBox::OPTION_HOVER_TEXT] = '###LABEL_ADDCLUB###';
         $ret .= $formTool->createNewLink('tx_cfcleague_club', $currentPid, '', $options);
 
         return $ret;

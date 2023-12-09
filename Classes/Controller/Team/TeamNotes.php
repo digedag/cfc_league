@@ -149,9 +149,9 @@ class TeamNotes
             $options[ToolBox::OPTION_DEFVALS]['tx_cfcleague_team_notes']['mediatype'] = $notes[0]->getMediaType();
         }
 
-        $options['title'] = $GLOBALS['LANG']->getLL('label_create_new').': '.$type->getLabel();
+        $label = $this->mod->getLanguageService()->getLL('label_create_new').': '.$type->getLabel();
         // Zielseite muss immer die Seite des Teams sein
-        $out .= $this->getFormTool()->createNewButton('tx_cfcleague_team_notes', $currTeam->getProperty('pid'), $options);
+        $out .= $this->getFormTool()->createNewLink('tx_cfcleague_team_notes', $currTeam->getProperty('pid'), $label, $options);
 
         return $out.'<br /><br />';
     }
