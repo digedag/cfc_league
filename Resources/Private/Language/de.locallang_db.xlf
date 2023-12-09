@@ -511,6 +511,10 @@
 				<source>Assists</source>
 				<target>Linienrichter</target>
 			</trans-unit>
+			<trans-unit id="tx_cfcleague_games.videoassists" xml:space="preserve">
+				<source>Video-Assists</source>
+				<target>Video-Assists</target>
+			</trans-unit>
 			<trans-unit id="tx_cfcleague_games.parts_4_default" xml:space="preserve">
 				<source>Quarter</source>
 				<target>Viertel</target>

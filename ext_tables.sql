@@ -224,6 +224,7 @@ CREATE TABLE tx_cfcleague_games (
 
 	referee int(11) DEFAULT '0' NOT NULL,
 	assists text,
+	videoassists int(11) DEFAULT '0' NOT NULL,
 	coach_home int(11) DEFAULT '0' NOT NULL,
 	coach_guest int(11) DEFAULT '0' NOT NULL,
 	players_home text,
@@ -309,7 +310,8 @@ CREATE TABLE tx_cfcleague_profiles (
 	description text,
 	types varchar(150) DEFAULT '' NOT NULL,
 	extid varchar(255) DEFAULT '' NOT NULL,
-	
+	relitems int(11) DEFAULT '0' NOT NULL,
+
 	PRIMARY KEY (uid),
 	KEY parent (pid)
 );
@@ -322,6 +324,21 @@ CREATE TABLE tx_cfcleague_profiletypes_mm (
 	uid_local int(11) unsigned DEFAULT '0' NOT NULL,
 	uid_foreign int(11) unsigned DEFAULT '0' NOT NULL,
 	tablenames varchar(50) DEFAULT '' NOT NULL,
+	sorting int(11) unsigned DEFAULT '0' NOT NULL,
+	sorting_foreign int(11) unsigned DEFAULT '0' NOT NULL,
+	KEY uid_local (uid_local),
+	KEY uid_foreign (uid_foreign)
+);
+
+#
+# Table structure for table 'tx_cfcleague_profiletypes_mm'
+# uid_local used for fixture
+#
+CREATE TABLE tx_cfcleague_profiles_mm (
+	uid_local int(11) unsigned DEFAULT '0' NOT NULL,
+	uid_foreign int(11) unsigned DEFAULT '0' NOT NULL,
+	tablenames varchar(50) DEFAULT '' NOT NULL,
+	fieldname varchar(50) DEFAULT '' NOT NULL,
 	sorting int(11) unsigned DEFAULT '0' NOT NULL,
 	sorting_foreign int(11) unsigned DEFAULT '0' NOT NULL,
 	KEY uid_local (uid_local),

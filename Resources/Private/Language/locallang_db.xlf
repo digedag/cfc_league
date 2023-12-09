@@ -384,6 +384,9 @@
 			<trans-unit id="tx_cfcleague_games.assists" xml:space="preserve">
 				<source>Assists</source>
 			</trans-unit>
+			<trans-unit id="tx_cfcleague_games.videoassists" xml:space="preserve">
+				<source>Video-Assists</source>
+			</trans-unit>
 			<trans-unit id="tx_cfcleague_games.parts_4_default" xml:space="preserve">
 				<source>Quarter</source>
 			</trans-unit>

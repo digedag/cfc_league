@@ -3,6 +3,7 @@
 namespace System25\T3sports\Model\Repository;
 
 use Sys25\RnBase\Domain\Repository\PersistenceRepository;
+use Sys25\RnBase\Search\SearchBase;
 use System25\T3sports\Model\MatchNote;
 use System25\T3sports\Model\Profile;
 use System25\T3sports\Search\ProfileSearch;
@@ -42,6 +43,21 @@ class ProfileRepository extends PersistenceRepository
     public function getSearchClass()
     {
         return ProfileSearch::class;
+    }
+
+    /**
+     * 
+     * @return Collection<Profile>
+     */
+    public function findByFixtureRelation(int $fixtureUid, string $fieldName)
+    {
+        $fields = $options = [];
+        $fields['PROFILEMM.UID_FOREIGN'][OP_EQ_INT] = $fixtureUid;
+        $fields['PROFILEMM.TABLENAMES'][OP_EQ] = 'tx_cfcleague_games';
+        $fields['PROFILEMM.FIELDNAME'][OP_EQ] = $fieldName;
+        $options['orderby']['PROFILEMM.SORTING_FOREIGN'] = 'asc';
+
+        return $this->search($fields, $options);
     }
 
     /**
