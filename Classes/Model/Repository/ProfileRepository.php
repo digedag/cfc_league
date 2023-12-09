@@ -3,7 +3,6 @@
 namespace System25\T3sports\Model\Repository;
 
 use Sys25\RnBase\Domain\Repository\PersistenceRepository;
-use Sys25\RnBase\Search\SearchBase;
 use System25\T3sports\Model\MatchNote;
 use System25\T3sports\Model\Profile;
 use System25\T3sports\Search\ProfileSearch;
@@ -46,7 +45,6 @@ class ProfileRepository extends PersistenceRepository
     }
 
     /**
-     * 
      * @return Collection<Profile>
      */
     public function findByFixtureRelation(int $fixtureUid, string $fieldName)
