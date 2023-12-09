@@ -2,6 +2,9 @@
 Änderungen
 ==========
 
+## v1.11.6 (09.12.2023)
+ * Support for CSP-Headers in TYPO3 12
+
 ## v1.11.5 (03.11.2023)
  * #94 fix module access for regular users
  * #93 fix config for ticker text fields
