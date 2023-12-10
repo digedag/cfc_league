@@ -478,9 +478,24 @@ class Fixture extends BaseModel
      */
     public function getReferee()
     {
-        if ($this->getProperty('referee')) {
+        return $this->getProfile('referee');
+    }
+
+    /**
+     * Liefert den Referee als Datenobjekt.
+     *
+     * @return Profile
+     */
+    public function getVideoReferee()
+    {
+        return $this->getProfile('videoreferee');
+    }
+
+    private function getProfile(string $attr)
+    {
+        if ($this->getProperty($attr)) {
             try {
-                $profile = Profile::getProfileInstance($this->getProperty('referee'));
+                $profile = Profile::getProfileInstance($this->getProperty($attr));
 
                 return $profile->isValid() ? $profile : null;
             } catch (Exception $e) {

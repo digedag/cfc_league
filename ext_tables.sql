@@ -224,6 +224,7 @@ CREATE TABLE tx_cfcleague_games (
 
 	referee int(11) DEFAULT '0' NOT NULL,
 	assists text,
+	videoreferee int(11) DEFAULT '0' NOT NULL,
 	videoassists int(11) DEFAULT '0' NOT NULL,
 	coach_home int(11) DEFAULT '0' NOT NULL,
 	coach_guest int(11) DEFAULT '0' NOT NULL,
