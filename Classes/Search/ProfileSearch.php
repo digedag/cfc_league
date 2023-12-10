@@ -10,7 +10,7 @@ use System25\T3sports\Model\Profile;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2006-2021 Rene Nitzsche
+ *  (c) 2006-2023 Rene Nitzsche
  *  Contact: rene@system25.de
  *  All rights reserved
  *
@@ -40,6 +40,7 @@ class ProfileSearch extends SearchBase
     {
         $tableMapping = [
             'PROFILE' => 'tx_cfcleague_profiles',
+            'PROFILEMM' => 'tx_cfcleague_profiles_mm',
             'TEAM' => 'tx_cfcleague_teams',
             'TEAMNOTE' => 'tx_cfcleague_team_notes',
         ];
@@ -72,6 +73,10 @@ class ProfileSearch extends SearchBase
         if (isset($tableAliases['TEAM'])) {
             $join[] = new Join('PROFILE', 'tx_cfcleague_teams', 'FIND_IN_SET(PROFILE.uid, TEAM.players)', 'TEAM');
         }
+        if (isset($tableAliases['PROFILEMM'])) {
+            $join[] = new Join('PROFILE', 'tx_cfcleague_profiles_mm', 'PROFILE.uid = PROFILEMM.uid_local', 'PROFILEMM');
+        }
+
         if (isset($tableAliases['TEAMNOTE'])) {
             $join[] = new Join('PROFILE', 'tx_cfcleague_team_notes', 'PROFILE.uid = TEAMNOTE.player', 'TEAMNOTE');
         }

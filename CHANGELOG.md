@@ -2,6 +2,9 @@
 Änderungen
 ==========
 
+## v1.11.7 (??.12.2023)
+ * Add fields for video assists (#74)
+
 ## v1.11.6 (09.12.2023)
  * Support for CSP-Headers in TYPO3 12
 

@@ -352,7 +352,7 @@ $tx_cfcleague_games = [
                 'default' => 0,
                 'minitems' => 0,
                 'maxitems' => 1,
-                'wizards' => Tx_Rnbase_Utility_TcaTool::getWizards('tx_cfcleague_profiles', [
+                'wizards' => Sys25\RnBase\Backend\Utility\TcaTool::getWizards('tx_cfcleague_profiles', [
                     'suggest' => true,
                 ]),
             ],
@@ -367,9 +367,46 @@ $tx_cfcleague_games = [
                 'size' => 3,
                 'minitems' => 0,
                 'maxitems' => 5,
-                'wizards' => Tx_Rnbase_Utility_TcaTool::getWizards('tx_cfcleague_profiles', [
+                'wizards' => Sys25\RnBase\Backend\Utility\TcaTool::getWizards('tx_cfcleague_profiles', [
                     'suggest' => true,
                 ]),
+            ],
+        ],
+        'videoreferee' => [
+            'exclude' => 1,
+            'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_games.videoreferee',
+            'config' => [
+                'type' => 'group',
+                'internal_type' => 'db',
+                'allowed' => 'tx_cfcleague_profiles',
+                'size' => 1,
+                'default' => 0,
+                'minitems' => 0,
+                'maxitems' => 1,
+                'wizards' => Sys25\RnBase\Backend\Utility\TcaTool::getWizards('tx_cfcleague_profiles', [
+                    'suggest' => true,
+                ]),
+            ],
+        ],
+        'videoassists' => [
+            'exclude' => 1,
+            'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_games.videoassists',
+            'config' => [
+                'type' => 'group',
+                'internal_type' => 'db',
+                'allowed' => 'tx_cfcleague_profiles',
+                'size' => 5,
+                'selectedListStyle' => 'width: 450px;',
+                'autoSizeMax' => 10,
+                'minitems' => 0,
+                'maxitems' => 10,
+                'MM' => 'tx_cfcleague_profiles_mm',
+                'MM_foreign_select' => 1,
+                'MM_opposite_field' => 'relitems',
+                'MM_match_fields' => [
+                    'tablenames' => 'tx_cfcleague_games',
+                    'fieldname' => 'videoassists',
+                ],
             ],
         ],
 
@@ -674,7 +711,7 @@ $tx_cfcleague_games = [
     // goals_home_1, goals_guest_1, goals_home_2, goals_guest_2,
         '0' => [
             'showitem' => 'hidden,match_no,competition,home,guest,round,round_name,date,addinfo,status,--palette--;;6,sets,arena,stadium,visitors,extid,
-			--div--;LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_games.tab_lineup,coach_home, players_home, substitutes_home, system_home, system_guest, coach_guest, players_guest, substitutes_guest, referee, assists,
+			--div--;LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_games.tab_lineup,coach_home, players_home, substitutes_home, system_home, system_guest, coach_guest, players_guest, substitutes_guest, referee, assists, videoreferee, videoassists,
 			--div--;LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_games.tab_lineup_stat,players_home_stat, substitutes_home_stat, players_guest_stat, substitutes_guest_stat, scorer_home_stat, scorer_guest_stat,
 			--div--;LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_games.tab_score, is_extratime,--palette--;;2, is_penalty,--palette--;;3,
 			--div--;LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_games.game_report, game_report,--palette--;;4, game_report_author,--palette--;;5, t3images, dam_media, dam_media2, video, videoimg',
@@ -698,6 +735,8 @@ if (\Sys25\RnBase\Utility\TYPO3::isTYPO104OrHigher()) {
     'game_report' => ['RTE' => ['defaultExtras' => $rteConfig]],
     'referee' => ['targettable' => 'tx_cfcleague_profiles', 'suggest' => true],
     'assists' => ['targettable' => 'tx_cfcleague_profiles', 'suggest' => true],
+    'videoreferee' => ['targettable' => 'tx_cfcleague_profiles', 'suggest' => true],
+    'videoassists' => ['targettable' => 'tx_cfcleague_profiles', 'suggest' => true],
 ]);
 
 $tx_cfcleague_games['columns']['t3images'] = \Sys25\RnBase\Utility\TSFAL::getMediaTCA('t3images', [
