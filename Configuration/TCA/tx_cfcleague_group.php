@@ -33,7 +33,7 @@ $tx_cfcleague_group = [
     'columns' => [
         'hidden' => [
             'exclude' => 1,
-            'label' => \Sys25\RnBase\Backend\Utility\TcaTool::buildGeneralLabel('hidden'),
+            'label' => Sys25\RnBase\Backend\Utility\TcaTool::buildGeneralLabel('hidden'),
             'config' => [
                 'type' => 'check',
                 'default' => '0',
@@ -41,11 +41,11 @@ $tx_cfcleague_group = [
         ],
         'starttime' => [
             'exclude' => 1,
-            'label' => \Sys25\RnBase\Backend\Utility\TcaTool::buildGeneralLabel('starttime'),
+            'label' => Sys25\RnBase\Backend\Utility\TcaTool::buildGeneralLabel('starttime'),
             'config' => [
                 'type' => 'input',
                 'renderType' => 'inputDateTime',
-                'eval' => 'datetime'.(\Sys25\RnBase\Utility\TYPO3::isTYPO104OrHigher() ? ',int' : ''),
+                'eval' => 'datetime'.(Sys25\RnBase\Utility\TYPO3::isTYPO104OrHigher() ? ',int' : ''),
                 'default' => '0',
             ],
         ],
@@ -81,11 +81,11 @@ $tx_cfcleague_group = [
     ],
 ];
 
-if (\Sys25\RnBase\Utility\TYPO3::isTYPO104OrHigher()) {
+if (Sys25\RnBase\Utility\TYPO3::isTYPO104OrHigher()) {
     unset($tx_cfcleague_group['interface']['showRecordFieldList']);
 }
 
-$tx_cfcleague_group['columns']['logo'] = \Sys25\RnBase\Utility\TSFAL::getMediaTCA('logo', [
+$tx_cfcleague_group['columns']['logo'] = Sys25\RnBase\Utility\TSFAL::getMediaTCA('logo', [
     'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_club.logo',
     'size' => 1,
     'maxitems' => 1,

@@ -33,7 +33,7 @@ $tx_cfcleague_competition_penalty = [
     'columns' => [
         'hidden' => [
             'exclude' => 1,
-            'label' => \Sys25\RnBase\Backend\Utility\TcaTool::buildGeneralLabel('hidden'),
+            'label' => Sys25\RnBase\Backend\Utility\TcaTool::buildGeneralLabel('hidden'),
             'config' => [
                 'type' => 'check',
                 'default' => '0',
@@ -265,10 +265,10 @@ $tx_cfcleague_competition_penalty = [
     ],
 ];
 
-if (\Sys25\RnBase\Utility\TYPO3::isTYPO104OrHigher()) {
+if (Sys25\RnBase\Utility\TYPO3::isTYPO104OrHigher()) {
     unset($tx_cfcleague_competition_penalty['interface']['showRecordFieldList']);
 }
 
-$tx_cfcleague_competition_penalty['columns']['comment']['config']['wizards'] = \Sys25\RnBase\Backend\Utility\TcaTool::getWizards('', ['RTE' => true]);
+$tx_cfcleague_competition_penalty['columns']['comment']['config']['wizards'] = Sys25\RnBase\Backend\Utility\TcaTool::getWizards('', ['RTE' => true]);
 
 return $tx_cfcleague_competition_penalty;

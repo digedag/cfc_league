@@ -4,7 +4,7 @@ if (!(defined('TYPO3') || defined('TYPO3_MODE'))) {
     exit('Access denied.');
 }
 
-$clubOrdering = intval(\Sys25\RnBase\Configuration\Processor::getExtensionCfgValue('cfc_league', 'clubOrdering')) > 0;
+$clubOrdering = intval(Sys25\RnBase\Configuration\Processor::getExtensionCfgValue('cfc_league', 'clubOrdering')) > 0;
 
 $labelClub = $clubOrdering ? 'city' : 'name';
 $altLabelClub = $clubOrdering ? 'name' : 'city';
@@ -40,7 +40,7 @@ $tx_cfcleague_club = [
     'columns' => [
         'hidden' => [
             'exclude' => 1,
-            'label' => \Sys25\RnBase\Backend\Utility\TcaTool::buildGeneralLabel('hidden'),
+            'label' => Sys25\RnBase\Backend\Utility\TcaTool::buildGeneralLabel('hidden'),
             'config' => [
                 'type' => 'check',
                 'default' => '0',
@@ -209,7 +209,7 @@ $tx_cfcleague_club = [
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_club_established',
             'config' => [
                 'type' => 'input',
-                'renderType' => (\Sys25\RnBase\Utility\TYPO3::isTYPO86OrHigher() ? 'inputDateTime' : ''),
+                'renderType' => (Sys25\RnBase\Utility\TYPO3::isTYPO86OrHigher() ? 'inputDateTime' : ''),
                 'size' => '10',
                 'eval' => 'date',
                 'default' => '0',
@@ -289,17 +289,17 @@ $tx_cfcleague_club = [
     ],
 ];
 
-if (\Sys25\RnBase\Utility\TYPO3::isTYPO104OrHigher()) {
+if (Sys25\RnBase\Utility\TYPO3::isTYPO104OrHigher()) {
     unset($tx_cfcleague_club['interface']['showRecordFieldList']);
 }
 
-\Sys25\RnBase\Backend\Utility\TcaTool::configureWizards($tx_cfcleague_club, [
+Sys25\RnBase\Backend\Utility\TcaTool::configureWizards($tx_cfcleague_club, [
     'stadiums' => ['targettable' => 'tx_cfcleague_stadiums', 'add' => true, 'edit' => true],
     'info' => ['RTE' => ['defaultExtras' => $rteConfig]],
     'info2' => ['RTE' => ['defaultExtras' => $rteConfig]],
 ]);
 
-if (\Sys25\RnBase\Utility\Extensions::isLoaded('tt_address')) {
+if (Sys25\RnBase\Utility\Extensions::isLoaded('tt_address')) {
     $tx_cfcleague_club['columns']['address'] = [
         'exclude' => 1,
         'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_club.address',
@@ -315,11 +315,11 @@ if (\Sys25\RnBase\Utility\Extensions::isLoaded('tt_address')) {
     ];
 }
 
-if (\Sys25\RnBase\Utility\Extensions::isLoaded('static_info_tables')) {
-    $tx_cfcleague_club['columns']['country'] = \System25\T3sports\Utility\TcaLookup::getCountryField();
+if (Sys25\RnBase\Utility\Extensions::isLoaded('static_info_tables')) {
+    $tx_cfcleague_club['columns']['country'] = System25\T3sports\Utility\TcaLookup::getCountryField();
 }
 
-$tx_cfcleague_club['columns']['logo'] = \Sys25\RnBase\Utility\TSFAL::getMediaTCA('logo', [
+$tx_cfcleague_club['columns']['logo'] = Sys25\RnBase\Utility\TSFAL::getMediaTCA('logo', [
     'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_club.logo',
 ]);
 

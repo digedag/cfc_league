@@ -51,7 +51,7 @@ class TeamNoteDecorator
      *
      * @return string
      */
-    public function format($value, $colName, $record = [], TeamNote $item = null)
+    public function format($value, $colName, $record = [], ?TeamNote $item = null)
     {
         $ret = $value;
         if (!$item) {

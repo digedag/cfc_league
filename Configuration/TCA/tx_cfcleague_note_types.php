@@ -68,7 +68,7 @@ $tx_cfcleague_note_types = [
     ],
 ];
 
-if (\Sys25\RnBase\Utility\TYPO3::isTYPO104OrHigher()) {
+if (Sys25\RnBase\Utility\TYPO3::isTYPO104OrHigher()) {
     unset($tx_cfcleague_note_types['interface']['showRecordFieldList']);
 }
 

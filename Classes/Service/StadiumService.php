@@ -38,7 +38,7 @@ class StadiumService extends AbstractService
 {
     private $repo;
 
-    public function __construct(StadiumRepository $repo = null)
+    public function __construct(?StadiumRepository $repo = null)
     {
         $this->repo = $repo ?: new StadiumRepository();
     }

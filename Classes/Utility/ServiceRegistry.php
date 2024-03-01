@@ -45,13 +45,13 @@ class ServiceRegistry implements \TYPO3\CMS\Core\SingletonInterface
     private $teamSrv;
 
     public function __construct(
-        CompetitionService $competitionService = null,
-        GroupService $groupService = null,
-        MatchService $matchService = null,
-        ProfileService $profileService = null,
-        SaisonService $saisonService = null,
-        StadiumService $stadiumService = null,
-        TeamService $teamService = null
+        ?CompetitionService $competitionService = null,
+        ?GroupService $groupService = null,
+        ?MatchService $matchService = null,
+        ?ProfileService $profileService = null,
+        ?SaisonService $saisonService = null,
+        ?StadiumService $stadiumService = null,
+        ?TeamService $teamService = null
     ) {
         $this->competitionSrv = $competitionService ?: new CompetitionService();
         $this->groupSrv = $groupService ?: new GroupService();

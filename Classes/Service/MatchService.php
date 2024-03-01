@@ -50,7 +50,7 @@ class MatchService extends AbstractService
     private $repo;
     private $mnRepo;
 
-    public function __construct(MatchRepository $repo = null, MatchNoteRepository $mnRepo = null)
+    public function __construct(?MatchRepository $repo = null, ?MatchNoteRepository $mnRepo = null)
     {
         $this->repo = $repo ?: new MatchRepository();
         $this->mnRepo = $mnRepo ?: new MatchNoteRepository();

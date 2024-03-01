@@ -34,7 +34,7 @@ $tx_cfcleague_competition = [
     'columns' => [
         'hidden' => [
             'exclude' => 1,
-            'label' => \Sys25\RnBase\Backend\Utility\TcaTool::buildGeneralLabel('hidden'),
+            'label' => Sys25\RnBase\Backend\Utility\TcaTool::buildGeneralLabel('hidden'),
             'config' => [
                 'type' => 'check',
                 'default' => '0',
@@ -251,15 +251,15 @@ $tx_cfcleague_competition = [
     ],
 ];
 
-if (\Sys25\RnBase\Utility\TYPO3::isTYPO104OrHigher()) {
+if (Sys25\RnBase\Utility\TYPO3::isTYPO104OrHigher()) {
     unset($tx_cfcleague_competition['interface']['showRecordFieldList']);
 }
 
-\Sys25\RnBase\Backend\Utility\TcaTool::configureWizards($tx_cfcleague_competition, [
+Sys25\RnBase\Backend\Utility\TcaTool::configureWizards($tx_cfcleague_competition, [
     'teams' => ['targettable' => 'tx_cfcleague_teams', 'add' => true],
 ]);
 
-$tx_cfcleague_competition['columns']['logo'] = \Sys25\RnBase\Utility\TSFAL::getMediaTCA('logo', [
+$tx_cfcleague_competition['columns']['logo'] = Sys25\RnBase\Utility\TSFAL::getMediaTCA('logo', [
     'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_club.logo',
     'config' => ['size' => 1, 'maxitems' => 1],
 ]);

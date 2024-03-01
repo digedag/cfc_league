@@ -40,7 +40,7 @@ $tx_cfcleague_profiles = [
     'columns' => [
         'hidden' => [
             'exclude' => 1,
-            'label' => \Sys25\RnBase\Backend\Utility\TcaTool::buildGeneralLabel('hidden'),
+            'label' => Sys25\RnBase\Backend\Utility\TcaTool::buildGeneralLabel('hidden'),
             'config' => [
                 'type' => 'check',
                 'default' => '0',
@@ -103,7 +103,7 @@ $tx_cfcleague_profiles = [
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_profiles.birthday',
             'config' => [
                 'type' => 'input',
-                'renderType' => (\Sys25\RnBase\Utility\TYPO3::isTYPO86OrHigher() ? 'inputDateTime' : ''),
+                'renderType' => (Sys25\RnBase\Utility\TYPO3::isTYPO86OrHigher() ? 'inputDateTime' : ''),
                 'size' => '8',
                 'eval' => 'date',
                 'checkbox' => '0',
@@ -115,7 +115,7 @@ $tx_cfcleague_profiles = [
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_profiles.dayofdeath',
             'config' => [
                 'type' => 'input',
-                'renderType' => (\Sys25\RnBase\Utility\TYPO3::isTYPO86OrHigher() ? 'inputDateTime' : ''),
+                'renderType' => (Sys25\RnBase\Utility\TYPO3::isTYPO86OrHigher() ? 'inputDateTime' : ''),
                 'size' => '8',
                 'eval' => 'date',
                 'checkbox' => '0',
@@ -328,17 +328,17 @@ $tx_cfcleague_profiles = [
     ],
 ];
 
-if (\Sys25\RnBase\Utility\TYPO3::isTYPO104OrHigher()) {
+if (Sys25\RnBase\Utility\TYPO3::isTYPO104OrHigher()) {
     unset($tx_cfcleague_profiles['interface']['showRecordFieldList']);
 }
 
-\Sys25\RnBase\Backend\Utility\TcaTool::configureWizards($tx_cfcleague_profiles, [
+Sys25\RnBase\Backend\Utility\TcaTool::configureWizards($tx_cfcleague_profiles, [
     'description' => ['RTE' => ['defaultExtras' => $rteConfig]],
     'summary' => ['RTE' => ['defaultExtras' => $rteConfig]],
 ]);
 
 $tx_cfcleague_profiles['columns']['t3images'] = tx_rnbase_util_TSFAL::getMediaTCA('t3images', [
-    'label' => \Sys25\RnBase\Backend\Utility\TcaTool::buildGeneralLabel('images'),
+    'label' => Sys25\RnBase\Backend\Utility\TcaTool::buildGeneralLabel('images'),
 ]);
 
 return $tx_cfcleague_profiles;

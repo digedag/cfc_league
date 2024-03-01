@@ -52,7 +52,7 @@ class ProfileService extends AbstractService
      */
     private $profileTypeService;
 
-    public function __construct(ProfileRepository $repo = null, ProfileTypeService $profileTypeSrv = null)
+    public function __construct(?ProfileRepository $repo = null, ?ProfileTypeService $profileTypeSrv = null)
     {
         $this->repo = $repo ?: new ProfileRepository();
         $this->profileTypeService = $profileTypeSrv ?: new ProfileTypeService();

@@ -6,25 +6,25 @@ if (!(defined('TYPO3') || defined('TYPO3_MODE'))) {
 
 $_EXTKEY = 'cfc_league';
 
-\Sys25\RnBase\Utility\Extensions::addUserTSConfig('
+Sys25\RnBase\Utility\Extensions::addUserTSConfig('
     options.saveDocNew.tx_cfcleague_group=1
 ');
-\Sys25\RnBase\Utility\Extensions::addUserTSConfig('
+Sys25\RnBase\Utility\Extensions::addUserTSConfig('
     options.saveDocNew.tx_cfcleague_saison=1
 ');
-\Sys25\RnBase\Utility\Extensions::addUserTSConfig('
+Sys25\RnBase\Utility\Extensions::addUserTSConfig('
     options.saveDocNew.tx_cfcleague_competition=1
 ');
-\Sys25\RnBase\Utility\Extensions::addUserTSConfig('
+Sys25\RnBase\Utility\Extensions::addUserTSConfig('
     options.saveDocNew.tx_cfcleague_club=1
 ');
-\Sys25\RnBase\Utility\Extensions::addUserTSConfig('
+Sys25\RnBase\Utility\Extensions::addUserTSConfig('
     options.saveDocNew.tx_cfcleague_teams=1
 ');
-\Sys25\RnBase\Utility\Extensions::addUserTSConfig('
+Sys25\RnBase\Utility\Extensions::addUserTSConfig('
     options.saveDocNew.tx_cfcleague_profiles=1
 ');
-\Sys25\RnBase\Utility\Extensions::addUserTSConfig('
+Sys25\RnBase\Utility\Extensions::addUserTSConfig('
     options.saveDocNew.tx_cfcleague_team_notes=1
 ');
 
@@ -33,10 +33,10 @@ $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['proc
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass'][] = 'System25\T3sports\Hooks\TceHook';
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processCmdmapClass'][] = 'System25\T3sports\Hooks\CommandMapHook';
 
-if (\Sys25\RnBase\Utility\Environment::isBackend()) {
+if (Sys25\RnBase\Utility\Environment::isBackend()) {
     // Einbindung einer PageTSConfig
-    if (!\Sys25\RnBase\Utility\TYPO3::isTYPO121OrHigher()) {
-        \Sys25\RnBase\Utility\Extensions::addPageTSConfig('<INCLUDE_TYPOSCRIPT: source="FILE:EXT:cfc_league/Configuration/page.tsconfig">');
+    if (!Sys25\RnBase\Utility\TYPO3::isTYPO121OrHigher()) {
+        Sys25\RnBase\Utility\Extensions::addPageTSConfig('<INCLUDE_TYPOSCRIPT: source="FILE:EXT:cfc_league/Configuration/page.tsconfig">');
     }
 
     $GLOBALS['TYPO3_CONF_VARS']['SYS']['formEngine']['nodeRegistry']['t3sports_logoSelect'] = [
@@ -46,37 +46,37 @@ if (\Sys25\RnBase\Utility\Environment::isBackend()) {
     ];
 }
 
-\System25\T3sports\Utility\Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_match_notes.type.ticker', '100');
-\System25\T3sports\Utility\Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_match_notes.type.goal', '10');
-\System25\T3sports\Utility\Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_match_notes.type.goal.header', '11');
-\System25\T3sports\Utility\Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_match_notes.type.goal.penalty', '12');
-\System25\T3sports\Utility\Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_match_notes.type.goal.own', '30');
-\System25\T3sports\Utility\Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_match_notes.type.goal.assist', '31');
-\System25\T3sports\Utility\Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_match_notes.type.penalty.forgiven', '32');
-\System25\T3sports\Utility\Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_match_notes.type.corner', '33');
-\System25\T3sports\Utility\Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_match_notes.type.yellow', '70');
-\System25\T3sports\Utility\Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_match_notes.type.yellowred', '71');
-\System25\T3sports\Utility\Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_match_notes.type.red', '72');
-\System25\T3sports\Utility\Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_match_notes.type.changeout', '80');
-\System25\T3sports\Utility\Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_match_notes.type.changein', '81');
-\System25\T3sports\Utility\Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_match_notes.type.captain', '200');
+System25\T3sports\Utility\Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_match_notes.type.ticker', '100');
+System25\T3sports\Utility\Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_match_notes.type.goal', '10');
+System25\T3sports\Utility\Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_match_notes.type.goal.header', '11');
+System25\T3sports\Utility\Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_match_notes.type.goal.penalty', '12');
+System25\T3sports\Utility\Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_match_notes.type.goal.own', '30');
+System25\T3sports\Utility\Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_match_notes.type.goal.assist', '31');
+System25\T3sports\Utility\Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_match_notes.type.penalty.forgiven', '32');
+System25\T3sports\Utility\Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_match_notes.type.corner', '33');
+System25\T3sports\Utility\Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_match_notes.type.yellow', '70');
+System25\T3sports\Utility\Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_match_notes.type.yellowred', '71');
+System25\T3sports\Utility\Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_match_notes.type.red', '72');
+System25\T3sports\Utility\Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_match_notes.type.changeout', '80');
+System25\T3sports\Utility\Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_match_notes.type.changein', '81');
+System25\T3sports\Utility\Misc::registerMatchNote('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_match_notes.type.captain', '200');
 
-\System25\T3sports\Utility\Misc::registerFormation('', '0');
-\System25\T3sports\Utility\Misc::registerFormation('3-5-2', '1-3-5-2');
-\System25\T3sports\Utility\Misc::registerFormation('3-4-3', '1-3-4-3');
-\System25\T3sports\Utility\Misc::registerFormation('4-2-3-1', '1-4-2-3-1');
-\System25\T3sports\Utility\Misc::registerFormation('4-3-3', '1-4-3-3');
-\System25\T3sports\Utility\Misc::registerFormation('4-4-2', '1-4-4-2');
-\System25\T3sports\Utility\Misc::registerFormation('4-5-1', '1-4-5-1');
-\System25\T3sports\Utility\Misc::registerFormation('5-3-2', '1-5-3-2');
-\System25\T3sports\Utility\Misc::registerFormation('5-4-1', '1-5-4-1');
+System25\T3sports\Utility\Misc::registerFormation('', '0');
+System25\T3sports\Utility\Misc::registerFormation('3-5-2', '1-3-5-2');
+System25\T3sports\Utility\Misc::registerFormation('3-4-3', '1-3-4-3');
+System25\T3sports\Utility\Misc::registerFormation('4-2-3-1', '1-4-2-3-1');
+System25\T3sports\Utility\Misc::registerFormation('4-3-3', '1-4-3-3');
+System25\T3sports\Utility\Misc::registerFormation('4-4-2', '1-4-4-2');
+System25\T3sports\Utility\Misc::registerFormation('4-5-1', '1-4-5-1');
+System25\T3sports\Utility\Misc::registerFormation('5-3-2', '1-5-3-2');
+System25\T3sports\Utility\Misc::registerFormation('5-4-1', '1-5-4-1');
 
-\System25\T3sports\Utility\Misc::registerTableStrategy('default', 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_competition_tablestrategy_default', '');
+System25\T3sports\Utility\Misc::registerTableStrategy('default', 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_competition_tablestrategy_default', '');
 
 // ---------------
 // Services for kind of sports
 // ---------------
-\System25\T3sports\Utility\Misc::registerSports('football', System25\T3sports\Sports\Football::class);
-\System25\T3sports\Utility\Misc::registerSports('handball', System25\T3sports\Sports\Handball::class);
-\System25\T3sports\Utility\Misc::registerSports('icehockey', System25\T3sports\Sports\IceHockey::class);
-\System25\T3sports\Utility\Misc::registerSports('volleyball', System25\T3sports\Sports\Volleyball::class);
+System25\T3sports\Utility\Misc::registerSports('football', System25\T3sports\Sports\Football::class);
+System25\T3sports\Utility\Misc::registerSports('handball', System25\T3sports\Sports\Handball::class);
+System25\T3sports\Utility\Misc::registerSports('icehockey', System25\T3sports\Sports\IceHockey::class);
+System25\T3sports\Utility\Misc::registerSports('volleyball', System25\T3sports\Sports\Volleyball::class);

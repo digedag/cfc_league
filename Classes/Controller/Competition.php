@@ -71,7 +71,7 @@ class Competition extends BaseModFunc
         return 'cfc_league';
     }
 
-    public function __construct(DfbSync $dfbSync = null)
+    public function __construct(?DfbSync $dfbSync = null)
     {
         $this->dfbSync = $dfbSync ?: tx_rnbase::makeInstance(DfbSync::class);
     }

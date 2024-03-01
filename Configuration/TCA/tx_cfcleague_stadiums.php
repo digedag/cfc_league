@@ -250,11 +250,11 @@ $tx_cfcleague_stadiums = [
     ],
 ];
 
-if (\Sys25\RnBase\Utility\TYPO3::isTYPO104OrHigher()) {
+if (Sys25\RnBase\Utility\TYPO3::isTYPO104OrHigher()) {
     unset($tx_cfcleague_stadiums['interface']['showRecordFieldList']);
 }
 
-\Sys25\RnBase\Backend\Utility\TcaTool::configureWizards($tx_cfcleague_stadiums, [
+Sys25\RnBase\Backend\Utility\TcaTool::configureWizards($tx_cfcleague_stadiums, [
     'description' => ['RTE' => ['defaultExtras' => $rteConfig]],
     'description2' => ['RTE' => ['defaultExtras' => $rteConfig]],
 ]);

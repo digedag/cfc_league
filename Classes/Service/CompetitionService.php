@@ -46,7 +46,7 @@ class CompetitionService extends AbstractService
      */
     private $repo;
 
-    public function __construct(CompetitionRepository $repo = null)
+    public function __construct(?CompetitionRepository $repo = null)
     {
         $this->repo = $repo ?: new CompetitionRepository();
     }
