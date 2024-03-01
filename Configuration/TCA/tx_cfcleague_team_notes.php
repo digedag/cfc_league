@@ -34,7 +34,7 @@ $tx_cfcleague_team_notes = [
     'columns' => [
         'hidden' => [
             'exclude' => 1,
-            'label' => \Sys25\RnBase\Backend\Utility\TcaTool::buildGeneralLabel('hidden'),
+            'label' => Sys25\RnBase\Backend\Utility\TcaTool::buildGeneralLabel('hidden'),
             'config' => [
                 'type' => 'check',
                 'default' => '0',
@@ -131,13 +131,13 @@ $tx_cfcleague_team_notes = [
     ],
 ];
 
-if (\Sys25\RnBase\Utility\TYPO3::isTYPO104OrHigher()) {
+if (Sys25\RnBase\Utility\TYPO3::isTYPO104OrHigher()) {
     unset($tx_cfcleague_team_notes['interface']['showRecordFieldList']);
 }
 
 $tx_cfcleague_team_notes['columns']['mediatype']['config']['items'][] =
                 ['LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_team_notes.mediatype.media', '1'];
-$tx_cfcleague_team_notes['columns']['media'] = \Sys25\RnBase\Utility\TSFAL::getMediaTCA('media', [
+$tx_cfcleague_team_notes['columns']['media'] = Sys25\RnBase\Utility\TSFAL::getMediaTCA('media', [
     'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.images',
     'config' => ['size' => 1, 'maxitems' => 1],
 ]);

@@ -38,7 +38,7 @@ class GroupService extends AbstractService
 {
     private $repo;
 
-    public function __construct(GroupRepository $repo = null)
+    public function __construct(?GroupRepository $repo = null)
     {
         $this->repo = $repo ?: new GroupRepository();
     }

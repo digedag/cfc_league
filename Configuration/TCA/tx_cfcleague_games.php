@@ -45,7 +45,7 @@ $tx_cfcleague_games = [
     'columns' => [
         'hidden' => [
             'exclude' => 1,
-            'label' => \Sys25\RnBase\Backend\Utility\TcaTool::buildGeneralLabel('hidden'),
+            'label' => Sys25\RnBase\Backend\Utility\TcaTool::buildGeneralLabel('hidden'),
             'config' => [
                 'type' => 'check',
                 'default' => '0',
@@ -727,11 +727,11 @@ $tx_cfcleague_games = [
     ],
 ];
 
-if (\Sys25\RnBase\Utility\TYPO3::isTYPO104OrHigher()) {
+if (Sys25\RnBase\Utility\TYPO3::isTYPO104OrHigher()) {
     unset($tx_cfcleague_games['interface']['showRecordFieldList']);
 }
 
-\Sys25\RnBase\Backend\Utility\TcaTool::configureWizards($tx_cfcleague_games, [
+Sys25\RnBase\Backend\Utility\TcaTool::configureWizards($tx_cfcleague_games, [
     'game_report' => ['RTE' => ['defaultExtras' => $rteConfig]],
     'referee' => ['targettable' => 'tx_cfcleague_profiles', 'suggest' => true],
     'assists' => ['targettable' => 'tx_cfcleague_profiles', 'suggest' => true],
@@ -739,14 +739,14 @@ if (\Sys25\RnBase\Utility\TYPO3::isTYPO104OrHigher()) {
     'videoassists' => ['targettable' => 'tx_cfcleague_profiles', 'suggest' => true],
 ]);
 
-$tx_cfcleague_games['columns']['t3images'] = \Sys25\RnBase\Utility\TSFAL::getMediaTCA('t3images', [
-    'label' => \Sys25\RnBase\Backend\Utility\TcaTool::buildGeneralLabel('images'),
+$tx_cfcleague_games['columns']['t3images'] = Sys25\RnBase\Utility\TSFAL::getMediaTCA('t3images', [
+    'label' => Sys25\RnBase\Backend\Utility\TcaTool::buildGeneralLabel('images'),
 ]);
-$tx_cfcleague_games['columns']['dam_media'] = \Sys25\RnBase\Utility\TSFAL::getMediaTCA('dam_media', [
+$tx_cfcleague_games['columns']['dam_media'] = Sys25\RnBase\Utility\TSFAL::getMediaTCA('dam_media', [
     'type' => 'media',
     'label' => 'LLL:EXT:cms/locallang_ttc.xlf:media',
 ]);
-$tx_cfcleague_games['columns']['dam_media2'] = \Sys25\RnBase\Utility\TSFAL::getMediaTCA('dam_media2', [
+$tx_cfcleague_games['columns']['dam_media2'] = Sys25\RnBase\Utility\TSFAL::getMediaTCA('dam_media2', [
     'type' => 'media',
     'label' => 'LLL:EXT:cms/locallang_ttc.xlf:media',
 ]);

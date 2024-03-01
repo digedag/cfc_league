@@ -4,8 +4,8 @@ if (!(defined('TYPO3') || defined('TYPO3_MODE'))) {
     exit('Access denied.');
 }
 
-$globalClubs = intval(\Sys25\RnBase\Configuration\Processor::getExtensionCfgValue('cfc_league', 'useGlobalClubs')) > 0;
-$clubOrdering = intval(\Sys25\RnBase\Configuration\Processor::getExtensionCfgValue('cfc_league', 'clubOrdering')) > 0;
+$globalClubs = intval(Sys25\RnBase\Configuration\Processor::getExtensionCfgValue('cfc_league', 'useGlobalClubs')) > 0;
+$clubOrdering = intval(Sys25\RnBase\Configuration\Processor::getExtensionCfgValue('cfc_league', 'clubOrdering')) > 0;
 
 $rteConfig = 'richtext[paste|bold|italic|underline|formatblock|class|left|center|right|orderedlist|unorderedlist|outdent|indent|link|image]:rte_transform[mode=ts]';
 
@@ -60,7 +60,7 @@ $tx_cfcleague_teams = [
     'columns' => [
         'hidden' => [
             'exclude' => 1,
-            'label' => \Sys25\RnBase\Backend\Utility\TcaTool::buildGeneralLabel('hidden'),
+            'label' => Sys25\RnBase\Backend\Utility\TcaTool::buildGeneralLabel('hidden'),
             'config' => [
                 'type' => 'check',
                 'default' => '0',
@@ -242,11 +242,11 @@ $tx_cfcleague_teams = [
     ],
 ];
 
-if (\Sys25\RnBase\Utility\TYPO3::isTYPO104OrHigher()) {
+if (Sys25\RnBase\Utility\TYPO3::isTYPO104OrHigher()) {
     unset($tx_cfcleague_teams['interface']['showRecordFieldList']);
 }
 
-\Sys25\RnBase\Backend\Utility\TcaTool::configureWizards($tx_cfcleague_teams, [
+Sys25\RnBase\Backend\Utility\TcaTool::configureWizards($tx_cfcleague_teams, [
     'comment' => ['RTE' => ['defaultExtras' => $rteConfig]],
 ]);
 

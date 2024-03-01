@@ -57,7 +57,7 @@ class DfbSync
      */
     private $synchronizer;
 
-    public function __construct(Synchronizer $synchronizer = null)
+    public function __construct(?Synchronizer $synchronizer = null)
     {
         $this->synchronizer = $synchronizer ?: tx_rnbase::makeInstance(Synchronizer::class);
     }

@@ -38,7 +38,7 @@ class SaisonService extends AbstractService
 {
     private $repo;
 
-    public function __construct(SaisonRepository $repo = null)
+    public function __construct(?SaisonRepository $repo = null)
     {
         $this->repo = $repo ?: new SaisonRepository();
     }

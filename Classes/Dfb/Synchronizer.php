@@ -59,7 +59,7 @@ class Synchronizer
 
     private $teamRepo;
 
-    public function __construct(TeamRepository $teamRepo = null)
+    public function __construct(?TeamRepository $teamRepo = null)
     {
         $this->teamRepo = $teamRepo ?: new TeamRepository();
     }

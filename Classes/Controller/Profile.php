@@ -55,7 +55,7 @@ class Profile extends BaseModFunc
      */
     public $hideResults = false;
     /**
-     * @var \Sys25\RnBase\Backend\Form\ToolBox
+     * @var ToolBox
      */
     private $formTool;
 

@@ -58,7 +58,7 @@ class ProfileAdd
      *
      * @return string
      */
-    public function handleRequest($module, team $currTeam, TeamInfo $teamInfo)
+    public function handleRequest($module, Team $currTeam, TeamInfo $teamInfo)
     {
         $this->mod = $module;
 
