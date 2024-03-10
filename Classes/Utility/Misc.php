@@ -7,7 +7,6 @@ use Sys25\RnBase\Backend\Utility\Icons;
 use Sys25\RnBase\Database\Connection;
 use Sys25\RnBase\Utility\TYPO3;
 use Sys25\RnBase\Utility\Typo3Classes;
-use System25\T3sports\Sports\ISports;
 use tx_rnbase;
 
 /***************************************************************
