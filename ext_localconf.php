@@ -76,7 +76,16 @@ System25\T3sports\Utility\Misc::registerTableStrategy('default', 'LLL:EXT:cfc_le
 // ---------------
 // Services for kind of sports
 // ---------------
-System25\T3sports\Utility\Misc::registerSports('football', System25\T3sports\Sports\Football::class);
-System25\T3sports\Utility\Misc::registerSports('handball', System25\T3sports\Sports\Handball::class);
-System25\T3sports\Utility\Misc::registerSports('icehockey', System25\T3sports\Sports\IceHockey::class);
-System25\T3sports\Utility\Misc::registerSports('volleyball', System25\T3sports\Sports\Volleyball::class);
+if (!Sys25\RnBase\Utility\TYPO3::isTYPO104OrHigher()) {
+    $provider = System25\T3sports\Sports\ServiceLocator::getInstance();
+    $provider->addSports(new System25\T3sports\Sports\Football());
+    $provider->addSports(new System25\T3sports\Sports\Handball());
+    $provider->addSports(new System25\T3sports\Sports\IceHockey());
+    $provider->addSports(new System25\T3sports\Sports\Volleyball());
+    $provider->addSports(new System25\T3sports\Sports\Judo());
+}
+
+// System25\T3sports\Utility\Misc::registerSports('football', System25\T3sports\Sports\Football::class);
+// System25\T3sports\Utility\Misc::registerSports('handball', System25\T3sports\Sports\Handball::class);
+// System25\T3sports\Utility\Misc::registerSports('icehockey', System25\T3sports\Sports\IceHockey::class);
+// System25\T3sports\Utility\Misc::registerSports('volleyball', System25\T3sports\Sports\Volleyball::class);

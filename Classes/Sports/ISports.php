@@ -42,10 +42,14 @@ interface ISports
     /**
      * @return bool
      */
-    public function isSetBased();
+    public function isSetBased(): bool;
+
+    public function hasPoints(): bool;
 
     /**
      * @return MatchInfo
      */
     public function getMatchInfo();
+
+    public function getIdentifier(): string;
 }

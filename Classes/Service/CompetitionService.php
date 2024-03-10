@@ -9,6 +9,7 @@ use Sys25\RnBase\Utility\Misc;
 use System25\T3sports\Model\Competition;
 use System25\T3sports\Model\Repository\CompetitionRepository;
 use System25\T3sports\Model\Saison;
+use System25\T3sports\Sports\ServiceLocator;
 use System25\T3sports\Utility\ServiceRegistry;
 
 /***************************************************************
@@ -45,10 +46,12 @@ class CompetitionService extends AbstractService
      * @var CompetitionRepository
      */
     private $repo;
+    private $sportsServiceLocator;
 
-    public function __construct(?CompetitionRepository $repo = null)
+    public function __construct(?ServiceLocator $serviceLocator = null, ?CompetitionRepository $repo = null)
     {
         $this->repo = $repo ?: new CompetitionRepository();
+        $this->sportsServiceLocator = $serviceLocator ?? ServiceLocator::getInstance();
     }
 
     /**
@@ -120,9 +123,9 @@ class CompetitionService extends AbstractService
 
     public function getPointSystems($sports)
     {
-        $srv = \System25\T3sports\Utility\Misc::getSports($sports);
+        $sports = $this->sportsServiceLocator->getSportsByIdentifier($sports);
 
-        return $srv->getTCAPointSystems();
+        return $sports->getTCAPointSystems();
     }
 
     /**
@@ -135,11 +138,11 @@ class CompetitionService extends AbstractService
         $items = [];
 
         // Jetzt schauen, ob noch weitere Sportarten per Service geliefert werden
-        $sportsData = \System25\T3sports\Utility\Misc::lookupSports();
+        $sportsData = $this->sportsServiceLocator->getAllSports();
         foreach ($sportsData as $data) {
             $items[] = [
-                Misc::translateLLL($data['sports']->getTCALabel()),
-                $data['type'],
+                Misc::translateLLL($data->getTCALabel()),
+                $data->getIdentifier(),
             ];
         }
 

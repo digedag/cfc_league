@@ -111,6 +111,9 @@
 			<trans-unit id="tx_cfcleague_competition.point_system_3_icehockey" xml:space="preserve">
 				<source>3 Point-Rule (Icehockey)</source>
 			</trans-unit>
+			<trans-unit id="tx_cfcleague_competition.point_system_2_judo" xml:space="preserve">
+				<source>2 Point-Rule (Judo)</source>
+			</trans-unit>
 			<trans-unit id="tx_cfcleague_competition_tablestrategy" xml:space="preserve">
 				<source>Strategy for score board calculation</source>
 			</trans-unit>
@@ -438,6 +441,14 @@
 			<trans-unit id="tx_cfcleague_games.goals_guest_4" xml:space="preserve">
 				<source>Goals Guest Part 4</source>
 			</trans-unit>
+
+			<trans-unit id="tx_cfcleague_games.points_home" xml:space="preserve">
+				<source>Sub-Score Home</source>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_games.points_guest" xml:space="preserve">
+				<source>Sub-Score Guest</source>
+			</trans-unit>
+
 			<trans-unit id="tx_cfcleague_games.date" xml:space="preserve">
 				<source>Date</source>
 			</trans-unit>

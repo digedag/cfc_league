@@ -24,7 +24,7 @@ use tx_rnbase;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2007-2023 Rene Nitzsche (rene@system25.de)
+ *  (c) 2007-2024 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -65,9 +65,9 @@ class MatchEdit
      */
     private $module;
 
-    public function __construct()
+    public function __construct(?ServiceLocator $serviceLocator = null)
     {
-        $this->sportsServiceLocator = new ServiceLocator();
+        $this->sportsServiceLocator = $serviceLocator ?? ServiceLocator::getInstance();
     }
 
     /**
@@ -277,9 +277,13 @@ class MatchEdit
                 $arr[] = $label ? $label : $i.'. part';
             }
         }
-        $sports = $this->sportsServiceLocator->getSportsService($competition->getSports());
+        $sports = $this->sportsServiceLocator->getSportsByIdentifier($competition->getSports());
         if ($sports->isSetBased()) {
             $arr[] = $LANG->getLL('tx_cfcleague_games_sets');
+        }
+        if ($sports->hasPoints()) {
+            $arr[] = $LANG->getLL('tx_cfcleague_games_points_home');
+            $arr[] = $LANG->getLL('tx_cfcleague_games_points_guest');
         }
 
         $arr[] = $LANG->getLL('tx_cfcleague_games.visitors');
@@ -349,9 +353,13 @@ class MatchEdit
                     $row[] = $this->formTool->createIntInput('data[tx_cfcleague_games]['.$matchUid.'][goals_home_'.$i.']', $match->getProperty('goals_home_'.$i), 3).' : '.$this->formTool->createIntInput('data[tx_cfcleague_games]['.$matchUid.'][goals_guest_'.$i.']', $match->getProperty('goals_guest_'.$i), 3);
                 }
 
-                $sports = $this->sportsServiceLocator->getSportsService($competition->getSports());
+                $sports = $this->sportsServiceLocator->getSportsByIdentifier($competition->getSports());
                 if ($sports->isSetBased()) {
                     $row[] = $this->formTool->createTxtInput('data[tx_cfcleague_games]['.$matchUid.'][sets]', $match->getProperty('sets'), 12);
+                }
+                if ($sports->hasPoints()) {
+                    $row[] = $this->formTool->createTxtInput('data[tx_cfcleague_games]['.$matchUid.'][points_home]', $match->getProperty('points_home'), 12);
+                    $row[] = $this->formTool->createTxtInput('data[tx_cfcleague_games]['.$matchUid.'][points_guest]', $match->getProperty('points_guest'), 12);
                 }
 
                 $row[] = $this->formTool->createIntInput('data[tx_cfcleague_games]['.$matchUid.'][visitors]', $match->getProperty('visitors'), 6);

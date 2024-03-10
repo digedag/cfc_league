@@ -2,14 +2,13 @@
 
 namespace System25\T3sports\Sports;
 
-use Sys25\RnBase\Typo3Wrapper\Service\AbstractService;
 use Sys25\RnBase\Utility\Misc;
 use tx_rnbase;
 
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2017-2020 Rene Nitzsche (rene@system25.de)
+ *  (c) 2017-2024 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -29,7 +28,7 @@ use tx_rnbase;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-class Handball extends AbstractService implements ISports
+class Handball implements ISports
 {
     /**
      * @return array
@@ -49,7 +48,12 @@ class Handball extends AbstractService implements ISports
         return 'Handball';
     }
 
-    public function isSetBased()
+    public function isSetBased(): bool
+    {
+        return false;
+    }
+
+    public function hasPoints(): bool
     {
         return false;
     }
@@ -71,5 +75,10 @@ class Handball extends AbstractService implements ISports
         }
 
         return $this->matchInfo;
+    }
+
+    public function getIdentifier(): string
+    {
+        return 'handball';
     }
 }
