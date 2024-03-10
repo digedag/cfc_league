@@ -84,8 +84,3 @@ if (!Sys25\RnBase\Utility\TYPO3::isTYPO104OrHigher()) {
     $provider->addSports(new System25\T3sports\Sports\Volleyball());
     $provider->addSports(new System25\T3sports\Sports\Judo());
 }
-
-// System25\T3sports\Utility\Misc::registerSports('football', System25\T3sports\Sports\Football::class);
-// System25\T3sports\Utility\Misc::registerSports('handball', System25\T3sports\Sports\Handball::class);
-// System25\T3sports\Utility\Misc::registerSports('icehockey', System25\T3sports\Sports\IceHockey::class);
-// System25\T3sports\Utility\Misc::registerSports('volleyball', System25\T3sports\Sports\Volleyball::class);

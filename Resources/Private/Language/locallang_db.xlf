@@ -448,6 +448,12 @@
 			<trans-unit id="tx_cfcleague_games.points_guest" xml:space="preserve">
 				<source>Sub-Score Guest</source>
 			</trans-unit>
+			<trans-unit id="tx_cfcleague_games_judo_points_home" xml:space="preserve">
+				<source>Sub-Score Home</source>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_games_judo_points_guest" xml:space="preserve">
+				<source>Sub-Score Guest</source>
+			</trans-unit>
 
 			<trans-unit id="tx_cfcleague_games.date" xml:space="preserve">
 				<source>Date</source>
