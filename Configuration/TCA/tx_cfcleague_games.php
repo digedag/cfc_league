@@ -31,14 +31,14 @@ $tx_cfcleague_games = [
     ],
     'interface' => [
         'showRecordFieldList' => 'hidden,home,guest,competition,round,round_name,status, goals_home_1,goals_guest_1,
-            goals_home_2,goals_guest_2,goals_home_3,goals_guest_3,goals_home_4,goals_guest_4,points_home,points_guest,date,
+            goals_home_2,goals_guest_2,goals_home_3,goals_guest_3,goals_home_4,goals_guest_4,score_home,score_guest,date,
             game_report,visitors,t3images,goals_home_et,goals_guest_et,goals_home_ap,goals_guest_ap',
         'maxDBListItems' => '5',
     ],
     'feInterface' => [
         'fe_admin_fieldList' => 'hidden, home, guest, competition, round, round_name, status, coach_home,
             coach_guest, players_home, players_guest, substitutes_home, substitutes_guest, goals_home_1,
-            goals_guest_1, goals_home_2, goals_guest_2, goals_home_3, goals_guest_3, goals_home_4, goals_guest_4,points_home,points_guest,
+            goals_guest_1, goals_home_2, goals_guest_2, goals_home_3, goals_guest_3, goals_home_4, goals_guest_4,score_home,score_guest,
             date, link_report, link_ticker, game_report, visitors, goals_home_et, goals_guest_et, goals_home_ap,
             goals_guest_ap',
     ],
@@ -531,9 +531,9 @@ $tx_cfcleague_games = [
                 'default' => 0,
             ],
         ],
-        'points_home' => [
+        'score_home' => [
             'exclude' => 1,
-            'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_games.points_home',
+            'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_games.score_home',
             'config' => [
                 'type' => 'input',
                 'size' => '4',
@@ -546,9 +546,9 @@ $tx_cfcleague_games = [
                 'default' => 0,
             ],
         ],
-        'points_guest' => [
+        'score_guest' => [
             'exclude' => 1,
-            'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_games.points_guest',
+            'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_games.score_guest',
             'config' => [
                 'type' => 'input',
                 'size' => '4',
@@ -753,7 +753,7 @@ $tx_cfcleague_games = [
         '4' => ['showitem' => 'link_report, link_ticker'],
         '5' => ['showitem' => 'liveticker_author'],
         '6' => ['showitem' => 'goals_home_2, goals_guest_2, goals_home_1, goals_guest_1'],
-        '7' => ['showitem' => 'points_home, points_guest'],
+        '7' => ['showitem' => 'score_home, score_guest'],
     ],
 ];
 

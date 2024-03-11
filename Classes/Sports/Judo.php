@@ -67,7 +67,7 @@ class Judo implements ISports
         return false;
     }
 
-    public function hasPoints(): bool
+    public function hasScore(): bool
     {
         return true;
     }
@@ -81,7 +81,7 @@ class Judo implements ISports
         if (null === $this->matchInfo) {
             $this->matchInfo = tx_rnbase::makeInstance('MatchInfo', [
                 MatchInfo::MATCH_TIME => 60,
-                MatchInfo::MATCH_PARTS => 2,
+                MatchInfo::MATCH_PARTS => 1,
                 MatchInfo::MATCH_EXTRA_TIME => 10,
             ]);
         }

@@ -51,7 +51,7 @@ class Football implements ISports
         return false;
     }
 
-    public function hasPoints(): bool
+    public function hasScore(): bool
     {
         return false;
     }

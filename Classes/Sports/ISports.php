@@ -44,7 +44,7 @@ interface ISports
      */
     public function isSetBased(): bool;
 
-    public function hasPoints(): bool;
+    public function hasScore(): bool;
 
     /**
      * @return MatchInfo

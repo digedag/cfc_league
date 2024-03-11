@@ -51,7 +51,7 @@ class Volleyball implements ISports
         return true;
     }
 
-    public function hasPoints(): bool
+    public function hasScore(): bool
     {
         return false;
     }

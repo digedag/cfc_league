@@ -281,9 +281,9 @@ class MatchEdit
         if ($sports->isSetBased()) {
             $arr[] = $LANG->getLL('tx_cfcleague_games_sets');
         }
-        if ($sports->hasPoints()) {
-            $arr[] = $LANG->getLL(sprintf('tx_cfcleague_games_%s_points_home', $sports->getIdentifier()));
-            $arr[] = $LANG->getLL(sprintf('tx_cfcleague_games_%s_points_guest', $sports->getIdentifier()));
+        if ($sports->hasScore()) {
+            $arr[] = $LANG->getLL(sprintf('tx_cfcleague_games_%s_score_home', $sports->getIdentifier()));
+            $arr[] = $LANG->getLL(sprintf('tx_cfcleague_games_%s_score_guest', $sports->getIdentifier()));
         }
 
         $arr[] = $LANG->getLL('tx_cfcleague_games.visitors');
@@ -357,9 +357,9 @@ class MatchEdit
                 if ($sports->isSetBased()) {
                     $row[] = $this->formTool->createTxtInput('data[tx_cfcleague_games]['.$matchUid.'][sets]', $match->getProperty('sets'), 12);
                 }
-                if ($sports->hasPoints()) {
-                    $row[] = $this->formTool->createTxtInput('data[tx_cfcleague_games]['.$matchUid.'][points_home]', $match->getProperty('points_home'), 6);
-                    $row[] = $this->formTool->createTxtInput('data[tx_cfcleague_games]['.$matchUid.'][points_guest]', $match->getProperty('points_guest'), 6);
+                if ($sports->hasScore()) {
+                    $row[] = $this->formTool->createTxtInput('data[tx_cfcleague_games]['.$matchUid.'][score_home]', $match->getProperty('score_home'), 6);
+                    $row[] = $this->formTool->createTxtInput('data[tx_cfcleague_games]['.$matchUid.'][score_guest]', $match->getProperty('score_guest'), 6);
                 }
 
                 $row[] = $this->formTool->createIntInput('data[tx_cfcleague_games]['.$matchUid.'][visitors]', $match->getProperty('visitors'), 6);

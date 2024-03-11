@@ -249,8 +249,8 @@ CREATE TABLE tx_cfcleague_games (
 	goals_guest_3 int(11) DEFAULT '0' NOT NULL,
 	goals_home_4 int(11) DEFAULT '0' NOT NULL,
 	goals_guest_4 int(11) DEFAULT '0' NOT NULL,
-	points_home int(11) DEFAULT '0' NOT NULL,
-	points_guest int(11) DEFAULT '0' NOT NULL,
+	score_home int(11) DEFAULT '0' NOT NULL,
+	score_guest int(11) DEFAULT '0' NOT NULL,
 
 	date int(11) DEFAULT '0' NOT NULL,
 	link_report tinyint(4) DEFAULT '0' NOT NULL,
