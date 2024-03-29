@@ -119,9 +119,9 @@ class MatchTable
         $menu = $this->getFormTool()->showMenu($this->getModule()
             ->getPid(), 't3s_mcmode', $this->getModule()
             ->getName(), [
-            0 => 'Auto',
-            '1' => 'Manual',
-        ]);
+                0 => 'Auto',
+                '1' => 'Manual',
+            ]);
         $content .= $menu['menu'];
         $mode = $menu['value'];
         $content .= '<br>';

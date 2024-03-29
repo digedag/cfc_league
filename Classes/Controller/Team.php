@@ -130,10 +130,10 @@ class Team extends BaseModFunc
         // Wenn ein Team gefunden ist, dann können wir das Modul schreiben
         $menu = $this->selector->showTabMenu($this->getModule()
             ->getPid(), 'teamtools', [
-            '0' => $LANG->getLL('create_players'),
-            '1' => $LANG->getLL('add_players'),
-            '2' => $LANG->getLL('manage_teamnotes'),
-        ]);
+                '0' => $LANG->getLL('create_players'),
+                '1' => $LANG->getLL('add_players'),
+                '2' => $LANG->getLL('manage_teamnotes'),
+            ]);
 
         $tabs = $menu['menu'];
         $tabs .= '<div style="display: block; border: 1px solid #a2aab8;" ></div>';

@@ -540,18 +540,18 @@ class MatchTicker extends BaseModFunc
             $row[] = $this->getModule()
                 ->getFormTool()
                 ->createSelectByArray('data[tx_cfcleague_match_notes][NEW'.$i.'][type]', '0', $types, [
-                ToolBox::OPTION_CSS_CLASSES => 'tickerField',
-            ]);
+                    ToolBox::OPTION_CSS_CLASSES => 'tickerField',
+                ]);
             $row[] = $this->getModule()
                 ->getFormTool()
                 ->createSelectByArray('data[tx_cfcleague_match_notes][NEW'.$i.'][player_home]', '0', $playersHome, [
-                ToolBox::OPTION_CSS_CLASSES => 'tickerField',
-            ]);
+                    ToolBox::OPTION_CSS_CLASSES => 'tickerField',
+                ]);
             $row[] = $this->getModule()
                 ->getFormTool()
                 ->createSelectByArray('data[tx_cfcleague_match_notes][NEW'.$i.'][player_guest]', '0', $playersGuest, [
-                ToolBox::OPTION_CSS_CLASSES => 'tickerField',
-            ]);
+                    ToolBox::OPTION_CSS_CLASSES => 'tickerField',
+                ]);
             $arr[] = $row;
 
             // Das Bemerkungsfeld kommt in die nächste Zeile
@@ -559,8 +559,8 @@ class MatchTicker extends BaseModFunc
             $row[] = $this->getModule()
                 ->getFormTool()
                 ->createTextArea('data[tx_cfcleague_match_notes][NEW'.$i.'][comment]', '', $cols, $rows, [
-                ToolBox::OPTION_CSS_CLASSES => 'tickerField',
-            ]);
+                    ToolBox::OPTION_CSS_CLASSES => 'tickerField',
+                ]);
             $arr[] = $row;
         }
 

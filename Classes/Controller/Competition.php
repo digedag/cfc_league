@@ -4,7 +4,6 @@ namespace System25\T3sports\Controller;
 
 use Sys25\RnBase\Backend\Form\ToolBox;
 use Sys25\RnBase\Backend\Module\BaseModFunc;
-use Sys25\RnBase\Configuration\ConfigurationInterface;
 use Sys25\RnBase\Frontend\Marker\FormatUtil;
 use Sys25\RnBase\Frontend\Marker\Templates;
 use System25\T3sports\Controller\Competition\DfbSync;
@@ -17,7 +16,7 @@ use tx_rnbase;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2008-2023 Rene Nitzsche (rene@system25.de)
+ *  (c) 2008-2024 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -53,6 +52,10 @@ class Competition extends BaseModFunc
      * @var DfbSync
      */
     private $dfbSync;
+    /**
+     * @var MatchEdit
+     */
+    private $matchEdit;
 
     public $MCONF;
 
@@ -71,9 +74,10 @@ class Competition extends BaseModFunc
         return 'cfc_league';
     }
 
-    public function __construct(?DfbSync $dfbSync = null)
+    public function __construct(?MatchEdit $matchEdit = null, ?DfbSync $dfbSync = null)
     {
         $this->dfbSync = $dfbSync ?: tx_rnbase::makeInstance(DfbSync::class);
+        $this->matchEdit = $matchEdit ?: tx_rnbase::makeInstance(MatchEdit::class);
     }
 
     /**
@@ -119,11 +123,11 @@ class Competition extends BaseModFunc
 
         $menu = $this->selector->showTabMenu($this->getModule()
             ->getPid(), 'comptools', [
-            '0' => $lang->getLL('edit_games'),
-            '1' => $lang->getLL('mod_compteams'),
-            '2' => $lang->getLL('create_games'),
-            '3' => $lang->getLL('mod_compdfbsync'),
-        ]);
+                '0' => $lang->getLL('edit_games'),
+                '1' => $lang->getLL('mod_compteams'),
+                '2' => $lang->getLL('create_games'),
+                '3' => $lang->getLL('mod_compdfbsync'),
+            ]);
 
         $tabs = $menu['menu'];
         $tabs .= '<div style="display: block; border: 1px solid #a2aab8;" ></div>';
@@ -168,9 +172,7 @@ class Competition extends BaseModFunc
 
     private function showEditMatches($current_league, $module)
     {
-        /** @var MatchEdit $subMod */
-        $subMod = tx_rnbase::makeInstance(MatchEdit::class);
-        $content = $subMod->main($module, $current_league);
+        $content = $this->matchEdit->main($module, $current_league);
 
         return $content;
     }

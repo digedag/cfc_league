@@ -17,7 +17,7 @@ $tx_cfcleague_competition_penalty = [
         'sortby' => 'sorting',
         'delete' => 'deleted',
         'enablecolumns' => [
-                'disabled' => 'hidden',
+            'disabled' => 'hidden',
         ],
         'typeicon_classes' => [
             'default' => 'ext-cfcleague-competition-penalty-default',

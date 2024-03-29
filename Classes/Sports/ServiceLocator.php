@@ -2,12 +2,10 @@
 
 namespace System25\T3sports\Sports;
 
-use System25\T3sports\Utility\Misc;
-
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2010-2023 Rene Nitzsche (rene@system25.de)
+ *  (c) 2010-2024 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -27,15 +25,61 @@ use System25\T3sports\Utility\Misc;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-class ServiceLocator
+class ServiceLocator implements \TYPO3\CMS\Core\SingletonInterface
 {
+    private $sports = [];
+
+    /**
+     * Used by T3 versions without DI.
+     *
+     * @var StatsIndexerProvider
+     */
+    private static $instance;
+
+    public function addSports(ISports $sports)
+    {
+        $this->sports[$sports->getIdentifier()] = $sports;
+    }
+
+    /**
+     * @return ISports
+     */
+    public function getSportsByIdentifier(string $type): ?ISports
+    {
+        return $this->sports[$type] ?? null;
+    }
+
+    /**
+     * @return ISports[]
+     */
+    public function getAllSports(): array
+    {
+        return $this->sports;
+    }
+
     /**
      * @param string $sports
      *
      * @return ISports
+     *
+     * @deprecated use getSportsByIdentifier()
      */
     public function getSportsService($sports)
     {
-        return Misc::getSports($sports);
+        return $this->getSportsByIdentifier($sports);
+    }
+
+    /**
+     * Only used by T3 versions prior to 10.x.
+     *
+     * @return self
+     */
+    public static function getInstance()
+    {
+        if (null === self::$instance) {
+            self::$instance = new self();
+        }
+
+        return self::$instance;
     }
 }

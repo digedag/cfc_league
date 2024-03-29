@@ -2,14 +2,13 @@
 
 namespace System25\T3sports\Sports;
 
-use Sys25\RnBase\Typo3Wrapper\Service\AbstractService;
 use Sys25\RnBase\Utility\Misc;
 use tx_rnbase;
 
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2008-2020 Rene Nitzsche (rene@system25.de)
+ *  (c) 2008-2024 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -29,7 +28,7 @@ use tx_rnbase;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-class IceHockey extends AbstractService implements ISports
+class IceHockey implements ISports
 {
     /**
      * @return array
@@ -47,7 +46,12 @@ class IceHockey extends AbstractService implements ISports
         return 'Icehockey';
     }
 
-    public function isSetBased()
+    public function isSetBased(): bool
+    {
+        return false;
+    }
+
+    public function hasScore(): bool
     {
         return false;
     }
@@ -62,12 +66,17 @@ class IceHockey extends AbstractService implements ISports
         if (null == $this->matchInfo) {
             // TODO: Beim Eishockey ist die Overtime variabel
             $this->matchInfo = tx_rnbase::makeInstance(MatchInfo::class, [
-                    MatchInfo::MATCH_TIME => 60,
-                    MatchInfo::MATCH_PARTS => 3,
-                    MatchInfo::MATCH_EXTRA_TIME => 20,
+                MatchInfo::MATCH_TIME => 60,
+                MatchInfo::MATCH_PARTS => 3,
+                MatchInfo::MATCH_EXTRA_TIME => 20,
             ]);
         }
 
         return $this->matchInfo;
+    }
+
+    public function getIdentifier(): string
+    {
+        return 'icehockey';
     }
 }
