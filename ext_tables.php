@@ -29,7 +29,7 @@ if (Sys25\RnBase\Utility\Environment::isBackend()) {
                 'routeTarget' => System25\T3sports\Module\T3sportsModule::class,
                 'icon' => 'EXT:cfc_league/Resources/Public/Icons/module-t3sports.svg',
                 'labels' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_mod.xlf',
-        ]);
+            ]);
         Sys25\RnBase\Utility\Extensions::insertModuleFunction($modName, System25\T3sports\Controller\Competition::class, '', 'LLL:EXT:cfc_league/Resources/Private/Language/locallang.xlf:mod_competition');
         Sys25\RnBase\Utility\Extensions::insertModuleFunction($modName, System25\T3sports\Controller\MatchTicker::class, '', 'LLL:EXT:cfc_league/Resources/Private/Language/locallang.xlf:match_ticker');
         Sys25\RnBase\Utility\Extensions::insertModuleFunction($modName, System25\T3sports\Controller\Team::class, '', 'LLL:EXT:cfc_league/Resources/Private/Language/locallang.xlf:mod_team');

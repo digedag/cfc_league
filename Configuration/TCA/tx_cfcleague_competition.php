@@ -143,7 +143,7 @@ $tx_cfcleague_competition = [
                     ['LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_competition.type_league', 1],
                     ['LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_competition.type_ko', 2],
                     ['LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_competition.type_other', 0],
-//					, Array('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_competition.type_combined',100)
+                    // ['LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_competition.type_combined',100]
                 ],
                 'default' => 1,
             ],
@@ -216,7 +216,7 @@ $tx_cfcleague_competition = [
                 'maxitems' => 100,
             ],
         ],
-/* used for combined competitions later...
+        /* used for combined competitions later...
         'parent' => Array (
             'exclude' => 0,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_competition.parent',
@@ -244,7 +244,7 @@ $tx_cfcleague_competition = [
     'types' => [
         '0' => ['showitem' => 'hidden, name, tournament, sports, internal_name, short_name, agegroup, saison, type,--palette--;;1, tablestrategy, point_system, logo, teams, match_keys, table_marks, match_parts, addparts,extid'],
         '1' => ['showitem' => 'hidden, name, tournament'],
-//		'icehockey' => Array('showitem' => 'hidden, name, sports, internal_name, short_name, agegroup, saison, type;;2, point_system, logo, teams, match_keys, table_marks, match_parts, addparts'),
+        // 'icehockey' => ['showitem' => 'hidden, name, sports, internal_name, short_name, agegroup, saison, type;;2, point_system, logo, teams, match_keys, table_marks, match_parts, addparts'],
     ],
     'palettes' => [
         '1' => ['showitem' => 'obligation'],

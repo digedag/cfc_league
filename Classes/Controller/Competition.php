@@ -123,11 +123,11 @@ class Competition extends BaseModFunc
 
         $menu = $this->selector->showTabMenu($this->getModule()
             ->getPid(), 'comptools', [
-            '0' => $lang->getLL('edit_games'),
-            '1' => $lang->getLL('mod_compteams'),
-            '2' => $lang->getLL('create_games'),
-            '3' => $lang->getLL('mod_compdfbsync'),
-        ]);
+                '0' => $lang->getLL('edit_games'),
+                '1' => $lang->getLL('mod_compteams'),
+                '2' => $lang->getLL('create_games'),
+                '3' => $lang->getLL('mod_compdfbsync'),
+            ]);
 
         $tabs = $menu['menu'];
         $tabs .= '<div style="display: block; border: 1px solid #a2aab8;" ></div>';

@@ -125,7 +125,7 @@ $tx_cfcleague_games = [
                 'size' => '4',
                 'max' => '4',
                 'eval' => 'required,int',
-//				'checkbox' => '0',
+                //				'checkbox' => '0',
                 'range' => [
                     'upper' => '1000',
                     'lower' => '1',
@@ -660,7 +660,6 @@ $tx_cfcleague_games = [
                 'size' => '4',
                 'max' => '4',
                 'eval' => 'int',
-//				'checkbox' => '0',
                 'range' => [
                     'upper' => '1000',
                     'lower' => '0',
@@ -676,7 +675,6 @@ $tx_cfcleague_games = [
                 'size' => '4',
                 'max' => '4',
                 'eval' => 'int',
-//				'checkbox' => '0',
                 'range' => [
                     'upper' => '1000',
                     'lower' => '0',
@@ -701,7 +699,6 @@ $tx_cfcleague_games = [
                 'size' => '4',
                 'max' => '4',
                 'eval' => 'int',
-//				'checkbox' => '0',
                 'range' => [
                     'upper' => '1000',
                     'lower' => '0',
@@ -717,7 +714,6 @@ $tx_cfcleague_games = [
                 'size' => '4',
                 'max' => '4',
                 'eval' => 'int',
-//				'checkbox' => '0',
                 'range' => [
                     'upper' => '1000',
                     'lower' => '0',
@@ -737,13 +733,13 @@ $tx_cfcleague_games = [
         ],
     ],
     'types' => [
-    // goals_home_1, goals_guest_1, goals_home_2, goals_guest_2,
+        // goals_home_1, goals_guest_1, goals_home_2, goals_guest_2,
         '0' => [
             'showitem' => 'hidden,match_no,competition,home,guest,round,round_name,date,addinfo,status,--palette--;;6,sets,--palette--;;7,arena,stadium,visitors,extid,
-			--div--;LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_games.tab_lineup,coach_home, players_home, substitutes_home, system_home, system_guest, coach_guest, players_guest, substitutes_guest, referee, assists, videoreferee, videoassists,
-			--div--;LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_games.tab_lineup_stat,players_home_stat, substitutes_home_stat, players_guest_stat, substitutes_guest_stat, scorer_home_stat, scorer_guest_stat,
-			--div--;LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_games.tab_score, is_extratime,--palette--;;2, is_penalty,--palette--;;3,
-			--div--;LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_games.game_report, game_report,--palette--;;4, game_report_author,--palette--;;5, t3images, dam_media, dam_media2, video, videoimg',
+            --div--;LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_games.tab_lineup,coach_home, players_home, substitutes_home, system_home, system_guest, coach_guest, players_guest, substitutes_guest, referee, assists, videoreferee, videoassists,
+            --div--;LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_games.tab_lineup_stat,players_home_stat, substitutes_home_stat, players_guest_stat, substitutes_guest_stat, scorer_home_stat, scorer_guest_stat,
+            --div--;LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_games.tab_score, is_extratime,--palette--;;2, is_penalty,--palette--;;3,
+            --div--;LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_games.game_report, game_report,--palette--;;4, game_report_author,--palette--;;5, t3images, dam_media, dam_media2, video, videoimg',
         ],
     ],
     'palettes' => [

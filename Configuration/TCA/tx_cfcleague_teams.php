@@ -233,7 +233,7 @@ $tx_cfcleague_teams = [
     ],
     'types' => [
         '0' => [
-        'showitem' => 'hidden, club,logo, t3logo, name, short_name, tlc, agegroup, t3images, link_report, dummy, extid,
+            'showitem' => 'hidden, club,logo, t3logo, name, short_name, tlc, agegroup, t3images, link_report, dummy, extid,
             --div--;LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_teams_tab_members,coaches, players, supporters, players_comment, coaches_comment, supporters_comment, comment',
         ],
     ],

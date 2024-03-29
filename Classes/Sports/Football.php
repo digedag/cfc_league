@@ -65,9 +65,9 @@ class Football implements ISports
     {
         if (null == $this->matchInfo) {
             $this->matchInfo = tx_rnbase::makeInstance(MatchInfo::class, [
-                    MatchInfo::MATCH_TIME => 90,
-                    MatchInfo::MATCH_PARTS => 2,
-                    MatchInfo::MATCH_EXTRA_TIME => 30,
+                MatchInfo::MATCH_TIME => 90,
+                MatchInfo::MATCH_PARTS => 2,
+                MatchInfo::MATCH_EXTRA_TIME => 30,
             ]);
         }
 
