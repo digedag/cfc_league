@@ -7,12 +7,12 @@ use Sys25\RnBase\Backend\Module\IModFunc;
 use Sys25\RnBase\Backend\Module\IModule;
 use Sys25\RnBase\Backend\Utility\BackendUtility;
 use Sys25\RnBase\Backend\Utility\Tables;
+use Sys25\RnBase\Domain\Collection\BaseCollection;
 use Sys25\RnBase\Utility\Misc;
 use Sys25\RnBase\Utility\T3General;
 use System25\T3sports\Module\Decorator\ProfileDecorator;
 use System25\T3sports\Utility\ServiceRegistry;
 use tx_rnbase;
-use tx_rnbase_mod_IModFunc;
 
 /*
  * *************************************************************
@@ -107,33 +107,43 @@ class ProfileSearcher
         return $out;
     }
 
-    public function getResultList()
+    public function getResultList(?IProfileListRenderer $renderer = null)
     {
         $content = '';
         $lang = $this->module->getLanguageService();
         $searchTerm = Misc::validateSearchString($this->SEARCH_SETTINGS['searchterm'] ?? '');
         if (!$searchTerm) {
-            return $this->module->getDoc()->section($lang->getLL('message').':', $lang->getLL('msg_searchhelp'), 0, 1, tx_rnbase_mod_IModFunc::ICON_INFO);
+            return $this->module->getDoc()->section($lang->getLL('message').':', $lang->getLL('msg_searchhelp'), 0, 1, IModFunc::ICON_INFO);
         }
 
         $profiles = $this->searchProfiles($searchTerm);
-        $content .= $this->showProfiles('###LABEL_SEARCHRESULTS###', $profiles);
+        $content .= null !== $renderer ? $renderer->renderProfiles('###LABEL_SEARCHRESULTS###', $profiles) : $this->showProfiles('###LABEL_SEARCHRESULTS###', $profiles);
 
         return $content;
     }
 
+    /**
+     * @return BaseCollection<Profile>
+     */
     private function searchProfiles($searchterm)
     {
+        $isYearSearch = (ctype_digit($searchterm) && (int) $searchterm > 1000 && (int) $searchterm < 3000);
+
         $joined = $fields = [];
         if (strlen($searchterm)) {
-            $joined['value'] = trim($searchterm);
-            $joined['cols'] = [
-                'PROFILE.LAST_NAME',
-                'PROFILE.FIRST_NAME',
-                'PROFILE.UID',
-            ];
-            $joined['operator'] = OP_LIKE;
-            $fields[SEARCH_FIELD_JOINED][] = $joined;
+            if ($isYearSearch) {
+                $fields['PROFILE.BIRTHDAY'][OP_GTEQ_INT] = strtotime(sprintf('01.01.%d 00:00:00', $searchterm));
+                $fields['PROFILE.BIRTHDAY'][OP_LT_INT] = strtotime(sprintf('31.12.%d 23:59:59', $searchterm));
+            } else {
+                $joined['value'] = trim($searchterm);
+                $joined['cols'] = [
+                    'PROFILE.LAST_NAME',
+                    'PROFILE.FIRST_NAME',
+                    'PROFILE.UID',
+                ];
+                $joined['operator'] = OP_LIKE;
+                $fields[SEARCH_FIELD_JOINED][] = $joined;
+            }
         }
 
         $options = [];

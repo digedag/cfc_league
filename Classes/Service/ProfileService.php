@@ -3,6 +3,7 @@
 namespace System25\T3sports\Service;
 
 use Sys25\RnBase\Database\Connection;
+use Sys25\RnBase\Domain\Collection\BaseCollection;
 use Sys25\RnBase\Domain\Model\RecordInterface;
 use Sys25\RnBase\Typo3Wrapper\Service\AbstractService;
 use Sys25\RnBase\Utility\Misc;
@@ -14,7 +15,7 @@ use System25\T3sports\Utility\ServiceRegistry;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2009-2023 Rene Nitzsche (rene@system25.de)
+ *  (c) 2009-2024 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -227,7 +228,7 @@ class ProfileService extends AbstractService
      * @param array $fields
      * @param array $options
      *
-     * @return Profile[]
+     * @return BaseCollection<Profile>
      */
     public function search($fields, $options)
     {

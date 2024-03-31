@@ -9,11 +9,14 @@ use Sys25\RnBase\Backend\Template\Override\DocumentTemplate;
 use Sys25\RnBase\Backend\Utility\BackendUtility;
 use Sys25\RnBase\Backend\Utility\Tables;
 use Sys25\RnBase\Database\Connection;
+use Sys25\RnBase\Domain\Collection\BaseCollection;
 use Sys25\RnBase\Utility\T3General;
 use Sys25\RnBase\Utility\TYPO3;
 use System25\T3sports\Controller\Profile\ProfileMerger;
 use System25\T3sports\Controller\Profile\ShowItem;
 use System25\T3sports\Controller\Profile\ShowItem87;
+use System25\T3sports\Module\Searcher\IProfileListRenderer;
+use System25\T3sports\Module\Searcher\ProfileSearcher;
 use System25\T3sports\Module\Utility\Selector;
 use Throwable;
 use tx_rnbase;
@@ -46,7 +49,7 @@ use tx_rnbase;
  * Das Modul wurde relativ schnell runterprogrammiert und ist daher nicht auf Erweiterbarkeit
  * ausgelegt.
  */
-class Profile extends BaseModFunc
+class Profile extends BaseModFunc implements IProfileListRenderer
 {
     private $doc;
 
@@ -96,27 +99,19 @@ class Profile extends BaseModFunc
             'searchterm' => '',
         ], $data, $this->getModule()->getName());
 
-        $content .= $this->doc->section($lang->getLL('msg_search_person'), $this->createSearchForm($settings), 0, 1);
-
         // Haben wir Daten im Request?
         if (is_array($data)) {
             // Soll ein Profil bearbeitet werden?
             $content .= $this->handleProfileUpdate($data);
             $content .= $this->handleProfileMerge($data);
         }
-        // Wir zeigen die Liste an
+
+        $searcher = tx_rnbase::makeInstance(ProfileSearcher::class, $this->mod, $settings);
+
+        $content .= $this->doc->section($lang->getLL('msg_search_person'), $searcher->getSearchForm(), 0, 1);
+
         if (!$this->hideResults) {
-            $searchterm = trim($settings['searchterm']);
-            if (strlen($searchterm) && strlen($searchterm) < 3) {
-                $content .= $this->doc->section($lang->getLL('message').':', $lang->getLL('msg_string_too_short'), 0, 1, IModFunc::ICON_INFO);
-            } elseif (strlen($searchterm) >= 3) {
-                $profiles = $this->searchProfiles($searchterm);
-                if (!empty($profiles)) {
-                    $content .= $this->doc->section($lang->getLL('msg_found_person'), $this->buildProfileTable($profiles), 0, 1);
-                } else {
-                    $content .= $this->doc->section($lang->getLL('msg_no_person_found'), '', 0, 1, IModFunc::ICON_WARN);
-                }
-            }
+            $content .= $searcher->getResultList($this);
         }
 
         return $content;
@@ -335,10 +330,15 @@ class Profile extends BaseModFunc
 
     /**
      * Erstellt eine Tabelle mit den gefundenen Personen.
+     *
+     * @implements IProfileListRenderer
      */
-    protected function buildProfileTable(&$profiles)
+    public function renderProfiles(string $headline, BaseCollection $profiles)
     {
         $lang = $this->getModule()->getLanguageService();
+        if ($profiles->isEmpty()) {
+            return $this->doc->section($lang->getLL('msg_no_person_found'), '', 0, 1, IModFunc::ICON_WARN);
+        }
 
         $out = '';
         $arr = [
@@ -359,7 +359,7 @@ class Profile extends BaseModFunc
             $row = [];
             $row[] = $this->formTool->createRadio('data[merge1]', $profile['uid']).$this->formTool->createRadio('data[merge2]', $profile['uid']);
             $row[] = $profile['uid'];
-            $row[] = $profile['last_name'];
+            $row[] = $profile['last_name'].'-'.$profile['birthday'];
             $row[] = $profile['first_name'] ? $profile['first_name'] : '&nbsp;';
             $row[] = date('j.n.Y', $profile['birthday']).' <input type="submit" name="data[edit_profile]['.$profile['uid'].']" value="'.$lang->getLL('btn_edit').'"';
             // Die Zusatzinfos zusammenstellen
@@ -394,21 +394,6 @@ class Profile extends BaseModFunc
                 ]);
         }
 
-        return $out;
-    }
-
-    protected function createSearchForm(array $settings)
-    {
-        $lang = $this->getModule()->getLanguageService();
-        $out = '<div class="form-inline">';
-        $out .= $lang->getLL('label_searchterm').': ';
-        $out .= $this->formTool->createTxtInput('data[searchterm]', $settings['searchterm'] ?? '', 20, [
-            'class' => 'form-control input-sm',
-        ]);
-        // Den Update-Button einfügen
-        $out .= $this->formTool->createSubmit('search', $lang->getLL('btn_search'));
-        $out .= '</div>';
-
-        return $out;
+        return $this->doc->section($lang->getLL('msg_found_person'), $out, 0, 1);
     }
 }

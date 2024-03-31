@@ -2,6 +2,12 @@
 Änderungen
 ==========
 
+## v1.12.0 (??.04.2024)
+ * Support for Judo added
+ * (BC) types of sports registered by compiler pass
+ * Some refactoring in person search backend module
+ * Allow to search for year if birth in person search (e.g. "1985") Every number between 1000 and 3000 is interpreted as year.
+
 ## v1.11.7 (01.03.2024)
  * Add fields for video assists (#74)
 

@@ -8,23 +8,11 @@ $_EXTKEY = 'cfc_league';
 
 Sys25\RnBase\Utility\Extensions::addUserTSConfig('
     options.saveDocNew.tx_cfcleague_group=1
-');
-Sys25\RnBase\Utility\Extensions::addUserTSConfig('
     options.saveDocNew.tx_cfcleague_saison=1
-');
-Sys25\RnBase\Utility\Extensions::addUserTSConfig('
     options.saveDocNew.tx_cfcleague_competition=1
-');
-Sys25\RnBase\Utility\Extensions::addUserTSConfig('
     options.saveDocNew.tx_cfcleague_club=1
-');
-Sys25\RnBase\Utility\Extensions::addUserTSConfig('
     options.saveDocNew.tx_cfcleague_teams=1
-');
-Sys25\RnBase\Utility\Extensions::addUserTSConfig('
     options.saveDocNew.tx_cfcleague_profiles=1
-');
-Sys25\RnBase\Utility\Extensions::addUserTSConfig('
     options.saveDocNew.tx_cfcleague_team_notes=1
 ');
 
