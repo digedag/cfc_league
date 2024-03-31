@@ -107,7 +107,6 @@ class Profile extends BaseModFunc implements IProfileListRenderer
         }
 
         $searcher = tx_rnbase::makeInstance(ProfileSearcher::class, $this->mod, $settings);
-
         $content .= $this->doc->section($lang->getLL('msg_search_person'), $searcher->getSearchForm(), 0, 1);
 
         if (!$this->hideResults) {
