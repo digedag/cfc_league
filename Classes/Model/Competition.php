@@ -466,7 +466,9 @@ class Competition extends BaseModel
      */
     public function getTeamIds()
     {
-        return Strings::intExplode(',', $this->getProperty('teams'));
+        $teamIds = $this->getProperty('teams');
+
+        return $teamIds ? Strings::intExplode(',', $teamIds) : [];
     }
 
     /**
