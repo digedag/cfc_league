@@ -5,7 +5,7 @@ namespace System25\T3sports\MatchGeneration;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2009-2021 Rene Nitzsche (rene@system25.de)
+ *  (c) 2009-2024 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -111,6 +111,10 @@ class Generator
      */
     private function createTable($teams, $table, $options)
     {
+        $ret = [];
+        if (empty($teams)) {
+            return $ret;
+        }
         $option_halfseries = isset($options['halfseries']) ? intval($options['halfseries']) : 0;
         $option_nomatch = isset($options['nomatch']) ? intval($options['nomatch']) : 0;
         // Alle Elemente einen Indexplatz hochschieben, damit die Team-Nr stimmt.
@@ -121,7 +125,6 @@ class Generator
         // Zählung des Spieltags
         $dayCnt = isset($options['firstmatchday']) ? intval($options['firstmatchday']) : 0;
 
-        $ret = [];
         // die Hinrunde hinzufügen
         if (2 != $option_halfseries) {
             foreach ($table as $day => $matches) {
