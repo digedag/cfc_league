@@ -421,7 +421,7 @@ class TcaLookup
         global $LANG;
         $LANG->includeLLFile('EXT:cfc_league/Resources/Private/Language/locallang_db.xlf');
         $column = 'team';
-        if ($PA['row'][$column]) {
+        if ($PA['row'][$column] ?? false) {
             $tablename = 'tx_cfcleague_team_notes';
             $tcaFieldConf = $GLOBALS['TCA'][$tablename]['columns'][$column]['config'];
             $fieldValue = $PA['row'][$column];
