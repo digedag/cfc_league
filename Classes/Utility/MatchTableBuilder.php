@@ -10,7 +10,7 @@ use tx_rnbase;
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2008-2023 Rene Nitzsche (rene@system25.de)
+*  (c) 2008-2024 Rene Nitzsche (rene@system25.de)
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -167,7 +167,7 @@ class MatchTableBuilder
             $options['limit'] = intval($this->_limit);
         }
         if ($this->_orderbyDate) {
-            $options['orderby']['MATCH']['DATE'] = $this->_orderbyDateDesc ? 'DESC' : 'ASC';
+            $options['orderby']['MATCH.DATE'] = $this->_orderbyDateDesc ? 'DESC' : 'ASC';
         }
         if ($this->_pidList) {
             $options['pidlist'] = $this->_pidList;
@@ -177,12 +177,12 @@ class MatchTableBuilder
     /**
      * Set orderby date match.
      *
-     * @param bool $asc true for ascending, false for descending
+     * @param bool $desc true for ascending, false for descending
      */
-    public function setOrderByDate($asc = true)
+    public function setOrderByDate($desc = true)
     {
         $this->_orderbyDate = true;
-        $this->_orderbyDateDesc = $asc;
+        $this->_orderbyDateDesc = $desc;
     }
 
     /**
@@ -199,6 +199,9 @@ class MatchTableBuilder
         if (count($clubs) > 1) {
             // Interne Spiele der Vereine ausschließen
             $fields[SEARCH_FIELD_CUSTOM] = 'TEAM1.club != TEAM2.club';
+            // Sicherstellen, daß beide Tabellen gejoined werden
+            $fields['TEAM1.UID'][OP_GT_INT] = 0;
+            $fields['TEAM2.UID'][OP_GT_INT] = 0;
         }
     }
 
