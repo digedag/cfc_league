@@ -21,7 +21,7 @@ use tx_rnbase;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2007-2023 Rene Nitzsche (rene@system25.de)
+ *  (c) 2007-2024 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -106,7 +106,7 @@ class Profile extends BaseModFunc
         }
         // Wir zeigen die Liste an
         if (!$this->hideResults) {
-            $searchterm = trim($settings['searchterm']);
+            $searchterm = trim($settings['searchterm'] ?? '');
             if (strlen($searchterm) && strlen($searchterm) < 3) {
                 $content .= $this->doc->section($lang->getLL('message').':', $lang->getLL('msg_string_too_short'), 0, 1, IModFunc::ICON_INFO);
             } elseif (strlen($searchterm) >= 3) {
