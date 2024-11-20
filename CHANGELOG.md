@@ -4,6 +4,9 @@
 
 ## v1.11.8 (20.11.2024)
  * Backend module not loaded for non-admins
+ * support for judo added
+ * all repositories loaded as symfony services
+ * some bugfixes
 
 ## v1.11.7 (01.03.2024)
  * Add fields for video assists (#74)
