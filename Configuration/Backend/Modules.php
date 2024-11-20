@@ -12,7 +12,7 @@ return [
         'extensionName' => 'CfcLeague',
         'routes' => [
             '_default' => [
-                'target' => System25\T3sports\Module\T3sportsModule::class,
+                'target' => System25\T3sports\Controller\Competition::class.'::main',
             ],
         ],
     ],
