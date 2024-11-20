@@ -8,7 +8,7 @@ use Sys25\RnBase\Backend\Module\BaseModule;
  * *************************************************************
  * Copyright notice
  *
- * (c) 2008-2021 Rene Nitzsche (rene@system25.de)
+ * (c) 2008-2024 Rene Nitzsche (rene@system25.de)
  * All rights reserved
  *
  * This script is part of the TYPO3 project. The TYPO3 project is
@@ -34,6 +34,7 @@ use Sys25\RnBase\Backend\Module\BaseModule;
  *
  * @author René Nitzsche rene@system25.de
  * tx_cfcleague_mod1_Module
+ * Wird ab T3 12 nicht mehr benötigt.
  */
 class T3sportsModule extends BaseModule
 {

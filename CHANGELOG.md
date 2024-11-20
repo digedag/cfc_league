@@ -2,6 +2,9 @@
 Änderungen
 ==========
 
+## v1.11.8 (20.11.2024)
+ * Backend module not loaded for non-admins
+
 ## v1.11.7 (01.03.2024)
  * Add fields for video assists (#74)
 
