@@ -251,7 +251,7 @@ class MatchEdit
      */
     private function getHeadline($parts, $competition)
     {
-        global $LANG;
+        $LANG = $this->getModule()->getLanguageService();
         $arr = [
             '',
             $LANG->getLL('tx_cfcleague_games.date'),
