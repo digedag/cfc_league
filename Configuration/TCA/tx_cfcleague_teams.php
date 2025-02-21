@@ -253,11 +253,11 @@ Sys25\RnBase\Backend\Utility\TcaTool::configureWizards($tx_cfcleague_teams, [
 // Auswahlbox Vereinslogos
 $tx_cfcleague_teams['columns']['logo'] = System25\T3sports\Utility\TcaLookup::getTeamLogoField();
 
-$tx_cfcleague_teams['columns']['t3logo'] = tx_rnbase_util_TSFAL::getMediaTCA('t3logo', [
+$tx_cfcleague_teams['columns']['t3logo'] = Sys25\RnBase\Utility\TSFAL::getMediaTCA('t3logo', [
     'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_teams.altlogo',
     'config' => ['size' => 1, 'maxitems' => 1],
 ]);
-$tx_cfcleague_teams['columns']['t3images'] = tx_rnbase_util_TSFAL::getMediaTCA('t3images', [
+$tx_cfcleague_teams['columns']['t3images'] = Sys25\RnBase\Utility\TSFAL::getMediaTCA('t3images', [
     'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_teams.pictures',
 ]);
 
