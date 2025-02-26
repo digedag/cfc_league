@@ -7,7 +7,6 @@ use Sys25\RnBase\Utility\Math;
 use Sys25\RnBase\Utility\TSFAL;
 use tx_rnbase;
 use TYPO3\CMS\Backend\Form\Element\SelectSingleElement;
-use TYPO3\CMS\Backend\Form\NodeFactory;
 use TYPO3\CMS\Core\Resource\Exception\FileDoesNotExistException;
 use TYPO3\CMS\Core\Resource\File;
 use TYPO3\CMS\Fluid\View\StandaloneView;
@@ -42,25 +41,6 @@ use TYPO3\CMS\Fluid\View\StandaloneView;
  */
 class LogoSelect extends SelectSingleElement
 {
-    /**
-     * @var StandaloneView
-     */
-    protected $templateView;
-
-    public function __construct(NodeFactory $nodeFactory, array $data)
-    {
-        parent::__construct($nodeFactory, $data);
-        $this->templateView = tx_rnbase::makeInstance(StandaloneView::class);
-        $this->templateView->setTemplateSource('
-<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
-	xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers">
-	<div class="media-object" data-preview-height="80">
-		<f:image image="{image}" height="80" class="thumbnail thumbnail-status"/>
-	</div>
-</html>
-        ');
-    }
-
     protected function renderFieldWizard(): array
     {
         $resultArray = parent::renderFieldWizard();
@@ -78,8 +58,19 @@ class LogoSelect extends SelectSingleElement
             'image' => $file,
         ];
 
-        $this->templateView->assignMultiple($arguments);
-        $resultArray['html'] .= $this->templateView->render();
+        /** @var StandaloneView $templateView */
+        $templateView = tx_rnbase::makeInstance(StandaloneView::class);
+        $templateView->setTemplateSource('
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+	xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers">
+	<div class="media-object" data-preview-height="80">
+		<f:image image="{image}" height="80" class="thumbnail thumbnail-status"/>
+	</div>
+</html>
+        ');
+
+        $templateView->assignMultiple($arguments);
+        $resultArray['html'] .= $templateView->render();
 
         return $resultArray;
     }
