@@ -10,7 +10,7 @@ use Sys25\RnBase\Backend\Module\IModule;
 use Sys25\RnBase\Backend\Utility\Icons;
 use Sys25\RnBase\Backend\Utility\Tables;
 use Sys25\RnBase\Database\Connection;
-use Sys25\RnBase\Utility\T3General;
+use Sys25\RnBase\Frontend\Request\Parameters;
 use Sys25\RnBase\Utility\TYPO3;
 use System25\T3sports\Model\Competition;
 use System25\T3sports\Model\CompetitionRound;
@@ -24,7 +24,7 @@ use tx_rnbase;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2007-2024 Rene Nitzsche (rene@system25.de)
+ *  (c) 2007-2025 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -86,7 +86,7 @@ class MatchEdit
         $formTool = $module->getFormTool();
         $this->formTool = $formTool;
         $lang = $formTool->getLanguageService();
-        $lang->includeLLFile('EXT:cfc_league/Resources/Private/Language/locallang_db.xlf');
+        $lang->registerLangFile('EXT:cfc_league/Resources/Private/Language/locallang_db.xlf');
         $formTool->insertJsModule('@digedag/cfc_league/match-edit.js');
 
         // Zuerst mal müssen wir die passende Liga auswählen lassen:
@@ -111,7 +111,7 @@ class MatchEdit
         $content .= sprintf('%s</button><br><br>', $icon.$lang->getLL('btn_statusToFinished'));
 
         $content .= '<div class="cleardiv"/>';
-        $data = T3General::_GP('data');
+        $data = Parameters::_GP('data');
 
         // Haben wir Daten im Request?
         if (isset($data['tx_cfcleague_games'])) {
@@ -136,6 +136,7 @@ class MatchEdit
             }
         } catch (Exception $e) {
             $content .= $this->getModule()->getDoc()->section('Error:', $e->getMessage(), 0, 1, IModFunc::ICON_FATAL);
+            $content .= $this->getModule()->getDoc()->section($e->getTraceAsString(), 0, 1, IModFunc::ICON_FATAL);
         }
         $content .= '<br /><br />';
         $content .= $this->getFooter($current_league, $current_round, $pid, $formTool);
@@ -173,7 +174,7 @@ class MatchEdit
 
     private function makeTeamSelector(&$content, $pid, $current_league)
     {
-        global $LANG;
+        $LANG = $this->formTool->getLanguageService();
         $teamOptions = [];
         $teamOptions['selectorId'] = 'teamMatchEdit';
         $teamOptions['noLinks'] = true;
@@ -235,8 +236,9 @@ class MatchEdit
                 'round_name' => $roundName,
             ],
         ];
-        $params[ToolBox::OPTION_TITLE] = $GLOBALS['LANG']->getLL('label_create_match');
-        $content = $formTool->createNewLink('tx_cfcleague_games', $pid, $GLOBALS['LANG']->getLL('label_create_match'), $params);
+        $lang = $this->formTool->getLanguageService();
+        $params[ToolBox::OPTION_TITLE] = $lang->getLL('label_create_match');
+        $content = $formTool->createNewLink('tx_cfcleague_games', $pid, $lang->getLL('label_create_match'), $params);
 
         return $content;
     }

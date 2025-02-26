@@ -7,8 +7,8 @@ use Sys25\RnBase\Backend\Module\IModule;
 use Sys25\RnBase\Backend\Utility\BackendUtility;
 use Sys25\RnBase\Configuration\Processor;
 use Sys25\RnBase\Database\Connection;
+use Sys25\RnBase\Frontend\Request\Parameters;
 use Sys25\RnBase\Utility\Misc;
-use Sys25\RnBase\Utility\T3General;
 use Sys25\RnBase\Utility\TYPO3;
 use System25\T3sports\Model\Club;
 use System25\T3sports\Model\Competition;
@@ -22,7 +22,7 @@ use tx_rnbase;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2007-2023 Rene Nitzsche (rene@system25.de)
+ *  (c) 2007-2025 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -132,7 +132,7 @@ class Selector
             $content .= $this->renderSelector($menuData['menu'], $links);
         }
 
-        if (T3General::_GP('clearCache') && $menuData['value']) {
+        if (Parameters::_GP('clearCache') && $menuData['value']) {
             // Hook aufrufen
             Misc::callHook('cfc_league', 'clearStatistics_hook', [
                 'compUid' => $menuData['value'],
@@ -393,7 +393,7 @@ class Selector
     public function showMenu($pid, $name, $entries)
     {
         $MENU = [$name => $entries];
-        $SETTINGS = BackendUtility::getModuleData($MENU, T3General::_GP('SET'), $this->MCONF['name']) // Das ist der Name des Moduls
+        $SETTINGS = BackendUtility::getModuleData($MENU, Parameters::_GP('SET'), $this->MCONF['name']) // Das ist der Name des Moduls
         ;
         $ret = [];
         $ret['menu'] = BackendUtility::getFuncMenu($pid, 'SET['.$name.']', $SETTINGS[$name], $MENU[$name], $this->getScriptURI());

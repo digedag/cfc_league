@@ -19,7 +19,7 @@ use tx_rnbase;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2007-2023 Rene Nitzsche (rene@system25.de)
+ *  (c) 2007-2025 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -80,7 +80,7 @@ class MatchTicker extends BaseModFunc
      */
     protected function getContent($template, &$configurations, &$formatter, $formTool)
     {
-        global $LANG;
+        $lang = $this->getModule()->getLanguageService();
 
         $this->doc = $this->getModule()->getDoc();
 
@@ -98,12 +98,12 @@ class MatchTicker extends BaseModFunc
         $current_league = $this->getSelector()->showLeagueSelector($selector, $this->getModule()
             ->getPid());
         if (!$current_league) {
-            return $this->getModule()->getDoc()->section('Info:', $LANG->getLL('no_league_in_page'), 0, 1, self::ICON_WARN);
+            return $this->getModule()->getDoc()->section('Info:', $lang->getLL('no_league_in_page'), 0, 1, self::ICON_WARN);
         }
 
         if (!count($current_league->getRounds())) {
             $this->getModule()->setSelector($selector);
-            $content .= $LANG->getLL('no_round_in_league');
+            $content .= $lang->getLL('no_round_in_league');
 
             return $content;
         }
@@ -123,7 +123,7 @@ class MatchTicker extends BaseModFunc
         // Haben wir Daten im Request?
         if ($update && is_array($data['tx_cfcleague_match_notes'])) {
             $this->insertNotes($data);
-            $modContent .= '<i>'.$LANG->getLL('msg_data_saved').'</i>';
+            $modContent .= '<i>'.$lang->getLL('msg_data_saved').'</i>';
             // Jetzt das Spiel nochmal laden, da sich Daten geändert haben könnten
             $match->reset();
         }
@@ -145,7 +145,7 @@ class MatchTicker extends BaseModFunc
         // Den Update-Button einfügen
         $modContent .= $this->getModule()
             ->getFormTool()
-            ->createSubmit('update', $LANG->getLL('btn_save'));
+            ->createSubmit('update', $lang->getLL('btn_save'));
         // Jetzt listen wir noch die zum Spiel vorhandenen Tickermeldungen auf
         $modContent .= $this->doc->divider(5);
         $tickerArr = $this->createTickerArray($match, T3General::_GP('showAll'));
@@ -160,14 +160,14 @@ class MatchTicker extends BaseModFunc
             $tableLayout['defRowEven']['defCol'] = $tableLayout['defRowOdd']['defCol']; // Array('<td valign="top" style="padding:5px 5px;">', '</td>');
             $tickerContent .= $tables->buildTable($tickerArr, $tableLayout);
         } else {
-            $tickerContent .= $LANG->getLL('msg_NoTicker');
+            $tickerContent .= $lang->getLL('msg_NoTicker');
         }
 
         // Den JS-Code für Validierung einbinden
         $content .= $formTool->form->printNeededJSFunctions_top();
         $content .= $modContent.'</div>';
         // $content .= $this->getModule()->getFormTool()->form->JSbottom('editform');
-        $content .= $this->getModule()->getDoc()->section($LANG->getLL('title_recent_tickers'), $tickerContent);
+        $content .= $this->getModule()->getDoc()->section($lang->getLL('title_recent_tickers'), $tickerContent);
 
         $content .= $formTool->form->printNeededJSFunctions();
 
@@ -246,7 +246,7 @@ class MatchTicker extends BaseModFunc
         $out = '<table width="100%"><tr><td style="text-align:left">';
         $out .= $this->getModule()
             ->getFormTool()
-            ->createSubmit('update', $GLOBALS['LANG']->getLL('btn_save'));
+            ->createSubmit('update', $this->getModule()->getLanguageService()->getLL('btn_save'));
         $out .= '</td><td style="text-align:left">';
 
         $out .= '###LABEL_TICKEROFFSET###: ';
@@ -302,17 +302,17 @@ class MatchTicker extends BaseModFunc
      */
     private function createStandingForm(Fixture $match, Competition $competition)
     {
-        global $LANG;
+        $lang = $this->getModule()->getLanguageService();
 
         $standingWidth = 3;
         $out = '';
 
         $parts = $competition->getNumberOfMatchParts();
         for ($i = $parts; $i > 0; --$i) {
-            $label = $LANG->getLL('tx_cfcleague_games.parts_'.$parts.'_'.$i);
+            $label = $lang->getLL('tx_cfcleague_games.parts_'.$parts.'_'.$i);
             if (!$label) {
                 // Prüfen ob ein default gesetzt ist
-                $label = $LANG->getLL('tx_cfcleague_games.parts_'.$parts.'_default');
+                $label = $lang->getLL('tx_cfcleague_games.parts_'.$parts.'_default');
                 if ($label) {
                     $label = $i.'. '.$label;
                 }
@@ -330,7 +330,7 @@ class MatchTicker extends BaseModFunc
         $out .= $this->getModule()
             ->getFormTool()
             ->createSelectSingle('data[tx_cfcleague_games]['.$match->getUid().'][status]', intval($match->getProperty('status')), 'tx_cfcleague_games', 'status');
-        $out .= $LANG->getLL('tx_cfcleague_games.visitors').': ';
+        $out .= $lang->getLL('tx_cfcleague_games.visitors').': ';
         $out .= $this->getModule()
             ->getFormTool()
             ->createIntInput('data[tx_cfcleague_games]['.$match->getUid().'][visitors]', $match->getProperty('visitors'), 6);
@@ -487,14 +487,14 @@ class MatchTicker extends BaseModFunc
      */
     protected function createFormArray(Fixture $match)
     {
-        global $LANG;
+        $lang = $this->getModule()->getLanguageService();
 
         $arr = [
             [
-                $LANG->getLL('tx_cfcleague_match_notes.minute'),
-                $LANG->getLL('tx_cfcleague_match_notes.type'),
-                $LANG->getLL('tx_cfcleague_match_notes.player_home'),
-                $LANG->getLL('tx_cfcleague_match_notes.player_guest'),
+                $lang->getLL('tx_cfcleague_match_notes.minute'),
+                $lang->getLL('tx_cfcleague_match_notes.type'),
+                $lang->getLL('tx_cfcleague_match_notes.player_home'),
+                $lang->getLL('tx_cfcleague_match_notes.player_guest'),
             ],
         ];
 
@@ -522,7 +522,7 @@ class MatchTicker extends BaseModFunc
         }
         asort($playersGuest);
         // Jetzt noch den Dummy-Player anhängen
-        $playersHome[-1] = $playersGuest[-1] = $LANG->getLL('tx_cfcleague.unknown');
+        $playersHome[-1] = $playersGuest[-1] = $lang->getLL('tx_cfcleague.unknown');
 
         $types = $this->getTickerTypes();
         // Wenn kein sinnvoller Wert vorhanden ist, bleibt der Standard bei 4
