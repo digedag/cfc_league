@@ -10,11 +10,12 @@ use Sys25\RnBase\Utility\TYPO3;
 use System25\T3sports\Dfb\Synchronizer;
 use System25\T3sports\Model\Competition;
 use tx_rnbase;
+use TYPO3\CMS\Core\Resource\DefaultUploadFolderResolver;
 
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2008-2023 Rene Nitzsche (rene@system25.de)
+ *  (c) 2008-2025 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -51,6 +52,8 @@ class DfbSync
      */
     protected $uploadedFiles = [];
     protected $formTool;
+    /** @var IModule */
+    private $module;
 
     /**
      * @var Synchronizer
@@ -73,6 +76,7 @@ class DfbSync
         // Zuerst mal müssen wir die passende Liga auswählen lassen:
         // Entweder global über die Datenbank oder die Ligen der aktuellen Seite
         $this->doc = $module->getDoc();
+        $this->module = $module;
 
         $this->formTool = $module->getFormTool();
         $this->checkUpload();
@@ -114,9 +118,9 @@ class DfbSync
 
     protected function buildInfoMessage(Competition $competition)
     {
-        global $LANG;
+        $lang = $this->module->getLanguageService();
         $key = $competition->getExtId();
-        $msg = $LANG->getLL($key ? 'label_dfbsync_keyfound' : 'label_dfbsync_nokeyfound');
+        $msg = $lang->getLL($key ? 'label_dfbsync_keyfound' : 'label_dfbsync_nokeyfound');
 
         return sprintf($msg, $key);
     }
@@ -131,16 +135,12 @@ class DfbSync
         $file = Parameters::getPostOrGetParameter('file');
         // Initializing:
         $this->fileProcessor = tx_rnbase::makeInstance('TYPO3\\CMS\\Core\\Utility\\File\\ExtendedFileUtility');
-        if (TYPO3::isTYPO87OrHigher()) {
-            $this->fileProcessor->setActionPermissions();
-            $this->fileProcessor->setExistingFilesConflictMode(
-                \TYPO3\CMS\Core\Resource\DuplicationBehavior::REPLACE
-            );
-        } else {
-            $this->fileProcessor->init([], $GLOBALS['TYPO3_CONF_VARS']['BE']['fileExtensions']);
-            $this->fileProcessor->setActionPermissions();
-            $this->fileProcessor->dontCheckForUnique = 1;
-        }
+        $this->fileProcessor->setActionPermissions();
+        $this->fileProcessor->setExistingFilesConflictMode(
+            TYPO3::isTYPO130OrHigher() ? \TYPO3\CMS\Core\Resource\Enum\DuplicationBehavior::REPLACE :
+            \TYPO3\CMS\Core\Resource\DuplicationBehavior::REPLACE
+        );
+
         $this->fileProcessor->start($file);
         $result = $this->fileProcessor->processData();
 
@@ -161,8 +161,14 @@ class DfbSync
     {
         $defaultImportExportFolder = null;
 
-        $defaultTemporaryFolder = $this->getBackendUser()->getDefaultUploadTemporaryFolder();
-        if (null !== $defaultTemporaryFolder) {
+        $defaultTemporaryFolder = null;
+        if (TYPO3::isTYPO130OrHigher()) {
+            $defaultTemporaryFolder = tx_rnbase::makeInstance(DefaultUploadFolderResolver::class)->resolve($this->getBackendUser());
+        } else {
+            $defaultTemporaryFolder = $this->getBackendUser()->getDefaultUploadTemporaryFolder();
+        }
+
+        if ($defaultTemporaryFolder) {
             $importExportFolderName = 'importexport';
             $createFolder = !$defaultTemporaryFolder->hasFolder($importExportFolderName);
             if (true === $createFolder) {

@@ -18,7 +18,7 @@ use tx_rnbase;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2009-2023 Rene Nitzsche (rene@system25.de)
+ *  (c) 2009-2025 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -46,6 +46,7 @@ class MatchTable
     /** @var \Sys25\RnBase\Backend\Template\Override\DocumentTemplate */
     private $doc;
 
+    /** @var IModule */
     private $module;
 
     /** @var ToolBox */
@@ -106,12 +107,12 @@ class MatchTable
      */
     private function showMatchTable(Competition $comp)
     {
-        global $LANG;
+        $lang = $this->module->getLanguageService();
 
         $content = '';
         $matchCnt = $comp->getNumberOfMatches(false);
         if ($matchCnt > 0) {
-            $content .= $this->doc->section($LANG->getLL('warning').':', $LANG->getLL('msg_league_generation_hasmatches'), 0, 1, IModFunc::ICON_WARN);
+            $content .= $this->doc->section($lang->getLL('warning').':', $lang->getLL('msg_league_generation_hasmatches'), 0, 1, IModFunc::ICON_WARN);
             $content .= '<br/><br/>';
         }
 
@@ -144,7 +145,7 @@ class MatchTable
      */
     private function showMatchTableAuto(Competition $comp)
     {
-        global $LANG;
+        $lang = $this->module->getLanguageService();
         $content = '';
         // Wir holen die Mannschaften und den GameString aus der Liga
         // Beides jagen wir durch den Generator
@@ -160,17 +161,17 @@ class MatchTable
 
         if (count($gen->errors)) {
             // Da gibt es wohl ein Problem bei der Erzeugung der Spiele...
-            $content .= $this->doc->section($LANG->getLL('error').':', '<ul><li>'.implode('<li>', $gen->errors).'</ul>', 0, 1, IModFunc::ICON_FATAL);
+            $content .= $this->doc->section($lang->getLL('error').':', '<ul><li>'.implode('<li>', $gen->errors).'</ul>', 0, 1, IModFunc::ICON_FATAL);
         }
         if (count($gen->warnings)) {
             // Da gibt es wohl ein Problem bei der Erzeugung der Spiele...
-            $content .= $this->doc->section($LANG->getLL('warning').':', '<ul><li>'.implode('<li>', $gen->warnings).'</ul>', 0, 1, IModFunc::ICON_WARN);
+            $content .= $this->doc->section($lang->getLL('warning').':', '<ul><li>'.implode('<li>', $gen->warnings).'</ul>', 0, 1, IModFunc::ICON_WARN);
         }
         if (count($table)) {
             // Wir zeigen alle Spieltage und fragen nach dem Termin
             $content .= $this->prepareMatchTable($table, $comp, $options['halfseries']);
             // Den Update-Button einfügen
-            $content .= $this->formTool->createSubmit('update', $LANG->getLL('btn_create'), $GLOBALS['LANG']->getLL('msg_CreateGameTable'));
+            $content .= $this->formTool->createSubmit('update', $lang->getLL('btn_create'), $GLOBALS['LANG']->getLL('msg_CreateGameTable'));
         }
 
         return $content;
@@ -181,7 +182,7 @@ class MatchTable
      */
     private function prepareMatchTable($table, &$league, $option_halfseries)
     {
-        global $LANG;
+        $lang = $this->module->getLanguageService();
 
         $content = '';
         // Wir benötigen eine Select-Box mit der man die Rückrunden-Option einstellen kann
@@ -204,7 +205,7 @@ class MatchTable
 
         $arr = [
             [
-                $LANG->getLL('label_roundset'),
+                $lang->getLL('label_roundset'),
             ],
         ];
         // $arr = Array(Array($LANG->getLL('label_round'), $LANG->getLL('label_roundname').' / '.
@@ -220,7 +221,7 @@ class MatchTable
             // Die Formularfelder, die jetzt erstellt werden, wandern später direkt in die neuen Game-Records
             // Ein Hidden-Field für die Runde
             $fields[] = $this->formTool->createHidden('data[rounds][round_'.$round.'][round]', $round);
-            $roundName = $round.$LANG->getLL('createGameTable_round');
+            $roundName = $round.$lang->getLL('createGameTable_round');
             $fields[] = $this->formTool->createTxtInput('data[rounds][round_'.$round.'][round_name]', $roundName, 10, [
                 'class' => 'roundname',
             ]);
@@ -246,13 +247,13 @@ class MatchTable
      */
     private function createMatchTableArray($matches, &$league, $namePrefix)
     {
-        global $LANG;
+        $lang = $this->module->getLanguageService();
         $teamNames = $league->getTeamNames();
         $arr = [
             [
-                $LANG->getLL('label_match_no'),
-                $LANG->getLL('label_home'),
-                $LANG->getLL('label_guest'),
+                $lang->getLL('label_match_no'),
+                $lang->getLL('label_home'),
+                $lang->getLL('label_guest'),
             ],
         ];
         foreach ($matches as $match) {
@@ -303,7 +304,7 @@ class MatchTable
      */
     protected function createMatches($rounds, $league)
     {
-        global $LANG;
+        $lang = $this->module->getLanguageService();
 
         // Aus den Spielen der $table die TCA-Datensätze erzeugen
         $data = [
@@ -336,6 +337,6 @@ class MatchTable
         $tce = Connection::getInstance()->getTCEmain($data);
         $tce->process_datamap();
 
-        return $LANG->getLL('msg_matches_created');
+        return $lang->getLL('msg_matches_created');
     }
 }

@@ -3,6 +3,8 @@
 # Achtung: im BE können keine Referenzen verwendet werden. Die Werte also immmer kopieren!!				
 ##############################
 
+# Pattern: templates."composer-name"."something-unique" = "overriding-extension-composer-name":"entry-path"
+templates.digedag/cfc-league.rnbase = digedag/rn-base:Resources/Private
 
 mod {
 	cfc_league {
