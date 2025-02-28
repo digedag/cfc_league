@@ -162,7 +162,7 @@ class Teams
      */
     protected function showNewTeamForm($pid, $competition)
     {
-        global $LANG;
+        $lang = $this->module->getLanguageService();
         $show = intval(Parameters::_GP('check_newcompteam'));
 
         $onClick = TYPO3::isTYPO121OrHigher() ?
@@ -199,7 +199,7 @@ class Teams
         /* @var $tables Tables */
         $tables = tx_rnbase::makeInstance(Tables::class);
         $content .= $tables->buildTable($arr, $this->getTableLayout());
-        $content .= $this->getFormTool()->createSubmit('update', $LANG->getLL('btn_create'), $GLOBALS['LANG']->getLL('msg_create_teams'));
+        $content .= $this->getFormTool()->createSubmit('update', $lang->getLL('btn_create'), $lang->getLL('msg_create_teams'));
 
         return $content;
     }

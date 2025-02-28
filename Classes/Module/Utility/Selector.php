@@ -184,7 +184,7 @@ class Selector
         if (!$noLinks && $menu) {
             $links[] = $this->getFormTool()->createEditLink('tx_cfcleague_teams', $menuData['value']);
             if ($teamObj->getProperty('club')) {
-                $links[] = $this->getFormTool()->createEditLink('tx_cfcleague_club', intval($teamObj->getProperty('club')), $GLOBALS['LANG']->getLL('label_club'));
+                $links[] = $this->getFormTool()->createEditLink('tx_cfcleague_club', intval($teamObj->getProperty('club')), $this->getFormTool()->getLanguageService()->getLL('label_club'));
             }
         }
         $content .= $this->renderSelector($menuData['menu'], $links);

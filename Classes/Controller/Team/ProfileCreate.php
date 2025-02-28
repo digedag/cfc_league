@@ -106,11 +106,11 @@ class ProfileCreate
      */
     private function showCreateProfiles(&$data, Team $team, TeamInfo $teamInfo)
     {
-        global $LANG;
+        $lang = $this->module->getLanguageService();
 
         $content = '';
         if (!self::isProfilePage($this->pid)) {
-            $content .= $this->doc->section('Message:', $LANG->getLL('msg_pageNotAllowed'), 0, 1, IModFunc::ICON_WARN);
+            $content .= $this->doc->section('Message:', $lang->getLL('msg_pageNotAllowed'), 0, 1, IModFunc::ICON_WARN);
 
             return $content;
         }
@@ -122,9 +122,9 @@ class ProfileCreate
 
         if ($teamInfo->isTeamFull()) {
             // Kann nix mehr angelegt werden
-            $content .= $this->doc->section('Message:', $LANG->getLL('msg_maxPlayers'), 0, 1, IModFunc::ICON_WARN);
+            $content .= $this->doc->section('Message:', $lang->getLL('msg_maxPlayers'), 0, 1, IModFunc::ICON_WARN);
         } else {
-            $content .= $this->doc->section('Info:', $LANG->getLL('msg_checkPage').': <b>'.BackendUtility::getRecordPath($this->pid, '', 0).'</b>', 0, 1, IModFunc::ICON_INFO);
+            $content .= $this->doc->section('Info:', $lang->getLL('msg_checkPage').': <b>'.BackendUtility::getRecordPath($this->pid, '', 0).'</b>', 0, 1, IModFunc::ICON_INFO);
             $content .= $teamInfo->getInfoTable($this->module);
             // Wir zeigen 15 Zeilen mit Eingabefeldern
             $content .= $this->prepareInputTable($team, $teamInfo);
@@ -143,14 +143,15 @@ class ProfileCreate
      */
     protected function prepareInputTable(Team $team, TeamInfo $teamInfo)
     {
+        $lang = $this->module->getLanguageService();
         // Es werden zwei Tabellen erstellt
         $tableProfiles = $teamInfo->getTeamTable($this->module);
 
         $arr = [
             [
                 '&nbsp;',
-                $this->doc->getLangSrv()->getLL('label_firstname'),
-                $this->doc->getLangSrv()->getLL('label_lastname'),
+                $lang->getLL('label_firstname'),
+                $lang->getLL('label_lastname'),
                 '&nbsp;',
             ],
         ];
@@ -172,8 +173,8 @@ class ProfileCreate
         // Den Update-Button einfügen
         $button = $this->getFormTool()->createSubmit(
             'update',
-            $this->doc->getLangSrv()->getLL('btn_create'),
-            $this->doc->getLangSrv()->getLL('msg_CreateProfiles'),
+            $lang->getLL('btn_create'),
+            $lang->getLL('msg_CreateProfiles'),
             [
                 'class' => 'btn btn-primary',
                 'icon' => 'actions-user',
