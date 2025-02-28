@@ -99,6 +99,7 @@ class ProfileAdd
      */
     protected function showAddProfiles(Team $currTeam, TeamInfo $teamInfo)
     {
+        $lang = $this->mod->getLanguageService();
         $options = [
             'checkbox' => 1,
         ];
@@ -106,7 +107,7 @@ class ProfileAdd
         // Todo: wir müssen wissen, welche Teil des Teams selectiert ist
         $profiles = $currTeam->getPlayers();
         foreach ($profiles as $profile) {
-            $options['dontcheck'][$profile->getUid()] = $GLOBALS['LANG']->getLL('msg_profile_already_joined');
+            $options['dontcheck'][$profile->getUid()] = $lang->getLL('msg_profile_already_joined');
         }
 
         $searcher = $this->getProfileSearcher($options);
@@ -117,7 +118,7 @@ class ProfileAdd
             // Button für Zuordnung
             $tableForm .= $this->getFormTool()->createSubmit(
                 'profile2team',
-                $this->mod->getDoc()->getLangSrv()->getLL('label_join_profiles'),
+                $lang->getLL('label_join_profiles'),
                 '',
                 ['class' => 'btn btn-primary btn-sm', 'icon' => 'actions-code-merge']
             );
@@ -141,17 +142,17 @@ class ProfileAdd
      */
     protected function getCreateForm()
     {
-        global $LANG;
+        $lang = $this->mod->getLanguageService();
 
         if (!ProfileCreate::isProfilePage($this->mod->getPid())) {
-            $content = $this->mod->getDoc()->section('Message:', $LANG->getLL('msg_pageNotAllowed'), 0, 1, IModFunc::ICON_WARN);
+            $content = $this->mod->getDoc()->section('Message:', $lang->getLL('msg_pageNotAllowed'), 0, 1, IModFunc::ICON_WARN);
 
             return $content;
         }
         $arr = [
             [
-                $LANG->getLL('label_firstname'),
-                $LANG->getLL('label_lastname'),
+                $lang->getLL('label_firstname'),
+                $lang->getLL('label_lastname'),
                 '&nbsp;',
                 '&nbsp;',
             ],
@@ -161,13 +162,13 @@ class ProfileAdd
         $row[] = $this->getFormTool()->createTxtInput('data[tx_cfcleague_profiles][NEW'.$i.'][first_name]', '', 10);
         $row[] = $this->getFormTool()->createTxtInput('data[tx_cfcleague_profiles][NEW'.$i.'][last_name]', '', 10);
         $row[] = $this->getFormTool()->createSelectByArray('data[tx_cfcleague_profiles][NEW'.$i.'][type]', '', ProfileCreate::getProfileTypeArray());
-        $row[] = $this->getFormTool()->createSubmit('newprofile2team', $GLOBALS['LANG']->getLL('btn_create'), $GLOBALS['LANG']->getLL('msg_CreateProfiles')).$this->getFormTool()->createHidden('data[tx_cfcleague_profiles][NEW'.$i.'][pid]', $this->mod->getPid());
+        $row[] = $this->getFormTool()->createSubmit('newprofile2team', $lang->getLL('btn_create'), $lang->getLL('msg_CreateProfiles')).$this->getFormTool()->createHidden('data[tx_cfcleague_profiles][NEW'.$i.'][pid]', $this->mod->getPid());
         $arr[] = $row;
         $tables = tx_rnbase::makeInstance(Tables::class);
         $formTable = $tables->buildTable($arr);
 
         $out = '<hr /><div class="form-group">
-      <label>'.$LANG->getLL('label_create_profile4team').'</label>
+      <label>'.$lang->getLL('label_create_profile4team').'</label>
       '.$formTable.'</div>';
 
         return $out;
@@ -221,36 +222,37 @@ class ProfileAdd
      */
     protected function handleAddProfiles(Team $currTeam, TeamInfo $teamInfo)
     {
+        $lang = $this->mod->getLanguageService();
         $out = '';
         $profile2team = strlen(T3General::_GP('profile2team')) > 0; // Wurde der Submit-Button gedrückt?
         if ($profile2team) {
             $entryUids = T3General::_GP('checkEntry');
             if (!is_array($entryUids) || !count($entryUids)) {
-                $out = $GLOBALS['LANG']->getLL('msg_no_profile_selected').'<br/><br/>';
+                $out = $lang->getLL('msg_no_profile_selected').'<br/><br/>';
             } else {
                 $type = (int) T3General::_GP('profileType');
                 if (1 == $type) {
                     if ($teamInfo->get('freePlayers') < count($entryUids)) {
                         // Team ist schon voll
-                        $out = $GLOBALS['LANG']->getLL('msg_maxPlayers').'<br/><br/>';
+                        $out = $lang->getLL('msg_maxPlayers').'<br/><br/>';
                     } else {
                         // Die Spieler hinzufügen
                         $this->addProfiles2Team($currTeam, 'players', $entryUids);
-                        $out .= $GLOBALS['LANG']->getLL('msg_profiles_joined').'<br/><br/>';
+                        $out .= $lang->getLL('msg_profiles_joined').'<br/><br/>';
                     }
                 } elseif (2 == $type) {
                     // Die Trainer hinzufügen
                     $this->addProfiles2Team($currTeam, 'coaches', $entryUids);
-                    $out .= $GLOBALS['LANG']->getLL('msg_profiles_joined').'<br/><br/>';
+                    $out .= $lang->getLL('msg_profiles_joined').'<br/><br/>';
                 } else {
                     // Die Trainer hinzufügen
                     $this->addProfiles2Team($currTeam, 'supporters', $entryUids);
-                    $out .= $GLOBALS['LANG']->getLL('msg_profiles_joined').'<br/><br/>';
+                    $out .= $lang->getLL('msg_profiles_joined').'<br/><br/>';
                 }
             }
         }
 
-        return (strlen($out)) ? $this->mod->getDoc()->section($GLOBALS['LANG']->getLL('message').':', $out, 0, 1, IModFunc::ICON_INFO) : '';
+        return (strlen($out)) ? $this->mod->getDoc()->section($lang->getLL('message').':', $out, 0, 1, IModFunc::ICON_INFO) : '';
     }
 
     /**

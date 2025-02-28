@@ -171,7 +171,7 @@ class MatchTable
             // Wir zeigen alle Spieltage und fragen nach dem Termin
             $content .= $this->prepareMatchTable($table, $comp, $options['halfseries']);
             // Den Update-Button einfügen
-            $content .= $this->formTool->createSubmit('update', $lang->getLL('btn_create'), $GLOBALS['LANG']->getLL('msg_CreateGameTable'));
+            $content .= $this->formTool->createSubmit('update', $lang->getLL('btn_create'), $lang->getLL('msg_CreateGameTable'));
         }
 
         return $content;

@@ -90,7 +90,7 @@ class ProfileSearcherNew
         $out .= $this->getFormTool()->createTxtInput('data[searchterm]', $this->SEARCH_SETTINGS['searchterm'], 20);
         //$out .= $this->formTool->createTxtInput('searchdata[searchterm]', $this->SEARCH_SETTINGS['searchterm'], 20);
         // Den Update-Button einfügen
-        $out .= $this->getFormTool()->createSubmit('searchProfile', $GLOBALS['LANG']->getLL('btn_search'));
+        $out .= $this->getFormTool()->createSubmit('searchProfile', $this->formTool->getLanguageService->getLL('btn_search'));
         //        $out .= '<input type="submit" name="search" value="'.$LANG->getLL('btn_search').'" />';
         // Jetzt noch zusätzlichen JavaScriptcode für Buttons auf der Seite
         //        $out .= $this->formTool->getJSCode($this->mod->getPid());

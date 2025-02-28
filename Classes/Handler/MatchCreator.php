@@ -2,7 +2,6 @@
 
 namespace System25\T3sports\Handler;
 
-use Sys25\RnBase\Backend\Form\FormBuilder;
 use Sys25\RnBase\Backend\Module\IModFunc;
 use Sys25\RnBase\Backend\Module\IModule;
 use Sys25\RnBase\Backend\Utility\Tables;
@@ -14,7 +13,7 @@ use tx_rnbase;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2010-2023 Rene Nitzsche (rene@system25.de)
+ *  (c) 2010-2025 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -65,7 +64,7 @@ class MatchCreator
         $tcaData = T3General::_GP('data');
         $tce = Connection::getInstance()->getTCEmain($tcaData);
         $tce->process_datamap();
-        $content = $mod->getDoc()->section('Message:', $GLOBALS['LANG']->getLL('msg_matches_created'), 0, 1, IModFunc::ICON_INFO);
+        $content = $mod->getDoc()->section('Message:', $mod->getLanguageService()->getLL('msg_matches_created'), 0, 1, IModFunc::ICON_INFO);
 
         return $content;
     }
@@ -76,8 +75,8 @@ class MatchCreator
      */
     public function showScreen(Competition $competition, IModule $mod)
     {
-        global $LANG;
-        $LANG->includeLLFile('EXT:cfc_league/Resources/Private/Language/locallang_db.xlf');
+        $lang = $mod->getLanguageService();
+        //        $LANG->includeLLFile('EXT:cfc_league/Resources/Private/Language/locallang_db.xlf');
 
         $items = [];
         for ($i = 1; $i < 33; ++$i) {
@@ -91,11 +90,11 @@ class MatchCreator
         // Jetzt 6 Boxen mit Name und Kurzname
         $arr = [
             0 => [
-                $LANG->getLL('tx_cfcleague_games.round'),
-                $LANG->getLL('tx_cfcleague_games.date'),
-                $LANG->getLL('tx_cfcleague_games.status'),
-                $LANG->getLL('tx_cfcleague_games.home'),
-                $LANG->getLL('tx_cfcleague_games.guest'),
+                $lang->getLL('tx_cfcleague_games.round'),
+                $lang->getLL('tx_cfcleague_games.date'),
+                $lang->getLL('tx_cfcleague_games.status'),
+                $lang->getLL('tx_cfcleague_games.home'),
+                $lang->getLL('tx_cfcleague_games.guest'),
             ],
         ];
 
@@ -104,7 +103,7 @@ class MatchCreator
             'competition' => $competition->getUid(),
             'date' => time(),
             'round' => $competition->getNumberOfRounds(),
-            'round_name' => $competition->getNumberOfRounds().$LANG->getLL('createGameTable_round'),
+            'round_name' => $competition->getNumberOfRounds().$lang->getLL('createGameTable_round'),
         ];
 
         /* @var $formBuilder FormBuilder */
@@ -127,7 +126,7 @@ class MatchCreator
         }
         $tables = tx_rnbase::makeInstance(Tables::class);
         $content .= $tables->buildTable($arr);
-        $content .= $mod->getFormTool()->createSubmit('doCreateMatches', $LANG->getLL('btn_create'), $GLOBALS['LANG']->getLL('msg_CreateGameTable'));
+        $content .= $mod->getFormTool()->createSubmit('doCreateMatches', $lang->getLL('btn_create'), $lang->getLL('msg_CreateGameTable'));
 
         return $content;
     }

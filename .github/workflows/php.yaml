@@ -12,12 +12,10 @@ jobs:
         strategy:
             matrix:
                 php-version:
-                    - "7.1"
-                    - "7.2"
-                    - "7.3"
                     - "7.4"
                     - "8.0"
                     - "8.1"
+                    - "8.2"
         steps:
             -
                 name: "Checkout"
@@ -59,9 +57,6 @@ jobs:
             fail-fast: false
             matrix:
                 php-version:
-                    - "7.1"
-                    - "7.2"
-                    - "7.3"
                     - "7.4"
                     - "8.0"
                     - "8.1"
@@ -112,24 +107,15 @@ jobs:
             matrix:
                 include:
                     -
-                        typo3-version: "typo3/minimal:^9.5"
-                        php-version: "7.2"
-                    -
-                        typo3-version: "typo3/minimal:^9.5"
-                        php-version: "7.3"
-                    -
-                        typo3-version: "typo3/minimal:^9.5"
-                        php-version: "7.4"
-                    -
-                        typo3-version: "typo3/minimal:^10.4"
-                        php-version: "7.2"
-                    -
-                        typo3-version: "typo3/minimal:^10.4"
-                        php-version: "7.3"
-                    -
                         typo3-version: "typo3/minimal:^10.4"
                         php-version: "7.4"
-
+                    -
+                        typo3-version: "typo3/minimal:^11.5"
+                        php-version: "8.0"
+                    -
+                        typo3-version: "typo3/minimal:^12.4"
+                        php-version: "8.1"
+        
         steps:
             -
                 name: "Checkout"

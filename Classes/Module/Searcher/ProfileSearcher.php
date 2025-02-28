@@ -179,7 +179,7 @@ class ProfileSearcher
             $arr = $tables->prepareTable($profiles, $columns, $this->formTool, $this->options);
             $out .= $tables->buildTable($arr[0]);
         } else {
-            $out .= '<p><strong>'.$GLOBALS['LANG']->getLL('msg_no_matches_in_betset').'</strong></p><br/>';
+            $out .= '<p><strong>'.$this->module->getLanguageService()->getLL('msg_no_matches_in_betset').'</strong></p><br/>';
         }
 
         return $this->module->getDoc()->section($headline.':', $out, 0, 1, IModFunc::ICON_INFO);
