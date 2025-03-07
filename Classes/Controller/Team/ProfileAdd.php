@@ -114,7 +114,7 @@ class ProfileAdd
         $tableForm = '<div style="margin-top:10px">'.$searcher->getSearchForm().'</div>';
         $tableForm .= $searcher->getResultList();
         if ($searcher->getSize()) {
-            $tableForm .= $this->getFormTool()->createSelectByArray('profileType', '', ProfileCreate::getProfileTypeArray());
+            $tableForm .= $this->getFormTool()->createSelectByArray('profileType', '', ProfileCreate::getProfileTypeArray($lang));
             // Button für Zuordnung
             $tableForm .= $this->getFormTool()->createSubmit(
                 'profile2team',
@@ -161,7 +161,7 @@ class ProfileAdd
         $i = 1;
         $row[] = $this->getFormTool()->createTxtInput('data[tx_cfcleague_profiles][NEW'.$i.'][first_name]', '', 10);
         $row[] = $this->getFormTool()->createTxtInput('data[tx_cfcleague_profiles][NEW'.$i.'][last_name]', '', 10);
-        $row[] = $this->getFormTool()->createSelectByArray('data[tx_cfcleague_profiles][NEW'.$i.'][type]', '', ProfileCreate::getProfileTypeArray());
+        $row[] = $this->getFormTool()->createSelectByArray('data[tx_cfcleague_profiles][NEW'.$i.'][type]', '', ProfileCreate::getProfileTypeArray($lang));
         $row[] = $this->getFormTool()->createSubmit('newprofile2team', $lang->getLL('btn_create'), $lang->getLL('msg_CreateProfiles')).$this->getFormTool()->createHidden('data[tx_cfcleague_profiles][NEW'.$i.'][pid]', $this->mod->getPid());
         $arr[] = $row;
         $tables = tx_rnbase::makeInstance(Tables::class);

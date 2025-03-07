@@ -9,7 +9,6 @@ use Sys25\RnBase\Backend\Module\IModule;
 use Sys25\RnBase\Backend\Utility\Tables;
 use Sys25\RnBase\Database\Connection;
 use Sys25\RnBase\Utility\T3General;
-use Sys25\RnBase\Utility\TYPO3;
 use System25\T3sports\Handler\MatchCreator;
 use System25\T3sports\MatchGeneration\Generator;
 use System25\T3sports\Model\Competition;
@@ -51,6 +50,12 @@ class MatchTable
 
     /** @var ToolBox */
     private $formTool;
+    private $generator;
+
+    public function __construct(Generator $generator)
+    {
+        $this->generator = $generator;
+    }
 
     /**
      * Verwaltet die Erstellung von Spielplänen von Ligen.
@@ -156,7 +161,7 @@ class MatchTable
         $options['firstmatchnumber'] = $comp->getLastMatchNumber();
         // Zunächst mal Anzeige der Daten
         /** @var Generator $gen */
-        $gen = tx_rnbase::makeInstance(Generator::class);
+        $gen = $this->generator;
         $table = $gen->main($comp->getTeamIds(), $comp->getGenerationKey(), $options);
 
         if (count($gen->errors)) {
@@ -208,8 +213,6 @@ class MatchTable
                 $lang->getLL('label_roundset'),
             ],
         ];
-        // $arr = Array(Array($LANG->getLL('label_round'), $LANG->getLL('label_roundname').' / '.
-        // $LANG->getLL('label_rounddate'), $LANG->getLL('label_roundset')));
         $tables = tx_rnbase::makeInstance(Tables::class);
 
         $matchDay = new DateTime('next saturday 15:00:00');

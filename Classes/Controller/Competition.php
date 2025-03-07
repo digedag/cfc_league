@@ -56,6 +56,7 @@ class Competition extends BaseModFunc
      * @var MatchEdit
      */
     private $matchEdit;
+    private $matchTable;
 
     public $MCONF;
 
@@ -74,8 +75,9 @@ class Competition extends BaseModFunc
         return 'cfc_league';
     }
 
-    public function __construct(?MatchEdit $matchEdit = null, ?DfbSync $dfbSync = null)
+    public function __construct(MatchTable $matchTable, ?MatchEdit $matchEdit = null, ?DfbSync $dfbSync = null)
     {
+        $this->matchTable = $matchTable;
         $this->dfbSync = $dfbSync ?: tx_rnbase::makeInstance(DfbSync::class);
         $this->matchEdit = $matchEdit ?: tx_rnbase::makeInstance(MatchEdit::class);
     }
@@ -146,7 +148,7 @@ class Competition extends BaseModFunc
 
                 break;
             case 2:
-                $mod = tx_rnbase::makeInstance(MatchTable::class);
+                $mod = $this->matchTable;
                 $funcContent = $mod->main($this->getModule(), $current_league);
 
                 break;
