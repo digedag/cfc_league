@@ -7,7 +7,6 @@ T3sports Backend
 [![Total Downloads](https://img.shields.io/packagist/dt/digedag/cfc-league.svg?maxAge=3600)](https://packagist.org/packages/digedag/cfc-league)
 [![Code Style](https://github.com/digedag/cfc_league/actions/workflows/php.yaml/badge.svg)](https://github.com/digedag/cfc_league/actions/workflows/php.yaml)
 [![License](https://img.shields.io/packagist/l/digedag/cfc-league.svg?maxAge=3600)](https://packagist.org/packages/digedag/cfc-league)
-<a href="https://twitter.com/intent/follow?screen_name=T3sports1"><img src="https://img.shields.io/twitter/follow/T3sports1.svg?label=Follow%20@T3sports1" alt="Follow @T3sports1" /></a>
 [CHANGELOG](CHANGELOG.md)
 
 Extensive extension for Content Management System TYPO3 to manage sportclubs and competitions. This part of T3sports 

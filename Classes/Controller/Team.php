@@ -87,7 +87,7 @@ class Team extends BaseModFunc
      */
     protected function getContent($template, &$configurations, &$formatter, $formTool)
     {
-        global $LANG;
+        $lang = $this->getModule()->getLanguageService();
         // Zuerst mal müssen wir die passende Liga auswählen lassen:
         // Entweder global über die Datenbank oder die Ligen der aktuellen Seite
 
@@ -110,7 +110,7 @@ class Team extends BaseModFunc
 
         if (!($saison && count($competitions))) {
             $this->getModule()->setSelector($selector);
-            $content .= $this->doc->section('Info:', $saison ? $LANG->getLL('msg_NoCompetitonsFound') : $LANG->getLL('msg_NoSaisonFound'), 0, 1, self::ICON_WARN);
+            $content .= $this->doc->section('Info:', $saison ? $lang->getLL('msg_NoCompetitonsFound') : $lang->getLL('msg_NoSaisonFound'), 0, 1, self::ICON_WARN);
 
             return $content;
         }
@@ -123,16 +123,16 @@ class Team extends BaseModFunc
         $this->getModule()->setSelector($selector);
 
         if (!$team) { // Kein Team gefunden
-            $content .= $this->doc->section('Info:', $LANG->getLL('msg_no_team_found'), 0, 1, self::ICON_WARN);
+            $content .= $this->doc->section('Info:', $lang->getLL('msg_no_team_found'), 0, 1, self::ICON_WARN);
 
             return $content;
         }
         // Wenn ein Team gefunden ist, dann können wir das Modul schreiben
         $menu = $this->selector->showTabMenu($this->getModule()
             ->getPid(), 'teamtools', [
-                '0' => $LANG->getLL('create_players'),
-                '1' => $LANG->getLL('add_players'),
-                '2' => $LANG->getLL('manage_teamnotes'),
+                '0' => $lang->getLL('create_players'),
+                '1' => $lang->getLL('add_players'),
+                '2' => $lang->getLL('manage_teamnotes'),
             ]);
 
         $tabs = $menu['menu'];

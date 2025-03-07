@@ -173,7 +173,7 @@ class TeamInfo
      */
     public function handleRequest()
     {
-        global $LANG;
+        $lang = $this->getFormTool()->getLanguageService();
         $data = Parameters::getPostOrGetParameter('remFromTeam');
         if (!is_array($data)) {
             return '';
@@ -204,7 +204,7 @@ class TeamInfo
 
         return $this->getFormTool()
             ->getDoc()
-            ->section('Info:', $LANG->getLL('msg_removedProfileFromTeam'), 0, 1, IModFunc::ICON_INFO);
+            ->section('Info:', $lang->getLL('msg_removedProfileFromTeam'), 0, 1, IModFunc::ICON_INFO);
     }
 
     /**
@@ -216,7 +216,7 @@ class TeamInfo
      */
     private function addProfiles(&$arr, $profileNames, $label, $type)
     {
-        global $LANG;
+        $lang = $this->getFormTool()->getLanguageService();
         $i = 1;
         if ($profileNames) {
             foreach ($profileNames as $uid => $prof) {
@@ -237,7 +237,7 @@ class TeamInfo
                 $row[] = $this->getFormTool()->createSubmit(
                     'remFromTeam['.$type.']',
                     $uid,
-                    $LANG->getLL('msg_remove_team_'.$type),
+                    $lang->getLL('msg_remove_team_'.$type),
                     [
                         ToolBox::OPTION_ICON_NAME => 'actions-delete',
                         ToolBox::OPTION_HOVER_TEXT => 'Remove from Team',

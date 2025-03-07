@@ -10,6 +10,7 @@ use Sys25\RnBase\Backend\Utility\BackendUtility;
 use Sys25\RnBase\Backend\Utility\Tables;
 use Sys25\RnBase\Configuration\Processor;
 use Sys25\RnBase\Database\Connection;
+use Sys25\RnBase\Utility\LanguageTool;
 use Sys25\RnBase\Utility\Strings;
 use Sys25\RnBase\Utility\T3General;
 use System25\T3sports\Model\Team;
@@ -163,7 +164,7 @@ class ProfileCreate
             $row[] = $this->formTool->createTxtInput('data[tx_cfcleague_profiles][NEW'.$i.'][first_name]', '', 10);
             $row[] = $this->formTool->createTxtInput('data[tx_cfcleague_profiles][NEW'.$i.'][last_name]', '', 10);
             $row[] = $this->formTool->createSelectByArray('data[tx_cfcleague_profiles][NEW'.$i.'][type]', '',
-                self::getProfileTypeArray()).$this->formTool->createHidden('data[tx_cfcleague_profiles][NEW'.$i.'][pid]', $this->pid);
+                self::getProfileTypeArray($this->getFormTool()->getLanguageService())).$this->formTool->createHidden('data[tx_cfcleague_profiles][NEW'.$i.'][pid]', $this->pid);
             $arr[] = $row;
         }
         /* @var $tables Tables */
@@ -195,12 +196,12 @@ class ProfileCreate
      *
      * @return array
      */
-    public static function getProfileTypeArray()
+    public static function getProfileTypeArray(LanguageTool $languageTool)
     {
         return [
-            '1' => $GLOBALS['LANG']->getLL('label_profile_player'),
-            '2' => $GLOBALS['LANG']->getLL('label_profile_coach'),
-            '3' => $GLOBALS['LANG']->getLL('label_profile_supporter'),
+            '1' => $languageTool->getLL('label_profile_player'),
+            '2' => $languageTool->getLL('label_profile_coach'),
+            '3' => $languageTool->getLL('label_profile_supporter'),
         ];
     }
 

@@ -174,12 +174,12 @@ class MatchEdit
 
     private function makeTeamSelector(&$content, $pid, $current_league)
     {
-        $LANG = $this->formTool->getLanguageService();
+        $lang = $this->formTool->getLanguageService();
         $teamOptions = [];
         $teamOptions['selectorId'] = 'teamMatchEdit';
         $teamOptions['noLinks'] = true;
         $teamOptions['firstItem']['id'] = -1;
-        $teamOptions['firstItem']['label'] = $LANG->getLL('label_roundmode');
+        $teamOptions['firstItem']['label'] = $lang->getLL('label_roundmode');
 
         return $this->getSelector()->showTeamSelector($content, $pid, $current_league, $teamOptions);
     }
@@ -253,25 +253,25 @@ class MatchEdit
      */
     private function getHeadline($parts, $competition)
     {
-        $LANG = $this->getModule()->getLanguageService();
+        $lang = $this->getModule()->getLanguageService();
         $arr = [
             '',
-            $LANG->getLL('tx_cfcleague_games.date'),
-            $LANG->getLL('tx_cfcleague_games.status'),
-            $LANG->getLL('tx_cfcleague_games.home'),
-            $LANG->getLL('tx_cfcleague_games.guest'),
+            $lang->getLL('tx_cfcleague_games.date'),
+            $lang->getLL('tx_cfcleague_games.status'),
+            $lang->getLL('tx_cfcleague_games.home'),
+            $lang->getLL('tx_cfcleague_games.guest'),
         ];
 
         if ($competition->isAddPartResults() || 1 == $parts) {
-            $arr[] = $LANG->getLL('tx_cfcleague_games.endresult');
+            $arr[] = $lang->getLL('tx_cfcleague_games.endresult');
         }
         // Hier je Spielart die Überschrift setzen
         if ($parts > 1) {
             for ($i = $parts; $i > 0; --$i) {
-                $label = $LANG->getLL('tx_cfcleague_games.parts_'.$parts.'_'.$i);
+                $label = $lang->getLL('tx_cfcleague_games.parts_'.$parts.'_'.$i);
                 if (!$label) {
                     // Prüfen ob ein default gesetzt ist
-                    $label = $LANG->getLL('tx_cfcleague_games.parts_'.$parts.'_default');
+                    $label = $lang->getLL('tx_cfcleague_games.parts_'.$parts.'_default');
                     if ($label) {
                         $label = $i.'. '.$label;
                     }
@@ -281,14 +281,14 @@ class MatchEdit
         }
         $sports = $this->sportsServiceLocator->getSportsByIdentifier($competition->getSports());
         if ($sports->isSetBased()) {
-            $arr[] = $LANG->getLL('tx_cfcleague_games_sets');
+            $arr[] = $lang->getLL('tx_cfcleague_games_sets');
         }
         if ($sports->hasScore()) {
-            $arr[] = $LANG->getLL(sprintf('tx_cfcleague_games_%s_score_home', $sports->getIdentifier()));
-            $arr[] = $LANG->getLL(sprintf('tx_cfcleague_games_%s_score_guest', $sports->getIdentifier()));
+            $arr[] = $lang->getLL(sprintf('tx_cfcleague_games_%s_score_home', $sports->getIdentifier()));
+            $arr[] = $lang->getLL(sprintf('tx_cfcleague_games_%s_score_guest', $sports->getIdentifier()));
         }
 
-        $arr[] = $LANG->getLL('tx_cfcleague_games.visitors');
+        $arr[] = $lang->getLL('tx_cfcleague_games.visitors');
 
         return $arr;
     }

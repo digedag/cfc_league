@@ -2,6 +2,8 @@
 
 namespace System25\T3sports\MatchGeneration;
 
+use Sys25\RnBase\Utility\LanguageTool;
+
 /***************************************************************
  *  Copyright notice
  *
@@ -45,6 +47,13 @@ class Generator
         18 => '1-17,3-14,5-12,7-10,9-8,11-6,13-4,15-2,18-16|2-13,4-11,6-9,8-7,10-5,12-3,14-18,16-1,17-15|1-15,3-10,5-8,7-6,9-4,11-2,13-17,16-14,18-12|2-9,4-7,6-5,8-3,10-18,12-16,14-1,15-13,17-11|1-13,3-6,5-4,7-2,9-17,11-15,14-12,16-10,18-8|2-5,4-3,6-18,8-16,10-14,12-1,13-11,15-9,17-7|1-11,3-2,5-17,7-15,9-13,12-10,14-8,16-6,18-4|2-18,4-16,6-14,8-12,10-1,11-9,13-7,15-5,17-3|1-9,3-15,5-13,7-11,10-8,12-6,14-4,16-2,18-17|2-14,4-12,6-10,8-1,9-7,11-5,13-3,15-18,17-16|1-7,3-11,5-9,8-6,10-4,12-2,14-17,16-15,18-13|2-10,4-8,6-1,7-5,9-3,11-18,13-16,15-14,17-12|1-5,3-7,6-4,8-2,10-17,12-15,14-13,16-11,18-9|2-6,4-1,5-3,7-18,9-16,11-14,13-12,15-10,17-8|1-3,4-2,6-17,8-15,10-13,12-11,14-9,16-7,18-5|1-2,3-18,5-16,7-14,9-12,11-10,13-8,15-6,17-4|2-17,4-15,6-13,8-11,10-9,12-7,14-5,16-3,18-1',
     ];
 
+    private $languageTool;
+
+    public function __construct(LanguageTool $languageTool)
+    {
+        $this->languageTool = $languageTool;
+    }
+
     /**
      * Optionen die per $options übergeben werden können:
      * halfseries - wenn != 0 wird nur die erste Halbserie erzeugt
@@ -65,7 +74,7 @@ class Generator
      */
     public function main($teams, $table, $options)
     {
-        global $LANG;
+        $lang = $this->languageTool;
         // Passenden KeyString setzen
         $table = trim($table);
         if (!strlen($table)) {
@@ -74,7 +83,7 @@ class Generator
         // In Teams müssen eigentlich nur die UIDs der Teams stehen
         $table = $this->splitTableString($table);
         if (!count($table)) {
-            $this->errors[] = $LANG->getLL('msg_no_matchkeys');
+            $this->errors[] = $lang->getLL('msg_no_matchkeys');
 
             return [];
         }
@@ -163,32 +172,32 @@ class Generator
      */
     private function checkParams($teams, $table)
     {
-        global $LANG;
+        $lang = $this->languageTool;
 
         $warnings = [];
         $teamCnt = count($teams);
         // Anzahl Spieltage prüfen
         if ($teamCnt - 1 != count($table)) {
-            $warnings[] = sprintf($LANG->getLL('msg_wrongmatchdays'), $teamCnt - 1, count($table));
+            $warnings[] = sprintf($lang->getLL('msg_wrongmatchdays'), $teamCnt - 1, count($table));
         }
         // Anzahl Spiele pro Spieltag prüfen
         $matchCnt = intval($teamCnt / 2);
         foreach ($table as $day => $matches) {
             if ($matchCnt != count($matches)) {
-                $warnings[] = sprintf($LANG->getLL('msg_wrongmatches4matchday'), $day, count($matches), $matchCnt);
+                $warnings[] = sprintf($lang->getLL('msg_wrongmatches4matchday'), $day, count($matches), $matchCnt);
             }
             // Stimmen die Indizes?
             foreach ($matches as $k => $match) {
                 $matchArr = explode('-', $match);
                 if (2 != count($matchArr)) {
-                    $warnings[] = sprintf($LANG->getLL('msg_wrongmatch_syntax'), $day, $match);
+                    $warnings[] = sprintf($lang->getLL('msg_wrongmatch_syntax'), $day, $match);
                 }
                 if (intval($matchArr[0]) < 1 || intval($matchArr[0]) > $teamCnt) {
-                    $warnings[] = sprintf($LANG->getLL('msg_wrongmatch_homeidx'), $day, $matchArr[0]);
+                    $warnings[] = sprintf($lang->getLL('msg_wrongmatch_homeidx'), $day, $matchArr[0]);
                 }
                 // $warnings[] = "Fehler bei Spieltag $day: TeamIndex ist falsch ".$match;
                 if (intval($matchArr[1]) < 1 || intval($matchArr[1]) > $teamCnt) {
-                    $warnings[] = sprintf($LANG->getLL('msg_wrongmatch_guestidx'), $day, $matchArr[1]);
+                    $warnings[] = sprintf($lang->getLL('msg_wrongmatch_guestidx'), $day, $matchArr[1]);
                 }
                 // $warnings[] = "Fehler bei Spieltag $day: TeamIndex ist falsch ".$match;
             }
