@@ -4,6 +4,7 @@ namespace System25\T3sports\Utility;
 
 use Exception;
 use Sys25\RnBase\Utility\Debug;
+use Sys25\RnBase\Utility\LanguageTool;
 use Sys25\RnBase\Utility\Strings;
 use Sys25\RnBase\Utility\TSFAL;
 use Sys25\RnBase\Utility\TYPO3;
@@ -16,7 +17,7 @@ use tx_rnbase;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2007-2024 Rene Nitzsche (rene@system25.de)
+ *  (c) 2007-2025 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -38,6 +39,13 @@ use tx_rnbase;
 
 class TcaLookup
 {
+    private $languageTool;
+
+    public function __construct(LanguageTool $languageTool)
+    {
+        $this->languageTool = $languageTool;
+    }
+
     /**
      * Returns all available profile types for a TCA select item.
      *
@@ -308,9 +316,6 @@ class TcaLookup
      */
     public function getPlayersHome4Match($PA, $fobj)
     {
-        global $LANG;
-        $LANG->includeLLFile('EXT:cfc_league/Resources/Private/Language/locallang_db.xlf');
-
         $teamId = (int) $this->getPAValue($PA['row']['home'] ?? 0);
         $matchValue = $this->getPAValue($PA['row']['game'] ?? false);
         if ($teamId) {
@@ -339,8 +344,9 @@ class TcaLookup
             sort($playerArr);
             $PA['items'] = $playerArr;
             // Abschließend noch den Spieler "Unbekannt" hinzufügen! Dieser ist nur in Matchnotes verfügbar
+
             $PA['items'][] = [
-                $LANG->getLL('tx_cfcleague.unknown'),
+                $this->languageTool->sL('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague.unknown'),
                 '-1',
             ];
         } else {
@@ -357,9 +363,6 @@ class TcaLookup
      */
     public function getPlayersGuest4Match($PA, $fobj)
     {
-        global $LANG;
-        $LANG->includeLLFile('EXT:cfc_league/Resources/Private/Language/locallang_db.xlf');
-
         $teamId = (int) $this->getPAValue($PA['row']['guest'] ?? 0);
         $matchValue = $this->getPAValue($PA['row']['game'] ?? false);
 
@@ -386,7 +389,7 @@ class TcaLookup
             $PA['items'] = $playerArr;
             // Abschließend noch den Spieler "Unbekannt" hinzufügen!
             $PA['items'][] = [
-                $LANG->getLL('tx_cfcleague.unknown'),
+                $this->languageTool->sL('LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague.unknown'),
                 '-1',
             ];
         } else { // Ohne Daten müssen wir alle Spieler löschen
@@ -418,8 +421,6 @@ class TcaLookup
      */
     public function getPlayers4Team(&$PA, $fobj)
     {
-        global $LANG;
-        $LANG->includeLLFile('EXT:cfc_league/Resources/Private/Language/locallang_db.xlf');
         $column = 'team';
         if ($PA['row'][$column] ?? false) {
             $tablename = 'tx_cfcleague_team_notes';

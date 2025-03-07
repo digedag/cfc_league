@@ -8,6 +8,7 @@ use Sys25\RnBase\Backend\Module\BaseModFunc;
 use Sys25\RnBase\Backend\Utility\BackendUtility;
 use Sys25\RnBase\Backend\Utility\Tables;
 use Sys25\RnBase\Database\Connection;
+use Sys25\RnBase\Frontend\Request\Parameters;
 use Sys25\RnBase\Utility\T3General;
 use System25\T3sports\Model\Competition;
 use System25\T3sports\Model\Fixture;
@@ -57,6 +58,11 @@ class MatchTicker extends BaseModFunc
      */
     private $selector;
 
+    public function __construct(?Selector $selector = null)
+    {
+        $this->selector = $selector ?? tx_rnbase::makeInstance(Selector::class);
+    }
+
     /**
      * Method getFuncId.
      *
@@ -85,9 +91,7 @@ class MatchTicker extends BaseModFunc
         $this->doc = $this->getModule()->getDoc();
 
         // Selector-Instanz bereitstellen
-        $this->selector = tx_rnbase::makeInstance(Selector::class);
-        $this->selector->init($this->getModule()
-            ->getDoc(), $this->getModule());
+        $this->selector->init($this->getModule()->getDoc(), $this->getModule());
 
         // Zuerst mal müssen wir die passende Liga auswählen lassen:
         $content = '';
@@ -95,8 +99,9 @@ class MatchTicker extends BaseModFunc
         $selector = '';
         // Anzeige der vorhandenen Ligen
         /* @var $current_league Competition */
-        $current_league = $this->getSelector()->showLeagueSelector($selector, $this->getModule()
-            ->getPid());
+        $current_league = $this->getSelector()->showLeagueSelector(
+            $selector, $this->getModule()->getPid()
+        );
         if (!$current_league) {
             return $this->getModule()->getDoc()->section('Info:', $lang->getLL('no_league_in_page'), 0, 1, self::ICON_WARN);
         }
@@ -108,17 +113,20 @@ class MatchTicker extends BaseModFunc
             return $content;
         }
         // Jetzt den Spieltag wählen lassen
-        $current_round = $this->getSelector()->showRoundSelector($selector, $this->getModule()
-            ->getPid(), $current_league);
+        $current_round = $this->getSelector()->showRoundSelector(
+            $selector, $this->getModule()->getPid(), $current_league
+        );
 
         // Und nun das Spiel wählen
         $matchData = ServiceRegistry::getMatchService()->searchMatchesByRound($current_league, $current_round, true);
-        $match = $this->getSelector()->showMatchSelector($selector, $this->getModule()
-            ->getPid(), $matchData);
+        $match = $this->getSelector()->showMatchSelector(
+            $selector, $this->getModule()->getPid(), $matchData
+        );
         $this->getModule()->setSelector($selector);
 
         $modContent = '<div id="editform">';
-        $update = T3General::_GP('update');
+        $btn = Parameters::_GP('btnClicked');
+        $update = 'btn_update' === $btn;
         $data = T3General::_GP('data');
         // Haben wir Daten im Request?
         if ($update && is_array($data['tx_cfcleague_match_notes'])) {
@@ -145,7 +153,7 @@ class MatchTicker extends BaseModFunc
         // Den Update-Button einfügen
         $modContent .= $this->getModule()
             ->getFormTool()
-            ->createSubmit('update', $lang->getLL('btn_save'));
+            ->createSubmit('btn_update', $lang->getLL('btn_save'));
         // Jetzt listen wir noch die zum Spiel vorhandenen Tickermeldungen auf
         $modContent .= $this->doc->divider(5);
         $tickerArr = $this->createTickerArray($match, T3General::_GP('showAll'));
@@ -198,9 +206,10 @@ class MatchTicker extends BaseModFunc
 
     protected function getFormHeadline()
     {
-        $stop = T3General::_GP('btn_watch_stop');
-        $pause = T3General::_GP('btn_watch_pause');
-        $start = T3General::_GP('btn_watch_start');
+        $btn = Parameters::_GP('btnClicked');
+        $stop = 'btn_watch_stop' === $btn;
+        $pause = 'btn_watch_pause' === $btn;
+        $start = 'btn_watch_start' === $btn;
         $pauseTime = (int) T3General::_GP('watch_pausetime');
         $startTime = (int) T3General::_GP('watch_starttime');
         $clickTime = (int) T3General::_GP('watch_localtime');
@@ -233,20 +242,21 @@ class MatchTicker extends BaseModFunc
         $isPaused = $pauseTime > 0;
 
         // Der übergebene Offset wird immer gespeichert
-        $offset = [
-            'watch_offset' => (int) T3General::_GP('watch_offset'),
-        ];
+        $offset = Parameters::_GP('watch_offset');
+        $offset = null !== $offset ? [
+            'watch_offset' => (int) $offset,
+        ] : [];
         $modValues = BackendUtility::getModuleData(
             ['watch_offset' => 0],
             $offset,
             $this->getModule()->getName()
         );
-        $offset = isset($modValues['watch_offset']) ? $modValues['watch_offset'] : '0';
+        $offset = $modValues['watch_offset'] ?? '0';
 
         $out = '<table width="100%"><tr><td style="text-align:left">';
         $out .= $this->getModule()
             ->getFormTool()
-            ->createSubmit('update', $this->getModule()->getLanguageService()->getLL('btn_save'));
+            ->createSubmit('btn_update', $this->getModule()->getLanguageService()->getLL('btn_save'));
         $out .= '</td><td style="text-align:left">';
 
         $out .= '###LABEL_TICKEROFFSET###: ';

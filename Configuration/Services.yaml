@@ -11,8 +11,14 @@ services:
   System25\T3sports\Model\Repository\:
     resource: '../Classes/Model/Repository/*'
 
-  System25\T3sports\Service\ProfileService:
+  System25\T3sports\Controller\Ajax\AjaxTicker:
     public: true
 
   System25\T3sports\Controller\Competition:
+    public: true
+
+  System25\T3sports\Service\ProfileService:
+    public: true
+
+  System25\T3sports\Utility\TcaLookup:
     public: true
