@@ -6,7 +6,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Sys25\RnBase\Backend\Utility\BackendUtility;
 use Sys25\RnBase\Database\Connection;
-use Sys25\RnBase\Utility\T3General;
+use Sys25\RnBase\Utility\LanguageTool;
 use Sys25\RnBase\Utility\TYPO3;
 use TYPO3\CMS\Core\Http\Response;
 
@@ -15,18 +15,27 @@ use TYPO3\CMS\Core\Http\Response;
  */
 class AjaxTicker
 {
+    private $languageTool;
+
+    public function __construct(LanguageTool $languageTool)
+    {
+        $this->languageTool = $languageTool;
+    }
+
     public function dispatch(ServerRequestInterface $request): ResponseInterface
     {
-        $tickerMessage = trim(strip_tags(T3General::_POST('value')));
-        $t3Time = (int) T3General::_POST('t3time');
-        $t3match = (int) T3General::_POST('t3match');
+        $parsedBody = $request->getParsedBody();
+
+        $tickerMessage = trim(strip_tags($parsedBody['value'] ?? ''));
+        $t3Time = (int) ($parsedBody['t3time'] ?? 0);
+        $t3match = (int) ($parsedBody['t3match'] ?? 0);
 
         if (!is_object(TYPO3::getBEUser())) {
             return $this->createResponse('No BE user found!', 401);
         }
 
         if (!$tickerMessage || !$t3match) {
-            return $this->createJsonResponse('Invalid request!', 400);
+            return $this->createResponse('Invalid request!', 400);
         }
         $matchRecord = BackendUtility::getRecord('tx_cfcleague_games', $t3match);
 
@@ -45,9 +54,9 @@ class AjaxTicker
         $tce = Connection::getInstance()->getTCEmain($data);
         $tce->process_datamap();
 
-        $GLOBALS['LANG']->includeLLFile('EXT:cfc_league/Resources/Private/Language/locallang.xlf');
+        $response = $this->languageTool->sL('LLL:EXT:cfc_league/Resources/Private/Language/locallang.xlf:msg_sendInstant');
 
-        return $this->createResponse($GLOBALS['LANG']->getLL('msg_sendInstant'), 200);
+        return $this->createResponse($response, 200);
     }
 
     /**
