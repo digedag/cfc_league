@@ -22,3 +22,13 @@ services:
 
   System25\T3sports\Utility\TcaLookup:
     public: true
+
+  System25\T3sports\Utility\SlugModifier:
+    public: true
+
+  System25\T3sports\Command\MaintenanceCommand:
+    tags:
+      - name: 'console.command'
+        command: 't3sports:maintenance'
+        schedulable: false
+        description: Maintenance tasks for T3sports

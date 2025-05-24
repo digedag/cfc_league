@@ -14,6 +14,7 @@ CREATE TABLE tx_cfcleague_group (
 	name varchar(255) DEFAULT '' NOT NULL,
 	shortname varchar(55) DEFAULT '' NOT NULL,
 	logo int(11) DEFAULT '0' NOT NULL,
+	slug varchar(2048),
 
 	PRIMARY KEY (uid),
 	KEY parent (pid)
@@ -35,6 +36,7 @@ CREATE TABLE tx_cfcleague_saison (
 	hidden tinyint(4) DEFAULT '0' NOT NULL,
 	name varchar(255) DEFAULT '' NOT NULL,
 	halftime int(11) DEFAULT '0' NOT NULL,
+	slug varchar(2048),
 	
 	PRIMARY KEY (uid),
 	KEY parent (pid)
@@ -75,6 +77,7 @@ CREATE TABLE tx_cfcleague_competition (
 	addparts tinyint(4) DEFAULT '0' NOT NULL,
 	parent int(11) DEFAULT '0' NOT NULL,
 	extid varchar(255) DEFAULT '' NOT NULL,
+	slug varchar(2048),
 
 	PRIMARY KEY (uid),
 	KEY parent (pid)
@@ -191,6 +194,7 @@ CREATE TABLE tx_cfcleague_teams (
 	supporters_comment text,
 	link_report tinyint(4) DEFAULT '0' NOT NULL,
 	extid varchar(255) DEFAULT '' NOT NULL,
+	slug varchar(2048),
 
 	PRIMARY KEY (uid),
 	KEY parent (pid)
@@ -272,7 +276,8 @@ CREATE TABLE tx_cfcleague_games (
 	goals_home_ap int(11) DEFAULT '0' NOT NULL,
 	goals_guest_ap int(11) DEFAULT '0' NOT NULL,
 	extid varchar(255) DEFAULT '' NOT NULL,
-	
+	slug varchar(2048),
+
 	PRIMARY KEY (uid),
 	KEY parent (pid)
 );
@@ -314,6 +319,7 @@ CREATE TABLE tx_cfcleague_profiles (
 	types varchar(150) DEFAULT '' NOT NULL,
 	extid varchar(255) DEFAULT '' NOT NULL,
 	relitems int(11) DEFAULT '0' NOT NULL,
+	slug varchar(2048),
 
 	PRIMARY KEY (uid),
 	KEY parent (pid)
@@ -446,6 +452,7 @@ CREATE TABLE tx_cfcleague_stadiums (
 	clubs int(11) DEFAULT '0' NOT NULL,
 	address int(11) DEFAULT '0' NOT NULL,
 	extid varchar(255) DEFAULT '' NOT NULL,
+	slug varchar(2048),
 
 	PRIMARY KEY (uid),
 	KEY parent (pid)

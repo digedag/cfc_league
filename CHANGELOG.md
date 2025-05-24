@@ -2,6 +2,12 @@
 Änderungen
 ==========
 
+## v1.12.0 (??.06.2025)
+ * Support for TYPO3 13 LTS
+ * Support for TYPO3 8 and 9 dropped
+ * New slug field for speaking url in matches
+ * Command `t3sports:maintenance slug` to generate slug content
+
 ## v1.11.8 (20.11.2024)
  * Backend module not loaded for non-admins
  * support for judo added

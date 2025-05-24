@@ -192,6 +192,28 @@ $tx_cfcleague_games = [
                 'maxitems' => 1,
             ],
         ],
+
+        'slug' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_tca.xlf:pages.slug',
+            'config' => [
+                'type' => 'slug',
+                'size' => 50,
+                'generatorOptions' => [
+                    'fields' => ['uid'],
+                    'replacements' => [
+                        '/' => '-',
+                    ],
+                    'postModifiers' => [
+                        System25\T3sports\Utility\SlugModifier::class.'->handleFixture',
+                    ],
+                ],
+                'fallbackCharacter' => '-',
+                'eval' => 'unique',
+                'default' => '',
+            ],
+        ],
+
         'coach_home' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_games.coach_home',
@@ -735,7 +757,7 @@ $tx_cfcleague_games = [
     'types' => [
         // goals_home_1, goals_guest_1, goals_home_2, goals_guest_2,
         '0' => [
-            'showitem' => 'hidden,match_no,competition,home,guest,round,round_name,date,addinfo,status,--palette--;;6,sets,--palette--;;7,arena,stadium,visitors,extid,
+            'showitem' => 'hidden,match_no,competition,home,guest,round,round_name,date,addinfo,status,--palette--;;6,sets,--palette--;;7,arena,stadium,visitors,slug,extid,
             --div--;LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_games.tab_lineup,coach_home, players_home, substitutes_home, system_home, system_guest, coach_guest, players_guest, substitutes_guest, referee, assists, videoreferee, videoassists,
             --div--;LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_games.tab_lineup_stat,players_home_stat, substitutes_home_stat, players_guest_stat, substitutes_guest_stat, scorer_home_stat, scorer_guest_stat,
             --div--;LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_games.tab_score, is_extratime,--palette--;;2, is_penalty,--palette--;;3,
