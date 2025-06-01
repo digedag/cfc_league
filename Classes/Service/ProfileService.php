@@ -89,6 +89,7 @@ class ProfileService extends AbstractService
                 $ret[$toLoadFlip[$profile->getUid()]] = $profile;
             }
         }
+        ksort($ret);
 
         return $ret;
     }
