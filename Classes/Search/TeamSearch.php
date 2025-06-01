@@ -42,6 +42,8 @@ class TeamSearch extends SearchBase
             'TEAM' => 'tx_cfcleague_teams',
             'COMPETITION' => 'tx_cfcleague_competition',
         ];
+        $tableMapping['TEAMHOME'] = 'TEAMHOME';
+        $tableMapping['TEAMGUEST'] = 'TEAMGUEST';
 
         // Hook to append other tables
         Misc::callHook('cfc_league', 'search_Team_getTableMapping_hook', [
@@ -71,6 +73,12 @@ class TeamSearch extends SearchBase
         $join = [];
         if (isset($tableAliases['COMPETITION'])) {
             $join[] = new Join('TEAM', 'tx_cfcleague_competition', 'FIND_IN_SET(TEAM.uid, COMPETITION.teams)', 'COMPETITION');
+        }
+        if (isset($tableAliases['TEAMHOME'])) {
+            $join[] = new Join('TEAM', 'tx_cfcleague_games', 'TEAMHOME.home = TEAM.uid', 'TEAMHOME');
+        }
+        if (isset($tableAliases['TEAMGUEST'])) {
+            $join[] = new Join('TEAM', 'tx_cfcleague_games', 'TEAMGUEST.guest = TEAM.uid', 'TEAMGUEST');
         }
 
         // Hook to append other tables
