@@ -94,7 +94,7 @@ class MatchTable
         // Haben wir Daten im Request?
         $content = '';
         $data = T3General::_GP('data');
-        if (isset($data['rounds']) && T3General::_GP('update')) {
+        if (isset($data['rounds']) && !empty($data['rounds'])) {
             $result = $this->createMatches($data['rounds'], $comp);
 
             $content .= $this->doc->section($this->formTool->getLanguageService()->getLL('message').':', $result, 0, 1, IModFunc::ICON_INFO);
@@ -176,7 +176,7 @@ class MatchTable
             // Wir zeigen alle Spieltage und fragen nach dem Termin
             $content .= $this->prepareMatchTable($table, $comp, $options['halfseries']);
             // Den Update-Button einfügen
-            $content .= $this->formTool->createSubmit('update', $lang->getLL('btn_create'), $lang->getLL('msg_CreateGameTable'));
+            $content .= $this->getFormTool()->createSubmit('update', $lang->getLL('btn_create'), $lang->getLL('msg_CreateGameTable'));
         }
 
         return $content;

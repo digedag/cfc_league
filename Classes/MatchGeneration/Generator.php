@@ -141,8 +141,8 @@ class Generator
                 foreach ($matches as $k => $match) {
                     $teamIds = explode('-', $match);
                     // Ist es ein spielfreies Spiel
-                    $isNoMatch = $teams[$teamIds[0]] == $option_nomatch || $teams[$teamIds[1]] == $option_nomatch;
-                    $dayArr[] = new Fixture(++$matchCnt, $isNoMatch ? '' : ++$matchCnt2, $teams[$teamIds[0]], $teams[$teamIds[1]], $isNoMatch);
+                    $isNoMatch = ($teams[$teamIds[0] ?? -1] ?? true) == $option_nomatch || ($teams[$teamIds[1] ?? -1] ?? true) == $option_nomatch;
+                    $dayArr[] = new Fixture(++$matchCnt, $isNoMatch ? '' : ++$matchCnt2, $teams[$teamIds[0]] ?? null, $teams[$teamIds[1]] ?? null, $isNoMatch);
                 }
                 $ret[++$dayCnt] = $dayArr;
             }
@@ -153,8 +153,8 @@ class Generator
                 $dayArr = []; // Hier kommen die Spiele rein
                 foreach ($matches as $k => $match) {
                     $teamIds = explode('-', $match);
-                    $isNoMatch = $teams[$teamIds[0]] == $option_nomatch || $teams[$teamIds[1]] == $option_nomatch;
-                    $dayArr[] = new Fixture(++$matchCnt, $isNoMatch ? '' : ++$matchCnt2, $teams[$teamIds[1]], $teams[$teamIds[0]], $isNoMatch);
+                    $isNoMatch = ($teams[$teamIds[0] ?? -1] ?? true) == $option_nomatch || ($teams[$teamIds[1] ?? -1] ?? true) == $option_nomatch;
+                    $dayArr[] = new Fixture(++$matchCnt, $isNoMatch ? '' : ++$matchCnt2, $teams[$teamIds[1]] ?? null, $teams[$teamIds[0]] ?? null, $isNoMatch);
                     // $dayArr[] = new Match(++$matchCnt, $teams[$teamIds[1]], $teams[$teamIds[0]]);
                 }
                 $ret[++$dayCnt] = $dayArr;
