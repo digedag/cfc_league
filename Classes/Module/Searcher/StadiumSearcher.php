@@ -106,7 +106,7 @@ class StadiumSearcher
     public function getResultList()
     {
         /** @var BEPager $pager */
-        $pager = tx_rnbase::makeInstance(BEPager::class, 'stadiumPager', $this->getModule()->getName(), 0);
+        $pager = tx_rnbase::makeInstance(BEPager::class, 'stadiumPager', $this->getModule(), 0);
         // Get stadium service
         $srv = ServiceRegistry::getStadiumService();
 
