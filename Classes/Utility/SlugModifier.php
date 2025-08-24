@@ -22,6 +22,23 @@ class SlugModifier
         $this->teamRepo = $teamRepo;
     }
 
+    public function handleProfile(array $hookParameters, $parent)
+    {
+        $record = $hookParameters['record'];
+        $uid = (int) ($record['uid'] ?? 0);
+        if ($uid <= 0) {
+            return '';
+        }
+        $map = [
+            'uid' => $record['uid'],
+            'name' => trim(!empty($record['stage_name'] ?? '') ? $record['stage_name'] : ($record['first_name'] ?? '').' '.($record['last_name'] ?? '')),
+        ];
+        $template = '[uid]/[name]';
+        $slug = $this->buildSlug($template, $map);
+
+        return $slug;
+    }
+
     public function handleFixture(array $hookParameters, $parent)
     {
         $record = $hookParameters['record'];
@@ -44,7 +61,13 @@ class SlugModifier
         ];
 
         $template = '[saison_name]/[comp_name]/[home_tlc]-[guest_tlc]';
+        $slug = $this->buildSlug($template, $map);
 
+        return $slug;
+    }
+
+    private function buildSlug($template, $map)
+    {
         $slug = preg_replace_callback('/\[([^\]]+)\]/', function ($matches) use ($map) {
             $key = $matches[1];
 
@@ -57,7 +80,7 @@ class SlugModifier
         } else {
             $slug = strtr($slug, ['ä' => 'ae', 'ö' => 'oe', 'ü' => 'ue', 'ß' => 'ss']);
         }
-        $slug = preg_replace('/[^a-z0-9-]+/', '-', $slug); // Rest normalisieren
+        $slug = preg_replace('/[^a-z0-9-\/]+/', '-', $slug); // Rest normalisieren. Also alles ausser a-z, 0-9 und / zu -
         $slug = preg_replace('/-+/', '-', $slug); // Mehrere - zu einem
         $slug = trim($slug, '-/');
 
