@@ -302,6 +302,26 @@ $tx_cfcleague_profiles = [
                 ],
             ],
         ],
+        'slug' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_tca.xlf:pages.slug',
+            'config' => [
+                'type' => 'slug',
+                'size' => 50,
+                'generatorOptions' => [
+                    'fields' => ['uid'],
+                    'replacements' => [
+                        '/' => '-',
+                    ],
+                    'postModifiers' => [
+                        System25\T3sports\Utility\SlugModifier::class.'->handleProfile',
+                    ],
+                ],
+                'fallbackCharacter' => '-',
+                'eval' => 'unique',
+                'default' => '',
+            ],
+        ],
         'extid' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_profiles_extid',
@@ -315,7 +335,7 @@ $tx_cfcleague_profiles = [
     ],
     'types' => [
         '0' => [
-            'showitem' => 'hidden, first_name, last_name, stage_name, home_town, birthday, died, dayofdeath, native_town, nationality, gender, height, weight, position, duration_of_contract, start_of_contract, email, nickname, extid,
+            'showitem' => 'hidden, first_name, last_name, stage_name, home_town, birthday, died, dayofdeath, native_town, nationality, gender, height, weight, position, duration_of_contract, start_of_contract, email, nickname, slug, extid,
 		         --div--;LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_profiles.description,gdpr,link_report,t3images,types, summary, description',
         ],
         'columnsOverrides' => [

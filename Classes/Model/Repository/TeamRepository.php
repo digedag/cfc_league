@@ -8,7 +8,7 @@ use System25\T3sports\Search\TeamSearch;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2017-2021 Rene Nitzsche (rene@system25.de)
+ *  (c) 2017-2025 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -48,21 +48,14 @@ class TeamRepository extends PersistenceRepository
      */
     public function findByClubAndSaison($clubUid, $saisonIds, $agegroups)
     {
-        $what = 'distinct tx_cfcleague_teams.uid, tx_cfcleague_teams.comment, '.
-                'tx_cfcleague_teams.name, tx_cfcleague_teams.short_name, '.
-                'tx_cfcleague_teams.coaches, tx_cfcleague_teams.players, tx_cfcleague_teams.supporters, '.
-                'tx_cfcleague_teams.coaches_comment, tx_cfcleague_teams.players_comment, tx_cfcleague_teams.supporters_comment, '.
-                'tx_cfcleague_teams.t3images';
-        $from = [
-            'tx_cfcleague_teams INNER JOIN tx_cfcleague_competition c ON FIND_IN_SET(tx_cfcleague_teams.uid, c.teams) AND c.hidden=0 AND c.deleted=0 ',
-            'tx_cfcleague_teams',
-        ];
+        $fields = [];
+        $fields['TEAM.CLUB'][OP_EQ_INT] = $clubUid;
+        $fields['COMPETITION.SAISON'][OP_IN_INT] = $saisonIds;
+        $fields['COMPETITION.AGEGROUP'][OP_IN_INT] = $agegroups;
         $options = [];
-        // FIXME: Umstellen auf SearchClass
-        $options['where'] = 'tx_cfcleague_teams.club = '.$clubUid.' AND c.saison IN ('.$saisonIds.') AND c.agegroup IN ('.$agegroups.')';
-        $options['wrapperclass'] = $this->getSearcher()->getWrapperClass();
+        $options['distinct'] = 1;
 
-        return $this->getConnection()->doSelect($what, $from, $options);
+        return $this->search($fields, $options);
 
         /*
          * SELECT distinct t.uid, t.name FROM tx_cfcleague_teams

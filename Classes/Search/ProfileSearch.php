@@ -10,7 +10,7 @@ use System25\T3sports\Model\Profile;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2006-2023 Rene Nitzsche
+ *  (c) 2006-2025 Rene Nitzsche
  *  Contact: rene@system25.de
  *  All rights reserved
  *

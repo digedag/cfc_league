@@ -4,6 +4,7 @@ namespace System25\T3sports\Hooks;
 
 use Sys25\RnBase\Database\Connection;
 use Sys25\RnBase\Utility\Strings;
+use tx_rnbase;
 
 /**
  * *************************************************************
@@ -43,8 +44,18 @@ class AfterDBHook
     public function processDatamap_afterDatabaseOperations($status, $table, $id, $fieldArray, &$tcemain)
     {
         if ('tx_cfcleague_profiles' == $table) {
+            $db = Connection::getInstance();
+
+            if ('new' === $status && empty($fieldArray['slug'] ?? '')) {
+                // Bei neuen Datensätzen wird der Slug initial angelegt
+                $uid = (int) $tcemain->substNEWwithIDs[$id];
+                $fieldArray['uid'] = $uid;
+                // Slug neu generieren
+                $slugModifier = tx_rnbase::makeInstance(\System25\T3sports\Utility\SlugModifier::class);
+                $slug = $slugModifier->handleProfile(['record' => $fieldArray], null);
+                $db->doUpdate('tx_cfcleague_profiles', 'uid='.$uid, ['slug' => $slug]);
+            }
             if (array_key_exists('types', $fieldArray)) {
-                $db = Connection::getInstance();
                 // Die Types werden zusätzlich in einer MM-Tabelle gespeichert
                 $id = ('new' == $status) ? $tcemain->substNEWwithIDs[$id] : $id;
                 if ('new' != $status) {

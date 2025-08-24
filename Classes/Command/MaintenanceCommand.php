@@ -8,7 +8,6 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Sys25\RnBase\Database\Connection;
-use System25\T3sports\Model\Repository\MatchRepository;
 use System25\T3sports\Utility\SlugModifier;
 use Throwable;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
@@ -42,19 +41,22 @@ class MaintenanceCommand extends Command
 {
     /** @var OutputInterface */
     private $output;
-    private $matchRepo;
     private $slugModifier;
+    private $slugTableMap = [
+        'fixtures' => ['table' => 'tx_cfcleague_games', 'slugMethod' => 'handleFixture'],
+        'profiles' => ['table' => 'tx_cfcleague_profiles', 'slugMethod' => 'handleProfile'],
+    ];
 
-    public function __construct(SlugModifier $slugModifier, MatchRepository $matchRepo)
+    public function __construct(SlugModifier $slugModifier)
     {
         parent::__construct(null);
         $this->slugModifier = $slugModifier;
-        $this->matchRepo = $matchRepo;
     }
 
     protected function configure()
     {
         $this->addArgument('task', InputOption::VALUE_REQUIRED, 'Task to execute');
+        $this->addOption('table', null, InputOption::VALUE_REQUIRED, 'Table to process.');
         $this->addOption('force', null, InputOption::VALUE_NONE, 'Really execute command.');
         $this->setHelp('Maintenance operations.');
     }
@@ -70,7 +72,7 @@ class MaintenanceCommand extends Command
         $command = $input->getArgument('task');
         switch ($command) {
             case 'slug':
-                $result = $this->updateSlug($style, $force);
+                $result = $this->updateSlug($input, $style, $force);
                 break;
             default:
                 $style->error('Unknown command');
@@ -82,14 +84,23 @@ class MaintenanceCommand extends Command
         return $result;
     }
 
-    public function updateSlug(SymfonyStyle $style, bool $force): int
+    public function updateSlug(InputInterface $input, SymfonyStyle $style, bool $force): int
     {
+        $tableData = $this->slugTableMap[$input->getOption('table')] ?? null;
+        if (!$tableData) {
+            $style->warning(sprintf('Unknown or missing table for option --table.'));
+
+            return Command::FAILURE;
+        }
+
+        $table = $tableData['table'];
         $connection = Connection::getInstance();
-        $rows = $connection->doSelect('f.uid', [
-            'table' => 'tx_cfcleague_games',
+        $rows = $connection->doSelect('f.*', [
+            'table' => $table,
             'alias' => 'f',
         ], [
             'enablefieldsbe' => 1,
+            'collection' => 'iterator',
             'debug' => 1,
             'where' => function (QueryBuilder $qb) {
                 $qb->where(sprintf('(f.slug IS NULL OR f.slug = \'\')'));
@@ -109,16 +120,11 @@ class MaintenanceCommand extends Command
         $progress->start();
         foreach ($rows as $row) {
             try {
-                $match = $this->matchRepo->findByUid($row['uid']);
-                if ($match) {
-                    $slug = $this->slugModifier->handleFixture(['record' => $match->getProperties()], $match);
-                    $match->setProperty('slug', $slug);
-                    $connection->doUpdate('tx_cfcleague_games', sprintf('uid = %d', $row['uid']), [
-                        'slug' => $slug,
-                    ]);
-                } else {
-                    $this->output->writeln(sprintf('Match %d not found', $row['uid']));
-                }
+                $slugMethod = $tableData['slugMethod'];
+                $slug = $this->slugModifier->$slugMethod(['record' => $row], null);
+                $connection->doUpdate($table, sprintf('uid = %d', $row['uid']), [
+                    'slug' => $slug,
+                ]);
             } catch (Throwable $e) {
                 $this->output->writeln(sprintf('Error for match (%d): %s', $row['uid'], $e->getMessage()));
             }
