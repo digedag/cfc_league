@@ -23,6 +23,20 @@ return $config->setFinder($finder)
         'trailing_comma_in_multiline' => [
             'elements' => ['arrays'],
         ],
+        'no_unneeded_control_parentheses' => [
+            'statements' => [
+                'break', 
+                'clone', 
+                'continue', 
+                'echo_print', 
+                'others', 
+                'return', 
+                'switch_case', 
+                'yield', 
+                'yield_from',
+                // 'negative_instanceof' <-- Diese Zeile einfach weglassen
+            ],
+        ],
     ])
     ->setLineEnding("\n")
 ;

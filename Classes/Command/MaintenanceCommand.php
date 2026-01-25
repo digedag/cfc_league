@@ -61,7 +61,7 @@ class MaintenanceCommand extends Command
         $this->setHelp('Maintenance operations.');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->output = $output;
         $style = new SymfonyStyle($input, $output);
@@ -84,7 +84,7 @@ class MaintenanceCommand extends Command
         return $result;
     }
 
-    public function updateSlug(InputInterface $input, SymfonyStyle $style, bool $force): int
+    private function updateSlug(InputInterface $input, SymfonyStyle $style, bool $force): int
     {
         $tableData = $this->slugTableMap[$input->getOption('table')] ?? null;
         if (!$tableData) {
