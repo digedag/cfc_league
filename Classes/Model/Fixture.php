@@ -609,9 +609,9 @@ class Fixture extends BaseModel
             }
 
             return $ret;
-        } else {
-            return $this->matchNoteTypes[intval($type)];
         }
+
+        return $this->matchNoteTypes[intval($type)];
     }
 
     public function getColumnNames()
