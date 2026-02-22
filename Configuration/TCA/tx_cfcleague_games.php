@@ -275,7 +275,7 @@ $tx_cfcleague_games = [
                 'itemsProcFunc' => System25\T3sports\Utility\TcaLookup::class.'->getPlayersHome4Match',
                 'size' => 9,
                 'minitems' => 0,
-                'maxitems' => 10,
+                'maxitems' => 20,
             ],
         ],
         'substitutes_guest' => [
@@ -287,7 +287,7 @@ $tx_cfcleague_games = [
                 'itemsProcFunc' => System25\T3sports\Utility\TcaLookup::class.'->getPlayersGuest4Match',
                 'size' => 9,
                 'minitems' => 0,
-                'maxitems' => 10,
+                'maxitems' => 20,
             ],
         ],
         'players_home_stat' => [
