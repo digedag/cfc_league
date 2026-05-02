@@ -2,7 +2,7 @@
 Änderungen
 ==========
 
-## v1.12.1 (??.0?.2026)
+## v1.12.1 (02.05.2026)
  * fix maintencance command for PHP 8.3 (#106)
  * extend number of substitutes to 20 players in TCA
 
