@@ -13,7 +13,7 @@ use System25\T3sports\Utility\ServiceRegistry;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2009-2023 Rene Nitzsche (rene@system25.de)
+ *  (c) 2009-2026 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -580,8 +580,8 @@ class Competition extends BaseModel
         foreach ($arr as $item) {
             // Jedes Item splitten
             $mark = Strings::trimExplode(';', $item);
-            $positions = Strings::intExplode(',', $mark[0]);
-            $comments = Strings::trimExplode(',', $mark[1]);
+            $positions = Strings::intExplode(',', $mark[0] ?? '');
+            $comments = Strings::trimExplode(',', $mark[1] ?? '');
             // Jetzt das Ergebnisarray aufbauen
             foreach ($positions as $position) {
                 $ret[$position] = [

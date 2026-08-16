@@ -22,5 +22,5 @@ runs:
             restore-keys: "php-${{ inputs.php-version }}-composer-"
     -
         name: "Install composer dependencies"
-        run: "composer install --no-interaction --no-progress --no-suggest"
+        run: "composer install --no-interaction --no-progress"
         shell: bash
