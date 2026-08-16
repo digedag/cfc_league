@@ -64,6 +64,7 @@ class ClubRepository extends PersistenceRepository
         $options['wrapperclass'] = Club::class;
         $options['orderby'] = 'name';
 
+        $where = '';
         $saison = (strlen($saisonUids)) ? implode(',', Strings::intExplode(',', $saisonUids)) : '';
         if (strlen($saison) > 0) {
             $where .= ' tx_cfcleague_competition.saison IN ('.$saison.')';

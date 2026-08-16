@@ -80,6 +80,7 @@ CREATE TABLE tx_cfcleague_competition (
 	slug varchar(2048),
 
 	PRIMARY KEY (uid),
+	KEY idx_saison (saison),
 	KEY parent (pid)
 );
 
@@ -279,6 +280,10 @@ CREATE TABLE tx_cfcleague_games (
 	slug varchar(2048),
 
 	PRIMARY KEY (uid),
+	KEY idx_competition (competition),
+	KEY idx_round (round),
+	KEY idx_status (status),
+	KEY idx_home_guest (home, guest),
 	KEY parent (pid)
 );
 
