@@ -15,6 +15,18 @@
                 <source>Error</source>
                 <target>Fehler</target>
             </trans-unit>
+            <trans-unit id="label_message" xml:space="preserve">
+                <source>Message</source>
+                <target>Hinweis</target>
+            </trans-unit>
+            <trans-unit id="label_warning" xml:space="preserve">
+                <source>Warning</source>
+                <target>Warnung</target>
+            </trans-unit>
+            <trans-unit id="label_error" xml:space="preserve">
+                <source>Error</source>
+                <target>Fehler</target>
+            </trans-unit>
             <trans-unit id="label_t3sports_modname" xml:space="preserve">
                 <source>T3sports - League Management</source>
                 <target/>
@@ -306,6 +318,10 @@
             <trans-unit id="label_btn_watchstop" xml:space="preserve">
                 <source>Stop watch</source>
                 <target>Uhr stoppen</target>
+            </trans-unit>
+            <trans-unit id="label_check_fixture_status" xml:space="preserve">
+                <source>Die Stoppuhr wurde gestartet, das Spiel ist aber noch im Status "angesetzt" steht. Bitte den Status Spiels prüfen.</source>
+                <target>Die Stoppuhr wurde gestartet, das Spiel ist aber noch im Status "angesetzt" steht. Bitte den Status Spiels prüfen.</target>
             </trans-unit>
             <trans-unit id="label_tickerminute" xml:space="preserve">
                 <source>Match minute</source>

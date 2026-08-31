@@ -8,8 +8,6 @@ use Sys25\RnBase\Backend\Module\BaseModFunc;
 use Sys25\RnBase\Backend\Utility\BackendUtility;
 use Sys25\RnBase\Backend\Utility\Tables;
 use Sys25\RnBase\Database\Connection;
-use Sys25\RnBase\Frontend\Request\Parameters;
-use Sys25\RnBase\Utility\T3General;
 use System25\T3sports\Model\Competition;
 use System25\T3sports\Model\Fixture;
 use System25\T3sports\Model\Repository\MatchNoteRepository;
@@ -20,7 +18,7 @@ use tx_rnbase;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2007-2025 Rene Nitzsche (rene@system25.de)
+ *  (c) 2007-2026 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -125,9 +123,12 @@ class MatchTicker extends BaseModFunc
         $this->getModule()->setSelector($selector);
 
         $modContent = '<div id="editform">';
-        $btn = Parameters::_GP('btnClicked');
-        $update = 'btn_update' === $btn;
-        $data = T3General::_GP('data');
+
+        $request = $this->getModule()->getRequest();
+        $params = $request->getParsedBody() ?? [];
+        $data = $params['data'] ?? [];
+        $update = 'btn_update' === ($params['btnClicked'] ?? null);
+
         // Haben wir Daten im Request?
         if ($update && is_array($data['tx_cfcleague_match_notes'])) {
             $this->insertNotes($data);
@@ -139,7 +140,8 @@ class MatchTicker extends BaseModFunc
         // Wir zeigen die bisherigen Meldungen
         // Dann zeigen wir die FORM für die nächste Meldung
         $modContent .= $this->getInstantMessageField($formTool);
-        $modContent .= $this->getFormHeadline();
+        $modContent .= $this->getFormHeadline($params);
+        $modContent .= $this->getRunningMatchWarning($match, $params);
         $tickerArr = $this->createFormArray($match);
 
         /* @var $tables Tables */
@@ -156,7 +158,7 @@ class MatchTicker extends BaseModFunc
             ->createSubmit('btn_update', $lang->getLL('btn_save'));
         // Jetzt listen wir noch die zum Spiel vorhandenen Tickermeldungen auf
         $modContent .= $this->doc->divider(5);
-        $tickerArr = $this->createTickerArray($match, T3General::_GP('showAll'));
+        $tickerArr = $this->createTickerArray($match, $params['showAll'] ?? null);
         $tickerContent = '';
         if ($tickerArr) {
             $tickerContent = $formTool->createModuleLink(
@@ -204,15 +206,35 @@ class MatchTicker extends BaseModFunc
         return (new DateTime('@'.((int) ($time / 1000))))->format('Y-m-d H:i:s').' - '.$time;
     }
 
-    protected function getFormHeadline()
+    protected function getRunningMatchWarning(Fixture $match, array $params): string
     {
-        $btn = Parameters::_GP('btnClicked');
+        $startTime = (int) ($params['watch_starttime'] ?? 0);
+        $btn = $params['btnClicked'] ?? null;
+        $start = 'btn_watch_start' === $btn;
+        $stop = 'btn_watch_stop' === $btn;
+
+        if (!$stop && ($startTime > 0 || $start) && !$match->isRunning()) {
+            return $this->getModule()->getDoc()->section(
+                '###LABEL_WARNING###:',
+                '###LABEL_CHECK_FIXTURE_STATUS###',
+                0,
+                1,
+                self::ICON_WARN
+            );
+        }
+
+        return '';
+    }
+
+    protected function getFormHeadline(array $params)
+    {
+        $btn = $params['btnClicked'] ?? null;
         $stop = 'btn_watch_stop' === $btn;
         $pause = 'btn_watch_pause' === $btn;
         $start = 'btn_watch_start' === $btn;
-        $pauseTime = (int) T3General::_GP('watch_pausetime');
-        $startTime = (int) T3General::_GP('watch_starttime');
-        $clickTime = (int) T3General::_GP('watch_localtime');
+        $pauseTime = (int) ($params['watch_pausetime'] ?? 0);
+        $startTime = (int) ($params['watch_starttime'] ?? 0);
+        $clickTime = (int) ($params['watch_localtime'] ?? 0);
 
         // Daten: Startuhrzeit auf dem Client und gewünschtes offset
         $currentValues = [];
@@ -242,7 +264,7 @@ class MatchTicker extends BaseModFunc
         $isPaused = $pauseTime > 0;
 
         // Der übergebene Offset wird immer gespeichert
-        $offset = Parameters::_GP('watch_offset');
+        $offset = $params['watch_offset'] ?? null;
         $offset = null !== $offset ? [
             'watch_offset' => (int) $offset,
         ] : [];
