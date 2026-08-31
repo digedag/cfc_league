@@ -320,8 +320,8 @@
                 <target>Uhr stoppen</target>
             </trans-unit>
             <trans-unit id="label_check_fixture_status" xml:space="preserve">
-                <source>Die Stoppuhr wurde gestartet, das Spiel ist aber noch im Status "angesetzt" steht. Bitte den Status Spiels prüfen.</source>
-                <target>Die Stoppuhr wurde gestartet, das Spiel ist aber noch im Status "angesetzt" steht. Bitte den Status Spiels prüfen.</target>
+                <source>The stopwatch has been started, but the game is still listed as "scheduled." Please check the game's status.</source>
+                <target>Die Stoppuhr wurde gestartet, das Spiel ist aber noch im Status "angesetzt". Bitte den Status Spiels prüfen.</target>
             </trans-unit>
             <trans-unit id="label_tickerminute" xml:space="preserve">
                 <source>Match minute</source>
