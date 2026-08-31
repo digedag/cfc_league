@@ -12,6 +12,15 @@
             <trans-unit id="error" xml:space="preserve">
                 <source>Error</source>
             </trans-unit>
+            <trans-unit id="label_message" xml:space="preserve">
+                <source>Message</source>
+            </trans-unit>
+            <trans-unit id="label_warning" xml:space="preserve">
+                <source>Warning</source>
+            </trans-unit>
+            <trans-unit id="label_error" xml:space="preserve">
+                <source>Error</source>
+            </trans-unit>
             <trans-unit id="label_t3sports_modname" xml:space="preserve">
                 <source>T3sports - League Management</source>
             </trans-unit>
@@ -229,6 +238,9 @@
             </trans-unit>
             <trans-unit id="label_btn_watchstop" xml:space="preserve">
                 <source>Stop watch</source>
+            </trans-unit>
+            <trans-unit id="label_check_fixture_status" xml:space="preserve">
+                <source>The stopwatch has been started, but the game is still listed as "scheduled." Please check the game's status.</source>
             </trans-unit>
             <trans-unit id="label_tickerminute" xml:space="preserve">
                 <source>Match minute</source>
