@@ -309,6 +309,9 @@
 			<trans-unit id="tx_cfcleague_games.tab_score" xml:space="preserve">
 				<source>Score</source>
 			</trans-unit>
+			<trans-unit id="tx_cfcleague_games.match_notes" xml:space="preserve">
+				<source>Match notes</source>
+			</trans-unit>
 			<trans-unit id="tx_cfcleague_games.match_no" xml:space="preserve">
 				<source>Match number</source>
 			</trans-unit>

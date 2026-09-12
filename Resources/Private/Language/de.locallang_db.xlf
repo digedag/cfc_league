@@ -411,6 +411,10 @@
 				<source>Score</source>
 				<target>Ergebnis</target>
 			</trans-unit>
+			<trans-unit id="tx_cfcleague_games.match_notes" xml:space="preserve">
+				<source>Match notes</source>
+				<target>Spielticker</target>
+			</trans-unit>
 			<trans-unit id="tx_cfcleague_games.match_no" xml:space="preserve">
 				<source>Match number</source>
 				<target>Spielnummer</target>
