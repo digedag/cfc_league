@@ -125,7 +125,10 @@ class MatchTicker extends BaseModFunc
         $modContent = '<div id="editform">';
 
         $request = $this->getModule()->getRequest();
-        $params = $request->getParsedBody() ?? [];
+        $params = array_replace(
+            $request->getQueryParams(),
+            (array) ($request->getParsedBody() ?? [])
+        );
         $data = $params['data'] ?? [];
         $update = 'btn_update' === ($params['btnClicked'] ?? null);
 

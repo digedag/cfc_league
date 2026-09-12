@@ -213,6 +213,32 @@ $tx_cfcleague_games = [
                 'default' => '',
             ],
         ],
+        'match_notes' => [
+            'exclude' => 1,
+            'label' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_games.match_notes',
+            'config' => [
+                'type' => 'inline',
+                'foreign_table' => 'tx_cfcleague_match_notes',
+                'foreign_field' => 'game',
+                'foreign_sortby' => 'minute',
+                'minitems' => 0,
+                'overrideChildTca' => [
+                    'types' => [
+                        '0' => [
+                            'showitem' => 'hidden,minute,second,extra_time,type,player_home,player_guest,comment',
+                        ],
+                    ],
+                ],
+                'appearance' => [
+                    'collapseAll' => 1,
+                    'expandSingle' => 1,
+                    'enabledControls' => [
+                        'sort' => false,
+                    ],
+                    'useSortable' => false,
+                ],
+            ],
+        ],
 
         'coach_home' => [
             'exclude' => 1,
@@ -761,7 +787,8 @@ $tx_cfcleague_games = [
             --div--;LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_games.tab_lineup,coach_home, players_home, substitutes_home, system_home, system_guest, coach_guest, players_guest, substitutes_guest, referee, assists, videoreferee, videoassists,
             --div--;LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_games.tab_lineup_stat,players_home_stat, substitutes_home_stat, players_guest_stat, substitutes_guest_stat, scorer_home_stat, scorer_guest_stat,
             --div--;LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_games.tab_score, is_extratime,--palette--;;2, is_penalty,--palette--;;3,
-            --div--;LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_games.game_report, game_report,--palette--;;4, game_report_author,--palette--;;5, t3images, dam_media, dam_media2, video, videoimg',
+            --div--;LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_games.game_report, game_report,--palette--;;4, game_report_author,--palette--;;5, t3images, dam_media, dam_media2, video, videoimg,
+            --div--;LLL:EXT:cfc_league/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_games.match_notes, match_notes',
         ],
     ],
     'palettes' => [
