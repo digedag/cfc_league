@@ -268,6 +268,7 @@ CREATE TABLE tx_cfcleague_games (
 	dam_media int(11) DEFAULT '0' NOT NULL,
 	dam_media2 int(11) DEFAULT '0' NOT NULL,
 	t3images int(11) DEFAULT '0' NOT NULL,
+	match_notes int(11) unsigned DEFAULT '0' NOT NULL,
 
 	is_extratime tinyint(3) DEFAULT '0' NOT NULL,
 	goals_home_et int(11) DEFAULT '0' NOT NULL,
