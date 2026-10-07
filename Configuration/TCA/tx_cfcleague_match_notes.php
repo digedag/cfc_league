@@ -14,6 +14,7 @@ $tx_cfcleague_match_notes = [
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
         'cruser_id' => 'cruser_id',
+        'sortby' => 'sorting',
         'default_sortby' => 'ORDER BY crdate',
         'delete' => 'deleted',
         'enablecolumns' => [
